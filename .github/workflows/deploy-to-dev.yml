@@ -27,4 +27,4 @@ jobs:
         run: Deplying ForceApp to CP Dev Org
         
       - name: Deploys to Target Org
-        run: sfdx force:source:deploy -p . -u org-2 
+        run: sfdx force:source:deploy -c -p . -u org-2 
