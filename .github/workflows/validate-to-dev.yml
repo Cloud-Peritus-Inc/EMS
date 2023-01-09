@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: EMS-Dev
+name: Validate to EMS-Dev Org
 
 # Controls when the workflow will run
 on:
