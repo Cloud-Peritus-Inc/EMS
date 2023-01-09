@@ -23,8 +23,6 @@ jobs:
       - uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: Deplying ForceApp to CP Dev Org
         
-      - name: Deploys to Target Org
+      - name: Deploys to EMS Dev Org
         run: sfdx force:source:deploy -c -p . -u org-2 
