@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Escalation_mail_send_to_employee_when_timesheet_is_not_submitted</fullName>
+        <description>Escalation mail send to employee when timesheet is not submitted</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>timesheet@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Escalation_Email_to_Employee</template>
+    </alerts>
+</Workflow>
