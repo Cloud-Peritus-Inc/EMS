@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "d27d89ba-05d7-46b1-baed-dd1684a5a70b",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "id" : "4fb9434b-b7b7-4f4a-8cf4-46faf45b7709",
+  "label" : "MyInfo",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-myinfo",
+  "type" : "route",
+  "urlPrefix" : "myinfo"
+}

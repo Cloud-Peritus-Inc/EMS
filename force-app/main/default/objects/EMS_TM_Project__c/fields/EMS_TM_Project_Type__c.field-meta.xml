@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_TM_Project_Type__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( RecordType.Name = &apos;Client Projects&apos; || (RecordType.Name = &apos;Internal Projects&apos; &amp;&amp; Name &lt;&gt; &apos;Bench&apos;)  || (RecordType.Name = &apos;Global Projects&apos; &amp;&amp; Name &lt;&gt; &apos;OOO&apos;&amp;&amp; Name &lt;&gt; &apos;Other&apos;), &apos;Client&apos;, 
+
+IF( RecordType.Name = &apos;Global Projects&apos; &amp;&amp; Name = &apos;Other&apos; , &apos;Other&apos;,
+
+IF( RecordType.Name = &apos;Global Projects&apos; &amp;&amp; Name = &apos;OOO&apos; , &apos;OOO&apos;,
+
+IF( RecordType.Name = &apos;Internal Projects&apos; &amp;&amp; Name = &apos;Bench&apos;, &apos;Bench&apos;, &apos;Client&apos;) ) ) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Project Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

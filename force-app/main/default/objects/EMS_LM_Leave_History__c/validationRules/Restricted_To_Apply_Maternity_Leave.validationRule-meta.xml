@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restricted_To_Apply_Maternity_Leave</fullName>
+    <active>false</active>
+    <description>To Avail of Maternity Leave Please Email HR before 8 Weeks and Get it Enabled</description>
+    <errorConditionFormula>AND(
+ ISPICKVAL(EMS_LM_Leave_Type_Name__c, &apos;Maternity Leave&apos;),
+  EMS_LM_Contact__r.EMS_LM_Maternity_Leave__c = false
+)</errorConditionFormula>
+    <errorDisplayField>EMS_LM_Leave_Type_Name__c</errorDisplayField>
+    <errorMessage>&quot;By default maternity leave is disabled for all the employees. If you wish to enable maternity leave, please email HR 8 weeks prior to the leave start date&quot;</errorMessage>
+</ValidationRule>

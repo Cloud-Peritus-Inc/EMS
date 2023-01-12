@@ -1,0 +1,134 @@
+<!-- This component is used to show the Leave History in Admin View Tab For current Logged in Employee  -->
+
+
+
+
+<template>  
+  <!-- sldsValidatorIgnore -->
+  <lightning-card>
+    <lightning-layout multiple-rows>
+      <lightning-layout-item padding="around-small" size="4">
+        <div>
+          <lightning-input type="text" label="Employee" value={empName}
+            onchange={namechange}></lightning-input>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item padding="around-small" size="2">
+        <div>
+          <lightning-input type="Date" label="Start Date" value={startDate}
+            onchange={startdatechange}></lightning-input>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item padding="around-small" size="2">
+        <div>
+          <lightning-input type="Date" label="End Date" value={endDate}
+            onchange={enddatechange}></lightning-input>
+        </div>
+      </lightning-layout-item>
+      <!--<lightning-layout-item padding="around-small" size="2">
+        <div>
+          <lightning-combobox name="leavetype" label="Leave Type" placeholder="Select Leave Type"
+            options={lOptions} onchange={handleChange}>
+          </lightning-combobox>
+        </div>
+      </lightning-layout-item>-->
+      <lightning-layout-item padding="around-small" size="4">
+        <div>
+          <lightning-combobox name="leavestatus" label="Leave Status"
+            placeholder="Select Leave Status" options={lStatus} onchange={statusChange}>
+          </lightning-combobox>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+    <template if:true={showdata}>  
+      <lightning-card>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" title="User Name">Employee Name</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Leave Type">Leave Type</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Leave Start Date">Leave Start Date</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Leave End Date">Leave End Date</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Leave Duration">Leave Duration</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Reason">Reason</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Approver">Approver</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Leave Status">Leave Status</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Approved On">Approved On</div>
+              </th>
+              <th class="slds-cell_action-mode" scope="col" style="width:3.25rem">
+                <div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={datahistory} for:item="Req">
+              <tr key={Req.Id}>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Contact__r.Name}</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Leave_Type_Name__c }</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Leave_Start_Date__c}</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Leave_End_Date__c}</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Leave_Duration__c}</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Reason__c}</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Final_Approver__c}</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Status__c}</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate dv-dynamic-width" style={fixedWidth}>{Req.EMS_LM_Approved_On__c}</div>
+                </th>
+                <th class="slds-cell_action-mode" role="gridcell">
+                  <lightning-button-menu alternative-text="Show menu" icon-name="utility:threedots_vertical"
+                    variant="container" menu-alignment="right" onclick={handleCancelButton}
+                    data-value={Req.EMS_LM_Status__c} data-record-id={Req.Id}>
+                    <template if:true={showcancelbutton}>
+                      <lightning-menu-item value="Approve" label="Approve" onclick={handleApproveClick}
+                        data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
+                        data-record-id={Req.Id}></lightning-menu-item>
+                      <lightning-menu-item value="Reject" label="Reject" onclick={handleRejectClick}
+                        data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
+                        data-record-id={Req.Id}></lightning-menu-item>
+                    </template>
+                  </lightning-button-menu>
+                </th>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </lightning-card> 
+    </template>
+  </lightning-card>
+<template if:true={nodata}>
+  <h2> No Requests Found.</h2>
+</template>
+</template>

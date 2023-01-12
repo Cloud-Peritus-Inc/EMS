@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "09042b6d-311e-44dd-aa09-5b635e907e0e",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "id" : "6a4cdc86-80ed-40d7-8ec2-0129e7c5c63d",
+  "label" : "Lead List",
+  "objectApiName" : "CP_Sales_lead__c",
+  "routeType" : "list-a08",
+  "type" : "route",
+  "urlPrefix" : "cp-sales-lead"
+}

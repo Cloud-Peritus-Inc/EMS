@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "ad4dc9b6-2620-404d-8266-bf5f76c08931",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "id" : "ee1c9b76-33ab-42f4-8f02-995d10254b28",
+  "label" : "Sales objects",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-sales-objects",
+  "type" : "route",
+  "urlPrefix" : "sales-objects"
+}

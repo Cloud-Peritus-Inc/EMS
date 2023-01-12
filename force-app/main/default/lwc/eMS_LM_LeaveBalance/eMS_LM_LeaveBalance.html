@@ -1,0 +1,84 @@
+<template>
+    <lightning-card>
+        <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+            <lightning-layout size="12">
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <b>Annual Leave</b>&nbsp;&nbsp;&nbsp;
+                        <lightning-helptext content={annualLeaveContent}></lightning-helptext>
+                        <br><br>
+                        <!-- <ul class="slds-list_dotted"><li>Basic ordered list</li><li>List Item</li></ul>      -->
+                        <lightning-icon icon-name="standard:event" alternative-text="Event" title="Annual leave (also known as Paid time-off) permits an employee to take time off from work for personal reasons. Every quarter, 5 Annual leaves get credited to the leave balance.">
+                        </lightning-icon>
+                        <br><br>
+                        <p>Available : {AnnualAvailable}</p>
+                        <p>Utilized : {AnnualUtilized}</p>
+
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <b>Compensatory Off</b>&nbsp;&nbsp;&nbsp;
+                        <lightning-helptext content={compensatoryLeaveContent}></lightning-helptext>
+                        <br><br>
+                        <lightning-icon icon-name="standard:event" alternative-text="Event"
+                            title="If an employee has to work on a weekend or a holiday due to the priority of the deliverables, they are offered a Compensatory Off on any other workday."></lightning-icon>
+                        <br><br>
+                        <p>Available : {CompensatoryAvailable}</p>
+                        <p>Utilized : {CompensatoryUtilized}</p>
+                    </div>
+                </lightning-layout-item>
+              <!--   <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <b>Paternity Leave</b>&nbsp;&nbsp;&nbsp;
+                        <lightning-helptext content={paternityLeaveContent}></lightning-helptext>
+                        <br><br>
+                        <lightning-icon icon-name="standard:event" alternative-text="Event"
+                            title="Paternity Leave is a leave that is utilized to bond and to care for a newborn child after birth. It should be applied 2 Days prior to the Leave Start Date."></lightning-icon>
+                        <br><br>
+                        <p></p>
+                        <br></br>
+                        <p></p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <b>Maternity Leave</b>&nbsp;&nbsp;&nbsp;
+                        <lightning-helptext content={maternityLeaveContent}></lightning-helptext>
+                        <br><br>
+                        <lightning-icon icon-name="standard:event" alternative-text="Event"
+                            title="Maternity Leave means a period during which a woman is absent from work because she is pregnant or has given birth to a child. In order to  utilize Maternity Leave,  the female applicant should drop an email to the Human Resource department so that they can enable Maternity Leave for the applicant. It should be applied 8 weeks prior to the Leave Start Date."></lightning-icon>
+                        <br><br>
+                        <p></p>
+                        <br></br>
+                        <p></p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <b>Bereavement Leave</b>&nbsp;&nbsp;&nbsp;
+                        <lightning-helptext content={bereavementLeaveContent}></lightning-helptext>
+                        <br><br>
+                        <lightning-icon icon-name="standard:event" alternative-text="Event" title="Bereavement leave permits employees to take time off from work when there is a death in the family or losing a loved one."></lightning-icon>
+                        <br><br>
+                        <p></p>
+                        <br></br>
+                        <p></p>
+                    </div>
+                </lightning-layout-item>
+            <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <b>Loss Of Pay</b>&nbsp;&nbsp;&nbsp;
+                        <lightning-helptext content={lossOfPayLeaveContent}></lightning-helptext>
+                        <br><br>
+                        <lightning-icon icon-name="standard:event" alternative-text="Event" title="There are cases when an employee has exhausted all leave balance but still requires time-off for some exigency. In such situations, companies allow them to go on leave without pay (LWP)."></lightning-icon>
+                        <br><br>
+                        <p></p>
+                        <br></br>
+                        <p></p>
+                    </div>
+                </lightning-layout-item>    -->
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

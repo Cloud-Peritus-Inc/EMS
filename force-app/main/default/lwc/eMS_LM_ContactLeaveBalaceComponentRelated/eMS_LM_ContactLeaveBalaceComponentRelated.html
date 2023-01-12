@@ -1,0 +1,47 @@
+<template>
+    <lightning-card>
+        <lightning-record-view-form record-id={recordId} object-api-name="Contact">
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-var-p-horizontal_small" title="Leave Balance Details">Leave Balance
+                        Details</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+                    <div class="slds-grid slds-gutters ">
+                        <div class="slds-col">
+                            <span>
+                                <div class="slds-form-element slds-form-element_horizontal">
+                                    <label class="slds-form-element__label">Annual Leave Balance</label>
+                                    <div class="slds-form-element__control">
+                                        <span class="slds-form-element__static">
+                                            <lightning-output-field field-name="EMS_LM_No_Of_Availble_Leaves__c"
+                                                variant="label-hidden">
+                                                <hr style="margin-top:2px">
+                                            </lightning-output-field>
+                                        </span>
+                                    </div>
+                                </div>                        
+                            </span>
+                        </div>
+                        <div class="slds-col">
+                            <span>
+                              <div class="slds-form-element slds-form-element_horizontal">
+                                    <label class="slds-form-element__label">Compensatory Off Balance</label>
+                                    <div class="slds-form-element__control">
+                                        <span class="slds-form-element__static">
+                                            <lightning-output-field
+                                                field-name="EMS_LM_No_Of_Available_Compensatory_Off__c"
+                                                variant="label-hidden">
+                                                <hr style="margin-top:2px">
+                                            </lightning-output-field>
+                                        </span>
+                                    </div>
+                                </div>                             
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </lightning-record-view-form>
+    </lightning-card>
+</template>

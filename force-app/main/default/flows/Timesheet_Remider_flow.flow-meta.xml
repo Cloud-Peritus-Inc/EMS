@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>timesheet_Reminder_mail</name>
+        <label>timesheet Reminder mail</label>
+        <locationX>176</locationX>
+        <locationY>396</locationY>
+        <actionName>Contact.timsheet_auto_remainder</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <environments>Default</environments>
+    <interviewLabel>Timesheet Remider flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Timesheet Reminder flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>get_contact</name>
+        <label>get contact</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>timesheet_Reminder_mail</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordtype</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>get_contact</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Official_Mail__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EMS_RM_Current_Job_Role__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Associate Talent Acquisition Partner</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EMS_RM_Current_Job_Role__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>HR Executive</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EMS_RM_Current_Job_Role__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Senior Talent Acquisition Partner</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EMS_RM_Current_Job_Role__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Talent Acquisition Partner</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EMS_RM_Current_Job_Role__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>US Talent Acquisition Partner</stringValue>
+            </value>
+        </filters>
+        <object>Contact</object>
+        <schedule>
+            <frequency>Weekly</frequency>
+            <startDate>2022-09-15</startDate>
+            <startTime>21:30:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>recordtype</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Resource&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+</Flow>
