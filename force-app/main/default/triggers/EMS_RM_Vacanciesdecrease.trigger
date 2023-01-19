@@ -1,17 +1,17 @@
 trigger EMS_RM_Vacanciesdecrease on Contact (before insert, before update, after insert) {
    
     if(trigger.isBefore && (trigger.isInsert || trigger.isUpdate)){
-        EMS_TM_UpdateContactEmail.updatecontactEmail(Trigger.new);
+        //EMS_TM_UpdateContactEmail.updatecontactEmail(Trigger.new); // Revamped by Eswar and Shireesha
     }
     
     if(trigger.isBefore && trigger.isUpdate){
-        //EMS_TM_UpdateContactEmail.sendWelcomeMailtoEmployee(trigger.new,trigger.oldmap);
-        //EMS_EM_aplicantConvertResource.sendTheWelcomeMailtoEmployee(trigger.new,trigger.oldmap);
+        //EMS_TM_UpdateContactEmail.sendWelcomeMailtoEmployee(trigger.new,trigger.oldmap);  These are commented earliar itself.
+        //EMS_EM_aplicantConvertResource.sendTheWelcomeMailtoEmployee(trigger.new,trigger.oldmap); These are commented earliar itself.
 
     }
     
     if(trigger.isAfter && trigger.isInsert){
-        EMS_TM_UpdateContactEmail.updateAnnualLeave(Trigger.new);
+      //  EMS_TM_UpdateContactEmail.updateAnnualLeave(Trigger.new); // Revamped by Eswar and Shireesha
     }
 
     
