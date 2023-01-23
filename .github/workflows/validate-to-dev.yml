@@ -25,4 +25,4 @@ jobs:
       # Runs a single command using the runners shell
         
       - name: Validate Code to EMS Dev Org
-        run: sfdx force:source:deploy -c -p . -u EMS-Dev 
+        run: sfdx force:source:deploy -c -p . -u EMS-Dev -l runAllTests
