@@ -31,6 +31,6 @@ jobs:
         #run: sfdx force:source:deploy -c -p . -u EMS-Dev --testlevel=RunLocalTests
         run: sfdx force:apex:test:run --testlevel RunLocalTests -u EMS-Dev --resultformat json > /tmp/deploy.log
       - name: Reading the Deploy log
-        run: cat /tmp/deploy.log| jq --raw-output '.result.tests|.[].Outcome="fail"|.[]|select(.Message !=null).FullName+"\nError Message = "+.Message+"\n================================================================================="'
+        run: echo /tmp/deploy.log| jq --raw-output '.result.tests|.[].Outcome="fail"|.[]|select(.Message !=null).FullName+"\nError Message = "+.Message+"\n================================================================================="'
       - name: Cleaning Deploy Log
         run: rm -rf /tmp/deploy.log
