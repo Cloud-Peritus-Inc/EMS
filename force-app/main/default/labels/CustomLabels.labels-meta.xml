@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Error_Message_For_Assignment_Restriction</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Message For Assignment Restriction</shortDescription>
+        <value>No Assignments are allowed for completed Projects</value>
+    </labels>
+    <labels>
+        <fullName>Past_Days_Consider_For_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Past Days Consider For Notification</shortDescription>
+        <value>3</value>
+    </labels>
+    <labels>
+        <fullName>Retry_Exception</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Retry Exception</shortDescription>
+        <value>10</value>
+    </labels>
+</CustomLabels>

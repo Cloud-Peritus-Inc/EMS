@@ -1,0 +1,120 @@
+<!--
+  @description       : The componet to display the leave request records in lightning accordion.
+  @author            : Pavan
+  @group             : 
+  @last modified on  : 11-01-2023
+  @last modified by  : 
+-->
+<template>
+	<lightning-card variant="Narrow" title="Leave Request" icon-name="standard:account" class="textBody">
+		<template if:false={isViewAll}>
+			<lightning-button variant="success" label="Approve All" title="titleName" onclick={handleApproveAll}
+				slot="actions">
+			</lightning-button>
+			&nbsp;&nbsp;
+			<lightning-button variant="destructive" label="Reject All" title="titleName" onclick={handleRejectAll}
+				slot="actions">
+			</lightning-button>
+		</template>
+
+		<lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
+			active-section-name={activeSections} class="slds-card slds-m-around_medium">
+			<template if:true={leaveReqPendingList}>
+				<lightning-accordion-section name="Approver 1" label="Level 1 Approvarls Pending"
+					class="slds-scrollable_y">
+					<c-e-m-s-_-leave-request-_-table leave-req={leaveReqPendingList}
+						onapproveall={handlemultipleApprovals}>
+					</c-e-m-s-_-leave-request-_-table>
+				</lightning-accordion-section>
+			</template>
+			<template if:true={leaveReqApprover2List}>
+				<lightning-accordion-section name="Approver 2" label="Level 2 Approvarls Pending">
+					<c-e-m-s-_-leave-request-_-table leave-req={leaveReqApprover2List}
+						onapproveall={handlemultipleApprovals}>
+					</c-e-m-s-_-leave-request-_-table>
+				</lightning-accordion-section>
+			</template>
+
+			<template if:true={leaveReqApprover3List}>
+				<lightning-accordion-section name="Approver 3" label="Level 3 Approvarls Pending">
+					<c-e-m-s-_-leave-request-_-table leave-req={leaveReqApprover3List}
+						onapproveall={handlemultipleApprovals}>
+					</c-e-m-s-_-leave-request-_-table>
+				</lightning-accordion-section>
+			</template>
+		</lightning-accordion>
+
+		<!-- APPROVE ALL POP-UP-->
+		<template if:true={isShowModalApproveAll}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+							Confirmation</h2>
+					</header>
+
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<p style="font-size:20px;">Please Enter the Approve Comments</p><br>
+						<lightning-textarea name="input" required value="" placeholder="Type comments here..."
+							label="Comments" maxlength="140"
+							message-when-too-long="A maximum of 140 characters are allowed."
+							message-when-value-missing="Please add comments." onchange={handleApproveAllComments}>
+						</lightning-textarea>
+					</div>
+
+					<!-- modal footer start-->
+					<footer class="slds-modal__footer">
+
+						<button class="slds-button slds-button_neutral" onclick={handleCloseAll}
+										>Cancel</button>
+						<button class="slds-button slds-button_neutral" onclick={handleApproveAllSave}
+										>Save</button>
+					</footer>
+				</div>
+			</section>
+		</template>
+		<!-- REJECTALL POP-UP-->
+		<template if:true={isShowModalReject}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">
+							Confirmation</h2>
+					</header>
+
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+						<p style="font-size:20px;">Please Enter the Reject Comments</p><br>
+						<lightning-textarea name="input" required value={rejectComments}
+							placeholder="Type comments here..." label="Comments" maxlength="140"
+							message-when-too-long="A maximum of 140 characters are allowed."
+							message-when-value-missing="Please add comments." onchange={handleRejectAllComments}
+							class="isRequired" data-id="validateValue">
+						</lightning-textarea>
+					</div>
+
+					<!-- modal footer start-->
+					<footer class="slds-modal__footer">
+
+						<button class="slds-button slds-button_neutral" onclick={handleClose}
+										>Cancel</button>
+						<button class="slds-button slds-button_neutral" onclick={handleRejectAllSave}
+										>Save</button>
+					</footer>
+
+				</div>
+			</section>
+			<div key={leave.Id} class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+				<div class="slds-p-around_x-small textAlign">
+					<button class="slds-button " onclick={handleApproveAllNavigation} if:true={isViewAll}> View All</button>
+		</div>
+		
+	</lightning-card>
+
+</template>
