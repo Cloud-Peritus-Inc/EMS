@@ -10,7 +10,7 @@ export default class EMS_LM_LeaveApproveRejectScreen extends NavigationMixin(Lig
   rejectAllComments;
   isShowModalApproveAll = false;
   isShowModalRejectAll = false;
-  isViewAll = true;
+  //isViewAll = true;
   leaveReqPendingList;
   leaveReqApprover2List;
   leaveReqApprover3List;
@@ -73,19 +73,6 @@ export default class EMS_LM_LeaveApproveRejectScreen extends NavigationMixin(Lig
     console.log("### removeDuplicates", JSON.stringify(this.removeDuplicates));
   }
 
-  /* handleMultipleApprovals(event) {
-     this.multipleApprovals = [...this.multipleApprovals, event.detail];
-     let removeDuplicates = [...new Set(this.multipleApprovals)].filter((item, index, self) => self.indexOf(item) === index);
-     submitHandler(removeDuplicates);
-     console.log('OUTPUT : ',removeDuplicates);
-   }*/
-
-
-  /* submitHandler(multipleApprovals) {
-     this.entireData = [...this.entireData, multipleApprovals];
-     console.log("### entireData", JSON.stringify(this.entireData));
-   }*/
-
   //Approve All
   handleApproveAllComments(event) {
     this.approveAllComments = event.target.value
@@ -102,7 +89,6 @@ export default class EMS_LM_LeaveApproveRejectScreen extends NavigationMixin(Lig
     if (this.removeDuplicates.length === 0) {
       alert('Please select at least one record');
     } else {
-      //bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
       bulkLeaveReqApproval({ bulkleaveReqId: this.removeDuplicates, comments: this.approveAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
@@ -112,9 +98,6 @@ export default class EMS_LM_LeaveApproveRejectScreen extends NavigationMixin(Lig
         });
     }
   }
-
-
-
 
   //Reject All
   handleRejectAllComments(event) {
@@ -131,7 +114,7 @@ export default class EMS_LM_LeaveApproveRejectScreen extends NavigationMixin(Lig
     if (this.multipleApprovals.length === 0) {
       alert('Please select at least one record');
     } else {
-      bulkLeaveReqReject({ bulkRejectId: this.multipleApprovals, comments: this.rejectAllComments })
+      bulkLeaveReqReject({ bulkRejectId: this.removeDuplicates, comments: this.rejectAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
           window.location.reload();
@@ -140,7 +123,7 @@ export default class EMS_LM_LeaveApproveRejectScreen extends NavigationMixin(Lig
         });
     }
   }
-
+/*
   //Approve All page navigation
   handleApproveAllNavigation(event) {
     var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
@@ -161,7 +144,7 @@ export default class EMS_LM_LeaveApproveRejectScreen extends NavigationMixin(Lig
       this.isViewAll = false;
       console.log('Bye : ');
     }
-  }
+  }*/
 
   //Modal Pop-up Close
   handleCloseAll() {

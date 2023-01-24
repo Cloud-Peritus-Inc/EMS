@@ -1,8 +1,9 @@
 import { LightningElement, api } from 'lwc';
 import updateRejecteStatusAndComments from '@salesforce/apex/LeaveRequestRejectHandler.updateRejecteStatusAndComments';
 import updateApproveStatusAndComments from '@salesforce/apex/LeaveRequestApproveHandler.updateApproveStatusAndComments';
+import { NavigationMixin } from 'lightning/navigation';
 //import bulkLeaveReqApproval from '@salesforce/apex/LeaveRequestApproveHandler.bulkLeaveReqApproval';
-export default class EMS_LeaveRequest_Table extends LightningElement {
+export default class EMS_LeaveRequest_Table extends NavigationMixin (LightningElement) {
 
     approveComments;
     rejectComments;
@@ -33,16 +34,16 @@ export default class EMS_LeaveRequest_Table extends LightningElement {
         });
 
         //Conditions to make isViewAll to TRUE
-        var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
-        var params = new URLSearchParams();
-        params.append("bulkupdate", "value");
-        url.search += "&" + params.toString();
-        var params = new URLSearchParams(location.search);
-        if (params.has('bulkupdate')) {
-            console.log("Hello");
-            this.isViewAll = true;
-            console.log('Bye : ');
-        }
+         var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
+         var params = new URLSearchParams();
+         params.append("bulkupdate", "value");
+         url.search += "&" + params.toString();
+         var params = new URLSearchParams(location.search);
+         if (params.has('bulkupdate')) {
+             console.log("Hello");
+             this.isViewAll = true;
+             console.log('Bye : ');
+         }
     }
 
     //CheckBox
@@ -121,4 +122,19 @@ export default class EMS_LeaveRequest_Table extends LightningElement {
         this.isShowModalApprove = false;
         this.isShowModalReject = false;
     }
+
+    //Approve All page navigation
+      handleApproveAllNavigation1(event) {
+          var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
+          console.log('### URL : ',url);
+          var params = new URLSearchParams();
+          params.append("bulkupdate", "value");
+          url.search += "&" + params.toString();
+          this[NavigationMixin.Navigate]({
+              type: 'standard__webPage',
+              attributes: {
+                  url: url.href
+              }
+          });
+      }
 }
