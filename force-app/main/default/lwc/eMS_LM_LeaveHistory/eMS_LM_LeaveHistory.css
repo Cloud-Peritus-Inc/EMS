@@ -1,0 +1,7 @@
+.wrapping-cell{
+    word-wrap: break-word;
+  }
+ .textBody{
+    font-size: 0.8rem;
+	font-family: "SalesforceSans-Regular";
+ }

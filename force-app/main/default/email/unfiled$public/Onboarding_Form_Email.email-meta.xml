@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Onboarding Form Email</name>
+    <style>freeForm</style>
+    <subject>Required Details for Onboarding</subject>
+    <textOnly>Dear {!Contact.Name},
+
+
+Hope you&apos;re doing well!
+
+
+We appreciate you joining us at Cloud Peritus and look forward to your association with us. 
+
+
+As part of our onboarding formalities, we require you to provide some details. Please login to our onboarding portal by clicking on the link below:
+
+https://cpprd--emsem.sandbox.my.site.com/s/?emailid={!Contact.Email}
+
+
+Please make sure to upload all the documents and fill in all the details. If you are unable to provide any of the documents or details please reply to this mail with the reason. 
+
+
+Once you fill in all the details and submit, we will cross check and verify the details provided at our end and will update you if we require any further information.
+
+
+Best wishes,
+HR Team 
+CloudPeritus.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

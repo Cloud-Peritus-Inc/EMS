@@ -1,0 +1,377 @@
+<template>
+    <template if:false={hideSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={showModalPopUp}>
+        <c-ems-confirm-pop-up name="confirmModal"
+            confirm-label={confirmModal.confirmLabel}
+            cancel-label={confirmModal.cancelLabel}
+            message={confirmModal.message}
+            title={confirmModal.title}
+            onresponce={handleResponce}>
+            <div class="modalStyle" >
+                <p class="timeSheet slds-p-bottom_x-small">Timesheet Summary:</p>
+                <p>Total hours entered for the week: <span class="total">{totalHours.value}</span></p><br>
+                <p><lightning-icon class="slds-p-right_small"
+                        icon-name="utility:warning"
+                        alternative-text="Warning!"
+                        variant="warning"
+                        title="warning variant small"
+                        size="small"></lightning-icon>
+                    {confirmModal.message}</p><br>
+                <p>Do you wish to proceed?</p><br>
+            </div>
+        </c-ems-confirm-pop-up>
+    </template>
+    <template if:true={showCompOffPopUp}>
+        <c-ems-confirm-pop-up name="confirmModal"
+            confirm-label={confirmModal.confirmLabel}
+            cancel-label={confirmModal.cancelLabel}
+            message={confirmModal.message}
+            title={confirmModal.title}
+            onresponce={handleCompoffResponce}>
+            <div class="modalStyle" >
+                <p class="timeSheet slds-p-bottom_x-small">Timesheet Summary:</p>
+                <p>Total hours entered for the week: <span class="total">{weekendEnteredValue}</span></p><br>
+                <p><lightning-icon class="slds-p-right_small"
+                        icon-name="utility:warning"
+                        alternative-text="Warning!"
+                        variant="warning"
+                        title="warning variant small"
+                        size="small"></lightning-icon>
+                    {confirmModal.message}</p><br>
+                <p>Do you wish to proceed?</p><br>
+            </div>
+        </c-ems-confirm-pop-up>
+    </template>
+    <lightning-card>
+        <div class="slds-grid slds-grid_align-spread slds-p-horizontal_large">
+            <div>
+                <lightning-icon icon-name="standard:business_hours"
+                    alternative-text="Event"
+                    title="Event"></lightning-icon>
+                <label class="slds-p-left_medium timeSheet">Time Sheet</label>
+            </div>  
+            <div if:true={enableManagerView}>
+                <lightning-input data-id="toggle"
+                    type="toggle"
+                    onchange={handleManagerViewToggle}
+                    label="Manager view"
+                    message-toggle-active=""
+                    message-toggle-inactive=""></lightning-input>
+            </div>
+        </div>
+    </lightning-card><br>
+    <lightning-layout class="slds-grid header slds-grid_align-spread">
+        <div class="slds-p-around_medium slds-large-size_3-of-12">
+            <template if:true={managerView}>
+                 <label for="fieldid">Employee Name</label>
+                <c-ems-custom-look-up obj-name="User" 
+                    search-placeholder="Search User"
+                    icon-name="standard:user" onlookupselected={handleUserselection}
+                    onremove={handleUserRemove} 
+                    name="User" filter={managerLookUpFilter}>
+                </c-ems-custom-look-up>
+            </template>
+        </div>
+        <div class="slds-size_1-of-6"></div>
+        <div class="slds-grid alignCenter slds-p-around_medium slds-size_1-of-3">
+            <lightning-input class="slds-p-right_large"
+                data-id="toggle" type="toggle" label="Weekend"
+                onchange={handleWeekendToggle}
+                message-toggle-active=""
+                message-toggle-inactive=""></lightning-input>
+            <lightning-input class="slds-p-right_large"
+                name="EMS_TM_Remarks__c" data-id="remarkToggle" type="toggle"
+                label="Remark" onchange={handleRemarkToggle}
+                message-toggle-active="" message-toggle-inactive="">
+            </lightning-input>
+            <lightning-button label="Copy Previous Week"
+                variant="brand" onclick={copyPreviousWeek}
+                disabled={disableSubmited}></lightning-button>
+        </div>
+        <div class="slds-p-around_medium  slds-large-size_3-of-12">
+            <div class="fullWidth"><label for="fieldid">Week beginning from</label></div>
+            <div class="slds-grid slds-grid_vertical-align-start">
+                <lightning-button-icon icon-name="utility:chevronleft"
+                    data-id='pre' alternative-text="Previous Week"
+                    title="Previous Week" onclick={handleNextPreWeek}
+                    disabled={disablePreButtons}>
+                </lightning-button-icon>
+                <lightning-input type="date" name='EMS_TM_Week__c'
+                    variant="label-hidden" onchange={handleWeek}
+                    value={timeSheetRecord.EMS_TM_Week__c}
+                    data-id="EMS_TM_Week__c" max={thisWeek} required>
+                </lightning-input>
+                <lightning-button-icon icon-name="utility:chevronright"
+                    data-id='next' alternative-text="Next Week"
+                    title="Next Week" onclick={handleNextPreWeek}
+                    disabled={disableNextButtons}></lightning-button-icon>
+            </div>
+        </div>
+    </lightning-layout><br>
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-border_left slds-border_right tableStyle">
+        <thead>
+            <tr class="slds-text-title_caps tabelHeader">
+                <th scope="col">
+                    <div class="slds-truncate"></div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Project"> Project</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="ProjectTask">Task</div>
+                </th>
+                <th if:true={showOtherTask} scope="col">
+                    <div class="slds-truncate" title="ProjectTaskPicklist">Other Task</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="monday">
+                        <lightning-formatted-date-time value={weekDates.EMS_TM_Mon__c}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Tuesday">
+                        <lightning-formatted-date-time value={weekDates.EMS_TM_Tue__c}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Wednesday">
+                        <lightning-formatted-date-time value={weekDates.EMS_TM_Wed__c}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Thursday">
+                        <lightning-formatted-date-time value={weekDates.EMS_TM_Thu__c}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Friday">
+                        <lightning-formatted-date-time value={weekDates.EMS_TM_Fri__c}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                </th>
+                <th if:true={showWeekend} scope="col">
+                    <div class="slds-truncate" title="Saturday">
+                        <lightning-formatted-date-time value={weekDates.EMS_TM_Sat__c}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                </th>
+                <!-- weekday="short" month="numeric" day="numeric" time-zone="UTC"> -->
+                <th if:true={showWeekend} scope="col">
+                    <div class="slds-truncate" title="sunday">
+                        <lightning-formatted-date-time value={weekDates.EMS_TM_Sun__c}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Total Hours">Sub Total</div>
+                </th>
+                <th if:true={showRemarks} scope="col">
+                    <div class="slds-truncate" title="Remarks">Remarks</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template iterator:it={displayItemList}>
+                
+                <tr key={it.value} >
+                    <td style="border:1px rgba(244, 235, 235, 0.927) solid">
+                        <lightning-button-icon icon-name="utility:delete" data-id={it.index}
+                            alternative-text="Delete Row" variant="brand"  class="slds-m-left_xx-small"
+                            title="Delete Row" onclick={removeRow} disabled={disableSubmited}
+                            data-project={it.value.projectValueAvailable}>
+                        </lightning-button-icon>
+                    </td>
+                    <td style="width: 180px;">
+                        <template if:true={it.value.projectValueAvailable}>
+                            <lightning-record-edit-form object-api-name="EMS_Timesheet__c">
+                                <lightning-input-field field-name="EMS_TM_Project__c"
+                                    value={it.value.EMS_TM_Project__c}
+                                    data-id={it.index} onchange={removeRetrievedProject} variant="label-hidden"
+                                    disabled={disableSubmited}>
+                                </lightning-input-field>
+                            </lightning-record-edit-form>
+                        </template>
+                        <template if:false={it.value.projectValueAvailable}>
+                            <c-ems-custom-look-up obj-name="EMS_TM_Project__c"
+                                search-placeholder="Search Projects" aria-required
+                                icon-name="custom:custom55" onlookupselected={handleProjectselection}
+                                onremove={handleProjectRemove} filter={projectLookUpFilter} 
+                                name="EMS_TM_Project__c" selected-name={it.value.projectName}
+                                index-id={it.index} value={it.value.EMS_TM_Project__c}>
+                            </c-ems-custom-look-up>
+                        </template>
+                    </td>
+                    <td>
+                        <lightning-combobox name="EMS_TM_ProjectTask__c"
+                            variant="label-hidden" placeholder="Choose"
+                            data-id={it.index} value={it.value.EMS_TM_ProjectTask__c}
+                            onchange={handleUserInput} required={it.value.projectValueAvailable}
+                            options={it.value.projectTaskOptions}
+                            disabled={disableSubmited}>
+                        </lightning-combobox>
+                    </td>
+                    <td if:true={showOtherTask}>
+                        <div if:true={it.value.otherTask}>
+                            <lightning-input name='EMS_TM_OtherTask__c' data-id={it.index}
+                                onchange={handleUserInput} disabled={disableSubmited}
+                                value={it.value.EMS_TM_OtherTask__c}
+                                variant="label-hidden" required>
+                            </lightning-input>
+                        </div>
+                        <div if:false={it.value.otherTask}></div>
+                    </td>
+                    <td>
+                        <lightning-input name='EMS_TM_Mon__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Mon__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disableSubmited}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name='EMS_TM_Tue__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Tue__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disableSubmited}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name='EMS_TM_Wed__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Wed__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disableSubmited}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name='EMS_TM_Thu__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Thu__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disableSubmited}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name='EMS_TM_Fri__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Fri__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disableSubmited}>
+                        </lightning-input>
+                    </td>
+                    <td if:true={showWeekend}>
+                        <lightning-input name='EMS_TM_Sat__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Sat__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden"
+                            disabled={disableSubmited}>
+                        </lightning-input>
+                    </td>
+                    <td if:true={showWeekend}>
+                        <lightning-input name='EMS_TM_Sun__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Sun__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden"
+                            disabled={disableSubmited}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name='Total_Hours__c' variant="label-hidden"
+                            value={it.value.Total_Hours__c} readonly>
+                        </lightning-input>
+                    </td>
+                    <td if:true={showRemarks}>
+                        <lightning-input name='EMS_TM_Remarks__c'
+                            value={it.value.EMS_TM_Remarks__c} data-id={it.index} required={it.value.remarkRequired}
+                            onchange={handleUserInput} variant="label-hidden" disabled={disableSubmited}>
+                        </lightning-input>
+                    </td>
+                </tr>
+            
+            </template>
+        
+        </tbody>
+        <tfoot>
+            <tr class="tableFooter">
+                <td></td>
+                <td></td>
+                <td class="slds-text-title_caps">Sub total</td>
+                <td if:true={showOtherTask}></td>
+                <td>
+                    <p>{totalDayHours.EMS_TM_Mon__c}</p>
+                    <p if:true={totalDayHours.errorEMS_TM_Mon__c}
+                        class="slds-has-error maxValueError">Value must be between 0-24 Only</p>
+                </td>
+                <td>
+                    <p>{totalDayHours.EMS_TM_Tue__c}</p>
+                    <p if:true={totalDayHours.errorEMS_TM_Tue__c} class="slds-has-error maxValueError">Value must be
+                        between 0-24 Only</p>
+                </td>
+                <td>
+                    <p>{totalDayHours.EMS_TM_Wed__c}</p>
+                    <p if:true={totalDayHours.errorEMS_TM_Wed__c} class="slds-has-error maxValueError">Value must be
+                        between 0-24 Only</p>
+                </td>
+                <td>
+                    <p>{totalDayHours.EMS_TM_Thu__c}</p>
+                    <p if:true={totalDayHours.errorEMS_TM_Thu__c} class="slds-has-error maxValueError">Value must be
+                        between 0-24 Only</p>
+                </td>
+                <td>
+                    <p>{totalDayHours.EMS_TM_Fri__c}</p>
+                    <p if:true={totalDayHours.errorEMS_TM_Fri__c} class="slds-has-error maxValueError">Value must be
+                        between 0-24 Only</p>
+                </td>
+                <td if:true={showWeekend}>
+                    <p>{totalDayHours.EMS_TM_Sat__c}</p>
+                    <p if:true={totalDayHours.errorEMS_TM_Sat__c} class="slds-has-error maxValueError">Value must be
+                        between 0-24 Only</p>
+                </td>
+                <td if:true={showWeekend}>
+                   <p>{totalDayHours.EMS_TM_Sun__c}</p>
+                   <p if:true={totalDayHours.errorEMS_TM_Sun__c} class="slds-has-error maxValueError">Value must be
+                       between 0-24 Only</p>
+                </td>
+                <td>
+                    <p>{totalHours.value}</p>
+                    <p if:true={totalHours.error}
+                        class="slds-has-error maxValueError">Value exceeding more than 168</p>
+                </td>
+                <td if:true={showRemarks}></td>
+            </tr>
+        </tfoot>
+    </table><br>
+    <lightning-layout class="fullWidth slds-grid slds-grid_align-spread">
+        <lightning-layout-item>
+            <lightning-button icon-name="action:new" label="New" variant="Neutral" name="Name"
+                alternative-text="Add Row" onclick={addRow} class="slds-p-right_large" disabled={disableSubmited}>
+            </lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-grid slds-p-left_large">
+            <!-- <lightning-button label="Clear" variant="destructive" type="Clear" name="Clear"
+                onclick={handleClear} class="slds-p-right_large" disabled={disableSubmited}>
+            </lightning-button> -->
+            <lightning-button if:true={managerView} label="Revise" variant="brand" name="Revise"
+            icon-name="utility:save" class="slds-p-right_large" onclick={handleRevise} disabled={disableRevise}></lightning-button>
+            <lightning-button label="Save" variant="brand" name="Saved" disabled={disableSubmited}
+                icon-name="utility:save" class="slds-p-right_large" onclick={handleValidation}></lightning-button>
+            <lightning-button label="Submit" variant="brand" name="Submitted" icon-name="utility:fallback"
+                onclick={confirmPopUp} disabled={disableSubmited}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

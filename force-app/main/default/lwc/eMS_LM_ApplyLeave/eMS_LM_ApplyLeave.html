@@ -1,0 +1,99 @@
+<!-- This component is used to apply the Leave For current Logged in Employee  -->
+
+
+<template>
+  <div class="slds-box slds-theme_shade">
+    <div class="slds-modal slds-fade-in-open slds-backdrop">
+      <div class="slds-modal__container">
+        <div class="slds-modal__header">
+          <lightning-button-icon icon-name="utility:close" alternative-text="Close" size="large" variant="bare-inverse"
+            onclick={closeme} class="slds-modal__close">
+          </lightning-button-icon>
+          <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Apply Leave</h1>
+          <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+            <lightning-layout multiple-rows>
+              <lightning-layout-item padding="around-small" size="12">
+                <div>
+                  <lightning-combobox name="leavetype" label="Leave Type" value={leaveType} placeholder="Select Leave Type"
+                    options={lOptions} onchange={handleChange} required></lightning-combobox>
+                </div>
+              </lightning-layout-item>
+              <lightning-layout-item padding="around-small" size="3">
+                <div>
+                  <lightning-input type="Date" label="Start Date" name="startDate1" value={startDate1}
+                    onchange={datechange}></lightning-input>
+                </div>
+              </lightning-layout-item>
+              <lightning-layout-item padding="around-small" size="3">
+                <div>
+                  <lightning-input type="Date" label="End Date" name="endDate1" value={endDate1}
+                    onchange={datechange}></lightning-input>
+                </div>
+              </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                  <div>
+                    <lightning-combobox name='selectday' label='Select Day' placeholder='Full Day'
+                      options={dOptions} onchange={dayChange}></lightning-combobox>
+                  </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                  <div>
+                    <lightning-input type="number" label="Leave Duration" value={duration} disabled></lightning-input>
+                  </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                  <div>
+                    <lightning-input type="number" label="No Of Available Leaves" value={availabledays} disabled></lightning-input>
+                  </div>
+                </lightning-layout-item>
+              <lightning-layout-item padding="around-small" size="12">
+                <div>
+                  <lightning-input type="text" label="Reason" value={reason} onchange={reasonChange} required></lightning-input>            
+                </div>
+              </lightning-layout-item>
+              <lightning-layout-item padding="around-small" size="12">
+              <template if:true={fileuploadRequired}>
+                 
+                <div class="slds-var-m-around_medium">
+                  <lightning-input type="file" required 
+                  accept=".png, .doc, .docx, .pdf , .jpg, .jpeg"
+                  label="Upload Proof" onchange={openfileUpload}></lightning-input>
+              </div>
+              <template if:true={fileData}>
+                  <p>{fileData.filename}</p>
+              </template>
+                <!--<div>
+                  <lightning-file-upload label="Upload Proof " name="fileUploader" accept={acceptedFormats}
+                    record-id={rId} onuploadfinished={handleUploadFinished} multiple>
+                  </lightning-file-upload>
+                </div>
+                <template if:true={file}>
+                  <br/>               
+                  <p>{fileName}</p>
+              </template>-->
+              
+              </template>
+              </lightning-layout-item>
+             
+              <lightning-layout-item padding="around-small" size="6">
+                
+                
+                  <div>
+                    <lightning-button variant="brand" label="Submit" title="Primary action" onclick={submitme} disabled={submitcheck}
+                      class="slds-var-m-left_x-small"></lightning-button>
+                  </div>
+                
+              </lightning-layout-item>
+              <lightning-layout-item padding="around-small" size="6">
+                <div>
+                  <lightning-button variant="destructive" label="Cancel" title="Destructive action" onclick={closeme}
+                    class="slds-var-m-left_x-small"></lightning-button>
+                </div>
+              </lightning-layout-item>
+            </lightning-layout>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

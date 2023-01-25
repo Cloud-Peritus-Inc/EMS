@@ -1,0 +1,55 @@
+<template>
+	<div class="textBody">
+		<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+			aria-label="Example table of Opportunities with striped rows">
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th class="" scope="col">
+						<div class="slds-truncate">Start Date</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate">End Date</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate">Status</div>
+					</th>
+					<template if:true={isActions}>
+						<th class="" scope="col">
+							<div class="slds-truncate">Actions </div>
+						</th>
+					</template>
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={PendingLeaveReq} for:item="Req">
+					<tr key={Req.Id}>
+						<th scope="col">
+							<div class="slds-truncate dv-dynamic-width">
+								{Req.EMS_LM_Leave_Start_Date__c}
+							</div>
+						</th>
+						<th scope="col">
+							<div class="slds-truncate dv-dynamic-width">
+								{Req.EMS_LM_Leave_End_Date__c}
+							</div>
+						</th>
+						<th scope="col">
+							<div class="slds-truncate dv-dynamic-width">{Req.EMS_LM_Status__c}</div>
+						</th>
+						<template if:true={isActions}>
+							<th>
+								<lightning-button variant="brand" label="View" onclick={handleView} data-id={Req.Id}>
+								</lightning-button> &nbsp;
+								<lightning-button variant="Success" label="Edit" onclick={handleEdit} data-id={Req.Id} disabled={Req.disableButton}>
+								</lightning-button>&nbsp;
+								<lightning-button variant="destructive" label="Cancel" onclick={handleCancel} data-id={Req.Id}
+									disabled={Req.disableButton}>
+								</lightning-button>
+							</th>
+						</template>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+	</div>
+</template>
