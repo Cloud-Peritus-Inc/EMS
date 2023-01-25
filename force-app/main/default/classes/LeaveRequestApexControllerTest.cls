@@ -26,23 +26,6 @@ public class LeaveRequestApexControllerTest {
             testConList.add(testConData);
         }
         insert testConList;
-        //Users Data
-       /* Profile communityProfile = [SELECT id FROM profile WHERE name='TM Customer Community'];
-        UserRole userRole = [SELECT Id FROM UserRole WHERE Name = 'Leadership' LIMIT 1];
-        User newUser = new User(Alias = 'PT0', 
-                                Email='pavanuser@testmethod.com', 
-                                EmailEncodingKey='UTF-8',
-                                LastName='Testing',
-                                FirstName = 'User2', 
-                                LanguageLocaleKey='en_US', 
-                                LocaleSidKey='en_US', 
-                                ProfileId = communityProfile.Id, 
-                                TimeZoneSidKey='America/Los_Angeles', 
-                                UserName='standarduser@testuser.com', 
-                                IsActive = true ,
-                                UserRoleId = userRole.Id,
-                                ContactId= testConList[1].Id );
-        insert newUser;*/
         //Leave Request Data
         List<EMS_LM_Leave_History__c> testLeaveRequestPendingList = new List<EMS_LM_Leave_History__c>();
         List<EMS_LM_Leave_History__c> testLeaveRequestApprover2List = new List<EMS_LM_Leave_History__c>();

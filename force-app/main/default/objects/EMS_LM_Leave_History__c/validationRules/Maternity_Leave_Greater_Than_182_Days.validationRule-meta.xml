@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Maternity_Leave_Greater_Than_182_Days</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL( EMS_LM_Leave_Type_Name__c, &apos;Maternity Leave&apos;),
+EMS_LM_Leave_Duration__c &gt;(182))</errorConditionFormula>
+    <errorMessage>&quot;Maternity leave is applicable for 6 months only, incase if you want more leaves, consider applying annual leave for additional days&quot;</errorMessage>
+</ValidationRule>

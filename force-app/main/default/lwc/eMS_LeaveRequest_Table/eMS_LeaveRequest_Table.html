@@ -29,7 +29,7 @@
 						<div class="slds-truncate" title="No of Date">No of Days</div>
 					</th>
 					<th class="" scope="col">
-						<div class="slds-truncate" title="Actions"> Actions</div>
+						<div class="slds-truncate" title="Actions" if:false={isViewAll}> Actions</div>
 					</th>
 				</tr>
 			</thead>
@@ -49,12 +49,15 @@
 						</td>
 						<td>{leave.EMS_LM_Leave_Duration__c}</td>
 						<td>
+							<template if:false={isViewAll}>
 							<lightning-icon icon-name='action:approval' alternative-text='approval' size='x-small'
 								title='approval' data-key={leave.Id} onclick={showModalApprovalBox}></lightning-icon>
 							&nbsp;
 							<lightning-icon icon-name='action:close' alternative-text='close' size='x-small'
 								title='close' data-key={leave.Id} onclick={showModalRejectBox}>
 							</lightning-icon>
+							</template>
+
 						</td>
 
 						<!-- APPROVE POP-UP-->
