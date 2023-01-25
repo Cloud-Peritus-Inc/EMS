@@ -6,4 +6,5 @@ public class LeaveRequestConstant {
     public static final String PENDING = 'Pending';
     public static final String CANCELLED = 'Cancelled';
     public static final String REJECTED = 'Rejected';
+    public static final String WORK_FROM_HOME= 'Work from Home';
 }

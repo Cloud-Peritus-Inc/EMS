@@ -1,4 +1,5 @@
 
 package.xml
-.sfdx
+.sfdx/**
 .DS_Store
+.sf/**
