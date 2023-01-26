@@ -1,6 +1,7 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy to EMS-Qa Org
+name: Deployment Job
+run-name: Deployment for ${{ github.event.inputs.choice }}
 
 # Controls when the workflow will run
 on:
@@ -10,6 +11,13 @@ on:
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: Select Org
+        options:
+        - EMS-Dev
+        - EMS-Qa
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,4 +33,4 @@ jobs:
       # Runs a single command using the runners shell
         
       - name: Deploys to EMS Qa Org
-        run: sfdx force:source:deploy -p . -u EMS-Qa
+        run: sfdx force:source:deploy -p . -u ${{ github.event.inputs.choice }}
