@@ -1,7 +1,7 @@
 # This is a basic workflow to help you get started with Actions
 
 name: Validation Job 
-run-name: ${{ github.event.inputs.choice }} ${{ inputs.deploy_target }}
+run-name: Validation For ${{ github.event.inputs.choice }}
 
 # Controls when the workflow will run
 on:
