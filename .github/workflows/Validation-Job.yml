@@ -13,7 +13,6 @@ on:
   workflow_dispatch:
     
     inputs:
-      
       choice:
         type: choice
         description: Select A Org to Validate
