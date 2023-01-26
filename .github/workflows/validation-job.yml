@@ -30,4 +30,5 @@ jobs:
         
       - name: Validate Code to EMS QA Org
         run: sfdx force:source:deploy -c -p . -u ${{ github.event.inputs.choice }}
+run-name: ${{ inputs.deploy_target }}
         
