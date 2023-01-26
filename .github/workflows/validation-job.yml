@@ -12,8 +12,7 @@ on:
         options:
         - EMS-Dev
         - EMS-Qa
-      run-name: ${{ inputs.deploy_target }}
-    
+     
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   Validate:
@@ -30,4 +29,6 @@ jobs:
         
       - name: Validate Code to EMS QA Org
         run: sfdx force:source:deploy -c -p . -u ${{ github.event.inputs.choice }}
+        
+run-name: ${{ inputs.deploy_target }}
         
