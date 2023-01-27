@@ -1,0 +1,36 @@
+/*.homeCard{
+    background-color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	//box-shadow: 0px 6px rgb(229 229 229);
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: "SalesforceSans-Regular";
+}*/
+.homeCard {
+    background-color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 20px; /* increased from 10px */
+    margin-bottom: 30px; /* increased from 20px */
+    font-family: "SalesforceSans-Regular";
+}
+
+.text-helpicon-container {
+  display: flex;
+  align-items: center;
+}
+.total-leave-balance {
+  margin-left: 8px;
+}
+.help-icon {
+  margin-left: 8px;
+}
+.firstBox{
+    border-bottom: 2px solid rgb(229 229 229);
+    overflow: auto;
+    height: 200px;
+}
+.secondBox{
+    text-align: center;
+    cursor: pointer;
+    color:DodgerBlue;   
+}

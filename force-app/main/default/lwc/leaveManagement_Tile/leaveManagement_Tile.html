@@ -1,0 +1,22 @@
+<template>
+	<div class="homeCard slds-m-around_xxx-small">
+		<lightning-card variant="Narrow">
+			<div class="text-helpicon-container ">
+				<lightning-icon icon-name='action:defer' alternative-text='defer' size='large' title='defer'>
+				</lightning-icon>
+				<div class="total-leave-balance slds-text-title_bold">Total Leave Balance</div>
+				<lightning-helptext content={contextText} class="help-icon">
+				</lightning-helptext>
+			</div>
+			<div class="slds-p-around_x-small firstBox">
+				<c-e-m-s-_-l-m-_-leave-history>
+				</c-e-m-s-_-l-m-_-leave-history>
+			</div>
+			<div class="slds-p-around_xx-small secondBox">
+				<div class="slds-text-title_bold  slds-p-around_x-small" onclick={handleLMNavigation}>
+					Apply New / View
+				</div>
+			</div>
+		</lightning-card>
+	</div>
+</template>
