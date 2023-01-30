@@ -9,6 +9,7 @@ import getAssignmentProjectWire from '@salesforce/apex/EMS_TM_TimesheetClass.get
 import getTimeSheetData from '@salesforce/apex/EMS_TM_TimesheetClass.getTimeSheetData';
 import getPreWeekData from '@salesforce/apex/EMS_TM_TimesheetClass.getPreWeekData';
 import reviseTimesheet from '@salesforce/apex/EMS_TM_TimesheetClass.reviseTimesheet';
+import savecomppRec from '@salesforce/apex/createCompoffThroughTimesheet.createCompOff';
 import { getRecord } from 'lightning/uiRecordApi';
 import user_Id from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
@@ -833,6 +834,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         Parameters  : null 
     */
     confirmPopUp() {
+         console.log('+++++ IN confirmPopUp++++++');
         if (this.weekendEnteredValue > 0) {
             this.weekendEntered = true;
         } else {
@@ -852,7 +854,18 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             this.showModalPopUp = true;
         }
     }
-
+submitpopup(){
+    console.log('IN submitpopup++++++');
+   // this.showModalPopUp = false;
+    this.showCompOffPopUp=false;
+    this.weekendEntered = false
+   //  this.showModalPopUp = false;
+    this.confirmModal.message = 'Please note that the timesheet once submitted cannot be edited';
+            this.confirmModal.confirmLabel = 'OK';
+            this.confirmModal.cancelLabel = 'Cancel';
+            this.confirmModal.title = 'Confirm Submission';
+            this.showModalPopUp = true;
+}
     /*
         function    : handleResponce
         Description : Handles response from confirm popup when clicked on Submit button
@@ -874,16 +887,31 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         Parameters  : event 
     */
     handleCompoffResponce(event) {
-        this.showModalPopUp = false;
+       // this.showModalPopUp = false;
         if (event.detail.status === 'cancel') {
+              // this.confirmPopUp();
+               this.submitpopup();
             console.log('handleCompoffResponce No');
         } else if (event.detail.status === 'confirm') {
             console.log('handleCompoffResponce Yes');
-            // write code here for compoff request
+
+            savecomppRec({userId:user_Id,compoffhours:this.weekendEnteredValue})
+        .then(result => {
+            window.console.log('result ===> '+result);
+            // Show success messsage
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'Success!!',
+                message: 'Compoff Record Created Successfully!!',
+                variant: 'success'
+            }),);
+        })
+        .catch(error => {
+            this.error = error.message;
+        });
+            
+            this.submitpopup();
         }
-        this.weekendEntered = false;
-        this.showCompOffPopUp = false;
-        this.confirmPopUp();
+    
     }
 
     checkValidation() {
