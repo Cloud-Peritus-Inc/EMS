@@ -279,7 +279,11 @@ public class EMS_TM_TimesheetClass {
             returnStatement = JSON.serialize(timesheetSaveResult);
         } else if (!isError) {
             for(EMS_TM_Timesheet_Record__c record : timeRecords) {
+                record.Status__c ='Saved';
+                System.debug('recordstatus'+record);
                 EMS_TM_Timesheet_Record__c row = renderTimeRecord( record, timesheet, createdId );
+                System.debug('recordstatus'+row);
+               // row.Status__c ='Saved';
                 objRecordsList.add(row);
             }
 
@@ -337,6 +341,7 @@ public class EMS_TM_TimesheetClass {
         timeRecordRow.User__c                             = timesheet.User__c;
         timeRecordRow.EMS_TM_Remarks__c                   = timerecord.EMS_TM_Remarks__c;
         timeRecordRow.EMS_Timesheet__c                    = timesheetId;
+        timeRecordRow.Status__c                           = timerecord.Status__c;
 
         return timeRecordRow;
     }
@@ -389,6 +394,7 @@ public class EMS_TM_TimesheetClass {
             if (!newRecords.isEmpty()) {
                 List<EMS_TM_Timesheet_Record__c> recordstoInsert = new List<EMS_TM_Timesheet_Record__c>();
                 for(EMS_TM_Timesheet_Record__c record : newRecords) {
+                    record.Status__c ='Saved';
                     EMS_TM_Timesheet_Record__c row = renderTimeRecord(record, timeSheetRecord, timesheetId);
                     recordstoInsert.add(row);
                 }
