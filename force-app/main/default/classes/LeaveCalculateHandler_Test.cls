@@ -140,12 +140,45 @@ public class LeaveCalculateHandler_Test {
             leavehistory.EMS_LM_Contact__c=c.Id;
             leavehistory.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
             leavehistory.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
-            
-        Test.startTest();
+            leavehistory.EMS_LM_Leave_Type_Name__c='Annual Leave';
+            leavehistory.EMS_LM_Status__c='Pending';
             insert leavehistory;
             leaveList.add(leavehistory);
-            LeaveCalculateHandler.leaveCalculateMethod(leaveList);
             
+             EMS_LM_Leave_History__c leavehistory1 =new EMS_LM_Leave_History__c();
+            leavehistory1.EMS_LM_Contact__c=c.Id;
+            leavehistory1.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
+            leavehistory1.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
+            leavehistory1.EMS_LM_Leave_Type_Name__c='Annual Leave';
+            leavehistory1.EMS_LM_Status__c='Approved';
+            insert leavehistory1;
+            leaveList.add(leavehistory1);
+            
+            EMS_LM_Leave_History__c leavehistory2 =new EMS_LM_Leave_History__c();
+            leavehistory2.EMS_LM_Contact__c=c.Id;
+            leavehistory2.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
+            leavehistory2.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
+            leavehistory2.EMS_LM_Leave_Type_Name__c='Annual Leave';
+            leavehistory2.EMS_LM_Status__c='Waiting For Approver 2';
+            insert leavehistory2;
+            leaveList.add(leavehistory2);
+            
+            EMS_LM_Leave_History__c leavehistory3 =new EMS_LM_Leave_History__c();
+            leavehistory3.EMS_LM_Contact__c=c.Id;
+            leavehistory3.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
+            leavehistory3.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
+            leavehistory3.EMS_LM_Leave_Type_Name__c='Compensatory Off';
+            leavehistory3.EMS_LM_Status__c='Approved';
+            insert leavehistory3;
+            leaveList.add(leavehistory3);
+            
+        Test.startTest();
+           
+            LeaveCalculateHandler newlist =New LeaveCalculateHandler();
+            newlist.leaveCalculateMethod(leaveList);
+            
+            Cp_CalculateLeaveDuration calcuList=New Cp_CalculateLeaveDuration();
+            calcuList.leavedurationmethod(leaveList);
         Test.stopTest();  
     }
 }

@@ -20,9 +20,4 @@ trigger CP_LeaveRequestTrigger on EMS_LM_Leave_History__c ( before insert,
   after undelete
 ) {
   new MetadataTriggerHandler().run();
-    
-    if( Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate))
-    {
-    LeaveCalculateHandler.leaveCalculateMethod(Trigger.New); 
-    }
 }
