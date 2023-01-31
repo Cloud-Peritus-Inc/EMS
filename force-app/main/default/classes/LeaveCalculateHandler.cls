@@ -12,9 +12,19 @@
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-public class LeaveCalculateHandler {
+public without sharing class LeaveCalculateHandler implements TriggerAction.AfterInsert,TriggerAction.AfterUpdate{
     
-    public static void leaveCalculateMethod(list<EMS_LM_Leave_History__c> newList){
+    public void afterInsert(List<EMS_LM_Leave_History__c> newList) {      
+        leaveCalculateMethod(newList);     
+    }
+    
+    public void afterUpdate(List<EMS_LM_Leave_History__c> newList,List<EMS_LM_Leave_History__c> oldList) {      
+        leaveCalculateMethod(newList);
+    }
+    
+    
+    @TestVisible
+   private void leaveCalculateMethod(list<EMS_LM_Leave_History__c> newList){
        set<id> setId=New set<id>();
         for(EMS_LM_Leave_History__c leaveall:newList){
             setId.add(leaveall.EMS_LM_Contact__c);
@@ -39,6 +49,7 @@ public class LeaveCalculateHandler {
         List<Contact> conlist = new List<Contact> ();
         Decimal Utilized_Leaves=0;
         Decimal utilizedcompoffLeave = 0;
+        Decimal utilizedMaternityLeave = 0;
         for(EMS_LM_Leave_History__c l2 : l1){
                   if(l2.EMS_LM_Leave_Type_Name__c == 'Annual Leave' && l2.EMS_LM_Leave_Duration__c !=Null  && (l2.EMS_LM_Status__c=='Pending' || 
               																					l2.EMS_LM_Status__c=='Approved' || 
@@ -54,11 +65,19 @@ public class LeaveCalculateHandler {
                 {
                       utilizedcompoffLeave = utilizedcompoffLeave + l2.EMS_LM_Leave_Duration__c;
                   }
+            	if(l2.EMS_LM_Leave_Type_Name__c == 'Maternity Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c=='Pending' || 
+                                                                        l2.EMS_LM_Status__c=='Approved' || 
+                                                                        l2.EMS_LM_Status__c=='Waiting For Approver 2'||
+                                                                       l2.EMS_LM_Status__c=='Waiting For Approver 3'))
+                {
+                      utilizedMaternityLeave = utilizedMaternityLeave + l2.EMS_LM_Leave_Duration__c;
+                  }
               } 
         
         for(Contact con:Resourceleave){     
             con.EMS_LM_No_Of_Utilized_Leaves__c=Utilized_Leaves;
             con.EMS_LM_No_OF_Utilized_Compensatory_Off__c=utilizedcompoffLeave;
+            con.EMS_LM_No_Of_Utilized_Maternity_Leaves__c=utilizedMaternityLeave;
             conlist.add(con);
         }
         
