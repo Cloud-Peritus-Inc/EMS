@@ -10,6 +10,7 @@ import getTimeSheetData from '@salesforce/apex/EMS_TM_TimesheetClass.getTimeShee
 import getPreWeekData from '@salesforce/apex/EMS_TM_TimesheetClass.getPreWeekData';
 import reviseTimesheet from '@salesforce/apex/EMS_TM_TimesheetClass.reviseTimesheet';
 import savecomppRec from '@salesforce/apex/createCompoffThroughTimesheet.createCompOff';
+import checkcomppRec from '@salesforce/apex/createCompoffThroughTimesheet.checkCompOff';
 import { getRecord } from 'lightning/uiRecordApi';
 import user_Id from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
@@ -56,8 +57,11 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     weekendEnteredValue = 0;
     hideSpinner = false;
     leaveRecords;
+    @track compoffCheck = false;
 
     @track showModalPopUp = false;
+
+    @track compoffAlredyexist = false;
 
     @wire(getRecord,({ recordId: '$userId', fields: [NAME_FIELD]}))
     getData({data, error}) {
@@ -348,7 +352,6 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 }),
             );
         } else {
-            this.disableSubmited = false;
             if (event.target.value) {
                 let enteredDate = new Date(event.target.value);
                 if (enteredDate <= new Date()) {
@@ -364,11 +367,13 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 selectedWeek = 'empty';
             }
             if (selectedWeek === 'empty') {
+                this.disableSubmited = false;
                 this.disablePreButtons = true;
                 this.disableNextButtons = true;
                 this.timeSheetRecord.EMS_TM_Week__c = null;
                 this.timeSheetRecord.Week__c = '';
             } else if (selectedWeek === 'selected') {
+                this.disableSubmited = false;
                 this.disablePreButtons = false;
                 this.disableNextButtons = false;
                 this.insertSheetRecord(firstDay, lastDay);
@@ -387,6 +392,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     handleNextPreWeek(event) {
         let value = event.target.dataset.id;
         let presentWeek = new Date(this.timeSheetRecord.EMS_TM_Week__c);
+        console.log('presentWeek'+presentWeek);
         let lastDay;
         let week;
         if (this.managerView && !this.userSelected) {
@@ -411,6 +417,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             this.retrieveAssignmentRecords();
             this.deletedRecordsList = [];
         }
+        console.log('week'+this.week);
     }
 
     /*
@@ -840,7 +847,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         } else {
             this.weekendEntered = false;
         }
-        if (this.weekendEntered) {
+        if (this.weekendEntered && this.compoffAlredyexist == false) {
             this.showCompOffPopUp = true;
             this.confirmModal.message = 'Are you sure you want to add data in weekend';
             this.confirmModal.confirmLabel = 'Yes';
@@ -878,11 +885,14 @@ submitpopup(){
         } else if (event.detail.status === 'confirm') {
             event.target.name = 'Submitted';
             this.handleValidation(event);
+             if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
+                 this.handlesaveCompOffRecord();
+             }
         }
     }
 
     /*
-        function    : handleResponce
+        function    : handleCompoffResponce
         Description : Handles response from confirm popup when clicked on Submit button
         Parameters  : event 
     */
@@ -890,14 +900,66 @@ submitpopup(){
        // this.showModalPopUp = false;
         if (event.detail.status === 'cancel') {
               // this.confirmPopUp();
+              this.compoffCheck = false;
                this.submitpopup();
             console.log('handleCompoffResponce No');
         } else if (event.detail.status === 'confirm') {
+            this.compoffCheck = true;
             console.log('handleCompoffResponce Yes');
-
-            savecomppRec({userId:user_Id,compoffhours:this.weekendEnteredValue})
+            this.submitpopup();
+        }
+    
+    }
+    connectedCallback() {
+        var comoff = null;
+              checkcomppRec({userId:user_Id,compOffweek :this.comoff})
         .then(result => {
-            window.console.log('result ===> '+result);
+            window.console.log('handlecheckCompOffRec ===> '+JSON.stringify(result));
+            if(result == true){
+                this.compoffAlredyexist = true;
+               /*this.dispatchEvent(new ShowToastEvent({
+                                        title:'you have alredy Compoff Record',
+                                        message:'you have alredy Compoff Record in this week',
+                                        variant: 'success',
+                                    }),
+                                );*/
+            }else{
+                 this.compoffAlredyexist = false;
+            } 
+        })
+        .catch(error => {
+            console.log('handlecheckCompOffRecError'+JSON.stringify(error));
+        });
+    }
+
+    handlecheckCompOffRec(){      
+         console.log('handlecheckCompOffRecDate'+this.thisWeek +'userId'+user_Id);
+            checkcomppRec({userId:user_Id,compOffweek :this.thisWeek})
+        .then(result => {
+            window.console.log('handlecheckCompOffRec ===> '+JSON.stringify(result));
+            if(result == true){
+                this.compoffAlredyexist = true;
+               this.dispatchEvent(new ShowToastEvent({
+                                        title:'you have alredy Compoff Record',
+                                        message:'you have alredy Compoff Record in this week',
+                                        variant: 'success',
+                                    }),
+                                );
+            }else{
+                 this.compoffAlredyexist = false;
+            }
+        })
+        .catch(error => {
+            console.log('handlecheckCompOffRecError'+JSON.stringify(error));
+        });
+    }
+
+    handlesaveCompOffRecord(){
+           console.log('data'+this.thisWeek);
+            savecomppRec({userId:user_Id,compoffhours:this.weekendEnteredValue,compOffweek :this.thisWeek})
+        .then(result => {
+            window.console.log('compOffRecordresult ===> '+JSON.stringify(result));
+           
             // Show success messsage
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Success!!',
@@ -906,19 +968,22 @@ submitpopup(){
             }),);
         })
         .catch(error => {
+            console.log('compOffError'+JSON.stringify(error));
+            this.dispatchEvent(new ShowToastEvent({
+                                        title: error.body.message,
+                                        message:error.body.message,
+                                        variant: 'error',
+                                    }),
+                                );
             this.error = error.message;
         });
-            
-            this.submitpopup();
-        }
-    
     }
 
     checkValidation() {
         for( let key in this.totalDayHours ) {
             if (key.length === 13 && (key != 'EMS_TM_Sat__c' && key != 'EMS_TM_Sun__c')) {
                 let error = 'error'+key;
-                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 0 ) {
+                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 8 ) {
                     this.isValid = false;
                     this.totalDayHours[error] = true;
                 } else {
@@ -996,9 +1061,10 @@ submitpopup(){
                             }),
                         );
                     } else {
+                         //this.records.Status__c ='Saved';
                         saveTimeSheetRecords({timeRecords: this.records, timesheet : this.timeSheetRecord})
                         .then(result => {
-                            console.log('result ',result);
+                            console.log('saveTimeSheetRecordsresult ',result);
                             if (result.includes('Success')) {
                                 this.recordId = result.slice(7);
                                 if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {
@@ -1036,13 +1102,14 @@ submitpopup(){
                 let newRecords = [];
                 this.records.forEach( record => {
                     if (record.Id) {
+                        record.Status__c ='Submitted';
                         updateRecords.push(record);
                     } else {
                         newRecords.push(record);
                     }
                 })
                 updateTimeSheetRecords( {updateRecords: updateRecords, newRecords: newRecords, deleteRecords: this.deletedRecordsList, timesheet : this.timeSheetRecord} ).then(result => {
-                    console.log('result ',result);
+                    console.log('updateTimeSheetRecordsresult ',result);
                     if (result.includes('Success')) {
                         this.recordId = result.slice(7);
                         if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {

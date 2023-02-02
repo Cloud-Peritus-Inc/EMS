@@ -5,7 +5,7 @@ public class LeaveCalculateHandler_Test {
     public static void leaveCalculatemethod(){
          UserRole r =[Select Id from UserRole where Name = 'leadership'];
         Id sysAdminId = [select Id From Profile where Name ='System Administrator'].Id;
-        Id communityId = [select Id From Profile where Name ='TM Customer Community'].Id;
+       // Id communityId = [select Id From Profile where Name ='TM Customer Community'].Id;
         User u = [select Id, contactId, Email From User WHERE IsActive =True and ProfileId = :sysAdminId limit 1];
         system.debug(u);        
         System.runAs(u){
@@ -76,7 +76,7 @@ public class LeaveCalculateHandler_Test {
         c.EMS_EM_JD__c = system.today();
         c.EMS_LM_No_of_Bereavement_Leaves_Credit__c = c.EMS_LM_No_Of_Compensatory_Off_Credit__c = c.EMS_LM_No_Of_Leaves_Credit__c = c.EMS_LM_No_Of_Maternity_Leaves_Credit__c=c.EMS_LM_No_Of_Paternity_Leaves_Credit__c = c.EMS_LM_No_Of_Utilized_Bereavement_Leaves__c = c.EMS_LM_No_OF_Utilized_Compensatory_Off__c = c.EMS_LM_No_Of_Utilized_Leaves__c = c.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c = c.EMS_LM_No_Of_Utilized_Maternity_Leaves__c = c.No_Of_Utilized_Paternity_Leaves__c = 0;
         insert c;
-        user us1 =new user();
+      /*  user us1 =new user();
         us1.FirstName='nbk';
         us1.LastName='jj';
         us1.Email='nbkjj121@gmail.com';
@@ -90,7 +90,7 @@ public class LeaveCalculateHandler_Test {
         us1.ContactId = c.Id;
         insert us1;
         c.EMS_TM_User__c = us1.Id;
-        update c;
+        update c;*/
         EMS_TM_Calendar__c ec = new EMS_TM_Calendar__c();
         Date d = system.today() + 6;
 		ec.EMS_TM_Calendar_Date__c = d;
@@ -103,31 +103,38 @@ public class LeaveCalculateHandler_Test {
         lc1.EMS_LM_Leave_Credited_Date__c = system.today();
         lc1.EMS_LM_Leaves_Credited__c = 5;
         lc1.EMS_LM_Select_Leave_Type__c = 'Paternity Leave';
-        insert lc1;
+       
         EMS_LM_Leave_Credit__c lc2 = new EMS_LM_Leave_Credit__c();
         lc2.EMS_LM_Employee__c = c.Id;
         lc2.EMS_LM_Leave_Credited_Date__c = system.today();
         lc2.EMS_LM_Leaves_Credited__c = 5;
         lc2.EMS_LM_Select_Leave_Type__c = 'Annual Leave';
-        insert lc2;
+        
         EMS_LM_Leave_Credit__c lc3 = new EMS_LM_Leave_Credit__c();
         lc3.EMS_LM_Employee__c = c.Id;
         lc3.EMS_LM_Leave_Credited_Date__c = system.today();
         lc3.EMS_LM_Leaves_Credited__c = 5;
         lc3.EMS_LM_Select_Leave_Type__c = 'Bereavement Leave';
-        insert lc3;
+        
         EMS_LM_Leave_Credit__c lc4 = new EMS_LM_Leave_Credit__c();
         lc4.EMS_LM_Employee__c = c.Id;
         lc4.EMS_LM_Leave_Credited_Date__c = system.today();
         lc4.EMS_LM_Leaves_Credited__c = 0;
         lc4.EMS_LM_Select_Leave_Type__c = 'Loss of Pay';
-        insert lc4;
+        
         EMS_LM_Leave_Credit__c lc5 = new EMS_LM_Leave_Credit__c();
         lc5.EMS_LM_Employee__c = c.Id;
         lc5.EMS_LM_Leave_Credited_Date__c = system.today();
         lc5.EMS_LM_Leaves_Credited__c = 5;
         lc5.EMS_LM_Select_Leave_Type__c = 'Compensatory Off';
-        insert lc5;    
+        
+          /*  test.startTest();
+            insert lc1;
+            insert lc2;
+            insert lc3;
+            insert lc4;
+            insert lc5; 
+            test.stopTest();*/
         Date startdate = system.today() + 5 ;
         String startd = string.valueOf(startdate);
         Date enddate = startdate + 4;
@@ -142,26 +149,29 @@ public class LeaveCalculateHandler_Test {
             leavehistory.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
             leavehistory.EMS_LM_Leave_Type_Name__c='Annual Leave';
             leavehistory.EMS_LM_Status__c='Pending';
-            insert leavehistory;
-            leaveList.add(leavehistory);
             
-             EMS_LM_Leave_History__c leavehistory1 =new EMS_LM_Leave_History__c();
+            
+          /*   EMS_LM_Leave_History__c leavehistory1 =new EMS_LM_Leave_History__c();
             leavehistory1.EMS_LM_Contact__c=c.Id;
             leavehistory1.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
             leavehistory1.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
             leavehistory1.EMS_LM_Leave_Type_Name__c='Annual Leave';
-            leavehistory1.EMS_LM_Status__c='Approved';
-            insert leavehistory1;
-            leaveList.add(leavehistory1);
+            leavehistory1.EMS_LM_Status__c='Approved';*/
             
-            EMS_LM_Leave_History__c leavehistory2 =new EMS_LM_Leave_History__c();
+          /*  EMS_LM_Leave_History__c leavehistory2 =new EMS_LM_Leave_History__c();
             leavehistory2.EMS_LM_Contact__c=c.Id;
             leavehistory2.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
             leavehistory2.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
             leavehistory2.EMS_LM_Leave_Type_Name__c='Annual Leave';
-            leavehistory2.EMS_LM_Status__c='Waiting For Approver 2';
-            insert leavehistory2;
-            leaveList.add(leavehistory2);
+            leavehistory2.EMS_LM_Status__c='Waiting For Approver 2';*/
+            
+            EMS_LM_Leave_History__c leavehistory6 =new EMS_LM_Leave_History__c();
+            leavehistory6.EMS_LM_Contact__c=c.Id;
+            leavehistory6.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
+            leavehistory6.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
+            leavehistory6.EMS_LM_Leave_Type_Name__c='Annual Leave';
+            leavehistory6.EMS_LM_Status__c='Waiting For Approver 3';
+            
             
             EMS_LM_Leave_History__c leavehistory3 =new EMS_LM_Leave_History__c();
             leavehistory3.EMS_LM_Contact__c=c.Id;
@@ -169,10 +179,61 @@ public class LeaveCalculateHandler_Test {
             leavehistory3.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
             leavehistory3.EMS_LM_Leave_Type_Name__c='Compensatory Off';
             leavehistory3.EMS_LM_Status__c='Approved';
-            insert leavehistory3;
+           
+            
+             EMS_LM_Leave_History__c leavehistory4 =new EMS_LM_Leave_History__c();
+            leavehistory4.EMS_LM_Contact__c=c.Id;
+            leavehistory4.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
+            leavehistory4.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
+            leavehistory4.EMS_LM_Leave_Type_Name__c='Work from Home';
+            leavehistory4.EMS_LM_Status__c='Waiting For Approver 3';
+           
+            
+             EMS_LM_Leave_History__c leavehistory5 =new EMS_LM_Leave_History__c();
+            leavehistory5.EMS_LM_Contact__c=c.Id;
+            leavehistory5.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
+            leavehistory5.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
+            leavehistory5.EMS_LM_Leave_Type_Name__c='Compensatory Off';
+            leavehistory5.EMS_LM_Status__c='Waiting For Approver 3';
+            
+             EMS_LM_Leave_History__c leavehistory7 =new EMS_LM_Leave_History__c();
+            leavehistory7.EMS_LM_Contact__c=c.Id;
+            leavehistory7.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
+            leavehistory7.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
+            leavehistory7.EMS_LM_Leave_Type_Name__c='Paternity Leave';
+            leavehistory7.EMS_LM_Status__c='Approved';
+            
+            EMS_LM_Leave_History__c leavehistory8 =new EMS_LM_Leave_History__c();
+            leavehistory8.EMS_LM_Contact__c=c.Id;
+            leavehistory8.EMS_LM_Leave_Start_Date__c=date.newInstance(2023, 2, 1);
+            leavehistory8.EMS_LM_Leave_End_Date__c=date.newInstance(2023, 2, 5);
+            leavehistory8.EMS_LM_Leave_Type_Name__c='Paternity Leave';
+            leavehistory8.EMS_LM_Status__c='Waiting For Approver 3';
+ 
+         Test.startTest();
+            insert leavehistory;
+            leaveList.add(leavehistory);
+           
+            insert leavehistory8;
+            leaveList.add(leavehistory8);
+            
+           /* insert leavehistory2;
+            leaveList.add(leavehistory2);*/
+            
+             insert leavehistory3;
             leaveList.add(leavehistory3);
             
-        Test.startTest();
+             insert leavehistory4;
+            leaveList.add(leavehistory4);
+            
+            insert leavehistory5;
+            leaveList.add(leavehistory5);
+            
+            insert leavehistory6;
+            leaveList.add(leavehistory6);
+            
+             insert leavehistory7;
+            leaveList.add(leavehistory7);
            
             LeaveCalculateHandler newlist =New LeaveCalculateHandler();
             newlist.leaveCalculateMethod(leaveList);

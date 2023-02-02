@@ -35,5 +35,36 @@ public without sharing class createCompoffThroughTimesheet {
    } 
 
     }
+    @AuraEnabled
+     public static Boolean  checkCompOff(Id userId,Date compOffweek){
+         date weekStart;
+         System.debug('userId'+userId);
+        System.debug('compOffweek'+compOffweek);
+         if (compOffweek == null){
+            Date today = Date.today();
+            weekStart = today.toStartofWeek().addDays(1);
+         System.debug('weekStart'+weekStart);
+         }else{
+             weekStart= compOffweek;
+             System.debug('else weekStart'+weekStart);
+         }
+        boolean compOffAlredyExist = false;
+       Contact contactRec =[SELECT Id,
+                                     EMS_TM_User__c 
+                                     FROM contact 
+                                     WHERE EMS_TM_User__c =: userId];
+       List<EMS_LM_Leave_Credit__c> compOffRecord=[Select Id 
+                                                    FROM EMS_LM_Leave_Credit__c 
+                                                    WHERE EMS_LM_Employee__c =: contactRec.Id 
+                                                    AND CompOff_Week__c =: weekStart];
+         System.debug('compOffRecord'+compOffRecord);
+         If(!compOffRecord.isEmpty()){
+              compOffAlredyExist = True;
+             return compOffAlredyExist;
+         }else{
+             compOffAlredyExist = false;
+               return compOffAlredyExist;
+         }
+     }
 
 }
