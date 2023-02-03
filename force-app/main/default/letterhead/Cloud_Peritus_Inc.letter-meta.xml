@@ -8,17 +8,18 @@
         <height>0</height>
     </bottomLine>
     <footer>
-        <backgroundColor>#FFFFFF</backgroundColor>
-        <height>100</height>
-        <horizontalAlignment>Left</horizontalAlignment>
-        <verticalAlignment>Top</verticalAlignment>
+        <backgroundColor>#CCCCCC</backgroundColor>
+        <height>0</height>
+        <horizontalAlignment>Center</horizontalAlignment>
+        <logo>Experiences_Shared_Document_Folder/CP_Logo_With_Address.png</logo>
+        <verticalAlignment>Middle</verticalAlignment>
     </footer>
     <header>
         <backgroundColor>#FFFFFF</backgroundColor>
         <height>0</height>
-        <horizontalAlignment>Center</horizontalAlignment>
-        <logo>Experiences_Shared_Document_Folder/GridLogo_png.png</logo>
-        <verticalAlignment>Top</verticalAlignment>
+        <horizontalAlignment>Left</horizontalAlignment>
+        <logo>Experiences_Shared_Document_Folder/Grid_Logo_Horizontal.png</logo>
+        <verticalAlignment>Middle</verticalAlignment>
     </header>
     <middleLine>
         <color>#AAAAFF</color>
