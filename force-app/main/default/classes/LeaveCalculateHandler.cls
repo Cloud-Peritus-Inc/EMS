@@ -39,17 +39,22 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                                             From EMS_LM_Leave_History__c 
                       						where EMS_LM_Contact__c=:setId 
                                             		And CreatedDate = This_Year 
-                                            		AND (EMS_LM_Leave_Type_Name__c = 'Annual Leave' 
-                                                         OR EMS_LM_Leave_Type_Name__c ='Compensatory Off') 
                                             		AND (EMS_LM_Status__c='Pending' 
                                                      	OR EMS_LM_Status__c='Approved' 
                                                      	OR EMS_LM_Status__c='Waiting For Approver 2' 
                                                      	OR EMS_LM_Status__c='Waiting For Approver 3')];
+       
+       //AND (EMS_LM_Leave_Type_Name__c = 'Annual Leave' OR EMS_LM_Leave_Type_Name__c ='Compensatory Off')
         
         List<Contact> conlist = new List<Contact> ();
         Decimal Utilized_Leaves=0;
         Decimal utilizedcompoffLeave = 0;
         Decimal utilizedMaternityLeave = 0;
+       
+       Decimal utilizedPaternityLeave = 0;
+       Decimal utilizedBereavementLeave = 0;
+       Decimal utilizedLossOfPay = 0;
+       Decimal utilizedWorkfromhome = 0;
         for(EMS_LM_Leave_History__c l2 : l1){
                   if(l2.EMS_LM_Leave_Type_Name__c == 'Annual Leave' && l2.EMS_LM_Leave_Duration__c !=Null  && (l2.EMS_LM_Status__c=='Pending' || 
               																					l2.EMS_LM_Status__c=='Approved' || 
@@ -72,12 +77,49 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                 {
                       utilizedMaternityLeave = utilizedMaternityLeave + l2.EMS_LM_Leave_Duration__c;
                   }
+            //Paternity Leave
+            if(l2.EMS_LM_Leave_Type_Name__c == 'Paternity Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c=='Pending' || 
+                                                                        l2.EMS_LM_Status__c=='Approved' || 
+                                                                        l2.EMS_LM_Status__c=='Waiting For Approver 2'||
+                                                                       l2.EMS_LM_Status__c=='Waiting For Approver 3'))
+                {
+                      utilizedPaternityLeave = utilizedPaternityLeave + l2.EMS_LM_Leave_Duration__c;
+                  }
+            
+            if(l2.EMS_LM_Leave_Type_Name__c == 'Bereavement Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c=='Pending' || 
+                                                                        l2.EMS_LM_Status__c=='Approved' || 
+                                                                        l2.EMS_LM_Status__c=='Waiting For Approver 2'||
+                                                                       l2.EMS_LM_Status__c=='Waiting For Approver 3'))
+                {
+                      utilizedBereavementLeave = utilizedBereavementLeave + l2.EMS_LM_Leave_Duration__c;
+                  }
+            
+            if(l2.EMS_LM_Leave_Type_Name__c == 'Loss of Pay' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c=='Pending' || 
+                                                                        l2.EMS_LM_Status__c=='Approved' || 
+                                                                        l2.EMS_LM_Status__c=='Waiting For Approver 2'||
+                                                                       l2.EMS_LM_Status__c=='Waiting For Approver 3'))
+                {
+                      utilizedLossOfPay = utilizedLossOfPay + l2.EMS_LM_Leave_Duration__c;
+                  }
+            
+            if(l2.EMS_LM_Leave_Type_Name__c == 'Work from Home' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c=='Pending' || 
+                                                                        l2.EMS_LM_Status__c=='Approved' || 
+                                                                        l2.EMS_LM_Status__c=='Waiting For Approver 2'||
+                                                                       l2.EMS_LM_Status__c=='Waiting For Approver 3'))
+                {
+                      utilizedWorkfromhome = utilizedWorkfromhome + l2.EMS_LM_Leave_Duration__c;
+                  }
               } 
         
         for(Contact con:Resourceleave){     
             con.EMS_LM_No_Of_Utilized_Leaves__c=Utilized_Leaves;
             con.EMS_LM_No_OF_Utilized_Compensatory_Off__c=utilizedcompoffLeave;
             con.EMS_LM_No_Of_Utilized_Maternity_Leaves__c=utilizedMaternityLeave;
+            
+            con.No_Of_Utilized_Paternity_Leaves__c = utilizedPaternityLeave;       
+            con.EMS_LM_No_Of_Utilized_Bereavement_Leaves__c =  utilizedBereavementLeave;                  
+            con.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c = utilizedLossOfPay ;
+            con.No_OF_Utilized_Work_from_Home__c = utilizedWorkfromhome;
             conlist.add(con);
         }
         
