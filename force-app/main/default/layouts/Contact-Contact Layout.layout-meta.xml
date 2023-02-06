@@ -166,6 +166,11 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>LogACall</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
@@ -199,11 +204,6 @@
             <actionName>FeedItem.ContentPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>LogACall</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>

@@ -54,13 +54,14 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         
         List<EMS_EM_Onboarding_Request__c> applicantsList = new List<EMS_EM_Onboarding_Request__c>();
         List<Contact> applicantsToSendMail = new List<Contact>();
+        Id contRecordTypeId = [Select id from RecordType where sObjectType = 'Contact' and developerName ='Applicant' ].id ;
         
         for(Contact contactRec : contactList){
         
-            if(contactRec.EMS_EM_JD__c != NULL && contactRec.RecordTypeId == '0125e000000qrLRAAY'){
+            if(contactRec.EMS_EM_JD__c != NULL && contactRec.RecordTypeId == contRecordTypeId){
                 Date today = Date.today();
                 Date sobjectDate = contactRec.EMS_EM_JD__c;
-                if(today.daysBetween(sobjectDate) < 10){
+                if(today.daysBetween(sobjectDate) < 10 && contactRec.EMS_EM_JD__c >= system.today()){
                     EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
                     applicantRec.EMS_EM_Personal_Email__c = contactRec.Email;
                     applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
