@@ -281,7 +281,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                         }
                     });
                     console.log('record ',record);
-                        this.records[0] = record;
+                    this.records.push(record);
                     
                 }
             }
