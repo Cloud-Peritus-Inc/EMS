@@ -30,26 +30,11 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <actionCalls>
-        <name>Approver_3_Leave_Request</name>
-        <label>Approver 3 Leave Request</label>
-        <locationX>578</locationX>
-        <locationY>455</locationY>
-        <actionName>EMS_LM_Leave_History__c.Approver_3_Leave_Request</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
     <apiVersion>56.0</apiVersion>
     <decisions>
         <name>status_leave_request</name>
         <label>status leave request</label>
-        <locationX>446</locationX>
+        <locationX>314</locationX>
         <locationY>335</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -78,7 +63,7 @@
                 <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Waiting For Approver 2</stringValue>
+                    <stringValue>Approver 2 Pending</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -89,25 +74,6 @@
                 <targetReference>Approver_2_Leave_Request</targetReference>
             </connector>
             <label>Waiting for second approver</label>
-        </rules>
-        <rules>
-            <name>Waiting_for_third_approver</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Waiting For Approver 3</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Approver_3__r.Email</leftValueReference>
-                <operator>NotEqualTo</operator>
-            </conditions>
-            <connector>
-                <targetReference>Approver_3_Leave_Request</targetReference>
-            </connector>
-            <label>Waiting for third approver</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -133,7 +99,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>320</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>status_leave_request</targetReference>
