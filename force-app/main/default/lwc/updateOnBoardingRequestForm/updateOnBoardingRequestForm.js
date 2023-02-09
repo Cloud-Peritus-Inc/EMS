@@ -256,6 +256,13 @@ guestObj.EMS_EM_Certification_Name16__c=ts.Certificationname17;
 guestObj.EMS_EM_Certification_Name17__c=ts.Certificationname18;
 guestObj.EMS_EM_Certification_Name18__c=ts.Certificationname19;
 guestObj.EMS_EM_Certification_Name19__c=ts.Certificationname20;
+guestObj.Personal_Details_Value_Filled__c = ts.isPersonalUpdateCheckbox;
+guestObj.Identify_Details_Value_Filled__c = ts.isIdentifyDetailsCheckbox;
+guestObj.Other_Certifications_Value_Filled__c=ts.isOtherCertificationsCheckbox;
+guestObj.Address_Details_Value_Filled__c = ts.isAddressDetailsCheckbox;
+guestObj.Company_Information_Viewed__c = ts.isCompanyInformationValueChecked;
+guestObj.Is_Confirm__c = ts.isConfirmSubmit;
+
   console.log('guestObj-->'+guestObj);
   
   let guestObj1 = { 'sobjectType': 'ems_EM_Additional_Detail__c' };
@@ -301,6 +308,7 @@ guestObj.EMS_EM_Certification_Name19__c=ts.Certificationname20;
         guestObj1.EMS_EM_To_Date__c= ts.todate0;
         guestObj1.EMS_EM_Previous_Company_Name__c= ts.previouscompanyname0;
         guestObj1.EMS_EM_Previous_Company_HR_EmailId__c=ts.previouscomemailid;
+        
 
         guestObj1.EMS_EM_Job_Title1__c=ts.jobtitle1;
         guestObj1.EMS_EM_From_Date1__c=ts.fromdate1;
@@ -326,6 +334,8 @@ guestObj.EMS_EM_Certification_Name19__c=ts.Certificationname20;
         guestObj1.EMS_EM_From_Date5__c=ts.fromdate5;
         guestObj1.EMS_EM_To_Date5__c=ts.todate5;
         guestObj1.EMS_EM_Previous_Company_Name5__c=ts.previouscompanyname5;
+        guestObj1.Education_Details_Filled__c=ts.isEducationDetailsCheckbox;
+        guestObj1.Work_Details_Filled__c=ts.isWorkExperienceCheckbox;
 
       //  ts.hideModalBox();
         //ts.readonlyfield=true;
@@ -337,12 +347,14 @@ guestObj.EMS_EM_Certification_Name19__c=ts.Certificationname20;
           console.log('this.onboardingformID'+ts.onboardingformId); 
           if(ts.isShowPersonalDetails){
             displayShowtoastMessage('Success','Onboarding Form Personal Details Saved Successfully','success',ts);
+            ts.isShowPersonalDetailsValueFilled = true;
+            console.log('Details Filled',ts.isShowPersonalDetailsValueFilled);
        }
-         if(ts.isIdentifyDetails){      
-           displayShowtoastMessage('Success','Onboarding Form Identification Details Saved Successfully','success',ts);          
+         if(ts.isIdentifyDetails){     
+           displayShowtoastMessage('Success','Onboarding Form Identification Details Saved Successfully','success',ts); 
        }  
        if(ts.isAddressDetails){
-        displayShowtoastMessage('Success','Onboarding Form Address Details Saved Successfully','success',ts);
+        displayShowtoastMessage('Success','Onboarding Form Address Details Saved Successfully','success',ts); 
        }
        if(ts.isEducationDetails){
           displayShowtoastMessage('Success','Onboarding Form Educational Details Saved Successfully','success',ts); 
@@ -351,7 +363,7 @@ guestObj.EMS_EM_Certification_Name19__c=ts.Certificationname20;
         displayShowtoastMessage('Success','Onboarding Form Other Certification Details Saved Successfully','success',ts);
        }
        if(ts.isWorkExperience){
-          displayShowtoastMessage('Success','Onboarding Form Work Experience Details Saved Successfully','success',ts);
+          displayShowtoastMessage('Success','Onboarding Form Work Experience Details Saved Successfully','success',ts); 
        }
   //         sendEmail({  subject: "Onboard Form Submission",recordId:ts.onboardingformId,
   //         body: "Dear HR Team,"+"<Br/><Br/>"+"Employee  has submitted their onboarding form along with the required documents."+"<Br/><Br/>"+"Click here https://cpprd.lightning.force.com/"+this.onboardingformId+ "  to find and verify the details."})
@@ -542,7 +554,6 @@ function updateOnboardingInfoOnPageLoads(ts){
             })
             if(onboarding !=null){
              // this.readonlyfield=true;
-
               ts.firstName = onboarding.EMS_EM_First_Name__c;
               ts.lastName=onboarding.EMS_EM_Last_Name__c;
               ts.fName=onboarding.EMS_EM_Father__c;
@@ -652,6 +663,15 @@ function updateOnboardingInfoOnPageLoads(ts){
               ts.fromdate5=additionalDetails.EMS_EM_From_Date5__c;
               ts.todate5=additionalDetails.EMS_EM_To_Date5__c;
               ts.previouscompanyname5=additionalDetails.EMS_EM_Previous_Company_Name5__c; 
+              ts.isPersonalUpdateCheckbox = onboarding.Personal_Details_Value_Filled__c;
+              ts.isIdentifyDetailsCheckbox = onboarding.Identify_Details_Value_Filled__c;
+              ts.isAddressDetailsCheckbox = onboarding.Address_Details_Value_Filled__c;
+              ts.isOtherCertificationsCheckbox = onboarding.Other_Certifications_Value_Filled__c;
+              ts.isEducationDetailsCheckbox = additionalDetails.Education_Details_Filled__c;
+              ts.isWorkExperienceCheckbox = additionalDetails.Work_Details_Filled__c;
+              ts.isCompanyInformationValueChecked = onboarding.Company_Information_Viewed__c;
+              ts.isConfirmSubmit = onboarding.Is_Confirm__c;
+
               if(ts.levleofedu1){
                 ts.addmoreempfields = true;
                 ts.hideplus = false;
@@ -768,6 +788,34 @@ function updateOnboardingInfoOnPageLoads(ts){
                 ts.addmoreworkfields4 = true;
                 ts.hidefivthadd = false;
               }
+              if(result.onboarding.Personal_Details_Value_Filled__c === true){
+                ts.isPersonalUpdateCheckbox = true;
+                console.log('check box personal',ts.isPersonalUpdateCheckbox);
+                }
+                if(result.onboarding.Identify_Details_Value_Filled__c === true){
+                  ts.isIdentifyDetailsCheckbox = true;
+                  console.log('check box personal',ts.isIdentifyDetailsCheckbox);
+                }
+                if(result.onboarding.Address_Details_Value_Filled__c === true){
+                  ts.isAddressDetailsCheckbox = true;
+                }
+                if(result.onboarding.Other_Certifications_Value_Filled__c === true){
+                  ts.isOtherCertificationsCheckbox = true;
+                }
+                if(result.additionalDetails.Education_Details_Filled__c === true){
+                  ts.isEducationDetailsCheckbox = true;
+                }
+                if(result.additionalDetails.Work_Details_Filled__c === true){
+                  ts.isWorkExperienceCheckbox = true;
+                }
+                if(result.onboarding.Company_Information_Viewed__c === true){
+                  ts.isCompanyInformationValueChecked = true;
+                }
+                if(result.onboarding.Is_Confirm__c === true){
+                  ts.isConfirmSubmit = true;
+                  ts.readonlyfield=true;
+                }
+                
             }
         })
         .catch(error => {

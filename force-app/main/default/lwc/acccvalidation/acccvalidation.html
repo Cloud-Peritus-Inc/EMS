@@ -78,8 +78,8 @@
         <div class="slds-size_1-of-6"></div>
         <div class="slds-grid alignCenter slds-p-around_medium slds-size_1-of-3">
             <lightning-input class="slds-p-right_large"
-                data-id="toggle" type="toggle" label="Weekend"
-                onchange={handleWeekendToggle}
+            data-id="weekendToggle" type="toggle" label="Weekend"
+            onchange={handleWeekendToggle}
                 message-toggle-active=""
                 message-toggle-inactive=""></lightning-input>
             <lightning-input class="slds-p-right_large"
@@ -121,7 +121,7 @@
                     <div class="slds-truncate" title="Project"> Project</div>
                 </th>
                 <th scope="col">
-                    <div class="slds-truncate" title="ProjectTask">Task</div>
+                    <div class="slds-truncate" title="ProjectTask">Assignment</div>
                 </th>
                 <th if:true={showOtherTask} scope="col">
                     <div class="slds-truncate" title="ProjectTaskPicklist">Other Task</div>
@@ -216,13 +216,29 @@
                         </template>
                     </td>
                     <td>
-                        <lightning-combobox name="EMS_TM_ProjectTask__c"
+                        <!-- <lightning-combobox name="EMS_TM_ProjectTask__c"
                             variant="label-hidden" placeholder="Choose"
                             data-id={it.index} value={it.value.EMS_TM_ProjectTask__c}
                             onchange={handleUserInput} required={it.value.projectValueAvailable}
                             options={it.value.projectTaskOptions}
                             disabled={disableSubmited}>
-                        </lightning-combobox>
+                        </lightning-combobox> -->
+                        <template if:true={it.value.projectAssignAvail}>
+                            <lightning-input name="EMS_TM_ProjectTask__c"
+                                variant="label-hidden" data-id={it.index}
+                                value={it.value.EMS_TM_ProjectTask__c}
+                                disabled></lightning-input>
+                        </template>
+                        <template if:false={it.value.projectAssignAvail}>
+                            <lightning-combobox name="EMS_TM_ProjectTask__c"
+                                variant="label-hidden" placeholder="Choose"
+                                data-id={it.index} value={it.value.EMS_TM_ProjectTask__c}
+                                onchange={handleUserInput} required={it.value.projectValueAvailable}
+                                options={it.value.projectTaskOptions}
+                                disabled={disableSubmited}>
+                            </lightning-combobox>
+                            <p if:true={it.value.projectTaskDuplicate} class="slds-has-error">Duplicate task value</p>
+                        </template>   
                     </td>
                     <td if:true={showOtherTask}>
                         <div if:true={it.value.otherTask}>

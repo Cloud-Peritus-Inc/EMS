@@ -139,7 +139,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     initialValues() {
         this.showOtherTask = false;
         this.totalDayHours = {EMS_TM_Sun__c: 0,EMS_TM_Mon__c: 0,EMS_TM_Tue__c: 0,EMS_TM_Wed__c: 0,EMS_TM_Thu__c: 0,EMS_TM_Fri__c: 0,EMS_TM_Sat__c: 0};
-        this.records = [{key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: [], projectName: '', remarkRequired: false}];
+        this.records = [{key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_ProjectTask__c: '', EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: [], projectName: '', remarkRequired: false, projectAssignAvail: false, projectTaskDuplicate: false}];
     }
 
     /*
@@ -184,13 +184,14 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 timeSheetRecords.forEach( record => {
                     let element = {};
                     element.projectTaskOptions = [];
+                    element.projectAssignAvail = false;
                     if (this.projectRecords) {
                         let project = this.projectRecords.find( item => item.Id === record.EMS_TM_Project__c);
+                        let assignment = this.assignmentRecords.find( item => item.EMS_TM_ProjectName_Asgn__c === record.EMS_TM_Project__c);
+                        element.projectAssignAvail = record.EMS_TM_ProjectTask__c ? true : false;
                         if (project) {
                             element.EMS_TM_Project__c = record.EMS_TM_Project__c;
-                            if (project.EMS_TM_Project_Type__c === 'Client') {
-                                element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.clientPicklist));
-                            } else if (project.EMS_TM_Project_Type__c === 'OOO') {
+                            if (project.EMS_TM_Project_Type__c === 'OOO') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
                             } else if (project.EMS_TM_Project_Type__c === 'Bench') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
@@ -203,6 +204,13 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                             if (record.EMS_TM_ProjectTask__c === 'Other' && record.EMS_TM_OtherTask__c) {
                                 countOtherTask++;
                                 element.otherTask = true;
+                                // this.showOtherTask = true;
+                            }
+                            if (record.EMS_TM_Sun__c > 0 || record.EMS_TM_Sat__c > 0) {
+                                this.showWeekend = true;
+                                this.showRemarks = true;
+                                this.template.querySelector('[data-id="remarkToggle"]').checked = true;
+                                this.template.querySelector('[data-id="weekendToggle"]').checked = true;
                                 // this.showOtherTask = true;
                             }
                             this.records.push(element);
@@ -236,7 +244,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             if (this.holidayRecords.length > 0) {
                 let oooProject = this.projectRecords.find(item => item.Name === 'OOO');
                 let addRow = false;
-                let record = {key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist , EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: 'Holiday', projectValueAvailable: true};
+                let record = {key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist , EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: 'Holiday', projectValueAvailable: true, projectAssignAvail: false, projectTaskDuplicate: false};
                 this.holidayRecords.forEach(holiday => {
                     let date = new Date(holiday.EMS_TM_Calendar_Date__c).getDay();
                     console.log('holidays ',date);
@@ -265,18 +273,16 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             if (this.leaveRecords) {
                 if (this.leaveRecords.length > 0) {
                     let oooProject = this.projectRecords.find(item => item.Name === 'OOO')
-                    let record = {key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist , EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: 'Paid time-off', projectValueAvailable: true};
+                    let record = {key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist , EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: 'Paid time-off', projectValueAvailable: true, projectAssignAvail: false, projectTaskDuplicate: false};
                     this.leaveRecords.forEach(leave => {
                         let date = new Date(leave).getDay();
                         console.log('leaves ',date);
                         switch (date) {
-                            case 0: record.EMS_TM_Sun__c = 8; break;
                             case 1: record.EMS_TM_Mon__c = 8; break;
                             case 2: record.EMS_TM_Tue__c = 8; break;
                             case 3: record.EMS_TM_Wed__c = 8; break;
                             case 4: record.EMS_TM_Thu__c = 8; break;
                             case 5: record.EMS_TM_Fri__c = 8; break;
-                            case 6: record.EMS_TM_Sat__c = 8; break;
                             default: break;
                         }
                     });
@@ -554,13 +560,13 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 timeSheetRecords.forEach( record => {
                     let element = {};
                     element.projectTaskOptions = [];
+                    element.projectAssignAvail = false;
                     if (this.projectRecords) {
+                        element.projectAssignAvail = record.EMS_TM_ProjectTask__c ? true : false;
                         let project = this.projectRecords.find( item => item.Id === record.EMS_TM_Project__c);
                         if (project && project.EMS_TM_Project_Type__c !== 'OOO') {
                             element.EMS_TM_Project__c = record.EMS_TM_Project__c;
-                            if (project.EMS_TM_Project_Type__c === 'Client') {
-                                element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.clientPicklist));
-                            } else if (project.EMS_TM_Project_Type__c === 'OOO') {
+                            if (project.EMS_TM_Project_Type__c === 'OOO') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
                             } else if (project.EMS_TM_Project_Type__c === 'Bench') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
@@ -594,7 +600,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     */
     addRow() {
         this.keyIndex++;
-        let newItem = { key: this.keyIndex, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: [] };
+        let newItem = { key: this.keyIndex, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: [], projectAssignAvail: false, projectTaskDuplicate: false, EMS_TM_ProjectTask__c: '' };
         this.records.push(newItem);
         this.displayItemList = JSON.parse(JSON.stringify(this.records));
     }
@@ -643,7 +649,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             this.calculateTotalHours();
             console.log('records=> ',this.records.length);
             if (this.records.length === 0) {
-                this.records = [{key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: []}];
+                this.records = [{key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: [], projectAssignAvail: false, projectTaskDuplicate: false, EMS_TM_ProjectTask__c: ''}];
             }
 
             console.log('this.deletedRecordsList => ', this.deletedRecordsList);
@@ -662,16 +668,19 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         let value = event.target.value;
         let index = event.target.dataset.id;
         let fieldName = event.target.name;
-        this.records[index][fieldName] = value;
         if (fieldName === 'EMS_TM_ProjectTask__c') {
             this.handleProjecttaskSelection(value, index);
         } else  if (fieldName.length === 13) {
+            this.records[index][fieldName] = value;
             if (value === '' || value == null) {
                 this.records[index][fieldName] = '00';
             } else {
                 this.records[index][fieldName] = parseFloat(value);
             }
             this.calculateTotalHours();
+        } else {
+            this.records[index][fieldName] = value;
+        
         }
         if ((fieldName === 'EMS_TM_Sat__c' || fieldName === 'EMS_TM_Sun__c') && parseFloat(value) > 0) {
             this.showRemarks = true;
@@ -706,7 +715,10 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         let fieldName = val.name;
         let index = val.index;
         let value = val.value;
+        let assignment = this.assignmentRecords.filter( item => item.EMS_TM_ProjectName_Asgn__c === value);
         let type;
+        console.log('handleProjectselection this.assignmentRecords ',this.assignmentRecords);
+        console.log('handleProjectselection assignment ',assignment);
         this.records[index][fieldName] = value;
         this.records[index].projectValueAvailable = true;
         this.records[index].projectName = val.recordName;
@@ -715,7 +727,18 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 type = project.EMS_TM_Project_Type__c;
             }
         });
-        this.handlePicklistValues(index, type);
+        if (assignment.length === 1) {
+            this.records[index].projectAssignAvail = true;
+            this.records[index].EMS_TM_ProjectTask__c = assignment[0].EMS_TM_AssignedAs__c;
+        } else if(assignment.length > 1) {
+            let picklist = [];
+            assignment.forEach(assign => {
+                picklist.push({value: assign.EMS_TM_AssignedAs__c, label: assign.EMS_TM_AssignedAs__c});
+            });
+            this.records[index].projectTaskOptions = picklist;
+        } else {
+            this.handlePicklistValues(index, type);
+        }
         this.displayItemList = JSON.parse(JSON.stringify(this.records));
     }
 
@@ -781,7 +804,22 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 this.showOtherTask = true;
                 break;
             }
+            // if (i != index) {
+            //     if (this.records[i].EMS_TM_Project__c === this.records[index].EMS_TM_Project__c && this.records[i].EMS_TM_ProjectTask__c === this.records[index].EMS_TM_ProjectTask__c) {
+            //         this.records[index].projectTaskDuplicate = true;
+            //     } else {
+            //         this.records[index].projectTaskDuplicate = false;
+            //     }
+            // } else {
+            //     this.records[index].projectTaskDuplicate = false;
+            // }
+            // if ( i != index && this.records[i].EMS_TM_Project__c === this.records[index].EMS_TM_Project__c && this.records[i].EMS_TM_ProjectTask__c === this.records[index].EMS_TM_ProjectTask__c) {
+            //     this.records[index].projectTaskDuplicate = true;
+            // } else {
+            //     this.records[index].projectTaskDuplicate = false;
+            // }
         }
+        this.records[index].EMS_TM_ProjectTask__c = value;
     }
 
     /*
@@ -983,7 +1021,7 @@ submitpopup(){
         for( let key in this.totalDayHours ) {
             if (key.length === 13 && (key != 'EMS_TM_Sat__c' && key != 'EMS_TM_Sun__c')) {
                 let error = 'error'+key;
-                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 8 ) {
+                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 0 ) {
                     this.isValid = false;
                     this.totalDayHours[error] = true;
                 } else {
@@ -1102,7 +1140,7 @@ submitpopup(){
                 let newRecords = [];
                 this.records.forEach( record => {
                     if (record.Id) {
-                        record.Status__c ='Submitted';
+                       // record.Status__c ='Submitted';
                         updateRecords.push(record);
                     } else {
                         newRecords.push(record);

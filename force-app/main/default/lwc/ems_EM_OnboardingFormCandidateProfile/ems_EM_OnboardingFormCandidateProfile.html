@@ -1540,6 +1540,112 @@
              </div>
 			 </template>
     <!--Company Information Page Ends-->
+    <template if:true={isConfirm}>   
+        <div class="slds-p-around_medium"> 
+            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
+			class="slds-p-around_xx-small">
+            <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle} active-section-name={activeSections}>
+				<lightning-accordion-section name="Profile" label="Profile">
+          <div>
+         <div class="slds-grid slds-wrap slds-box" style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+            <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">  
+		 <p >Personal Details</p> 
+	   </div>
+	<div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+        <template if:true={isPersonalUpdateCheckbox}>
+		<img src={correctImages}  alt="correct" width="22" height="21">
+    </template>
+    <template if:false={isPersonalUpdateCheckbox}>
+        <img src={wrongImages}  alt="correct" width="19" height="19">
+        </template>
+	</div>
+     <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+		 <p >Identity Information</p> 
+	</div>
+	<div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+        <template if:true={isIdentifyDetailsCheckbox}>
+            <img src={correctImages}  alt="correct" width="22" height="21">
+        </template>
+        <template if:false={isIdentifyDetailsCheckbox}>
+            <img src={wrongImages}  alt="correct" width="19" height="19">
+            </template>
+	</div>
+     <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+		 <p >Address Details</p> 
+	</div>
+	<div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+        <template if:true={isAddressDetailsCheckbox}>
+            <img src={correctImages}  alt="correct" width="22" height="21">
+        </template>
+        <template if:false={isAddressDetailsCheckbox}>
+            <img src={wrongImages}  alt="correct" width="19" height="19">
+            </template>
+	</div>
+     <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+		 <p>Education Details</p> 
+	</div>
+	<div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+        <template if:true={isEducationDetailsCheckbox}>
+            <img src={correctImages}  alt="correct" width="22" height="21">
+        </template>
+        <template if:false={isEducationDetailsCheckbox}>
+            <img src={wrongImages}  alt="correct" width="19" height="19">
+            </template>
+	</div>
+     <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+		 <p >Other Certifications</p> 
+	</div>
+	<div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+        <template if:true={isOtherCertificationsCheckbox}>
+            <img src={correctImages}  alt="correct" width="22" height="21">
+        </template>
+        <template if:false={isOtherCertificationsCheckbox}>
+            <img src={wrongImages}  alt="correct" width="19" height="19">
+            </template>
+	</div>
+    <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+        <p >Work Experience</p> 
+   </div>
+   <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+    <template if:true={isWorkExperienceCheckbox}>
+		<img src={correctImages}  alt="correct" width="22" height="21">
+    </template>
+    <template if:false={isWorkExperienceCheckbox}>
+        <img src={wrongImages}  alt="correct" width="19" height="19">
+        </template>
+   </div>
+   
+</div>
+</div>
+</lightning-accordion-section>
+<lightning-accordion-section name="Company Information" label="Company Information">
+    <div>
+    <div class="slds-grid slds-wrap slds-box" style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+  <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+    <p >Company Information</p> 
+  </div>
+<div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+    <template if:true={isCompanyInformationValueChecked}>
+		<img src={correctImages}  alt="correct" width="22" height="21">
+    </template>
+    <template if:false={isCompanyInformationValueChecked}>
+        <img src={wrongImages}  alt="correct" width="19" height="19">
+        </template>
+</div>
+</div>
+</div>
+</lightning-accordion-section>
+            </lightning-accordion>
+        <br>
+    <br>
+            <div style="text-align:center;margin-bottom:10px">
+                <lightning-button style="margin:5px;"  label="Confirm" type="brand" onclick={confirmSubmit} variant="brand"></lightning-button>
+			</div>
+        </div>
+        <br>
+        <br>
+        </div>
+    </template>
  </div>
 </div>
 </div>

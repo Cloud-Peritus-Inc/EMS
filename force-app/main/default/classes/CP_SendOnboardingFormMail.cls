@@ -66,7 +66,11 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
                     applicantRec.EMS_EM_Personal_Email__c = contactRec.Email;
                     applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
                     applicantsList.add(applicantRec);
-                    sendOnboardingEmail(contactRec.Email,contactRec.Id);    
+                    String status = sendOnboardingEmail(contactRec.Email,contactRec.Id); 
+                    if(status == 'success'){
+                        sendEmailToHR(contactRec.Id);
+                        sendEmailToTA(contactRec.Id);
+                    }
                 }
             }   
         }
@@ -83,11 +87,44 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         message.toAddresses = emailList;
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
         Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
         if (results[0].success) {
             return 'success';
         } else {
             return 'failure';
         }
+    }
+    
+    public static void sendEmailToHR(string recordId){
+        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Notify To Hr After Onboarding Form Sent' LIMIT 1];
+        String hrTeamEmail = [SELECT id, email FROM Contact WHERE name = 'HR Team'].email;
+        List<String> hrEmailList = new List<String>();
+        hrEmailList.add(hrTeamEmail);
+        
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.toAddresses = hrEmailList;
+        message.setTemplateID(emailTemplate.Id);
+        message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
+    }
+    
+    public static void sendEmailToTA(string recordId){
+        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Notify TA After Onboarding Form Sent' LIMIT 1];
+        String taTeamEmail = [SELECT id, email FROM Contact WHERE name = 'TA Team'].email;
+        List<String> taEmailList = new List<String>();
+        taEmailList.add(taTeamEmail);
+        
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.toAddresses = taEmailList;
+        message.setTemplateID(emailTemplate.Id);
+        message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
 }
