@@ -16,20 +16,25 @@ public class EMS_TM_TimesheetClass {
         List<EMS_TM_Picklist_value__c> picklistValues = new List<EMS_TM_Picklist_value__c>();
         User user = new user();
         Id systemAdminId;
+        boolean manageracc;
 
         List<Id> idList = new List<Id>();
         List<Profile> profileDetails = [SELECT Id, Name FROM Profile WHERE Name IN :EMS_TM_GlobalConstants.USERPROFILES];
         
         for (Profile profile : profileDetails) {
-            if (profile.Name == EMS_TM_GlobalConstants.SYSTEMADMINISTRATOR) {
+           /* if (profile.Name == EMS_TM_GlobalConstants.SYSTEMADMINISTRATOR) {
                 systemAdminId = profile.Id;
-            }
+            }*/
             idList.add(profile.Id);
         }
+        
 
-        user = [SELECT Id, ProfileId, FirstName, LastName, Name, ContactId,
+        user = [SELECT Id, ProfileId, FirstName, LastName, Name, ContactId,Manager_Access__c,
                 (Select id, lastname, Location__c from Contacts__r)
                 FROM User WHERE Id = :userId];
+        if(user.Manager_Access__c != false){
+            manageracc = true;
+        }
         
         String location= user.Contacts__r[0].Location__c;
 
@@ -130,7 +135,7 @@ public class EMS_TM_TimesheetClass {
         returnObj.holidays          = holidays;
         returnObj.assignment        = assignmentList;
         returnObj.picklist          = picklistValues;
-        returnObj.enableManagerView = user.ProfileId == systemAdminId ? true : false;
+        returnObj.enableManagerView = user.Manager_Access__c == manageracc ? true : false;
         returnObj.User              = user;
         returnObj.projectIdList     = idList;
         returnObj.leaves            = leaves;
@@ -394,7 +399,7 @@ public class EMS_TM_TimesheetClass {
             if (!newRecords.isEmpty()) {
                 List<EMS_TM_Timesheet_Record__c> recordstoInsert = new List<EMS_TM_Timesheet_Record__c>();
                 for(EMS_TM_Timesheet_Record__c record : newRecords) {
-                    record.Status__c ='Saved';
+                    record.Status__c ='Saved';  //Submitted
                     EMS_TM_Timesheet_Record__c row = renderTimeRecord(record, timeSheetRecord, timesheetId);
                     recordstoInsert.add(row);
                 }
@@ -420,15 +425,28 @@ public class EMS_TM_TimesheetClass {
    
 
  @AuraEnabled
- public static list<EMS_Timesheet__c> getTimesheetHours(){
+ public static wrappergetTimeSheetHours getTimesheetHours(){
+
 
 List<EMS_Timesheet__c> timesheetList = [SELECT EMS_TM_Total__c,
                                                              enddate__c,
                                                              OwnerId
                                                              FROM EMS_Timesheet__c
-                                                             WHERE OwnerId =: UserInfo.getUserId() ORDER BY enddate__c DESC
+                                                             WHERE OwnerId =: UserInfo.getUserId() 
+                                                             AND enddate__c < THIS_WEEK
+                                                             ORDER BY enddate__c DESC
                                                              LIMIT 5];
-                                                             return timesheetList;
+                                                             //return timesheetList;
+     Decimal currentWeekData =[ SELECT EMS_TM_Total__c,
+                                                    enddate__c,
+                                                    OwnerId 
+                                                    FROM EMS_Timesheet__c 
+                                                    WHERE enddate__c = THIS_WEEK
+                                                    AND OwnerId =: UserInfo.getUserId()].EMS_TM_Total__c;
+                wrappergetTimeSheetHours newgethours = new wrappergetTimeSheetHours();
+                                        newgethours.timeSheetrecord = currentWeekData;
+                                        newgethours.timeSheetRecordsList =timesheetList;
+                                        return newgethours;
  }  
     public class wrapperAP {
         @AuraEnabled
@@ -458,6 +476,14 @@ List<EMS_Timesheet__c> timesheetList = [SELECT EMS_TM_Total__c,
         public EMS_Timesheet__c timeSheet {get; set;}
         @AuraEnabled
         public List<EMS_TM_Timesheet_Record__c> timeSheetRecords {get; set;}
+    }
+
+    public class wrappergetTimeSheetHours{
+      @AuraEnabled
+        public Decimal timeSheetrecord {get; set;}
+        @AuraEnabled
+        public List<EMS_Timesheet__c> timeSheetRecordsList {get; set;}
+
     }
 
    

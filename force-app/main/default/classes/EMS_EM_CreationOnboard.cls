@@ -1,3 +1,19 @@
+/**
+    * @author Rakshitha 
+    * @date 27/01/2023
+    * @description  Create Onboard Record from onboarding form 
+    *
+    *               Test code coverage provided by the following test class:
+    *               - EMS_EM_CreationOnboardTest
+    *
+    * CHANGE HISTORY
+    * ====================================================================================================
+    * DATE          NAME                    DESCRIPTION
+    * N/A           N/A                     N/A
+    * ====================================================================================================
+    **/
+
+
 public without Sharing class EMS_EM_CreationOnboard {
     
     public string contactId;
@@ -122,7 +138,7 @@ public without Sharing class EMS_EM_CreationOnboard {
                                                   EMS_EM_Previous_Company_HR_EmailId__c,EMS_EM_Certification_Name__c,EMS_EM_Certification_Name2__c,EMS_EM_Certification_Name3__c,EMS_EM_Certification_Name4__c,EMS_EM_Certification_Name5__c,EMS_EM_Certification_Name6__c,
                                                   EMS_EM_Certification_Name7__c,EMS_EM_Certification_Name8__c,EMS_EM_Certification_Name9__c,EMS_EM_Certification_Name10__c,EMS_EM_Certification_Name11__c,EMS_EM_Certification_Name12__c,
                                                   EMS_EM_Certification_Name13__c,EMS_EM_Certification_Name14__c,EMS_EM_Certification_Name15__c,EMS_EM_Certification_Name16__c,EMS_EM_Certification_Name17__c,EMS_EM_Certification_Name18__c,
-                                                  EMS_EM_Certification_Name19__c
+                                                  EMS_EM_Certification_Name19__c,Personal_Details_Value_Filled__c,Identify_Details_Value_Filled__c,Address_Details_Value_Filled__c,Other_Certifications_Value_Filled__c
                                                   from EMS_EM_Onboarding_Request__c where Id=:recordId];
         
         return onboardlist;
@@ -173,7 +189,7 @@ public without Sharing class EMS_EM_CreationOnboard {
                                                                EMS_EM_To_Date__c, EMS_EM_Previous_Company_HR_EmailId__c, 
                                                                EMS_EM_Previous_Company_Name1__c, EMS_EM_Previous_Company_Name2__c,
                                                                EMS_EM_Previous_Company_Name3__c, EMS_EM_Previous_Company_Name4__c,
-                                                               EMS_EM_Previous_Company_Name5__c, EMS_EM_Previous_Company_Name__c, 
+                                                               EMS_EM_Previous_Company_Name5__c, EMS_EM_Previous_Company_Name__c,Education_Details_Filled__c,Work_Details_Filled__c, 
                                                                Onboarding_Request__c, ContactId__c FROM ems_EM_Additional_Detail__c 
                                                                where ContactId__c=:getContactid];
             

@@ -4,6 +4,9 @@ import createGuest from '@salesforce/apex/EMS_EM_CreationOnboard.createGuest';
 import getCompanyInformation from '@salesforce/apex/EMS_EM_GridConfigurationSettings.getCompanyInformation';
 import { uploadFilesFromThis, updateOnBoardingRequest, updateOnboardingInfoOnPageLoads, displayShowtoastMessage } from 'c/updateOnBoardingRequestForm';
 import getonOnboardformInfo from '@salesforce/apex/EMS_EM_CreationOnboard.getonOnboardformInfo';
+	
+import correctImage from '@salesforce/resourceUrl/Correct';
+import wrongImage from '@salesforce/resourceUrl/Wrong';
 
 const isAllowedKeyCode = keyCode => {
   if (keyCode === 8 // backspace
@@ -69,6 +72,17 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   isWorkExperience = false;
   isConfirm = false;
   isCompanyInformation = false;
+  correctImages = correctImage;
+  wrongImages = wrongImage;
+  isPersonalUpdateCheckbox = false;
+  isIdentifyDetailsCheckbox = false;
+  isAddressDetailsCheckbox = false;
+  isEducationDetailsCheckbox = false;
+  isOtherCertificationsCheckbox = false;
+  isWorkExperienceCheckbox = false;
+  isCompanyInformationValueChecked = false;
+  isConfirmSubmit = false;
+
 
   handleSectionToggle(event) {
     const openSections = event.detail.openSections;
@@ -158,6 +172,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Company Information") {
       this.isCompanyInformation = true;
+      this.isCompanyInformationValueChecked = true;
+      updateOnBoardingRequest(this); 
       console.log('Company Info', this.isCompanyInformation);
       this.isAddressDetails = false;
       this.isShowPersonalDetails = false;
@@ -1883,32 +1899,57 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     if(this.isShowPersonalDetails){
       if(this.selectStep1()){
         console.log('step1',this.selectStep1);
+        this.isPersonalUpdateCheckbox = true;
+        console.log('check box',this.isPersonalUpdateCheckbox);
         updateOnBoardingRequest(this);  
       }
     }
     if(this.isIdentifyDetails){
       if(this.selectStep2()){
+        this.isIdentifyDetailsCheckbox = true;
         updateOnBoardingRequest(this);      
       }
     }
   if(this.isAddressDetails){
     if(this.selectStep3()){
+      this.isAddressDetailsCheckbox = true;
       updateOnBoardingRequest(this); 
     }
     }
   if(this.isEducationDetails){
-   if(this.selectStep4()) {
+   if(this.selectStep4()) {  
+    this.isEducationDetailsCheckbox = true;
       updateOnBoardingRequest(this);
     }
   }
   if(this.isOtherCertifications){
+    this.isOtherCertificationsCheckbox = true;
     updateOnBoardingRequest(this);
   }
   if(this.isWorkExperience){
     if(this.selectStep5()){
+     this.isWorkExperienceCheckbox = true;
     updateOnBoardingRequest(this);
   }
 }
+  }
+  confirmSubmit(event){
+  if(this.isPersonalUpdateCheckbox && this.isIdentifyDetailsCheckbox && this.isAddressDetailsCheckbox && this.isEducationDetailsCheckbox && this.isOtherCertificationsCheckbox && this.isWorkExperienceCheckbox && this.isCompanyInformationValueChecked) 
+  {
+    this.isConfirmSubmit = true;
+    this.readonlyfield = true;
+    updateOnBoardingRequest(this);
+    displayShowtoastMessage('Success','Onboarding Form Submitted Successfully','success',this);
+  }
+  else{
+    const even = new ShowToastEvent({
+      message: 'Please complete all the required section',
+      variant: 'error'
+    });
+    this.dispatchEvent(even);
+    return false;
+
+  }
   }
 
   //---------------------------------------------------------------------------- uploading
