@@ -26,10 +26,5 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-        
-      - name: Validate Code to EMS Org
-        run: sfdx force:apex:test:run --testlevel RunLocalTests -u EMS-Dev --resultformat json > /tmp/deploy.log
-        
       - name: Building the Error Report
-        run: sh /home/ec2-user/report.sh
+        run: sh /home/ec2-user/report.sh ${{ github.event.inputs.choice }}
