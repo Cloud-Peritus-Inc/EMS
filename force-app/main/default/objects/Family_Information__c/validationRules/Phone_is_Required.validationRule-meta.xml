@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Phone_is_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK( Contact_Phone_Number__c ) &amp;&amp;  Is_It_Emergency_Contact__c</errorConditionFormula>
+    <errorMessage>Contact Phone Number is required for emergency relation</errorMessage>
+</ValidationRule>

@@ -21,7 +21,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
     	
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id, lastName, EMS_EM_JD__c, Email, EMS_RM_LastName__c,Name, Is_Email_Sent__c from Contact WHERE EMS_EM_JD__c != NULL AND RecordType.Name = \'Applicant\'' 
+        	'SELECT id, lastName, EMS_EM_JD__c, Email, Personal_Email__c, EMS_RM_LastName__c,Name, Is_Email_Sent__c from Contact WHERE EMS_EM_JD__c != NULL AND RecordType.Name = \'Applicant\'' 
         );
     }
     
@@ -33,10 +33,10 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         for(Contact contactRec : contactList){
             if(contactRec.EMS_EM_JD__c.addDays(-10) == System.today()){
                 EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
-                applicantRec.EMS_EM_Personal_Email__c = contactRec.Email;
+                applicantRec.EMS_EM_Personal_Email__c = contactRec.Personal_Email__c;
                 applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
                 applicantsList.add(applicantRec);
-                String status = sendOnboardingEmail(contactRec.Email,contactRec.Id);
+                String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id);
                 if(status == 'success'){
                     sendEmailToHR(contactRec.Id);
                     sendEmailToTA(contactRec.Id);
@@ -56,6 +56,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.toAddresses = emailList;
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
+        message.setSaveAsActivity(false);
         Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
         if (results[0].success) {
             return 'success';
@@ -77,6 +78,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
+        message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
     
@@ -93,6 +95,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
+        message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
     

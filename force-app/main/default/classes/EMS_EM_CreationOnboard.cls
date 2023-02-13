@@ -1,17 +1,17 @@
 /**
-    * @author Rakshitha 
-    * @date 27/01/2023
-    * @description  Create Onboard Record from onboarding form 
-    *
-    *               Test code coverage provided by the following test class:
-    *               - EMS_EM_CreationOnboardTest
-    *
-    * CHANGE HISTORY
-    * ====================================================================================================
-    * DATE          NAME                    DESCRIPTION
-    * N/A           N/A                     N/A
-    * ====================================================================================================
-    **/
+* @author Rakshitha 
+* @date 27/01/2023
+* @description  Create Onboard Record from onboarding form 
+*
+*               Test code coverage provided by the following test class:
+*               - EMS_EM_CreationOnboardTest
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 
 
 public without Sharing class EMS_EM_CreationOnboard {
@@ -60,7 +60,7 @@ public without Sharing class EMS_EM_CreationOnboard {
                                                     }else{
                                                         return null;
                                                     }                                             
-   }
+                                                }
     
     
     @AuraEnabled
@@ -153,7 +153,7 @@ public without Sharing class EMS_EM_CreationOnboard {
                 WrapperDetails.onboarding = returnOnboardingDetailsBasedOnEmail(onboardEmailid);
                 WrapperDetails.additionalDetails = returnAdditionalgDetailsBasedOnRecordId(WrapperDetails.onboarding.Id);
                 WrapperDetails.contentDocumentLink = returnFiles(WrapperDetails.onboarding.Id,  WrapperDetails.additionalDetails.Id);
-                WrapperDetails.gridConfiguration = [SELECT Id, Name, CreatedDate, Description__c FROM Grid_Configuration__c where Name = 'Company Information' Limit 1];
+                WrapperDetails.gridConfiguration = [SELECT Id, Name, CreatedDate, Description__c, Grid_Configuration_Type__c  FROM Grid_Configuration__c where Name = 'Company Information - Pre-onboarding' Limit 1];
                 return WrapperDetails; 
             }Catch(Exception ex){
                 System.debug('### Exception' + ex.getMessage());
@@ -239,42 +239,42 @@ public without Sharing class EMS_EM_CreationOnboard {
             Set<Id> documentIdsSet = new Set<Id>();
             if (String.isNotBlank(onBoardingRecordId)) {
                 For (ContentDocumentLink content : [SELECT Id, 
-                                                           LinkedEntityId, 
-                                                           ContentDocumentId 
+                                                    LinkedEntityId, 
+                                                    ContentDocumentId 
                                                     FROM ContentDocumentLink 
                                                     Where LinkedEntityId =:onBoardingRecordId]){
                                                         
-                    documentIdsSet.add(content.ContentDocumentId);
-                }
+                                                        documentIdsSet.add(content.ContentDocumentId);
+                                                    }
             }
             if(String.isNotBlank(additionalRecordId)){
-          
+                
                 for (ContentDocumentLink content: [SELECT Id, 
-                                                          LinkedEntityId, 
-                                                          ContentDocumentId 
+                                                   LinkedEntityId, 
+                                                   ContentDocumentId 
                                                    FROM ContentDocumentLink 
                                                    Where LinkedEntityId =:additionalRecordId]) {
-                   documentIdsSet.add(content.ContentDocumentId); 
-                }
+                                                       documentIdsSet.add(content.ContentDocumentId); 
+                                                   }
                 
                 if(documentIdsSet.isEmpty()){
                     return null;
                 }
- 
+                
             }
             return [SELECT Id, 
-                               Title, 
-                               ContentSize, 
-                               FileType, 
-                               PublishStatus, 
-                               LatestPublishedVersionId, 
-                               CreatedDate,         
-                              FileExtension FROM ContentDocument  
+                    Title, 
+                    ContentSize, 
+                    FileType, 
+                    PublishStatus, 
+                    LatestPublishedVersionId, 
+                    CreatedDate,         
+                    FileExtension FROM ContentDocument  
                     Where Id In :documentIdsSet];
         }catch(Exception ex){
             System.debug('### Exception' + ex.getMessage());
             System.debug('### Exception' + ex.getStackTraceString());
-             return null;
+            return null;
         }
         
     }
@@ -284,9 +284,9 @@ public without Sharing class EMS_EM_CreationOnboard {
         public EMS_EM_Onboarding_Request__c onboarding;
         @AuraEnabled
         public ems_EM_Additional_Detail__c additionalDetails;
-         @AuraEnabled
+        @AuraEnabled
         public List<ContentDocument> contentDocumentLink;
-         @AuraEnabled
+        @AuraEnabled
         public Grid_Configuration__c  gridConfiguration;
         
         public onboardingDetails(){

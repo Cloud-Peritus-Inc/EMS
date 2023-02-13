@@ -41,6 +41,7 @@ public without sharing class CalculateTheAnnualLeaves implements TriggerAction.A
      **/
      private void updateResourceLeaves(List<Contact> contactList) {
       Map<String,Decimal> leaveMap = new Map<String,Decimal>();
+      Id AnnualLeaveTypeId = [Select Id FROM EMS_LM_Leave__c  Where Name = 'Annual Leave'].Id;
       List<EMS_LM_Leave_Credit__c> leaveCreditList = new List<EMS_LM_Leave_Credit__c>();
         List<Contact> filteredList = new List<Contact>();
         for(Contact conRec : contactList) {
@@ -67,6 +68,7 @@ public without sharing class CalculateTheAnnualLeaves implements TriggerAction.A
                  leaveCredit.EMS_LM_Employee__c = contactRec.Id;
                  leaveCredit.EMS_LM_Leave_Credited_Date__c = System.today();
                  leaveCredit.EMS_LM_Select_Leave_Type__c = 'Annual Leave'; 
+                 leaveCredit.EMS_LM_Leave_Type__c = AnnualLeaveTypeId;
                  leaveCredit.EMS_LM_Leaves_Credited__c = leaveMap.get(uniqueKey);
                  leaveCreditList.add(leaveCredit);
              }

@@ -3,7 +3,7 @@ import updateRejecteStatusAndComments from '@salesforce/apex/LeaveRequestRejectH
 import updateApproveStatusAndComments from '@salesforce/apex/LeaveRequestApproveHandler.updateApproveStatusAndComments';
 import { NavigationMixin } from 'lightning/navigation';
 //import bulkLeaveReqApproval from '@salesforce/apex/LeaveRequestApproveHandler.bulkLeaveReqApproval';
-export default class EMS_LeaveRequest_Table extends NavigationMixin (LightningElement) {
+export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningElement) {
 
     approveComments;
     rejectComments;
@@ -28,22 +28,24 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin (LightningEl
         return value;
     }
     connectedCallback() {
+        this.a_Record_URL = window.location.origin;
+        console.log('Base Url' + this.a_Record_URL);
         this.leaveReq = JSON.parse(JSON.stringify(this.leaveReq));
         this.leaveReq.forEach((item, index) => {
             console.log('### item size: ' + JSON.stringify(item))
         });
 
         //Conditions to make isViewAll to TRUE
-         var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
-         var params = new URLSearchParams();
-         params.append("bulkupdate", "value");
-         url.search += "&" + params.toString();
-         var params = new URLSearchParams(location.search);
-         if (params.has('bulkupdate')) {
-             console.log("Hello");
-             this.isViewAll = true;
-             console.log('Bye : ');
-         }
+        var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
+        var params = new URLSearchParams();
+        params.append("bulkupdate", "value");
+        url.search += "&" + params.toString();
+        var params = new URLSearchParams(location.search);
+        if (params.has('bulkupdate')) {
+            console.log("Hello");
+            this.isViewAll = true;
+            console.log('Bye : ');
+        }
     }
 
     //CheckBox
@@ -124,9 +126,33 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin (LightningEl
     }
 
     //Approve All page navigation
-      handleApproveAllNavigation1(event) {
-          var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
-          console.log('### URL : ',url);
+    /*   handlebulkNavigation(event) {
+           //var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
+           var url = new URL ("https://cpprd--dev.sandbox.my.site.com/CpLink/s/leave-management")
+           console.log('### URL : ',url);
+           var params = new URLSearchParams();
+           params.append("bulkupdate", "value");
+           url.search += "&" + params.toString();
+           this[NavigationMixin.Navigate]({
+               type: 'standard__webPage',
+               attributes: {
+                   url: url.href
+               }
+           });
+       }*/
+
+    //Approve All page navigation
+    handlebulkNavigation(event) {
+        var url = new URL(this.a_Record_URL + '/CpLink/s/leave-management');
+        this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: url.href
+            }
+        });
+        //var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
+        /*  var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/leave-management")
+          console.log('### URL : ', url);
           var params = new URLSearchParams();
           params.append("bulkupdate", "value");
           url.search += "&" + params.toString();
@@ -134,7 +160,10 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin (LightningEl
               type: 'standard__webPage',
               attributes: {
                   url: url.href
+              },
+              state: {
+                  'c__selectedTab': 'pending'
               }
-          });
-      }
+          });*/
+    }
 }

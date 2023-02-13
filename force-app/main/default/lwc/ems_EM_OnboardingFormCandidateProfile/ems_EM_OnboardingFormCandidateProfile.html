@@ -72,7 +72,7 @@
                 </div>			
         </div>
 				</lightning-accordion-section>
-				<lightning-accordion-section name="Confirm" label="Confirm">
+				<lightning-accordion-section name="Confirm" label="Submit">
                     <div>
                         <div>
                      <div class="slds-nav-vertical__section slds-p-around_small">
@@ -81,7 +81,7 @@
                     <span class="slds-nav-vertical__item">
                         <input type="radio" id="Confirm" name="details" value="Confirm" onchange={selectedDetails}/>
                         <label class="slds-nav-vertical__action" for="Confirm">
-                        <span class="slds-nav-vertical_radio-faux">Confirm</span>
+                        <span class="slds-nav-vertical_radio-faux">Submit</span>
                         </label>
                         </span>
                     </fieldset>
@@ -1533,7 +1533,7 @@
 		 <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
 			class="slds-p-around_xx-small">
             <template if:true={companyInformation}>
-                <h1>{companyInformation.Name}</h1>
+                <h1>{companyInformation.Grid_Configuration_Type__c}</h1>
               <lightning-formatted-rich-text value={companyInformation.Description__c}></lightning-formatted-rich-text>      
             </template>
              </div>
@@ -1544,10 +1544,10 @@
         <div class="slds-p-around_medium"> 
             <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
 			class="slds-p-around_xx-small">
-            <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle} active-section-name={activeSections}>
+            <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle} active-section-name={activeSectionsConfirm}>
 				<lightning-accordion-section name="Profile" label="Profile">
-          <div>
-         <div class="slds-grid slds-wrap slds-box" style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+          <div class="slds-box">
+         <div class="slds-grid slds-wrap" style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;">
             <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">  
 		 <p >Personal Details</p> 
 	   </div>
@@ -1619,8 +1619,8 @@
 </div>
 </lightning-accordion-section>
 <lightning-accordion-section name="Company Information" label="Company Information">
-    <div>
-    <div class="slds-grid slds-wrap slds-box" style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+    <div class="slds-box">
+    <div class="slds-grid slds-wrap" style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;">
   <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
     <p >Company Information</p> 
   </div>
@@ -1639,7 +1639,7 @@
         <br>
     <br>
             <div style="text-align:center;margin-bottom:10px">
-                <lightning-button style="margin:5px;"  label="Confirm" type="brand" onclick={confirmSubmit} variant="brand"></lightning-button>
+                <lightning-button style="margin:5px;"  label="Submit" type="brand" onclick={confirmSubmit} disabled={buttonDisable} variant="brand"></lightning-button>
 			</div>
         </div>
         <br>

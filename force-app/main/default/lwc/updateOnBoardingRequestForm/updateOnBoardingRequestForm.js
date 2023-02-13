@@ -814,6 +814,7 @@ function updateOnboardingInfoOnPageLoads(ts){
                 if(result.onboarding.Is_Confirm__c === true){
                   ts.isConfirmSubmit = true;
                   ts.readonlyfield=true;
+                  ts.buttonDisable = true;
                 }
                 
             }

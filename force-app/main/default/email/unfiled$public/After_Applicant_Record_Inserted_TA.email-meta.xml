@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>After Applicant Record Inserted TA</name>
+    <style>freeForm</style>
+    <subject>Cloud Peritus : New Applicant created</subject>
+    <textOnly>Dear TA,
+
+A new Applicant has been added to the system. Please find the details below.
+
+Link:
+
+https://cpprd--dev.sandbox.lightning.force.com/lightning/r/Contact/{!Contact.Id}/view
+
+Created by: {!Contact.CreatedBy}
+
+Regards,
+
+Team Cloud Peritus</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

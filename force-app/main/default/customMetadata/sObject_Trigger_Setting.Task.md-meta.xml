@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Object_Namespace__c</field>
-        <value xsi:type="xsd:string">Task</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Required_Permission__c</field>

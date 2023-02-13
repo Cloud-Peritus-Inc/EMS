@@ -34,3 +34,12 @@
     cursor: pointer;
     color:DodgerBlue;   
 }
+.iconContainer{
+   
+    display:inline-block;
+    cursor :pointer;
+}
+.fontsize{
+
+  font-size: 40px;
+}

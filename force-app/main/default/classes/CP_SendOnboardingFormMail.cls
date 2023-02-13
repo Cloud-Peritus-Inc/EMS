@@ -46,7 +46,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
     
     public void afterUpdate(List<Contact> newList, List<Contact> oldList) {      
          System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterUpdate() : BEGIN');
-         sendOnboardingFormMail(newList);
+       //  sendOnboardingFormMail(newList);
          System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterUpdate() : END');       
      }
     
@@ -63,10 +63,11 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
                 Date sobjectDate = contactRec.EMS_EM_JD__c;
                 if(today.daysBetween(sobjectDate) < 10 && contactRec.EMS_EM_JD__c >= system.today()){
                     EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
-                    applicantRec.EMS_EM_Personal_Email__c = contactRec.Email;
+                    //applicantRec.EMS_EM_Personal_Email__c = contactRec.Email;
+                    applicantRec.EMS_EM_Personal_Email__c = contactRec.Personal_Email__c;
                     applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
                     applicantsList.add(applicantRec);
-                    String status = sendOnboardingEmail(contactRec.Email,contactRec.Id); 
+                    String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id); 
                     if(status == 'success'){
                         sendEmailToHR(contactRec.Id);
                         sendEmailToTA(contactRec.Id);
@@ -88,6 +89,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
+        message.setSaveAsActivity(false);
         Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
         if (results[0].success) {
             return 'success';
@@ -109,6 +111,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
+        message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
     
@@ -125,6 +128,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
+         message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
 }
