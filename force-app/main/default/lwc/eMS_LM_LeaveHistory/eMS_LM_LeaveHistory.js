@@ -1,6 +1,6 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import getLeaveRequest from '@salesforce/apex/LeaveManagementApexController.getLeaveRequest';
-import cancleLeaveRequest from '@salesforce/apex/LeaveManagementApexController.cancleLeaveRequest';
+//import cancleLeaveRequest from '@salesforce/apex/LeaveManagementApexController.cancleLeaveRequest';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class EMS_LM_LeaveHistory extends NavigationMixin(LightningElement) {
@@ -28,7 +28,7 @@ export default class EMS_LM_LeaveHistory extends NavigationMixin(LightningElemen
   }
   
   //To check whether the url has "bulkupdate" and to display the actions
-  connectedCallback() {
+ /* connectedCallback() {
     var params = new URLSearchParams(location.search);
     if (params.has('bulkupdate')) {
       console.log("Hello");
@@ -82,5 +82,5 @@ export default class EMS_LM_LeaveHistory extends NavigationMixin(LightningElemen
       }).catch((err) => {
         console.log('### err : ', JSON.stringify(err));
       });
-  }
+  }*/
 }

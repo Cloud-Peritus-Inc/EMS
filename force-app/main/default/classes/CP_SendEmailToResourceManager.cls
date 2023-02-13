@@ -72,6 +72,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
             body += 'Regards, <br/>';
             body += 'Team Cloud Peritus';
             message.setHtmlBody(body);
+            message.setSaveAsActivity(false);
             mails.add(message);
         }
        Messaging.sendEmail(mails);

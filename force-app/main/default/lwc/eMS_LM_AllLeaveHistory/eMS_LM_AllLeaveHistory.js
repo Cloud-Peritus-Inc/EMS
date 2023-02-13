@@ -1,26 +1,31 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getLeaveHistory from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveHistory';
-import getLeaveType from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveType';
 import recallApproval from '@salesforce/apex/EMS_LM_ApprovalProcessUpdate.recallApproval';//need to change apex class method after approval process
 import cancleLeaveRequest from '@salesforce/apex/LeaveManagementApexController.cancleLeaveRequest';
 import u_Id from '@salesforce/user/Id';
 import LightningConfirm from "lightning/confirm";
 import { NavigationMixin } from 'lightning/navigation';
-import { refreshApex } from '@salesforce/apex';
+import LEAVEHISTORY_OBJECT from '@salesforce/schema/EMS_LM_Leave_History__c';
+import getLMHistory from '@salesforce/apex/LeaveHistoryApexController.getLMHistory';
+import getLeaveTypesForUser from '@salesforce/apex/LeaveHistoryApexController.getLeaveTypesForUser';
+import userLevelOfApproval from '@salesforce/apex/LeaveHistoryApexController.userLevelOfApproval';
+import defaultMyRequestData from '@salesforce/apex/LeaveHistoryApexController.defaultMyRequestData';
+
 const columns = [
     { label: 'Leave Type', fieldName: 'EMS_LM_Leave_Type_Name__c' },
     { label: 'Leave Start Date', fieldName: 'EMS_LM_Leave_Start_Date__c', type: 'date' },
     { label: 'Leave End Date', fieldName: 'EMS_LM_Leave_End_Date__c', type: 'date' },
     { label: 'Leave Duration', fieldName: 'EMS_LM_Leave_Duration__c', type: 'number' },
     { label: 'Reason', fieldName: 'EMS_LM_Reason__c' },
-    { label: 'Approver', fieldName: 'EMS_LM_Final_Approver__c' },
+    { label: 'Approver', fieldName: 'EMS_LM_Current_Approver__c' },
     { label: 'Leave Status', fieldName: 'EMS_LM_Status__c' },
     { label: 'Approved On', fieldName: 'EMS_LM_Approved_On__c', type: 'date' }];
 
-
 export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningElement) {
     @track columns = columns;
+    picklistValues; //Leave status
+    leaveTypeValues; // Leave Type
+    error;
     fixedWidth = "width:8rem;";
     requeststatus;
     outputStatus;
@@ -37,53 +42,138 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     @track lOptions = [];
     value = '';
     sValue = '';
-    @track lStatus = [{ label: 'None', value: '' }, { label: 'Pending', value: 'Pending' }, { label: 'Approved', value: 'Approved' },
-    { label: 'Rejected', value: 'Rejected' }, { label: 'Cancelled', value: 'Cancelled' },
-    { label: 'Approver 1 Pending', value: 'Approver 1 Pending' },
-    { label: 'Approver 2 Pending', value: 'Approver 2 Pending' }];
-    @wire(getLeaveType, { userid: '$uId' })
+    showApplyLeaveEdit = false;
+    @track picklistValues = [];
+    // @track loa = 2;
+    approvalLevel;
+    autoApproval;
+    selectEditRecordId;
+
+
+    @track listStatus = {
+
+        empStatus: [
+            { label: 'Approved', value: 'Approved' }, { label: 'Pending', value: 'Pending' },
+            { label: 'Rejected', value: 'Rejected' }, { label: 'Cancelled', value: 'Cancelled' },
+            { label: 'Approver 1 Pending', value: 'Approver 1 Pending' },
+            { label: 'Approver 2 Pending', value: 'Approver 2 Pending' }
+        ],
+
+        leadStatus: [
+            { label: 'Approved', value: 'Approved' }, { label: 'Pending', value: 'Pending' },
+            { label: 'Rejected', value: 'Rejected' }, { label: 'Cancelled', value: 'Cancelled' }
+        ],
+
+        directorStatus: [
+            { label: 'Auto Approved', value: 'Auto Approved' }, { label: 'Pending', value: 'Pending' },
+            { label: 'Rejected', value: 'Rejected' }, { label: 'Cancelled', value: 'Cancelled' }
+        ]
+    };
+
+    connectedCallback() {
+        console.log('OUTPUT : inside connect callback');
+        this.LevelOfApproval();
+        console.log('OUTPUT : called');
+    }
+
+    //Based on Level of Approval showing Leave status values
+    LevelOfApproval() {
+        userLevelOfApproval().then((result) => {
+            console.log('RESULT  : ', JSON.stringify(result));
+            this.approvalLevel = result.levelOfApproval;
+            console.log('### approvalLevel : ', this.approvalLevel);
+            this.autoApproval = result.autoApproval;
+            console.log('### autoApproval : ', this.autoApproval);
+            this.approvalCheckMethod();
+        }).catch((err) => {
+            console.log('### err : ', err);
+        });
+    }
+
+    approvalCheckMethod() {
+        switch (this.approvalLevel) {
+            case 2:
+                console.log('OUTPUT : ');
+                this.picklistValues = this.listStatus.empStatus;
+                console.log('### selectedList : ', this.selectedList);
+                break;
+            case 1:
+                this.picklistValues = this.listStatus.leadStatus;
+                break;
+            case 3:
+                this.picklistValues = this.listStatus.directorStatus;
+                break;
+            default:
+                this.picklistValues = [];
+                break;
+        }
+    }
+
+    @wire(getLeaveTypesForUser, { userId: '$uId' })
     wiredlvtype({ error, data }) {
         if (data) {
-            let opt1 = { label: 'None', value: '' };
+            console.log('### data : ', data);
             let opt = data.map((record) => ({
                 value: record,
                 label: record
             }));
-            opt.push(opt1);
-            this.lOptions = opt;
+            this.leaveTypeValues = opt;
+            console.log('### leaveTypeValues : ', this.leaveTypeValues);
             this.error = undefined;
         } else if (error) {
             this.error = error;
             this.lOptions = undefined;
         }
     }
-    @wire(getLeaveHistory, { stdate: '$startDate', eddate: '$endDate', status: '$sValue', type: '$value' })
+
+    //TO SHOW DEFAULT DATA
+    @wire(defaultMyRequestData)
+    defaultMyRequestDataWiredData({ error, data }) {
+        if (data) {
+            console.log('### defaultMyRequestData', data);
+            this.showdata = true;
+            this.nodata = false;
+            //this.datahistory = data;
+            this.datahistory = JSON.parse(JSON.stringify(data));
+            console.log('### datahistory', this.datahistory);
+            this.datahistory.forEach(req => {
+                req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending';
+            });
+            console.log('### defaultMyRequestData datahistory: ', this.datahistory);
+        } else if (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    //TO SHOW FILTER DATA
+    @wire(getLMHistory, { stdate: '$startDate', eddate: '$endDate', statusValues: '$sValue', typeValues: '$value' })
     wiredLeavHistory({ error, data }) {
         if (data) {
+            console.log('### DATA BEFORE: ', data);
             if (data.length > 0) {
+                console.log('### DATA AFTER: ', data);
                 this.showdata = true;
                 this.nodata = false;
                 this.datahistory = JSON.parse(JSON.stringify(data));
                 console.log('### datahistory', this.datahistory);
                 this.datahistory.forEach(req => {
-                    req.disableButton = req.EMS_LM_Status__c !== 'Pending';
+                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending';
                 });
                 this.error = undefined;
             }
-            else {
+           /* else {
                 this.nodata = true;
                 this.showdata = false;
-                this.datahistory = data;
+               // this.datahistory = data;
+                console.log('## Else : ', data);
                 this.error = undefined;
-            }
+            }*/
         } else if (error) {
             this.error = error;
             this.datahistory = undefined;
         }
     }
-    statusChange(event) {
-        this.sValue = event.detail.value;
-    }
+
     startdatechange(event) {
         this.startDate = event.detail.value;
         console.log(this.startDate);
@@ -102,17 +192,75 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             this.endDate = event.detail.value + ' 00:00:00';
         }
     }
-    handleChange(event) {
-        this.value = event.detail.value;
+
+    //MULTI SELECT LEAVE STATUS
+    handleValueChange(event) {
+        console.log(JSON.stringify(event.detail));
+        this.sValue = event.detail;
+        console.log('## this.sValue', this.sValue);
     }
-    handleCancelButton(event) {
-        this.requeststatus = event.target.dataset.value;
-        if (this.requeststatus == 'Pending' || this.requeststatus == '' || this.requeststatus == undefined || this.requeststatus == 'Approver 1 Pending' || this.requeststatus == 'Approver 2 Pending') {
-            this.showcancelbutton = true;
-        }
-        else
-            this.showcancelbutton = false;
+
+    //MULTI SELECT LEAVE TYPE
+    handleTypeValueChange(event) {
+        console.log(JSON.stringify(event.detail));
+        this.value = event.detail;
+        console.log('## this.value', this.value);
     }
+
+    //To view the leave record
+    handleView(event) {
+        const selectedRecordId = event.currentTarget.dataset.id;
+        console.log('### handleView : ', selectedRecordId);
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: selectedRecordId,
+                objectApiName: 'EMS_LM_Leave_History__c',
+                actionName: 'view',
+            },
+        });
+    }
+
+    //To edit the leave record
+    handleEdit(event) {
+        this.selectEditRecordId = event.currentTarget.dataset.id;
+        const selectedRecordId = event.currentTarget.dataset.id;
+        console.log('### handleEdit : ', selectedRecordId);
+        this.showApplyLeaveEdit = true;
+        /*
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: selectedRecordId,
+                objectApiName: 'EMS_LM_Leave_History__c',
+                actionName: 'view',
+            },
+        });*/
+    }
+
+    cancelHandler(event){
+        this.showApplyLeaveEdit = false;
+    }
+
+    //TO cancel the leave record
+    handleCancel(event) {
+        const selectedRecordId = event.currentTarget.dataset.id;
+        console.log('### handleCancel : ', selectedRecordId);
+        cancleLeaveRequest({ leaveReqCancelId: selectedRecordId })
+            .then((result) => {
+                console.log('### result : ', result);
+                const evt = new ShowToastEvent({
+                    title: 'Toast Success',
+                    message: 'Leave Request was Cancelled Successfully',
+                    variant: 'success',
+                });
+                this.dispatchEvent(evt);
+                window.location.reload();
+            }).catch((err) => {
+                console.log('### err : ', JSON.stringify(err));
+            });
+    }
+
     /*HandelViewRequestModel(event) {
       this.isShowViewRequest = true;
       this.requestType = event.target.dataset.value;
@@ -121,7 +269,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     hideModalBox() {
         this.isShowViewRequest = false;
     }
-
 
     async handleConfirmClick(event) {
         this.requeststatus = event.target.dataset.value;
@@ -155,50 +302,8 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         else {
         }
     }
-    //To view the leave record
-    handleView(event) {
-        const selectedRecordId = event.currentTarget.dataset.id;
-        console.log('### handleView : ', selectedRecordId);
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: selectedRecordId,
-                objectApiName: 'EMS_LM_Leave_History__c',
-                actionName: 'view',
-            },
-        });
-    }
 
-    //To edit the leave record
-    handleEdit(event) {
-        const selectedRecordId = event.currentTarget.dataset.id;
-        console.log('### handleEdit : ', selectedRecordId);
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: selectedRecordId,
-                objectApiName: 'EMS_LM_Leave_History__c',
-                actionName: 'view',
-            },
-        });
-    }
 
-    //TO cancel the leave record
-    handleCancel(event) {
-        const selectedRecordId = event.currentTarget.dataset.id;
-        console.log('### handleCancel : ', selectedRecordId);
-        cancleLeaveRequest({ leaveReqCancelId: selectedRecordId })
-            .then((result) => {
-                console.log('### result : ', result);
-                const evt = new ShowToastEvent({
-                    title: 'Toast Success',
-                    message: 'Leave Request was Cancelled Successfully',
-                    variant: 'success',
-                });
-                this.dispatchEvent(evt);
-                window.location.reload();
-            }).catch((err) => {
-                console.log('### err : ', JSON.stringify(err));
-            });
-    }
+
+
 }

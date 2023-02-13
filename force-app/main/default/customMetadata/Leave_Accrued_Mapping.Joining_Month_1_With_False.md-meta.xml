@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Leaves_Credits__c</field>
-        <value xsi:type="xsd:double">3.33</value>
+        <value xsi:type="xsd:double">0.83</value>
     </values>
 </CustomMetadata>

@@ -88,7 +88,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 profileIdsString = profileIdsString.replace("[", "(");
                 profileIdsString = profileIdsString.replace("]", ")");
                 profileIdsString = profileIdsString.replace(/"/g, "'");
-                this.managerLookUpFilter = 'ProfileId in ' + profileIdsString;
+                this.managerLookUpFilter = 'Id in ' + profileIdsString;
             }
             let pickListValues = data.picklist;
             if (pickListValues) {
@@ -1086,6 +1086,9 @@ submitpopup(){
             }
     
             this.timeSheetRecord.EMS_TM_Status__c = type;
+            this.records.forEach(ele => {
+                ele.Status__c = type;
+            });
             if (this.recordId === '') {
                 duplicatetimesheetLWC({ timesheet : this.timeSheetRecord }).then(result => {
                     console.log('result ',result);

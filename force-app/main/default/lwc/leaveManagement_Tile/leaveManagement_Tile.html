@@ -1,21 +1,28 @@
 <template>
-	<div class="homeCard slds-m-around_xxx-small">
+	<div class="homeCard slds-m-around_xxx-small iconContainer">
 		<lightning-card variant="Narrow">
-			<div class="text-helpicon-container ">
-				<lightning-icon icon-name='action:defer' alternative-text='defer' size='large' title='defer'>
+			<div class="text-helpicon-container slds-p-left_small ">
+				<lightning-icon icon-name='action:defer' alternative-text='defer' size='medium' title='defer'>
 				</lightning-icon>
-				<div class="total-leave-balance slds-text-title_bold">Total Leave Balance</div>
+				<div class="total-leave-balance slds-text-title_bold" onclick={handleLMNavigation}>Total Leave Balance
+				</div>
 				<lightning-helptext content={contextText} class="help-icon">
 				</lightning-helptext>
 			</div>
+			<div class="slds-text-title_bold  slds-p-around_x-small slds-align_absolute-center slds-text-heading_large fontsize"
+				onclick={handleLMNavigation}>
+				{leaveBalanceData}
+			</div>
+
 			<div class="slds-p-around_x-small firstBox">
 				<c-e-m-s-_-l-m-_-leave-history>
 				</c-e-m-s-_-l-m-_-leave-history>
 			</div>
 			<div class="slds-p-around_xx-small secondBox">
-				<div class="slds-text-title_bold  slds-p-around_x-small" onclick={handleLMNavigation}>
-					Apply New / View
-				</div>
+				<!--div class="slds-text-title_bold  slds-p-around_x-small" onclick={handleLMNavigation}>
+					Apply New
+				</div-->
+				<c-e-m-s-_-l-m-_-apply-new></c-e-m-s-_-l-m-_-apply-new>
 			</div>
 		</lightning-card>
 	</div>

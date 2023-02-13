@@ -17,23 +17,49 @@ public class EMS_TM_TimesheetClass {
         User user = new user();
         Id systemAdminId;
         boolean manageracc;
+        boolean ITadminacc;
 
         List<Id> idList = new List<Id>();
+        Id contactId;
         List<Profile> profileDetails = [SELECT Id, Name FROM Profile WHERE Name IN :EMS_TM_GlobalConstants.USERPROFILES];
         
         for (Profile profile : profileDetails) {
            /* if (profile.Name == EMS_TM_GlobalConstants.SYSTEMADMINISTRATOR) {
                 systemAdminId = profile.Id;
             }*/
-            idList.add(profile.Id);
+            //idList.add(profile.Id);
         }
-        
 
-        user = [SELECT Id, ProfileId, FirstName, LastName, Name, ContactId,Manager_Access__c,
+        user = [SELECT Id, ProfileId, FirstName, LastName, Name, ContactId,Manager_Access__c,IT_Admin_Access__c,
                 (Select id, lastname, Location__c from Contacts__r)
                 FROM User WHERE Id = :userId];
+        if (user.IT_Admin_Access__c == true) {
+            ITadminacc = true;
+            List<User> users = [SELECT Id, Username FROM User];
+            for (User u : users) {
+                idList.add(u.Id);
+                }
+        }       
         if(user.Manager_Access__c != false){
             manageracc = true;
+            contactId = user.ContactId;
+            List<Id> contactIdList = new List<Id>();
+            List<Resource_Resource_Relationship__c> resourceRelationList1 = [SELECT Id, Resource__c, Resource_Reports_To__c, Resource_Role__c, Reports_To_Role__c, Resource_Reports_To_User__c FROM Resource_Resource_Relationship__c WHERE Resource_Reports_To__c=:contactId];
+            List<Id> resourceList1 = new List<Id>();
+            List<Id> resourceList2 = new List<Id>();
+            for (Resource_Resource_Relationship__c resource : resourceRelationList1) {
+                resourceList1.add(resource.Resource__c);
+            }
+            List<Resource_Resource_Relationship__c> resourceRelationList2 = [SELECT Id, Resource__c, Resource_Reports_To__c, Resource_Role__c, Reports_To_Role__c, Resource_Reports_To_User__c FROM Resource_Resource_Relationship__c WHERE Resource_Reports_To__c IN :resourceList1];
+            for (Resource_Resource_Relationship__c resource : resourceRelationList2) {
+                resourceList2.add(resource.Resource__c);
+            }
+            contactIdList.addAll(resourceList1);
+            contactIdList.addAll(resourceList2);
+            List<User> users = [SELECT Id, ContactId FROM User WHERE ContactId IN :contactIdList];
+            for (User us : users) {
+                idList.add(us.Id);
+            }
         }
         
         String location= user.Contacts__r[0].Location__c;
@@ -135,7 +161,7 @@ public class EMS_TM_TimesheetClass {
         returnObj.holidays          = holidays;
         returnObj.assignment        = assignmentList;
         returnObj.picklist          = picklistValues;
-        returnObj.enableManagerView = user.Manager_Access__c == manageracc ? true : false;
+        returnObj.enableManagerView = user.IT_Admin_Access__c ==ITadminacc  || user.Manager_Access__c == manageracc ? true : false;
         returnObj.User              = user;
         returnObj.projectIdList     = idList;
         returnObj.leaves            = leaves;
@@ -284,7 +310,7 @@ public class EMS_TM_TimesheetClass {
             returnStatement = JSON.serialize(timesheetSaveResult);
         } else if (!isError) {
             for(EMS_TM_Timesheet_Record__c record : timeRecords) {
-                record.Status__c ='Saved';
+                //record.Status__c ='Saved';
                 System.debug('recordstatus'+record);
                 EMS_TM_Timesheet_Record__c row = renderTimeRecord( record, timesheet, createdId );
                 System.debug('recordstatus'+row);
@@ -399,7 +425,7 @@ public class EMS_TM_TimesheetClass {
             if (!newRecords.isEmpty()) {
                 List<EMS_TM_Timesheet_Record__c> recordstoInsert = new List<EMS_TM_Timesheet_Record__c>();
                 for(EMS_TM_Timesheet_Record__c record : newRecords) {
-                    record.Status__c ='Saved';  //Submitted
+                    //record.Status__c ='Saved';  //Submitted
                     EMS_TM_Timesheet_Record__c row = renderTimeRecord(record, timeSheetRecord, timesheetId);
                     recordstoInsert.add(row);
                 }

@@ -67,7 +67,7 @@ public Without Sharing class LeaveManagementApexController {
 *   Date        Name                    Description
 *   N/A         N/A                     N/A
 *   ====================================================================================================
-**/@testvisible
+**/
     @AuraEnabled(Cacheable = true)
     public static Contact leaveBanlance(){
         User usrConId = [SELECT Id, ContactId__c FROM User WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
