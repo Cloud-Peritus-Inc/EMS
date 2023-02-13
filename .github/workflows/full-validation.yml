@@ -29,5 +29,7 @@ jobs:
       # Runs a single command using the runners shell
         
       - name: Validate Code to EMS Org
-#         run: sfdx force:source:deploy -c -p . -u ${{ github.event.inputs.choice }}
-        run: sfdx force:apex:test:run --testlevel RunLocalTests -u EMS-Dev --resultformat json > deploy.log
+        run: sfdx force:apex:test:run --testlevel RunLocalTests -u EMS-Dev --resultformat json > /tmp/deploy.log
+        
+      - name: Building the Error Report
+        run: sh /home/ec2-user/report.sh
