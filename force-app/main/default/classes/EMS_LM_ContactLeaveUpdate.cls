@@ -1,7 +1,21 @@
-public without sharing class EMS_LM_ContactLeaveUpdate {
+/**
+* @author Sangharsh Kamble
+* @date 24/01/2023
+* @description Class for Creating leave request from community.
+*
+*               Test code coverage provided by the following test class: 
+*               - EMS_LM_ContactLeaveUpdate_Test
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
+Public without sharing class EMS_LM_ContactLeaveUpdate {
 // This method is used to get the Leave types of Leve Credit records of of particular loggedin Employee
    @AuraEnabled(Cacheable=true)
-   public static List<String> getLeaveType(Id userid){
+   public static List<String> getLeaveType(Id userid) {
    List<String> s = new List<String>();
    if(userid !=null){
       user u =[Select id, ContactId, Email from user where id =: userid];
@@ -11,7 +25,7 @@ public without sharing class EMS_LM_ContactLeaveUpdate {
    List<EMS_LM_Leave_Credit__c> i1 = new List<EMS_LM_Leave_Credit__c>();
    i1 = [SELECT EMS_LM_Select_Leave_Type__c
                FROM EMS_LM_Leave_Credit__c
-               WHERE EMS_LM_Employee__c = :u.ContactId ORDER BY EMS_LM_Select_Leave_Type__c ASC];
+               WHERE EMS_LM_Select_Leave_Type__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :u.ContactId ORDER BY EMS_LM_Select_Leave_Type__c ASC];
                for(EMS_LM_Leave_Credit__c i2:i1){
                   i.add(i2.EMS_LM_Select_Leave_Type__c);
                }
@@ -27,7 +41,7 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
    contact c = [Select Id from contact where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid];
    i1 = [SELECT EMS_LM_Select_Leave_Type__c
                FROM EMS_LM_Leave_Credit__c
-               WHERE EMS_LM_Employee__c = :c.Id ORDER BY EMS_LM_Select_Leave_Type__c ASC];
+               WHERE EMS_LM_Select_Leave_Type__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :c.Id ORDER BY EMS_LM_Select_Leave_Type__c ASC];
                for(EMS_LM_Leave_Credit__c i2:i1){
                   i.add(i2.EMS_LM_Select_Leave_Type__c);
                }
@@ -47,7 +61,14 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
    }
       return s;
 
-}  
+}
+    
+    @AuraEnabled(Cacheable=true)
+    public static EMS_LM_Leave__c getLeaveTypeid(string leavetype){
+        EMS_LM_Leave__c el = [select Id from EMS_LM_Leave__c where EMS_LM_Leave_Type__c = :leavetype LIMIT 1];
+        return el;
+    }
+    
 // This method is used to get the leave history of particular loggedin Employee
 @AuraEnabled(Cacheable=true)
    public static List<EMS_LM_Leave_History__c> getLeaveHistory(String stdate, String eddate, String status, String type){

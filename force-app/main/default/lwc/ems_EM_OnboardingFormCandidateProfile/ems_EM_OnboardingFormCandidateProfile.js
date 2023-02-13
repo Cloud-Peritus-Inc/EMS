@@ -62,7 +62,7 @@ const maskPassportNumber = value => {
 export default class LightningExampleAccordionMultiple extends LightningElement {
   onboardingformId
   activeSections = ['Profile'];
-  activeSectionsMessage = '';
+  activeSectionsConfirm = ['Profile','Company Information'];
   isPersonaldetails = true;
   isShowPersonalDetails = true;
   isIdentifyDetails = false;
@@ -82,6 +82,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   isWorkExperienceCheckbox = false;
   isCompanyInformationValueChecked = false;
   isConfirmSubmit = false;
+  buttonDisable = false;
 
 
   handleSectionToggle(event) {
@@ -169,6 +170,10 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       this.isIdentifyDetails = false;
       this.isAddressDetails = false;
       this.isCompanyInformation = false;
+      if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+      {
+        this.buttonDisable = true;
+      }
     }
     else if (seletedDetails === "Company Information") {
       this.isCompanyInformation = true;
@@ -182,6 +187,13 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       this.isOtherCertifications = false;
       this.isWorkExperience = false;
       this.isConfirm = false;
+      if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+      {
+        this.buttonDisable = true;
+      }
+      else{
+        this.buttonDisable = false;
+      }
     }
   }
 
@@ -1902,34 +1914,76 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
         this.isPersonalUpdateCheckbox = true;
         console.log('check box',this.isPersonalUpdateCheckbox);
         updateOnBoardingRequest(this);  
+        if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+        {
+          this.buttonDisable = true;
+        }
+        else{
+          this.buttonDisable = false;
+        }
       }
     }
     if(this.isIdentifyDetails){
       if(this.selectStep2()){
         this.isIdentifyDetailsCheckbox = true;
-        updateOnBoardingRequest(this);      
+        updateOnBoardingRequest(this); 
+        if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+        {
+          this.buttonDisable = true;
+        }
+        else{
+          this.buttonDisable = false;
+        }    
       }
     }
   if(this.isAddressDetails){
     if(this.selectStep3()){
       this.isAddressDetailsCheckbox = true;
       updateOnBoardingRequest(this); 
+      if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+        {
+          this.buttonDisable = true;
+        }
+        else{
+          this.buttonDisable = false;
+        }
     }
     }
   if(this.isEducationDetails){
    if(this.selectStep4()) {  
     this.isEducationDetailsCheckbox = true;
       updateOnBoardingRequest(this);
+      if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+        {
+          this.buttonDisable = true;
+        }
+        else{
+          this.buttonDisable = false;
+        }
     }
   }
   if(this.isOtherCertifications){
     this.isOtherCertificationsCheckbox = true;
     updateOnBoardingRequest(this);
+    if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+        {
+          this.buttonDisable = true;
+        }
+        else{
+          this.buttonDisable = false;
+        }
   }
   if(this.isWorkExperience){
     if(this.selectStep5()){
      this.isWorkExperienceCheckbox = true;
     updateOnBoardingRequest(this);
+    if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+        {
+          this.buttonDisable = true;
+        }
+        else{
+          this.buttonDisable = false;
+        }
   }
 }
   }
@@ -1940,6 +1994,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     this.readonlyfield = true;
     updateOnBoardingRequest(this);
     displayShowtoastMessage('Success','Onboarding Form Submitted Successfully','success',this);
+    this.buttonDisable = true;
   }
   else{
     const even = new ShowToastEvent({

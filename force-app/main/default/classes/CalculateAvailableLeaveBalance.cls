@@ -65,9 +65,12 @@ public class CalculateAvailableLeaveBalance implements TriggerAction.AfterInsert
             if(contactMap.containsKey(leaveCreditRec.EMS_LM_Employee__c)){
               contact contactRec =  contactMap.get(leaveCreditRec.EMS_LM_Employee__c);
                 String leaveTypeRec = leaveCreditRec.Leave_Type_Name__c;
+                system.debug('====='+leaveTypeRec);
+                 system.debug('====='+contactRec.EMS_LM_No_Of_Leaves_Credit__c);
+                 system.debug('====='+leaveCreditRec.EMS_LM_Leaves_Credited__c);
                 Switch on leaveTypeRec{
                     when 'Annual Leave'{
-                        contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;
+                        contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c != null ? contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
                     }
                     when 'Compensatory Off'{
                         contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c = contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;

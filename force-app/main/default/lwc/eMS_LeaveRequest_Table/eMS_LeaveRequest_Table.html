@@ -57,7 +57,6 @@
 								title='close' data-key={leave.Id} onclick={showModalRejectBox}>
 							</lightning-icon>
 							</template>
-
 						</td>
 
 						<!-- APPROVE POP-UP-->
@@ -134,7 +133,7 @@
 			</tbody>
 		</table>
 		<div class="slds-p-around_xx-small textAlign">
-			<button class="slds-button " onclick={handleApproveAllNavigation1} if:false={isViewAll}> View All</button>
+			<button class="slds-button " onclick={handlebulkNavigation} if:false={isViewAll}> View All</button>
 		</div>
 	</lightning-card>
 </template>

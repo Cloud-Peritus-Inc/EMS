@@ -1,150 +1,134 @@
-<!-- This component is used to show the Leave History in My requests Tab For current Logged in Employee  -->
+<!--
+  @description       : This component is used to show the Leave History in My requests Tab For current Logged in Employee
+  @author            : Pavan
+  @group             : 
+  @last modified on  : 01-02-2023
+  @last modified by  : Pavan 08-02-2023
+-->
 <template>
-
-
-	<!-- sldsValidatorIgnore -->
-	<lightning-card>
-		<lightning-layout multiple-rows>
-			<lightning-layout-item padding="around-small" size="3">
-				<div>
-					<lightning-input type="Date" label="Start Date" value={startDate} onchange={startdatechange}>
-					</lightning-input>
-				</div>
-			</lightning-layout-item>
-			<lightning-layout-item padding="around-small" size="3">
-				<div>
-					<lightning-input type="Date" label="End Date" value={endDate} onchange={enddatechange}>
-					</lightning-input>
-				</div>
-			</lightning-layout-item>
-			<lightning-layout-item padding="around-small" size="3">
-				<div>
-					<lightning-combobox name="leavetype" label="Leave Type" placeholder="Select Leave Type"
-						options={lOptions} onchange={handleChange}>
-					</lightning-combobox>
-				</div>
-			</lightning-layout-item>
-			<lightning-layout-item padding="around-small" size="3">
-				<div>
-					<lightning-combobox name="leavestatus" label="Leave Status" placeholder="Select Leave Status"
-						options={lStatus} onchange={statusChange}>
-					</lightning-combobox>
-				</div>
-			</lightning-layout-item>
-		</lightning-layout>
-		<!--<lightning-datatable key-field="id" data={datahistory} columns={columns} onclick={handleRowAction}>
-      </lightning-datatable>-->
-		<template if:true={showdata}>
-			<lightning-card>
-				<table class="slds-table slds-table_bordered fixed_header">
-					<thead>
-						<tr class="slds-line-height_reset">
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Leave Type">Leave Type</div>
-							</th>
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Leave Start Date">Leave Start Date</div>
-							</th>
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Leave End Date">Leave End Date</div>
-							</th>
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Leave Duration">Leave Duration</div>
-							</th>
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Reason">Reason</div>
-							</th>
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Approver">Approver</div>
-							</th>
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Leave Status">Leave Status</div>
-							</th>
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Approved On">Approved On</div>
-							</th>
-							<th class="slds-is-resizable" scope="col">
-								<div class="slds-truncate" title="Actions">Actions</div>
-							</th>
-							<!--th class="slds-is-resizable slds-cell_action-mode" scope="col" style="width:3.25rem">
-								<div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
-							</th-->
-						</tr>
-					</thead>
-					<tbody>
-						<template for:each={datahistory} for:item="Req">
-							<tr key={Req.Id}>
-								<th scope="col">
-									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Leave_Type_Name__c }</div>
-								</th>
-								<th scope="col">
-									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Leave_Start_Date__c}</div>
-								</th>
-								<th scope="col">
-									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Leave_End_Date__c}</div>
-								</th>
-								<th scope="col">
-									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Leave_Duration__c}</div>
-								</th>
-								<th scope="col">
-									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Reason__c}</div>
-								</th>
-								<th scope="col">
-									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Final_Approver__c}</div>
-								</th>
-								<th scope="col">
-									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Status__c}</div>
-								</th>
-								<th scope="col">
-									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Approved_On__c}</div>
+	<div class="font">
+		<lightning-card>
+			<lightning-layout multiple-rows>
+				<lightning-layout-item padding="around-small" size="3">
+					<div>
+						<lightning-input type="Date" label="Start Date" value={startDate} onchange={startdatechange}>
+						</lightning-input>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="3">
+					<div>
+						<lightning-input type="Date" label="End Date" value={endDate} onchange={enddatechange}>
+						</lightning-input>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="3">
+					<div>
+						<c-multi-select-picklist if:true={leaveTypeValues} options={leaveTypeValues}
+							onvaluechange={handleTypeValueChange} label="Leave Type" onchange={statusChange}>
+						</c-multi-select-picklist>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="3">
+					<div>
+						<c-multi-select-picklist if:true={picklistValues} options={picklistValues}
+							onvaluechange={handleValueChange} label="Leave Status" onchange={statusChange}>
+						</c-multi-select-picklist>
+						<!--c-multi-select-picklist options={selectedList} label="Leave Status"></c-multi-select-picklist-->
+					</div>
+				</lightning-layout-item>
+			</lightning-layout>
+			<template if:true={showdata}>
+				<lightning-card>
+					<table>
+						<thead>
+							<tr style="border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4">
+								<th style="padding:9px">
+									<div title="Leave Type">Leave Type</div>
 								</th>
 								<th>
-									<lightning-button variant="brand" label="View" onclick={handleView}
-										data-id={Req.Id}>
-									</lightning-button> &nbsp;
-									<lightning-button variant="Success" label="Edit" onclick={handleEdit}
-										data-id={Req.Id} disabled={Req.disableButton}>
-									</lightning-button>&nbsp;
-									<lightning-button variant="destructive" label="Cancel" onclick={handleCancel}
-										data-id={Req.Id} disabled={Req.disableButton}>
-									</lightning-button>
+									<div title="Leave Start Date">Leave Start Date</div>
 								</th>
-								<!--th class="slds-cell_action-mode" role="gridcell">
-                    <lightning-button-menu alternative-text="Show menu" icon-name="utility:threedots_vertical"
-                      variant="container" menu-alignment="right" onclick={handleCancelButton}
-                      data-value={Req.EMS_LM_Status__c} data-record-id={Req.Id}>
-                      <template if:true={showcancelbutton}>
-                        <lightning-menu-item value="Cancel" label="Cancel" onclick={handleConfirmClick}
-                          data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
-                          data-record-id={Req.Id}></lightning-menu-item>
-                      </template>
-                    </lightning-button-menu>
-                  </th-->
+								<th>
+									<div title="Leave End Date">Leave End Date</div>
+								</th>
+								<th>
+									<div title="Leave Duration">Leave Duration</div>
+								</th>
+								<th>
+									<div title="Reason">Reason</div>
+								</th>
+								<th>
+									<div title="Approver">Approver</div>
+								</th>
+								<th>
+									<div title="Leave Status">Leave Status</div>
+								</th>
+								<th>
+									<div title="Approved On">Approved On</div>
+								</th>
+								<th>
+									<div title="Actions">Actions</div>
+								</th>
 							</tr>
-						</template>
-					</tbody>
-				</table>
-			</lightning-card>
+						</thead>
+						<tbody>
+							<template for:each={datahistory} for:item="Req">
+								<tr key={Req.Id} style="border-bottom:1px solid #d4d4d4">
+									<td style="padding:15px">
+										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											{Req.EMS_LM_Leave_Type_Name__c }</div>
+									</td>
+									<td>
+										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											{Req.EMS_LM_Leave_Start_Date__c}</div>
+									</td>
+									<td>
+										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											{Req.EMS_LM_Leave_End_Date__c}</div>
+									</td>
+									<td>
+										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											{Req.EMS_LM_Leave_Duration__c}</div>
+									</td>
+									<td>
+										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											{Req.EMS_LM_Reason__c}</div>
+									</td>
+									<td>
+										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											{Req.EMS_LM_Current_Approver__c}</div>
+									</td>
+									<td>
+										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											{Req.EMS_LM_Status__c}</div>
+									</td>
+									<td>
+										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											{Req.EMS_LM_Approved_On__c}</div>
+									</td>
+									<td>
+										<lightning-button variant="brand" label="View" onclick={handleView}
+											data-id={Req.Id}>
+										</lightning-button> &nbsp;
+										<lightning-button variant="Success" label="Edit" onclick={handleEdit}
+											data-id={Req.Id} disabled={Req.disableButton}>
+										</lightning-button>&nbsp;
+										<lightning-button variant="destructive" label="Cancel" onclick={handleCancel}
+											data-id={Req.Id} disabled={Req.disableButton}>
+										</lightning-button>
+									</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</lightning-card>
+			</template>
+		</lightning-card>
+		<template if:true={nodata}>
+			<h2> No Requests Found. </h2>
 		</template>
-	</lightning-card>
-	<template if:true={nodata}>
-		<h2> No Requests Found. </h2>
-	</template>
-    <lightning-card  variant="Narrow"  title="Hello" icon-name="standard:account">
-  <lightning-combobox label="Select Accounts" 
-                      placeholder="Select Accounts" 
-                      options={options}
-                      value={selectedValues}
-                      onchange={handleChange}
-                      multiple>
-  </lightning-combobox>
-    </lightning-card>
+		<template if:true={showApplyLeaveEdit}>
+			<c-e-m-s-_-l-m-_-editapply-new oncloseleave={cancelHandler} selecteditrecordid ={selectEditRecordId}></c-e-m-s-_-l-m-_-editapply-new>
+		</template>
+	</div>
 </template>

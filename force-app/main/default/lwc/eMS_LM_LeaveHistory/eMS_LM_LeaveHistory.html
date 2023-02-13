@@ -13,11 +13,11 @@
 					<th class="" scope="col">
 						<div class="slds-truncate">Status</div>
 					</th>
-					<template if:true={isActions}>
+					<!--template if:true={isActions}>
 						<th class="" scope="col">
 							<div class="slds-truncate">Actions </div>
 						</th>
-					</template>
+					</template-->
 				</tr>
 			</thead>
 			<tbody>
@@ -36,7 +36,7 @@
 						<th scope="col">
 							<div class="slds-truncate dv-dynamic-width">{Req.EMS_LM_Status__c}</div>
 						</th>
-						<template if:true={isActions}>
+						<!--template if:true={isActions}>
 							<th>
 								<lightning-button variant="brand" label="View" onclick={handleView} data-id={Req.Id}>
 								</lightning-button> &nbsp;
@@ -46,7 +46,7 @@
 									disabled={Req.disableButton}>
 								</lightning-button>
 							</th>
-						</template>
+						</template-->
 					</tr>
 				</template>
 			</tbody>

@@ -34,20 +34,29 @@ public without sharing class LeaveRequestApproveHandler {
                                                              Approver_2_Approved_Comments__c,
                                                              Approver_3_Approved_Comments__c,
                                                              EMS_LM_Approver__c,
+                                                       		 EMS_LM_Approver__r.LastName,
+                                                       	     EMS_LM_Approver__r.FirstName,
                                                              EMS_LM_2nd_Approver__c,
-                                                             Approver_3__c
+                                                       		 EMS_LM_2nd_Approver__r.LastName,
+                                                       	     EMS_LM_2nd_Approver__r.FirstName,
+                                                       		 EMS_LM_Current_Approver__c,
+                                                             Approver_3__c,
+                                                             Approver_3__r.LastName,
+                                                             Approver_3__r.FirstName
                                                        FROM EMS_LM_Leave_History__c
                                                        WHERE Id =:leaveRequestId]) {
             //Approver 1
             if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_Approver__c) {
-            	leaveReqStatus.EMS_LM_Status__c = String.isNotBlank(leaveReqStatus.EMS_LM_2nd_Approver__c) ? LeaveRequestConstant.APPROVER_2_WAITING : LeaveRequestConstant.APPROVED;
+            	leaveReqStatus.EMS_LM_Status__c = String.isNotBlank(leaveReqStatus.EMS_LM_2nd_Approver__c) ? LeaveRequestConstant.APPROVER_3_WAITING : LeaveRequestConstant.APPROVED;
             	leaveReqStatus.Approver_1_Approved_Comments__c = comments;
+                leaveReqStatus.EMS_LM_Current_Approver__c = String.isNotBlank(leaveReqStatus.EMS_LM_2nd_Approver__c) ? leaveReqStatus.EMS_LM_2nd_Approver__r.LastName + ' ' +  leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName : leaveReqStatus.EMS_LM_Approver__r.LastName + ' ' + leaveReqStatus.EMS_LM_Approver__r.FirstName;
             	updatedLeaveReqList.add(leaveReqStatus); 
             }
             //Approver 2
-            else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_2nd_Approver__c && leaveReqStatus.EMS_LM_Status__c != LeaveRequestConstant.APPROVER_3_WAITING){
-                leaveReqStatus.EMS_LM_Status__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? LeaveRequestConstant.APPROVER_3_WAITING: LeaveRequestConstant.APPROVED;
+            else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_2nd_Approver__c ) {
+                leaveReqStatus.EMS_LM_Status__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? LeaveRequestConstant.APPROVER_4_WAITING: LeaveRequestConstant.APPROVED;
                 leaveReqStatus.Approver_2_Approved_Comments__c = comments;
+                leaveReqStatus.EMS_LM_Current_Approver__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? leaveReqStatus.Approver_3__r.LastName + leaveReqStatus.Approver_3__r.FirstName : leaveReqStatus.EMS_LM_2nd_Approver__r.LastName + ' ' +  leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName ;
                 updatedLeaveReqList.add(leaveReqStatus); 
             }
             //Approver 3
@@ -100,7 +109,7 @@ public without sharing class LeaveRequestApproveHandler {
             	bulkupdatedLeaveReqList.add(bulkleaveReqApproval); 
             }
             //Approver 2
-            else if (LeaveRequestConstant.LOGGEDIN_USERID == bulkleaveReqApproval.EMS_LM_2nd_Approver__c && bulkleaveReqApproval.EMS_LM_Status__c != LeaveRequestConstant.APPROVER_3_WAITING){
+            else if (LeaveRequestConstant.LOGGEDIN_USERID == bulkleaveReqApproval.EMS_LM_2nd_Approver__c ){
                 bulkleaveReqApproval.EMS_LM_Status__c = String.isNotBlank(bulkleaveReqApproval.Approver_3__c) ? LeaveRequestConstant.APPROVER_3_WAITING: LeaveRequestConstant.APPROVED;
                 bulkleaveReqApproval.Approver_2_Approved_Comments__c = comments;
                 bulkupdatedLeaveReqList.add(bulkleaveReqApproval); 
