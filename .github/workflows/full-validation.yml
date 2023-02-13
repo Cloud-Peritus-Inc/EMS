@@ -26,8 +26,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Building the Error Report
-        run: sh /home/ec2-user/report.sh ${{ github.event.inputs.choice }}
+      - name: Running the Test Report
+        run: sfdx force:apex:test:run --testlevel RunLocalTests -u ${{ github.event.inputs.choice }} --resultformat json > /tmp/deploy.log
+#         run: sh /home/ec2-user/report.sh ${{ github.event.inputs.choice }}
+
+  Generating-Report:
+    runs-on: self-hosted
+    steps:
+      - name: Generating Report
+        run : sh /home/ec2-user/report.sh
         
-      - name: Access the report here
-        run : echo "http://ec2-184-73-72-245.compute-1.amazonaws.com/report.html"
+        
