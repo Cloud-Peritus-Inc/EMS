@@ -10,9 +10,9 @@
 	<div class="font">
 		<lightning-card>
 			<div slot="actions">
-				<lightning-button variant="destructive" label="Select All" title="Select All" onclick={handleSelectAll}>
+				<!--lightning-button variant="destructive" label="Select All" title="Select All" onclick={handleSelectAll}>
 				</lightning-button>
-				&nbsp;&nbsp;
+				&nbsp;&nbsp;-->
 				<lightning-button variant="success" label="Approve All" title="Approve ALl" onclick={handleApproveAll}>
 				</lightning-button>
 				&nbsp;&nbsp;
@@ -59,7 +59,10 @@
 						<thead>
 							<tr style="border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4">
 								<th style="padding:12px">
-									<div> </div>
+									<div>
+										<lightning-input type="checkbox" variant="standard" label="Select All"
+											onclick={handleSelectAll}></lightning-input>
+									</div>
 								</th>
 								<th>
 									<div title="User Name">Employee Name</div>
