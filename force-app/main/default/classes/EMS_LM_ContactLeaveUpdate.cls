@@ -23,11 +23,11 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
    if(u.ContactId !=null){ // if contact Id is not null we will retrieve the data using User contact Id
    set<String> i = new set<String>();
    List<EMS_LM_Leave_Credit__c> i1 = new List<EMS_LM_Leave_Credit__c>();
-   i1 = [SELECT EMS_LM_Select_Leave_Type__c
+   i1 = [SELECT Leave_Type_Name__c
                FROM EMS_LM_Leave_Credit__c
-               WHERE EMS_LM_Select_Leave_Type__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :u.ContactId ORDER BY EMS_LM_Select_Leave_Type__c ASC];
+               WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :u.ContactId ORDER BY Leave_Type_Name__c ASC];
                for(EMS_LM_Leave_Credit__c i2:i1){
-                  i.add(i2.EMS_LM_Select_Leave_Type__c);
+                  i.add(i2.Leave_Type_Name__c);
                }
    for(String s1 : i){
       s.add(s1);
@@ -39,11 +39,11 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
    set<String> i = new set<String>();
    List<EMS_LM_Leave_Credit__c> i1 = new List<EMS_LM_Leave_Credit__c>();
    contact c = [Select Id from contact where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid];
-   i1 = [SELECT EMS_LM_Select_Leave_Type__c
+   i1 = [SELECT Leave_Type_Name__c
                FROM EMS_LM_Leave_Credit__c
-               WHERE EMS_LM_Select_Leave_Type__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :c.Id ORDER BY EMS_LM_Select_Leave_Type__c ASC];
+               WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :c.Id ORDER BY Leave_Type_Name__c ASC];
                for(EMS_LM_Leave_Credit__c i2:i1){
-                  i.add(i2.EMS_LM_Select_Leave_Type__c);
+                  i.add(i2.Leave_Type_Name__c);
                }
                for(String s1 : i){
                   s.add(s1);
@@ -234,7 +234,7 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
 }
 //this method is used to get the all Leave Hidtory records in the company to show in Admin View
 @AuraEnabled(Cacheable=true)
-   public static List<EMS_LM_Leave_History__c> getAdminLeaveHistory(String name,String stdate, String eddate, String status){
+   public static List<EMS_LM_Leave_History__c> getAdminLeaveHistory(String name,String stdate, String eddate, List<String> status){
       List<EMS_LM_Leave_History__c> lh = new List<EMS_LM_Leave_History__c>();
       String query = 'Select Id, EMS_LM_Leave_Type_Name__c,EMS_LM_Leave_Start_Date__c,EMS_LM_Final_Approver__c,' + 
       'EMS_LM_Leave_End_Date__c,EMS_LM_Leave_Duration__c,EMS_LM_Reason__c,EMS_LM_Status__c,EMS_LM_Approved_On__c,EMS_LM_Contact__R.Name From EMS_LM_Leave_History__c where CreatedDate !=null ';
@@ -249,8 +249,8 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
          query = query + ' AND EMS_LM_Leave_End_Date__c <= :d1';
       } 
       system.debug(query); 
-      if(Status !='' && Status != null){
-         query = query + ' AND EMS_LM_Status__c = :Status';
+      if(status.size() > 0){
+         query = query + ' AND EMS_LM_Status__c IN :status';
       } 
       system.debug(query); 
       if(name !='' && name != null){  
