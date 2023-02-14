@@ -19,3 +19,23 @@
     overflow: auto;
     height: 200px;
 }
+
+.progress-circle {
+  width: 200px;
+  height: 200px;
+}
+
+.parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.child1 {
+    width: 60%;
+}
+
+.child2 {
+    width: 40%;
+	padding-bottom: 10px;
+}
