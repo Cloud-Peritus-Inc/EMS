@@ -27,10 +27,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   endDate = '';//To filter Leave History end date = '2022-12-20 00:00:00'
   startDate = '';//To filter Leave History start date  = '2022-01-20 00:00:00'
   @track datahistory = [];//to pass data to Leave history table
-  value = 'Work From Home ';
-  sValue = 'Approver 1 Pending';
+  value = '';
+  sValue = '';
   @api recordId;
-  multipleApprovals = [];
+  @track multipleApprovals = [];
   approveAllComments;
   rejectAllComments;
   isShowModalApproveAll = false;
@@ -41,6 +41,9 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   rejectComments
   selectedRecordApproveId;
   selectedRecordRejectId;
+  picklistValues;
+  leaveTypeValues;
+
   @track selectedLeaveReqIds = [];
 
   @track currentPageReference;
@@ -146,7 +149,6 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     console.log('SELECTED RECORD : ');
     const selectedRecordCheckboxId = event.currentTarget.dataset.id;
     console.log('### selectedRecordCheckboxId : ', selectedRecordCheckboxId);
-
     if (!event.target.checked) {
       const index = this.multipleApprovals.indexOf(selectedRecordCheckboxId);
       this.multipleApprovals.splice(index, 1);
@@ -155,6 +157,34 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     }
     console.log('###  multipleApprovals Child: ', this.multipleApprovals);
   }
+
+  //TO SELECT ALL THE CHECKBOXES
+  handleSelectAll(event) {
+    console.log('OUTPUT : ');
+    if (event.target.checked) {
+      const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+      const selectedRecordIds = [];
+      checkboxElements.forEach(element => {
+        element.checked = true;
+        //console.log('### element.checked : ', element.checked);
+        //console.log('### element.dataset : ', JSON.stringify(element.dataset));
+        selectedRecordIds.push(element.dataset);
+        //console.log('### selectedRecordIds : ', selectedRecordIds);
+      });
+      console.log('Selected Record Ids:', selectedRecordIds);
+      this.multipleApprovals = selectedRecordIds.map(item => item.id);
+      console.log('### multipleApprovals', this.multipleApprovals);
+    } else if (!event.target.checked) {
+      const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+      //const selectedRecordIds = [];
+      checkboxElements.forEach(element => {
+        element.checked = false;
+        this.multipleApprovals = [];
+        console.log('### else multipleApprovals : ', this.multipleApprovals);
+      });
+    }
+  }
+
 
   //Approve All
   handleApproveAllComments(event) {
@@ -277,22 +307,6 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         actionName: 'view',
       },
     });
-  }
-
-  //TO SELECT ALL THE CHECKBOXES
-  handleSelectAll(event) {
-    console.log('OUTPUT : ');
-    const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
-    const selectedRecordIds = [];
-    checkboxElements.forEach(element => {
-      element.checked = true;
-      //console.log('### element.checked : ', element.checked);
-      //console.log('### element.dataset : ', JSON.stringify(element.dataset));
-      selectedRecordIds.push(element.dataset);
-      console.log('### selectedRecordIds : ',selectedRecordIds);
-    });
-
-    console.log('Selected Record Ids:', selectedRecordIds);
   }
 
   handleCancelButton(event) {

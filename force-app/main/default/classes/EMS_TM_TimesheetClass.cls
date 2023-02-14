@@ -35,7 +35,7 @@ public class EMS_TM_TimesheetClass {
                 FROM User WHERE Id = :userId];
         if (user.IT_Admin_Access__c == true) {
             ITadminacc = true;
-            List<User> users = [SELECT Id, Username FROM User];
+            List<User> users = [SELECT Id, FirstName, LastName, Name FROM User];
             for (User u : users) {
                 idList.add(u.Id);
                 }
@@ -463,15 +463,15 @@ List<EMS_Timesheet__c> timesheetList = [SELECT EMS_TM_Total__c,
                                                              ORDER BY enddate__c DESC
                                                              LIMIT 5];
                                                              //return timesheetList;
-     Decimal currentWeekData =[ SELECT EMS_TM_Total__c,
-                                                    enddate__c,
+        List<EMS_Timesheet__c> emlsheet = new List<EMS_Timesheet__c>();
+     emlsheet =[ SELECT EMS_TM_Total__c,enddate__c,
                                                     OwnerId 
                                                     FROM EMS_Timesheet__c 
                                                     WHERE enddate__c = THIS_WEEK
-                                                    AND OwnerId =: UserInfo.getUserId()].EMS_TM_Total__c;
+                                                    AND OwnerId =: UserInfo.getUserId()];
                 wrappergetTimeSheetHours newgethours = new wrappergetTimeSheetHours();
-                                        newgethours.timeSheetrecord = currentWeekData;
-                                        newgethours.timeSheetRecordsList =timesheetList;
+                                        newgethours.timeSheetrecord = emlsheet.size()>0? emlsheet[0].EMS_TM_Total__c : 0;
+                                        newgethours.timeSheetRecordsList = timesheetList;
                                         return newgethours;
  }  
     public class wrapperAP {

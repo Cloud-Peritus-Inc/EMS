@@ -24,11 +24,11 @@ public without sharing class EMS_LM_EditLeaveRequest {
    if(u.ContactId !=null){ // if contact Id is not null we will retrieve the data using User contact Id
    set<String> i = new set<String>();
    List<EMS_LM_Leave_Credit__c> i1 = new List<EMS_LM_Leave_Credit__c>();
-   i1 = [SELECT EMS_LM_Select_Leave_Type__c
+   i1 = [SELECT Leave_Type_Name__c
                FROM EMS_LM_Leave_Credit__c
-               WHERE EMS_LM_Employee__c = :u.ContactId ORDER BY EMS_LM_Select_Leave_Type__c ASC];
+               WHERE EMS_LM_Employee__c = :u.ContactId ORDER BY Leave_Type_Name__c ASC];
                for(EMS_LM_Leave_Credit__c i2:i1){
-                  i.add(i2.EMS_LM_Select_Leave_Type__c);
+                  i.add(i2.Leave_Type_Name__c);
                }
    for(String s1 : i){
       s.add(s1);
@@ -40,11 +40,11 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
    set<String> i = new set<String>();
    List<EMS_LM_Leave_Credit__c> i1 = new List<EMS_LM_Leave_Credit__c>();
    contact c = [Select Id from contact where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid];
-   i1 = [SELECT EMS_LM_Select_Leave_Type__c
+   i1 = [SELECT Leave_Type_Name__c
                FROM EMS_LM_Leave_Credit__c
-               WHERE EMS_LM_Employee__c = :c.Id ORDER BY EMS_LM_Select_Leave_Type__c ASC];
+               WHERE EMS_LM_Employee__c = :c.Id ORDER BY Leave_Type_Name__c ASC];
                for(EMS_LM_Leave_Credit__c i2:i1){
-                  i.add(i2.EMS_LM_Select_Leave_Type__c);
+                  i.add(i2.Leave_Type_Name__c);
                }
                for(String s1 : i){
                   s.add(s1);

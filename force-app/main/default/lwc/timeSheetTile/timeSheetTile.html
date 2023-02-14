@@ -1,14 +1,26 @@
 <template>
             <div class="homeCard">
-                <div class="slds-text-title_bold firstBox slds-p-around_x-small">
-                    Time
-                </div>
-                <div class="slds-p-around_x-small secondBox">
-                    <lightning-icon icon-name="utility:clock" alternative-text="Time" size="medium" title="Time"></lightning-icon>
-                </div>
-                <div class="slds-p-around_x-small thirdBox">
-                    Previous Week
-                </div>
+                 <lightning-card >
+      
+                        <div class="parent">
+                                <div class="child1">
+                                   <center>  <canvas class="canvas" width={width} height={height}></canvas> </center>
+                                </div>
+                                <div class="child2" style="padding-right:5px;">
+                                    <font size="5"  > <b>Time entered this week </b> </font> <br/><br/>
+                                     Make sure to enter 40 hours per week to stay complaint<br/><br/>
+
+                                   <lightning-button variant="brand" label="Enter Time" title="titleName" icon-name="utility:connected_apps" onclick={handleClick}></lightning-button>
+
+                                </div>
+                            </div> 
+               
+                 <div style="padding-left:20px;"><font size="5" > <b>Previous Entered Time </b> </font></div>
+                
+
+
+
+                <template if:true={filledpastdata}>
                 <diV class="slds-p-around_x-small fourthBox">
                     <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" aria-label="Example table of Opportunities with striped rows">
                         <thead>
@@ -23,93 +35,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="slds-hint-parent">
-                            <td scope="row">
-                                <div class="slds-truncate" title="Cloudhub">
-                                1st Jan 2022
-                                </div>
-                            </td>
-                            <td>
-                                <div class="slds-truncate" title="Cloudhub">40</div>
-                            </td>
-                            
-                            </tr>
-                            
-                            <tr class="slds-hint-parent">
-                            <td scope="row">
-                                <div class="slds-truncate" title="Cloudhub">
-                                1st Jan 2022
-                                </div>
-                            </td>
-                            <td>
-                                <div class="slds-truncate" title="Cloudhub">40</div>
-                            </td>
-                            
-                            </tr>
-
-                            <tr class="slds-hint-parent">
-                            <td scope="row">
-                                <div class="slds-truncate" title="Cloudhub">
-                                1st Jan 2022
-                                </div>
-                            </td>
-                            <td>
-                                <div class="slds-truncate" title="Cloudhub">40</div>
-                            </td>
-                            
-                            </tr>
-
-                            <tr class="slds-hint-parent">
-                            <td scope="row">
-                                <div class="slds-truncate" title="Cloudhub">
-                                1st Jan 2022
-                                </div>
-                            </td>
-                            <td>
-                                <div class="slds-truncate" title="Cloudhub">40</div>
-                            </td>
-                            
-                            </tr>
-
-                            <tr class="slds-hint-parent">
-                            <td scope="row">
-                                <div class="slds-truncate" title="Cloudhub">
-                                1st Jan 2022
-                                </div>
-                            </td>
-                            <td>
-                                <div class="slds-truncate" title="Cloudhub">40</div>
-                            </td>
-                            
-                            </tr>
-
-                            <tr class="slds-hint-parent">
-                            <td scope="row">
-                                <div class="slds-truncate" title="Cloudhub">
-                                1st Jan 2022
-                                </div>
-                            </td>
-                            <td>
-                                <div class="slds-truncate" title="Cloudhub">40</div>
-                            </td>
-                            
-                            </tr>
-
-                            <tr class="slds-hint-parent">
-                            <td scope="row">
-                                <div class="slds-truncate" title="Cloudhub">
-                                1st Jan 2022
-                                </div>
-                            </td>
-                            <td>
-                                <div class="slds-truncate" title="Cloudhub">40</div>
-                            </td>
-                            
-                            </tr>
-                            
+                            <template for:each={filledpastdata} for:item="timerec">
+                                <tr key={timerec.Id}  class="slds-hint-parent">
+                                
+                                    <td key={timerec.Id} scope="row">
+                                        <lightning-formatted-date-time value={timerec.enddate__c} month="numeric"
+                                            day="numeric" year="numeric"></lightning-formatted-date-time>					
+                                    </td>
+                                    <td> {timerec.EMS_TM_Total__c}</td>
+                                </tr>
+                            </template>
                         </tbody>
                         </table>
+                        <div class="uiOutputText footer" style="padding:10px;" >
+                        <center> <a href=""  ><font class="uiOutputText" onclick={handleClick}>View All Timesheets</font></a> </center>
+                        </div>
+                        
                 </diV>
+                </template>
+                 </lightning-card>
             </div>
             
         
