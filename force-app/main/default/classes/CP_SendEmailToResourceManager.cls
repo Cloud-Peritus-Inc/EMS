@@ -20,7 +20,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
     
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id,name, EMS_EM_JD__c, Resource_Manager__c, Resource_Manager__r.Personal_Email__c, Resource_Manager__r.name, Designation__r.name FROM Contact WHERE EMS_EM_JD__c != NULL AND Resource_Manager__c != NULL AND RecordType.Name = \'Applicant\'' 
+        	'SELECT id,name, EMS_EM_JD__c, Resource_Manager__c, Resource_Manager__r.Official_Mail__c, Resource_Manager__r.name, Designation__r.name FROM Contact WHERE EMS_EM_JD__c != NULL AND Resource_Manager__c != NULL AND RecordType.Name = \'Applicant\'' 
         );
     }
     
@@ -35,6 +35,8 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
                 updatedContactList.add(contactRec);
                 Task t = new Task();
                 t.OwnerId = itGroup.Id;
+                //System.debug('Resource manager 1 => '+Resource_Manager__r.id);
+                System.debug('Resource manager 2 => '+contactRec.Resource_Manager__r.id);
                 t.Subject = 'Conduct One to One Onboarding for the new employee';
                 t.Status = 'Open';
                 t.Priority = 'High';
@@ -59,7 +61,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
         List<String> sendTo = new List<String>();
         for(Contact con : finalContactList){
             Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-            sendTo.add(con.Resource_Manager__r.Personal_Email__c);
+            sendTo.add(con.Resource_Manager__r.Official_Mail__c);
         	message.toAddresses = sendTo;
             message.setSubject('Cloud Peritus :  Upcoming Employee Onboarding');
             String body = 'Dear '+ con.Resource_Manager__r.name+', <br/><br/>';
