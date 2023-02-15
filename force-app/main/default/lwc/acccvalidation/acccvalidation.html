@@ -67,7 +67,7 @@
         <div class="slds-p-around_medium slds-large-size_3-of-12">
             <template if:true={managerView}>
                  <label for="fieldid">Employee Name</label>
-                <c-ems-custom-look-up obj-name="User" 
+                <c-ems-custom-look-up obj-name="User" users
                     search-placeholder="Search User"
                     icon-name="standard:user" onlookupselected={handleUserselection}
                     onremove={handleUserRemove} 
@@ -206,7 +206,7 @@
                             </lightning-record-edit-form>
                         </template>
                         <template if:false={it.value.projectValueAvailable}>
-                            <c-ems-custom-look-up obj-name="EMS_TM_Project__c"
+                            <c-ems-custom-look-up obj-name="EMS_TM_Project__c" users={falseVariable}
                                 search-placeholder="Search Projects" aria-required
                                 icon-name="custom:custom55" onlookupselected={handleProjectselection}
                                 onremove={handleProjectRemove} filter={projectLookUpFilter} 

@@ -7,5 +7,5 @@
         <userField>Contact</userField>
     </accessMappings>
     <name>Assignment Shareing</name>
-    <profiles>employee</profiles>
+    <profiles>employee - resource(community)</profiles>
 </SharingSet>

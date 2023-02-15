@@ -7,6 +7,5 @@
  ISPICKVAL(EMS_LM_Leave_Type_Name__c, &apos;Maternity Leave&apos;),
   EMS_LM_Contact__r.EMS_LM_Maternity_Leave__c = false
 )</errorConditionFormula>
-    <errorDisplayField>EMS_LM_Leave_Type_Name__c</errorDisplayField>
-    <errorMessage>&quot;By default maternity leave is disabled for all the employees. If you wish to enable maternity leave, please email HR 8 weeks prior to the leave start date&quot;</errorMessage>
+    <errorMessage>To avail the maternity leave, please request your HR. Maternity leave has to be applied eight weeks before the leave start date.</errorMessage>
 </ValidationRule>
