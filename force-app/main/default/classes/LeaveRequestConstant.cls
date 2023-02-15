@@ -8,4 +8,5 @@ public class LeaveRequestConstant {
      public static final String CANCELLED = 'Cancelled';
      public static final String REJECTED = 'Rejected';
      public static final String WORK_FROM_HOME= 'Work from Home';
+     public static final String AUTO_APPROVED = 'Auto Approved';
 }
