@@ -26,9 +26,10 @@ export default class EmsCustomLookUp extends LightningElement {
         if (data) {
             console.log('searchTerm'+this.searchTerm);
             console.log('filetr'+this.filter);
-            console.log();
+            console.log("DATA" + data);
             this.error = undefined;
             if (this.users) {
+
                 for (let i = 0; i < data.length; i++) {
                     let item = {Id: data[i].Id,displayName: '', FirstName: data[i].FirstName, LastName: data[i].LastName}
                     this.records.push(item);
@@ -92,6 +93,7 @@ export default class EmsCustomLookUp extends LightningElement {
     }
 
     onSelect(event) {
+        
         let selectedId = event.currentTarget.dataset.id;
         let selectedName = event.currentTarget.dataset.name;
         let returnValue = {};

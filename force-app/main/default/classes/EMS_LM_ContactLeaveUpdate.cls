@@ -234,7 +234,7 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
 }
 //this method is used to get the all Leave Hidtory records in the company to show in Admin View
 @AuraEnabled(Cacheable=true)
-   public static List<EMS_LM_Leave_History__c> getAdminLeaveHistory(String name,String stdate, String eddate, List<String> status){
+   public static List<EMS_LM_Leave_History__c> getAdminLeaveHistory(String name,String stdate, String eddate,List<String> leaveType, List<String> status){
       List<EMS_LM_Leave_History__c> lh = new List<EMS_LM_Leave_History__c>();
       String query = 'Select Id, EMS_LM_Leave_Type_Name__c,EMS_LM_Leave_Start_Date__c,EMS_LM_Final_Approver__c,' + 
       'EMS_LM_Leave_End_Date__c,EMS_LM_Leave_Duration__c,EMS_LM_Reason__c,EMS_LM_Status__c,EMS_LM_Approved_On__c,EMS_LM_Contact__R.Name From EMS_LM_Leave_History__c where CreatedDate !=null ';
@@ -251,6 +251,10 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
       system.debug(query); 
       if(status.size() > 0){
          query = query + ' AND EMS_LM_Status__c IN :status';
+      } 
+      system.debug(query); 
+      if(leaveType.size() > 0){
+         query = query + ' AND EMS_LM_Leave_Type_Name__c IN :leaveType';
       } 
       system.debug(query); 
       if(name !='' && name != null){  
@@ -301,8 +305,8 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
 @AuraEnabled
     Public static Id createwfhRecord(String cId, Decimal duration, String stDate, String edDate, String reason )  
     {       
-     // EMS_LM_Leave__c el = new EMS_LM_Leave__c();
-      //el = [select Id from EMS_LM_Leave__c where EMS_LM_Leave_Type__c = :type LIMIT 1];
+      EMS_LM_Leave__c el = new EMS_LM_Leave__c();
+      el = [select Id from EMS_LM_Leave__c where EMS_LM_Leave_Type__c = :LeaveRequestConstant.WORK_FROM_HOME LIMIT 1];
       EMS_LM_Leave_History__c e = new EMS_LM_Leave_History__c();
       Date sd = date.valueOf(stDate);
       Date ed = date.valueOf(edDate);
@@ -314,9 +318,9 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
       e.EMS_LM_Status__c=LeaveRequestConstant.PENDING;
       e.EMS_LM_Reason__c = reason;
       e.EMS_LM_Day__c = 'Full Day';
-     // if(el != null){
-       //  e.EMS_LM_Leave_Type__c = el.Id ;
-     // }
+      if(el != null){
+         e.EMS_LM_Leave_Type__c = el.Id ;
+      }
       Database.insert(e);
       Id i = e.Id;
       system.debug(i);

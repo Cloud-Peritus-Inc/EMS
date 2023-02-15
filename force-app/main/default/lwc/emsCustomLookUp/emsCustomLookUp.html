@@ -28,7 +28,7 @@
                         <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
                             <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                                 <template for:each={records} for:item="record">
-                                    <li key={record.Id} onclick={onSelect} data-id={record.Id} role="presentation" data-name={record.displayName}>
+                                    <li key={record.Id} onclick={onSelect} data-id={record.Id.Id} role="presentation" data-name={record.displayName}>
                                         <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option">
                                             <lightning-icon icon-name={iconName} alternative-text={objName} title={objName} size="small"></lightning-icon>
                                             <span class="slds-truncate slds-p-left_small">{record.displayName}</span>
