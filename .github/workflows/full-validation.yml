@@ -28,10 +28,10 @@ jobs:
 
       - name: Running the Test Report
         run: sfdx force:apex:test:run --testlevel RunLocalTests -u ${{ github.event.inputs.choice }} --resultformat json > /tmp/deploy.log
-#         run: sh /home/ec2-user/report.sh ${{ github.event.inputs.choice }}
 
   Generating-Report:
     runs-on: self-hosted
+    needs : [Full-Validation]
     steps:
       - name: Generating Report
         run : sh /home/ec2-user/report.sh
