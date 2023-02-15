@@ -11,20 +11,49 @@ export default class EmsCustomLookUp extends LightningElement {
     @api name;
     @api indexId;
     @api value;
+    @api users;
     // @api recordName;
     @track _selectedName;
-    @track records;
+    @track records = [];
     @track isValueSelected;
     @track blurTimeout;
     searchTerm;
     //css
     @track boxClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-has-focus';
     @track inputClass = '';
-    @wire(lookUp, {searchTerm : '$searchTerm', myObject : '$objName', filter : '$filter'})
+    @wire(lookUp, {searchTerm : '$searchTerm', myObject : '$objName', filter : '$filter', fullName : '$users'})
     wiredRecords({ error, data }) {
         if (data) {
+            console.log('searchTerm'+this.searchTerm);
+            console.log('filetr'+this.filter);
+            console.log("DATA" + data);
             this.error = undefined;
-            this.records = data;
+            if (this.users) {
+
+                for (let i = 0; i < data.length; i++) {
+                    let item = {Id: data[i].Id,displayName: '', FirstName: data[i].FirstName, LastName: data[i].LastName}
+                    this.records.push(item);
+                }
+                this.records.forEach(record => {
+                    record.displayName = '';
+                    if (record.FirstName) {
+                        record.displayName = record.FirstName;
+                    }
+                    if (record.LastName) {
+                        record.displayName = record.displayName+' '+ record.LastName;
+                    }
+                    if (record.FirstName && record.LastName) {
+                        record.displayName = record.FirstName + ' ' + record.LastName;
+                    }
+                });
+                console.log('records ',this.records);
+            } else {
+                // this.records = data;
+                for (let i = 0; i < data.length; i++) {
+                    let item = {Id: data[i],displayName: data[i].Name, FirstName: data[i].FirstName, LastName: data[i].LastName}
+                    this.records.push(item);
+                }
+            }
         } else if (error) {
             this.error = error;
             this.records = undefined;
@@ -64,6 +93,7 @@ export default class EmsCustomLookUp extends LightningElement {
     }
 
     onSelect(event) {
+        
         let selectedId = event.currentTarget.dataset.id;
         let selectedName = event.currentTarget.dataset.name;
         let returnValue = {};
