@@ -1,16 +1,26 @@
 public class EMS_TM_GenericController {
 
     @AuraEnabled(cacheable=true)
-    public static List<sObject> search(String searchTerm, string myObject, String filter) {
+    public static List<sObject> search(String searchTerm, string myObject, String filter, Boolean fullName) {
         String myQuery = null;
         List<sObject> lookUpList = new List<sObject>();
         if(filter != null && filter != '') {
             if(searchTerm == null || searchTerm == '') {
-                myQuery = 'Select Id, Name from ' + myObject + ' Where ' + filter + ' LIMIT  5';
-                System.debug('myQueryfilter '+myQuery);
+                if (fullName) {
+                    myQuery = 'Select Id, Name, LastName, FirstName from ' + myObject + ' Where ' + filter + ' LIMIT  5';
+                    System.debug('myQueryfilter '+myQuery);
+                } else {
+                    myQuery = 'Select Id, Name from ' + myObject + ' Where ' + filter + ' LIMIT  5';
+                    System.debug('myQueryfilter '+myQuery);
+                }
             } else {
-                myQuery = 'Select Id, Name from ' + myObject + ' Where Name Like  \'%' + searchTerm + '%\' AND ' + filter + ' LIMIT  5';
-                System.debug('myQueryfilter search '+myQuery);
+                if (fullName) {
+                    myQuery = 'Select Id, Name, LastName, FirstName from ' + myObject + ' Where Name Like  \'%' + searchTerm + '%\' AND ' + filter + ' LIMIT  5';
+                    System.debug('myQueryfilter search '+myQuery);
+                } else {
+                    myQuery = 'Select Id, Name from ' + myObject + ' Where Name Like  \'%' + searchTerm + '%\' AND ' + filter + ' LIMIT  5';
+                    System.debug('myQueryfilter search '+myQuery);
+                }
             }
         } else {
             if(searchTerm == null || searchTerm == '') {
