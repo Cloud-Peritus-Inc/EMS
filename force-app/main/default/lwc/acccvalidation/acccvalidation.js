@@ -38,6 +38,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     disablePreButtons = false;
     disableNextButtons = false;
     disableSubmited = false;
+    falseVariable = false;
     assignmentRecords;
     holidayRecords;
     projectRecords;
