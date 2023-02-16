@@ -21,4 +21,11 @@
         <shortDescription>Retry Exception</shortDescription>
         <value>10</value>
     </labels>
+    <labels>
+        <fullName>Days_Consider_for_Onboarding_Taks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Days Consider for Onboarding Taks</shortDescription>
+        <value>0</value>
+    </labels>
 </CustomLabels>

@@ -8,11 +8,15 @@
     </values>
     <values>
         <field>Contact_API__c</field>
-        <value xsi:type="xsd:string">Added_to_company_email_groups_Assigned__</value>
+        <value xsi:type="xsd:string">Added_to_company_email_groups_Assigned__c</value>
     </values>
     <values>
         <field>Due_Date_Days__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Onboarding_Task__c</field>
+        <value xsi:type="xsd:string">Pre</value>
     </values>
     <values>
         <field>Task_Subject__c</field>

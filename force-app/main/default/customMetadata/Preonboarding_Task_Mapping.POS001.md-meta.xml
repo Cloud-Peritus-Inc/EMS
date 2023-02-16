@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>PRE007</label>
+    <label>POS001</label>
     <protected>false</protected>
     <values>
         <field>Assigned_To__c</field>
-        <value xsi:type="xsd:string">HR Team</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Contact_API__c</field>
-        <value xsi:type="xsd:string">Conducted_One_to_One_Onboarding_session_c</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Due_Date_Days__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">7.0</value>
     </values>
     <values>
         <field>Onboarding_Task__c</field>
@@ -20,14 +20,14 @@
     </values>
     <values>
         <field>Task_Subject__c</field>
-        <value xsi:type="xsd:string">Conduct One to One Onboarding for the new employee</value>
+        <value xsi:type="xsd:string">Update your Emergency Details</value>
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Queue</value>
+        <value xsi:type="xsd:string">Contact</value>
     </values>
     <values>
         <field>Unique_Identifier__c</field>
-        <value xsi:type="xsd:string">PRE007</value>
+        <value xsi:type="xsd:string">POS001</value>
     </values>
 </CustomMetadata>
