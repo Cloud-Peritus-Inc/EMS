@@ -27,7 +27,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   endDate = '';//To filter Leave History end date = '2022-12-20 00:00:00'
   startDate = '';//To filter Leave History start date  = '2022-01-20 00:00:00'
   @track datahistory = [];//to pass data to Leave history table
-  value = '';
+  value = 'Annual Leave';
   sValue = '';
   @api recordId;
   @track multipleApprovals = [];
@@ -52,15 +52,19 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     this.currentPageReference = currentPageReference;
   }
 
+  // TO SHOW DEFAULT PENDING ON ME DATA
   @wire(pendingOnMeLeaveReq)
   pendingOnMeLeaveReqWiredData({ error, data }) {
     if (data) {
       console.log('### pendingOnMeLeaveReq', data);
-      this.datahistory = data;
-      console.log('### non filter : ', this.datahistory);
       this.showdata = true;
-      console.log('### showdata : ', this.showdata);
       this.nodata = false;
+      this.datahistory = JSON.parse(JSON.stringify(data));
+      console.log('### non filter : ', this.datahistory);
+      this.datahistory.forEach(req => {
+        req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
+      });
+      console.log('### showdata : ', this.showdata);
     } else if (error) {
       console.error('Error:', error);
     }
@@ -92,7 +96,12 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         console.log('### DATA AFTER: ', data);
         this.showdata = true;
         this.nodata = false;
-        this.datahistory = data;
+        //this.datahistory = data;
+        this.datahistory = JSON.parse(JSON.stringify(data));
+        console.log('### datahistory JSON : ', this.datahistory);
+        this.datahistory.forEach(req => {
+          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
+        });
         console.log('### datahistory', this.datahistory);
         this.error = undefined;
       }
@@ -275,16 +284,17 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   showModalRejectBox(event) {
     console.log('BUTTON CLICKED Reject: ');
-    this.isShowModalReject = true;
     console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
+    console.log('### event id: ', JSON.stringify(event.currentTarget.dataset.id));
     this.selectedRecordRejectId = event.currentTarget.dataset.id;
-    console.log('### selectedRecordRejectId : ', selectedRecordRejectId);
+    console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
+    this.isShowModalReject = true;
 
   }
 
   handleRejectSave(event) {
-    const selectedRecordRejectId = event.currentTarget.dataset.id;
-    console.log('### selectedRecordRejectId : ', selectedRecordRejectId);
+    //const selectedRecordRejectId = event.currentTarget.dataset.id;
+    console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
     updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
       .then((result) => {
         console.log('Leave Request: ', result);

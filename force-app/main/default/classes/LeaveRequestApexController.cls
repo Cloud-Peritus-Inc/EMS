@@ -55,13 +55,14 @@ public without sharing class LeaveRequestApexController {
                                                    WHERE (EMS_LM_Approver__c =:LeaveRequestConstant.LOGGEDIN_USERID
                                                    OR EMS_LM_2nd_Approver__c =:LeaveRequestConstant.LOGGEDIN_USERID
                                                    OR Approver_3__c =:LeaveRequestConstant.LOGGEDIN_USERID)
-                                                   AND EMS_LM_Status__c !=: LeaveRequestConstant.APPROVED
+                                                   /*AND EMS_LM_Status__c !=: LeaveRequestConstant.APPROVED
                                                    AND EMS_LM_Status__c !=: LeaveRequestConstant.REJECTED
-                                                   AND EMS_LM_Status__c !=: LeaveRequestConstant.CANCELLED]){
-           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_Approver__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.PENDING) {
+                                                   AND EMS_LM_Status__c !=: LeaveRequestConstant.CANCELLED*/
+                                                   ORDER BY CreatedDate DESC Limit 50]){
+           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_Approver__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_2_WAITING) {
                	leaveRequestPendingList.add(emsLmLeave); //Approver 1
            }
-           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_2nd_Approver__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_2_WAITING) {
+           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_2nd_Approver__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING) {
                	leaveRequestApprover2List.add(emsLmLeave); //Approver 2
            }
            if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.Approver_3__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING) {

@@ -150,20 +150,5 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
                 url: url.href
             }
         });
-        //var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
-        /*  var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/leave-management")
-          console.log('### URL : ', url);
-          var params = new URLSearchParams();
-          params.append("bulkupdate", "value");
-          url.search += "&" + params.toString();
-          this[NavigationMixin.Navigate]({
-              type: 'standard__webPage',
-              attributes: {
-                  url: url.href
-              },
-              state: {
-                  'c__selectedTab': 'pending'
-              }
-          });*/
     }
 }

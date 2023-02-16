@@ -57,8 +57,8 @@
 				<lightning-card>
 					<table>
 						<thead>
-							<tr style="border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4">
-								<th style="padding:12px">
+							<tr style="border-top:0.5px solid #d4d4d4;border-bottom:0.5px solid #d4d4d4">
+								<th style="padding:8px">
 									<div>
 										<lightning-input type="checkbox" variant="standard" label="Select All"
 											onclick={handleSelectAll}></lightning-input>
@@ -91,14 +91,14 @@
 								<th>
 									<div title="Approved On">Approved On</div>
 								</th>
-								<th class="slds-cell_action-mode" style="width:3.25rem">
+								<th class="slds-cell_action-mode" style="width:2.25rem">
 									<div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<template for:each={datahistory} for:item="Req">
-								<tr key={Req.Id} style="border-bottom:1px solid #d4d4d4">
+								<tr key={Req.Id} style="border-bottom:0.5px solid #d4d4d4">
 									<td style="padding:7px">
 										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 											<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id}/>
@@ -140,12 +140,26 @@
 										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 											{Req.EMS_LM_Approved_On__c}</div>
 									</td>
-									<td class="slds-cell_action-mode" role="gridcell">
-										<lightning-button-menu alternative-text="Show menu"
+									<td class="slds-truncate dv-dynamic-width">
+										<lightning-button-icon variant="bare" size="large" icon-name="action:preview"
+											alternative-text="View" onclick={handleView}
+											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
+											data-id={Req.Id}></lightning-button-icon>
+										&nbsp;&nbsp;
+										<lightning-button-icon variant="bare" size="large" icon-name="action:approval"
+											alternative-text="Approve" onclick={showModalApprovalBox}
+											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
+											data-id={Req.Id} disabled={Req.disableButton}></lightning-button-icon>
+										&nbsp;&nbsp;
+										<lightning-button-icon variant="bare" size="large" icon-name="action:reject"
+											alternative-text="Reject" onclick={showModalRejectBox}
+											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
+											data-id={Req.Id} disabled={Req.disableButton}></lightning-button-icon>
+										<!--lightning-button-menu alternative-text="Show menu"
 											icon-name="utility:threedots_vertical" variant="container"
 											menu-alignment="right" onclick={handleCancelButton}
 											data-value={Req.EMS_LM_Status__c} data-record-id={Req.Id}>
-											<!--template if:true={showcancelbutton}-->
+											<template if:true={showcancelbutton}>
 											<lightning-menu-item value="View" label="View" onclick={handleView}
 												data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
 												data-record-id={Req.Id} data-id={Req.Id}>
@@ -158,8 +172,8 @@
 												onclick={showModalRejectBox} data-value={Req.EMS_LM_Status__c}
 												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}>
 											</lightning-menu-item>
-											<!--/template-->
-										</lightning-button-menu>
+											</template>
+										</lightning-button-menu-->
 									</td>
 								</tr>
 							</template>

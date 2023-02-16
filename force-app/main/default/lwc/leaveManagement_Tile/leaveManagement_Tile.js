@@ -3,15 +3,15 @@ import leaveBanlance from '@salesforce/apex/LeaveManagementApexController.leaveB
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 export default class LeaveManagement_Tile extends NavigationMixin(LightningElement) {
 
-  contextText = 'This shows your total leave balance in hours.This includes your annual leaves, comp off, etc. for which you are eligible and have balance.'
+  contextText = 'This shows your total leave balance in days.This includes your annual leaves, comp off, etc. for which you are eligible and have balance.'
 
   @track leaveBalanceData;
 
   connectedCallback() {
     this.a_Record_URL = window.location.origin;
     console.log('Base Url' + this.a_Record_URL);
-
   }
+  
   @wire(leaveBanlance)
   leaveBalanceWiredData({ error, data }) {
     if (data) {

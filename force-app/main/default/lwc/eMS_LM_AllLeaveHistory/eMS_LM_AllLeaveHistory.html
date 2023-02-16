@@ -107,15 +107,29 @@
 											{Req.EMS_LM_Approved_On__c}</div>
 									</td>
 									<td>
-										<lightning-button variant="brand" label="View" onclick={handleView}
+										<lightning-button-icon size="large" variant="bare" icon-name="action:preview"
+											alternative-text="view" onclick={handleView} data-id={Req.Id}>
+										</lightning-button-icon>
+										&nbsp;&nbsp;
+										<lightning-button-icon size="large" variant="bare" icon-name="action:edit"
+											alternative-text="Edit" onclick={handleEdit} data-id={Req.Id}
+											disabled={Req.disableButton}></lightning-button-icon>
+										&nbsp; &nbsp;
+										<lightning-button-icon size="large" variant="bare"
+											icon-name="utility:cancel_file_request" alternative-text="cancel"
+											class="cancel" onclick={handleCancel} data-id={Req.Id}
+											disabled={Req.disableButton}>
+										</lightning-button-icon>
+
+										<!--lightning-button variant="brand" label="View" onclick={handleView}
 											data-id={Req.Id}>
-										</lightning-button> &nbsp;
-										<lightning-button variant="Success" label="Edit" onclick={handleEdit}
+										</lightning-button> &nbsp;-->
+										<!--lightning-button variant="Success" label="Edit" onclick={handleEdit}
 											data-id={Req.Id} disabled={Req.disableButton}>
-										</lightning-button>&nbsp;
-										<lightning-button variant="destructive" label="Cancel" onclick={handleCancel}
+										</lightning-button>&nbsp-->;
+										<!--lightning-button variant="destructive" label="Cancel" onclick={handleCancel}
 											data-id={Req.Id} disabled={Req.disableButton}>
-										</lightning-button>
+										</lightning-button -->
 									</td>
 								</tr>
 							</template>
@@ -128,7 +142,8 @@
 			<h2> No Requests Found. </h2>
 		</template>
 		<template if:true={showApplyLeaveEdit}>
-			<c-e-m-s-_-l-m-_-editapply-new oncloseleave={cancelHandler} selecteditrecordid ={selectEditRecordId}></c-e-m-s-_-l-m-_-editapply-new>
+			<c-e-m-s-_-l-m-_-editapply-new oncloseleave={cancelHandler} selecteditrecordid={selectEditRecordId}>
+			</c-e-m-s-_-l-m-_-editapply-new>
 		</template>
 	</div>
 </template>

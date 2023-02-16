@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
-    <applicationVisibilities>
-        <application>Grid</application>
-        <default>false</default>
-        <visible>true</visible>
-    </applicationVisibilities>
     <classAccesses>
         <apexClass>EMS_TM_GenericController</apexClass>
         <enabled>true</enabled>
@@ -13,31 +8,46 @@
         <apexClass>EMS_TM_TimesheetClass</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>LeaveHistoryApexController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeaveManagementApexController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeaveRequestApexController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeaveRequestApproveHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeaveRequestRejectHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>populateApproverDetails</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>true</custom>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Department__c</field>
+        <field>EMS_LM_Leave_History__c.EMS_LM_Current_Approver__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Level_of_Approval__c</field>
+        <field>Pay_Period__c.Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Override_the_standard_level_of_approval__c</field>
+        <field>Pay_Period__c.Pay_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Department__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>true</enabled>
