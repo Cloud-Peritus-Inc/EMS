@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>CP_SendEmailToResourceManager</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Cp_CalculateLeaveDuration</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EMS_LM_ContactLeaveUpdate</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EMS_LM_ContactLeaveUpdate_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EMS_LM_EditLeaveRequest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EMS_LM_Leave_Duration_Handler</apexClass>
+        <apexClass>EMS_TM_GenericController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -29,11 +9,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>LeaveRequestApproveHandler</apexClass>
+        <apexClass>LeaveHistoryApexController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>LeaveRequestConstant</apexClass>
+        <apexClass>LeaveManagementApexController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeaveRequestApexController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeaveRequestApproveHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -45,6 +33,21 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EMS_LM_Leave_History__c.EMS_LM_Current_Approver__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pay_Period__c.Location__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pay_Period__c.Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <userLicense>Customer Community</userLicense>
     <userPermissions>
         <enabled>true</enabled>

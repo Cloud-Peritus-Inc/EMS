@@ -65,8 +65,8 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         ],
 
         directorStatus: [
-            { label: 'Auto Approved', value: 'Auto Approved' }, { label: 'Pending', value: 'Pending' },
-            { label: 'Rejected', value: 'Rejected' }, { label: 'Cancelled', value: 'Cancelled' }
+            { label: 'Auto Approved', value: 'Auto Approved' },
+            { label: 'Cancelled', value: 'Cancelled' }
         ]
     };
 
@@ -100,7 +100,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             case 1:
                 this.picklistValues = this.listStatus.leadStatus;
                 break;
-            case 3:
+            case 0:
                 this.picklistValues = this.listStatus.directorStatus;
                 break;
             default:
@@ -137,7 +137,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             this.datahistory = JSON.parse(JSON.stringify(data));
             console.log('### datahistory', this.datahistory);
             this.datahistory.forEach(req => {
-                req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending';
+                req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true;
             });
             console.log('### defaultMyRequestData datahistory: ', this.datahistory);
         } else if (error) {
@@ -157,7 +157,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                 this.datahistory = JSON.parse(JSON.stringify(data));
                 console.log('### datahistory', this.datahistory);
                 this.datahistory.forEach(req => {
-                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending';
+                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true;
                 });
                 this.error = undefined;
             }
