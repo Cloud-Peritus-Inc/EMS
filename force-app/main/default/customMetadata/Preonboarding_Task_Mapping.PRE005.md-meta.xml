@@ -15,6 +15,10 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>Onboarding_Task__c</field>
+        <value xsi:type="xsd:string">Pre</value>
+    </values>
+    <values>
         <field>Task_Subject__c</field>
         <value xsi:type="xsd:string">Add the new employee to company Whatsapp groups</value>
     </values>

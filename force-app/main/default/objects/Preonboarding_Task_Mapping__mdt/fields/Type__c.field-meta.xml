@@ -3,6 +3,7 @@
     <fullName>Type__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Value should Only Queue, User or Contact</inlineHelpText>
     <label>Type</label>
     <length>10</length>
     <required>false</required>
