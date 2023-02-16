@@ -58,6 +58,15 @@ public class LeaveHistoryApexController {
         return lh;  
     }
     
+                /**
+*   {Purpose} - Method used for bulk updation of leave request status to Approved, Approver 1 Pending, Approver 2 Pending.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
     @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> getPendingLeaveHistory(String name,String stdate, String eddate, List<String> statusValues, List<String> typeValues){
         List<EMS_LM_Leave_History__c> lh = new List<EMS_LM_Leave_History__c>();
@@ -94,7 +103,7 @@ public class LeaveHistoryApexController {
             query = query + ' AND EMS_LM_Leave_Type_Name__c IN :typeValues';
         }
         system.debug(query);  
-        query = query + ' ORDER BY CreatedDate DESC Limit 5';
+        //query = query + ' ORDER BY CreatedDate DESC Limit 5';
         
         system.debug(query);      
         try{ 
@@ -107,6 +116,15 @@ public class LeaveHistoryApexController {
         return lh;  
     }
     
+                /**
+*   {Purpose} - Method used for bulk updation of leave request status to Approved, Approver 1 Pending, Approver 2 Pending.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
     @AuraEnabled(Cacheable=true)
     public static List<String> getLeaveTypesForUser(Id userId) {
         System.debug('### userId' + userId);
@@ -158,10 +176,25 @@ public class LeaveHistoryApexController {
         return leaveTypes;
     }
     
+                /**
+*   {Purpose} - Method used for bulk updation of leave request status to Approved, Approver 1 Pending, Approver 2 Pending.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
     @AuraEnabled(Cacheable=true)
     public static IntBolleanWrapper userLevelOfApproval(){
         IntBolleanWrapper returnValues = new IntBolleanWrapper();
-        Contact con = [SELECT Id, Resource_Role__c, Resource_Role__r.Level_of_Approval__c, Resource_Role__r.Auto_Approve__c, EMS_TM_User__c FROM Contact WHERE EMS_TM_User__c =: LeaveRequestConstant.LOGGEDIN_USERID];
+        Contact con = [SELECT Id, 
+                              Resource_Role__c, 
+                              Resource_Role__r.Level_of_Approval__c, 
+                              Resource_Role__r.Auto_Approve__c, 
+                              EMS_TM_User__c 
+                       FROM Contact 
+                       WHERE EMS_TM_User__c =: LeaveRequestConstant.LOGGEDIN_USERID];
         System.debug('### con '  + con);
         System.debug('### con '  + con.Resource_Role__r.Level_of_Approval__c);
         System.debug('### con '  + con.Resource_Role__r.Auto_Approve__c);
@@ -177,9 +210,20 @@ public class LeaveHistoryApexController {
         @AuraEnabled
         public  Boolean autoApproval {get; set;}
     }
+
+                /**
+*   {Purpose} - Method used to show default pending or approver 1 pending records on My Request tab.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
     
     @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> defaultMyRequestData(){
+        user usr =[Select Id, ContactId, Email from user where Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         List<EMS_LM_Leave_History__c> myLeaveReq = [SELECT Id,
                                                     	   EMS_LM_Leave_Type_Name__c,
                                                     	   EMS_LM_Leave_Start_Date__c,
@@ -190,17 +234,28 @@ public class LeaveHistoryApexController {
                                                     	   EMS_LM_Status__c,
                                                            EMS_LM_Approved_On__c,
                                                     	   EMS_LM_Contact__c,
+                                                    	   EMS_LM_Auto_Approve__c,
                                                     	   CreatedDate,
                                                     	   CreatedById
                                                     FROM EMS_LM_Leave_History__c
-                                                    WHERE CreatedById =:LeaveRequestConstant.LOGGEDIN_USERID
+                                                    WHERE EMS_LM_Contact__c =:usr.ContactId
                                                     AND (EMS_LM_Status__c =: LeaveRequestConstant.PENDING 
-                                                    OR  EMS_LM_Status__c =: LeaveRequestConstant.APPROVER_2_WAITING)
+                                                    OR  EMS_LM_Status__c =: LeaveRequestConstant.APPROVER_2_WAITING
+                                                    OR EMS_LM_Status__c =: LeaveRequestConstant.AUTO_APPROVED)
                                                     ORDER BY CreatedDate DESC Limit 5
                                                     ];
         return myLeaveReq;
     }
     
+                /**
+*   {Purpose} - Method used to show default pending or approver 1 pending records on Pending on me tab.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
     @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> pendingOnMeLeaveReq(){
         List<EMS_LM_Leave_History__c> mypendingReq = [SELECT Id,
@@ -216,6 +271,8 @@ public class LeaveHistoryApexController {
                                                        FROM EMS_LM_Leave_History__c
                                                        WHERE (EMS_LM_Approver__c =:LeaveRequestConstant.LOGGEDIN_USERID
                                                        OR EMS_LM_2nd_Approver__c =:LeaveRequestConstant.LOGGEDIN_USERID)
+                                                       AND (EMS_LM_Status__c =: LeaveRequestConstant.PENDING 
+                                                       OR  EMS_LM_Status__c =: LeaveRequestConstant.APPROVER_2_WAITING)
                                                        ORDER BY CreatedDate DESC Limit 5
                                                      		 ];
         return mypendingReq;

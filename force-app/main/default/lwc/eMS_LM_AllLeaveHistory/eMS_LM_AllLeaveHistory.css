@@ -4,6 +4,15 @@
    margin-right: 100%;
 }
 
-.font {
-   font-family: "SalesforceSans-Regular";
+.cancel {
+   color: red;
+}
+.slds-button--icon-border, .slds-button--icon-border-filled, .slds-button_icon-border, .slds-button_icon-border-filled {
+    line-height: 1;
+    vertical-align: middle;
+    color: red;
+    border: 1px solid #ea001e;
+    -webkit-transition: border .15s linear;
+    transition: border .15s linear;
+    border-color: #dddbda;
 }

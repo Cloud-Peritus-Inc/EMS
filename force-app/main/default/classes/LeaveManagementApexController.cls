@@ -27,11 +27,11 @@ public Without Sharing class LeaveManagementApexController {
     public static List<EMS_LM_Leave_History__c> getLeaveRequest(){
         User usrConId = [SELECT Id, ContactId__c,Hr_Access__c FROM User WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         List<EMS_LM_Leave_History__c> leaveReqList = [SELECT Id,
-                                                      EMS_LM_Contact__c,
-                                                      EMS_LM_Leave_Start_Date__c,
-                                                      EMS_LM_Leave_End_Date__c,
-                                                      CreatedDate,
-                                                      EMS_LM_Status__c
+                                                            EMS_LM_Contact__c,
+                                                            EMS_LM_Leave_Start_Date__c,
+                                                            EMS_LM_Leave_End_Date__c,
+                                                            CreatedDate,
+                                                            EMS_LM_Status__c
                                                       FROM EMS_LM_Leave_History__c
                                                       WHERE EMS_LM_Contact__c =:usrConId.ContactId__c
                                                       ORDER BY CreatedDate DESC  LIMIT 5];
@@ -39,7 +39,7 @@ public Without Sharing class LeaveManagementApexController {
     }
 
 /**
-*   {Purpose} - Method used to display ALL  leave request data to HR.
+*   {Purpose} - Method used to display ALL leave request data to HR.
 *
 *   CHANGE HISTORY
 *   ====================================================================================================
@@ -50,11 +50,11 @@ public Without Sharing class LeaveManagementApexController {
     @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> getLeaveRequestHr(){
         List<EMS_LM_Leave_History__c> leaveReqListHr = [SELECT Id,
-                                                      EMS_LM_Contact__c,
-                                                      EMS_LM_Leave_Start_Date__c,
-                                                      EMS_LM_Leave_End_Date__c,
-                                                      CreatedDate,
-                                                      EMS_LM_Status__c
+                                                                EMS_LM_Contact__c,
+                                                                EMS_LM_Leave_Start_Date__c,
+                                                                EMS_LM_Leave_End_Date__c,
+                                                                CreatedDate,
+                                                                EMS_LM_Status__c
                                                       FROM EMS_LM_Leave_History__c
                                                       ORDER BY CreatedDate ];
         return leaveReqListHr;
@@ -72,7 +72,7 @@ public Without Sharing class LeaveManagementApexController {
     public static Contact leaveBanlance(){
         User usrConId = [SELECT Id, ContactId__c FROM User WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         Contact empLeaveBalance = [SELECT Id,
-                                   EMS_LM_No_Of_Availble_Leaves__c
+                                          EMS_LM_No_Of_Availble_Leaves__c
                                    FROM Contact
                                    WHERE Id =: usrConId.ContactId__c ];
         return empLeaveBalance;
@@ -92,7 +92,7 @@ public Without Sharing class LeaveManagementApexController {
         System.debug('### leaveReqCancelId ' + leaveReqCancelId);
         List<EMS_LM_Leave_History__c> updateCancelLeaveReqList = new List<EMS_LM_Leave_History__c>();
         for(EMS_LM_Leave_History__c leaveReqcancle : [SELECT Id,
-                                                           EMS_LM_Status__c
+                                                             EMS_LM_Status__c
                                                       FROM EMS_LM_Leave_History__c
                                                       WHERE Id =:leaveReqCancelId
                                                    ]) {
