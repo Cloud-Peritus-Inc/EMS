@@ -22,9 +22,9 @@
                 <label>Mother</label>
             </value>
             <value>
-                <fullName>Spouse</fullName>
+                <fullName>Brother</fullName>
                 <default>false</default>
-                <label>Spouse</label>
+                <label>Brother</label>
             </value>
             <value>
                 <fullName>Son</fullName>
@@ -37,14 +37,9 @@
                 <label>Daughter</label>
             </value>
             <value>
-                <fullName>Brother</fullName>
+                <fullName>Cousin</fullName>
                 <default>false</default>
-                <label>Brother</label>
-            </value>
-            <value>
-                <fullName>Sister</fullName>
-                <default>false</default>
-                <label>Sister</label>
+                <label>Cousin</label>
             </value>
             <value>
                 <fullName>Other</fullName>
