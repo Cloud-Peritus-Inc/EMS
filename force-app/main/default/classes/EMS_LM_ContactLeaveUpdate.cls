@@ -304,12 +304,14 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
     // this methodis used to create leave history(for work from home) record when employee submits the leave request
 @AuraEnabled
     Public static Id createwfhRecord(String cId, Decimal duration, String stDate, String edDate, String reason )  
-    {       
+    {
+        
       EMS_LM_Leave__c el = new EMS_LM_Leave__c();
       el = [select Id from EMS_LM_Leave__c where EMS_LM_Leave_Type__c = :LeaveRequestConstant.WORK_FROM_HOME LIMIT 1];
       EMS_LM_Leave_History__c e = new EMS_LM_Leave_History__c();
       Date sd = date.valueOf(stDate);
       Date ed = date.valueOf(edDate);
+        
       e.EMS_LM_Contact__c = cId ;
       e.EMS_LM_Leave_Duration__c = duration;
       e.EMS_LM_Leave_End_Date__c = ed;

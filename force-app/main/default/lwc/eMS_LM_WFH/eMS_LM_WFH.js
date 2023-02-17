@@ -3,6 +3,7 @@ import u_Id from '@salesforce/user/Id';
 import getLeaveType from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveType';
 import getLocation from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLocation';
 import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhDuration';
+import getwfhWFHweekends from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhWFHweekends';
 import createwfhRecord from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.createwfhRecord';
 import uploadFile from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.uploadFile';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -17,6 +18,7 @@ export default class EMS_LM_WFH extends LightningElement {
     reason;
     wfhrecordId;
     @track duration;
+    weekendwfh = false;
   error;
     startDate1;//To apply Leave start date
   endDate1;//To apply Leave end date
@@ -25,7 +27,7 @@ export default class EMS_LM_WFH extends LightningElement {
 
   connectedCallback() {
     let today = new Date();
-    let dd = today.getDate() + 2;
+    let dd = today.getDate();
     let mm = today.getMonth() + 1;
     let y = today.getFullYear();
     let date = Date.parse(y + '-' + mm + '-' + dd);
@@ -34,18 +36,20 @@ export default class EMS_LM_WFH extends LightningElement {
     let formattedDate = date1.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
     this.todaydate = formattedDate;
   }
-  
+
+
   
   datechange(event) {
     var namecheck = event.target.name;
     let enteredDate = new Date(event.target.value);
     let day =enteredDate.getDay();
     if (namecheck == 'startDate1') {
+
       this.startDate1 = event.detail.value + ' 00:00:00';
       window.console.log('startDate1 ##' + this.startDate1);
       if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
         const evt = new ShowToastEvent({
-            message: 'Please select a proper Start Date',
+            message: 'Please select a proper start date',
             variant: 'error',
         });
         this.dispatchEvent(evt);
@@ -58,17 +62,19 @@ export default class EMS_LM_WFH extends LightningElement {
           let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
           let todaydate1 = formattedDate;
           if (new Date(todaydate1) < new Date(this.todaydate)) {
-           // this.submitcheck = false;
+            this.disabledSubmitted = true;
            this.startDate1=null;
             const evt = new ShowToastEvent({
-            message: 'Leave to be applied before 48Hrs',
+            message: 'You have selected past date, please select future date.',
             variant: 'error',
         });
         this.dispatchEvent(evt);
           }
+         
     }
 
     if (namecheck == 'endDate1') {
+
       this.endDate1 = event.detail.value + ' 00:00:00';
       window.console.log('endDate1 ##' + this.endDate1);
 
@@ -83,26 +89,16 @@ export default class EMS_LM_WFH extends LightningElement {
         this.startDate1 = null;
         this.endDate1 = null;
       }
+      if(this.startDate1!=null && this.endDate1!=null){
+      this.disabledSubmitted=false;
+      }
+     
+    }    
 
-       let date = new Date(this.endDate1);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if (new Date(todaydate1) < new Date(this.todaydate)) {
-           // this.submitcheck = false;
-           this.endDate1=null;
-            const evt = new ShowToastEvent({
-            message: 'Leave to be applied before 48Hrs',
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
-          }
-
-         
-    }
      if(day==6 || day==0){
         //alert('please select working days');
         const evt = new ShowToastEvent({
-            message: 'Please select working days',
+            message: 'You can apply leave on working days only, please select working days.',
             variant: 'error',
         });
         this.dispatchEvent(evt);
@@ -114,8 +110,8 @@ export default class EMS_LM_WFH extends LightningElement {
       this.disabledSubmitted=false;
     }
 
-
   }
+
   
   @wire(getLocation, { userid: '$uId' })
   wiredlocation({ error, data }) {
@@ -143,6 +139,18 @@ export default class EMS_LM_WFH extends LightningElement {
     }
   }
 
+  @wire(getwfhWFHweekends, { stDate: '$startDate1', edDate: '$endDate1' } )
+  wirewfhWFHweekends({ error, data }) {
+    if (data) {
+      console.log('wfhWFHweekends-->',data);
+      this.weekendwfh = data;
+      this.error = undefined;
+    } else if (error) {
+      this.error = error;
+      this.weekendwfh = undefined;
+    }
+  }
+
   closeme() {
     this.check1 = false;
     this.check2 = false;
@@ -159,15 +167,25 @@ export default class EMS_LM_WFH extends LightningElement {
 
   submit(event) {
 
-  if(this.reason == null && this.duration>3){
-            const evt = new ShowToastEvent({
-            message: 'Please mention Reason',
+  if(this.weekendwfh > 1){
+      const evt = new ShowToastEvent({
+            message: 'Please apply Work from Home for same week',
             variant: 'error',
         });
         this.dispatchEvent(evt);
-     // alert('Please Upload Proof');// need to chane the alert message
+        
     }else{
- createwfhRecord({ cId: this.conId, duration: this.duration, stDate: this.startDate1, edDate: this.endDate1, reason: this.reason})
+
+      if( this.reason == null && this.duration>3){
+        const evt = new ShowToastEvent({
+            message: 'Please mention the reason for your request',
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+        this.disabledSubmitted = true;
+      }else{
+
+      createwfhRecord({ cId: this.conId, duration: this.duration, stDate: this.startDate1, edDate: this.endDate1, reason: this.reason})
         .then(result => {
             this.wfhrecordId = result;
             
@@ -183,7 +201,7 @@ export default class EMS_LM_WFH extends LightningElement {
             this.dispatchEvent(gethvalue);
             this.dispatchEvent(new ShowToastEvent({
               title: 'Success!!',
-              message: 'Work From Home Applied Successfully !!.',
+              message: 'Your Work From Home request has been successfully applied!',
               variant: 'success'
             }));
             
@@ -198,9 +216,9 @@ export default class EMS_LM_WFH extends LightningElement {
             variant: 'error'
           }));
          // window.location.reload();
-        });
-}
-     
+        });  
+      }
+    }    
 
   }
 
