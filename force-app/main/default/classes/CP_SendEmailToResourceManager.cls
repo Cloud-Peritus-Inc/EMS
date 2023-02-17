@@ -67,7 +67,6 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
             String body = 'Dear '+ con.Resource_Manager__r.name+', <br/><br/>';
             body += 'The following candidate will join our company on '+ con.EMS_EM_JD__c + ': <br/>';
             body += 'Name: '+ con.Name + ' <br/>';
-            body += 'Designation: '+ con.Designation__r.name + ' <br/>';
             body += 'Please be prepared to give an orientation session on their first day. Also, ensure that ';
             body += 'training materials/sessions are organized for the employee for the first week, so that ';
             body += 'the employee has all the necessary information to perform well in their new position. <br/><br/>';
