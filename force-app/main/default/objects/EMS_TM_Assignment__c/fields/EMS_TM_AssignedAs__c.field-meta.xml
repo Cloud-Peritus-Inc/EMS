@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_TM_AssignedAs__c</fullName>
+    <externalId>false</externalId>
+    <label>Assigned As</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Accountant</fullName>
+                <default>false</default>
+                <label>Accountant</label>
+            </value>
+            <value>
+                <fullName>Accounting Manager</fullName>
+                <default>false</default>
+                <label>Accounting Manager</label>
+            </value>
+            <value>
+                <fullName>Accounts Executive</fullName>
+                <default>false</default>
+                <label>Accounts Executive</label>
+            </value>
+            <value>
+                <fullName>Associate BSA</fullName>
+                <default>false</default>
+                <label>Associate BSA</label>
+            </value>
+            <value>
+                <fullName>Associate Developer</fullName>
+                <default>false</default>
+                <label>Associate Developer</label>
+            </value>
+            <value>
+                <fullName>Associate Engineer</fullName>
+                <default>false</default>
+                <label>Associate Engineer</label>
+            </value>
+            <value>
+                <fullName>Associate manager</fullName>
+                <default>false</default>
+                <label>Associate manager</label>
+            </value>
+            <value>
+                <fullName>Associate Quality Analyst</fullName>
+                <default>false</default>
+                <label>Associate Quality Analyst</label>
+            </value>
+            <value>
+                <fullName>BSA</fullName>
+                <default>false</default>
+                <label>BSA</label>
+            </value>
+            <value>
+                <fullName>BSA Lead</fullName>
+                <default>false</default>
+                <label>BSA Lead</label>
+            </value>
+            <value>
+                <fullName>Consultant Architecture</fullName>
+                <default>false</default>
+                <label>Consultant Architecture</label>
+            </value>
+            <value>
+                <fullName>Data Analyst</fullName>
+                <default>false</default>
+                <label>Data Analyst</label>
+            </value>
+            <value>
+                <fullName>Data Scientist</fullName>
+                <default>false</default>
+                <label>Data Scientist</label>
+            </value>
+            <value>
+                <fullName>Delivery Manager</fullName>
+                <default>false</default>
+                <label>Delivery Manager</label>
+            </value>
+            <value>
+                <fullName>Developer</fullName>
+                <default>false</default>
+                <label>Developer</label>
+            </value>
+            <value>
+                <fullName>Engineer</fullName>
+                <default>false</default>
+                <label>Engineer</label>
+            </value>
+            <value>
+                <fullName>Finance Manager</fullName>
+                <default>false</default>
+                <label>Finance Manager</label>
+            </value>
+            <value>
+                <fullName>HR Director</fullName>
+                <default>false</default>
+                <label>HR Director</label>
+            </value>
+            <value>
+                <fullName>HR Executive</fullName>
+                <default>false</default>
+                <label>HR Executive</label>
+            </value>
+            <value>
+                <fullName>HR Manager</fullName>
+                <default>false</default>
+                <label>HR Manager</label>
+            </value>
+            <value>
+                <fullName>Manager</fullName>
+                <default>false</default>
+                <label>Manager</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Project Manager</fullName>
+                <default>false</default>
+                <label>Project Manager</label>
+            </value>
+            <value>
+                <fullName>Quality Analyst</fullName>
+                <default>false</default>
+                <label>Quality Analyst</label>
+            </value>
+            <value>
+                <fullName>Quality Lead</fullName>
+                <default>false</default>
+                <label>Quality Lead</label>
+            </value>
+            <value>
+                <fullName>Salesforce Administrator</fullName>
+                <default>false</default>
+                <label>Salesforce Administrator</label>
+            </value>
+            <value>
+                <fullName>Salesforce Application Designer</fullName>
+                <default>false</default>
+                <label>Salesforce Application Designer</label>
+            </value>
+            <value>
+                <fullName>Salesforce Business Analyst</fullName>
+                <default>false</default>
+                <label>Salesforce Business Analyst</label>
+            </value>
+            <value>
+                <fullName>Salesforce CPQ Developer</fullName>
+                <default>false</default>
+                <label>Salesforce CPQ Developer</label>
+            </value>
+            <value>
+                <fullName>Salesforce Data Analyst</fullName>
+                <default>false</default>
+                <label>Salesforce Data Analyst</label>
+            </value>
+            <value>
+                <fullName>Salesforce Developer</fullName>
+                <default>false</default>
+                <label>Salesforce Developer</label>
+            </value>
+            <value>
+                <fullName>Salesforce Finance Cloud Consultant</fullName>
+                <default>false</default>
+                <label>Salesforce Finance Cloud Consultant</label>
+            </value>
+            <value>
+                <fullName>Salesforce Senior Developer</fullName>
+                <default>false</default>
+                <label>Salesforce Senior Developer</label>
+            </value>
+            <value>
+                <fullName>Salesforce Lead Developer</fullName>
+                <default>false</default>
+                <label>Salesforce Lead Developer</label>
+            </value>
+            <value>
+                <fullName>Salesforce Marketing Cloud Consultant</fullName>
+                <default>false</default>
+                <label>Salesforce Marketing Cloud Consultant</label>
+            </value>
+            <value>
+                <fullName>Salesforce Platform Manager</fullName>
+                <default>false</default>
+                <label>Salesforce Platform Manager</label>
+            </value>
+            <value>
+                <fullName>Salesforce Product Owner</fullName>
+                <default>false</default>
+                <label>Salesforce Product Owner</label>
+            </value>
+            <value>
+                <fullName>Salesforce Project Manager/Scrum master</fullName>
+                <default>false</default>
+                <label>Salesforce Project Manager/Scrum master</label>
+            </value>
+            <value>
+                <fullName>Salesforce Quality Analysts/Testers</fullName>
+                <default>false</default>
+                <label>Salesforce Quality Analysts/Testers</label>
+            </value>
+            <value>
+                <fullName>Salesforce Solution Architect</fullName>
+                <default>false</default>
+                <label>Salesforce Solution Architect</label>
+            </value>
+            <value>
+                <fullName>Salesforce Technical Architect</fullName>
+                <default>false</default>
+                <label>Salesforce Technical Architect</label>
+            </value>
+            <value>
+                <fullName>Scrum Master</fullName>
+                <default>false</default>
+                <label>Scrum Master</label>
+            </value>
+            <value>
+                <fullName>Security Engineer</fullName>
+                <default>false</default>
+                <label>Security Engineer</label>
+            </value>
+            <value>
+                <fullName>Sr Account Executive</fullName>
+                <default>false</default>
+                <label>Sr Account Executive</label>
+            </value>
+            <value>
+                <fullName>Sr BSA</fullName>
+                <default>false</default>
+                <label>Sr BSA</label>
+            </value>
+            <value>
+                <fullName>Sr Developer</fullName>
+                <default>false</default>
+                <label>Sr Developer</label>
+            </value>
+            <value>
+                <fullName>Sr Engineer</fullName>
+                <default>false</default>
+                <label>Sr Engineer</label>
+            </value>
+            <value>
+                <fullName>Sr HR Executive</fullName>
+                <default>false</default>
+                <label>Sr HR Executive</label>
+            </value>
+            <value>
+                <fullName>Sr Quality Analyst</fullName>
+                <default>false</default>
+                <label>Sr Quality Analyst</label>
+            </value>
+            <value>
+                <fullName>Sr Talent Acquisition Specialist</fullName>
+                <default>false</default>
+                <label>Sr Talent Acquisition Specialist</label>
+            </value>
+            <value>
+                <fullName>Talent Acquisition Specialist</fullName>
+                <default>false</default>
+                <label>Talent Acquisition Specialist</label>
+            </value>
+            <value>
+                <fullName>Analysis</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Analysis</label>
+            </value>
+            <value>
+                <fullName>Data Migration</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Data Migration</label>
+            </value>
+            <value>
+                <fullName>Design</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Design</label>
+            </value>
+            <value>
+                <fullName>Development</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Development</label>
+            </value>
+            <value>
+                <fullName>Documentation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Documentation</label>
+            </value>
+            <value>
+                <fullName>Knowledge Transfer</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Knowledge Transfer</label>
+            </value>
+            <value>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Meeting</label>
+            </value>
+            <value>
+                <fullName>Planning</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Planning</label>
+            </value>
+            <value>
+                <fullName>Requirement Gathering</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Requirement Gathering</label>
+            </value>
+            <value>
+                <fullName>Testing</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Testing</label>
+            </value>
+            <value>
+                <fullName>Training</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Training</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
