@@ -93,7 +93,7 @@
                 <field>EMS_Employee_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Resource_Manager__c</field>
             </layoutItems>
             <layoutItems>

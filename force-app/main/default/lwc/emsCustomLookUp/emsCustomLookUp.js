@@ -26,7 +26,7 @@ export default class EmsCustomLookUp extends LightningElement {
         if (data) {
             console.log('searchTerm'+this.searchTerm);
             console.log('filetr'+this.filter);
-            console.log("DATA" + data);
+            console.log("DATA" + JSON.stringify(data));
             this.error = undefined;
             if (this.users) {
 
@@ -46,12 +46,14 @@ export default class EmsCustomLookUp extends LightningElement {
                         record.displayName = record.FirstName + ' ' + record.LastName;
                     }
                 });
-                console.log('records ',this.records);
+                console.log('records '+JSON.stringify(this.records));
             } else {
                 // this.records = data;
                 for (let i = 0; i < data.length; i++) {
-                    let item = {Id: data[i],displayName: data[i].Name, FirstName: data[i].FirstName, LastName: data[i].LastName}
+                    let item = {Id: data[i].Id,displayName: data[i].Name, FirstName: data[i].FirstName, LastName: data[i].LastName}
                     this.records.push(item);
+
+                    console.log('PRojectData'+JSON.stringify(this.records));
                 }
             }
         } else if (error) {

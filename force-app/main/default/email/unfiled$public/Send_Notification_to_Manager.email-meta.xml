@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Send Notification to Manager</name>
+    <style>freeForm</style>
+    <subject>New project is assigned to you</subject>
+    <textOnly>Dear {!EMS_TM_Project__c.Project_Manager__c},
+
+The project {!EMS_TM_Project__c.Name} was created with you as the Project Manager. Please find the link to the project here:
+
+{!EMS_TM_Project__c.Link}
+
+Regards,
+
+Team Cloud Peritus</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

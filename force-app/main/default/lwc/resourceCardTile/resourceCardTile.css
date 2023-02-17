@@ -1,0 +1,77 @@
+.childparent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+	padding: 5px;
+}
+
+.childimage {
+    width: 30%;
+	padding:10px;
+	border-right: 1px black;
+}
+
+.childtext {
+    width: 70%;
+	padding-bottom: 10px;
+    padding-left : 20px;
+}
+
+.container {
+  text-align: center; /* Aligns the boxes to the center of the container */
+}
+
+.box {
+  display: inline-block; /* Displays the boxes on the same line */
+  background-color: white; 
+}
+
+.homeCard {
+    background-color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(226, 162, 237, 0.2), 0 6px 20px 0 rgba(216, 170, 238, 0.19);
+    margin-top: 20px; /* increased from 10px */
+    margin-bottom: 30px; /* increased from 20px */
+}
+    .header {
+        background-color: whitesmoke;
+        padding: 10px;
+    }
+
+    .text {
+        padding: 10px;
+    }
+
+    .footer {
+        background-color: whitesmoke;
+        padding: 10px;
+    }
+.parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.child1 {
+    width: 40%;
+    padding: 5px;
+}
+
+.child2 {
+    width: 30%;
+    padding: 5px;
+	
+}
+.child3 {
+    width: 30%;
+    padding: 5px;
+}
+
+.profile-picture {
+  
+}
+
+.round {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}

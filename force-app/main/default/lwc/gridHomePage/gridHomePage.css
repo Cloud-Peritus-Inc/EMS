@@ -1,0 +1,21 @@
+.homeCard{
+    background-color: rgb(247 246 246) !important; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	//box-shadow: 0 4px 8px 0 #CBC3E3, 0 6px 20px 0 #CBC3E3;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.firstBox{
+    border-bottom: 3.5px solid rgb(229 229 229);
+}
+.secondBox{
+    border-bottom: 2px solid rgb(229 229 229);
+}
+.thirdBox{
+    
+    border-bottom: 2px solid rgb(229 229 229);
+}
+.fourthBox{
+    overflow: auto;
+    height: 200px;
+}

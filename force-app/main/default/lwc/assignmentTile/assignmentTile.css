@@ -1,0 +1,36 @@
+.homeCard {
+    background-color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 20px; /* increased from 10px */
+    margin-bottom: 30px; /* increased from 20px */
+   
+}
+    .header {
+        background-color: white;
+        padding: 10px;
+    }
+
+    .text {
+        padding: 10px;
+    }
+
+    .footer {
+        background-color: white;
+        padding: 10px;
+    }
+.parent {
+	padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.child1 {
+    width: 20%;
+	text-align: left;
+}
+
+.child2 {
+    width: 80%;
+	text-align: left;
+}
