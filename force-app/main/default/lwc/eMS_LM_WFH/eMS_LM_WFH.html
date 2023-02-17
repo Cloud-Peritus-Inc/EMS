@@ -46,14 +46,15 @@
               </lightning-layout-item>
               <lightning-layout-item padding="around-small" size="6">
                 <div>
-                  <lightning-button variant="brand" label="Submit" title="Primary action" onclick={submit} disabled={disabledSubmitted}
-                    class="slds-m-left_x-small"></lightning-button>
+                  <lightning-button variant="destructive" label="Cancel" title="Destructive action"
+                  onclick={closeme} class="slds-m-left_x-small"></lightning-button>
                 </div>
               </lightning-layout-item>
               <lightning-layout-item padding="around-small" size="6">
                 <div>
-                  <lightning-button variant="destructive" label="Cancel" title="Destructive action"
-                    onclick={closeme} class="slds-m-left_x-small"></lightning-button>
+                 
+                    <lightning-button variant="brand" label="Submit" title="Primary action" onclick={submit} disabled={disabledSubmitted}
+                    class="slds-m-left_x-small"></lightning-button>
                 </div>
               </lightning-layout-item>
             </lightning-layout>
