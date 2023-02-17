@@ -71,5 +71,33 @@ public  without sharing class EMS_LM_Leave_Duration_Handler {
         }
         System.debug('--Working days'+Duration);  
         return Duration;          
-    }   
+    }
+    
+    @AuraEnabled(Cacheable=true)
+    public static Integer getwfhWFHweekends(String stDate, String edDate){
+      
+        Date startDate = Date.valueOf(stDate);
+        Date endDate = Date.valueOf(edDate);
+        Integer weekEndDay = 1;
+        boolean weekday = false;
+        
+            for(integer i=0; i <= startDate.daysBetween(endDate); i++)  
+        {  
+            Date dt = startDate + i;  
+            DateTime currDate = DateTime.newInstance(dt.year(), dt.month(), dt.day());  
+            String todayDay = currDate.format('EEEE');  
+            if(todayDay == 'Saturday' || todayDay =='Sunday' )  
+                {  
+                    weekEndDay = weekEndDay + 1;
+              
+                }                    
+        }
+        if(weekEndDay > 0){
+            weekday = true;
+                }else{
+                    weekday = false;
+                }
+        return weekEndDay;
+
+	}
 }
