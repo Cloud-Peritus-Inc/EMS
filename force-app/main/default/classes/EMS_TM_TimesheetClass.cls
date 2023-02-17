@@ -9,6 +9,7 @@ public class EMS_TM_TimesheetClass {
 
     @AuraEnabled
     public static wrapperAP getAssignmentProject( date week, Boolean wireMethod, Id userId ) {
+        System.debug('week'+week +'.......'+userId);
         wrapperAP returnObj = new wrapperAP();
         List<Id> projects = new List<Id>();
         List<EMS_TM_Assignment__c> assignmentList = new List<EMS_TM_Assignment__c>();
@@ -97,6 +98,7 @@ public class EMS_TM_TimesheetClass {
                                                 FROM EMS_TM_Assignment__c 
                                                 WHERE EMS_TM_EmployeeName__r.EMS_TM_User__c= :userId
                                                 AND EMS_TM_StartDate_Asgn__c <= :weekEnd];
+                                                System.debug('assignments'+assignments);
 
         if (!assignments.isEmpty()) {
             for (EMS_TM_Assignment__c assignment : assignments) {
@@ -169,8 +171,12 @@ public class EMS_TM_TimesheetClass {
             returnObj.timeSheet         = timesheetWrapper.timeSheet;
             returnObj.timeSheetRecords  = timesheetWrapper.timeSheetRecords == null ? null : timesheetWrapper.timeSheetRecords;
         }
+        try{
 
         return returnObj;
+        }catch(Exception e){
+           throw new AuraHandledException(e.getMessage() +'>>>>>>>>>>>>>>>>'+e.getLineNumber());
+        }
     }
 
     @AuraEnabled
@@ -194,7 +200,13 @@ public class EMS_TM_TimesheetClass {
             wrapper.timeSheet = timeSheetValues[0];
             wrapper.timeSheetRecords = !timeSheetRecordValues.isEmpty() ? timeSheetRecordValues : null;
         }
-        return wrapper;
+
+        try{
+            return wrapper;
+        }catch(Exception e){
+           throw new AuraHandledException(e.getMessage());
+        }
+        
     }
 
     @AuraEnabled
@@ -220,7 +232,12 @@ public class EMS_TM_TimesheetClass {
             wrapper.timeSheet = timeSheetValues[0];
             wrapper.timeSheetRecords = !timeSheetRecordValues.isEmpty() ? timeSheetRecordValues : null;
         }
-        return wrapper;
+        try{
+            return wrapper;
+        }catch(Exception e){
+           throw new AuraHandledException(e.getMessage());
+        }
+        //return wrapper;
     }
 
     @AuraEnabled

@@ -526,6 +526,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     handleUserselection(event) {
         this.hideSpinner = false;
         console.log('handleUserselection event ', event);
+        console.log('handleUserselection  userID', event.detail.value);
         this.timeSheetRecord.User__c = event.detail.value;
         this.timeSheetRecord.EMS_TM_Week__c = this.thisWeek;
         this.disableRevise = true;
