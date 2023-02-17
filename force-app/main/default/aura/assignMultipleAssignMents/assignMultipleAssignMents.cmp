@@ -1,0 +1,6 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >  
+ <!-- <div class="slds-box">
+     <lightning:button variant="brand" label="Call LWC Function" onclick="{! c.handleClick }" />  
+   </div>  -->
+   <c:assignMutipleResources aura:id="assignMutipleResources"></c:assignMutipleResources>  
+</aura:component>
