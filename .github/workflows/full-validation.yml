@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Running the Test Report
-        run: sfdx force:apex:test:run --testlevel RunLocalTests -u ${{ github.event.inputs.choice }} --resultformat json --outputdir /tmp/ndeploy.log
+        run: sfdx force:apex:test:run --testlevel RunLocalTests -u ${{ github.event.inputs.choice }} --resultformat json > /tmp/ndeploy.log
 
   Generating-Report:
     runs-on: self-hosted
