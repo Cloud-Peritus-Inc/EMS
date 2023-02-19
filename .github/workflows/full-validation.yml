@@ -35,6 +35,6 @@ jobs:
     needs : [Full-Validation]
     steps:
       - name: Generating Report
-        run : sh /home/ec2-user/report.sh
+        run : echo "http://ec2-184-73-72-245.compute-1.amazonaws.com/report.html"
         
         
