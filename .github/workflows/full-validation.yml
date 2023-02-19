@@ -35,6 +35,6 @@ jobs:
     needs : [Full-Validation]
     steps:
       - name: Generating Report
-        run : echo "http://ec2-184-73-72-245.compute-1.amazonaws.com/report.html"
+        run : echo "http://ec2-184-73-72-245.compute-1.amazonaws.com/report-${{ github.event.inputs.choice }}.html"
         
         
