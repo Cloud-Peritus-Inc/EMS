@@ -54,13 +54,13 @@ export default class TimeSheetTile extends NavigationMixin(LightningElement) {
     ctx.stroke();
 
     ctx.fillStyle = 'black';
-    ctx.font = '50px SalesforceSans-Regular';
+    ctx.font = 'bold 50px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(this.numberofhoursfilledthisweek, centerX, centerY-20);
 
     ctx.fillStyle = 'black';
-    ctx.font = '10px SalesforceSans-Regular';
+    ctx.font = '10px sans-serif';
   //  ctx.textAlign = 'center';
   //  ctx.textBaseline = 'middle';
     ctx.fillText('Hours', centerX, centerY + 20);

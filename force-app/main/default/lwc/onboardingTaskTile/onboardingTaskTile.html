@@ -46,11 +46,18 @@
                    <a href="#"  data-id={task.taskid} onclick={handleClick}> {task.subject} </a>
                     </template>
                      <template if:true={task.isCompleted}>
-                    {task.subject} 
+                      {task.subject} 
                     </template>
 
                    
-                   <br/><font size="1"> {task.substring} </font></div> 
+                   <br/><font size="1">
+                        <template if:false={task.reqNav}>
+                        {task.substring} 
+                        </template>
+                         <template if:true={task.reqNav}>
+                        {task.substring} &nbsp;&nbsp;&nbsp; <a style="color:red" href={task.navLink}  data-id={task.taskid}  ><i>Click here for details</i> </a>
+                        </template>
+                         </font></div> 
                
            </div>
            </lightning-card> <br key={task.subject}/>

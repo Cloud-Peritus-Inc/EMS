@@ -28,8 +28,6 @@ global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-    
-global final Integer Add_leaves = 5;
     global Database.QueryLocator start(Database.BatchableContext BC) {
         
                
@@ -58,10 +56,24 @@ global final Integer Add_leaves = 5;
          Map<String,Decimal> leaveMap = new Map<String,Decimal>();
          Id AnnualLeaveTypeId = [Select Id FROM EMS_LM_Leave__c  Where Name = 'Annual Leave'].Id;
          Date dt = system.today();
+         Boolean isJan = dt.month() == 1 ? true : false;
          String uniqueMonthYear = String.valueOf(dt.month())+String.valueOf(dt.year());
           for(Leave_Accrued_Mapping__mdt lmpRec : [SELECT Is_Lessthan_15_Days__c,Joining_Month__c,Leaves_Credits__c FROM Leave_Accrued_Mapping__mdt ]){
             leaveMap.put(String.valueOf(lmpRec.Joining_Month__c+String.valueOf(lmpRec.Is_Lessthan_15_Days__c)),lmpRec.Leaves_Credits__c);
            }
+        Map<String,decimal> contactWithCarryFwdBalance = new Map<String,Decimal>();
+        
+        if(isJan){
+            for(Contact conRec : conList){
+                if(conRec.EMS_LM_No_Of_Availble_Leaves__c >=10) {
+                    contactWithCarryFwdBalance.put(conRec.Id,10);
+                }
+                else{
+                    contactWithCarryFwdBalance.put(conRec.Id,conRec.EMS_LM_No_Of_Availble_Leaves__c); 
+                }
+            } 
+        }
+        
         for(Contact conRec : conList){
             Boolean shouldIcreatedTheBal = true;
             Date processingDate = system.today();
@@ -70,11 +82,11 @@ global final Integer Add_leaves = 5;
              Boolean isItlessthan15 = processingDay <= 15;
              String uniqueKey = String.valueOf(processingMonth)+String.valueOf(isItlessthan15);
             
-            for(EMS_LM_Leave_Credit__C leaveCreds : conRec.Leave_Credits__r){
-                if(leaveCreds.CreditedMonthYear__c == uniqueMonthYear){
-                   shouldIcreatedTheBal = false; 
+                for(EMS_LM_Leave_Credit__C leaveCreds : conRec.Leave_Credits__r){
+                    if(leaveCreds.CreditedMonthYear__c == uniqueMonthYear){
+                       shouldIcreatedTheBal = false; 
+                    }
                 }
-            }
              
             if(shouldIcreatedTheBal){
              EMS_LM_Leave_Credit__c leaveCredit = new EMS_LM_Leave_Credit__c();
@@ -82,7 +94,12 @@ global final Integer Add_leaves = 5;
                  leaveCredit.EMS_LM_Leave_Credited_Date__c = System.today();
                  leaveCredit.EMS_LM_Select_Leave_Type__c = 'Annual Leave'; 
                  leaveCredit.EMS_LM_Leave_Type__c = AnnualLeaveTypeId;
+                if(contactWithCarryFwdBalance.containsKey(conRec.Id)){
+                    leaveCredit.EMS_LM_Leaves_Credited__c = contactWithCarryFwdBalance.get(conRec.Id)+leaveMap.get(uniqueKey);
+                   leaveCredit.Comments__c  = 'Included the Last Year Carry Forward Balance of '+contactWithCarryFwdBalance.get(conRec.Id);
+                }else{
                  leaveCredit.EMS_LM_Leaves_Credited__c = leaveMap.get(uniqueKey);
+                }
                  leaveCreditList.add(leaveCredit);
             }
         }

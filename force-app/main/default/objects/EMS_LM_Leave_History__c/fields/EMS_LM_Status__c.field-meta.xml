@@ -32,20 +32,25 @@
                 <label>Cancelled</label>
             </value>
             <value>
-                <fullName>Waiting For Approver 2</fullName>
+                <fullName>Approver 2 Pending</fullName>
                 <default>false</default>
-                <label>Waiting For Approver 2</label>
+                <label>Approver 2 Pending</label>
             </value>
             <value>
-                <fullName>Waiting For Approver 3</fullName>
+                <fullName>Approver 1 pending</fullName>
                 <default>false</default>
-                <label>Waiting For Approver 3</label>
+                <label>Approver 1 pending</label>
             </value>
             <value>
                 <fullName>Auto Approved</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Auto Approved</label>
+            </value>
+            <value>
+                <fullName>Waiting For Approver 3</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Waiting For Approver 3</label>
             </value>
         </valueSetDefinition>
     </valueSet>
