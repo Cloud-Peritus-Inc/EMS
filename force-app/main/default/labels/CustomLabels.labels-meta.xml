@@ -28,4 +28,11 @@
         <shortDescription>Days Consider for Onboarding Taks</shortDescription>
         <value>0</value>
     </labels>
+    <labels>
+        <fullName>Leave_Request_site_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Leave Request site Link</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/CpLink/s/leave-management</value>
+    </labels>
 </CustomLabels>
