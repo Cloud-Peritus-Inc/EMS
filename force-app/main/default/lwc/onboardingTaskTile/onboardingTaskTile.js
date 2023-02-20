@@ -1,10 +1,11 @@
 import { LightningElement,track,wire } from 'lwc';
 import MountainImage from '@salesforce/resourceUrl/MountainImage';
+import { NavigationMixin } from 'lightning/navigation';
 import getMyOnboardingTasks from '@salesforce/apex/onboardingTileController.getMyOnboardingTasks';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateTheTaskasComplete from '@salesforce/apex/onboardingTileController.updateTheTaskasComplete';
 import LightningConfirm from 'lightning/confirm';
-export default class OnboardingTaskTile extends LightningElement {
+export default class OnboardingTaskTile extends NavigationMixin(LightningElement) {
 @track imageUrl = MountainImage;
 showpopup = false;
 showonboardingUi = false;
@@ -54,15 +55,23 @@ async handleClick(event){
             label: 'Please Confirm',
             theme: 'error',
         });
-
+       console.log('======result==='+result);
         if(result==true){
           updateTheTaskasComplete({ 
              taskid : clickedId
          })
-         .then(result => {
+         .then(data => {
+              console.log('===data===='+data);
+              refreshApex(this.eventObj);
+              this[NavigationMixin.Navigate]({
+                type: 'standard__webPage',
+                attributes: {
+                    url: '#'
+                }
+            });
              const event = new ShowToastEvent({
                  title: 'Completed',
-                 message: result,
+                 message: data,
                  variant: 'success'
              });
              this.dispatchEvent(event);
@@ -80,5 +89,18 @@ async handleClick(event){
 
         }
 }
+
+ async handleNavClick(event){
+     console.log('======event.target.dataset===='+JSON.stringify(event.target.dataset));
+    const clickedId = event.target.dataset.id;
+    console.log('===clickedId======'+clickedId);
+     this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: clickedId
+            }
+        });
+
+ }
 
 }

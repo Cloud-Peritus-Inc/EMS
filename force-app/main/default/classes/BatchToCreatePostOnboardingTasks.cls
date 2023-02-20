@@ -98,6 +98,10 @@ global class BatchToCreatePostOnboardingTasks implements Database.Batchable<sObj
                 }else{
                 t.OwnerId = Userinfo.getUserId();    
                 }
+                if(ptm.Navigation_Required__c){
+                 t.Navigation_address__c = ptm.Navigation_address__c;
+                 t.Requires_Navigation__c =  ptm.Navigation_Required__c;
+                }
                 t.Subject = ptm.Task_Subject__c;
                 t.Status = 'Open';
                 t.Priority = 'High';
