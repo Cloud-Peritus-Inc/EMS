@@ -1,10 +1,13 @@
 <!-- This component is used to Show to apply for leave or WFH to current Logged in Employee  -->
 <template>
   <!--lightning-card-->
-    <div slot="actions">
+    <div >
       <span>
-        <button class="slds-button slds-button_neutral" onclick={firsthandle} style="width:250px" >Apply New</button>       
       
+      <div class="uiOutputText footer" style="padding:10px;" >
+             <a onclick={firsthandle} ><font class="uiOutputText" >Apply New</font></a> 
+      </div>
+
         <!--<lightning-button variant="brand-outline" label="Apply New" onclick={firsthandle}></lightning-button>
           lightning-button-menu  alternative-text="Show menu" label="Apply New" text="Apply New"
           variant="brand-outline" onselect={handleOnselect}>

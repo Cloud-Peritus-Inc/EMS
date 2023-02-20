@@ -1,3 +1,18 @@
+/**
+* @author Mukesh Rawat 
+* @date 15/02/2023
+* @description  Getting Family information data in Post Onboarding Form 
+*
+*               Test code coverage provided by the following test class:
+*               - 
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
+
 public class getFamilyInfoInOnboarding {
     
     @AuraEnabled(cacheable=true)
