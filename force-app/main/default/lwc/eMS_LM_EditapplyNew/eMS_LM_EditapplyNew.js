@@ -1,7 +1,7 @@
 import { LightningElement,api,track,wire } from 'lwc';
 import u_Id from '@salesforce/user/Id';
 import getLeaveRequestMethod from '@salesforce/apex/EMS_LM_EditLeaveRequest.getLeaveRequestMethod';
-import getLeaveType from '@salesforce/apex/EMS_LM_EditLeaveRequest.getLeaveType';
+import getLeaveType from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveType';
 import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getLeaveDuration';
 import getLeaveTypeId from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveTypeid';
 import getLocation from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLocation';
@@ -26,7 +26,7 @@ endDate1;//To apply Leave end date
 startDate;//To apply Leave start date
 endDate;
 value;
-submitcheck = true;//need to changed based on condition LD < ALD
+submitcheck;//need to changed based on condition LD < ALD
 @track availabledays;
 @track allavailabledays;
 @track reason;
@@ -45,6 +45,7 @@ leavetypeId;
 firstsecondDay;
 dayhalfChange;
 firstseconday;
+hideInWorkfromHome=true;
 
 @wire(getLeaveType, { userid: '$uId' })
   wiredltype({ error, data }) {
@@ -212,6 +213,7 @@ firstseconday;
           if(this.value == 'Work from Home'){
             this.submitcheck = false;
             this.duration = data;
+            this.hideInWorkfromHome = false;
           }else{
             if (this.availabledays >= data) {
             this.submitcheck = false;
@@ -509,7 +511,6 @@ connectedCallback(){
               detail:this.closeleavepopup
               });
               this.dispatchEvent(myEvent); 
-              window.location.reload();
             })
             .catch(error => {
                 this.error = error;

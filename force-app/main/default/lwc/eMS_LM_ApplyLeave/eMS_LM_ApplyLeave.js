@@ -561,7 +561,7 @@ if(this.reason == null && this.duration>3){
                     variant: 'success',
                 }),
             );
-            window.location.reload();
+           // window.location.reload();
         }).catch(error => {
         
             console.log('error-->',error);

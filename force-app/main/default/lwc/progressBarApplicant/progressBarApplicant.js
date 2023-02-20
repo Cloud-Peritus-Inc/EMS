@@ -1,4 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation';
 import fetchOnboardingRecords from '@salesforce/apex/ProgressBarApplicantController.fetchOnboardingRecords';
 import fetchAdditionalDetailRecords from '@salesforce/apex/ProgressBarApplicantController.fetchAdditionalDetailRecords';
 import { getRecord} from 'lightning/uiRecordApi';
@@ -44,6 +45,14 @@ export default class ProgressBarApplicant extends LightningElement {
             this.error = JSON.stringify(error);
         }
     }*/
+    @wire(CurrentPageReference)
+    getPageReferenceParameters(currentPageReference) {
+       if (currentPageReference) {
+          console.log(currentPageReference);
+          this.recordId = currentPageReference.attributes.recordId || null;
+
+       }
+    }
     userDetails(){
         fetchOnboardingRecords({onboardingId: this.recordId})
             .then((result) => {

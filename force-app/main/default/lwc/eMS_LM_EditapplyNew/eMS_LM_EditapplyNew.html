@@ -11,7 +11,9 @@
           <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
             <lightning-layout multiple-rows>
               <lightning-messages></lightning-messages>
-              <lightning-layout-item padding="around-small" size="12">
+              
+              <template if:true={hideInWorkfromHome}>
+                <lightning-layout-item padding="around-small" size="12">
                 <div>
                   <lightning-combobox name="leavetype" label="Leave Type" value={value} placeholder="Select Leave Type"
                     options={lOptions} onchange={handleChange} required></lightning-combobox>
@@ -29,7 +31,7 @@
                     onchange={datechange}></lightning-input>
                 </div>
               </lightning-layout-item>
-              <template if:true={firstsecondDay}>
+               <template if:true={firstsecondDay}>
                 <lightning-layout-item padding="around-small" size="6">
                   <div>
                     <lightning-combobox name='selectday' label='Select Day' placeholder='Full Day' value={fullday}
@@ -45,6 +47,32 @@
                   </div>
                 </lightning-layout-item>            
               </template>
+              </template>
+
+              
+              <template if:false={hideInWorkfromHome}>
+                <lightning-layout-item padding="around-small" size="12">
+                <div>
+                  <lightning-combobox name="leavetype" label="Leave Type"  disabled placeholder="Work from Home"
+                     required></lightning-combobox>
+                </div>
+              </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="6">
+                <div>
+                  <lightning-input type="Date" label="Start Date" name="startDate1" value={startDate1}
+                    onchange={datechange}></lightning-input>
+                </div>
+              </lightning-layout-item>
+              <lightning-layout-item padding="around-small" size="6">
+                <div>
+                  <lightning-input type="Date" label="End Date" name="endDate1" value={endDate1}
+                    onchange={datechange}></lightning-input>
+                </div>
+              </lightning-layout-item>
+              </template>
+              
+             
 
               <lightning-layout-item padding="around-small" size="12">
                 <div>

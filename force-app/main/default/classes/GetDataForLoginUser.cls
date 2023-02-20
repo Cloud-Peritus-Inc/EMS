@@ -4,7 +4,7 @@
 * @description  Getting Grid Configuration Data and Login User Data Using Methods
 *
 *               Test code coverage provided by the following test class:
-*               - EMS_EM_CreationOnboardTest
+*               - 
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -28,9 +28,9 @@ public without Sharing class GetDataForLoginUser {
                  FROM user where id =: userId  AND Contactid != null];
         System.debug('userid'+U);
         
-        contact contactDetails =[SELECT EMS_RM_FirstName__c,
+        contact contactDetails =[SELECT Lastname,
                                  Name,
-                                 EMS_RM_LastName__c,
+                                 Firstname,
                                  EMS_EM_Gender__c,
                                  EMS_Phone_Number__c,
                                  Personal_Email__c,
@@ -185,7 +185,19 @@ public without Sharing class GetDataForLoginUser {
         update newRecord;
         
         newPayroll.Contact__c =newRecord.Id;
-        insert newPayroll;
+        
+        if (newPayroll.Contact__c != null) {
+            List<PayRoll__c> existingPayrolls = [SELECT Id FROM PayRoll__c WHERE Contact__c = :newRecord.Id LIMIT 1];
+            
+            if (existingPayrolls.size() > 0) {
+                newPayroll.Id = existingPayrolls[0].Id;
+                update newPayroll;
+            } else {
+                insert newPayroll;
+            }
+        } else {
+            insert newPayroll;
+        }
         
         List<ContentVersion> relatedDocuments = new List<ContentVersion>();
         for (Object file : files) {
@@ -207,7 +219,7 @@ public without Sharing class GetDataForLoginUser {
     
     @AuraEnabled
     public static PayRoll__c updatepayroll( String ConRecordid,  PayRoll__c newPayroll, String PayrollId) {
-
+        
         newPayroll.Id = PayrollId;
         newPayroll.Contact__c = ConRecordid;
         update newPayroll;
