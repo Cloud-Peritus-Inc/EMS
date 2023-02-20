@@ -32,18 +32,28 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         
         for(Contact contactRec : contactList){
             if(contactRec.EMS_EM_JD__c.addDays(-10) == System.today()){
-                EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
+               EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
                 applicantRec.EMS_EM_Personal_Email__c = contactRec.Personal_Email__c;
                 applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
+                applicantRec.ContactId1__c = contactRec.Id;
                 applicantsList.add(applicantRec);
                 String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id);
                 if(status == 'success'){
                     sendEmailToHR(contactRec.Id);
                     sendEmailToTA(contactRec.Id);
+                    sendEmailToAdminTeam(contactRec.Id);                
                 }  
             }
         }
         insert applicantsList;
+        List<ems_EM_Additional_Detail__c> additionalDetailsList = new List<ems_EM_Additional_Detail__c>();
+        for(EMS_EM_Onboarding_Request__c onboardingRecords : applicantsList){
+            ems_EM_Additional_Detail__c applicantRec = new ems_EM_Additional_Detail__c();
+            applicantRec.Onboarding_Request__c = onboardingRecords.id;
+            applicantRec.ContactId__c = onboardingRecords.ContactId1__c;
+            additionalDetailsList.add(applicantRec);
+        }
+        insert additionalDetailsList;
     }
     
     public static String sendOnboardingEmail(String email,string recordId){
@@ -69,7 +79,10 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Notify To Hr After Onboarding Form Sent' LIMIT 1];
-        String hrTeamEmail = [SELECT id, email FROM Contact WHERE name = 'HR Team'].email;
+        /*String hrTeamEmail = [SELECT id, email FROM Contact WHERE name = 'HR Team'].email;
+        List<String> hrEmailList = new List<String>();
+        hrEmailList.add(hrTeamEmail);*/
+        String hrTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'HR_Team'].Email__c;
         List<String> hrEmailList = new List<String>();
         hrEmailList.add(hrTeamEmail);
         
@@ -86,7 +99,11 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Notify TA After Onboarding Form Sent' LIMIT 1];
-        String taTeamEmail = [SELECT id, email FROM Contact WHERE name = 'TA Team'].email;
+        /*String taTeamEmail = [SELECT id, email FROM Contact WHERE name = 'TA Team'].email;
+        List<String> taEmailList = new List<String>();
+        taEmailList.add(taTeamEmail);*/
+        
+        String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'TA_Team'].Email__c;
         List<String> taEmailList = new List<String>();
         taEmailList.add(taTeamEmail);
         
@@ -98,7 +115,26 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
-    
+     public static void sendEmailToAdminTeam(string recordId){
+        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='After Applicant Record Inserted Admin' LIMIT 1];
+       /* String adminTeamEmail = [SELECT id, email FROM Contact WHERE name = 'Admin Team'].email;
+        List<String> adminEmailList = new List<String>();
+        adminEmailList.add(adminTeamEmail);*/
+         
+        String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'Admin_Team'].Email__c;
+        List<String> adminEmailList = new List<String>();
+        adminEmailList.add(taTeamEmail);
+        
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.toAddresses = adminEmailList;
+        message.setTemplateID(emailTemplate.Id);
+        message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
+        message.setSaveAsActivity(false);
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
+    }
     public void finish(Database.BatchableContext bc){
         
     }

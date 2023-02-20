@@ -4,13 +4,14 @@ public without sharing class onboardingTileController {
    @AuraEnabled(cacheable=true)
     public static dataWrapper getMyOnboardingTasks(){
         List<Task> taskList = new List<Task>();
-        taskList = [SELECT Id,Subject,ActivityDate,Onboarding_UniqueKey__c,Status
+        taskList = [SELECT Id,Subject,ActivityDate,Onboarding_UniqueKey__c,Status,Requires_Navigation__c,Navigation_address__c
                          FROM Task WHERE Onboarding_UniqueKey__c != null AND OwnerId=:Userinfo.getUserId() ];
         List<taskInfoWrap> taskInfoWrapper = new List<taskInfoWrap>();
         List<dataWrapper> dataWrapper = new List<dataWrapper>();
         Integer numberTasks = taskList.size();
         Integer NumberofCompletedTasks = 0;
-        
+        List<Network> network = [select name, UrlPathPrefix FROM Network where name like '%grid' limit 1];
+           String base = URL.getSalesforceBaseUrl().toExternalForm(); 
         for(Task tnew : taskList){
             taskInfoWrap tw = new taskInfoWrap();
             tw.taskid = tnew.Id;
@@ -22,6 +23,14 @@ public without sharing class onboardingTileController {
             if(tnew.Status == 'Completed'){
                NumberofCompletedTasks = NumberofCompletedTasks+1;
                tw.isCompleted = true;
+            }
+            if(tnew.Requires_Navigation__c){
+                tw.reqNav = tnew.Requires_Navigation__c;
+                if(!Test.isRunningTest()){
+                 tw.navLink = base + '/' + network[0].UrlPathPrefix + '/s/'+tnew.Navigation_address__c;
+                }else{
+                  tw.navLink = tnew.Navigation_address__c;  
+                }
             }
             taskInfoWrapper.add(tw);
         }
@@ -42,7 +51,7 @@ public without sharing class onboardingTileController {
             update trec;
             return 'Successfully marked the task as completed.';
         }catch(exception ex){
-          return null;  
+          throw new AuraHandledException(ex.getMessage());
         }
     }
     
@@ -66,6 +75,10 @@ public without sharing class onboardingTileController {
         public String substring;
          @AuraEnabled
         public boolean isCompleted;
+         @AuraEnabled
+        public boolean reqNav;
+         @AuraEnabled
+        public string navLink;
     }
 
 }
