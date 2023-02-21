@@ -14,7 +14,7 @@
 * ====================================================================================================
 **/
 
-public class LeaveHistoryApexController {
+public without Sharing class LeaveHistoryApexController {
     @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> getLMHistory(String stdate, String eddate, List<String> statusValues, List<String> typeValues){
         List<EMS_LM_Leave_History__c> lh = new List<EMS_LM_Leave_History__c>();
@@ -117,7 +117,7 @@ public class LeaveHistoryApexController {
     }
     
                 /**
-*   {Purpose} - Method used for bulk updation of leave request status to Approved, Approver 1 Pending, Approver 2 Pending.
+*   {Purpose} - Method used to get Leave Types based on the LoggedIn user.
 *
 *   CHANGE HISTORY
 *   ====================================================================================================
@@ -177,7 +177,7 @@ public class LeaveHistoryApexController {
     }
     
                 /**
-*   {Purpose} - Method used for bulk updation of leave request status to Approved, Approver 1 Pending, Approver 2 Pending.
+*   {Purpose} - Method used to get the Level of approval and Auto-Approval data to show the leave status based on the level of approval.
 *
 *   CHANGE HISTORY
 *   ====================================================================================================

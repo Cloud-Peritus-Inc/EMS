@@ -199,7 +199,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
-          window.location.reload();
+          //window.location.reload();
+          this.isShowModalApproveAll = false;
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -224,7 +225,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       bulkLeaveReqReject({ bulkRejectId: this.multipleApprovals, comments: this.rejectAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
-          window.location.reload();
+          //window.location.reload();
+          this.isShowModalRejectAll = false;
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -256,7 +258,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
     updateLeaveStatus({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
       .then((result) => {
         console.log('Leave Request: ', result);
-        window.location.reload();
+        //window.location.reload();
+        this.isShowModalApprove = false;
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
@@ -285,7 +288,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalReject = false;
-        window.location.reload();
+        //window.location.reload();
+        this.isShowModalReject = false;
       }).catch((err) => {
         console.log('ERROR : ', err);
       });

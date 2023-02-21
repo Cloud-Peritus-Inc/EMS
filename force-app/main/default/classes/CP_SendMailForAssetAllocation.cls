@@ -26,27 +26,74 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
     }
     
     public void execute(Database.BatchableContext bc, List<Contact> contactList){
+        List<Contact> updatedContactList = new List<Contact>();
+        List<Contact> contactListForIT = new List<Contact>();
         for(Contact contactRec : contactList){
             if(contactRec.EMS_EM_JD__c.addDays(-10) == System.today()){
-                sendOnboardingEmail();
+                updatedContactList.add(contactRec);
             }
+            if(contactRec.EMS_EM_JD__c == System.today()){
+                contactListForIT.add(contactRec);
+            }  
         }
+        
+        if(updatedContactList.size() > 0){
+            sendOnboardingEmail(updatedContactList);
+        }
+        if(contactListForIT.size() > 0){
+            sendEmailToITTeam(contactListForIT);
+        	sendEmailToITTeamToAddCandidate(contactListForIT);
+        }
+        
     }
     
-    public static Void sendOnboardingEmail(){
+    public static Void sendOnboardingEmail(List<Contact> contactRecordsList){
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Email To IT Team For Assets' LIMIT 1];
-        List<string> emailList = new List<string>();
-        for(Contact contactRec : [SELECT id, email FROM Contact WHERE name = 'IT Departement' LIMIT 1]){
+        String itEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'IT_Team' LIMIT 1].Email__c;
+        for(Contact contactRec : contactRecordsList){
             Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
-            mail.setToAddresses(new list<string>{contactRec.email});
+            mail.setToAddresses(new list<string>{itEmail});
+            mail.setTemplateID(emailTemplate.Id);
+            mail.setTargetObjectId(contactRec.id);
+            mail.setTreatTargetObjectAsRecipient(false);
+            mail.setSaveAsActivity(false);         
+            mails.add(mail);
+        }
+        Messaging.sendEmail(mails);
+    }
+    
+    public static Void sendEmailToITTeam(List<Contact> contactRecordsList){
+        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Mail for Create Official Mail'];
+        String emailList = [SELECT id, email FROM Contact WHERE name = 'IT Departement'].email;
+        for(Contact contactRec : contactRecordsList){
+            Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
+            mail.setToAddresses(new list<string>{emailList});
             mail.setTemplateID(emailTemplate.Id);
             mail.setTargetObjectId(contactRec.id);
             mail.setSaveAsActivity(false);         
             mails.add(mail);
         }
         Messaging.sendEmail(mails);
+    }
+    
+    public void sendEmailToITTeamToAddCandidate(List<Contact> contactRecordsList){
+        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where DeveloperName = 'Mail_for_Add_Email_to_Company_Mail_Group'];
+        String emailList = [SELECT id, email FROM Contact WHERE name = 'IT Departement'].email;
+        for(Contact contactRec : contactRecordsList){
+            Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
+            mail.setToAddresses(new list<string>{emailList});
+            mail.setTemplateID(emailTemplate.Id);
+            mail.setTargetObjectId(contactRec.id);
+            mail.setSaveAsActivity(false);         
+            mails.add(mail);
+        }
+          Messaging.sendEmail(mails);  
     }
     
     public void finish(Database.BatchableContext bc){
