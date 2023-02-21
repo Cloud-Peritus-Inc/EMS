@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Mail for Create Official Mail</name>
+    <style>freeForm</style>
+    <subject>Cloud Peritus :  Date of joining tasks</subject>
+    <textOnly>Dear IT Team,
+
+Please find the details of the candidate who is going to join us today :
+
+First Name: {!Contact.FirstName}
+
+Last Name: {!Contact.LastName}
+
+Contact Number: {!Contact.Phone}
+
+Personal Email ID: {!Contact.Email}
+
+
+An official email id needs to be generated for this candidate. Also, please ensure that the IT assets are set-up for the new employee for their first day at work.
+
+
+Reply to this email with the official mail id of the employee once created, so that the HR executive can take the necessary actions.
+
+
+Regards,
+
+Team Cloud Peritus</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

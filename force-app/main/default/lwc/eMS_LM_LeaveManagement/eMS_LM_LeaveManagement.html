@@ -1,0 +1,27 @@
+<!-- This component is used to show all the compinents in single page For current Logged in Employee  -->
+
+<template>
+	<div class="parent-container">
+		<div class="right-aligned">
+			<c-e-m-s-_-l-m-_-apply-new ></c-e-m-s-_-l-m-_-apply-new>
+		</div>
+	</div>
+	<c-e-m-s-_-l-m-_-leave-balance></c-e-m-s-_-l-m-_-leave-balance>
+	<lightning-card>
+		<lightning-tabset variant="scoped" active-tab-value={activeTabValue}>
+			<lightning-tab label="My Requests" value="one">
+				<!--c-e-m-s-_-l-m-_-leave-history></c-e-m-s-_-l-m-_-leave-history-->
+				<c-e-m-s-_-l-m-_-all-leave-history></c-e-m-s-_-l-m-_-all-leave-history>
+				<!--c-e-m-s-_-l-m-_-h-r-leave-history></c-e-m-s-_-l-m-_-h-r-leave-history-->
+			</lightning-tab>
+			<lightning-tab label="Pending On Me" value="two">
+				<c-e-m-s-_-l-m-_-leave-history-_-pending-on-me></c-e-m-s-_-l-m-_-leave-history-_-pending-on-me>
+			</lightning-tab>
+			<template if:true={showTabAdmin}>
+				<lightning-tab label="Admin View" value="three">
+					<c-e-m-s-_-l-m-_-leave-history-_-admin-view></c-e-m-s-_-l-m-_-leave-history-_-admin-view>
+				</lightning-tab>
+			</template>
+		</lightning-tabset>
+	</lightning-card>
+</template>
