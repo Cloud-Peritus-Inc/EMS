@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_of_joining_validation</fullName>
+    <active>true</active>
+    <description>Date of joining should not be past date</description>
+    <errorConditionFormula>EMS_EM_JD__c  &lt;  TODAY()</errorConditionFormula>
+    <errorDisplayField>EMS_EM_JD__c</errorDisplayField>
+    <errorMessage>Date of Joining cannot be a past date</errorMessage>
+</ValidationRule>

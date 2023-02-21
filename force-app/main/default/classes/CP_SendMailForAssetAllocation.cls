@@ -21,13 +21,14 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
     
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id, EMS_EM_JD__c FROM Contact WHERE EMS_EM_JD__c != NULL AND RecordType.Name = \'Applicant\'' 
+        	'SELECT id, EMS_EM_JD__c, Resource_Manager__c, Resource_Manager__r.Official_Mail__c, Resource_Manager__r.name FROM Contact WHERE EMS_EM_JD__c != NULL AND RecordType.Name = \'Applicant\'' 
         );
     }
     
     public void execute(Database.BatchableContext bc, List<Contact> contactList){
         List<Contact> updatedContactList = new List<Contact>();
         List<Contact> contactListForIT = new List<Contact>();
+        List<Contact> contactListForRM = new List<Contact>();
         for(Contact contactRec : contactList){
             if(contactRec.EMS_EM_JD__c.addDays(-10) == System.today()){
                 updatedContactList.add(contactRec);
@@ -35,6 +36,9 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
             if(contactRec.EMS_EM_JD__c == System.today()){
                 contactListForIT.add(contactRec);
             }  
+            if((contactRec.EMS_EM_JD__c.addDays(-7) == System.today() || contactRec.EMS_EM_JD__c.addDays(-2) == System.today()) && contactRec.Resource_Manager__c != NULL){
+                contactListForRM.add(contactRec);
+            }
         }
         
         if(updatedContactList.size() > 0){
@@ -43,6 +47,9 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
         if(contactListForIT.size() > 0){
             sendEmailToITTeam(contactListForIT);
         	sendEmailToITTeamToAddCandidate(contactListForIT);
+        }
+        if(contactListForRM.size() > 0){
+            sendEmailToRM(updatedContactList);
         }
         
     }
@@ -94,6 +101,24 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
             mails.add(mail);
         }
           Messaging.sendEmail(mails);  
+    }
+    
+    public static void sendEmailToRM(List<Contact> finalContactList){
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+        	                          where name ='Notify Resource Manager About New Candidate' LIMIT 1];
+        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+        
+        for(Contact con : finalContactList){
+            String resourceManagerEmail = con.Resource_Manager__r.Official_Mail__c;
+            Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
+            mail.setToAddresses(new list<string>{resourceManagerEmail});
+            mail.setTemplateID(emailTemplate.Id);
+            mail.setTargetObjectId(con.id);
+            mail.setTreatTargetObjectAsRecipient(false);
+            mail.setSaveAsActivity(false);         
+            mails.add(mail);
+        } 
+        Messaging.sendEmail(mails);
     }
     
     public void finish(Database.BatchableContext bc){

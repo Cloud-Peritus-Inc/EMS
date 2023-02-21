@@ -48,7 +48,7 @@ global class BatchToCreatePostOnboardingTasks implements Database.Batchable<sObj
     global void execute(Database.BatchableContext BC, List<Contact> conList) {
          List<Task> finalTaskList = new List<Task>();
          List<Preonboarding_Task_Mapping__mdt> metaList = new List<Preonboarding_Task_Mapping__mdt>();
-        metaList = [SELECT Id,Assigned_To__c,Contact_API__c,Due_Date_Days__c,Task_Subject__c,Type__c,Unique_Identifier__c  FROM Preonboarding_Task_Mapping__mdt WHERE Onboarding_Task__c = 'Post'];
+        metaList = [SELECT Id,Assigned_To__c,Contact_API__c,Due_Date_Days__c,Task_Subject__c,Type__c,Unique_Identifier__c, Navigation_Required__c, Navigation_address__c  FROM Preonboarding_Task_Mapping__mdt WHERE Onboarding_Task__c = 'Post'];
          Map<String,Id> QueueWithId = new Map<String,Id>();
          Set<String> queueNames = new Set<String>();
          Map<String,Id> UserWithId = new Map<String,Id>();

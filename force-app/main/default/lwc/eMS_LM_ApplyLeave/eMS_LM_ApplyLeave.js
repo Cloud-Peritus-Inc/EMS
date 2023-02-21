@@ -516,7 +516,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
        } 
       } */
 
-if(this.reason == null && this.duration>3){
+if(this.reason == null || this.reason == ''){
             const evt = new ShowToastEvent({
             message: 'Please mention the reason for your leave request',
             variant: 'error',

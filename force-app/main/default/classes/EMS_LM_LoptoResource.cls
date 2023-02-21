@@ -24,7 +24,9 @@ public without sharing  class EMS_LM_LoptoResource implements TriggerAction.Afte
 
     // create a set of picklist values that are already used in child records
     Set<String> usedPicklistValues = new Set<String>();
-    for (EMS_LM_Leave_Credit__c child : [SELECT EMS_LM_Employee__c , Leave_Type_Name__c FROM EMS_LM_Leave_Credit__c WHERE EMS_LM_Employee__c IN :ResourceList]) {
+    for (EMS_LM_Leave_Credit__c child : [SELECT EMS_LM_Employee__c , Leave_Type_Name__c 
+                                         FROM EMS_LM_Leave_Credit__c 
+                                         WHERE EMS_LM_Employee__c IN :ResourceList AND Leave_Type_Name__c =:LeaveRequestConstant.LOSS_OF_PAY]) {
         usedPicklistValues.add(child.Leave_Type_Name__c);
     }
         
