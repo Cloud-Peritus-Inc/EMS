@@ -5,9 +5,14 @@
     <description>This rule will fire when the record owner tries to update the record when the leave status is not pending or Approver 1 is pending.</description>
     <errorConditionFormula>AND(
 NOT(ISNEW()),
-				  NOT(ISPICKVAL(EMS_LM_Status__c , &apos;Pending&apos;)),
-						NOT(ISPICKVAL(EMS_LM_Status__c , &apos;Approver 1 Pending&apos;)),
+OR(
+ISPICKVAL(PRIORVALUE(EMS_LM_Status__c), &quot;Approver 2 Pending&quot;),
+ISPICKVAL(PRIORVALUE(EMS_LM_Status__c), &quot;Cancelled&quot;),
+ISPICKVAL(PRIORVALUE(EMS_LM_Status__c), &quot;Rejected&quot;),
+				ISPICKVAL(PRIORVALUE(EMS_LM_Status__c), &quot;Approved&quot;)
+),
 				EMS_LM_Contact__r.Id == $User.ContactId
+
 )</errorConditionFormula>
     <errorMessage>You can not edit the record</errorMessage>
 </ValidationRule>
