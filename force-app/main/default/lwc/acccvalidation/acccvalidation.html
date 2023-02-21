@@ -190,10 +190,10 @@
                 <tr key={it.value} >
                     <td style="border:1px rgba(244, 235, 235, 0.927) solid">
                         <lightning-button-icon icon-name="utility:delete" data-id={it.index}
-                            alternative-text="Delete Row" variant="brand"  class="slds-m-left_xx-small"
+                            alternative-text="Delete Row" variant="destructive"  class="slds-m-left_xx-small changeIconColor"
                             title="Delete Row" onclick={removeRow} disabled={disableSubmited}
                             data-project={it.value.projectValueAvailable}>
-                        </lightning-button-icon>
+                        </lightning-button-icon> 
                     </td>
                     <td style="width: 180px;">
                         <template if:true={it.value.projectValueAvailable}>
