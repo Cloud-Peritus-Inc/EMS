@@ -1,0 +1,61 @@
+<template>
+    <lightning-card >
+       
+   
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="6"
+            padding="around-small">
+          <!--  <lightning-input label="Enter Batch Class Name" variant="label-inline"
+                onchange={handleBatchNameChange}></lightning-input> -->
+          <lightning-combobox
+            name="location"
+            label=""
+            value={batchClassName}
+            placeholder="Select Batch to Run"
+            options={dataoptions}
+            onchange={handleBatchNameChange} ></lightning-combobox>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="4"
+            padding="around-small">
+            <lightning-input label="Enter Batch Size" variant="label-inline" type="number" value={batchSize}
+                onchange={handleBatchSizeChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+            padding="around-small">
+            <lightning-button label="Execute Batch" variant="brand" onclick={handleExecuteBatch}
+                class="slds-p-top_large" disabled={disableExecuteBatch}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout if:true={batchJobId}>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="6"
+            padding="around-small">
+            <lightning-input label="Generated Batch Id" value={batchJobId} disabled variant="label-inline"
+                class="slds-p-bottom_medium"></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+            padding="around-small">
+            <lightning-button label="Get Batch Status" variant="Success" disabled={executedBatch}
+                onclick={getBatchStatus}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+            padding="around-small">
+            <lightning-button label="Refresh" variant="brand" onclick={handleRefreshView}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout if:true={batchJobId}>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12"
+            padding="around-small">
+            <div class="slds-p-top_large">
+                Batch Percentage Executed: <b>{executedPercentage}%</b>
+            </div>
+            <div class="slds-p-top_large">
+                <lightning-progress-bar value={executedIndicator} size="large"></lightning-progress-bar>
+            </div>
+            <div class="slds-p-top_large">
+                Batch Executed <b>{executedBatch}</b> of <b>{totalBatch}</b>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+
+     </lightning-card>
+</template>
