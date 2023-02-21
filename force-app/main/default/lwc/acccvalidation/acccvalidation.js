@@ -1023,7 +1023,7 @@ submitpopup(){
         for( let key in this.totalDayHours ) {
             if (key.length === 13 && (key != 'EMS_TM_Sat__c' && key != 'EMS_TM_Sun__c')) {
                 let error = 'error'+key;
-                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 0 ) {
+                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 8 ) {
                     this.isValid = false;
                     this.totalDayHours[error] = true;
                 } else {

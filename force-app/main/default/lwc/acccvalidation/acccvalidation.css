@@ -43,3 +43,6 @@
 .total {
     font-weight: 700;
 }
+.changeIconColor{
+    --lwc-colorTextIconDefault: #e20606;
+}
