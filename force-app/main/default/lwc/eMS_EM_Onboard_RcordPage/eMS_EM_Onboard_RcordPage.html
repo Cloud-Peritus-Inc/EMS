@@ -1,0 +1,409 @@
+<template>
+
+     <div class="con-container">
+        <lightning-accordion>
+            <lightning-accordion-section name="name" class="slds-form-element_compound" label="Personal Details" style="font-weight:bold;">
+                <div class="slds-section slds-is-open">
+                    <div aria-hidden="false" class="slds-section__content">
+                        <div class="slds-grid slds-gutters ">
+                                <div class="slds-col">
+                                    <strong>
+                                        <lightning-input  class="strong-text" data-field="name" label="First Name" value = {Firstname}  read-only='true'></lightning-input>
+                                         <lightning-input  class="strong-text" data-field="name" label="Last Name" value = {name}  read-only='true'></lightning-input>
+                                         <lightning-input data-field="name" label="Father's Name" value = {fathername}  read-only='true'></lightning-input>
+                                         <lightning-input data-field="name" label="Mother's Name" value = {mothername}  read-only='true'></lightning-input>
+                                         <lightning-input data-field="name" label="Gender" value = {gender}  read-only='true'></lightning-input>
+                                         <lightning-input data-field="name" label="Alternate Phone Number" value = {alternatecontact}  read-only='true'></lightning-input>
+                                         <lightning-input data-field="name" label="Date Of Birth" value = {dateOfBirth}  read-only='true'></lightning-input>
+                                         <lightning-input data-field="name" label="Maritual Status" value = {maritualStatus}  read-only='true'></lightning-input>
+                                         <lightning-input data-field="name" label="Spouse Name" value = {spousename}  read-only='true'></lightning-input>
+                                         <lightning-input data-field="name" label="Date Of Wedding" value = {dateOfWedding}  read-only='true'></lightning-input>
+                                        </strong>
+                                 </div>
+                                <div class="slds-col">
+                                    <lightning-input data-field="name"  label="Blood Group" value = {bloodGp}  read-only='true'></lightning-input>
+                                    <lightning-input data-field="name" label="Personal EmailId" value = {personalEmail}  read-only='true'></lightning-input>
+                                    <lightning-input data-field="name" label="Contact Number" value = {contactnumber}  read-only='true'></lightning-input>
+                                    <lightning-input data-field="name" type="text" label="Adhaar Number" value = {adhaarNo}  read-only='true'></lightning-input>
+                                    <lightning-input data-field="name" label="PAN" value = {panNo}  read-only='true'></lightning-input>
+                                    <lightning-input data-field="name" label="Passport Number" value = {passportNo}  read-only='true'></lightning-input>
+                                    <lightning-input data-field="name" label="UAN" value = {uanNo}  read-only='true'></lightning-input>
+                                    <lightning-input data-field="name" label="Nationality" value = {natioality}  read-only='true'></lightning-input>
+                                    <lightning-input data-field="name" label="Status" value = {status}  read-only='true'></lightning-input>
+
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="name2" class="slds-form-element_compound" label="Current Address Details" style="font-weight:bold;">
+                <div class="slds-section slds-is-open" >
+                    <div aria-hidden="false" class="slds-section__content">
+                        <div class="slds-grid slds-gutters ">
+                                        <div class="slds-col">
+                                            <lightning-input data-field="Current_Address_Line_1__c" label="Address Line1" value = {CurrentAddressLine1}  read-only='true'></lightning-input>
+                                            <lightning-input data-field="state" label="State" value = {currentState}  read-only='true'></lightning-input>
+                                            <lightning-input data-field="zip" label="Zip" value = {currentZip}  read-only='true'></lightning-input>
+                                        </div>
+                                         <div class="slds-col">
+                                            <lightning-input data-field="name" label="Address Line2" value = {CurrentAddressLine2}  read-only='true'></lightning-input>
+                                            <lightning-input data-field="name" label="City" value = {currentCity}  read-only='true'></lightning-input>
+
+                                        </div>
+                        </div>
+                    </div>
+                </div>
+             </lightning-accordion-section>
+
+
+                <lightning-accordion-section name="name2" class="slds-form-element_compound" label="Permanent Address Details" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Address Line1" value = {permanentAddressLine1}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="state" label="State" value = {permanentState}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="zip" label="Zip" value = {permanentZip}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="Address Line2" value = {permanentAddressLine2}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="City" value = {PermanentCity}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                 </lightning-accordion-section>
+
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Educational Details" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Level Of Education" value = {levelOfEducation}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="state" label="Degree" value = {degree}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="zip" label="Field Of Study" value = {fieldOfStudy}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="Institution Name" value = {institutionName}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Graduation Date" value = {graduationDate}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <template if:true={additionalEducation1} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Educational Details" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Level Of Education" value = {levelOfEducation1}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="state" label="Degree" value = {degree1}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="zip" label="Field Of Study" value = {fieldOfStudy1}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="Institution Name" value = {institutionName1}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Graduation Date" value = {graduationDate1}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+
+            <template if:true={additionalEducation2} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Educational Details" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Level Of Education" value = {levelOfEducation2}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="state" label="Degree" value = {degree2}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="zip" label="Field Of Study" value = {fieldOfStudy2}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="Institution Name" value = {institutionName2}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Graduation Date" value = {graduationDate2}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+
+            <template if:true={additionalEducation3} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Educational Details" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Level Of Education" value = {levelOfEducation3}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="state" label="Degree" value = {degree3}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="zip" label="Field Of Study" value = {fieldOfStudy3}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="Institution Name" value = {institutionName3}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Graduation Date" value = {graduationDate3}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+
+            <template if:true={additionalEducation4} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Educational Details" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Level Of Education" value = {levelOfEducation4}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="state" label="Degree" value = {degree4}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="zip" label="Field Of Study" value = {fieldOfStudy4}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="Institution Name" value = {institutionName4}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Graduation Date" value = {graduationDate4}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+
+            <template if:true={additionalEducation5} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Educational Details" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Level Of Education" value = {levelOfEducation5}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="state" label="Degree" value = {degree5}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="zip" label="Field Of Study" value = {fieldOfStudy5}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="Institution Name" value = {institutionName5}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Graduation Date" value = {graduationDate5}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+                  <!-- comments -->
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Other Certification Details" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                <template if:true={OtherCertificationDetails}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName}  read-only='true'></lightning-input>
+                                                </template>
+
+                                                <template if:true={OtherCertificationDetails4}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName4}  read-only='true'></lightning-input>
+                                                </template>
+                                                <template if:true={OtherCertificationDetails6}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName6}  read-only='true'></lightning-input>
+                                                </template>
+                                                <template if:true={OtherCertificationDetails8}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName8}  read-only='true'></lightning-input>
+                                                </template>
+                                                <template if:true={OtherCertificationDetails10}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName10}  read-only='true'></lightning-input>
+                                                </template>
+                                                <template if:true={OtherCertificationDetails12}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName12}  read-only='true'></lightning-input>
+                                                </template>
+
+                                                <template if:true={OtherCertificationDetails14}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName14}  read-only='true'></lightning-input>
+                                                </template>
+
+                                                <template if:true={OtherCertificationDetails16}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName16}  read-only='true'></lightning-input>
+                                                </template>
+                                                <template if:true={OtherCertificationDetails18}>
+                                                 <lightning-input data-field="name" label="Certification Name" value = {certifiationName18}  read-only='true'></lightning-input>
+                                                </template>
+                                            </div>
+                                            <div class="slds-col">
+                                                <template if:true={OtherCertificationDetails2}>
+                                                    <lightning-input data-field="name" label="Certification Name" value = {certifiationName2}  read-only='true'></lightning-input>
+                                                   </template>
+                                                <template if:true={OtherCertificationDetails1}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName1}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails3}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName3}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails5}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName5}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails7}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName7}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails9}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName9}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails11}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName11}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails13}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName13}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails15}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName15}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails17}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName17}  read-only='true'></lightning-input>
+                                            </template>
+                                            <template if:true={OtherCertificationDetails19}>
+                                                <lightning-input data-field="name" label="Certification Name" value = {certifiationName19}  read-only='true'></lightning-input>
+                                            </template>
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+
+
+
+
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Work Experience" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Job Title" value = {jobTitle}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="From Date" value = {fromDate}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="To Date" value = {toDate}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="Previous Company Name" value = {PreviousCompanyName}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Previous Company HR EmailId" value = {PreviousCompanyHrMailId}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+
+
+            <template if:true={workExperience1} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Work Experience" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Job Title" value = {jobTitle1}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="From Date" value = {fromDate1}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="To Date" value = {toDate1}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="To Date" value = {toDate1}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Previous Company Name" value = {PreviousCompanyName1}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+
+            <template if:true={workExperience2} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Work Experience" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Job Title" value = {jobTitle2}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="From Date" value = {fromDate2}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="To Date" value = {toDate2}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="To Date" value = {toDate2}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Previous Company Name" value = {PreviousCompanyName2}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+
+            <template if:true={workExperience3} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Work Experience" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Job Title" value = {jobTitle3}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="From Date" value = {fromDate3}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="To Date" value = {toDate3}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="To Date" value = {toDate3}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Previous Company Name" value = {PreviousCompanyName3}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+            <template if:true={workExperience4} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Work Experience" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Job Title" value = {jobTitle4}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="From Date" value = {fromDate4}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="To Date" value = {toDate4}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="To Date" value = {toDate4}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Previous Company Name" value = {PreviousCompanyName4}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+
+            <template if:true={workExperience5} >
+                <lightning-accordion-section name="name" class="slds-form-element_compound" label="Additional Work Experience" style="font-weight:bold;">
+                    <div class="slds-section slds-is-open" >
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col">
+                                                 <lightning-input data-field="name" label="Job Title" value = {jobTitle5}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="From Date" value = {fromDate5}  read-only='true'></lightning-input>
+                                                 <lightning-input data-field="name" label="To Date" value = {toDate5}  read-only='true'></lightning-input>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-input data-field="name" label="To Date" value = {toDate5}  read-only='true'></lightning-input>
+                                                <lightning-input data-field="name" label="Previous Company Name" value = {PreviousCompanyName5}  read-only='true'></lightning-input>
+
+                                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+    </div>
+
+
+</template>

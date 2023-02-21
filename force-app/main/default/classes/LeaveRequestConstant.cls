@@ -10,4 +10,8 @@ public class LeaveRequestConstant {
      public static final String WORK_FROM_HOME= 'Work from Home';
      public static final String AUTO_APPROVED = 'Auto Approved';
      public static final String LOSS_OF_PAY ='Loss of Pay';
+     public static final String ANNUAL_LEAVE ='Annual Leave';
+    public static final String COMPENSATORY_OFF ='Compensatory Off';
+    public static final String MATERNITY_LEAVE ='Maternity Leave';
+ //   public static final String MATERNITY_LEAVE ='Maternity Leave';
 }

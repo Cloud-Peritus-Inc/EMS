@@ -8,9 +8,7 @@
     <subject>New project is assigned to you</subject>
     <textOnly>Dear {!EMS_TM_Project__c.Project_Manager__c},
 
-The project {!EMS_TM_Project__c.Name} was created with you as the Project Manager. Please find the link to the project here:
-
-{!EMS_TM_Project__c.Link}
+The project {!EMS_TM_Project__c.Name} was created with you as the Project Manager. Please find the link to the project here: Click Here
 
 Regards,
 

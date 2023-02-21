@@ -11,9 +11,13 @@
 
 The following candidate will join our company on {!Contact.EMS_EM_JD__c}:
 
+
+
 Name: {!Contact.Name}
 
-Designation: {!Contact.Designation__c}
+Designation: {!Contact.Resource_Role__c}
+
+
 
 Please be prepared to give an orientation session on their first day. Also, ensure that training materials/sessions are organized for the employee for the first week, so that the employee has all the necessary information to perform well in their new position.
 
