@@ -12,7 +12,7 @@ get options() {
     }
 
 handleRadioChange(event){
-  this.selectedOption = event.detail.value;
+this.selectedOption = event.target.value;
   console.log('this.selectedOption-->',this.selectedOption);
   if (this.selectedOption == 'Leave') {
       this.openleave = true;

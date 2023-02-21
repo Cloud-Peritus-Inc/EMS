@@ -1,48 +1,52 @@
 public without sharing class holidayTitleController {
     
   @AuraEnabled(cacheable=true)
-    public static List<datawrapper> getMyUpcomingHoliday(){
+    public static returnedDate getMyUpcomingHoliday(){
         List<datawrapper> dataList = new List<datawrapper>(); 
-        User uREc = [SELECT Id,contactId,contact.Work_Location__c FROM User WHERE Id=:Userinfo.getUserId()];
+        Map<String,String> locationWithId = new Map<String,String>();
+        User uREc = [SELECT Id,contactId,contact.Work_Location__c,contact.Work_Location__r.Name FROM User WHERE Id=:Userinfo.getUserId()];
         List<EMS_TM_Calendar__c> holidayCalender = new List<EMS_TM_Calendar__c>();
+        String resourceLocation = uREc.contact.Work_Location__r.Name;
         Date dt = system.today();
-        holidayCalender = [SELECT Id,EMS_TM_Calendar_Date__c,Office_Location__c,Name,EMS_TM_Type_Of_Holiday__c 
+        holidayCalender = [SELECT Id,EMS_TM_Calendar_Date__c,Office_Location__c,Name,Office_Location__r.Name,EMS_TM_Type_Of_Holiday__c 
                            FROM EMS_TM_Calendar__c 
                            WHERE EMS_TM_Calendar_Date__c=THIS_YEAR 
                            AND EMS_TM_Calendar_Date__c >:dt  
-                           AND Office_Location__c=:uREc.contact.Work_Location__c];
+                           ];
+        
         for(EMS_TM_Calendar__c holi : holidayCalender){
+            system.debug('====holi.Office_Location__c=='+holi.Office_Location__c);
+             system.debug('==== uREc.contact.Work_Location__c=='+ uREc.contact.Work_Location__c);
+            if(holi.Office_Location__c == uREc.contact.Work_Location__c){
+                System.debug('=Inside====');
+                DateTime dt2 = DateTime.newInstance(holi.EMS_TM_Calendar_Date__c, Time.newInstance(0,0,0,0));
             datawrapper dtwrap = new datawrapper();
             dtwrap.holidayDate = holi.EMS_TM_Calendar_Date__c;
-            dtwrap.duration = '1';
-            dtwrap.status = 'NA';
+            dtwrap.status = dt2.format('EEEE');
             dtwrap.holidayType =  holi.Name;
             dataList.add(dtwrap);
+            }
+            locationWithId.put(holi.Office_Location__r.Name,holi.Office_Location__c);
         }
         
-        List<EMS_LM_Leave_History__c> leaveRequestList = new List<EMS_LM_Leave_History__c>();
-        leaveRequestList = [SELECT Id,EMS_LM_Leave_Start_Date__c,EMS_LM_Leave_Duration__c,EMS_LM_Leave_Type__c,EMS_LM_Leave_Type__r.Name,EMS_LM_Status__c 
-                            FROM EMS_LM_Leave_History__c 
-                            WHERE EMS_LM_Leave_Start_Date__c>:dt 
-                            AND EMS_LM_Leave_Start_Date__c= THIS_YEAR
-                            AND EMS_LM_Status__c != 'Rejected' 
-                            AND EMS_LM_Status__c != 'Cancelled'];
-            for(EMS_LM_Leave_History__c history : leaveRequestList){
-              datawrapper dtwrap = new datawrapper();
-            dtwrap.holidayDate = history.EMS_LM_Leave_Start_Date__c;
-            dtwrap.duration = string.valueOf(integer.valueOf(history.EMS_LM_Leave_Duration__c));
-                if(history.EMS_LM_Status__c == 'Auto Approved' || history.EMS_LM_Status__c == 'Approved'){
-                 dtwrap.status = 'Approved';
-                }else  if(history.EMS_LM_Status__c == 'Pending'){ 
-                 dtwrap.status = 'Pending';
-                }else {
-                   dtwrap.status = 'In Review';
-                }
-            dtwrap.holidayType =  history.EMS_LM_Leave_Type__r.Name;
-            dataList.add(dtwrap);  
-            }
-        dataList.sort();
-        return dataList;
+      
+         dataList.sort();
+        returnedDate rdData = new returnedDate();
+        rdData.datalist = dataList;
+        rdData.locationList = locationWithId;
+        rdData.resourceLocation = resourceLocation;
+       
+        return rdData;
+    }
+    
+    
+    public class returnedDate {
+        @AuraEnabled 
+        public List<datawrapper> datalist;
+        @AuraEnabled
+        public Map<String,String> locationList;
+        @AuraEnabled
+        public string resourceLocation;
     }
     
     public class datawrapper implements Comparable {
