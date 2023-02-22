@@ -18,6 +18,7 @@
         </div>
         <div class="child2">
            <div class="homeCard slds-m-around_xxx-small iconContainer">
+               <div class="table-container">
             <template for:each={datawrap} for:item="task">  
            <lightning-card key={task.subject}  >
                <template if:true={loaded}>
@@ -62,6 +63,7 @@
            </div>
            </lightning-card> <br key={task.subject}/>
          </template>
+               </div>
             </div>
         </div>
     </div> 

@@ -1,25 +1,26 @@
 /**
-    * @author Mukesh Rawat
-    * @date 30/01/2023
-    * @description  createContact to Convert Onboarding Records to Resource-Contact Resource
-    *
-    *               Test code coverage provided by the following test class:
-    *               - CP_OnboardingToResourceConvertTest
-    *
-    * CHANGE HISTORY
-    * ====================================================================================================
-    * DATE          NAME                    DESCRIPTION
-    * N/A           N/A                     N/A
-    * ====================================================================================================
-    **/
+* @author Mukesh Rawat
+* @date 30/01/2023
+* @description  createContact to Convert Onboarding Records to Resource-Contact Resource
+*
+*               Test code coverage provided by the following test class:
+*               - CP_OnboardingToResourceConvertTest
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 public class CP_OnboardingToResourceConvert {
     public static final String APPLICANT_RECORD_TYPE = 'Resource';
     public static final String CONTACT_APPLICANT_RECORD_TYPE_ID = Schema.SObjectType.Contact.getRecordTypeInfosByName().get(APPLICANT_RECORD_TYPE).getRecordTypeId();
-   
+    
     @AuraEnabled
     public static List<Contact> createContact(String onBoardRecordsIdsSet){
         Set<Id> onboardingContentDocumentRecordIdsSet = new Set<Id>();
         List<Contact> contactRecordsList = new List<Contact>();
+        List<Certifications__c> CertificationsRecordsList = new List<Certifications__c>();
         Map<Id,ems_EM_Additional_Detail__c> emsEMAdditionalDetailMap = new Map<Id,ems_EM_Additional_Detail__c>(); 
         try{
             For(ems_EM_Additional_Detail__c eachAdditionalDetails : [ Select Id,
@@ -118,15 +119,56 @@ public class CP_OnboardingToResourceConvert {
                                                                         EMS_EM_PA_City__c,	
                                                                         EMS_EM_CA_Zip__c,	
                                                                         EMS_EM_PA_Zip__c,
+                                                                        Trailblazer_ID_or_Public_URL__c,
+                                                                        EMS_EM_Certification_Name10__c,
+                                                                        EMS_EM_Certification_Name11__c,
+                                                                        EMS_EM_Certification_Name12__c,
+                                                                        EMS_EM_Certification_Name13__c,
+                                                                        EMS_EM_Certification_Name14__c,
+                                                                        EMS_EM_Certification_Name15__c,
+                                                                        EMS_EM_Certification_Name16__c,
+                                                                        EMS_EM_Certification_Name17__c,
+                                                                        EMS_EM_Certification_Name18__c,
+                                                                        EMS_EM_Certification_Name19__c,
+                                                                        EMS_EM_Certification_Name1__c,
+                                                                        EMS_EM_Certification_Name2__c,
+                                                                        EMS_EM_Certification_Name3__c,
+                                                                        EMS_EM_Certification_Name4__c,
+                                                                        EMS_EM_Certification_Name5__c,
+                                                                        EMS_EM_Certification_Name6__c,
+                                                                        EMS_EM_Certification_Name7__c,
+                                                                        EMS_EM_Certification_Name8__c,
+                                                                        EMS_EM_Certification_Name9__c,
+                                                                        EMS_EM_Certification_Name__c,
+                                                                        Completion_Date__c,
+                                                                        Completion_Date1__c,
+                                                                        Completion_Date2__c,
+                                                                        Completion_Date3__c,
+                                                                        Completion_Date4__c,
+                                                                        Completion_Date5__c,
+                                                                        Completion_Date6__c,
+                                                                        Completion_Date7__c,
+                                                                        Completion_Date8__c,
+                                                                        Completion_Date9__c,
+                                                                        Completion_Date10__c,
+                                                                        Completion_Date11__c,
+                                                                        Completion_Date12__c,
+                                                                        Completion_Date13__c,
+                                                                        Completion_Date14__c,
+                                                                        Completion_Date15__c,
+                                                                        Completion_Date16__c,
+                                                                        Completion_Date17__c,
+                                                                        Completion_Date18__c,
+                                                                        Completion_Date19__c,
                                                                         ContactId1__c,
                                                                         (SELECT LinkedEntityId, Id, ContentDocumentId, Visibility, ShareType FROM ContentDocumentLinks)
                                                                         from EMS_EM_Onboarding_Request__c  where Id =: onBoardRecordsIdsSet
                                                                        ]){
                                                                            Contact contactRecord = new Contact(
-                                                                                Id = eachOnboardingRequestRecord.ContactId1__c,
+                                                                               Id = eachOnboardingRequestRecord.ContactId1__c,
                                                                                FirstName = eachOnboardingRequestRecord.EMS_EM_First_Name__c,
                                                                                LastName = eachOnboardingRequestRecord.EMS_EM_Last_Name__c, 
-                                                                              
+                                                                               
                                                                                RecordTypeId = CONTACT_APPLICANT_RECORD_TYPE_ID,                                          
                                                                                EMS_EM_Father__c = eachOnboardingRequestRecord.EMS_EM_Father__c, 
                                                                                EMS_EM_Mother__c = eachOnboardingRequestRecord.EMS_EM_Mother__c,
@@ -153,6 +195,8 @@ public class CP_OnboardingToResourceConvert {
                                                                                EMS_EM_PA_City__c = 	eachOnboardingRequestRecord.EMS_EM_PA_City__c,	
                                                                                EMS_EM_CA_Zip__c = eachOnboardingRequestRecord.EMS_EM_CA_Zip__c,	
                                                                                EMS_EM_PA_Zip__c = eachOnboardingRequestRecord.EMS_EM_PA_Zip__c);
+                                                                           		
+                                                                           		
                                                                            if(emsEMAdditionalDetailMap.containsKey(eachOnboardingRequestRecord.Id)){
                                                                                contactRecord.EMS_EM_Level_of_Education__c = String.isNotBlank(emsEMAdditionalDetailMap.get(eachOnboardingRequestRecord.Id).EMS_EM_Education__c)  ? emsEMAdditionalDetailMap.get(eachOnboardingRequestRecord.Id).EMS_EM_Education__c  : '';
                                                                                contactRecord.EMS_EM_Level_of_Education1__c = String.isNotBlank(emsEMAdditionalDetailMap.get(eachOnboardingRequestRecord.Id).EMS_EM_Education1__c)  ? emsEMAdditionalDetailMap.get(eachOnboardingRequestRecord.Id).EMS_EM_Education1__c  : '';
@@ -212,12 +256,59 @@ public class CP_OnboardingToResourceConvert {
                                                                                
                                                                                contactRecord.EMS_EM_JD__c = system.today();  
                                                                            }
-                                                                           contactRecordsList.add(contactRecord);    
+                                                                           contactRecordsList.add(contactRecord); 
+                                                                           
+                                                                           Certifications__c certificateRecord =New Certifications__c();
+                                                                           certificateRecord.Contact__c=eachOnboardingRequestRecord.ContactId1__c;
+                                                                           certificateRecord.Trailblazer_ID_or_Public_URL__c = eachOnboardingRequestRecord.Trailblazer_ID_or_Public_URL__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name1__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name1__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name2__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name2__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name3__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name3__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name4__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name4__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name5__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name5__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name6__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name6__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name7__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name7__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name8__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name8__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name9__c=eachOnboardingRequestRecord.EMS_EM_Certification_Name9__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name10__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name10__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name11__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name11__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name12__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name12__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name13__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name13__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name14__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name14__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name15__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name15__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name16__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name16__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name17__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name17__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name18__c = eachOnboardingRequestRecord.EMS_EM_Certification_Name18__c;
+                                                                           certificateRecord.EMS_EM_Certification_Name19__c =eachOnboardingRequestRecord.EMS_EM_Certification_Name19__c;
+                                                                           certificateRecord.Completion_Date__c=eachOnboardingRequestRecord.Completion_Date__c;
+                                                                           certificateRecord.Completion_Date1__c=eachOnboardingRequestRecord.Completion_Date1__c;
+                                                                           certificateRecord.Completion_Date2__c = eachOnboardingRequestRecord.Completion_Date2__c;
+                                                                           certificateRecord.Completion_Date3__c =eachOnboardingRequestRecord.Completion_Date3__c;
+                                                                           certificateRecord.Completion_Date4__c=eachOnboardingRequestRecord.Completion_Date4__c;
+                                                                           certificateRecord.Completion_Date5__c = eachOnboardingRequestRecord.Completion_Date5__c;
+                                                                           certificateRecord.Completion_Date6__c =eachOnboardingRequestRecord.Completion_Date6__c;
+                                                                           certificateRecord.Completion_Date7__c=eachOnboardingRequestRecord.Completion_Date7__c;
+                                                                           certificateRecord.Completion_Date8__c = eachOnboardingRequestRecord.Completion_Date8__c;
+                                                                           certificateRecord.Completion_Date9__c =eachOnboardingRequestRecord.Completion_Date9__c;
+                                                                           certificateRecord.Completion_Date10__c=eachOnboardingRequestRecord.Completion_Date10__c;
+                                                                           certificateRecord.Completion_Date11__c = eachOnboardingRequestRecord.Completion_Date11__c;
+                                                                           certificateRecord.Completion_Date12__c =eachOnboardingRequestRecord.Completion_Date12__c;
+                                                                           certificateRecord.Completion_Date13__c=eachOnboardingRequestRecord.Completion_Date13__c;
+                                                                           certificateRecord.Completion_Date14__c = eachOnboardingRequestRecord.Completion_Date14__c;
+                                                                           certificateRecord.Completion_Date15__c =eachOnboardingRequestRecord.Completion_Date15__c;
+                                                                           certificateRecord.Completion_Date16__c=eachOnboardingRequestRecord.Completion_Date16__c;
+                                                                           certificateRecord.Completion_Date17__c = eachOnboardingRequestRecord.Completion_Date17__c;
+                                                                           certificateRecord.Completion_Date18__c =eachOnboardingRequestRecord.Completion_Date18__c;
+                                                                           certificateRecord.Completion_Date19__c=eachOnboardingRequestRecord.Completion_Date19__c;
+                                                                           CertificationsRecordsList.add(certificateRecord);
+                                                                           
                                                                            for(ContentDocumentLink contentDocumentEach : eachOnboardingRequestRecord.ContentDocumentLinks){
                                                                                onboardingContentDocumentRecordIdsSet.add(contentDocumentEach.ContentDocumentId); 
                                                                            }
                                                                        } 
         Update contactRecordsList;
+        Insert CertificationsRecordsList;
         Set<Id> contactRecordsSet = new Set<Id>();
         For(Contact con : contactRecordsList){
             contactRecordsSet.add(con.Id);
@@ -269,6 +360,6 @@ public class CP_OnboardingToResourceConvert {
             System.debug('### Exception Occured With'+ ex.getMessage());
             System.debug('### Exception Occured With'+ ex.getStackTraceString());
         }
-     return contactRecordsList;   
+        return contactRecordsList;   
     }
 }

@@ -61,6 +61,7 @@ async handleClick(event){
              taskid : clickedId
          })
          .then(data => {
+             window.location.reload();
               console.log('===data===='+data);
               refreshApex(this.eventObj);
               this[NavigationMixin.Navigate]({

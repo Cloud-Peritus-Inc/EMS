@@ -11,6 +11,8 @@ import CompanyPoliciesdata from '@salesforce/apex/GetDataForLoginUser.CompanyPol
 import getRelatedFilesByRecordId from '@salesforce/apex/GetDataForLoginUser.getRelatedFilesByRecordId';
 import Id from '@salesforce/user/Id';
 import getLoginURL from '@salesforce/apex/GetDataForLoginUser.getLoginURL';
+import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLoginUser.getRelatedFilesByRecordIdForPayForms';
+import getContentDistributionForFile from '@salesforce/apex/GetDataForLoginUser.getContentDistributionForFile';
 import getFamilyInfo from '@salesforce/apex/getFamilyInfoInOnboarding.getFamilyInfo';
 import getPayrollInfo from '@salesforce/apex/GetDataForLoginUser.getPayrollInfo';
 import { refreshApex } from '@salesforce/apex';
@@ -18,6 +20,19 @@ import { NavigationMixin } from 'lightning/navigation';
 import { deleteRecord } from 'lightning/uiRecordApi';
 
 import updateContact from '@salesforce/apex/GetDataForLoginUser.updateContact';
+
+const columns = [
+  { label: 'Title',       fieldName: 'Title', wrapText : true,
+      cellAttributes: { 
+          iconName: { fieldName: 'icon' }, iconPosition: 'left' 
+      }
+  },
+  { label: 'Preview', type:  'button', typeAttributes: { 
+          label: 'Preview',  name: 'Preview',  variant: 'brand-outline',
+          iconName: 'utility:preview', iconPosition: 'right'
+      } 
+  },
+];
 
 function uploadFilesFromThis(event,ts){
   if (event.target.files.length > 0 && event.target.files[0].size < 2000000 && event.target.files[0].type =="application/pdf") {
@@ -851,31 +866,48 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
 
 
-  getBaseUrl() {
-    let baseUrl = 'https://' + location.host + '/';
+  getBaseUrl(){
+    let baseUrl = 'https://'+location.host+'/';
     getLoginURL()
-      .then(result => {
+    .then(result => {
         baseUrl = result;
         window.console.log(baseUrl);
-      })
-      .catch(error => {
-        //console.error('Error: \n ', error);
-      });
+    })
+    .catch(error => {
+        console.error('Error: \n ', error);
+    });
     return baseUrl;
-  }
+}
+
+
+    handleDownloadFile(e) {
+        getContentDistributionForFile({
+            contentDocumentId: e.target.dataset.id
+        })
+        .then(response => {
+            console.log('Disturbution----'+JSON.stringify(response));
+            window.open(response.ContentDownloadUrl);
+        })
+        .catch(error => {
+            console.log(JSON.stringify(error));
+        })
+    }
 
   //for Pf Forms Files
-  filesList = []
-  @wire(getRelatedFilesByRecordId, { recordId: '$pfId' })
+  filesList = [];
+  @track documents;
+  @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$pfId' })
   wiredResult({ data, error }) {
     if (data) {
-      //console.log('Pf Forms Files-->' + JSON.stringify(data) ); 
-      this.filesList = Object.keys(data).map(item => ({
+      console.log('Pf Forms Files-->' + JSON.stringify(data) ); 
+     /* this.filesList = Object.keys(data).map(item => ({
         "label": data[item],
         "value": item,
         "url": `/sfsites/c/sfc/servlet.shepherd/document/download/${item}`
-      }))
-      //console.log(this.filesList)
+      })) */
+        this.documents = data;
+
+      console.log(''+JSON.stringify(this.documents));
     }
     if (error) {
       console.log(error)
@@ -895,34 +927,41 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
   // For Documents Files
   filesList0 = []
-  @wire(getRelatedFilesByRecordId, { recordId: '$docId' })
+  @track docs;
+  @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$docId' })
   wiredResult0({ data, error }) {
     if (data) {
-      //console.log('Documents Files-->' + JSON.stringify(data) ); 
-      this.filesList0 = Object.keys(data).map(item => ({
+      console.log('Documents Files-->' + JSON.stringify(data) ); 
+     /* this.filesList0 = Object.keys(data).map(item => ({
         "label": data[item],
         "value": item,
         "url": `/sfc/servlet.shepherd/document/download/${item}`
-      }))
+      }))*/
       //console.log(this.filesList0)
+      this.docs = data;
+
+      console.log(''+JSON.stringify(this.documents));
     }
     if (error) {
       console.log(error)
     }
   }
 
+
   // For Company Policies Files
   filesList1 = []
-  @wire(getRelatedFilesByRecordId, { recordId: '$policiesId' })
+  @track cpPolicies
+  @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$policiesId' })
   wiredResult1({ data, error }) {
     if (data) {
-      //console.log('Company Policies Files-->' + JSON.stringify(data) ); 
-      this.filesList1 = Object.keys(data).map(item => ({
+      console.log('Company Policies Files-->' + JSON.stringify(data) ); 
+     /* this.filesList1 = Object.keys(data).map(item => ({
         "label": data[item],
         "value": item,
         "url": `/sfc/servlet.shepherd/document/download/${item}`
-      }))
-      //console.log(this.filesList1)
+      }))*/
+      this.cpPolicies = data;
+      console.log(this.cpPolicies)
     }
     if (error) {
       console.log(error)
