@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EMS_EM_Validation_For_ACCHolderName</fullName>
-    <active>true</active>
-    <errorConditionFormula>NOT(REGEX( Account_Holder_Name__c ,&quot;^[a-z  A-Z]*$&quot;))</errorConditionFormula>
-    <errorMessage>Invalid Name</errorMessage>
-</ValidationRule>

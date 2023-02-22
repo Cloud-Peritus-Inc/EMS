@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EMS_EM_Validation_For_Degree_Name</fullName>
-    <active>true</active>
-    <errorConditionFormula>IF(  ISPICKVAL(EMS_EM_Request_Type__c, &quot;Education Details&quot;) &amp;&amp; ISPICKVAL(EMS_EM_Add_Education__c, &quot;Degree&quot;),
-NOT(REGEX(EMS_EM_Degree__c, &quot;[a-z A-Z]*&quot;)),false)</errorConditionFormula>
-    <errorDisplayField>EMS_EM_Degree__c</errorDisplayField>
-    <errorMessage>Invalid Degree Name</errorMessage>
-</ValidationRule>

@@ -37,6 +37,7 @@ public without sharing class LeaveRequestHRApproveHandler {
         }
             catch(Exception ex){
                 //LogException.logHandledException(ex);
+                LogException.logHandledException(ex, 'LeaveRequestHRApproveHandler', 'updateLeaveStatus');
                 System.debug('### Exception ' + ex.getMessage());
         	}
    		}
@@ -79,6 +80,7 @@ public without sharing class LeaveRequestHRApproveHandler {
         }
             catch(Exception ex){
                 //LogException.logHandledException(ex);
+                LogException.logHandledException(ex, 'LeaveRequestHRApproveHandler', 'bulkLeaveReqApproval');
                 System.debug('### Exception ' + ex.getMessage());
         	}
     

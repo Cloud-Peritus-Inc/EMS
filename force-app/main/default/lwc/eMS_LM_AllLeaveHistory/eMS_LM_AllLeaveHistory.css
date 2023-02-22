@@ -16,3 +16,16 @@
     transition: border .15s linear;
     border-color: #dddbda;
 }
+
+.redColor{
+    color : #FF0000;
+}
+.iconContainer{
+    width : 50px;
+    height:50px;
+    display:inline-block;
+    cursor: pointer;
+}
+.blueColor{
+    color : rgb(25, 0, 255);
+}

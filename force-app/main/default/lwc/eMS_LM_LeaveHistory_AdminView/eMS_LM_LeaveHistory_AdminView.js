@@ -12,9 +12,8 @@ import bulkLeaveReqApproval from '@salesforce/apex/LeaveRequestHRApproveHandler.
 import bulkLeaveReqReject from '@salesforce/apex/LeaveRequestHRRejectHandler.bulkLeaveReqReject';
 import updateRejectStatus from '@salesforce/apex/LeaveRequestHRRejectHandler.updateRejectStatus';
 import cancleLeaveRequest from '@salesforce/apex/LeaveManagementApexController.cancleLeaveRequest';
-import pendingOnMeLeaveReq from '@salesforce/apex/LeaveHistoryApexController.pendingOnMeLeaveReq';
-
-
+import defaultAdminViewData from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.defaultAdminViewData';
+import { refreshApex } from '@salesforce/apex';
 
 export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   @track empName = '';
@@ -69,6 +68,19 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
     }
   }
 
+  @wire(defaultAdminViewData)
+  wiredData({ error, data }) {
+    if (data) {
+      console.log('### defaultAdminViewData', data);
+      this.showdata = true;
+      this.nodata = false;
+      this.datahistory = JSON.parse(JSON.stringify(data));
+      console.log('###  defaultAdminViewData datahistory ', this.datahistory);
+    } else if (error) {
+      console.error('Error:', error);
+    }
+  }
+
   @wire(getAdminLeaveHistory, { name: '$empName', stdate: '$startDate', eddate: '$endDate', leaveType: '$tValue', status: '$sValue' })
   wiredLeavHistory({ error, data }) {
     if (data) {
@@ -83,17 +95,17 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         });
         this.error = undefined;
       }
-      else {
-        this.nodata = true;
-        this.showdata = false;
-        //this.datahistory = data;
-        this.datahistory = JSON.parse(JSON.stringify(data));
-        console.log('### datahistory JSON : ', this.datahistory);
-        this.datahistory.forEach(req => {
-          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' , req.EMS_LM_Status__c !== 'Approver 2 pending';
-        });
-        this.error = undefined;
-      }
+      /* else {
+         this.nodata = true;
+         this.showdata = false;
+         //this.datahistory = data;
+         this.datahistory = JSON.parse(JSON.stringify(data));
+         console.log('### datahistory JSON : ', this.datahistory);
+         this.datahistory.forEach(req => {
+           req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending', req.EMS_LM_Status__c !== 'Approver 2 pending';
+         });
+         this.error = undefined;
+       }*/
     } else if (error) {
       this.error = error;
       this.datahistory = undefined;
@@ -136,6 +148,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
     this.value = event.detail.value;
     console.log(this.value);
   }
+
   handleCancelButton(event) {
     this.requeststatus = event.target.dataset.value;
     if (this.requeststatus == 'Pending' || this.requeststatus == '' || this.requeststatus == undefined || this.requeststatus == 'Approver 1 Pending' || this.requeststatus == 'Approver 2 Pending') {
@@ -201,6 +214,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
           console.log('Leave Request: ', result);
           //window.location.reload();
           this.isShowModalApproveAll = false;
+          eval("$A.get('e.force:refreshView').fire();");
+          refreshApex(this.datahistory);
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -227,6 +242,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
           console.log('Leave Request: ', result);
           //window.location.reload();
           this.isShowModalRejectAll = false;
+          eval("$A.get('e.force:refreshView').fire();");
+          refreshApex(this.datahistory);
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -260,6 +277,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         console.log('Leave Request: ', result);
         //window.location.reload();
         this.isShowModalApprove = false;
+        eval("$A.get('e.force:refreshView').fire();");
+        refreshApex(this.datahistory);
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
@@ -290,6 +309,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         this.isShowModalReject = false;
         //window.location.reload();
         this.isShowModalReject = false;
+        eval("$A.get('e.force:refreshView').fire();");
+        refreshApex(this.datahistory);
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
@@ -309,7 +330,9 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
           mode: 'pester'
         });
         this.dispatchEvent(evt);
-        window.location.reload();
+        //window.location.reload();
+        eval("$A.get('e.force:refreshView').fire();");
+        refreshApex(this.datahistory);
       }).catch((err) => {
         console.log('### err : ', JSON.stringify(err));
       });
@@ -317,15 +340,15 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
 
 
 
-   async handleApproveClick(event) {
-   this.requeststatus = event.target.dataset.value;
-   this.reqRecordId = event.target.dataset.recordId;
+  async handleApproveClick(event) {
+    this.requeststatus = event.target.dataset.value;
+    this.reqRecordId = event.target.dataset.recordId;
     const result = await LightningConfirm.open({
-     message: "Are you sure you want to Approve this request?",
-     variant: "default", // headerless
-    theme: 'Success', // more would be success, info, warning
-    label: "Approve the request"
-   });
+      message: "Are you sure you want to Approve this request?",
+      variant: "default", // headerless
+      theme: 'Success', // more would be success, info, warning
+      label: "Approve the request"
+    });
     if (result) {
       approveApproval({ recId: this.reqRecordId })
         .then(result => {

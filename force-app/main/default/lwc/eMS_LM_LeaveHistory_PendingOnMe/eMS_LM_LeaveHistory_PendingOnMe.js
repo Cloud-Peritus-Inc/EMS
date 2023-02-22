@@ -53,7 +53,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
 
   // TO SHOW DEFAULT PENDING ON ME DATA
-  @wire(pendingOnMeLeaveReq)
+  /*@wire(pendingOnMeLeaveReq)
   pendingOnMeLeaveReqWiredData({ error, data }) {
     if (data) {
       console.log('### pendingOnMeLeaveReq', data);
@@ -63,6 +63,28 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       console.log('### non filter : ', this.datahistory);
       this.datahistory.forEach(req => {
         req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
+      });
+      console.log('### showdata : ', this.showdata);
+    } else if (error) {
+      console.error('Error:', error);
+    }
+  }*/
+
+  @wire(pendingOnMeLeaveReq)
+  pendingOnMeLeaveReqWiredData({ error, data }) {
+    if (data) {
+      console.log('### pendingOnMeLeaveReq', data);
+      //console.log('user ID 1: ', uId);
+      console.log('user ID : ', this.uId);
+      this.showdata = true;
+      this.nodata = false;
+      this.datahistory = JSON.parse(JSON.stringify(data));
+      console.log('### non filter : ', this.datahistory);
+      this.datahistory.forEach(req => {
+        // req.disableButton = req.EMS_LM_Status__c !== 'Pending' && (req.EMS_LM_Status__c ===  'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c  !== this.uId || req.EMS_LM_Status__c ===  'Approver 1 Pending' && req.EMS_LM_Approver__c !== this.uId);
+        console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
+        req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 pending' && req.EMS_LM_Approver__c === this.uId));
+        console.log('### req.EMS_LM_2nd_Approver__c default: ', req.EMS_LM_2nd_Approver__c);
       });
       console.log('### showdata : ', this.showdata);
     } else if (error) {
@@ -100,7 +122,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         this.datahistory = JSON.parse(JSON.stringify(data));
         console.log('### datahistory JSON : ', this.datahistory);
         this.datahistory.forEach(req => {
-          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
+          console.log('#### req for approval', req);
+          console.log('### req.EMS_LM_2nd_Approver__c filter: ', req.EMS_LM_2nd_Approver__c);
+          console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
+          req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c != null && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 pending' && req.EMS_LM_Approver__c === this.uId));
         });
         console.log('### datahistory', this.datahistory);
         this.error = undefined;
@@ -174,8 +199,9 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
       const selectedRecordIds = [];
       checkboxElements.forEach(element => {
-        element.checked = true;
-        //console.log('### element.checked : ', element.checked);
+        element.checked = !element.disabled && true;
+
+        console.log('### element.disableButton : ', element.disabled);
         //console.log('### element.dataset : ', JSON.stringify(element.dataset));
         selectedRecordIds.push(element.dataset);
         //console.log('### selectedRecordIds : ', selectedRecordIds);
