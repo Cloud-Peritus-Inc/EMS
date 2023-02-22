@@ -64,7 +64,7 @@
     <formulas>
         <name>WeekEndDate</name>
         <dataType>Date</dataType>
-        <expression>{!$Flow.CurrentDate}  + 2</expression>
+        <expression>{!$Flow.CurrentDate}  + 1</expression>
     </formulas>
     <formulas>
         <name>WeekstartDate</name>
