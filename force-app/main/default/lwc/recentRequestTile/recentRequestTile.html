@@ -1,10 +1,17 @@
 <template>
 	<div class="homeCard">
-		<div class="slds-text-title_bold firstBox slds-p-around_x-small">
-			Recent Request
-		</div>
-		<div class="slds-p-around_x-small secondBox">
-			<!--c-e-m-s-_-l-m-_-leave-approve-reject-screen> </c-e-m-s-_-l-m-_-leave-approve-reject-screen-->
+		<div class="childparent" >
+           <div class="childtext">
+   
+          <lightning-icon icon-name="action:manage_perm_sets" size="x-small" alternative-text="Internal" title="Internal">  </lightning-icon>
+           <font size="4"  > &nbsp;&nbsp;<b>My Recent Requests </b> </font>
+            
+           </div>
+            <div class="childimage">
+           
+            </div>
+        </div>
+		<div>
 			<c-e-m-s-_-leave-request-_-table leave-req={reqLeaveArray}>
 			</c-e-m-s-_-leave-request-_-table>
 		</div>

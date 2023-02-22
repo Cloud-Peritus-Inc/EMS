@@ -36,3 +36,90 @@
 .textAlign{
 	 text-align: center;
 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  width: 95%;
+}
+
+.table-container {
+  max-height: 150px; /* set maximum height */
+  overflow: auto; /* enable vertical scrollbar */
+}
+
+.table-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  /*background: #888;*/
+  background : rgb(223, 185, 235);
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+th, td {
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 8px;
+  font-weight: bold;
+}
+
+tr {
+  border-bottom: 1px solid #ddd;
+}
+
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+td:first-child {
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #cbb1d7;
+}
+
+tr.selected {
+  background-color: #e1f5fe;
+}
+
+tr:focus {
+  outline: none;
+}
+
+.childparent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+	padding: 5px;
+}
+
+.childimage {
+    width: 30%;
+	padding:10px;
+	border-right: 1px black;
+}
+
+.childtext {
+    width: 70%;
+	padding-bottom: 10px;
+    padding-left : 3px;
+}

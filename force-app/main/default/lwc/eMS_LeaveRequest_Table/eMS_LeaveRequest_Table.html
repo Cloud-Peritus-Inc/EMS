@@ -7,21 +7,20 @@
 -->
 
 <template>
+	<div class="homeCard">
 	<lightning-card variant="Narrow">
-		<table class="styled-table">
+		<div class="table-container">
+		<table>
 			<thead>
 				<tr>
 					<template if:true={isViewAll}>
-						<th class="" scope="col">
+						<th scope="col">
 							<div class="slds-truncate" title="Name"></div>
 						</th>
 					</template>
-					<th class="" scope="col">
+					<th  scope="col">
 						<div class="slds-truncate" title="Name">Name</div>
 					</th>
-					<!--th class="" scope="col">
-					<div class="slds-truncate" title="Phase">Reason</div>
-				</th-->
 					<th class="" scope="col">
 						<div class="slds-truncate" title="Leave Dates">Date</div>
 					</th>
@@ -40,7 +39,6 @@
 							<td> <input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={leave.Id}/> </td>
 						</template>
 						<td>{leave.EMS_LM_Contact__r.LastName}</td>
-						<!--td>{leave.EMS_LM_Reason__c}</td-->
 						<td key={leave.Id}>
 							<lightning-formatted-date-time value={leave.EMS_LM_Leave_Start_Date__c} month="numeric"
 								day="numeric" year="numeric"></lightning-formatted-date-time> -
@@ -132,8 +130,10 @@
 				</template>
 			</tbody>
 		</table>
-		<div class="slds-p-around_xx-small textAlign">
-			<button class="slds-button " onclick={handlebulkNavigation} if:false={isViewAll}> View All</button>
 		</div>
+		 <footer class="slds-modal__footer" style="width:95%">
+		<center>	<button class="slds-button " onclick={handlebulkNavigation} if:false={isViewAll}> View All My Requests</button> </center>
+		 </footer>
 	</lightning-card>
+	</div>
 </template>
