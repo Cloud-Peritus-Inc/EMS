@@ -57,6 +57,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.EMS_EM_OLocation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.EMS_Employee_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -128,6 +133,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Work_Experience__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EMS_EM_Onboarding_Request__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

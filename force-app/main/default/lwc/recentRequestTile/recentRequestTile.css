@@ -1,25 +1,25 @@
-.homeCard{
-    background-color: rgb(247 246 246) !important;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	//box-shadow: 0px 6px rgb(229 229 229);
-    margin-top: 10px;
-    margin-bottom: 20px;
-	font-size : 0.9rem;
-    font-family: "SalesforceSans-Regular";
+.homeCard {
+    background-color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(226, 162, 237, 0.2), 0 6px 20px 0 rgba(216, 170, 238, 0.19);
+    margin-top: 20px; /* increased from 10px */
+    margin-bottom: 30px; /* increased from 20px */
+	/*font-family: 'sans-serif';*/
 }
-.firstBox{
-    border-bottom: 3.5px solid rgb(229 229 229);
-	text-align: center;
+.childparent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+	padding: 5px;
 }
-.secondBox{
-    border-bottom: 2px solid rgb(229 229 229);
+
+.childimage {
+    width: 30%;
+	padding:0px;
+	border-right: 1px black;
 }
-.thirdBox{
-    
-    border-bottom: 2px solid rgb(229 229 229);
-	text-align: center;
-}
-.fourthBox{
-    overflow: auto;
-    height: 200px;
+
+.childtext {
+    width: 70%;
+	padding-top: 3px;
+    padding-left : 3px;
 }

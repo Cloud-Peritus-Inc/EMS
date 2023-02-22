@@ -800,16 +800,16 @@
                                     <lightning-formatted-rich-text
                                         value={PFDescription}></lightning-formatted-rich-text>
                                     <lightning-card>
-                                        <template for:each={filesList} for:item="file">
+                                    <!--    <template for:each={filesList} for:item="file">
                                             <div key={file.value} class="slds-box">
                                                 <div class="slds-grid slds-wrap">
                                                     <div
                                                         class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                        <p><strong>FileName - </strong>{file.label}</p>
+                                                        <p><strong>FileName - </strong>{file.name}</p>
                                                     </div>
                                                     <div
                                                         class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                        <a href={file.url} download>Download</a>
+                                                      <a href="javascript:void(0);" data-id={file.id}>{file.id}</a>  - {file.name} - {file.fileExtension}
                                                     </div>
                                                     <div
                                                         class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
@@ -819,6 +819,25 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </template> -->
+                                        <template if:true={documents}>
+                                            <template for:each={documents} for:item="document">
+                                                <div class="slds-box slds-m-vertical_x-small" key={document.Id}>
+                                                        <template for:each={document.files} for:item="file">
+                                                            <div class="slds-grid slds-wrap" key={file.id}>
+                                                                <div
+                                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                    <p><strong>File Name - {file.name} - {file.fileExtension}</strong></p>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="javascript:void(0);" data-id={file.id} onclick={handleDownloadFile}>Download</a> 
+                                                                </div>
+
+                                                            </div>
+                                                                          
+                                                        </template>
+                                                </div>
+                                            </template>
                                         </template>
                                     </lightning-card>
                                 </div>
@@ -884,7 +903,7 @@
                                     <lightning-formatted-rich-text
                                         value={docDescription}></lightning-formatted-rich-text>
                                     <lightning-card>
-                                        <template for:each={filesList0} for:item="file">
+                                    <!--    <template for:each={filesList0} for:item="file">
                                             <div key={file.value} class="slds-box">
                                                 <div class="slds-grid slds-wrap">
                                                     <div
@@ -903,6 +922,25 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </template> -->
+                                            <template if:true={docs}>
+                                            <template for:each={docs} for:item="docs">
+                                                <div class="slds-box slds-m-vertical_x-small" key={docs.Id}>
+                                                        <template for:each={docs.files} for:item="file">
+                                                            <div class="slds-grid slds-wrap" key={file.id}>
+                                                                <div
+                                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                    <p><strong>File Name - {file.name} - {file.fileExtension}</strong></p>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="javascript:void(0);" data-id={file.id} onclick={handleDownloadFile}>Download</a> 
+                                                                </div>
+
+                                                            </div>
+                                                                          
+                                                        </template>
+                                                </div>
+                                            </template>
                                         </template>
                                     </lightning-card>
                                 </div>
@@ -988,8 +1026,8 @@
                     <!--Company Policies Page Starts-->
                     <template if:true={isCompanyPolicies}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <!--
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;" class="slds-p-around_xx-small"> </div> -->
+                           
+                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;" class="slds-p-around_xx-small">
                             <div style="padding-left: 25px; padding-right: 25px;">
                                 <br>
                                 <strong>
@@ -999,27 +1037,27 @@
                                 <lightning-formatted-rich-text
                                     value={policiesDescription}></lightning-formatted-rich-text>
                                 <lightning-card>
-                                    <template for:each={filesList1} for:item="file">
-                                        <div key={file.value} class="slds-box">
-                                            <div class="slds-grid slds-wrap">
-                                                <div
-                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                    <p><strong>FileName - </strong>{file.label}</p>
+                                    <template if:true={cpPolicies}>
+                                            <template for:each={cpPolicies} for:item="cpPolicies">
+                                                <div class="slds-box slds-m-vertical_x-small" key={cpPolicies.Id}>
+                                                        <template for:each={cpPolicies.files} for:item="file">
+                                                            <div class="slds-grid slds-wrap" key={file.id}>
+                                                                <div
+                                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                    <p><strong>File Name - {file.name} - {file.fileExtension}</strong></p>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="javascript:void(0);" data-id={file.id} onclick={handleDownloadFile}>Download</a> 
+                                                                </div>
+
+                                                            </div>
+                                                                          
+                                                        </template>
                                                 </div>
-                                                <div
-                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                    <a href={file.url} download>Download</a>
-                                                </div>
-                                                <div
-                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                    <lightning-button label="Preview" variant="brand"
-                                                        data-id={file.value} onclick={previewHandler1}>
-                                                    </lightning-button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </template>
+                                            </template>
+                                        </template>
                                 </lightning-card>
+                            </div>
                             </div>
                         </div>
                     </template>
