@@ -20,7 +20,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
     
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id, EMS_EM_JD__c, Name, Personal_Email__c, Official_Mail__c from Contact WHERE EMS_EM_JD__c != NULL AND (Official_Mail__c != NULL OR Personal_Email__c != NULL) AND RecordType.Name = \'Resource\'' 
+        	'SELECT id, EMS_EM_JD__c, Name, Personal_Email__c, Post_Onboarding_Confirm__c, Official_Mail__c from Contact WHERE EMS_EM_JD__c != NULL AND (Official_Mail__c != NULL OR Personal_Email__c != NULL) AND RecordType.Name = \'Resource\'' 
         );
     }    
     
@@ -44,7 +44,9 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
                 System.debug('in gentele reminder 1 => '+contactRec.EMS_EM_JD__c.addDays(-1));
                 sendReminderEmail(contactRec.Personal_Email__c, contactRec.Id);
             }
-            
+            if(contactRec.Post_Onboarding_Confirm__c == False){
+                sendReminderEmailToEmployee(contactRec.Official_Mail__c, contactRec.Id);
+            }
         }
     }
     
@@ -83,6 +85,22 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
     public static void sendReminderEmail(String email, String recordId){
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Gentle Reminder Email' LIMIT 1];
+      
+        List<String> emailList = new List<String>();
+        emailList.add(email);
+        system.debug('Enaillist 3 => '+emailList);
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.toAddresses = emailList;
+        message.setTemplateID(emailTemplate.Id);
+        message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
+        message.setSaveAsActivity(false);
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
+    }
+    
+    public static void sendReminderEmailToEmployee(String email, String recordId){
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Send Reminder Email To Employee' LIMIT 1];
       
         List<String> emailList = new List<String>();
         emailList.add(email);

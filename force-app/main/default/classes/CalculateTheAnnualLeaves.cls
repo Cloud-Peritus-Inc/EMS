@@ -52,7 +52,7 @@ public without sharing class CalculateTheAnnualLeaves implements TriggerAction.A
          
          if(!filteredList.isEmpty()){
              for(Leave_Accrued_Mapping__mdt lmpRec : [SELECT Is_Lessthan_15_Days__c,Joining_Month__c,Leaves_Credits__c FROM Leave_Accrued_Mapping__mdt ]){
-                 leaveMap.put(String.valueOf(lmpRec.Joining_Month__c+String.valueOf(lmpRec.Is_Lessthan_15_Days__c)),lmpRec.Leaves_Credits__c);
+                 leaveMap.put(String.valueOf(integer.valueof(lmpRec.Joining_Month__c)+String.valueOf(lmpRec.Is_Lessthan_15_Days__c)),lmpRec.Leaves_Credits__c);
              }
          }
        

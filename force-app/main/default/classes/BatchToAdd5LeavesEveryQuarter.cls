@@ -59,7 +59,7 @@ global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject
          Boolean isJan = dt.month() == 1 ? true : false;
          String uniqueMonthYear = String.valueOf(dt.month())+String.valueOf(dt.year());
           for(Leave_Accrued_Mapping__mdt lmpRec : [SELECT Is_Lessthan_15_Days__c,Joining_Month__c,Leaves_Credits__c FROM Leave_Accrued_Mapping__mdt ]){
-            leaveMap.put(String.valueOf(lmpRec.Joining_Month__c+String.valueOf(lmpRec.Is_Lessthan_15_Days__c)),lmpRec.Leaves_Credits__c);
+            leaveMap.put(String.valueOf(integer.valueof(lmpRec.Joining_Month__c)+String.valueOf(lmpRec.Is_Lessthan_15_Days__c)),lmpRec.Leaves_Credits__c);
            }
         Map<String,decimal> contactWithCarryFwdBalance = new Map<String,Decimal>();
         

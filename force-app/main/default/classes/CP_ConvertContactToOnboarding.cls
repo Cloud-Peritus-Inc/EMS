@@ -66,6 +66,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.toAddresses = emailList;
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
         message.setSaveAsActivity(false);
         Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
         if (results[0].success) {
