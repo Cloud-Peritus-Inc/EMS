@@ -216,6 +216,15 @@ public without Sharing class GetDataForLoginUser {
         return newRecord;
         
     }
+    @AuraEnabled
+    public static Contact updateStatus( Contact statusUpdate, String ConRecordid) {
+        
+        statusUpdate.Id=ConRecordid;
+        update statusUpdate;
+
+        return statusUpdate;
+        
+    }
     
     @AuraEnabled
     public static PayRoll__c updatepayroll( String ConRecordid,  PayRoll__c newPayroll, String PayrollId) {

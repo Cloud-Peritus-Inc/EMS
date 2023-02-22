@@ -33,12 +33,14 @@ public class CP_SendEmailToTATeamNewApplicant implements TriggerAction.AfterInse
     
     private void sendEmailToTATeam(List<Contact> contactList){
         Id contRecordTypeId = [Select id from RecordType where sObjectType = 'Contact' and developerName ='Applicant' ].id ;
-        //String hrTeamEmail = [SELECT id, email FROM Contact WHERE name = 'HR Team'].email;
-        String taTeamEmail = [SELECT id, email FROM Contact WHERE name = 'TA Team'].email;
+        /*String taTeamEmail = [SELECT id, email FROM Contact WHERE name = 'TA Team'].email;
         List<String> emailList = new List<String>();
-        //emailList.add(hrTeamEmail);
-        emailList.add(taTeamEmail);
+        emailList.add(taTeamEmail);*/
         //List<String> emailList = new List<String>{'tets@gmail.com', 'bhb@gmail.com'};
+        
+        String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'TA_Team'].Email__c;
+        List<String> emailList = new List<String>();
+        emailList.add(taTeamEmail);
         
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate

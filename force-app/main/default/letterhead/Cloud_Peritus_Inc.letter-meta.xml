@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Letterhead xmlns="http://soap.sforce.com/2006/04/metadata">
     <available>true</available>
-    <backgroundColor>#CCCCCC</backgroundColor>
+    <backgroundColor>#EDEDED</backgroundColor>
     <bodyColor>#FFFFFF</bodyColor>
     <bottomLine>
         <color>#AAAAFF</color>
         <height>0</height>
     </bottomLine>
     <footer>
-        <backgroundColor>#CCCCCC</backgroundColor>
+        <backgroundColor>#EDEDED</backgroundColor>
         <height>0</height>
         <horizontalAlignment>Center</horizontalAlignment>
-        <logo>Experiences_Shared_Document_Folder/CP_Logo_With_Address.png</logo>
+        <logo>Experiences_Shared_Document_Folder/Cp_Email_Footer.jpg</logo>
         <verticalAlignment>Middle</verticalAlignment>
     </footer>
     <header>
-        <backgroundColor>#FFFFFF</backgroundColor>
+        <backgroundColor>#EDEDED</backgroundColor>
         <height>0</height>
         <horizontalAlignment>Left</horizontalAlignment>
-        <logo>Experiences_Shared_Document_Folder/Grid_Logo_Horizontal.png</logo>
         <verticalAlignment>Middle</verticalAlignment>
     </header>
     <middleLine>

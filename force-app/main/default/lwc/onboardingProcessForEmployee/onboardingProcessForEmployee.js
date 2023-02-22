@@ -15,6 +15,8 @@ import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLog
 import getContentDistributionForFile from '@salesforce/apex/GetDataForLoginUser.getContentDistributionForFile';
 import getFamilyInfo from '@salesforce/apex/getFamilyInfoInOnboarding.getFamilyInfo';
 import getPayrollInfo from '@salesforce/apex/GetDataForLoginUser.getPayrollInfo';
+import updateStatus from '@salesforce/apex/GetDataForLoginUser.updateStatus';
+
 import { refreshApex } from '@salesforce/apex';
 import { NavigationMixin } from 'lightning/navigation';
 import { deleteRecord } from 'lightning/uiRecordApi';
@@ -22,75 +24,77 @@ import { deleteRecord } from 'lightning/uiRecordApi';
 import updateContact from '@salesforce/apex/GetDataForLoginUser.updateContact';
 
 const columns = [
-  { label: 'Title',       fieldName: 'Title', wrapText : true,
-      cellAttributes: { 
-          iconName: { fieldName: 'icon' }, iconPosition: 'left' 
-      }
+  {
+    label: 'Title', fieldName: 'Title', wrapText: true,
+    cellAttributes: {
+      iconName: { fieldName: 'icon' }, iconPosition: 'left'
+    }
   },
-  { label: 'Preview', type:  'button', typeAttributes: { 
-          label: 'Preview',  name: 'Preview',  variant: 'brand-outline',
-          iconName: 'utility:preview', iconPosition: 'right'
-      } 
+  {
+    label: 'Preview', type: 'button', typeAttributes: {
+      label: 'Preview', name: 'Preview', variant: 'brand-outline',
+      iconName: 'utility:preview', iconPosition: 'right'
+    }
   },
 ];
 
-function uploadFilesFromThis(event,ts){
-  if (event.target.files.length > 0 && event.target.files[0].size < 2000000 && event.target.files[0].type =="application/pdf") {
-      let file = event.target.files[0];
-     let nameOfInput = event.target.name;
-     let uploadedFileName = event.target.files[0].name; 
-     let fileNameToAdd = event.target.files[0].name;
-     let fileTypeToAdd = event.target.files[0].type;
-     let concatFileName;
-     console.log('nameOfInput-->',nameOfInput);
-     if(nameOfInput === "Passport"){
+function uploadFilesFromThis(event, ts) {
+  if (event.target.files.length > 0 && event.target.files[0].size < 2000000 && event.target.files[0].type == "application/pdf") {
+    let file = event.target.files[0];
+    let nameOfInput = event.target.name;
+    let uploadedFileName = event.target.files[0].name;
+    let fileNameToAdd = event.target.files[0].name;
+    let fileTypeToAdd = event.target.files[0].type;
+    let concatFileName;
+    console.log('nameOfInput-->', nameOfInput);
+    if (nameOfInput === "Passport") {
       ts.fileName = uploadedFileName;
-      concatFileName = 'Passport_'+fileNameToAdd;
-    } else if(nameOfInput === "DrivingLicense"){
+      concatFileName = 'Passport_' + fileNameToAdd;
+    } else if (nameOfInput === "DrivingLicense") {
       ts.fileName1 = uploadedFileName;
-      concatFileName = 'DrivingLicense_'+fileNameToAdd;
+      concatFileName = 'DrivingLicense_' + fileNameToAdd;
     }
-    else if(nameOfInput === "Form11"){
+    else if (nameOfInput === "Form11") {
       ts.fileName2 = uploadedFileName;
-      concatFileName = 'Form11_'+fileNameToAdd;
+      concatFileName = 'Form11_' + fileNameToAdd;
     }
-    else if(nameOfInput === "Form2"){
+    else if (nameOfInput === "Form2") {
       ts.fileName3 = uploadedFileName;
-       concatFileName = 'Form2_'+fileNameToAdd;
+      concatFileName = 'Form2_' + fileNameToAdd;
     }
-    else if(nameOfInput === "Documents1"){
-          ts.fileName4 = uploadedFileName;
-          concatFileName = 'Documents1_'+fileNameToAdd;
+    else if (nameOfInput === "Documents1") {
+      ts.fileName4 = uploadedFileName;
+      concatFileName = 'Documents1_' + fileNameToAdd;
     }
-    else if(nameOfInput === "Documents2"){
-          ts.fileName5 = uploadedFileName;
-          concatFileName = 'Documents2_'+fileNameToAdd;
+    else if (nameOfInput === "Documents2") {
+      ts.fileName5 = uploadedFileName;
+      concatFileName = 'Documents2_' + fileNameToAdd;
     }
-    else if(nameOfInput === "Documents3"){
-          ts.fileName6 = uploadedFileName;
-          concatFileName ='Documents3_'+fileNameToAdd;
+    else if (nameOfInput === "Documents3") {
+      ts.fileName6 = uploadedFileName;
+      concatFileName = 'Documents3_' + fileNameToAdd;
     }
-    else if(nameOfInput === "Documents4"){
-     ts.fileName7 = uploadedFileName;
-     concatFileName = 'Documents4_'+fileNameToAdd;
+    else if (nameOfInput === "Documents4") {
+      ts.fileName7 = uploadedFileName;
+      concatFileName = 'Documents4_' + fileNameToAdd;
     }
-     
-      let reader = new FileReader();
-      reader.onloadend = e => {
-          let base64 = 'base64,';
-          let content = reader.result.indexOf(base64) + base64.length;
-          let fileContents = reader.result.substring(content);
-        //  ts.filesUploaded.push({PathOnClient: file.name, Title: file.name, VersionData: fileContents});
-         ts.filesUploaded = [...ts.filesUploaded,{PathOnClient: file.name, Title: concatFileName, VersionData: fileContents}]
-      };
-      reader.readAsDataURL(file);
-  }else{
-   const even = new ShowToastEvent({
-   message: 'File Size must be less than 2Mb & file type should be PDF only',
-   variant: 'error'
-  });
- ts.dispatchEvent(even);
- } 
+
+    let reader = new FileReader();
+    reader.onloadend = e => {
+      let base64 = 'base64,';
+      let content = reader.result.indexOf(base64) + base64.length;
+      let fileContents = reader.result.substring(content);
+      //  ts.filesUploaded.push({PathOnClient: file.name, Title: file.name, VersionData: fileContents});
+      ts.filesUploaded = [...ts.filesUploaded, { PathOnClient: file.name, Title: concatFileName, VersionData: fileContents }]
+    };
+    reader.readAsDataURL(file);
+  } else {
+    const even = new ShowToastEvent({
+      message: 'File Size must be less than 2Mb & file type should be PDF only',
+      variant: 'error'
+    });
+    ts.dispatchEvent(even);
+  }
 }
 
 const isAllowedKeyCode = keyCode => {
@@ -246,8 +250,13 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         this.doyouhaveavehicleval = employye.Do_you_have_a_vehicle__c;
         this.Vehicletypeval = employye.Vehicle_Type__c;
         this.VehicleNumber = employye.Vehicle_Number__c;
-        if(this.Vehicletypeval !=null){
-          this.showvehicle =true;
+        if (this.Vehicletypeval != null) {
+          this.showvehicle = true;
+        }
+
+        if (this.PostOnboardingConfirm) {
+          this.buttonDisable = true;
+          this.readonlyfield = true;
         }
 
         getPayrollInfo({ conId: this.contactID })
@@ -563,12 +572,11 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.isCompanyPolicies = false;
       this.isCompanyInformation = false;
       this.isConfirm = false;
-      if(this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
-        || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false)
-      {
+      if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
+        || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
         this.buttonDisable = true;
       }
-      else{
+      else {
         this.buttonDisable = false;
       }
     }
@@ -617,12 +625,11 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.isCompanyPolicies = false;
       this.isCompanyInformation = false;
       this.isConfirm = false;
-      if(this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
-        || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false)
-      {
+      if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
+        || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
         this.buttonDisable = true;
       }
-      else{
+      else {
         this.buttonDisable = false;
       }
     }
@@ -731,12 +738,11 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.isCompanyPoliciesValueChecked = true;
       this.isCompanyInformation = false;
       this.isConfirm = false;
-      if(this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
-        || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false)
-      {
+      if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
+        || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
         this.buttonDisable = true;
       }
-      else{
+      else {
         this.buttonDisable = false;
       }
     }
@@ -778,10 +784,9 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.isCompanyInformation = false;
       this.isConfirm = true;
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
-        || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) 
-        {
+        || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
         this.buttonDisable = true;
-        }
+      }
     }
   }
 
@@ -866,32 +871,32 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
 
 
-  getBaseUrl(){
-    let baseUrl = 'https://'+location.host+'/';
+  getBaseUrl() {
+    let baseUrl = 'https://' + location.host + '/';
     getLoginURL()
-    .then(result => {
+      .then(result => {
         baseUrl = result;
         window.console.log(baseUrl);
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Error: \n ', error);
-    });
+      });
     return baseUrl;
-}
+  }
 
 
-    handleDownloadFile(e) {
-        getContentDistributionForFile({
-            contentDocumentId: e.target.dataset.id
-        })
-        .then(response => {
-            console.log('Disturbution----'+JSON.stringify(response));
-            window.open(response.ContentDownloadUrl);
-        })
-        .catch(error => {
-            console.log(JSON.stringify(error));
-        })
-    }
+  handleDownloadFile(e) {
+    getContentDistributionForFile({
+      contentDocumentId: e.target.dataset.id
+    })
+      .then(response => {
+        console.log('Disturbution----' + JSON.stringify(response));
+        window.open(response.ContentDownloadUrl);
+      })
+      .catch(error => {
+        console.log(JSON.stringify(error));
+      })
+  }
 
   //for Pf Forms Files
   filesList = [];
@@ -899,15 +904,15 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$pfId' })
   wiredResult({ data, error }) {
     if (data) {
-      console.log('Pf Forms Files-->' + JSON.stringify(data) ); 
-     /* this.filesList = Object.keys(data).map(item => ({
-        "label": data[item],
-        "value": item,
-        "url": `/sfsites/c/sfc/servlet.shepherd/document/download/${item}`
-      })) */
-        this.documents = data;
+      console.log('Pf Forms Files-->' + JSON.stringify(data));
+      /* this.filesList = Object.keys(data).map(item => ({
+         "label": data[item],
+         "value": item,
+         "url": `/sfsites/c/sfc/servlet.shepherd/document/download/${item}`
+       })) */
+      this.documents = data;
 
-      console.log(''+JSON.stringify(this.documents));
+      console.log('' + JSON.stringify(this.documents));
     }
     if (error) {
       console.log(error)
@@ -931,16 +936,16 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$docId' })
   wiredResult0({ data, error }) {
     if (data) {
-      console.log('Documents Files-->' + JSON.stringify(data) ); 
-     /* this.filesList0 = Object.keys(data).map(item => ({
-        "label": data[item],
-        "value": item,
-        "url": `/sfc/servlet.shepherd/document/download/${item}`
-      }))*/
+      console.log('Documents Files-->' + JSON.stringify(data));
+      /* this.filesList0 = Object.keys(data).map(item => ({
+         "label": data[item],
+         "value": item,
+         "url": `/sfc/servlet.shepherd/document/download/${item}`
+       }))*/
       //console.log(this.filesList0)
       this.docs = data;
 
-      console.log(''+JSON.stringify(this.documents));
+      console.log('' + JSON.stringify(this.documents));
     }
     if (error) {
       console.log(error)
@@ -954,12 +959,12 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$policiesId' })
   wiredResult1({ data, error }) {
     if (data) {
-      console.log('Company Policies Files-->' + JSON.stringify(data) ); 
-     /* this.filesList1 = Object.keys(data).map(item => ({
-        "label": data[item],
-        "value": item,
-        "url": `/sfc/servlet.shepherd/document/download/${item}`
-      }))*/
+      console.log('Company Policies Files-->' + JSON.stringify(data));
+      /* this.filesList1 = Object.keys(data).map(item => ({
+         "label": data[item],
+         "value": item,
+         "url": `/sfc/servlet.shepherd/document/download/${item}`
+       }))*/
       this.cpPolicies = data;
       console.log(this.cpPolicies)
     }
@@ -1140,7 +1145,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
   onFileUpload4(event) {
     uploadFilesFromThis(event, this);
-   
+
   }
 
   onFileUpload5(event) {
@@ -1148,7 +1153,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
   onFileUpload6(event) {
     uploadFilesFromThis(event, this);
-    
+
   }
 
   onFileUpload7(event) {
@@ -1197,7 +1202,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     contactObj.Do_you_have_a_vehicle__c = this.doyouhaveavehicleval;
     contactObj.Vehicle_Type__c = this.Vehicletypeval;
     contactObj.Vehicle_Number__c = this.VehicleNumber;
-    contactObj.Post_Onboarding_Confirm__c = this.PostOnboardingConfirm;
 
     let payrollobj = { 'sobjectType': 'PayRoll__c' };
 
@@ -1433,36 +1437,24 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
 
   confirmSubmit(event) {
-    let conObj = { 'sobjectType': 'Contact' };
-    conObj.Post_Onboarding_Confirm__c = this.PostOnboardingConfirm;
-
-    updateContact({ newRecord: conObj, ConRecordid: this.contactID })
-      .then(result => {
-        if (result.conObj.Post_Onboarding_Confirm__c === true) {
-          this.PostOnboardingConfirm = true;
-          
-        }
-      });
     if (this.isWelcomeaboardValueChecked && this.isPersonalUpdateCheckbox && this.isIdentifyDetailsCheckbox && this.isEmploymentDetailsCheckbox && this.isAddressDetailsCheckbox && this.isFamilyInformationCheckbox && this.isFinancialInformationCheckbox
-      && this.isVehicleDetailsCheckbox && this.isPFFormsCheckbox && this.isDocumentsValueChecked && this.isCompanyPoliciesValueChecked && this.isCompanyInformationValueChecked) 
-      {
-        this.PostOnboardingConfirm = true;
-        this.buttonDisable = true;
-        this.readonlyfield = true;
-       
-        //contactObj.Post_Onboarding_Confirm__c = this.PostOnboardingConfirm;
+      && this.isVehicleDetailsCheckbox && this.isPFFormsCheckbox && this.isDocumentsValueChecked && this.isCompanyPoliciesValueChecked && this.isCompanyInformationValueChecked) {
+      this.PostOnboardingConfirm = true;
+      this.readonlyfield = true;
 
-      //updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj })
-        //.then(result => {
-          //console.log('confirm',confirm,'this.PostOnboardingConfirm',this.PostOnboardingConfirm);
-            this.dispatchEvent(
-              new ShowToastEvent({
-                title: 'Success',
-                message: 'Onboarding Form Submitted Successfully',
-                variant: 'success',
-              }),
-            ); this.buttonDisable = true;
-        //});
+      let statusfield = { 'sobjectType': 'Contact' };
+      statusfield.Post_Onboarding_Confirm__c = this.PostOnboardingConfirm;
+      updateStatus({ statusUpdate: statusfield, ConRecordid: this.contactID })
+        .then(result => {
+          console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
+          this.dispatchEvent(
+            new ShowToastEvent({
+              title: 'Success',
+              message: 'Onboarding Form Submitted Successfully',
+              variant: 'success',
+            }),
+          ); this.buttonDisable = true;
+        });
 
 
     }
@@ -1473,7 +1465,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         variant: 'error'
       });
       this.dispatchEvent(even);
-      console.log('error',error);
+      console.log('error', error);
       return false;
 
     }
@@ -1524,7 +1516,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     return this.medicalInsuranceId ? "Edit" : "Create";
   }
 
- 
+
 
   @wire(getFamilyInfo, { contactId: "$contactID" })
   getfamilyinformationrecords(totalRecords) {
@@ -1603,7 +1595,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       isVal = isVal && element.reportValidity();
     });
     if (isVal) {
-      
+
       this.template.querySelectorAll('.createDependenciesRecord').forEach(element => {
         //console.log("element", JSON.stringify(element));
         element.submit();
@@ -1618,7 +1610,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         refreshApex(this.totalFamilyRecords);
         this.showSpinner = false;
         this.isFamilyInformationCheckbox = true;
-        
+
       });
 
     } else {
