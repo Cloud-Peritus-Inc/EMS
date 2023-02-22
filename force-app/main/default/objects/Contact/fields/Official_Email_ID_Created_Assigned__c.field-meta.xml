@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Official_Email_ID_Created_Assigned__c</fullName>
-    <defaultValue>false</defaultValue>
-    <externalId>false</externalId>
-    <label>Official Email ID Created: For IT Team</label>
-    <trackFeedHistory>false</trackFeedHistory>
-    <type>Checkbox</type>
-</CustomField>

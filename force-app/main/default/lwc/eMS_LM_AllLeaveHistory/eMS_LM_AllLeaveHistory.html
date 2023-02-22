@@ -80,11 +80,17 @@
 									</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Leave_Start_Date__c}</div>
+											<lightning-formatted-date-time value={Req.EMS_LM_Leave_Start_Date__c}
+												month="numeric" day="numeric" year="numeric">
+											</lightning-formatted-date-time>		
+										</div>
 									</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Leave_End_Date__c}</div>
+											<lightning-formatted-date-time value={Req.EMS_LM_Leave_End_Date__c}
+												month="numeric" day="numeric" year="numeric">
+											</lightning-formatted-date-time>
+											</div>
 									</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
@@ -107,8 +113,9 @@
 											{Req.EMS_LM_Approved_On__c}</div>
 									</td>
 									<td>
-										<lightning-button-icon size="large" variant="bare" icon-name="action:preview"
-											alternative-text="view" onclick={handleView} data-id={Req.Id}>
+										<lightning-button-icon size="large" variant="bare" icon-name="utility:preview"
+											alternative-text="view" onclick={handleView} data-id={Req.Id}
+											class="changeIconColorView">
 										</lightning-button-icon>
 										&nbsp;&nbsp;
 										<lightning-button-icon size="large" variant="bare" icon-name="action:edit"
@@ -121,12 +128,71 @@
 											disabled={Req.disableButton}>
 										</lightning-button-icon>
 
+										<!--lightning-button-icon size="large" variant="bare" alternative-text="view"
+											onclick={handleView} data-id={Req.Id} icon-name="action:view">
+										</lightning-button-icon>
+										&nbsp;&nbsp;
+										<lightning-button-icon size="large" variant="bare" icon-name="action:edit"
+											alternative-text="Edit" onclick={handleEdit} data-id={Req.Id}
+											disabled={Req.disableButton}></lightning-button-icon>
+										&nbsp; &nbsp;
+										<lightning-button-icon size="large" variant="bare"
+											icon-name="utility:cancel_file_request" alternative-text="cancel"
+											class="cancel" onclick={handleCancel} data-id={Req.Id}
+											disabled={Req.disableButton}>
+										</lightning-button-icon-->
+
+										<!--div class="iconContainer redColor" onclick={handleView} data-id={Req.Id}>
+											<svg class="slds-button__icon slds-button__icon_large" focusable="false"
+												data-key="preview" aria-hidden="true" viewBox="0 0 52 52" part="icon">
+												<g>
+													<g>
+														<path
+															d="M51.8 25.1C47.1 15.6 37.3 9 26 9S4.9 15.6.2 25.1c-.3.6-.3 1.3 0 1.8C4.9 36.4 14.7 43 26 43s21.1-6.6 25.8-16.1c.3-.6.3-1.2 0-1.8zM26 37c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11z">
+														</path>
+														<path
+															d="M26 19c-3.9 0-7 3.1-7 7s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7z">
+														</path>
+													</g>
+												</g>
+											</svg>
+										</div>
+
+										<div class="iconContainer blueColor" onclick={handleEdit} data-id={Req.Id} disabled={Req.disableButton}>
+											<svg class="slds-button__icon slds-button__icon_large" focusable="false"
+												data-key="edit" aria-hidden="true" viewBox="0 0 52 52" part="icon">
+												<g>
+													<g>
+														<path
+															d="M48.8 7.4l-4.2-4.2c-1.6-1.6-4.1-1.6-5.6 0l-3.3 3.3c-.4.4-.4 1 0 1.4l8.5 8.5c.4.4 1 .4 1.4 0l3.3-3.3c1.5-1.6 1.5-4.1-.1-5.7zM32.9 10.7c-.4-.4-1-.4-1.4 0L5.4 36.8 2.1 48.1c-.3 1.1.7 2.2 1.8 1.9l11.4-3.2h-.1l26.1-26.1c.4-.4.4-1 0-1.4l-8.4-8.6z">
+														</path>
+													</g>
+												</g>
+											</svg>
+										</div>
+
+										<div class="iconContainer blueColor" onclick={handleCancel} data-id={Req.Id} disabled={Req.disableButton}>
+											<svg class="slds-button__icon slds-button__icon_large" focusable="false"
+												data-key="cancel_file_request" aria-hidden="true" viewBox="0 0 52 52"
+												part="icon">
+												<g>
+													<g>
+														<path
+															d="M28.6 11.4h5.1c.6 0 1.1-.5 1.1-1.1 0-.3-.1-.5-.3-.8l-7.2-7.1c-.2-.2-.4-.3-.7-.3-.6 0-1.1.5-1.1 1.1v5.1c0 1.7 1.4 3.1 3.1 3.1z">
+														</path>
+														<path
+															d="M24.6 40.6c0-6.8 4.2-12.6 10.2-14.9v-8.1c0-.9-.7-1.6-1.6-1.6h-7.8c-2.6 0-4.7-2.1-4.7-4.6V3.6c.1-.8-.6-1.5-1.5-1.5H6.8c-2.6 0-4.7 2.1-4.7 4.6v29.4c0 2.6 2.1 4.6 4.7 4.6h17.8v-.1zM31.8 34.6l6 6-6 6c-.6.6-.6 1.6 0 2.1l.7.7c.6.6 1.6.6 2.1 0l6-6 6 6c.6.6 1.6.6 2.1 0l.7-.7c.6-.6.6-1.6 0-2.1l-6-6 6-6c.6-.6.6-1.6 0-2.1l-.7-.7c-.6-.6-1.6-.6-2.1 0l-6 6-6-6c-.6-.6-1.6-.6-2.1 0l-.7.7c-.6.5-.6 1.5 0 2.1z">
+														</path>
+													</g>
+												</g>
+											</svg>
+										</div-->
 										<!--lightning-button variant="brand" label="View" onclick={handleView}
 											data-id={Req.Id}>
 										</lightning-button> &nbsp;-->
 										<!--lightning-button variant="Success" label="Edit" onclick={handleEdit}
 											data-id={Req.Id} disabled={Req.disableButton}>
-										</lightning-button>&nbsp-->;
+										</lightning-button>&nbsp;-->
 										<!--lightning-button variant="destructive" label="Cancel" onclick={handleCancel}
 											data-id={Req.Id} disabled={Req.disableButton}>
 										</lightning-button -->

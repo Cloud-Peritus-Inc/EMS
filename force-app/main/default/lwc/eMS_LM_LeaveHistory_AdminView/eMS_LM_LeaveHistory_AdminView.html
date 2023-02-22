@@ -57,91 +57,99 @@
 		</lightning-layout>
 		<template if:true={showdata}>
 			<lightning-card>
-				<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+				<table>
 					<thead>
-						<!-- <tr class="slds-line-height_reset"> -->
 						<tr style="border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4"></tr>
-						<th style="padding:12px">
+						<th style="padding:9px">
 							<div>
 								<lightning-input type="checkbox" variant="standard" label="Select All"
 									onclick={handleSelectAll}></lightning-input>
 							</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="User Name">Employee Name</div>
+						<th>
+							<div title="User Name">Employee Name</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Leave Type">Leave Type</div>
+						<th>
+							<div title="Leave Type">Leave Type</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Leave Start Date">Leave Start Date</div>
+						<th>
+							<div title="Leave Start Date">Leave Start Date</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Leave End Date">Leave End Date</div>
+						<th>
+							<div title="Leave End Date">Leave End Date</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Leave Duration">Leave Duration</div>
+						<th>
+							<div title="Leave Duration">Leave Duration</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Reason">Reason</div>
+						<th>
+							<div title="Reason">Reason</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Approver">Approver</div>
+						<th>
+							<div title="Approver">Approver</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Leave Status">Leave Status</div>
+						<th>
+							<div title="Leave Status">Leave Status</div>
 						</th>
-						<th class="" scope="col">
-							<div class="slds-truncate" title="Approved On">Approved On</div>
+						<th>
+							<div title="Approved On">Approved On</div>
 						</th>
-						<th class="slds-cell_action-mode" scope="col" style="width:3.25rem">
-							<div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+						<th style="width:3.25rem">
+							<div title="Actions">Actions</div>
 						</th>
 						</tr>
 					</thead>
 					<tbody>
 						<template for:each={datahistory} for:item="Req">
-							<tr key={Req.Id}>
-								<th scope="col">
+							<tr key={Req.Id} style="border-bottom:1px solid #d4d4d4">
+								<td style="padding:15px">
 									<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id}/>
-                </th>
-								<th scope="col">
+                </td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 										{Req.EMS_LM_Contact__r.Name}</div>
-								</th>
-								<th scope="col">
+								</td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 										{Req.EMS_LM_Leave_Type_Name__c }</div>
-								</th>
-								<th scope="col">
+								</td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Leave_Start_Date__c}</div>
-								</th>
-								<th scope="col">
+										<lightning-formatted-date-time value={Req.EMS_LM_Leave_Start_Date__c}
+											month="numeric" day="numeric" year="numeric">
+										</lightning-formatted-date-time>
+									</div>
+								</td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Leave_End_Date__c}</div>
-								</th>
-								<th scope="col">
+										<lightning-formatted-date-time value={Req.EMS_LM_Leave_End_Date__c}
+											month="numeric" day="numeric" year="numeric">
+										</lightning-formatted-date-time>
+									</div>
+								</td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 										{Req.EMS_LM_Leave_Duration__c}</div>
-								</th>
-								<th scope="col">
+								</td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 										{Req.EMS_LM_Reason__c}</div>
-								</th>
-								<th scope="col">
+								</td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 										{Req.EMS_LM_Current_Approver__c}</div>
-								</th>
-								<th scope="col">
+								</td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 										{Req.EMS_LM_Status__c}</div>
-								</th>
-								<th scope="col">
+								</td>
+								<td>
 									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-										{Req.EMS_LM_Approved_On__c}</div>
-								</th>
-								<th class="slds-cell_action-mode" role="gridcell">
+										<lightning-formatted-date-time value={Req.EMS_LM_Approved_On__c} month="numeric"
+											day="numeric" year="numeric">
+										</lightning-formatted-date-time>
+									</div>
+								</td>
+								<td class="slds-cell_action-mode" role="gridcell">
 									<lightning-button-icon variant="bare" size="large" icon-name="action:approval"
 										alternative-text="Approve" onclick={showModalApprovalBox}
 										data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
@@ -178,7 +186,7 @@
 
                     </template>
                   </lightning-button-menu-->
-								</th>
+								</td>
 							</tr>
 						</template>
 					</tbody>

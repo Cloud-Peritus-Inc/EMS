@@ -39,6 +39,7 @@ public without sharing class LeaveRequestHRRejectHandler {
         }
             catch(Exception ex){
                 //LogException.logHandledException(ex);
+                LogException.logHandledException(ex, 'LeaveRequestHRRejectHandler', 'updateRejectStatus');
                 System.debug('### Exception ' + ex.getMessage());
  
          }
@@ -82,6 +83,7 @@ public without sharing class LeaveRequestHRRejectHandler {
         }
             catch(Exception ex){
                 //LogException.logHandledException(ex);
+                LogException.logHandledException(ex, 'LeaveRequestHRRejectHandler', 'bulkLeaveReqReject');
                 System.debug('### Exception ' + ex.getMessage());
         	}
     

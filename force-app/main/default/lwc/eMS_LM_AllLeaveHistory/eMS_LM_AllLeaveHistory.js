@@ -10,6 +10,7 @@ import getLMHistory from '@salesforce/apex/LeaveHistoryApexController.getLMHisto
 import getLeaveTypesForUser from '@salesforce/apex/LeaveHistoryApexController.getLeaveTypesForUser';
 import userLevelOfApproval from '@salesforce/apex/LeaveHistoryApexController.userLevelOfApproval';
 import defaultMyRequestData from '@salesforce/apex/LeaveHistoryApexController.defaultMyRequestData';
+//import eMS_LM_AllLeaveHistory from 'c/eMS_LM_AllLeaveHistory';
 
 const columns = [
     { label: 'Leave Type', fieldName: 'EMS_LM_Leave_Type_Name__c' },
@@ -75,6 +76,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         this.LevelOfApproval();
         console.log('OUTPUT : called');
     }
+
 
     //Based on Level of Approval showing Leave status values
     LevelOfApproval() {
@@ -161,13 +163,13 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                 });
                 this.error = undefined;
             }
-           /* else {
-                this.nodata = true;
-                this.showdata = false;
-               // this.datahistory = data;
-                console.log('## Else : ', data);
-                this.error = undefined;
-            }*/
+            /* else {
+                 this.nodata = true;
+                 this.showdata = false;
+                // this.datahistory = data;
+                 console.log('## Else : ', data);
+                 this.error = undefined;
+             }*/
         } else if (error) {
             this.error = error;
             this.datahistory = undefined;
@@ -238,7 +240,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         });*/
     }
 
-    cancelHandler(event){
+    cancelHandler(event) {
         this.showApplyLeaveEdit = false;
     }
 
