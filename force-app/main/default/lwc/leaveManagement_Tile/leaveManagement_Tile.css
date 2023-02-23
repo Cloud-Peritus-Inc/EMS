@@ -19,6 +19,18 @@
 	border-right: 1px black;
 }
 
+.childimage2 {
+    width: 0%;
+	padding-left : 10px;
+	border-right: 1px black;
+}
+
+.childtext2 {
+    width: 100%;
+	padding-bottom: 0px;
+    padding-left : 0px;
+}
+
 .childtext {
     width: 70%;
 	padding-bottom: 0px;
