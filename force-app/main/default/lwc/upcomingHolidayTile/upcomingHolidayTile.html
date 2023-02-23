@@ -10,14 +10,18 @@
             </div>
            </div>
             <div class="childimage">
+            <template if:true={loaded}>
             <lightning-combobox
-            name="location"
-            label=""
-            value={value}
-            placeholder="Select Location"
-            options={mapdata}
-            onchange={handleChange} ></lightning-combobox>
+                    name=""
+                    label=""
+                    value={value}
+                    placeholder="Location"
+                    options={mapdata}
+                    onchange={handleChange} >
+            </lightning-combobox>
+            </template>
             </div>
+             
         </div>
   <center><div class="table-container"><table>
     <thead>

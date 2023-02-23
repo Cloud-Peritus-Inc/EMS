@@ -1,12 +1,16 @@
 <!-- This component is used to Show to apply for leave or WFH to current Logged in Employee  -->
 <template>
   <!--lightning-card-->
-    <div >
-      <span>
       
-      <div class="uiOutputText footer" style="padding:10px;" >
-             <a onclick={firsthandle} ><font class="uiOutputText" >Apply New</font></a> 
-      </div>
+       <template if:false={istile}>
+         <div style="padding:10px;">
+        <lightning-button style="padding-botton:5px;" icon-name="utility:work_order_type" variant="brand" label="Apply New Leave" title="Apply Leave" onclick={firsthandle} class="slds-m-left_x-small"></lightning-button>
+         </div>
+       </template>
+        <template if:true={istile}>
+        <lightning-button style="padding-botton:5px;" variant="brand" label="Apply" title="Apply Leave" onclick={firsthandle} class="slds-m-left_x-small"></lightning-button>
+        
+       </template>
 
         <!--<lightning-button variant="brand-outline" label="Apply New" onclick={firsthandle}></lightning-button>
           lightning-button-menu  alternative-text="Show menu" label="Apply New" text="Apply New"
@@ -14,8 +18,8 @@
           <lightning-menu-item value="Leave" label="Leave"></lightning-menu-item>
           <lightning-menu-item value="Work From Home" label="Work From Home"></lightning-menu-item>
         </lightning-button-menu -->
-    </span> 
-    </div> 
+    
+    
     <!--/lightning-card-->
     <template if:true={check}>
       <c-e-m-s-_-l-m-_-apply-leave ongetlvalue={getlvalue}></c-e-m-s-_-l-m-_-apply-leave>
