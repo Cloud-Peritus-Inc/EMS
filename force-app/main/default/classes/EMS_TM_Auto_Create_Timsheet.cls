@@ -14,6 +14,17 @@
     * ====================================================================================================
     **/
 global class EMS_TM_Auto_Create_Timsheet implements Schedulable {
+    /**
+* @author Subba
+* @date 22/01/2023
+* @description  Execute method to process the business logic.
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
     global void execute(SchedulableContext cnt) {
         
         List<Id> newTimesheetUsers = new List<Id>();
@@ -64,6 +75,9 @@ global class EMS_TM_Auto_Create_Timsheet implements Schedulable {
             timesheet.EMS_TM_Week__c                        = weekStart;
             timesheet.EMS_TM_Status__c                      = EMS_TM_GlobalConstants.STATUS_SAVED;
             timesheet.User__c                               = userId;
+            timesheet.EMS_TM_Status__c                      = 'New';
+            timesheet.Week_Start_Date__c	                = weekStart;
+            timesheet.Week_End_Date__c	                    = weekEnd;
             timesheet.OwnerId                               = userId;
             newTimeSheets.add(timesheet);
         }

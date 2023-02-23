@@ -1,41 +1,47 @@
 import { LightningElement,track,wire } from 'lwc';
 import getMyUpcomingHoliday from '@salesforce/apex/holidayTitleController.getMyUpcomingHoliday';
+import getSelectLocList from '@salesforce/apex/holidayTitleController.getSelectLocList';
 export default class UpcomingHolidayTile extends LightningElement {
 @track holidaydata ;
 @track value ;
-
-@track mapdata =  [];
+loclist = [];
+ mapdata =  [];
 
 connectedCallback() {
   
 }
 
-    @wire(getMyUpcomingHoliday)
-    holidayInfo({ error, data }) {
-    if (data) {
-    console.log('=======data==='+JSON.stringify(data));
-      this.holidaydata = data.datalist;
-      var consts = data.locationList;
-      for(var key in consts){
-        this.mapdata.push({value:key, label:key}); //Here we are creating the array to show on UI.
-      }
-      this.value = data.resourceLocation;
-      console.log('===d=='+JSON.stringify(this.mapdata));
-    } else if (error) {
-      console.error('ERROR====='+error);
+loaded = false
+    @wire(getMyUpcomingHoliday) 
+    wiredLabels({error, data}){
+        if(data){
+            console.log('data '+JSON.stringify(data));
+             this.holidaydata = data.datalist;
+             this.value = data.resourceLocation;
+            var consts = data.locationList;
+            for(var key in consts){
+            this.mapdata.push({label:key, value:consts[key]});
+        }
+        this.loaded = true;
     }
-  }
+    if(error){
+        this.error=error;
+    }
+    }
 
 
 handleChange(event) {
         this.value = event.detail.value;
-        console.log('===sds=='+event.target.value);
-        console.log('======Changed Value to ====='+this.value);
-        const field = event.target.name;
-        if (field === 'optionSelect') {
-        this.selectedOption = event.target.value;
-            alert("you have selected : "+this.selectedOption);
-        } 
+       
+        getSelectLocList({ locationId: this.value })
+            .then((result) => {
+             
+                this.holidaydata = result;  
+            })
+            .catch((error) => {
+            console.log('====='+error);
+        });
+       
     }
 
   }
