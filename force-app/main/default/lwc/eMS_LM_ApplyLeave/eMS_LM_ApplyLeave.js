@@ -26,6 +26,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   startDate;//To apply Leave start date
   endDate;
   value = '';
+  leavetypevalue =value = !'';
   submitcheck = true;//need to changed based on condition LD < ALD
   @track availabledays;
   @track allavailabledays;
@@ -262,6 +263,8 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
 
     this.submitcheck = true;
     this.value = event.detail.value;
+    
+    
 
     if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
       if (this.startDate == this.endDate) {
@@ -454,6 +457,9 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
     if (this.reason != null) {
       if(this.availabledays >= this.duration){
         this.submitcheck = false;
+      }
+      if(this.value == 'Loss of Pay' && this.annualcompduration < 0){
+        this.submitcheck = false;
       }      
     }
   }
@@ -467,54 +473,6 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
     this.dispatchEvent(getlvalue);
   }
   submitme(event) {
-
-       /*   const isInputsCorrect = [...this.template.querySelectorAll('lightning-input')]
-          .reduce((validSoFar, inputField) => {
-              inputField.reportValidity();
-              return validSoFar && inputField.checkValidity();
-          }, true);
-      if (isInputsCorrect) {
-        if(this.reason == null && this.duration>3){
-            const evt = new ShowToastEvent({
-            message: 'Please mention Reason',
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
-     // alert('Please Upload Proof');// need to chane the alert message
-    }else{
-        event.preventDefault();
-      this.submitcheck = true;
-      createLeaveHistoryRecord({ cId: this.cId, duration: this.duration, stDate: this.startDate, edDate: this.endDate, type: this.value, reason: this.reason, day: this.fullday })
-        .then(result => {
-            this.rId = result;
-            if(this.fileData != null){
-              uploadFile({ base64 : this.fileData.base64 , filename : this.fileData.filename , recordId : this.rId }).then(res=>{
-                console.log(res);
-              }).catch(error=> {  console.error(error.body.message);});
-            }            
-            this.check = false;
-            const getlvalue = new CustomEvent('getlvalue', {
-              detail: this.check
-            });
-            this.dispatchEvent(getlvalue);
-            this.dispatchEvent(new ShowToastEvent({
-              title: 'Success!!',
-              message: 'Leave Applied Successfully !!.',
-              variant: 'success'
-            }));
-        //    window.location.reload();
-        }).catch(error => {
-          console.error('Error creating record: ', error.body.message);
-          console.error('Error creating record: ', error);
-          this.dispatchEvent(new ShowToastEvent({
-            title: 'Error!!',
-            message:'Unable to Apply Leave Please Contact your Lead or Manager',
-            variant: 'error'
-          }));
-        //  window.location.reload(); 
-        });
-       } 
-      } */
 
 if(this.reason == null || this.reason == ''){
             const evt = new ShowToastEvent({
@@ -542,7 +500,7 @@ if(this.reason == null || this.reason == ''){
         //step3 call the imperation and handle it
         createRecord(recordData).then(result => {   
             this.rId = result.id;
-            console.log('this.rId-->',result);
+            console.log('this.rId------>',JSON.stringify(result));
           if(this.fileData != null){
               uploadFile({ base64 : this.fileData.base64 , filename : this.fileData.filename , recordId : this.rId }).then(res=>{
                 console.log(res);

@@ -3,7 +3,7 @@
     <fullName>Pre_Joining_Date_Validation</fullName>
     <active>true</active>
     <description>Pre joining date should not be less than today.</description>
-    <errorConditionFormula>Pre_Joining_Date__c  &lt;  TODAY()</errorConditionFormula>
+    <errorConditionFormula>OR( AND (ISNEW(),Pre_Joining_Date__c &lt; TODAY()) , AND(ISCHANGED(Pre_Joining_Date__c),Pre_Joining_Date__c &lt; TODAY()))</errorConditionFormula>
     <errorDisplayField>Pre_Joining_Date__c</errorDisplayField>
     <errorMessage>Pre joining date should not be less than today</errorMessage>
 </ValidationRule>

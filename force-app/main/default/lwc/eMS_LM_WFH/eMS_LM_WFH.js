@@ -182,7 +182,6 @@ export default class EMS_LM_WFH extends LightningElement {
             variant: 'error',
         });
         this.dispatchEvent(evt);
-        this.disabledSubmitted = true;
       }else{
 
       createwfhRecord({ cId: this.conId, duration: this.duration, stDate: this.startDate1, edDate: this.endDate1, reason: this.reason})
@@ -211,8 +210,8 @@ export default class EMS_LM_WFH extends LightningElement {
           console.error('Error creating record: ', error);
           console.error('Error creating record: ', error.body.message);
           this.dispatchEvent(new ShowToastEvent({
-            title: 'Error!!',
-            message: 'Unable to Apply Work From Home',
+            title: 'Unable to Apply Work From Home!!',
+            message: error.body.output.errors[0].errorCode + '-'+ error.body.output.errors[0].message,
             variant: 'error'
           }));
          // window.location.reload();

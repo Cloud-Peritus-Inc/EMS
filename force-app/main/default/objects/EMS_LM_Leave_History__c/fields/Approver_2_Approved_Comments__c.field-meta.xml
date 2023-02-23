@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Approver_2_Approved_Comments__c</fullName>
     <externalId>false</externalId>
-    <label>Approver 2 Approved Comments</label>
+    <label>Approver 2 Comments</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
