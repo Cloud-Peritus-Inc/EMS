@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Assigned_To__c</field>
-        <value xsi:type="xsd:string">HR Team</value>
+        <value xsi:type="xsd:string">Resource Manager</value>
     </values>
     <values>
         <field>Contact_API__c</field>
@@ -23,8 +23,16 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>Notification_Required_HR__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Notification_Required_IT__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Onboarding_Task__c</field>
-        <value xsi:type="xsd:string">Post</value>
+        <value xsi:type="xsd:string">Pre</value>
     </values>
     <values>
         <field>Task_Subject__c</field>

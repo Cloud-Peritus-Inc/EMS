@@ -19,4 +19,5 @@ trigger CP_ContactTrigger on Contact ( before insert,
   after undelete
 ) {
   new MetadataTriggerHandler().run();
+
 }
