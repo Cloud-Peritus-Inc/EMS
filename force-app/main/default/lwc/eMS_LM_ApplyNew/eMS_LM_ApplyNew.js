@@ -4,7 +4,7 @@ import u_Id from '@salesforce/user/Id';
 
 export default class EMS_LM_ApplyNew extends LightningElement {
 
-
+  @api istile = false;
   
   @track selectedValue;
   check = false;

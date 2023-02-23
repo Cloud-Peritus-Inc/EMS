@@ -237,7 +237,7 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
    public static List<EMS_LM_Leave_History__c> getAdminLeaveHistory(String name,String stdate, String eddate,List<String> leaveType, List<String> status){
       List<EMS_LM_Leave_History__c> lh = new List<EMS_LM_Leave_History__c>();
       String query = 'Select Id, EMS_LM_Leave_Type_Name__c,EMS_LM_Leave_Start_Date__c,EMS_LM_Final_Approver__c,' + 
-      'EMS_LM_Leave_End_Date__c,EMS_LM_Leave_Duration__c,EMS_LM_Reason__c,EMS_LM_Status__c,EMS_LM_Approved_On__c,EMS_LM_Contact__R.Name From EMS_LM_Leave_History__c where CreatedDate !=null ';
+      'EMS_LM_Leave_End_Date__c,EMS_LM_Leave_Duration__c,EMS_LM_Reason__c,EMS_LM_Status__c,EMS_LM_Approved_On__c,EMS_LM_Contact__R.Name,EMS_LM_Current_Approver__c From EMS_LM_Leave_History__c where CreatedDate !=null ';
       system.debug(query); 
       if(stdate !='' && stdate != null){
          Date d = date.valueOf(stdate);
@@ -274,6 +274,25 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
       }    
       return lh;  
 }
+    @AuraEnabled(Cacheable=true)
+    public static List<EMS_LM_Leave_History__c> defaultAdminViewData () {
+        List<EMS_LM_Leave_History__c> adminViewData = [Select Id, 
+                                                       		  EMS_LM_Leave_Type_Name__c,
+                                                              EMS_LM_Leave_Start_Date__c,
+                                                              EMS_LM_Final_Approver__c, 
+      														  EMS_LM_Leave_End_Date__c,
+                                                       		  EMS_LM_Leave_Duration__c,
+                                                              EMS_LM_Reason__c,EMS_LM_Status__c,
+                                                              EMS_LM_Approved_On__c,
+                                                              EMS_LM_Contact__R.Name 
+                                                       From EMS_LM_Leave_History__c
+                                                       WHERE (EMS_LM_Status__c =: LeaveRequestConstant.PENDING
+                                                       OR EMS_LM_Status__c =: LeaveRequestConstant.APPROVER_2_WAITING)
+                                                       ORDER BY CreatedDate DESC Limit 5
+                                                       ];
+        System.debug('### adminViewData ' + adminViewData);
+        return adminViewData;
+    }
 
 // this methodis used to create leave history record when employee submits the leave request
 @AuraEnabled

@@ -104,8 +104,11 @@ public without sharing class populateApproverDetails implements TriggerAction.Be
                 }// Added by Pavan Regarding Auto Approve
                 else {
                     System.debug('### here 3');
+                    User usr = [SELECT Id, FirstName, LastName FROM USER WHERE ID =:LeaveRequestConstant.LOGGEDIN_USERID];
                     newRec.EMS_LM_Status__c = LeaveRequestConstant.AUTO_APPROVED;
                     newRec.EMS_LM_Auto_Approve__c = true;
+                    newRec.EMS_LM_Approved_On__c = system.today();
+                    newRec.EMS_LM_Current_Approver__c = usr.LastName + usr.FirstName;
                 }
                 // Added by Pavan Regarding WFH
             } else if (resourceMap.containsKey(newRec.EMS_LM_Contact__c) && newRec.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.WORK_FROM_HOME) {
@@ -129,9 +132,11 @@ public without sharing class populateApproverDetails implements TriggerAction.Be
                     newRec.EMS_LM_Status__c = LeaveRequestConstant.PENDING;
                     newRec.EMS_LM_Approver__c = resourceMap.containsKey(appManager1) ? resourceMap.get(appManager1).EMS_TM_User__c : null; 
                     newRec.EMS_LM_Current_Approver__c = resourceMap.containsKey(appManager1) ? resourceMap.get(appManager1).EMS_TM_User__r.LastName : null;                  
-                } else if (newRec.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.WORK_FROM_HOME && newRec.Level_of_Approval__c == 0) {
+                } else /*if (newRec.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.WORK_FROM_HOME && newRec.Level_of_Approval__c == 0)*/ {
                     newRec.EMS_LM_Status__c = LeaveRequestConstant.AUTO_APPROVED;
                     newRec.EMS_LM_Auto_Approve__c = true;
+                    newRec.EMS_LM_Current_Approver__c = newRec.EMS_LM_Contact__r.LastName + newRec.EMS_LM_Contact__r.FirstName;
+                    newRec.EMS_LM_Approved_On__c = system.today();
                 }
             }
         }

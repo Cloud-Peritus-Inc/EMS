@@ -23,6 +23,14 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>Notification_Required_HR__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Notification_Required_IT__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Onboarding_Task__c</field>
         <value xsi:type="xsd:string">Post</value>
     </values>
