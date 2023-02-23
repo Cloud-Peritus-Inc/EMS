@@ -166,6 +166,17 @@
         <template>unfiled$public/Leave_Approved_By_the_PM_Approver_2</template>
     </alerts>
     <alerts>
+        <fullName>Leave_Auto_Approved</fullName>
+        <description>Leave Auto Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_LM_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Leave_Auto_Approved</template>
+    </alerts>
+    <alerts>
         <fullName>Leave_Cancelled</fullName>
         <description>Leave_Cancelled</description>
         <protected>false</protected>
@@ -265,6 +276,28 @@
         <template>unfiled$public/Email_Sent_When_Leave_Request_is_Edited_to_PM</template>
     </alerts>
     <alerts>
+        <fullName>When_HR_approves_Leave_Email_To_Employee</fullName>
+        <description>When HR approves Leave (Email To Employee)</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_LM_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Leave_Approve_By_the_HR_Email_To_Employee</template>
+    </alerts>
+    <alerts>
+        <fullName>When_HR_rejects_Leave_request_Email_To_Employee</fullName>
+        <description>When HR rejects Leave request(Email To Employee)</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_LM_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/When_HR_rejects_Leave_request_Email_To_Employee</template>
+    </alerts>
+    <alerts>
         <fullName>When_Leave_Request_is_Edited_Send_Email</fullName>
         <description>When Leave Request is Edited Send Email</description>
         <protected>false</protected>
@@ -274,17 +307,6 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/Sent_Email_When_The_Leave_Request_is_been_Edited</template>
-    </alerts>
-    <alerts>
-        <fullName>When_PM_approves_leave_request_of_employees_reporting_to_PM1</fullName>
-        <description>When PM approves leave request of employees reporting to PM</description>
-        <protected>false</protected>
-        <recipients>
-            <field>EMS_LM_2nd_Approver__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>unfiled$public/When_PM_approves_leave_request_of_employees_reporting_to_PM</template>
     </alerts>
     <alerts>
         <fullName>When_lead_approves_rejects_leave_request_of_employees_reporting_to_Lead</fullName>

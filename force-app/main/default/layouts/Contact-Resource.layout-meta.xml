@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <feedLayout>
         <autocollapsePublisher>true</autocollapsePublisher>
@@ -278,6 +276,21 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>23</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -296,6 +309,11 @@
             <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ViewCustomerPortal</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>20</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.ContentNote</actionName>
@@ -376,26 +394,6 @@
             <actionName>CreateSurveyInvitation</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>19</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ViewCustomerPortal</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>20</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>21</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>22</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>23</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>CreateCallList</actionName>
@@ -499,6 +497,18 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>EMS_LM_Leave_Type__c</fields>
+        <relatedList>EMS_LM_Leave_Credit__c.EMS_LM_Employee__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EMS_LM_Leave_Start_Date__c</fields>
+        <fields>EMS_LM_Leave_End_Date__c</fields>
+        <fields>EMS_LM_Status__c</fields>
+        <relatedList>EMS_LM_Leave_History__c.EMS_LM_Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <fields>Status__c</fields>
         <relatedList>CP_Sales_Contact__c.Reports_To__c</relatedList>
@@ -562,11 +572,18 @@
         <relatedList>Expense__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Family_Member_Name__c</fields>
+        <fields>Relationships__c</fields>
+        <fields>Is_It_Emergency_Contact__c</fields>
+        <fields>Is_It_Dependent_Contact__c</fields>
         <relatedList>Family_Information__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Beneficiary_Name__c</fields>
+        <fields>Bank_Name__c</fields>
+        <fields>Branch__c</fields>
+        <fields>Beneficiary_Account_Number__c</fields>
+        <fields>IFSC_Routing_Number__c</fields>
         <relatedList>PayRoll__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -589,7 +606,15 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Trailblazer_ID_or_Public_URL__c</fields>
+        <fields>EMS_EM_Certification_Name__c</fields>
+        <fields>EMS_EM_Certification_Name1__c</fields>
+        <fields>EMS_EM_Certification_Name2__c</fields>
         <relatedList>Certifications__c.Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>EMS_Timesheet__c.Resource__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

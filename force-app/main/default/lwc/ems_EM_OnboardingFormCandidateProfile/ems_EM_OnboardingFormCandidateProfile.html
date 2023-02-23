@@ -119,17 +119,17 @@
                                     onchange={MotherName} name="EMS_EM_Mother__c" onkeydown={handleFirstLastNameKeyDown} pattern="[A-Z a-z._-]{1,20}$" type="text" label="Mother's Name"></lightning-input>
     
                                     <lightning-input class="slds-p-top_small" value={dob} required disabled={readonlyfield}
-                                                onchange={DateofBirthValidation}  name="EMS_EM_DOB__c" type="date" label="Date Of Birth"></lightning-input>
+                                                onchange={DateofBirthValidation}  name="EMS_EM_DOB__c" type="date" label="Date of Birth"></lightning-input>
                                 </span>
                                 </div>
                                 <div class="slds-col ">
                                 <span>
 									 <lightning-input class="slds-p-top_small" value={ph} message-when-pattern-mismatch = "Invalid Contact number" required disabled={readonlyfield}
                                     onchange={phonenumber} name="Phone_Number__c" onkeydown={handleAadharNumberKeyDown}  pattern="[0-9]{10}$" type="phone"  label="Contact Number"></lightning-input>
-                                    <lightning-input class="slds-p-top_small" value={altphone} message-when-pattern-mismatch = "Invalid Phone number" disabled={readonlyfield}
+                                    <lightning-input class="slds-p-top_small" value={altphone} message-when-pattern-mismatch = "Invalid Phone number" required disabled={readonlyfield}
                                     pattern="[0-9]{10}$" onchange={altephone} onkeydown={handleAadharNumberKeyDown}  name="EMS_EM_Phone_Number__c" type="phone"  label="Alternate Contact Number"></lightning-input>
                                     <lightning-input class="slds-p-top_small" value={personalemail} message-when-pattern-mismatch = "Invalid Email" required disabled
-                                    onchange={personalemailchange} name="EMS_EM_Personal_Email__c" type="email"  label="Personal Email Id"></lightning-input>
+                                    onchange={personalemailchange} name="EMS_EM_Personal_Email__c" type="email"  label="Personal Email ID"></lightning-input>
     
                                        <lightning-input class="slds-p-top_small" value={nation} disabled={readonlyfield} required
                                       onchange={Nationality} onkeydown={handleFirstLastNameKeyDown} name="EMS_EM_Nationality__c" type="text"  label="Nationality "></lightning-input>
@@ -1053,7 +1053,6 @@
                                 <div class="slds-col slds-size_1-of-2">   
                                 <span>
                                     <label class="slds-form-element__label" for="text-input-id-1">
-                                       
                                         Certificate
                                         </label>
                                 <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
@@ -1243,11 +1242,12 @@
                                 <div class="slds-col slds-size_1-of-2">
                                 <span>                    
                                     <lightning-input value={previouscompanyname0} required disabled={readonlyfield}  onchange={changepreviouscompanyname} name="EMS_EM_Previous_Company_Name__c" type="text"  label="Previous Company Name"></lightning-input>                             
-                                    <lightning-input value={previouscomemailid} required class="slds-p-top_small" disabled={readonlyfield}  onchange={changePreCEmailId} name="EMS_EM_Previous_Company_HR_EmailId__c" type="email"  label="Previous Company HR Email Id"></lightning-input>                             
+                                    <lightning-input value={previouscomemailid} required class="slds-p-top_small" disabled={readonlyfield}  onchange={changePreCEmailId} name="EMS_EM_Previous_Company_HR_EmailId__c" type="email"  label="Previous Company HR Email ID"></lightning-input>                             
                                 </span>
                                 </div>
                                 </div>                                                
-                        </div>                   
+                        </div>       
+                        <br>            
                         <div style="padding-left: 25px;">
                             <span>                               
                                 <label class="slds-form-element__label" for="text-input-id-1">
@@ -1261,7 +1261,7 @@
                             <p>{fileName9}</p>  
                             <br>    
                             <label class="slds-form-element__label" for="text-input-id-1">
-                                Relieving Letter
+                              &nbsp;  Relieving Letter
                               </label>
                               <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
                             <lightning-input type="file" onchange={onFileUpload10} accept={accept} title="Relieving Letter" disabled={readonlyfield}
@@ -1269,7 +1269,7 @@
                             <p>{fileName10}</p>
                             <br>
                             <label class="slds-form-element__label" for="text-input-id-1">
-                                Experience Letter
+                              &nbsp;  Experience Letter
                               </label>
                               <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
                             <lightning-input type="file" onchange={onFileUpload11} accept={accept} title="Experience Letter" disabled={readonlyfield}
@@ -1277,6 +1277,7 @@
                             <p>{fileName11}</p>
                              <br>
                             <label class="slds-form-element__label" for="text-input-id-1">
+                                <abbr class="slds-required" title="required">*</abbr>
                                 Last 6 months Payslips
                               </label>
                               <lightning-helptext content="Please Upload Payslips in 1 PDF"></lightning-helptext>
