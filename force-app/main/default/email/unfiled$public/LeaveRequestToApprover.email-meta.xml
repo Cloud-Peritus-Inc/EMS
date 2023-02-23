@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>LeaveRequestToApprover</name>
     <style>freeForm</style>
-    <subject>Requesting for Leave Approval</subject>
+    <subject>Requesting for {!EMS_LM_Leave_History__c.Leave_Type_Name__c} Approval</subject>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

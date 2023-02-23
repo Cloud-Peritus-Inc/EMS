@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Leave Rejected by Approver 1 Email to the Lead</name>
     <style>freeForm</style>
-    <subject>{!Contact.FirstName} {!Contact.LastName} Leave Request is rejected by {!EMS_LM_Leave_History__c.EMS_LM_2nd_Approver__c}</subject>
+    <subject>{!Contact.FirstName} {!Contact.LastName} {!EMS_LM_Leave_History__c.Leave_Type_Name__c} Request is rejected by {!EMS_LM_Leave_History__c.EMS_LM_Approver__c}</subject>
     <textOnly>Dear Employee,
 
 The Leave Request Type {!EMS_LM_Leave_History__c.Leave_Type_Name__c} of {!Contact.FirstName} {!Contact.LastName}-{!Contact.EMS_RM_Candidate_Id__c} for the following date(s) has been rejected by {!EMS_LM_Leave_History__c.EMS_LM_2nd_Approver__c}

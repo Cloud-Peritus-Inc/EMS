@@ -75,6 +75,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   correctImages = correctImage;
   wrongImages = wrongImage;
   isPersonalUpdateCheckbox = false;
+  statusUpdate;
+  confirmStatusUpdate;
   isIdentifyDetailsCheckbox = false;
   isAddressDetailsCheckbox = false;
   isEducationDetailsCheckbox = false;
@@ -82,6 +84,11 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   isWorkExperienceCheckbox = false;
   isCompanyInformationValueChecked = false;
   isConfirmSubmit = false;
+  isIdentityStatusUpdate;
+  isAdressStatusUpdate;
+  isEducationStatusUpdate;
+  isCertificationStatusUpdate;
+  isWorkExperienceStatusUpdate;
   buttonDisable = false;
 
 
@@ -311,7 +318,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   selectStep1() {
     if (this.readonlyfield != true) {
       if (this.firstName != null && this.firstName != '' && this.lastName != null && this.lastName != ''
-        && this.fName != null && this.fName != '' && this.mName != null && this.mName != '' && this.ph.length == 10 &&
+        && this.fName != null && this.fName != '' && this.mName != null && this.mName != '' && this.ph.length == 10 && this.altphone.length == 10 &&
         this.nation != null && this.nation != '' && this.dob != null &&
         this.personalemail != null && this.gen != null &&
         this.fileName2 != null) {
@@ -320,13 +327,13 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
           var yyyy = today.getFullYear();
           today = yyyy +'-'+ mm +'-'+dd;
-         console.log("this.dob", this.dob);
-         console.log("this.dow", this.dow);
-         console.log("this.graduationDate", this.graduationDate);
+         //console.log("this.dob", this.dob);
+         //console.log("this.dow", this.dow);
+         //console.log("this.graduationDate", this.graduationDate);
   
-          console.log("today", today);
+          //console.log("today", today);
           if(this.dob >= today ){
-              console.log("I am in if");
+              //console.log("I am in if");
               this.dispatchEvent(
                   new ShowToastEvent({
                       title: 'Error',
@@ -335,21 +342,27 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
                   }),
               );
               return false;
-          }
-          else{
-              return true;
-          }     
-     }else{
-      const even = new ShowToastEvent({
-        message: 'Please complete required field & avoid invalid data!',
-        variant: 'error'
+          }else if (this.ph === this.altphone) {
+      this.dispatchEvent(
+        new ShowToastEvent({
+          title: 'Error',
+          message: 'Contact Number and Alternate Contact Number should not be the same',
+          variant: 'error'
+        })
+      );
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    const even = new ShowToastEvent({
+      message: 'Please complete required field & avoid invalid data!',
+      variant: 'error'
     });
     this.dispatchEvent(even);
     return false;
-    }
-  
   }
-  else{
+}else{
    return true;
   }
  }
@@ -1879,7 +1892,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           return validSoFar && inputField.checkValidity();
         }, true);
       if (isInputsCorrect) {
-        if (this.showExperienceyouhave == true && this.fileName9 == null) {
+        if (this.showExperienceyouhave == true && this.fileName9 == null && this.fileName12 == null) {
 
           const even = new ShowToastEvent({
             message: 'Please Provide Appointment Letter!',
@@ -1887,7 +1900,16 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           });
           this.dispatchEvent(even);
           return false;
-        } else {
+        } if (this.showExperienceyouhave == true && this.fileName12 == null) {
+
+          const even = new ShowToastEvent({
+            message: 'Please Provide Last 6 months Payslips!',
+            variant: 'error'
+          });
+          this.dispatchEvent(even);
+          return false;
+        } 
+        else {
           return true;
         }
       }
@@ -1910,8 +1932,9 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   SaveSubmitOnboarding(event) {
     if(this.isShowPersonalDetails){
       if(this.selectStep1()){
-        console.log('step1',this.selectStep1);
+        console.log('step1 => ',this.selectStep1);
         this.isPersonalUpdateCheckbox = true;
+       this.statusUpdate = 'In Progress';
         console.log('check box',this.isPersonalUpdateCheckbox);
         updateOnBoardingRequest(this);  
         if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
@@ -1926,6 +1949,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     if(this.isIdentifyDetails){
       if(this.selectStep2()){
         this.isIdentifyDetailsCheckbox = true;
+        this.isIdentityStatusUpdate = 'In Progress';
         updateOnBoardingRequest(this); 
         if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1939,6 +1963,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   if(this.isAddressDetails){
     if(this.selectStep3()){
       this.isAddressDetailsCheckbox = true;
+      this.isAdressStatusUpdate = 'In Progress';
       updateOnBoardingRequest(this); 
       if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1952,6 +1977,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   if(this.isEducationDetails){
    if(this.selectStep4()) {  
     this.isEducationDetailsCheckbox = true;
+    this.isEducationStatusUpdate = 'In Progress';
       updateOnBoardingRequest(this);
       if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1964,6 +1990,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   }
   if(this.isOtherCertifications){
     this.isOtherCertificationsCheckbox = true;
+    this.isCertificationStatusUpdate = 'In Progress';
     updateOnBoardingRequest(this);
     if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1976,6 +2003,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   if(this.isWorkExperience){
     if(this.selectStep5()){
      this.isWorkExperienceCheckbox = true;
+     this.isWorkExperienceStatusUpdate = 'In Progress';
     updateOnBoardingRequest(this);
     if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1992,6 +2020,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   {
     this.isConfirmSubmit = true;
     this.readonlyfield = true;
+    this.confirmStatusUpdate = 'Submitted for Review';
     updateOnBoardingRequest(this);
     displayShowtoastMessage('Success','Onboarding Form Submitted Successfully','success',this);
     this.buttonDisable = true;

@@ -31,14 +31,14 @@
               <!-- /template -->                    
               <lightning-layout-item padding="around-small" size="12">
                 <div>
-                  <lightning-input type="text" label="Reason" onchange={reasonchange} value={reason}></lightning-input>
+                  <lightning-textarea type="text" maxlength="250" label="Reason" onchange={reasonchange} value={reason}></lightning-textarea>
                 </div>
               </lightning-layout-item>
               <lightning-layout-item padding="around-small" size="12">
                 <div class="slds-var-m-around_medium">
                   <lightning-input type="file"
                   accept=".png, .doc, .docx, .pdf , .jpg, .jpeg"
-                  label="Upload Proof" onchange={openfileUpload}></lightning-input>
+                  label="Upload support document" onchange={openfileUpload}></lightning-input>
                 </div>
                 <template if:true={fileData}>
                   <p>{fileData.filename}</p>

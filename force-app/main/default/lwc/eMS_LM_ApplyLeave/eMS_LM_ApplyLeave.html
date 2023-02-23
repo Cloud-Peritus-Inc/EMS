@@ -1,15 +1,17 @@
 <!-- This component is used to apply the Leave For current Logged in Employee  -->
 <template>
+	<div >
 	<div class="slds-box slds-theme_shade">
 		<div class="slds-modal slds-fade-in-open slds-backdrop">
 			<div class="slds-modal__container">
-				<div  class="slds-modal__header">
-				<div>
+				<div class="slds-modal__header">
+				<div >
 					<lightning-button-icon icon-name="utility:close" alternative-text="Close" size="large"
 						variant="bare-inverse" onclick={closeme} class="slds-modal__close">
 					</lightning-button-icon>
 					<h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Apply Leave</h1>
 				</div>
+				
 					<div class="slds-modal__content slds-var-p-around_medium text-align: left;" id="modal-content-id-1" style="color:black">
 						<lightning-layout multiple-rows>
 							<lightning-messages></lightning-messages>
@@ -20,6 +22,7 @@
 										required></lightning-combobox>
 								</div>
 							</lightning-layout-item>
+							
 							<lightning-layout-item padding="around-small" size="3">
 								<div>
 									<lightning-input type="Date" label="Start Date" name="startDate1" value={startDate1}
@@ -54,8 +57,8 @@
 							</lightning-layout-item>
 							<lightning-layout-item padding="around-small" size="12">
 								<div>
-									<lightning-input type="text" required label="Reason" value={reason} onchange={reasonChange}>
-									</lightning-input>
+									<lightning-textarea type="text" maxlength="250" required label="Reason" value={reason} onchange={reasonChange}>
+									</lightning-textarea>
 								</div>
 							</lightning-layout-item>
 
@@ -65,7 +68,7 @@
 
 									<div class="slds-var-m-around_medium">
 										<lightning-input type="file" accept=".png, .doc, .docx, .pdf , .jpg, .jpeg"
-											label="Upload Proof" onchange={openfileUpload}></lightning-input>
+											label="Upload support document" onchange={openfileUpload}></lightning-input>
 									</div>
 									<template if:true={fileData}>
 										<p>{fileData.filename}</p>
@@ -99,6 +102,7 @@
 							</lightning-layout-item>
 						</lightning-layout>
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>
