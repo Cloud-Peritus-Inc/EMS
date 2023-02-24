@@ -39,6 +39,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Auto Approved</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Leave_Auto_Approved</targetReference>
             </connector>

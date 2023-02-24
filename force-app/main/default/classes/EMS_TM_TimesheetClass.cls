@@ -19,6 +19,7 @@ public class EMS_TM_TimesheetClass {
         Id systemAdminId;
         boolean manageracc;
         boolean ITadminacc;
+        boolean hrAccess;
 
         List<Id> idList = new List<Id>();
         Id contactId;
@@ -31,12 +32,31 @@ public class EMS_TM_TimesheetClass {
             //idList.add(profile.Id);
         }
 
-        user = [SELECT Id, ProfileId, FirstName, LastName, Name, ContactId,Manager_Access__c,IT_Admin_Access__c,
-                (Select id, lastname, Location__c from Contacts__r)
-                FROM User WHERE Id = :userId];
-        if (user.IT_Admin_Access__c == true) {
+        user = [SELECT Id,
+                        ProfileId, 
+                        FirstName,
+                        LastName, 
+                        Name, 
+                        ContactId,
+                        Manager_Access__c,
+                        IT_Admin_Access__c,
+                        Hr_Access__c,
+                                (Select id, lastname,
+                                Location__c 
+                                from Contacts__r)
+                                FROM User 
+                                WHERE Id = :userId];
+        if (user.IT_Admin_Access__c == true || user.Hr_Access__c ==true) {
+            if(user.IT_Admin_Access__c == true){
             ITadminacc = true;
-            List<User> users = [SELECT Id, FirstName, LastName, Name FROM User];
+            }
+            if(user.Hr_Access__c == true){
+                hrAccess =true;
+            }
+            List<User> users = [SELECT Id, 
+                                        FirstName, 
+                                        LastName, 
+                                        Name FROM User];
             for (User u : users) {
                 idList.add(u.Id);
                 }
@@ -45,19 +65,36 @@ public class EMS_TM_TimesheetClass {
             manageracc = true;
             contactId = user.ContactId;
             List<Id> contactIdList = new List<Id>();
-            List<Resource_Resource_Relationship__c> resourceRelationList1 = [SELECT Id, Resource__c, Resource_Reports_To__c, Resource_Role__c, Reports_To_Role__c, Resource_Reports_To_User__c FROM Resource_Resource_Relationship__c WHERE Resource_Reports_To__c=:contactId];
+            List<Resource_Resource_Relationship__c> resourceRelationList1 = [SELECT Id, 
+                                                                                    Resource__c, 
+                                                                                    Resource_Reports_To__c, 
+                                                                                    Resource_Role__c, 
+                                                                                    Reports_To_Role__c, 
+                                                                                    Resource_Reports_To_User__c 
+                                                                                    FROM Resource_Resource_Relationship__c 
+                                                                                    WHERE Resource_Reports_To__c=:contactId];
             List<Id> resourceList1 = new List<Id>();
             List<Id> resourceList2 = new List<Id>();
             for (Resource_Resource_Relationship__c resource : resourceRelationList1) {
                 resourceList1.add(resource.Resource__c);
             }
-            List<Resource_Resource_Relationship__c> resourceRelationList2 = [SELECT Id, Resource__c, Resource_Reports_To__c, Resource_Role__c, Reports_To_Role__c, Resource_Reports_To_User__c FROM Resource_Resource_Relationship__c WHERE Resource_Reports_To__c IN :resourceList1];
+            List<Resource_Resource_Relationship__c> resourceRelationList2 = [SELECT Id, 
+                                                                                    Resource__c, 
+                                                                                    Resource_Reports_To__c, 
+                                                                                    Resource_Role__c, 
+                                                                                    Reports_To_Role__c, 
+                                                                                    Resource_Reports_To_User__c 
+                                                                                    FROM Resource_Resource_Relationship__c 
+                                                                                    WHERE Resource_Reports_To__c IN :resourceList1];
             for (Resource_Resource_Relationship__c resource : resourceRelationList2) {
                 resourceList2.add(resource.Resource__c);
             }
             contactIdList.addAll(resourceList1);
             contactIdList.addAll(resourceList2);
-            List<User> users = [SELECT Id, ContactId FROM User WHERE ContactId IN :contactIdList];
+            List<User> users = [SELECT Id, 
+                                        ContactId 
+                                        FROM User 
+                                        WHERE ContactId IN :contactIdList];
             for (User us : users) {
                 idList.add(us.Id);
             }
@@ -163,7 +200,7 @@ public class EMS_TM_TimesheetClass {
         returnObj.holidays          = holidays;
         returnObj.assignment        = assignmentList;
         returnObj.picklist          = picklistValues;
-        returnObj.enableManagerView = user.IT_Admin_Access__c ==ITadminacc  || user.Manager_Access__c == manageracc ? true : false;
+        returnObj.enableManagerView = user.IT_Admin_Access__c ==ITadminacc  || user.Manager_Access__c == manageracc || user.Hr_Access__c == hrAccess ? true : false;
         returnObj.User              = user;
         returnObj.projectIdList     = idList;
         returnObj.leaves            = leaves;
@@ -184,10 +221,14 @@ public class EMS_TM_TimesheetClass {
         wrapperTimesheetRecords wrapper = new wrapperTimesheetRecords();
         List<EMS_TM_Timesheet_Record__c> timeSheetRecordValues = new List<EMS_TM_Timesheet_Record__c>();
 
-        List<EMS_Timesheet__c> timeSheetValues = [SELECT Id, User__c, User__r.Name,
-                                                EMS_TM_Week__c, EMS_TM_Status__c
-                                                FROM EMS_Timesheet__c where User__c = :userId
-                                                AND EMS_TM_Week__c = :week LIMIT 1];
+        List<EMS_Timesheet__c> timeSheetValues = [SELECT Id, 
+                                                        User__c, 
+                                                        User__r.Name,
+                                                        EMS_TM_Week__c,
+                                                        EMS_TM_Status__c
+                                                        FROM EMS_Timesheet__c 
+                                                        where User__c = :userId
+                                                        AND EMS_TM_Week__c = :week LIMIT 1];
 
         if (!timeSheetValues.isEmpty()) {
             timeSheetRecordValues = [SELECT Id, EMS_TM_Sun__c, EMS_TM_Mon__c, EMS_TM_Tue__c,
