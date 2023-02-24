@@ -46,9 +46,14 @@ public without Sharing class LeaveHistoryApexController {
         if(typeValues.size() > 0){
             query = query + ' AND EMS_LM_Leave_Type_Name__c IN :typeValues';
         }
-        system.debug(query);  
-        query = query + ' ORDER BY CreatedDate DESC Limit 5'; 
+        system.debug('###' +query);
+    	System.debug('### StartDate: ' + stdate);
+    	System.debug('### EndDate: ' + eddate);
+    	System.debug('### StatusValues: ' + statusValues);
+    	System.debug('## TypeValues: ' + typeValues);
+        //query = query + ' ORDER BY CreatedDate DESC Limit 5'; 
         try{ 
+            System.debug('### try ' + query);
             lh = Database.query(query);
             system.debug('### leave History ' + lh);
         }
@@ -59,7 +64,7 @@ public without Sharing class LeaveHistoryApexController {
     }
     
                 /**
-*   {Purpose} - Method used for bulk updation of leave request status to Approved, Approver 1 Pending, Approver 2 Pending.
+*   {Purpose} - 
 *
 *   CHANGE HISTORY
 *   ====================================================================================================
@@ -68,10 +73,10 @@ public without Sharing class LeaveHistoryApexController {
 *   ====================================================================================================
 **/
     @AuraEnabled(Cacheable=true)
-    public static List<EMS_LM_Leave_History__c> getPendingLeaveHistory(String name,String stdate, String eddate, List<String> statusValues, List<String> typeValues){
+   /* public static List<EMS_LM_Leave_History__c> getPendingLeaveHistory(String name,String stdate, String eddate, List<String> statusValues, List<String> typeValues){
         List<EMS_LM_Leave_History__c> lh = new List<EMS_LM_Leave_History__c>();
         String query = 'Select Id, EMS_LM_Leave_Type_Name__c,EMS_LM_Leave_Start_Date__c,EMS_LM_Current_Approver__c,' + 
-            'EMS_LM_Leave_End_Date__c,EMS_LM_Leave_Duration__c,EMS_LM_Reason__c,EMS_LM_Status__c,EMS_LM_Approved_On__c,EMS_LM_Contact__R.Name From EMS_LM_Leave_History__c ';
+            'EMS_LM_Leave_End_Date__c,EMS_LM_Leave_Duration__c,EMS_LM_Reason__c,EMS_LM_Status__c,EMS_LM_Approved_On__c,EMS_LM_Contact__R.Name,EMS_LM_Approver__c,EMS_LM_2nd_Approver__c From EMS_LM_Leave_History__c ';
         //String userId = UserInfo.getUserId();
         user usr =[Select id, ContactId, Email from user where id = :LeaveRequestConstant.LOGGEDIN_USERID];
         string cid = '';
@@ -114,7 +119,62 @@ public without Sharing class LeaveHistoryApexController {
             system.debug(e.getMessage());
         }    
         return lh;  
+    }*/
+    public static List<EMS_LM_Leave_History__c> getPendingLeaveHistory(String name, String stdate, String eddate, List<String> statusValues, List<String> typeValues) {
+    List<EMS_LM_Leave_History__c> lh = new List<EMS_LM_Leave_History__c>();
+    String query = 'SELECT Id, EMS_LM_Leave_Type_Name__c, EMS_LM_Leave_Start_Date__c, EMS_LM_Current_Approver__c, EMS_LM_Leave_End_Date__c, EMS_LM_Leave_Duration__c, EMS_LM_Reason__c, EMS_LM_Status__c, EMS_LM_Approved_On__c, EMS_LM_Contact__R.Name, EMS_LM_Approver__c, EMS_LM_2nd_Approver__c FROM EMS_LM_Leave_History__c';
+    
+    String cid = UserInfo.getUserId();
+    if (stdate != null && stdate != '') {
+        Date d = Date.valueOf(stdate);
+        query += ' WHERE EMS_LM_Leave_Start_Date__c >= :d';
     }
+    if (eddate != null && eddate != '') {
+        Date d1 = Date.valueOf(eddate);
+        if (query.contains('WHERE')) {
+            query += ' AND EMS_LM_Leave_End_Date__c <= :d1';
+        } else {
+            query += ' WHERE EMS_LM_Leave_End_Date__c <= :d1';
+        }
+    }
+    if (!statusValues.isEmpty()) {
+        if (query.contains('WHERE')) {
+            query += ' AND EMS_LM_Status__c IN :statusValues';
+        } else {
+            query += ' WHERE EMS_LM_Status__c IN :statusValues';
+        }
+    }
+    if (name != null && name != '') {  
+        String name1 = '%' + name + '%';
+        if (query.contains('WHERE')) {
+            query += ' AND EMS_LM_Contact__R.Name LIKE :name1';
+        } else {
+            query += ' WHERE EMS_LM_Contact__R.Name LIKE :name1';
+        }
+    }
+    if (!typeValues.isEmpty()) {
+        if (query.contains('WHERE')) {
+            query += ' AND EMS_LM_Leave_Type_Name__c IN :typeValues';
+        } else {
+            query += ' WHERE EMS_LM_Leave_Type_Name__c IN :typeValues';
+        }
+    }
+    query += ' AND (EMS_LM_Approver__c = :cid OR EMS_LM_2nd_Approver__c = :cid)';
+    System.debug('Query: ' + query);
+    System.debug('Name: ' + name);
+    System.debug('StartDate: ' + stdate);
+    System.debug('EndDate: ' + eddate);
+    System.debug('StatusValues: ' + statusValues);
+    System.debug('TypeValues: ' + typeValues);
+    
+    try { 
+        lh = Database.query(query);
+    } catch (Exception e) {
+        System.debug(e.getMessage());
+    }    
+    return lh;  
+}
+
     
                 /**
 *   {Purpose} - Method used to get Leave Types based on the LoggedIn user.
@@ -139,11 +199,12 @@ public without Sharing class LeaveHistoryApexController {
                 if(user.ContactId != null) {
                     Set<String> uniqueLeaveTypes = new Set<String>();
                     for(EMS_LM_Leave_Credit__c credit : [SELECT Id,
-                                                         EMS_LM_Select_Leave_Type__c 
+                                                         	    EMS_LM_Leave_Type__c,
+                                                                Leave_Type_Name__c
                                                          FROM EMS_LM_Leave_Credit__c 
                                                          WHERE EMS_LM_Employee__c = :user.ContactId 
-                                                         ORDER BY EMS_LM_Select_Leave_Type__c ASC]) {
-                                                             uniqueLeaveTypes.add(credit.EMS_LM_Select_Leave_Type__c);
+                                                         ORDER BY Leave_Type_Name__c ASC]) {
+                                                             uniqueLeaveTypes.add(credit.Leave_Type_Name__c);
                                                          }
                     for(String leaveType : uniqueLeaveTypes) {
                         leaveTypes.add(leaveType);
@@ -158,11 +219,12 @@ public without Sharing class LeaveHistoryApexController {
                                        AND EMS_TM_User__c = :userId];
                     
                     for(EMS_LM_Leave_Credit__c credit : [SELECT Id,
-                                                         EMS_LM_Select_Leave_Type__c 
+                                                         		EMS_LM_Leave_Type__c,
+                                                         		Leave_Type_Name__c 
                                                          FROM EMS_LM_Leave_Credit__c 
                                                          WHERE EMS_LM_Employee__c = :contact.Id 
-                                                         ORDER BY EMS_LM_Select_Leave_Type__c ASC]) {
-                                                             uniqueLeaveTypes.add(credit.EMS_LM_Select_Leave_Type__c);
+                                                         ORDER BY Leave_Type_Name__c ASC]) {
+                                                             uniqueLeaveTypes.add(credit.Leave_Type_Name__c);
                                                          }
                     for(String leaveType : uniqueLeaveTypes) {
                         leaveTypes.add(leaveType);
@@ -242,7 +304,7 @@ public without Sharing class LeaveHistoryApexController {
                                                     AND (EMS_LM_Status__c =: LeaveRequestConstant.PENDING 
                                                     OR  EMS_LM_Status__c =: LeaveRequestConstant.APPROVER_2_WAITING
                                                     OR EMS_LM_Status__c =: LeaveRequestConstant.AUTO_APPROVED)
-                                                    ORDER BY CreatedDate DESC Limit 5
+                                                    ORDER BY CreatedDate DESC, EMS_LM_Status__c DESC
                                                     ];
         return myLeaveReq;
     }
@@ -267,13 +329,15 @@ public without Sharing class LeaveHistoryApexController {
                                                       		 EMS_LM_Reason__c,
                                                       		 EMS_LM_Status__c,
                                                       		 EMS_LM_Approved_On__c,
-                                                      	     EMS_LM_Contact__r.Name
+                                                      	     EMS_LM_Contact__r.Name,
+                                                             EMS_LM_Approver__c,
+                                                             EMS_LM_2nd_Approver__c
                                                        FROM EMS_LM_Leave_History__c
                                                        WHERE (EMS_LM_Approver__c =:LeaveRequestConstant.LOGGEDIN_USERID
                                                        OR EMS_LM_2nd_Approver__c =:LeaveRequestConstant.LOGGEDIN_USERID)
                                                        AND (EMS_LM_Status__c =: LeaveRequestConstant.PENDING 
                                                        OR  EMS_LM_Status__c =: LeaveRequestConstant.APPROVER_2_WAITING)
-                                                       ORDER BY CreatedDate DESC Limit 5
+                                                       //ORDER BY CreatedDate DESC Limit 5
                                                      		 ];
         return mypendingReq;
     }

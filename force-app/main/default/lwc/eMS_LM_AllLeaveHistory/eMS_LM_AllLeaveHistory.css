@@ -1,22 +1,3 @@
-.table1 {
-   overflow: hidden;
-   width: 100%;
-   margin-right: 100%;
-}
-
-.cancel {
-   color: red;
-}
-.slds-button--icon-border, .slds-button--icon-border-filled, .slds-button_icon-border, .slds-button_icon-border-filled {
-    line-height: 1;
-    vertical-align: middle;
-    color: red;
-    border: 1px solid #ea001e;
-    -webkit-transition: border .15s linear;
-    transition: border .15s linear;
-    border-color: #dddbda;
-}
-
 .redColor{
     color : #FF0000;
 }
@@ -28,4 +9,70 @@
 }
 .blueColor{
     color : rgb(25, 0, 255);
+} 
+
+.table-container {
+  max-height: calc(6 * 40px + 40px);
+  overflow-y: scroll; /* enable vertical scrollbar */
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead {
+  background-color: #f2f2f2;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* set z-index to keep the header on top */
+}
+
+th {
+  text-align: left;
+  padding: 8px;
+  font-weight: bold;
+  border: 1px solid #ddd;
+}
+
+tbody {
+  border: 1px solid #ddd;
+}
+
+tr {
+  border-bottom: 1px solid #ddd;
+}
+
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:hover {
+  background-color: #cbb1d7;
+}
+
+tr.selected {
+  background-color: #e1f5fe;
+}
+
+tr:focus {
+  outline: none;
+}
+/*
+.table-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background : rgb(223, 185, 235);
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}*/
