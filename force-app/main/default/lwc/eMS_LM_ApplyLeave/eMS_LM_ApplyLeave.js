@@ -9,8 +9,9 @@ import createLeaveHistoryRecord from '@salesforce/apex/EMS_LM_ContactLeaveUpdate
 import uploadFile from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.uploadFile';
 import getLeaveTypeId from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveTypeid';
 import LightningConfirm from "lightning/confirm";
-
 import { createRecord } from 'lightning/uiRecordApi';
+
+
 
 export default class EMS_LM_ApplyLeave extends LightningElement {
   check;
@@ -26,7 +27,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   startDate;//To apply Leave start date
   endDate;
   value = '';
-  leavetypevalue =value = !'';
+  visiableotherdetail =false;
   submitcheck = true;//need to changed based on condition LD < ALD
   @track availabledays;
   @track allavailabledays;
@@ -43,6 +44,8 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   fileData;
   wfhtodaydate;
   leavetypeId;
+
+ 
 
   connectedCallback() {
     let today = new Date();
@@ -267,6 +270,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
     
 
     if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
+      this.visiableotherdetail=true;
       if (this.startDate == this.endDate) {
         if (this.startDate == undefined || this.endDate == undefined) {
           this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
@@ -280,10 +284,12 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
     }
     if (this.value == 'Annual Leave') {
+      this.visiableotherdetail=true;
       this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
       this.fileuploadRequired=true;
     }
     if (this.value == 'Paternity Leave') {
+      this.visiableotherdetail=true;
       this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Paternity_Leave__c;
       if(this.isbillable==true){
         this.fileuploadRequired=true;
@@ -293,6 +299,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
         
     }
     if (this.value == 'Bereavement Leave') {
+      this.visiableotherdetail=true;
       this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Bereavement_Leave__c;
       if(this.isbillable==true){
         this.fileuploadRequired=true;
@@ -302,11 +309,13 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       
     }
     if (this.value == 'Maternity Leave') {
+      this.visiableotherdetail=true;
       this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Maternity_Leave__c;
       this.fileuploadRequired=true;
      
     }
     if (this.value == 'Compensatory Off') {
+      this.visiableotherdetail=true;
       this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Compensatory_Off__c;
       if(this.isbillable==true){
         this.fileuploadRequired=true;
@@ -316,6 +325,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
      
     }
     if (this.value == 'Loss of Pay') {
+      this.visiableotherdetail=true;
       if (this.annualcompduration > 0) {
         console.log(this.annualcompduration);
         this.submitcheck = true;
@@ -336,9 +346,11 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
     }
   }
 
+  
   datechange(event) {
-    var namecheck = event.target.name;
-    let enteredDate = new Date(event.target.value);
+    var namecheck = event.target.name;    
+    let enteredDate = new Date(event.target.value + ' 00:00:00');
+
     let day =enteredDate.getDay();
     this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
     this.daycheck = false;
@@ -492,7 +504,7 @@ if(this.reason == null || this.reason == ''){
       }else{
         
         //step1 create fields list
-        const fields ={'EMS_LM_Leave_Start_Date__c':this.startDate, 'EMS_LM_Leave_End_Date__c':this.endDate ,
+        const fields ={'EMS_LM_Leave_Start_Date__c':this.startDate1, 'EMS_LM_Leave_End_Date__c':this.endDate1 ,
         'EMS_LM_Leave_Type_Name__c':this.value , 'EMS_LM_Contact__c':this.cId , 'EMS_LM_Reason__c':this.reason ,'EMS_LM_Day__c':this.fullday ,
       'EMS_LM_Leave_Type__c': this.leavetypeId};
         //step2 create API record with above fields

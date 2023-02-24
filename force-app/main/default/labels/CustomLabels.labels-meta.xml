@@ -42,4 +42,11 @@
         <shortDescription>TimeSheet Label</shortDescription>
         <value>https://cpprd--dev.sandbox.my.site.com/CpLink/s/timepage</value>
     </labels>
+    <labels>
+        <fullName>Pre_Onboarding_Form_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pre Onboarding Form URL</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/onboarding/s/?</value>
+    </labels>
 </CustomLabels>

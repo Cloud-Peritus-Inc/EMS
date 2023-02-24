@@ -27,6 +27,10 @@
                 <behavior>Edit</behavior>
                 <field>EMS_LM_2nd_Approver__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_Current_Approver__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

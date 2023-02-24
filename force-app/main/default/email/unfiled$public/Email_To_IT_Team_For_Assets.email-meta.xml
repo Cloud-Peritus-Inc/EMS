@@ -11,9 +11,11 @@
 
 The following candidate will join our company on {!Contact.EMS_EM_JD__c}:
 
-Name: {!Contact.Name}
+Name: {!Contact.EMS_EM_ED_Name__c}
 
-Designation: {!Contact.EMS_RM_Current_Job_Role__c}
+Designation: {!Contact.Resource_Role__c}
+
+
 
 Please make sure to keep the assets ready for the employee and dispatch the asset if the employee is working from another location.
 

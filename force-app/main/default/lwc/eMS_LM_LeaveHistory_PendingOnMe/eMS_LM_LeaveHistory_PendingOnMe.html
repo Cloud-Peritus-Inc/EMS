@@ -13,10 +13,12 @@
 				<!--lightning-button variant="destructive" label="Select All" title="Select All" onclick={handleSelectAll}>
 				</lightning-button>
 				&nbsp;&nbsp;-->
-				<lightning-button variant="success" label="Approve All" title="Approve ALl" onclick={handleApproveAll}>
+				<lightning-button variant="success" label="Approve All" title="Approve ALl" onclick={handleApproveAll}
+					disabled={disableButton}>
 				</lightning-button>
 				&nbsp;&nbsp;
-				<lightning-button variant="destructive" label="Reject All" title="Reject All" onclick={handleRejectAll}>
+				<lightning-button variant="destructive" label="Reject All" title="Reject All" onclick={handleRejectAll}
+					disabled={disableButton}>
 				</lightning-button>
 			</div>
 			<lightning-layout multiple-rows>
@@ -55,140 +57,122 @@
 			</lightning-layout>
 			<template if:true={showdata}>
 				<lightning-card>
-					<table>
-						<thead>
-							<tr style="border-top:0.5px solid #d4d4d4;border-bottom:0.5px solid #d4d4d4">
-								<th style="padding:8px">
-									<div>
-										<lightning-input type="checkbox" variant="standard" label="Select All"
-											onclick={handleSelectAll}></lightning-input>
-									</div>
-								</th>
-								<th>
-									<div title="User Name">Employee Name</div>
-								</th>
-								<th>
-									<div title="Leave Type">Leave Type</div>
-								</th>
-								<th>
-									<div title="Leave Start Date">Leave Start Date</div>
-								</th>
-								<th>
-									<div title="Leave End Date">Leave End Date</div>
-								</th>
-								<th>
-									<div title="Leave Duration">Leave Duration</div>
-								</th>
-								<th>
-									<div title="Reason">Reason</div>
-								</th>
-								<th>
-									<div title="Approver">Approver</div>
-								</th>
-								<th>
-									<div title="Leave Status">Leave Status</div>
-								</th>
-								<th>
-									<div title="Approved On">Approved On</div>
-								</th>
-								<th class="slds-cell_action-mode" style="width:2.25rem">
-									<div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<template for:each={datahistory} for:item="Req">
-								<tr key={Req.Id} style="border-bottom:0.5px solid #d4d4d4">
-									<td style="padding:7px">
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id} disabled ={Req.disableButton}/>
-									</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Contact__r.Name}</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Leave_Type_Name__c }</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											<lightning-formatted-date-time value={Req.EMS_LM_Leave_Start_Date__c}
-												month="numeric" day="numeric" year="numeric">
-											</lightning-formatted-date-time>
+					<div class="table-container">
+						<table>
+							<thead>
+								<tr style="border-top:0.5px solid #d4d4d4;border-bottom:0.5px solid #d4d4d4">
+									<th style="padding:8px">
+										<div>
+											<lightning-input type="checkbox" variant="standard" label="Select All"
+												onclick={handleSelectAll}></lightning-input>
 										</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											<lightning-formatted-date-time value={Req.EMS_LM_Leave_End_Date__c}
-												month="numeric" day="numeric" year="numeric">
-											</lightning-formatted-date-time>
-										</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Leave_Duration__c}</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Reason__c}</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Current_Approver__c}</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Status__c}</div>
-									</td>
-									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Approved_On__c}</div>
-									</td>
-									<td class="slds-truncate dv-dynamic-width">
-
-										<lightning-button-icon variant="bare" size="large" icon-name="action:preview"
-											alternative-text="View" onclick={handleView}
-											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
-											data-id={Req.Id}></lightning-button-icon>
-
-										&nbsp;&nbsp;
-										<!--template if:true={Req.disableButton}-->
-										<lightning-button-icon variant="bare" size="large" icon-name="action:approval"
-											alternative-text="Approve" onclick={showModalApprovalBox}
-											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
-											data-id={Req.Id} disabled={Req.disableButton}></lightning-button-icon>
-										<!--/template-->
-										&nbsp;&nbsp;
-										<lightning-button-icon variant="bare" size="large" icon-name="action:reject"
-											alternative-text="Reject" onclick={showModalRejectBox}
-											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
-											data-id={Req.Id} disabled={Req.disableButton}></lightning-button-icon>
-										<!--lightning-button-menu alternative-text="Show menu"
-											icon-name="utility:threedots_vertical" variant="container"
-											menu-alignment="right" onclick={handleCancelButton}
-											data-value={Req.EMS_LM_Status__c} data-record-id={Req.Id}>
-											<template if:true={showcancelbutton}>
-											<lightning-menu-item value="View" label="View" onclick={handleView}
-												data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
-												data-record-id={Req.Id} data-id={Req.Id}>
-											</lightning-menu-item>
-											<lightning-menu-item value="Approve" label="Approve"
-												onclick={showModalApprovalBox} data-value={Req.EMS_LM_Status__c}
-												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}>
-											</lightning-menu-item>
-											<lightning-menu-item value="Reject" label="Reject"
-												onclick={showModalRejectBox} data-value={Req.EMS_LM_Status__c}
-												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}>
-											</lightning-menu-item>
-											</template>
-										</lightning-button-menu-->
-									</td>
+									</th>
+									<th>
+										<div title="User Name">Employee Name</div>
+									</th>
+									<th>
+										<div title="Leave Type">Leave Type</div>
+									</th>
+									<th>
+										<div title="Leave Start Date">Leave Start Date</div>
+									</th>
+									<th>
+										<div title="Leave End Date">Leave End Date</div>
+									</th>
+									<th>
+										<div title="Leave Duration">Leave Duration</div>
+									</th>
+									<th>
+										<div title="Reason">Reason</div>
+									</th>
+									<th>
+										<div title="Approver">Approver</div>
+									</th>
+									<th>
+										<div title="Leave Status">Leave Status</div>
+									</th>
+									<th>
+										<div title="Approved On">Approved On</div>
+									</th>
+									<th class="slds-cell_action-mode" style="width:2.25rem">
+										<div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+									</th>
 								</tr>
-							</template>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<template for:each={datahistory} for:item="Req">
+									<tr key={Req.Id} style="border-bottom:0.5px solid #d4d4d4">
+										<td style="padding:7px">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id} disabled ={Req.disableButton}/>
+									</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												{Req.EMS_LM_Contact__r.Name}</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												{Req.EMS_LM_Leave_Type_Name__c }</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												<lightning-formatted-date-time value={Req.EMS_LM_Leave_Start_Date__c}
+													month="numeric" day="numeric" year="numeric">
+												</lightning-formatted-date-time>
+											</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												<lightning-formatted-date-time value={Req.EMS_LM_Leave_End_Date__c}
+													month="numeric" day="numeric" year="numeric">
+												</lightning-formatted-date-time>
+											</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												{Req.EMS_LM_Leave_Duration__c}</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												{Req.EMS_LM_Reason__c}</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												{Req.EMS_LM_Current_Approver__c}</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												{Req.EMS_LM_Status__c}</div>
+										</td>
+										<td>
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+												{Req.EMS_LM_Approved_On__c}</div>
+										</td>
+										<td class="slds-truncate dv-dynamic-width">
+
+											<lightning-button-icon variant="bare" size="large"
+												icon-name="action:preview" alternative-text="View" onclick={handleView}
+												data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
+												data-record-id={Req.Id} data-id={Req.Id}></lightning-button-icon>
+											&nbsp;&nbsp;
+											<lightning-button-icon variant="bare" size="large"
+												icon-name="action:approval" alternative-text="Approve"
+												onclick={showModalApprovalBox} data-value={Req.EMS_LM_Status__c}
+												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}
+												disabled={Req.disableButton}></lightning-button-icon>
+											&nbsp;&nbsp;
+											<lightning-button-icon variant="bare" size="large" icon-name="action:reject"
+												alternative-text="Reject" onclick={showModalRejectBox}
+												data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
+												data-record-id={Req.Id} data-id={Req.Id} disabled={Req.disableButton}>
+											</lightning-button-icon>
+										</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+					</div>
 				</lightning-card>
 			</template>
 			<!-- APPROVE ALL POP-UP-->

@@ -43,6 +43,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   selectedRecordRejectId;
   picklistValues;
   leaveTypeValues;
+  disableButton;
 
   @track selectedLeaveReqIds = [];
 
@@ -73,20 +74,24 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   @wire(pendingOnMeLeaveReq)
   pendingOnMeLeaveReqWiredData({ error, data }) {
     if (data) {
-      console.log('### pendingOnMeLeaveReq', data);
-      //console.log('user ID 1: ', uId);
-      console.log('user ID : ', this.uId);
-      this.showdata = true;
-      this.nodata = false;
-      this.datahistory = JSON.parse(JSON.stringify(data));
-      console.log('### non filter : ', this.datahistory);
-      this.datahistory.forEach(req => {
-        // req.disableButton = req.EMS_LM_Status__c !== 'Pending' && (req.EMS_LM_Status__c ===  'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c  !== this.uId || req.EMS_LM_Status__c ===  'Approver 1 Pending' && req.EMS_LM_Approver__c !== this.uId);
-        console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
-        req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 pending' && req.EMS_LM_Approver__c === this.uId));
-        console.log('### req.EMS_LM_2nd_Approver__c default: ', req.EMS_LM_2nd_Approver__c);
-      });
-      console.log('### showdata : ', this.showdata);
+      if (data.length > 0) {
+        console.log('### pendingOnMeLeaveReq', data);
+        //console.log('user ID 1: ', uId);
+        console.log('user ID : ', this.uId);
+        this.showdata = true;
+        this.nodata = false;
+        this.datahistory = JSON.parse(JSON.stringify(data));
+        console.log('### non filter : ', this.datahistory);
+        this.datahistory.forEach(req => {
+          // req.disableButton = req.EMS_LM_Status__c !== 'Pending' && (req.EMS_LM_Status__c ===  'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c  !== this.uId || req.EMS_LM_Status__c ===  'Approver 1 Pending' && req.EMS_LM_Approver__c !== this.uId);
+          //console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
+          req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 pending' && req.EMS_LM_Approver__c === this.uId));
+          //console.log('### req.EMS_LM_2nd_Approver__c default: ', req.EMS_LM_2nd_Approver__c);
+        });
+      } else {
+        this.nodata = true;
+        this.disableButton = this.nodata === true;
+      }
     } else if (error) {
       console.error('Error:', error);
     }
@@ -118,24 +123,17 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         console.log('### DATA AFTER: ', data);
         this.showdata = true;
         this.nodata = false;
-        //this.datahistory = data;
         this.datahistory = JSON.parse(JSON.stringify(data));
         console.log('### datahistory JSON : ', this.datahistory);
         this.datahistory.forEach(req => {
-          console.log('#### req for approval', req);
-          console.log('### req.EMS_LM_2nd_Approver__c filter: ', req.EMS_LM_2nd_Approver__c);
-          console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
+          //console.log('#### req for approval', req);
+          //console.log('### req.EMS_LM_2nd_Approver__c filter: ', req.EMS_LM_2nd_Approver__c);
+          //console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
           req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c != null && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 pending' && req.EMS_LM_Approver__c === this.uId));
         });
         console.log('### datahistory', this.datahistory);
         this.error = undefined;
       }
-      /* else {
-         this.nodata = true;
-         this.showdata = false;
-         this.datahistory = data;
-         this.error = undefined;
-       }*/
     } else if (error) {
       this.error = error;
       this.datahistory = undefined;
@@ -346,15 +344,6 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         actionName: 'view',
       },
     });
-  }
-
-  handleCancelButton(event) {
-    this.requeststatus = event.target.dataset.value;
-    if (this.requeststatus == 'Pending' || this.requeststatus == '' || this.requeststatus == undefined || this.requeststatus == 'Approver 1 Pending' || this.requeststatus == 'Approver 2 Pending') {
-      this.showcancelbutton = true;
-    }
-    else
-      this.showcancelbutton = false;
   }
 
 }

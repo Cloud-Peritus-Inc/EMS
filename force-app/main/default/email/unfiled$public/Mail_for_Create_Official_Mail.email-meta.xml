@@ -5,8 +5,9 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Mail for Create Official Mail</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus :  Date of joining tasks</subject>
+    <subject>Cloud Peritus : Date of joining tasks</subject>
     <textOnly>Dear IT Team,
+
 
 Please find the details of the candidate who is going to join us today :
 
@@ -14,9 +15,9 @@ First Name: {!Contact.FirstName}
 
 Last Name: {!Contact.LastName}
 
-Contact Number: {!Contact.Phone}
+Contact Number: {!Contact.EMS_Phone_Number__c}
 
-Personal Email ID: {!Contact.Email}
+Personal Email ID: {!Contact.Personal_Email__c}
 
 
 An official email id needs to be generated for this candidate. Also, please ensure that the IT assets are set-up for the new employee for their first day at work.

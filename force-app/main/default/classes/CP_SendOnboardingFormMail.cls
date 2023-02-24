@@ -46,7 +46,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
     
     public void afterUpdate(List<Contact> newList, List<Contact> oldList) {      
          System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterUpdate() : BEGIN');
-       //  sendOnboardingFormMail(newList);
+         //sendOnboardingFormMail(newList);
          System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterUpdate() : END');       
      }
     
@@ -80,7 +80,9 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
                 }
             }   
         }
-        insert applicantsList;
+        if(applicantsList.size() > 0){
+            insert applicantsList;
+        }
         List<ems_EM_Additional_Detail__c> additionalDetailsList = new List<ems_EM_Additional_Detail__c>();
         for(EMS_EM_Onboarding_Request__c onboardingRecords : applicantsList){
             ems_EM_Additional_Detail__c applicantRec = new ems_EM_Additional_Detail__c();
