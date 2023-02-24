@@ -76,8 +76,8 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
             for(Id appId : appWithAbseReqts.keySet()){
                 list<string> toaddress = new list<string>();              
                 if(appWithAbseReqts.containsKey(appId) && appWithAbseReqts.get(appId).size() >0 && approverwithemail.containsKey(appId)){
-                   // toaddress.add(approverwithemail.get(appId).Email);
-                   toaddress.add('subbu.kalavala@gmail.com');
+                   toaddress.add(approverwithemail.get(appId).Email);
+                  
                   Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
                   email.setOrgWideEmailAddressId(orgWideAddressId);
                   email.setSubject('Pending Leave Approval Requests');

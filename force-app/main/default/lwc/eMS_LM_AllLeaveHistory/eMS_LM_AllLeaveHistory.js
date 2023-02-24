@@ -45,7 +45,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     sValue = '';
     showApplyLeaveEdit = false;
     @track picklistValues = [];
-    // @track loa = 2;
     approvalLevel;
     autoApproval;
     selectEditRecordId;
@@ -132,16 +131,20 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     @wire(defaultMyRequestData)
     defaultMyRequestDataWiredData({ error, data }) {
         if (data) {
-            console.log('### defaultMyRequestData', data);
-            this.showdata = true;
-            this.nodata = false;
-            //this.datahistory = data;
-            this.datahistory = JSON.parse(JSON.stringify(data));
-            console.log('### datahistory', this.datahistory);
-            this.datahistory.forEach(req => {
-                req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true;
-            });
-            console.log('### defaultMyRequestData datahistory: ', this.datahistory);
+            if (data.length > 0) {
+                console.log('### defaultMyRequestData', data);
+                this.showdata = true;
+                this.nodata = false;
+                //this.datahistory = data;
+                this.datahistory = JSON.parse(JSON.stringify(data));
+                console.log('### datahistory', this.datahistory);
+                this.datahistory.forEach(req => {
+                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true;
+                });
+                console.log('### defaultMyRequestData datahistory: ', this.datahistory);
+            } else {
+                this.nodata = true
+            }
         } else if (error) {
             console.error('Error:', error);
         }
@@ -163,15 +166,14 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                 });
                 this.error = undefined;
             }
-            /* else {
-                 this.nodata = true;
-                 this.showdata = false;
-                // this.datahistory = data;
-                 console.log('## Else : ', data);
-                 this.error = undefined;
-             }*/
+            /*else {
+                this.nodata = true;
+                this.showdata = false;
+                this.error = undefined;
+            }*/
         } else if (error) {
             this.error = error;
+            this.nodata = true;
             this.datahistory = undefined;
         }
     }

@@ -36,13 +36,13 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
             if(contactRec.EMS_EM_JD__c == System.today()){
                 contactListForIT.add(contactRec);
             }  
-            if((contactRec.EMS_EM_JD__c.addDays(-7) == System.today() || contactRec.EMS_EM_JD__c.addDays(-2) == System.today()) && contactRec.Resource_Manager__c != NULL){
+            if((contactRec.EMS_EM_JD__c.addDays(-7) == System.today() || contactRec.EMS_EM_JD__c.addDays(-2) == System.today()) && contactRec.Resource_Manager__c != NULL && contactRec.Resource_Manager__r.Official_Mail__c != NULL){
                 contactListForRM.add(contactRec);
             }
         }
         
         if(updatedContactList.size() > 0){
-            sendOnboardingEmail(updatedContactList);
+            sendEmailToITTeamForNewJoin(updatedContactList);
         }
         if(contactListForIT.size() > 0){
             sendEmailToITTeam(contactListForIT);
@@ -54,7 +54,7 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
         
     }
     
-    public static Void sendOnboardingEmail(List<Contact> contactRecordsList){
+    public static Void sendEmailToITTeamForNewJoin(List<Contact> contactRecordsList){
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Email To IT Team For Assets' LIMIT 1];

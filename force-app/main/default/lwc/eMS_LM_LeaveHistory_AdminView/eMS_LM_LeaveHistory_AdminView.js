@@ -49,6 +49,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   isShowModalRejectAll = false;
   isShowModalApprove = false;
   isShowModalReject = false;
+  disableButton
 
   //TO GET OBJECT INFO
   @wire(getObjectInfo, { objectApiName: LEAVEHISTORY_OBJECT })
@@ -71,11 +72,19 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   @wire(defaultAdminViewData)
   wiredData({ error, data }) {
     if (data) {
-      console.log('### defaultAdminViewData', data);
-      this.showdata = true;
-      this.nodata = false;
-      this.datahistory = JSON.parse(JSON.stringify(data));
-      console.log('###  defaultAdminViewData datahistory ', this.datahistory);
+      if (data.length > 0) {
+        console.log('### defaultAdminViewData', data);
+        this.showdata = true;
+        this.nodata = false;
+        this.datahistory = JSON.parse(JSON.stringify(data));
+        console.log('###  defaultAdminViewData datahistory ', this.datahistory);
+        this.datahistory.forEach(req => {
+          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 pending';
+        });
+      } else {
+        this.nodata = true;
+        this.disableButton = this.nodata === true;
+      }
     } else if (error) {
       console.error('Error:', error);
     }
