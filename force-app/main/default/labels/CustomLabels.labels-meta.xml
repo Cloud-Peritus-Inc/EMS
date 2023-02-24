@@ -33,7 +33,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Leave Request site Link</shortDescription>
-        <value>https://cpprd--dev.sandbox.my.site.com/CpLink/s/leave-management</value>
+        <value>https://cpprd--qa.sandbox.my.site.com/onboarding/s/</value>
     </labels>
     <labels>
         <fullName>TimeSheet_Label</fullName>
@@ -47,6 +47,6 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pre Onboarding Form URL</shortDescription>
-        <value>https://cpprd--dev.sandbox.my.site.com/onboarding/s/?</value>
+        <value>https://cpprd--qa.sandbox.my.site.com/onboarding/s/?</value>
     </labels>
 </CustomLabels>
