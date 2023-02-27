@@ -1,15 +1,13 @@
 import { LightningElement, track, wire, api } from 'lwc';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import u_Id from '@salesforce/user/Id';
-import LightningConfirm from "lightning/confirm";
 import { getPicklistValues, getObjectInfo, getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
 import LEAVEHISTORY_OBJECT from '@salesforce/schema/EMS_LM_Leave_History__c';
-import getPendingLeaveHistory from '@salesforce/apex/LeaveHistoryApexController.getPendingLeaveHistory';
+import getPendingLeaveHistory from '@salesforce/apex/EMS_LM_PendingOnMeLeaveReq.getPendingLeaveHistory';
 import bulkLeaveReqApproval from '@salesforce/apex/LeaveRequestApproveHandler.bulkLeaveReqApproval';
 import bulkLeaveReqReject from '@salesforce/apex/LeaveRequestRejectHandler.bulkLeaveReqReject';
 import updateRejecteStatusAndComments from '@salesforce/apex/LeaveRequestRejectHandler.updateRejecteStatusAndComments';
 import updateApproveStatusAndComments from '@salesforce/apex/LeaveRequestApproveHandler.updateApproveStatusAndComments';
-import pendingOnMeLeaveReq from '@salesforce/apex/LeaveHistoryApexController.pendingOnMeLeaveReq';
+import pendingOnMeLeaveReq from '@salesforce/apex/EMS_LM_PendingOnMeLeaveReq.pendingOnMeLeaveReq';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 
 export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(LightningElement) {
@@ -17,7 +15,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   outputStatus;
   outputId;
   @track empName = '';
-  fixedWidth = "width:8rem;";
+  //fixedWidth = "width:8rem;";
   @track reqRecordId;
   showcancelbutton = false;
   isShowViewRequest = false;
@@ -27,7 +25,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   endDate = '';//To filter Leave History end date = '2022-12-20 00:00:00'
   startDate = '';//To filter Leave History start date  = '2022-01-20 00:00:00'
   @track datahistory = [];//to pass data to Leave history table
-  value = 'Annual Leave';
+  value = '';
   sValue = '';
   @api recordId;
   @track multipleApprovals = [];
@@ -44,7 +42,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   picklistValues;
   leaveTypeValues;
   disableButton;
-
+  @track isLoading = false;
   @track selectedLeaveReqIds = [];
 
   @track currentPageReference;
@@ -53,31 +51,14 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     this.currentPageReference = currentPageReference;
   }
 
-  // TO SHOW DEFAULT PENDING ON ME DATA
-  /*@wire(pendingOnMeLeaveReq)
-  pendingOnMeLeaveReqWiredData({ error, data }) {
-    if (data) {
-      console.log('### pendingOnMeLeaveReq', data);
-      this.showdata = true;
-      this.nodata = false;
-      this.datahistory = JSON.parse(JSON.stringify(data));
-      console.log('### non filter : ', this.datahistory);
-      this.datahistory.forEach(req => {
-        req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
-      });
-      console.log('### showdata : ', this.showdata);
-    } else if (error) {
-      console.error('Error:', error);
-    }
-  }*/
-
+  // WIRE METHOD TO SHOW THE DEFAULT DATA
   @wire(pendingOnMeLeaveReq)
   pendingOnMeLeaveReqWiredData({ error, data }) {
     if (data) {
       if (data.length > 0) {
         console.log('### pendingOnMeLeaveReq', data);
         //console.log('user ID 1: ', uId);
-        console.log('user ID : ', this.uId);
+        //console.log('user ID : ', this.uId);
         this.showdata = true;
         this.nodata = false;
         this.datahistory = JSON.parse(JSON.stringify(data));
@@ -115,10 +96,13 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     }
   }
 
-  @wire(getPendingLeaveHistory, { name: '$empName', stdate: '$startDate', eddate: '$endDate', statusValues: '$sValue', typeValues: '$value' })
+  // WIRE METHOD TO FILTERED DATA
+  @wire(getPendingLeaveHistory, { employeeName: '$empName', startDateStr: '$startDate', endDateStr: '$endDate', statusValues: '$sValue', typeValues: '$value' })
   wiredLeavHistory({ error, data }) {
     if (data) {
-      console.log('### DATA BEFORE: ', data);
+      this.isLoading = false;
+      this.showdata = true;
+      console.log('### DATA BEFORE: ', data, this.showdata);
       if (data.length > 0) {
         console.log('### DATA AFTER: ', data);
         this.showdata = true;
@@ -133,10 +117,21 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         });
         console.log('### datahistory', this.datahistory);
         this.error = undefined;
+      } else {
+        this.nodata = true;
+        this.showdata = false;
+        this.error = undefined;
       }
     } else if (error) {
       this.error = error;
+      this.nodata = true;
+      this.isLoading = false;
       this.datahistory = undefined;
+    } else {
+      this.nodata = true;
+      this.isLoading = true;
+      this.showdata = false;
+      this.error = undefined;
     }
   }
 
@@ -238,8 +233,8 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
-          //window.location.reload();
           this.isShowModalApproveAll = false;
+          this.updateMyRequestTabView();
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -266,6 +261,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
           console.log('Leave Request: ', result);
           //window.location.reload();
           this.isShowModalRejectAll = false;
+          this.updateMyRequestTabView();
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -299,6 +295,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         console.log('Leave Request: ', result);
         //window.location.reload();
         this.isShowModalApprove = false;
+        this.updateMyRequestTabView();
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
@@ -326,7 +323,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalReject = false;
-        //window.location.reload();
+        this.updateMyRequestTabView();
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
@@ -346,4 +343,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     });
   }
 
+  //TO REFRESH THE COMPONENT
+  updateMyRequestTabView() {
+    setTimeout(() => {
+      eval("$A.get('e.force:refreshView').fire();");
+    }, 1000);
+  }
 }

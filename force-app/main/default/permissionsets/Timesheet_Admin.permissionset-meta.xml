@@ -104,14 +104,6 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
