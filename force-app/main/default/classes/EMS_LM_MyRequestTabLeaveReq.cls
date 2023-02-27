@@ -67,10 +67,12 @@ public static List<EMS_LM_Leave_History__c> getLMHistory(String startDateStr, St
         System.debug('### hereer');
         query = query;
         System.debug('### typeValues null'+ typeValues);
-    }else {
+    }else if (typeValues != null && typeValues.size() > 0){
         system.debug('heree');
         query += 'AND EMS_LM_Leave_Type_Name__c IN :typeValues ';
         System.debug('## here typeValues ' + query);
+    }else {
+        System.debug('### hello buddy');
     }
 
     System.debug('## TypeValues: ' + typeValues);

@@ -117,9 +117,18 @@
                            
                                     <lightning-input class="slds-p-top_small" value={mName} message-when-pattern-mismatch = "Invalid name" required disabled={readonlyfield}
                                     onchange={MotherName} name="EMS_EM_Mother__c" onkeydown={handleFirstLastNameKeyDown} pattern="[A-Z a-z._-]{1,20}$" type="text" label="Mother's Name"></lightning-input>
-    
+                                    
                                     <lightning-input class="slds-p-top_small" value={dob} required disabled={readonlyfield}
                                                 onchange={DateofBirthValidation}  name="EMS_EM_DOB__c" type="date" label="Date of Birth"></lightning-input>
+                                    <lightning-combobox class="slds-p-top_small"
+                                      required
+                                      disabled={readonlyfield}
+                                      name="EMS_EM_Gender__c"
+                                      label="Gender"
+                                      value={gen}
+                                      placeholder="Select"
+                                      options={Gendervalue}
+                                      onchange={gender} ></lightning-combobox>
                                 </span>
                                 </div>
                                 <div class="slds-col ">
@@ -133,15 +142,7 @@
     
                                        <lightning-input class="slds-p-top_small" value={nation} disabled={readonlyfield} required
                                       onchange={Nationality} onkeydown={handleFirstLastNameKeyDown} name="EMS_EM_Nationality__c" type="text"  label="Nationality "></lightning-input>
-                                      <lightning-combobox class="slds-p-top_small"
-                                      required
-                                      disabled={readonlyfield}
-                                      name="EMS_EM_Gender__c"
-                                      label="Gender"
-                                      value={gen}
-                                      placeholder="Select"
-                                      options={Gendervalue}
-                                      onchange={gender} ></lightning-combobox>
+                                      
                                 </span>
                                 </div>
                                 </div>                                                
@@ -674,529 +675,55 @@
                           <span class="slds-truncate slds-p-horizontal_small" title="Certification Documents">Other Certification Documents</span>
                         </h3>
                         <div aria-hidden="false" class="slds-section__content" style="padding-left: 15px;" >
-                            <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name__c" style="margin-top: 22px;" value={Certificationname1} disabled={readonlyfield} onchange={certificationnamee1} type="text"  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1"> 
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" disabled={readonlyfield} onchange={onCertificationUpload1} accept={accept} name="Certificate6" multiple="true">  
-                                     </lightning-input>{CertificationfileName1}
-                                </span>
-                                </div>
-                                </div> 
-                                <br>
-                   <template if:true={hideCertification2}>
-                    <lightning-button-icon  icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small slds-p-top_small" title="add" onclick={handleraddCertification1}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>                   
-                   </template>
-                            <!-- Add New button-->    
-                            <template if:true={ShowCertification1}> 
-                         <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification1} ></lightning-button-icon>
-
-                             <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name1__c" style="margin-top: 22px;" value={Certificationname2} disabled={readonlyfield} onchange={certificationnamee2} type="text"  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1"> 
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate7" disabled={readonlyfield} onchange={onCertificationUpload2} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName2}
-                                </span>
-                                </div>
-                                </div> 
-                <template if:true={hideCertification3}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification2}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>
-                                </template>
-                                <!-- Add New button-->
-                                 <template if:true={ShowCertification2}> 
-        <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification2} ></lightning-button-icon>
-
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name2__c" style="margin-top: 22px;" value={Certificationname3} disabled={readonlyfield} onchange={certificationnamee3} type="text"  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate8" disabled={readonlyfield} onchange={onCertificationUpload3} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName3}
-                                </span>
-                                </div>
-                                </div> 
-                <template if:true={hideCertification4}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification3}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>
-                                 </template> 
-                                <!-- Add New button-->
-                                 <template if:true={ShowCertification3}>
-                        <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification3} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                                    
-                    <lightning-input name="EMS_EM_Certification_Name3__c" style="margin-top: 22px;" value={Certificationname4} disabled={readonlyfield} onchange={certificationnamee4} type="text"  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate9" disabled={readonlyfield} onchange={onCertificationUpload4} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName4}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification5}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification4}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                 </template>
-                                <!-- Add New button-->
-                                 <template if:true={ShowCertification4}> 
-                <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification4} ></lightning-button-icon>
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name4__c" type="text" style="margin-top: 22px;" value={Certificationname5} disabled={readonlyfield} onchange={certificationnamee5}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate10" disabled={readonlyfield} onchange={onCertificationUpload5} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName5}
-                                </span>
-                                </div>
-                                </div> 
-                <template if:true={hideCertification6}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification5}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>
-                                 </template> 
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification5}>
-                <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification5} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name5__c" type="text" style="margin-top: 22px;" value={Certificationname6} disabled={readonlyfield} onchange={certificationnamee6} label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate11" disabled={readonlyfield} onchange={onCertificationUpload6} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName6}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification7}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification6}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template> 
-                                  </template> 
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification6}>
-                <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification6} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name6__c" type="text" style="margin-top: 22px;" value={Certificationname7} disabled={readonlyfield} onchange={certificationnamee7} label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate12" disabled={readonlyfield} onchange={onCertificationUpload7} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName7}
-                                </span>
-                                </div>
-                                </div>
-                    <template if:true={hideCertification8}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification7}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template> 
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification7}>
-                                      <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification7} ></lightning-button-icon>
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name7__c" type="text" style="margin-top: 22px;" value={Certificationname8} disabled={readonlyfield} onchange={certificationnamee8}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                         
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate13" disabled={readonlyfield} onchange={onCertificationUpload8} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName8}
-                                </span>
-                                </div>
-                                </div>
-                    <template if:true={hideCertification9}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification8}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                 </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification8}>
-                            <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification8} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name8__c" type="text" style="margin-top: 22px;" value={Certificationname9} disabled={readonlyfield} onchange={certificationnamee9} label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate14" disabled={readonlyfield} onchange={onCertificationUpload9} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName9}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification10}>
-                  <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification9}></lightning-button-icon>
-                  <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification9}> 
-                    <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification9} ></lightning-button-icon>
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name9__c" type="text" style="margin-top: 22px;" value={Certificationname10} disabled={readonlyfield} onchange={certificationnamee10}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate15" disabled={readonlyfield} onchange={onCertificationUpload10} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName10}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification11}>
-                  <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification10}></lightning-button-icon>
-                  <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification10}> 
-                        <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification10} ></lightning-button-icon>
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name10__c" type="text" style="margin-top: 22px;" value={Certificationname11} disabled={readonlyfield} onchange={certificationnamee11}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                       
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate16" disabled={readonlyfield} onchange={onCertificationUpload11} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName11}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification12}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification11}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification11}>
-                        <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification11} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name11__c" style="margin-top: 22px;" type="text" value={Certificationname12} disabled={readonlyfield} onchange={certificationnamee12}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">Certificate</label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate17" multiple="true" disabled={readonlyfield} onchange={onCertificationUpload12} accept={accept}>  
-                                     </lightning-input> 
-                                {CertificationfileName12}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification13}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification12}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification12}>
-                <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification12} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name12__c" style="margin-top: 22px;" type="text" value={Certificationname13} disabled={readonlyfield} onchange={certificationnamee13}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                       
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate18" disabled={readonlyfield} onchange={onCertificationUpload13} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName13}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification14}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification13}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification13}> 
-                <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification13} ></lightning-button-icon>
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name13__c" style="margin-top: 22px;" type="text" value={Certificationname14} disabled={readonlyfield} onchange={certificationnamee14} label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate19" disabled={readonlyfield} onchange={onCertificationUpload14} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName14}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification15}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification14}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification14}>
-                    <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification14} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name14__c" type="text" style="margin-top: 22px;" value={Certificationname15} disabled={readonlyfield} onchange={certificationnamee15}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate20" disabled={readonlyfield} onchange={onCertificationUpload15} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName15}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification16}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification15}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification15}> 
-                <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification15} ></lightning-button-icon>
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name15__c" type="text" style="margin-top: 22px;" value={Certificationname16} disabled={readonlyfield} onchange={certificationnamee16} label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1"> Certificate</label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate21" disabled={readonlyfield} onchange={onCertificationUpload16} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName16}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification17}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification16}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification16}>
-                        <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification16} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name16__c" style="margin-top: 22px;" type="text" value={Certificationname17} disabled={readonlyfield} onchange={certificationnamee17}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                         
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate22" multiple="true" disabled={readonlyfield} onchange={onCertificationUpload17} accept={accept}>  
-                                     </lightning-input> 
-                                {CertificationfileName17}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification18}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification17}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification17}> 
-                        <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification17} ></lightning-button-icon>
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name17__c" style="margin-top: 22px;" type="text" value={Certificationname18} disabled={readonlyfield} onchange={certificationnamee18}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                       
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate23" multiple="true" disabled={readonlyfield} onchange={onCertificationUpload18} accept={accept}>  
-                                     </lightning-input> 
-                                {CertificationfileName18}
-                                </span>
-                                </div>
-                                </div>
-            <template if:true={hideCertification19}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification18}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification18}>
-                    <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification18} ></lightning-button-icon> 
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name18__c" style="margin-top: 22px;" type="text" value={Certificationname19} disabled={readonlyfield} onchange={certificationnamee19} label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                      
-                                        Certificate
-                                        </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate24" disabled={readonlyfield} onchange={onCertificationUpload19} accept={accept} multiple="true">  
-                                     </lightning-input> 
-                                {CertificationfileName19}
-                                </span>
-                                </div>
-                                </div>
-                <template if:true={hideCertification20}>
-                    <lightning-button-icon icon-name="action:new" alternative-text="Add"   class="slds-m-left_xx-small" title="add" onclick={handleraddCertification19}></lightning-button-icon>
-                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                </template>  
-                                  </template>
-                                 <!-- Add New button-->
-                                  <template if:true={ShowCertification19}> 
-                    <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"  class="slds-m-left_xx-small" title="Delete" onclick={removeCertification19} ></lightning-button-icon>
-                                 <div class="slds-grid slds-gutters ">
-                                <div class="slds-col slds-size_1-of-2">
-                                <span>
-                    <lightning-input name="EMS_EM_Certification_Name19__c" style="margin-top: 22px;" type="text" value={Certificationname20} disabled={readonlyfield} onchange={certificationnamee20}  label="Certification Name"></lightning-input>
-                               </span>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2">   
-                                <span>
-                                    <label class="slds-form-element__label" for="text-input-id-1">Certificate </label>
-                                <lightning-helptext content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                 <lightning-input type="file" name="Certificate25" multiple="true" disabled={readonlyfield} onchange={onCertificationUpload20} accept={accept}>  
-                                     </lightning-input> 
-                                {CertificationfileName20}
-                                </span>
-                                </div>
-							</div>	
-                                </div>
-                                  </template> 
+                            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                <!--
+                                <thead>
+                                    <tr class="slds-text-title_caps">
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Certification Name">Certification Name</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Completion Date">Completion Date</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Action">Action</div>
+                                        </th>
+                                    </tr>
+                                </thead> -->
+                                <tbody>
+                                    <template for:each={accountRecList} for:item="account" for:index="index">
+                    
+                                        <tr key={keyIndex}>
+                                            <td>
+                                                <lightning-combobox class="slds-p-top_small" value={account.bg} access-key={index} id={index}
+                                                                             required onchange={changeHandler}
+                                                                            options={certificationName} placeholder="Select" name="Certification_Name__c"
+                                                                            label="Certification Name"></lightning-combobox>
+                                            </td>
+                                            <td>
+                                                <lightning-input class="slds-p-top_small" value={account.dob} required access-key={index} id={index}
+                                                                             onchange={changeHandler}
+                                                                            name="Completion_Date__c" type="date"
+                                                                            label="Completion Date"></lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-icon icon-name="action:delete" access-key={index} id={index}
+                                                    alternative-text="Click to Call" size="small" title="large size" onclick={removeRow}>
+                                                </lightning-icon>                       
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                           
                                      <br/><br/>              
                                  <div style="text-align:center">
-                <lightning-button style="margin:5px;"  label="Save" type="brand" onclick={SaveSubmitOnboarding}  title="Next" variant="brand"></lightning-button>
+                                    <lightning-button label="Add" variant="brand" onclick={addRow}>
+                                    </lightning-button>&nbsp;
+                                    <lightning-button label="Save" variant="brand" onclick={saveMultipleAccounts}>
+                                    </lightning-button>
 							</div> 
+                            <br/><br/> 
                         </div>
                     </div>
                              </div>
