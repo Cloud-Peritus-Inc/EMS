@@ -5,8 +5,15 @@
   @last modified on  : 01-02-2023
   @last modified by  : Pavan 08-02-2023
 -->
+
 <template>
 	<lightning-card>
+		<div class="spinner">
+			<template if:true={isLoading}>
+				<lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+				</lightning-spinner>
+			</template>
+		</div>
 		<lightning-layout multiple-rows>
 			<lightning-layout-item padding="around-small" size="3">
 				<div>
@@ -58,7 +65,7 @@
 									<div title="Reason">Reason</div>
 								</th>
 								<th>
-									<div title="Approver">Approver</div>
+									<div title="Approver">Approved By</div>
 								</th>
 								<th>
 									<div title="Leave Status">Leave Status</div>

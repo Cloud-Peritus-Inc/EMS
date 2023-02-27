@@ -69,6 +69,13 @@
                     <elementReference>Todatedate</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Reminder_Email_to_Approver1</targetReference>
             </connector>
@@ -91,6 +98,13 @@
                     <elementReference>Todatedate</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_2nd_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Reminder_Email_to_Approver2</targetReference>
             </connector>
@@ -111,6 +125,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>Todatedate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -178,11 +199,11 @@
         <schedule>
             <frequency>Daily</frequency>
             <startDate>2023-02-14</startDate>
-            <startTime>19:30:00.000Z</startTime>
+            <startTime>00:30:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <textTemplates>
         <name>ReminderBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>

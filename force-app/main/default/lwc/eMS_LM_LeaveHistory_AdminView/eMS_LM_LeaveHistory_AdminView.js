@@ -1,18 +1,15 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getPicklistValues, getObjectInfo, getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
-import getAdminLeaveHistory from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getAdminLeaveHistory';
-import approveApproval from '@salesforce/apex/EMS_LM_ApprovalProcessUpdate.approveApproval';
-import rejectApproval from '@salesforce/apex/EMS_LM_ApprovalProcessUpdate.rejectApproval';
 import u_Id from '@salesforce/user/Id';
-import LightningConfirm from "lightning/confirm";
 import LEAVEHISTORY_OBJECT from '@salesforce/schema/EMS_LM_Leave_History__c';
 import updateLeaveStatus from '@salesforce/apex/LeaveRequestHRApproveHandler.updateLeaveStatus';
 import bulkLeaveReqApproval from '@salesforce/apex/LeaveRequestHRApproveHandler.bulkLeaveReqApproval';
 import bulkLeaveReqReject from '@salesforce/apex/LeaveRequestHRRejectHandler.bulkLeaveReqReject';
 import updateRejectStatus from '@salesforce/apex/LeaveRequestHRRejectHandler.updateRejectStatus';
 import cancleLeaveRequest from '@salesforce/apex/LeaveManagementApexController.cancleLeaveRequest';
-import defaultAdminViewData from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.defaultAdminViewData';
+import getAdminLeaveHistory from '@salesforce/apex/EMS_LM_LeaveReq_AdminView.getAdminLeaveHistory';
+import defaultAdminViewData from '@salesforce/apex/EMS_LM_LeaveReq_AdminView.defaultAdminViewData';
 import { refreshApex } from '@salesforce/apex';
 
 export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
@@ -34,10 +31,10 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   approveAllComments;
   rejectAllComments;
   value = '';
-  fixedWidth = "width:8rem;";
+  //fixedWidth = "width:8rem;";
   leaveTypeValues;
   tValue = '';
-  sValue = 'Pending';
+  sValue = ' ';
   picklistValues = '';
   selectedRecordApproveId;
   selectedRecordRejectId;
@@ -49,7 +46,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   isShowModalRejectAll = false;
   isShowModalApprove = false;
   isShowModalReject = false;
-  disableButton
+  disableButton;
+  @track isLoading = false;
 
   //TO GET OBJECT INFO
   @wire(getObjectInfo, { objectApiName: LEAVEHISTORY_OBJECT })
@@ -86,13 +84,14 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         this.disableButton = this.nodata === true;
       }
     } else if (error) {
-      console.error('Error:', error);
+      console.log('Error:', error);
     }
   }
 
-  @wire(getAdminLeaveHistory, { name: '$empName', stdate: '$startDate', eddate: '$endDate', leaveType: '$tValue', status: '$sValue' })
+  @wire(getAdminLeaveHistory, { employeeName: '$empName', startDate: '$startDate', endDate: '$endDate', typeValues: '$tValue', statusValues: '$sValue' })
   wiredLeavHistory({ error, data }) {
     if (data) {
+      this.isLoading = false;
       if (data.length > 0) {
         this.showdata = true;
         this.nodata = false;
@@ -104,20 +103,21 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         });
         this.error = undefined;
       }
-      /* else {
-         this.nodata = true;
-         this.showdata = false;
-         //this.datahistory = data;
-         this.datahistory = JSON.parse(JSON.stringify(data));
-         console.log('### datahistory JSON : ', this.datahistory);
-         this.datahistory.forEach(req => {
-           req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending', req.EMS_LM_Status__c !== 'Approver 2 pending';
-         });
-         this.error = undefined;
-       }*/
+      else {
+        this.nodata = true;
+        this.showdata = false;
+        this.error = undefined;
+      }
     } else if (error) {
       this.error = error;
       this.datahistory = undefined;
+      this.isLoading = false;
+      this.nodata = true;
+    } else {
+      this.isLoading = true;
+      this.nodata = true;
+      this.showdata = false;
+      this.error = undefined;
     }
   }
   namechange(event) {
@@ -156,23 +156,6 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   handleChange(event) {
     this.value = event.detail.value;
     console.log(this.value);
-  }
-
-  handleCancelButton(event) {
-    this.requeststatus = event.target.dataset.value;
-    if (this.requeststatus == 'Pending' || this.requeststatus == '' || this.requeststatus == undefined || this.requeststatus == 'Approver 1 Pending' || this.requeststatus == 'Approver 2 Pending') {
-      this.showcancelbutton = true;
-    }
-    else
-      this.showcancelbutton = false;
-  }
-  /*handelViewRequestModel(event) {
-    this.isShowViewRequest = true;
-    this.requestType = event.target.dataset.value;
-    this.reqRecordId = event.target.dataset.recordId;
-  }*/
-  hideModalBox() {
-    this.isShowViewRequest = false;
   }
 
   //TO SELECT ALL THE CHECKBOXES
@@ -293,8 +276,6 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       });
   }
 
-
-
   //Reject Modal
   handleRejectComments(event) {
     this.rejectComments = event.target.value;
@@ -327,6 +308,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
 
   // TO cancel the leave record
   handleCancel(event) {
+    this.isLoading = true;
     const selectedRecordId = event.currentTarget.dataset.id;
     console.log('### handleCancel : ', selectedRecordId);
     cancleLeaveRequest({ leaveReqCancelId: selectedRecordId })
@@ -339,90 +321,16 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
           mode: 'pester'
         });
         this.dispatchEvent(evt);
-        //window.location.reload();
-        eval("$A.get('e.force:refreshView').fire();");
-        refreshApex(this.datahistory);
+       this.updateAdminView();
       }).catch((err) => {
         console.log('### err : ', JSON.stringify(err));
       });
   }
 
-
-
-  async handleApproveClick(event) {
-    this.requeststatus = event.target.dataset.value;
-    this.reqRecordId = event.target.dataset.recordId;
-    const result = await LightningConfirm.open({
-      message: "Are you sure you want to Approve this request?",
-      variant: "default", // headerless
-      theme: 'Success', // more would be success, info, warning
-      label: "Approve the request"
-    });
-    if (result) {
-      approveApproval({ recId: this.reqRecordId })
-        .then(result => {
-          console.log(result);
-
-          this.dispatchEvent(new ShowToastEvent({
-            title: 'Success!!',
-            message: 'Leave Request Approved Successfully !!.',
-            variant: 'success',
-            mode: 'pester'
-          }));
-          window.location.reload();
-        })
-        .catch(error => {
-          window.console.log('Error ====> ' + error);
-          this.dispatchEvent(new ShowToastEvent({
-            title: 'Error!!',
-            message: error.message,
-            variant: 'error',
-            mode: 'pester'
-          }));
-          window.location.reload();
-        });
-    }
-    else {
-
-    }
-
-  }
-
-
-  async handleRejectClick(event) {
-    this.requeststatus = event.target.dataset.value;
-    this.reqRecordId = event.target.dataset.recordId;
-    const result = await LightningConfirm.open({
-      message: "Are you sure you want to Reject this request?",
-      variant: "default", // headerless
-      theme: 'error', // more would be success, info, warning
-      label: "Reject the request"
-    });
-    if (result) {
-      rejectApproval({ recId: this.reqRecordId })
-        .then(result => {
-          console.log(result);
-
-          this.dispatchEvent(new ShowToastEvent({
-            title: 'Success!!',
-            message: 'Leave Request Rejected Successfully !!.',
-            variant: 'success',
-            mode: 'pester'
-          }));
-          window.location.reload();
-        })
-        .catch(error => {
-          window.console.log('Error ====> ' + error);
-          this.dispatchEvent(new ShowToastEvent({
-            title: 'Error!!',
-            message: error.message,
-            variant: 'error',
-            mode: 'pester'
-          }));
-          window.location.reload();
-        });
-    }
-    else {
-    }
+  //TO REFRESH THE COMPONENT
+  updateAdminView() {
+    setTimeout(() => {
+      eval("$A.get('e.force:refreshView').fire();");
+    }, 1000);
   }
 }

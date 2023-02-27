@@ -1,16 +1,23 @@
-<!-- This component is used to show the Leave History in Admin View Tab For current Logged in Employee  -->
-
+<!--
+  @description       : This component is used to show the Leave History in Admin View Tab For current Logged in Employee
+  @author            : Pavan
+  @group             : 
+  @last modified on  : 02-02-2023
+  @last modified by  : 
+-->
 
 
 
 <template>
-	<!-- sldsValidatorIgnore -->
 	<div class="font">
 		<lightning-card>
+			<div class="spinner">
+				<template if:true={isLoading}>
+					<lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+					</lightning-spinner>
+				</template>
+			</div>
 			<div slot="actions">
-				<!--lightning-button variant="destructive" label="Select All" title="Select All" onclick={handleSelectAll}>
-				</lightning-button>
-				&nbsp;&nbsp;-->
 				<lightning-button variant="success" label="Approve All" title="Approve ALl" onclick={handleApproveAll}
 					disabled={disableButton}>
 				</lightning-button>
@@ -61,43 +68,43 @@
 				<div class="table-container">
 					<table>
 						<thead>
-							<tr style="border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4"></tr>
-							<th style="padding:9px">
-								<div>
-									<lightning-input type="checkbox" variant="standard" label="Select All"
-										onclick={handleSelectAll}></lightning-input>
-								</div>
-							</th>
-							<th>
-								<div title="User Name">Employee Name</div>
-							</th>
-							<th>
-								<div title="Leave Type">Leave Type</div>
-							</th>
-							<th>
-								<div title="Leave Start Date">Leave Start Date</div>
-							</th>
-							<th>
-								<div title="Leave End Date">Leave End Date</div>
-							</th>
-							<th>
-								<div title="Leave Duration">Leave Duration</div>
-							</th>
-							<th>
-								<div title="Reason">Reason</div>
-							</th>
-							<th>
-								<div title="Approver">Approver</div>
-							</th>
-							<th>
-								<div title="Leave Status">Leave Status</div>
-							</th>
-							<th>
-								<div title="Approved On">Approved On</div>
-							</th>
-							<th style="width:3.25rem">
-								<div title="Actions">Actions</div>
-							</th>
+							<tr style="border-top:0.5px solid #d4d4d4;border-bottom:0.5px solid #d4d4d4">
+								<th style="padding:8px">
+									<div>
+										<lightning-input type="checkbox" variant="standard" label="Select All"
+											onclick={handleSelectAll}></lightning-input>
+									</div>
+								</th>
+								<th>
+									<div title="User Name">Employee Name</div>
+								</th>
+								<th>
+									<div title="Leave Type">Leave Type</div>
+								</th>
+								<th>
+									<div title="Leave Start Date">Leave Start Date</div>
+								</th>
+								<th>
+									<div title="Leave End Date">Leave End Date</div>
+								</th>
+								<th>
+									<div title="Leave Duration">Leave Duration</div>
+								</th>
+								<th>
+									<div title="Reason">Reason</div>
+								</th>
+								<th>
+									<div title="Approver">Approver</div>
+								</th>
+								<th>
+									<div title="Leave Status">Leave Status</div>
+								</th>
+								<th>
+									<div title="Approved On">Approved On</div>
+								</th>
+								<th class="slds-cell_action-mode" style="width:2.25rem">
+									<div>Actions</div>
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -107,51 +114,51 @@
 										<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id}/>
                 </td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Contact__r.Name}</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Leave_Type_Name__c }</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											<lightning-formatted-date-time value={Req.EMS_LM_Leave_Start_Date__c}
 												month="numeric" day="numeric" year="numeric">
 											</lightning-formatted-date-time>
 										</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											<lightning-formatted-date-time value={Req.EMS_LM_Leave_End_Date__c}
 												month="numeric" day="numeric" year="numeric">
 											</lightning-formatted-date-time>
 										</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Leave_Duration__c}</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Reason__c}</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Current_Approver__c}</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Status__c}</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											<lightning-formatted-date-time value={Req.EMS_LM_Approved_On__c}
 												month="numeric" day="numeric" year="numeric">
 											</lightning-formatted-date-time>
 										</div>
 									</td>
-									<td class="slds-cell_action-mode" role="gridcell">
+									<td class="slds-truncate dv-dynamic-width">
 										<lightning-button-icon variant="bare" size="large" icon-name="action:approval"
 											alternative-text="Approve" onclick={showModalApprovalBox}
 											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
@@ -312,9 +319,6 @@
 		</section>
 		<div key={Req.Id} class="slds-backdrop slds-backdrop_open"></div>
 	</template>
-
-
-
 	<template if:true={nodata}>
 		<h2> No Requests Found.</h2>
 	</template>
