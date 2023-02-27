@@ -1,5 +1,12 @@
 <!--  this conponent used to Apply WFH for current logged in Employee   -->
 <template>
+  <!--is Load-->
+  <div if:true={isLoading}>
+        <lightning-spinner
+            alternative-text="Loading..." variant="brand" class="slds-is-fixed">
+        </lightning-spinner>
+    </div>
+    <!--Body-->
   <div  class="myDivAlligment">
   <div class="slds-box slds-theme_shade">
     <div class="slds-modal slds-fade-in-open slds-backdrop">
@@ -43,7 +50,7 @@
                   <div class="slds-var-m-around_medium">
                   <lightning-input type="file"
                   accept=".png, .doc, .docx, .pdf , .jpg, .jpeg"
-                  label="Upload support document" onchange={openfileUpload}></lightning-input>
+                  label="Upload supporting document" onchange={openfileUpload}></lightning-input>
                 </div>
                 <template if:true={fileData}>
                   <p>{fileData.filename}</p>

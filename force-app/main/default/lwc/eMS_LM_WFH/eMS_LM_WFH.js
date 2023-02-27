@@ -9,6 +9,7 @@ import uploadFile from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.uploadFile';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class EMS_LM_WFH extends LightningElement {
+    @track isLoading = false;
     check1;
     check2 = false;
     uId = u_Id;
@@ -92,6 +93,19 @@ export default class EMS_LM_WFH extends LightningElement {
       if(this.startDate1!=null && this.endDate1!=null){
       this.disabledSubmitted=false;
       }
+
+       let datessend = new Date(this.endDate1);
+          let formattedendDate = datessend.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+          let todaydate2 = formattedendDate;
+          if (new Date(todaydate2) < new Date(this.todaydate)) {
+          this.disabledSubmitted = true;
+           this.endDate1=null;
+            const evts = new ShowToastEvent({
+            message: 'You have selected past date, please select future date.',
+            variant: 'error',
+        });
+        this.dispatchEvent(evts);
+          }
      
     }    
 
@@ -205,6 +219,7 @@ export default class EMS_LM_WFH extends LightningElement {
             }));
             
           //  window.location.reload();
+          this.updateRecordView();
         }).catch(error => {
           this.check1 = false;
           console.error('Error creating record: ', error);
@@ -214,12 +229,24 @@ export default class EMS_LM_WFH extends LightningElement {
             message: 'There is already an Leave or Work from Home on this date. please recheck the dates or review your leave request.',
             variant: 'error'
           }));
-         // window.location.reload();
+         
+        }).finally(()=>{
+            this.handleIsLoading(false);
         });  
       }
     }    
 
   }
+
+  handleIsLoading(isLoading) {
+        this.isLoading = isLoading;
+    }
+
+  updateRecordView() {
+       setTimeout(() => {
+            eval("$A.get('e.force:refreshView').fire();");
+       }, 1000); 
+    }
 
   get acceptedFormats() {
     return ['.pdf', '.png', '.jpg', '.jpeg', '.docx'];

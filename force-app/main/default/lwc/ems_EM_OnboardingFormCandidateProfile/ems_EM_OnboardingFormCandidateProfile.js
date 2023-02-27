@@ -1,6 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import createGuest from '@salesforce/apex/EMS_EM_CreationOnboard.createGuest';
+import createRecords from '@salesforce/apex/EMS_EM_CreationOnboard.createRecords';
 import getCompanyInformation from '@salesforce/apex/EMS_EM_GridConfigurationSettings.getCompanyInformation';
 import { uploadFilesFromThis, updateOnBoardingRequest, updateOnboardingInfoOnPageLoads, displayShowtoastMessage } from 'c/updateOnBoardingRequestForm';
 import getonOnboardformInfo from '@salesforce/apex/EMS_EM_CreationOnboard.getonOnboardformInfo';
@@ -149,6 +150,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Other Certifications") {
       this.isOtherCertifications = true;
+      this.isOtherCertificationsCheckbox = true;
       this.isEducationDetails = false;
       this.isShowPersonalDetails = false;
       this.isIdentifyDetails = false;
@@ -327,11 +329,11 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
           var yyyy = today.getFullYear();
           today = yyyy +'-'+ mm +'-'+dd;
-         //console.log("this.dob", this.dob);
-         //console.log("this.dow", this.dow);
-         //console.log("this.graduationDate", this.graduationDate);
+         console.log("this.dob", this.dob);
+         console.log("this.dow", this.dow);
+         console.log("this.graduationDate", this.graduationDate);
   
-          //console.log("today", today);
+          console.log("today", today);
           if(this.dob >= today ){
               //console.log("I am in if");
               this.dispatchEvent(
@@ -2256,4 +2258,93 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     // uploadFiles(event,this);
     uploadFilesFromThis(event, this);
   }
+  // ---------------------->>>>>>>.
+
+  @track keyIndex = 0;  
+    @track error;
+    @track message;
+    @track accountRecList = [
+        {                      
+            Certification_Name__c: '',
+            Completion_Date__c: ''
+        }
+    ];
+
+    certificationName = [
+        { label: 'Salesforce Certified Associate', value: 'Salesforce Certified Associate' },
+        { label: 'Salesforce Certified Administrator', value: 'Salesforce Certified Administrator' },
+        { label: 'Salesforce Certified Advanced Administrator', value: 'Salesforce Certified Advanced Administrator' },
+      ];
+
+    //Add Row 
+    addRow() {
+        this.keyIndex+1;   
+        this.accountRecList.push ({                      
+            Certification_Name__c: '',
+            Completion_Date__c: ''
+        });
+        console.log('Enter ',this.accountRecList);
+        console.log('Enter ',this.accountRecList);
+    }
+    changeHandler(event){       
+       // alert(event.target.id.split('-'));
+        console.log('Access key2:'+event.target.accessKey);
+        console.log('id:'+event.target.id);
+        console.log('value:'+event.target.value);       
+        if(event.target.name==='Certification_Name__c')
+            this.accountRecList[event.target.accessKey].Certification_Name__c = event.target.value;
+        else if(event.target.name==='Completion_Date__c'){
+            this.accountRecList[event.target.accessKey].Completion_Date__c = event.target.value;
+        }
+    }
+    //Save Accounts
+     saveMultipleAccounts() {
+
+        console.log("accountlist"+JSON.stringify(this.accountRecList));
+        createRecords({ certifications : this.accountRecList })
+            .then(result => {
+                this.message = result;
+                this.error = undefined;                
+                this.accountRecList.forEach(function(item){                   
+                    item.Certification_Name__c='';
+                    item.Completion_Date__c='';
+                });
+
+                //this.accountRecList = [];
+                if(this.message !== undefined) {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Success',
+                            message: 'Certifications Created!',
+                            variant: 'success',
+                        }),
+                    );
+                }
+                
+                console.log(JSON.stringify(result));
+                console.log("result", this.message);
+            })
+            .catch(error => {
+                this.message = undefined;
+                this.error = error;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error creating records',
+                        message: error.body.message,
+                        variant: 'error',
+                    }),
+                );
+                console.log("error", JSON.stringify(this.error));
+            });
+    }
+    removeRow(event){       
+        console.log('Access key2:'+event.target.accessKey);
+        console.log(event.target.id.split('-')[0]);
+        if(this.accountRecList.length>=1){             
+             this.accountRecList.splice(event.target.accessKey,1);
+             this.keyIndex-1;
+        }
+    }
+
+
 }
