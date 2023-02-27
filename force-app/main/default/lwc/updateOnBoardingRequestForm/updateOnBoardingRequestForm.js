@@ -207,7 +207,9 @@ function uploadFilesFromThis(event,ts){
 function updateOnBoardingRequest(ts){
 let guestObj = { 'sobjectType': 'EMS_EM_Onboarding_Request__c' };
 guestObj.Id = ts.onboardingformId;
-console.log('Id' ,guestObj.Id);
+//console.log('Id => ' ,guestObj.Id);
+//console.log('onboardingformId => ' ,onboardingformId);
+console.log('onboardingformId 2 => ' ,ts.onboardingformId);
 guestObj.EMS_EM_First_Name__c = ts.firstName;
 guestObj.EMS_EM_Last_Name__c = ts.lastName;
 guestObj.EMS_EM_Father__c =ts.fName;
@@ -262,6 +264,13 @@ guestObj.Other_Certifications_Value_Filled__c=ts.isOtherCertificationsCheckbox;
 guestObj.Address_Details_Value_Filled__c = ts.isAddressDetailsCheckbox;
 guestObj.Company_Information_Viewed__c = ts.isCompanyInformationValueChecked;
 guestObj.Is_Confirm__c = ts.isConfirmSubmit;
+guestObj.Status__c = ts.statusUpdate;
+guestObj.Status__c = ts.isIdentityStatusUpdate;
+guestObj.Status__c = ts.isAdressStatusUpdate;
+guestObj.Status__c = ts.isEducationStatusUpdate;
+guestObj.Status__c = ts.isCertificationStatusUpdate;
+guestObj.Status__c = ts.isWorkExperienceStatusUpdate;
+guestObj.Status__c = ts.confirmStatusUpdate;
 
   console.log('guestObj-->'+guestObj);
   
@@ -671,6 +680,14 @@ function updateOnboardingInfoOnPageLoads(ts){
               ts.isWorkExperienceCheckbox = additionalDetails.Work_Details_Filled__c;
               ts.isCompanyInformationValueChecked = onboarding.Company_Information_Viewed__c;
               ts.isConfirmSubmit = onboarding.Is_Confirm__c;
+              ts.statusUpdate = onboarding.Status__c;
+              ts.isIdentityStatusUpdate = onboarding.Status__c;
+              ts.isAdressStatusUpdate = onboarding.Status__c;
+              ts.isEducationStatusUpdate = onboarding.Status__c;
+              ts.isCertificationStatusUpdate = onboarding.Status__c;
+              ts.isWorkExperienceStatusUpdate = onboarding.Status__c;
+
+              ts.confirmStatusUpdate = onboarding.Status__c;
 
               if(ts.levleofedu1){
                 ts.addmoreempfields = true;
@@ -790,30 +807,38 @@ function updateOnboardingInfoOnPageLoads(ts){
               }
               if(result.onboarding.Personal_Details_Value_Filled__c === true){
                 ts.isPersonalUpdateCheckbox = true;
+                ts.statusUpdate = 'In Progress';
                 console.log('check box personal',ts.isPersonalUpdateCheckbox);
                 }
                 if(result.onboarding.Identify_Details_Value_Filled__c === true){
                   ts.isIdentifyDetailsCheckbox = true;
+                  ts.isIdentityStatusUpdate = 'In Progress';
                   console.log('check box personal',ts.isIdentifyDetailsCheckbox);
                 }
                 if(result.onboarding.Address_Details_Value_Filled__c === true){
                   ts.isAddressDetailsCheckbox = true;
+                  ts.isAdressStatusUpdate = 'In Progress';
                 }
                 if(result.onboarding.Other_Certifications_Value_Filled__c === true){
                   ts.isOtherCertificationsCheckbox = true;
+                  ts.isCertificationStatusUpdate = 'In Progress';
                 }
                 if(result.additionalDetails.Education_Details_Filled__c === true){
                   ts.isEducationDetailsCheckbox = true;
+                  ts.isEducationStatusUpdate = 'In Progress';
                 }
                 if(result.additionalDetails.Work_Details_Filled__c === true){
                   ts.isWorkExperienceCheckbox = true;
+                  ts.isWorkExperienceStatusUpdate = 'In Progress';
                 }
                 if(result.onboarding.Company_Information_Viewed__c === true){
                   ts.isCompanyInformationValueChecked = true;
+                  ts.statusUpdate = 'In Progress';
                 }
                 if(result.onboarding.Is_Confirm__c === true){
                   ts.isConfirmSubmit = true;
                   ts.readonlyfield=true;
+                  ts.confirmStatusUpdate = 'Submitted for Review';
                   ts.buttonDisable = true;
                 }
                 

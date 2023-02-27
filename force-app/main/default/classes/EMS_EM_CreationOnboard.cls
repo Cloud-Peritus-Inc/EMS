@@ -147,13 +147,14 @@ public without Sharing class EMS_EM_CreationOnboard {
     
     @AuraEnabled
     public static onboardingDetails getonOnboardformInfo(String onboardEmailid){
+        System.debug('onboarding email => '+onboardEmailid);
         if(String.isNotBlank(onboardEmailid)){
             try{
                 onboardingDetails WrapperDetails = new onboardingDetails();                                                  
                 WrapperDetails.onboarding = returnOnboardingDetailsBasedOnEmail(onboardEmailid);
                 WrapperDetails.additionalDetails = returnAdditionalgDetailsBasedOnRecordId(WrapperDetails.onboarding.Id);
                 WrapperDetails.contentDocumentLink = returnFiles(WrapperDetails.onboarding.Id,  WrapperDetails.additionalDetails.Id);
-                WrapperDetails.gridConfiguration = [SELECT Id, Name, CreatedDate, Description__c, Grid_Configuration_Type__c  FROM Grid_Configuration__c where Name = 'Company Information - Pre-onboarding' Limit 1];
+                WrapperDetails.gridConfiguration = [SELECT Id, Name, CreatedDate, Description__c, Grid_Configuration_Type__c  FROM Grid_Configuration__c where Grid_Configuration_Type__c = 'Company Information - Pre-Onboarding' Limit 1];
                 return WrapperDetails; 
             }Catch(Exception ex){
                 System.debug('### Exception' + ex.getMessage());
@@ -295,6 +296,13 @@ public without Sharing class EMS_EM_CreationOnboard {
             contentDocumentLink = new List<ContentDocument>();
             gridConfiguration = new Grid_Configuration__c();
         }
+    }
+    
+    @AuraEnabled
+    public static List<Certifications__c> createRecords(List<Certifications__c> certifications) {
+        insert certifications;
+
+        return certifications;
     }
     
     

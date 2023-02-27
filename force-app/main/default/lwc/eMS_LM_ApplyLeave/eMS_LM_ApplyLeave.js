@@ -214,8 +214,14 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
               this.error = undefined;
             }
             else {
+              
+               const evt = new ShowToastEvent({
+                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+                });
+                this.dispatchEvent(evt);
+             // alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
               this.duration = data;
-              alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
               this.duration = undefined;
               this.error = undefined;
               this.submitcheck = true;
@@ -229,8 +235,14 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             this.error = undefined;
           }
           else {
+            
+             const evt = new ShowToastEvent({
+                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+                });
+                this.dispatchEvent(evt);
+           // alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
             this.duration = data;
-            alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
             this.duration = undefined;
             this.error = undefined;
             this.submitcheck = true;
