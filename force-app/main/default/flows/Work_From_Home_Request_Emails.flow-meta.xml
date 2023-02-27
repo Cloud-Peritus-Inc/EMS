@@ -580,7 +580,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_status_is_Pending</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2 ) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
