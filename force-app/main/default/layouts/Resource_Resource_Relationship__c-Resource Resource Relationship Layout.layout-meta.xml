@@ -12,19 +12,23 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Fiscal_Year__c</field>
+                <field>Resource__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Pay_Date__c</field>
+                <field>Resource_Reports_To__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Office_Location__c</field>
+                <behavior>Readonly</behavior>
+                <field>Resource_Role__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Pay_Period_Type__c</field>
+                <behavior>Readonly</behavior>
+                <field>Reports_To_Role__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Resource_Reports_To_User__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

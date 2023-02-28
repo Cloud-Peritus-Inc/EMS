@@ -184,11 +184,11 @@ public class EMS_TM_TimesheetClass {
         }
         List<Date> leaves = new List<Date>(dates);                                                
 
-        Id recordTypeId = [SELECT Id FROM RecordType
-                            WHERE Name = :EMS_TM_GlobalConstants.GLOBALPROJECTS].Id;
+      /*  Id recordTypeId = [SELECT Id FROM RecordType
+                            WHERE Name = :EMS_TM_GlobalConstants.GLOBALPROJECTS].Id; Global Projects*/
         projectList = [SELECT Id, EMS_TM_Project_Type__c, Name
                         FROM EMS_TM_Project__c WHERE Id in :projects
-                        OR RecordTypeId = :recordTypeId];
+                        OR Type_Of_Project__c = 'Global Projects'];
 
         picklistValues = [SELECT Id, EMS_TM_Value__c, EMS_TM_Label__c, 
                                                         EMS_TM_Type__c FROM EMS_TM_Picklist_value__c];

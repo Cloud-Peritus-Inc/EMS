@@ -16,7 +16,7 @@ public class activeAssignCountonContactTestclass {
         projectRec.EMS_TM_Status__c = 'ongoing';
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = contactRec.Id;
-        projectRec.RecordTypeId = ProjectConstant.PROJECT_RECORDTYPEID;
+        projectRec.Type_Of_Project__c ='Client Projects';
         insert projectRec;        
 
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
