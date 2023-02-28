@@ -20,7 +20,6 @@ export default class EMS_LM_LeaveHistory extends NavigationMixin(LightningElemen
     if (data) {
       if (data.length > 0) {
         this.PendingLeaveReq = JSON.parse(JSON.stringify(data));
-        console.log('### PendingLeaveReq', this.PendingLeaveReq);
         this.PendingLeaveReq.forEach(req => {
           req.disableButton = req.EMS_LM_Status__c !== 'Pending';
         });

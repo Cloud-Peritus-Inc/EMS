@@ -11,7 +11,7 @@ export default class LeaveManagement_Tile extends NavigationMixin(LightningEleme
     this.a_Record_URL = window.location.origin;
     console.log('Base Url' + this.a_Record_URL);
   }
-  
+
   @wire(leaveBanlance)
   leaveBalanceWiredData({ error, data }) {
     if (data) {
@@ -23,19 +23,7 @@ export default class LeaveManagement_Tile extends NavigationMixin(LightningEleme
   }
 
   handleLMNavigation(event) {
-    /*console.log('Button Clicked : ' + window.location.href);
-    var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/leave-management")
-    console.log('### URL : ', url);
-    var params = new URLSearchParams();
-    params.append("bulkupdate", "value");
-    url.search += "&" + params.toString();
-    this[NavigationMixin.Navigate]({
-      type: 'standard__webPage',
-      attributes: {
-        url: url.href
-      }
-    });*/
-    var url = new URL(this.a_Record_URL + '/CpLink/s/leave-management');
+    var url = new URL(this.a_Record_URL + '/Grid/s/leave-management');
     this[NavigationMixin.Navigate]({
       type: 'standard__webPage',
       attributes: {
@@ -49,3 +37,5 @@ export default class LeaveManagement_Tile extends NavigationMixin(LightningEleme
     console.log('### stack' + stack);
   }
 }
+
+//https://cpprd--dev.sandbox.my.site.com/cpgrid/s/leave-management

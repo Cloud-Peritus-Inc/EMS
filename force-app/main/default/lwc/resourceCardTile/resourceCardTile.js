@@ -13,13 +13,14 @@ resourcereportto = '';
 nextpaydate;
 resourcerole = '';
 userid= '';
+resourceinsurence = '';
+rescodecurrency = '';
 
 
 
     @wire(getUserInfo)
     userInfo({ error, data }) {
     if (data) {
-    console.log('=======data==='+JSON.stringify(data));
       this.userdate = data;
       this.userImageUrl = data.resourcePhotoURL;
       this.resourceName = data.resourceName;
@@ -28,6 +29,7 @@ userid= '';
       this.nextpaydate = data.nextpaydate;
       this.resourcerole = data.resourceRole;
       this.userid = data.resourceUserId;
+      this.resourceinsurence = data.resourceInsurence;
     } else if (error) {
       console.error(error);
     }

@@ -17,7 +17,7 @@ numberofcompletedTasks = 0;
 complaitionPercent = 0;
 
 connectedCallback() {
-    console.log('========Nubererm=======');
+   
 
 }
 
@@ -26,7 +26,7 @@ connectedCallback() {
     eventObj(value){
         const {data, error} = value;
         if(data){
-           console.log('======this.returned=data=='+JSON.stringify(data));
+         
             this.datawrap = data.taskList;
             this.numberofcompletedTasks = data.numberofcompletedTasks;
             this.numberOfTasks = data.numberofTasks;
@@ -55,14 +55,14 @@ async handleClick(event){
             label: 'Please Confirm',
             theme: 'error',
         });
-       console.log('======result==='+result);
+     
         if(result==true){
           updateTheTaskasComplete({ 
              taskid : clickedId
          })
          .then(data => {
              window.location.reload();
-              console.log('===data===='+data);
+            
               refreshApex(this.eventObj);
               this[NavigationMixin.Navigate]({
                 type: 'standard__webPage',
@@ -92,9 +92,8 @@ async handleClick(event){
 }
 
  async handleNavClick(event){
-     console.log('======event.target.dataset===='+JSON.stringify(event.target.dataset));
+   
     const clickedId = event.target.dataset.id;
-    console.log('===clickedId======'+clickedId);
      this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {
