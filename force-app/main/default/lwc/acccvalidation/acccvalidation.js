@@ -1,5 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import TIME_ZONE from '@salesforce/i18n/timeZone';
 import { NavigationMixin } from 'lightning/navigation';
 import saveTimeSheetRecords from '@salesforce/apex/EMS_TM_TimesheetClass.saveTimeSheetRecords';
 import updateTimeSheetRecords from '@salesforce/apex/EMS_TM_TimesheetClass.updateTimeSheetRecords';
@@ -118,11 +119,31 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         if (!this.hasRendered) {
             this.weekDates = {EMS_TM_Sun__c: '',EMS_TM_Mon__c: '',EMS_TM_Tue__c: '',EMS_TM_Wed__c: '',EMS_TM_Thu__c: '',EMS_TM_Fri__c: '',EMS_TM_Sat__c: ''};
             let today = new Date();
-            let dayDiff = today.getDay() === 0 ? 6 : today.getDay() - 1;
+            console.log('TODAYCallBacak'+today);
+            const timeZone = TIME_ZONE;
+            console.log('timeZone'+timeZone);
+           let dayDiff = today.getDay() === 0 ? 6 : today.getDay() - 1;
+             console.log('dayDiff'+dayDiff);
+     
             let firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff));
+             console.log('firstDayallBacak'+firstDay);
             let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 6));
+            const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Fri","Saturday"];
+            let day = weekday[firstDay.getDay()];
+            console.log('day'+day);
+            if(day != 'Monday'){
+                firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff-1));
+                 let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 5));
+                 console.log('IF-firstDayallBacak'+firstDay);
+                  console.log('IF-lastDayallBacak'+lastDay);
+            }
+            
+              console.log('lastDayallBacak'+lastDay);
+              console.log('firstDayallBacak'+firstDay);
+        
             this.insertSheetRecord(firstDay, lastDay);
             this.thisWeek = this.timeSheetRecord.EMS_TM_Week__c;
+            console.log('getingWEEKCallBacak'+this.thisWeek);
             this.initialValues();
 
             this.displayItemList = JSON.parse(JSON.stringify(this.records));
@@ -361,10 +382,23 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         } else {
             if (event.target.value) {
                 let enteredDate = new Date(event.target.value);
+                console.log('ENTERED DATE'+enteredDate);
                 if (enteredDate <= new Date()) {
                     let dayDiff = enteredDate.getDay() === 0 ? 6 : enteredDate.getDay() - 1;
+                     console.log('dayDiff>>>>>>>'+dayDiff);
                     firstDay = new Date(enteredDate.getUTCFullYear(),enteredDate.getUTCMonth(),(enteredDate.getUTCDate() - dayDiff));
+                    console.log('firstDay'+firstDay);
                     lastDay = new Date(enteredDate.getUTCFullYear(),enteredDate.getUTCMonth(),(enteredDate.getUTCDate() - dayDiff + 6));
+                     console.log('lastDay'+lastDay);
+                     const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Fri","Saturday"];
+            let day = weekday[firstDay.getDay()];
+            console.log('day'+day);
+            if(day != 'Monday'){
+                firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff-1));
+                 let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 5));
+                 console.log('IF-firstDayallBacak'+firstDay);
+                  console.log('IF-lastDayallBacak'+lastDay);
+            }
                     selectedWeek = 'selected';
                 } else {
                     event.target.value = this.timeSheetRecord.EMS_TM_Week__c;
@@ -450,12 +484,15 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     */
     showDates() {
         let week = new Date(this.timeSheetRecord.EMS_TM_Week__c);
+        console.log('**WEEK'+week);
+        console.log('WEEKValue'+week.valueOf());
         let dates = [];
         dates[0] = week.valueOf();
         for (let i = 1; i < 7; i++) {
             dates[i] = week.setDate(week.getDate() + 1);
         }
         dates = [...dates];
+        console.log('***dates'+dates);
         this.weekDates.EMS_TM_Mon__c = dates[0];
         this.weekDates.EMS_TM_Tue__c = dates[1];
         this.weekDates.EMS_TM_Wed__c = dates[2];
