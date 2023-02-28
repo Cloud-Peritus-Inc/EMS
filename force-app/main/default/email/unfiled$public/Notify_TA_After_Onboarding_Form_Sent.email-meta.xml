@@ -8,15 +8,15 @@
     <subject>Cloud Peritus : Candidate portal link sent</subject>
     <textOnly>Dear TA,
 
+
 The Candidate portal link has been sent to the following candidate:
 
 Name: {!Contact.Name}
 
-Designation: {!Contact.Designation__c}
+Designation: {!Contact.Resource_Role__c}
 
-Link:
+Link: Applicant Record
 
-https://cpprd--dev.sandbox.lightning.force.com/lightning/r/Contact/{!Contact.Id}/view
 
 Regards,
 

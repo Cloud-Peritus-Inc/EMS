@@ -8,13 +8,13 @@
     <subject>Cloud Peritus : New Applicant created</subject>
     <textOnly>Dear TA,
 
-A new Applicant has been added to the system. Please find the details below.
 
-Link:
+A new applicant has been added to the system. Please find the details below.
 
-https://cpprd--dev.sandbox.lightning.force.com/lightning/r/Contact/{!Contact.Id}/view
+Link: Applicant Record
 
 Created by: {!Contact.CreatedBy}
+
 
 Regards,
 
