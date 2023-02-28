@@ -153,18 +153,18 @@
 												{Req.EMS_LM_Approved_On__c}</div>
 										</td>
 										<td class="slds-truncate dv-dynamic-width">
-											<lightning-button-icon variant="bare" size="large"
+											<lightning-button-icon variant="brand" size="large"
 												icon-name="action:preview" alternative-text="View" onclick={handleView}
 												data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
 												data-record-id={Req.Id} data-id={Req.Id}></lightning-button-icon>
 											&nbsp;&nbsp;
-											<lightning-button-icon variant="bare" size="large"
+											<lightning-button-icon variant="brand" size="large"
 												icon-name="action:approval" alternative-text="Approve"
 												onclick={showModalApprovalBox} data-value={Req.EMS_LM_Status__c}
 												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}
 												disabled={Req.disableButton}></lightning-button-icon>
 											&nbsp;&nbsp;
-											<lightning-button-icon variant="bare" size="large" icon-name="action:reject"
+											<lightning-button-icon variant="brand" size="large" icon-name="action:reject"
 												alternative-text="Reject" onclick={showModalRejectBox}
 												data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
 												data-record-id={Req.Id} data-id={Req.Id} disabled={Req.disableButton}>
@@ -317,7 +317,7 @@
 
 		</lightning-card>
 		<template if:true={nodata}>
-			<h2> No Requests Found.</h2>
+			<h2> No requests found </h2>
 		</template>
 	</div>
 </template>
