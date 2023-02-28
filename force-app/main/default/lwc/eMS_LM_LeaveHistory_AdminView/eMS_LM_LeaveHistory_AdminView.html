@@ -109,10 +109,11 @@
 						</thead>
 						<tbody>
 							<template for:each={datahistory} for:item="Req">
-								<tr key={Req.Id} style="border-bottom:1px solid #d4d4d4">
-									<td style="padding:15px">
+								<tr key={Req.Id}
+									style="border-top:0.5px solid #d4d4d4;border-bottom:0.5px solid #d4d4d4">
+									<td style="padding:8px">
 										<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id}/>
-                </td>
+                					</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Contact__r.Name}</div>
@@ -159,17 +160,17 @@
 										</div>
 									</td>
 									<td class="slds-truncate dv-dynamic-width">
-										<lightning-button-icon variant="bare" size="large" icon-name="action:approval"
+										<lightning-button-icon variant="brand" size="large" icon-name="action:approval"
 											alternative-text="Approve" onclick={showModalApprovalBox}
 											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
 											data-id={Req.Id}></lightning-button-icon>
-
-										<lightning-button-icon variant="bare" size="large" icon-name="action:reject"
+										&nbsp;&nbsp;
+										<lightning-button-icon variant="brand" size="large" icon-name="action:reject"
 											alternative-text="Reject" onclick={showModalRejectBox}
 											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
 											data-id={Req.Id}></lightning-button-icon>
-
-										<lightning-button-icon variant="bare" size="large"
+										&nbsp;&nbsp;
+										<lightning-button-icon variant="brand" size="large"
 											icon-name="utility:cancel_file_request" alternative-text="Cancel"
 											onclick={handleCancel} data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
 											data-record-id={Req.Id} data-id={Req.Id}></lightning-button-icon>
@@ -320,6 +321,6 @@
 		<div key={Req.Id} class="slds-backdrop slds-backdrop_open"></div>
 	</template>
 	<template if:true={nodata}>
-		<h2> No Requests Found.</h2>
+		<h2> No requests found.</h2>
 	</template>
 </template>

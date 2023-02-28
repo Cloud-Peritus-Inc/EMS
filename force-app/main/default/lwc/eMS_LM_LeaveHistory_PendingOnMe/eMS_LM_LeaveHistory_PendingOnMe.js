@@ -44,6 +44,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   disableButton;
   @track isLoading = false;
   @track selectedLeaveReqIds = [];
+  isCheck = false;
 
   @track currentPageReference;
   @wire(CurrentPageReference)
@@ -51,8 +52,41 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     this.currentPageReference = currentPageReference;
   }
 
+   connectedCallback() {
+    this.pendingOnMeLeaveReqWiredData ();
+    
+  }
+
+  //TO SHOW DEFAULT DATA
+  pendingOnMeLeaveReqWiredData () {
+    pendingOnMeLeaveReq().then((result) => {
+        console.log('### pendingOnMeLeaveReq', result);
+        if(result.length > 0 ) {
+        //console.log('user ID 1: ', uId);
+        //console.log('user ID : ', this.uId);
+        this.showdata = true;
+        this.nodata = false;
+        this.isCheck = true;
+        this.datahistory = JSON.parse(JSON.stringify(result));
+        console.log('### non filter : ', this.datahistory);
+        this.datahistory.forEach(req => {
+          // req.disableButton = req.EMS_LM_Status__c !== 'Pending' && (req.EMS_LM_Status__c ===  'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c  !== this.uId || req.EMS_LM_Status__c ===  'Approver 1 Pending' && req.EMS_LM_Approver__c !== this.uId);
+          //console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
+          req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 Pending' && req.EMS_LM_Approver__c === this.uId));
+          //console.log('### req.EMS_LM_2nd_Approver__c default: ', req.EMS_LM_2nd_Approver__c);
+        });
+        }else {
+        this.nodata = true;
+        this.disableButton = this.nodata === true;         
+        }
+
+    }).catch((err) => {
+      console.error('Error:', error);
+      
+    });
+  }
   // WIRE METHOD TO SHOW THE DEFAULT DATA
-  @wire(pendingOnMeLeaveReq)
+ /* @wire(pendingOnMeLeaveReq)
   pendingOnMeLeaveReqWiredData({ error, data }) {
     if (data) {
       if (data.length > 0) {
@@ -60,6 +94,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         //console.log('user ID 1: ', uId);
         //console.log('user ID : ', this.uId);
         this.showdata = true;
+        console.log('pendingOnMeLeaveReq : ',this.showdata);
         this.nodata = false;
         this.datahistory = JSON.parse(JSON.stringify(data));
         console.log('### non filter : ', this.datahistory);
@@ -76,7 +111,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     } else if (error) {
       console.error('Error:', error);
     }
-  }
+  }*/
 
   //TO GET OBJECT INFO
   @wire(getObjectInfo, { objectApiName: LEAVEHISTORY_OBJECT })
@@ -113,13 +148,15 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
           //console.log('#### req for approval', req);
           //console.log('### req.EMS_LM_2nd_Approver__c filter: ', req.EMS_LM_2nd_Approver__c);
           //console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
-          req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c != null && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 pending' && req.EMS_LM_Approver__c === this.uId));
+          req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c != null && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 Pending' && req.EMS_LM_Approver__c === this.uId));
         });
         console.log('### datahistory', this.datahistory);
         this.error = undefined;
-      } else {
+      } else if (!this.isCheck){
         this.nodata = true;
+        console.log('### DATA BEFORE esle before: ', data, this.showdata);
         this.showdata = false;
+        console.log('### DATA BEFORE else: ', data, this.showdata);
         this.error = undefined;
       }
     } else if (error) {
@@ -136,11 +173,13 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
 
   namechange(event) {
+    this.isCheck = false;
     this.empName = event.detail.value;
   }
 
   startdatechange(event) {
     this.startDate = event.detail.value
+    this.isCheck = false;
     window.console.log('startDate ##' + this.startDate);
     if (this.startDate != null) {
       this.startDate = event.detail.value + ' 00:00:00';
@@ -153,6 +192,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
   enddatechange(event) {
     this.endDate = event.detail.value;
+    this.isCheck = false;
     window.console.log('endDate ##' + this.endDate);
     if (this.endDate != null) {
       this.endDate = event.detail.value + ' 00:00:00';
@@ -162,12 +202,14 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   handleValueChange(event) {
     console.log(JSON.stringify(event.detail));
     this.sValue = event.detail;
+    this.isCheck = false;
     console.log('## this.sValue Pending Tab', this.sValue);
   }
 
   handleTypeValueChange(event) {
     console.log(JSON.stringify(event.detail));
     this.value = event.detail;
+    this.isCheck = false;
     console.log('## this.value Pending Tab', this.value);
   }
 

@@ -53,15 +53,26 @@ public static List<EMS_LM_Leave_History__c> getLMHistory(String startDateStr, St
         Date endDate = Date.valueOf(endDateStr.split(' ')[0]); 
         query += 'AND EMS_LM_Leave_End_Date__c <= :endDate ';
     } 
-    
-    if (statusValues != null && statusValues.size() > 0) {
+
+   /* if (statusValues != null && statusValues.size() > 0) {
         System.debug('### I am here');
         query += 'AND EMS_LM_Status__c IN :statusValues ';
     }
     if (statusValues.isEmpty() ) {
        query = query;
         System.debug('### Status null ' + query);
+    }*/
+    Set<String> allowedStatusValues = new Set<String>{'Pending', 'Approver 1 Pending', 'Approver 2 Pending', 'Approved', 'Rejected', 'Cancelled', 'Auto Approved'};
+    if (!allowedStatusValues.containsAll(statusValues)) {
+        query = query;
+        System.debug('### statusValues null' + statusValues);
+    } else if (statusValues != null && statusValues.size() > 0) {
+        query += ' AND EMS_LM_Status__c IN :statusValues';
+        System.debug('## here statusValues ' + query);
+    }else {
+        System.debug(' hello nothing status');
     }
+
      Set<String> allowedTypeValues = new Set<String>{'Annual Leave', 'Work From Home', 'Loss of Pay', 'Paternity Leave', 'Bereavement Leave', 'Maternity Leave', 'Compensatory Off'};
     if (!allowedTypeValues.containsAll(typeValues) ) {
         System.debug('### hereer');
@@ -69,10 +80,10 @@ public static List<EMS_LM_Leave_History__c> getLMHistory(String startDateStr, St
         System.debug('### typeValues null'+ typeValues);
     }else if (typeValues != null && typeValues.size() > 0){
         system.debug('heree');
-        query += 'AND EMS_LM_Leave_Type_Name__c IN :typeValues ';
+        query += ' AND EMS_LM_Leave_Type_Name__c IN :typeValues ';
         System.debug('## here typeValues ' + query);
     }else {
-        System.debug('### hello buddy');
+        System.debug('### hello nothing types');
     }
 
     System.debug('## TypeValues: ' + typeValues);

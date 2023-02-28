@@ -28,57 +28,49 @@ public class EMS_LM_PendingOnMeLeaveReq {
     @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> getPendingLeaveHistory(String employeeName, String startDateStr, String endDateStr, List<String> statusValues, List<String> typeValues) {
     List<EMS_LM_Leave_History__c> leaveHistoryList = new List<EMS_LM_Leave_History__c>();
-    
+        
     String query = 'SELECT Id, EMS_LM_Leave_Type_Name__c, EMS_LM_Leave_Start_Date__c, EMS_LM_Current_Approver__c, EMS_LM_Leave_End_Date__c, EMS_LM_Leave_Duration__c, EMS_LM_Reason__c, EMS_LM_Status__c, EMS_LM_Approved_On__c, EMS_LM_Contact__R.Name, EMS_LM_Approver__c, EMS_LM_2nd_Approver__c FROM EMS_LM_Leave_History__c';
     String currentUserId = UserInfo.getUserId();
-    //query += ' WHERE (EMS_LM_Approver__c = :currentUserId OR EMS_LM_2nd_Approver__c = :currentUserId)';
+  	query += ' WHERE (EMS_LM_Approver__c = :currentUserId OR EMS_LM_2nd_Approver__c = :currentUserId)';
     
     if (startDateStr != null && startDateStr != '') {
         Date startDate = Date.valueOf(startDateStr.split(' ')[0]); 
-        query += ' WHERE EMS_LM_Leave_Start_Date__c >= :startDate ';    
+        query += ' AND EMS_LM_Leave_Start_Date__c >= :startDate ';    
     }
     
     if (endDateStr != null && endDateStr != '') {
-        Date endDate = Date.valueOf(endDateStr.split(' ')[0]);
-        if (query.contains('WHERE')) {
-          query += ' AND EMS_LM_Leave_End_Date__c <= :endDate ';  
-        }else {
-          query += ' WHERE EMS_LM_Leave_End_Date__c <= :endDate ';  
-        }       
+        Date endDate = Date.valueOf(endDateStr.split(' ')[0]); 
+        query += 'AND EMS_LM_Leave_End_Date__c <= :endDate ';
     } 
-    
+        
     if (employeeName != null && employeeName != '') {  
         String employeeNameWithWildcards = '%' + employeeName + '%';
-        if (query.contains('WHERE')) {
-            query += ' AND EMS_LM_Contact__R.Name LIKE :employeeNameWithWildcards';
-        }else {
-           	query += ' WHERE EMS_LM_Contact__R.Name LIKE :employeeNameWithWildcards'; 
-        }
+        query += ' AND EMS_LM_Contact__R.Name LIKE :employeeNameWithWildcards';
     }
-    
-    Set<String> allowedStatusValues = new Set<String>{'Pending', 'Approver 1 pending', 'Approver 2 Pending', 'Approved', 'Rejected', 'Cancelled', 'Auto Approved'};
+        
+    Set<String> allowedStatusValues = new Set<String>{'Pending', 'Approver 1 Pending', 'Approver 2 Pending', 'Approved', 'Rejected', 'Cancelled', 'Auto Approved'};
     if (!allowedStatusValues.containsAll(statusValues)) {
         query = query;
         System.debug('### statusValues null' + statusValues);
-    } else if (query.contains('WHERE')) {
+    } else if (statusValues != null && statusValues.size() > 0) {
         query += ' AND EMS_LM_Status__c IN :statusValues';
         System.debug('## here statusValues ' + query);
     }else {
-       query += ' WHERE EMS_LM_Status__c IN :statusValues'; 
+        System.debug(' hello nothing status');
     }
 
-    Set<String> allowedTypeValues = new Set<String>{'Annual Leave', 'Work from Home', 'Loss of Pay', 'Paternity Leave', 'Bereavement Leave', 'Maternity Leave', 'Compensatory Off'};
-    if (!allowedTypeValues.containsAll(typeValues)) {
+    Set<String> allowedTypeValues = new Set<String>{'Annual Leave', 'Work From Home', 'Loss of Pay', 'Paternity Leave', 'Bereavement Leave', 'Maternity Leave', 'Compensatory Off'};
+    if (!allowedTypeValues.containsAll(typeValues) ) {
+        System.debug('### hereer');
         query = query;
-    } else if(query.contains('WHERE')) {
+        System.debug('### typeValues null'+ typeValues);
+    }else if (typeValues != null && typeValues.size() > 0){
+        system.debug('heree');
         query += ' AND EMS_LM_Leave_Type_Name__c IN :typeValues ';
         System.debug('## here typeValues ' + query);
     }else {
-       query += ' WHERE EMS_LM_Leave_Type_Name__c IN :typeValues'; 
+        System.debug('### hello nothing types');
     }
-        
-    query += ' AND (EMS_LM_Approver__c = :currentUserId OR EMS_LM_2nd_Approver__c = :currentUserId)';
-    query += ' ORDER BY CreatedDate DESC, EMS_LM_Leave_Type_Name__c ASC ';
     System.debug('### Final QUERY ' + query);
     try { 
         leaveHistoryList = Database.query(query);
@@ -121,5 +113,4 @@ public class EMS_LM_PendingOnMeLeaveReq {
                                                      		 ];
         return mypendingReq;
     }   
-
 }

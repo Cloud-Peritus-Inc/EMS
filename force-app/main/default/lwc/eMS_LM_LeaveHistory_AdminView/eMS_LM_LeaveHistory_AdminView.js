@@ -77,7 +77,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         this.datahistory = JSON.parse(JSON.stringify(data));
         console.log('###  defaultAdminViewData datahistory ', this.datahistory);
         this.datahistory.forEach(req => {
-          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 pending';
+          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
         });
       } else {
         this.nodata = true;
@@ -99,7 +99,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         this.datahistory = JSON.parse(JSON.stringify(data));
         console.log('### datahistory JSON : ', this.datahistory);
         this.datahistory.forEach(req => {
-          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 pending';
+          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
         });
         this.error = undefined;
       }
