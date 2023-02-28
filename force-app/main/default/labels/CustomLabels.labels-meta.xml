@@ -61,6 +61,6 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Contact Record URL</shortDescription>
-        <value>https://cpprd--dev.sandbox.lightning.force.com/lightning/r/Contact/</value>
+        <value>https://cpprd--qa.sandbox.lightning.force.com/lightning/r/Contact/</value>
     </labels>
 </CustomLabels>
