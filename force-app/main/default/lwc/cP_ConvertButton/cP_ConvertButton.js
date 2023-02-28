@@ -9,6 +9,7 @@ export default class cP_ConvertButton extends NavigationMixin(LightningElement) 
     conid;
 
     handleConvert(){
+        console.log('recordId-->',this.recordId);
        
         const value = true;
         const valueChangeEvent = new CustomEvent("valuechange", {
@@ -19,8 +20,8 @@ export default class cP_ConvertButton extends NavigationMixin(LightningElement) 
         createContact({onBoardRecordsIdsSet:this.recordId})
         .then(res => {
             this.conid =res[0].Id;
-            console.log('this.conid1-->',res[0].Id);
-            console.log('this.conid3-->',res);
+            console.log('this.conid1-->',this.conid);
+            //console.log('this.conid3-->',res);
 
         convertButton({recordId:this.recordId})
         .then(result => {
