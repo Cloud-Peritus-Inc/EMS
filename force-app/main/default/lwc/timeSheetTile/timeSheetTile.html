@@ -1,5 +1,5 @@
 <template>
-            <div class="homeCard">
+            <div class="homeCard" style="border-top : 3px solid #9602c7;">
                  <lightning-card >
       
                         <div class="parent">
@@ -7,21 +7,21 @@
                                    <center>  <canvas class="canvas" width={width} height={height}></canvas> </center>
                                 </div>
                                 <div class="child2" style="padding-right:5px;">
-                                    <font size="5"  > <b>Time entered this week </b> </font> <br/><br/>
-                                     Make sure to enter 40 hours per week to stay complaint<br/><br/>
+                                    <font size="4"  > <b>Time entered this week </b> </font> <br/> <br/>
+                                    <p> Make sure to enter 40 hours per week to stay complaint </p><br/><br/>
 
                                    <lightning-button variant="brand" label="Enter Time" title="titleName" icon-name="utility:connected_apps" onclick={handleClick}></lightning-button>
 
                                 </div>
                             </div> 
                
-                 <div style="padding-left:20px;"><font size="5" > <b>Previous Entered Time </b> </font></div>
+                 <div style="padding-left:15px;"><font size="4" > <b>Previous Entered Time </b> </font></div>
                 
 
 
 
                 <template if:true={filledpastdata}>
-                <diV class="table-container">
+                <diV class="table-container" style="padding-left:15px;">
                     <table>
                         <thead>
                             <tr>

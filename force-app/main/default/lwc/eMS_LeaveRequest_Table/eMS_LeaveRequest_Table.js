@@ -11,6 +11,7 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
     isShowModalApprove = false;
     isShowModalReject = false;
     isViewAll = false;
+    nodata = false;
     _leaveReqData;
     @api get leaveReq() {
         return this._leaveReqData;
@@ -31,20 +32,12 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
         this.a_Record_URL = window.location.origin;
         console.log('Base Url' + this.a_Record_URL);
         this.leaveReq = JSON.parse(JSON.stringify(this.leaveReq));
-        this.leaveReq.forEach((item, index) => {
-            console.log('### item size: ' + JSON.stringify(item))
-        });
-
-        //Conditions to make isViewAll to TRUE
-        var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
-        var params = new URLSearchParams();
-        params.append("bulkupdate", "value");
-        url.search += "&" + params.toString();
-        var params = new URLSearchParams(location.search);
-        if (params.has('bulkupdate')) {
-            console.log("Hello");
-            this.isViewAll = true;
-            console.log('Bye : ');
+        if (this.leaveReq > 0) {
+            this.leaveReq.forEach((item, index) => {
+                console.log('### item size: ' + JSON.stringify(item))
+            });
+        } else {
+            this.nodata = true;
         }
     }
 
@@ -143,7 +136,7 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
 
     //Approve All page navigation
     handlebulkNavigation(event) {
-        var url = new URL(this.a_Record_URL + '/CpLink/s/leave-management');
+        var url = new URL(this.a_Record_URL + '/Grid/s/leave-management');
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {

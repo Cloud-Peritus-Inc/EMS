@@ -120,16 +120,16 @@
 											{Req.EMS_LM_Approved_On__c}</div>
 									</td>
 									<td>
-										<lightning-button-icon size="large" variant="bare" icon-name="utility:preview"
+										<lightning-button-icon size="large" variant="brand" icon-name="utility:preview"
 											alternative-text="view" onclick={handleView} data-id={Req.Id}
 											class="changeIconColorView">
 										</lightning-button-icon>
 										&nbsp;&nbsp;
-										<lightning-button-icon size="large" variant="bare" icon-name="action:edit"
+										<lightning-button-icon size="large" variant="brand" icon-name="action:edit"
 											alternative-text="Edit" onclick={handleEdit} data-id={Req.Id}
 											disabled={Req.disableButton}></lightning-button-icon>
 										&nbsp; &nbsp;
-										<lightning-button-icon size="large" variant="bare"
+										<lightning-button-icon size="large" variant="brand"
 											icon-name="utility:cancel_file_request" alternative-text="cancel"
 											onclick={handleCancel} data-id={Req.Id} disabled={Req.disableButton}>
 										</lightning-button-icon>
@@ -143,7 +143,7 @@
 		</template>
 	</lightning-card>
 	<template if:true={nodata}>
-		<h2> No active Leave Requests </h2>
+		<h2> No requests found </h2>
 	</template>
 	<template if:true={showApplyLeaveEdit}>
 		<c-e-m-s-_-l-m-_-editapply-new oncloseleave={cancelHandler} selecteditrecordid={selectEditRecordId}>

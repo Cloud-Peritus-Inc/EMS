@@ -9,6 +9,14 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>EMS_LM_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_Leave_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>EMS_LM_Leave_Start_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -21,25 +29,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_LM_Approver__c</field>
+                <field>EMS_LM_Day__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_LM_2nd_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_LM_Current_Approver__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_LM_Leave_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>EMS_LM_Contact__c</field>
+                <field>EMS_LM_Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -47,7 +41,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>EMS_LM_Approver__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Approver_1_Approved_Comments__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_2nd_Approver__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -55,9 +57,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_LM_Day__c</field>
+                <field>EMS_LM_Current_Approver__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_Remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_Approved_On__c</field>
             </layoutItems>
         </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>

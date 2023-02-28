@@ -52,11 +52,11 @@ global class BatchToCreateGoalsForRes implements Database.Batchable<sObject> {
         Grid_Configuration__c configRec = configList[0];
         List<Contact> conList = new List<Contact>();
         if(configRec.Grid_Configuration_Type__c == 'Org Level Goal'){
-            conList = [SELECT Id FROM Contact WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID AND is_Resource_Active__c = true AND Timesheet_NoNeed__c = false ];
+            conList = [SELECT Id,EMS_TM_User__c FROM Contact WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false ];
         }else if(configRec.Grid_Configuration_Type__c == 'Resource Role Level Goal'){
-            conList = [SELECT Id FROM Contact
+            conList = [SELECT Id,EMS_TM_User__c FROM Contact
                        WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID 
-                       AND is_Resource_Active__c = true 
+                       AND EMS_RM_ApplicantStatus_Update__c = 'Active'
                        AND Timesheet_NoNeed__c = false
                        AND Resource_Role__c =:configRec.Resource_Role__c];  
         }
@@ -71,6 +71,7 @@ global class BatchToCreateGoalsForRes implements Database.Batchable<sObject> {
             goal.Navigation_address__c = configRec.Navigation_address__c;
             goal.Start_Date__c = configRec.Goal_Start_Date__c;
             goal.Status__c = 'Active';
+            goal.OwnerId = con.EMS_TM_User__c;
            goalList.add(goal);
         }
         

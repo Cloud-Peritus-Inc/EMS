@@ -1,21 +1,18 @@
 <template>
 	<c-onboarding-task-tile></c-onboarding-task-tile>
+	<c-my-active-goals></c-my-active-goals>
 	<c-resource-card-tile></c-resource-card-tile>
-	<div class="slds-grid slds-gutters slds-card">
+	<div class="slds-grid slds-gutters">
 		
-		<div class="slds-col">
+		<div class="slds-col slds-size_1-of-2">
 			<c-time-sheet-tile></c-time-sheet-tile>
+			<c-goal-metrics></c-goal-metrics>
 			<c-recent-request-tile></c-recent-request-tile>
 		</div>
-		<div class="slds-col">
+		<div class="slds-col slds-size_1-of-2">
 			<c-leave-management-_-tile> </c-leave-management-_-tile>
-		
 			<c-upcoming-holiday-tile></c-upcoming-holiday-tile>
-				<c-assignment-tile></c-assignment-tile>
-		</div>
-		<div class="slds-col">
-		
-			
+			<c-assignment-tile></c-assignment-tile>
 		</div>
 	</div>
 

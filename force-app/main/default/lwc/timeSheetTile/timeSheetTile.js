@@ -14,8 +14,6 @@ export default class TimeSheetTile extends NavigationMixin(LightningElement) {
         getTimeSheetData().then( result => {
             this.numberofhoursfilledthisweek = result.timeSheetrecord;
             this.filledpastdata =result.timeSheetRecordsList;
-            console.log('====timeSheetRecordsList==='+result.timeSheetRecordsList.length);
-
             this.frameTheCircle();
         }).catch(err => {
             console.log('timesheettableerror'+JSON.stringify(err));
@@ -27,7 +25,6 @@ export default class TimeSheetTile extends NavigationMixin(LightningElement) {
 
 
   frameTheCircle() {
-    console.log('======numberofhoursfilledthisweek=========='+this.numberofhoursfilledthisweek);
   if(this.numberofhoursfilledthisweek != 0 && this.numberofhoursfilledthisweek <= 40){
   this.percentage = (this.numberofhoursfilledthisweek/40) * 100;
   }else if(this.numberofhoursfilledthisweek != 0 && this.numberofhoursfilledthisweek > 40){
@@ -54,16 +51,16 @@ export default class TimeSheetTile extends NavigationMixin(LightningElement) {
     ctx.stroke();
 
     ctx.fillStyle = 'black';
-    ctx.font = 'bold 50px sans-serif';
+    ctx.font = 'bold 60px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(this.numberofhoursfilledthisweek, centerX, centerY-20);
+    ctx.fillText(this.numberofhoursfilledthisweek, centerX, centerY);
 
     ctx.fillStyle = 'black';
     ctx.font = '10px sans-serif';
   //  ctx.textAlign = 'center';
   //  ctx.textBaseline = 'middle';
-    ctx.fillText('Hours', centerX, centerY + 20);
+    ctx.fillText('Hours', centerX, centerY + 28);
 
   }
 
