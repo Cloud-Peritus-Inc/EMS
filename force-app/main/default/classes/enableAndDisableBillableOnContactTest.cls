@@ -15,13 +15,6 @@
 public class enableAndDisableBillableOnContactTest {
     @testSetup
     public static void setUp(){
-        EMS_TM_Project__c projectRec = new EMS_TM_Project__c();
-        projectRec.EMS_TM_StartDate__c = System.today();
-        projectRec.EMS_TM_Status__c = 'ongoing';
-        projectRec.Name = 'project1';
-        projectRec.RecordTypeId = ProjectConstant.PROJECT_RECORDTYPEID;
-        insert projectRec;
-        
         contact contactRec = new contact();
         contactRec.LastName = 'rk';
         contactRec.Official_Mail__c ='rama@rama.com';
@@ -30,6 +23,14 @@ public class enableAndDisableBillableOnContactTest {
         contactRec.RecordTypeId = ContactConstant.RESOURCE_RECORDTYPEID;
         contactRec.EMS_EM_JD__c = system.today();
         insert contactRec;
+        
+        EMS_TM_Project__c projectRec = new EMS_TM_Project__c();
+        projectRec.EMS_TM_StartDate__c = System.today();
+        projectRec.EMS_TM_Status__c = 'ongoing';
+        projectRec.Name = 'project1';
+        projectRec.Project_Manager__c = contactRec.Id;
+        projectRec.Type_Of_Project__c ='Client Projects';
+        insert projectRec;
                 
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
         assignmentRec.EMS_TM_EmployeeName__c = contactRec.Id;

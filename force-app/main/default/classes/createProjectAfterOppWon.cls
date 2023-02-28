@@ -52,10 +52,11 @@ public without sharing class createProjectAfterOppWon implements TriggerAction.A
            
         if(!filteredOppMap.isEmpty() && !oppPrjMap.isEmpty()){
           
-           Id clientProjectRecordTypeId = Schema.SObjectType.EMS_TM_Project__c.getRecordTypeInfosByName().get('Client Projects').getRecordTypeId();
+         //  Id clientProjectRecordTypeId = Schema.SObjectType.EMS_TM_Project__c.getRecordTypeInfosByName().get('Client Projects').getRecordTypeId();
             for(Opportunity opp : filteredOppMap.values()){
                  EMS_TM_Project__c  proj = new EMS_TM_Project__c();
-                 proj.RecordTypeId = clientProjectRecordTypeId;
+            //     proj.RecordTypeId = clientProjectRecordTypeId;
+                   proj.Type_Of_Project__c ='Client Projects';
                 for(Opportunity_to_Project_Mapping__mdt ppm : oppPrjMap){
                     System.debug('ppm'+ppm);
                  proj.put(ppm.Project_Field_API__c,opp.get(ppm.Opportunity_Field_API__c)); 

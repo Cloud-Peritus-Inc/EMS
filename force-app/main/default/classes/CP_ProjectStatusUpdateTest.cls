@@ -19,7 +19,7 @@ public class CP_ProjectStatusUpdateTest {
         User adminUser = [Select Id, UserRoleId,IsActive From User Where Profile.Name='System Administrator' AND IsActive = true Limit 1];
         try{
             System.runAs(adminUser){
-                recordType rec =[SELECT Id, Name, IsActive FROM RecordType where name ='Client Projects'];
+              //  recordType rec =[SELECT Id, Name, IsActive FROM RecordType where name ='Client Projects'];
                 Contact con = new contact();
                 con.Email ='suneel@gmail.com';
                 con.FirstName ='Suneel';
@@ -31,7 +31,7 @@ public class CP_ProjectStatusUpdateTest {
                 con.EMS_EM_JD__c = system.today();
                 insert con;
                 EMS_TM_Project__c Emp = new EMS_TM_Project__c();
-                emp.RecordTypeId = rec.Id;
+                emp.Type_Of_Project__c ='Client Projects';
                 emp.Name ='qwq';
                 emp.EMS_TM_Status__c = 'ongoing';
                 emp.EMS_TM_StartDate__c = System.today();
