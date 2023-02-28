@@ -3,19 +3,29 @@ public without sharing class resourceTileController {
     public static datawrapper getUserInfo(Id userId) {
         User urecord = [SELECT FullPhotoUrl,Id,Name,Employee_Id__c,Contact.EMS_RM_Employee_Id__c,ContactId,
                         Contact.ReportsTo.Name,Contact.Resource_Role__r.Name FROM User WHERE Id = :Userinfo.getUserId()];
+        Contact conRec = [SELECT Id,Work_Location__c,Work_Location__r.Country__c,(SELECT Id FROM PayRolls__r),(Select Id,Amount__c FROM Benefits__r WHERE Type__c = 'Medical Insurence') FROM Contact WHERE Id=:urecord.contactId];
         datawrapper dwrap = new datawrapper();
         dwrap.resourceName = urecord.Name;
         dwrap.resourcePhotoURL = urecord.FullPhotoUrl;
         dwrap.resourceCpId = urecord.Contact.EMS_RM_Employee_Id__c;
         dwrap.resourceRole = urecord.Contact.Resource_Role__r.Name;
-        dwrap.nextpaydate = lastdayoftheMonth(urecord.contactId);
+        dwrap.nextpaydate = lastdayoftheMonth(conRec);
         dwrap.resourceReportTo = urecord.Contact.ReportsTo.Name;
         dwrap.resourceUserId = urecord.Id;
+        dwrap.resourceInsurence = getMyInsurenceBenf(conRec);
+        dwrap.rescodecurrency = conRec.Work_Location__r.Country__c == 'United States of America' ? 'USD' : 'INR';
         return dwrap;
     }
     
-    public static date lastdayoftheMonth(Id contactId){
-        Contact conRec = [SELECT Id,Work_Location__c,Work_Location__r.Country__c,(SELECT Id FROM PayRolls__r) FROM Contact WHERE Id=:contactId];
+    public static decimal getMyInsurenceBenf(Contact conRec){
+        if(!conRec.Benefits__r.isEmpty()){
+           return  conRec.Benefits__r[0].Amount__c;
+        }
+        return 300000;
+    }
+    
+    public static date lastdayoftheMonth(Contact conRec){
+        
         List<Pay_Period__c> paylist = new List<Pay_Period__c>();
         Date dt = system.today();
         String payperoid = 'Monthly';
@@ -44,6 +54,11 @@ public without sharing class resourceTileController {
         public Date nextpaydate;
         @AuraEnabled
         public string resourceReportTo;
+        @AuraEnabled
+        public decimal resourceInsurence;
+         @AuraEnabled
+        public string rescodecurrency;
+        
         
     }   
 }
