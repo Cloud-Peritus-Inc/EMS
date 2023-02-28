@@ -15,15 +15,9 @@
                 <behavior>Required</behavior>
                 <field>EMS_LM_Employee__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_LM_Leave_Credited_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CompOff_Week__c</field>
+                <field>EMS_LM_Leave_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -31,9 +25,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_LM_Leave_Type__c</field>
+                <field>EMS_LM_Leave_Credited_Date__c</field>
             </layoutItems>
         </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>

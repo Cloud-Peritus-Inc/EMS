@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_date_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>EMS_TM_EndDate_Asgn__c &lt; EMS_TM_StartDate_Asgn__c</errorConditionFormula>
+    <errorMessage>An end must be greater than or equal</errorMessage>
+</ValidationRule>

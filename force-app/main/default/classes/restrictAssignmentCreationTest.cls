@@ -21,7 +21,7 @@ public class restrictAssignmentCreationTest {
         projectRec.EMS_TM_StartDate__c = System.today();
         projectRec.EMS_TM_Status__c = 'Completed';
         projectRec.Name = 'project45';
-        projectRec.RecordTypeId = ProjectConstant.PROJECT_RECORDTYPEID;
+        projectRec.Type_Of_Project__c ='Client Projects';
         insert projectRec;
         
         contact contactRec = new contact();
