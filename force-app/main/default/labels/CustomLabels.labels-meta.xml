@@ -33,7 +33,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Leave Request site Link</shortDescription>
-        <value> https://cpprd--qa.sandbox.my.site.com/CpLink/s/leave-management</value>
+        <value>https://cpprd--qa.sandbox.my.site.com/CpLink/s/leave-management</value>
     </labels>
     <labels>
         <fullName>TimeSheet_Label</fullName>
@@ -48,5 +48,12 @@
         <protected>false</protected>
         <shortDescription>Pre Onboarding Form URL</shortDescription>
         <value>https://cpprd--qa.sandbox.my.site.com/onboarding/s/?</value>
+    </labels>
+    <labels>
+        <fullName>Days_Consider_for_Missed_Goal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Days Consider for Missed Goal</shortDescription>
+        <value>15</value>
     </labels>
 </CustomLabels>

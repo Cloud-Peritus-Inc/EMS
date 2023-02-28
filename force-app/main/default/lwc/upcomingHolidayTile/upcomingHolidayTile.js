@@ -15,7 +15,6 @@ loaded = false
     @wire(getMyUpcomingHoliday) 
     wiredLabels({error, data}){
         if(data){
-            console.log('data '+JSON.stringify(data));
              this.holidaydata = data.datalist;
              this.value = data.resourceLocation;
             var consts = data.locationList;

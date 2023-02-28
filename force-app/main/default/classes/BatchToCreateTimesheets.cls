@@ -6,7 +6,7 @@
 *               Schedule class 
 *               - BatchToCreateTimesheets_sch
 *               Test code coverage provided by the following test class:
-*               - BatchToCreateTimesheets_Test
+*               - BatchToCreateTimesheets_Test 
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -45,7 +45,7 @@ global date weekEnd ;
                                           WHERE Week_Start_Date__c >=:weekStart AND Week_End_Date__c<=:weekEnd  )
                                          FROM Contact 
                                          WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID 
-                                          AND is_Resource_Active__c = true AND Timesheet_NoNeed__c = false  ]);
+                                          AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false  ]);
     }
 
 

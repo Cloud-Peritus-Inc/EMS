@@ -1,20 +1,20 @@
 <template>
-	<div class="homeCard">
+	<div class="homeCard" style="border-top : 3px solid #9602c7;">
 		<lightning-card>
 			<div class="childparent">
 				<div class="childimage">
 					<div class="profile-picture">
-						<lightning-icon icon-name='action:defer' alternative-text='defer' size='large' title='defer'>
-						</lightning-icon>
+						<center><lightning-icon icon-name='action:defer' alternative-text='defer' size='large' title='defer'>
+						</lightning-icon> </center>
 					</div>
 				</div>
 				<div class="childtext">
 					<font size="4"><b>Total Leave Balance <lightning-helptext content={contextText} class="help-icon">
-				      </lightning-helptext></b></font> </br>
+				      </lightning-helptext></b></font>
 					<div class="childparent">
 						<div class="childtext2">
 								<div class="childparent">
-				<div class="childtext"><font size="8"> <b> {leaveBalanceData} </b> </font> </div>
+				<div class="childtext"><font size="9"> <b> {leaveBalanceData} </b> </font> </div>
 				<div class="childimage" style="padding-right:20px;"> 	<c-e-m-s-_-l-m-_-apply-new istile="true"></c-e-m-s-_-l-m-_-apply-new></div>
 
 							</div>
@@ -32,18 +32,15 @@
 				<c-e-m-s-_-l-m-_-leave-history>
 				</c-e-m-s-_-l-m-_-leave-history>
 			</div>
-			<div>
+			<center><div style="width:95%">
 				<footer class="slds-modal__footer">
 					<!---->
 
 					<center> <a href="#" onclick={handleLMNavigation}> View All My Request</a> </center>
 					<!--	 -->
 				</footer>
-				<!--div class="slds-text-title_bold  slds-p-around_x-small" onclick={handleLMNavigation}>
-					Apply New
-				</div-->
 
-			</div>
+			</div> </center>
 		</lightning-card>
 	</div>
 </template>

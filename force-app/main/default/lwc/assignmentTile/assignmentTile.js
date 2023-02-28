@@ -10,7 +10,6 @@ datawrap = [];
     eventObj(value){
         const {data, error} = value;
         if(data){
-           console.log('======this.assignments=data=='+JSON.stringify(data));
             this.showThetable = true;
             this.datawrap = data;
         }else if(error){

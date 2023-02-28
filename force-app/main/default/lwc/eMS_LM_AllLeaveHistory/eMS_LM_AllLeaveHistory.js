@@ -46,6 +46,9 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     approvalLevel;
     autoApproval;
     selectEditRecordId;
+    isCheck = false;
+    testdata
+    _wiredMarketData;
 
     //CREATED THIS TO SHOW THE LEAVE STATUSES BASED ON THE LEVEL OF APPROVAL A LOGGED IN USER HAD.
     @track listStatus = {
@@ -69,9 +72,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     };
 
     connectedCallback() {
-        console.log('OUTPUT : inside connect callback');
         this.LevelOfApproval();
-        console.log('OUTPUT : called');
     }
 
 
@@ -94,18 +95,18 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             case 2:
                 console.log('OUTPUT : ');
                 this.picklistValues = this.listStatus.empStatus;
-                this.sValue = this.picklistValues[0].value;
-                console.log('this.sValue : ', this.sValue);
+                /* this.sValue = this.picklistValues[0].value;
+                 console.log('this.sValue : ', this.sValue);*/
                 break;
             case 1:
                 this.picklistValues = this.listStatus.leadStatus;
-                this.sValue = this.picklistValues[0].value;
-                console.log('this.sValue : ', this.sValue);
+                /*this.sValue = this.picklistValues[0].value;
+                console.log('this.sValue : ', this.sValue);*/
                 break;
             case 0:
                 this.picklistValues = this.listStatus.directorStatus;
-                this.sValue = this.picklistValues[0].value;
-                console.log('this.sValue : ', this.sValue);
+                /* this.sValue = this.picklistValues[0].value;
+                 console.log('this.sValue : ', this.sValue);*/
                 break;
             default:
                 this.picklistValues = [];
@@ -118,11 +119,13 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     wiredlvtype({ error, data }) {
         if (data) {
             console.log('### data : ', data);
-            let opt = data.map((record) => ({
+            let leaveTypeOptions = data.map((record) => ({
                 value: record,
                 label: record
             }));
-            this.leaveTypeValues = opt;
+            const workFromHomeOption = { value: 'Work From Home', label: 'Work From Home' };
+            leaveTypeOptions.push(workFromHomeOption);
+            this.leaveTypeValues = leaveTypeOptions;
             console.log('### leaveTypeValues : ', this.leaveTypeValues);
             this.error = undefined;
         } else if (error) {
@@ -133,9 +136,17 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
 
     //TO SHOW DEFAULT DATA
     @wire(defaultMyRequestData)
-    defaultMyRequestDataWiredData({ error, data }) {
+    defaultMyRequestDataWiredData(wireResult) {
+        const { data, error } = wireResult;
+        this._wiredMarketData = wireResult;
         if (data) {
             if (data.length > 0) {
+               /* if (!this.datahistory) {
+                    setTimeout(() => {
+                        this.defaultMyRequestDataWiredData(wireResult);
+                    }, 1000);
+                    return;
+                }*/
                 console.log('### defaultMyRequestData', data);
                 this.showdata = true;
                 this.nodata = false;
@@ -143,7 +154,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                 this.datahistory = JSON.parse(JSON.stringify(data));
                 console.log('### datahistory', this.datahistory);
                 this.datahistory.forEach(req => {
-                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true && req.EMS_LM_Status__c !== 'Auto Approved';
+                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true && req.EMS_LM_Status__c !== 'Auto Approved';
                 });
                 console.log('### defaultMyRequestData datahistory: ', this.datahistory);
             } else {
@@ -158,8 +169,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     @wire(getLMHistory, { startDateStr: '$startDate', endDateStr: '$endDate', statusValues: '$sValue', typeValues: '$value' })
     wiredLeavHistory({ error, data }) {
         if (data) {
-            console.log('OUTPUT1 : ');
-            console.log('### DATA BEFORE: ', data);
             this.isLoading = false;
             console.log('OUTPUT : ', this.isLoading);
             if (data.length > 0) {
@@ -169,7 +178,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                 this.datahistory = JSON.parse(JSON.stringify(data));
                 console.log('### datahistory', this.datahistory);
                 this.datahistory.forEach(req => {
-                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true && req.EMS_LM_Status__c !== 'Auto Approved';
+                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true && req.EMS_LM_Status__c !== 'Auto Approved';
                 });
                 this.error = undefined;
             }
@@ -184,10 +193,8 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             this.datahistory = undefined;
             this.isLoading = false;
         } else {
-            console.log('OUTPUT 2: ');
             this.isLoading = true;
             this.nodata = true;
-            console.log('here : ',);
             this.showdata = false;
             this.error = undefined;
         }
@@ -254,19 +261,22 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
 
     //TO cancel the leave record
     handleCancel(event) {
-        this.isLoading = true;
+        //this.isLoading = true;
         const selectedRecordId = event.currentTarget.dataset.id;
         console.log('### handleCancel : ', selectedRecordId);
         cancleLeaveRequest({ leaveReqCancelId: selectedRecordId })
             .then((result) => {
                 console.log('### result : ', result);
-                const evt = new ShowToastEvent({
-                    title: 'Toast Success',
-                    message: 'Leave Request was Cancelled Successfully',
-                    variant: 'success',
-                });
-                this.dispatchEvent(evt);
-                this.updateMyRequestTabView();
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Toast Success',
+                        message: 'Leave Request was Cancelled Successfully',
+                        variant: 'success',
+                    })
+                );
+                //this.dispatchEvent(evt);
+                //this.updateMyRequestTabView();
+                return refreshApex(this._wiredMarketData)
             }).catch((err) => {
                 console.log('### err : ', JSON.stringify(err));
             });
@@ -278,4 +288,5 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             eval("$A.get('e.force:refreshView').fire();");
         }, 1000);
     }
+
 }
