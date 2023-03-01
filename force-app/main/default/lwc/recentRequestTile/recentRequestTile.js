@@ -4,15 +4,15 @@ import { NavigationMixin } from 'lightning/navigation';
 export default class RecentRequestTile extends NavigationMixin(LightningElement) {
 
     reqLeaveData;
-    //isViewAll = true;
+    nodata = false;
     @track reqLeaveArray;
     @wire(getLeaveReqData)
     getLeaveReqDataWiredData({ error, data }) {
         if (data) {
             this.reqLeaveData = data;
-            console.log('### reqLeaveData : ', this.reqLeaveData);
+           
             this.reqLeaveArray = [].concat.apply([], Object.values(this.reqLeaveData));
-            console.log('### reqLeaveArray', JSON.stringify(this.reqLeaveArray));
+            
         } else if (error) {
             console.error('Error:', error);
         }

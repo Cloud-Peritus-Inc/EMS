@@ -1,6 +1,7 @@
 <template>
     <div class="homeCard">
     <lightning-card >
+     <template if:true={showThetable}>
     <template for:each={datawrap} for:item="prj">  
   <div class="parent" key={prj.projectName}>
      <div class="slds-grid slds-grid_vertical-align-center" style="padding-left:12px;">  
@@ -16,6 +17,12 @@
     </div>
      </div>
   </div>
+     </template>
+     </template>
+     <template if:false={showThetable}>
+       <br/>
+       <center> No active assignments found. </center>
+       <br/>
      </template>
       <footer class="slds-modal__footer">
     <div class="uiOutputText footer" style="padding:10px;" >

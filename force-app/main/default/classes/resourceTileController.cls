@@ -12,6 +12,7 @@ public without sharing class resourceTileController {
         dwrap.nextpaydate = lastdayoftheMonth(conRec);
         dwrap.resourceReportTo = urecord.Contact.ReportsTo.Name;
         dwrap.resourceUserId = urecord.Id;
+        dwrap.resourceContactId = urecord.ContactId;
         dwrap.resourceInsurence = getMyInsurenceBenf(conRec);
         dwrap.rescodecurrency = conRec.Work_Location__r.Country__c == 'United States of America' ? 'USD' : 'INR';
         return dwrap;
@@ -58,6 +59,8 @@ public without sharing class resourceTileController {
         public decimal resourceInsurence;
          @AuraEnabled
         public string rescodecurrency;
+        @AuraEnabled
+        public string resourceContactId;
         
         
     }   
