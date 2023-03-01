@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Contact_API__c</field>
-        <value xsi:type="xsd:string">Conducted_One_to_One_Onboarding_session_c</value>
+        <value xsi:type="xsd:string">Conducted_One_to_One_Onboarding_session__c</value>
     </values>
     <values>
         <field>Due_Date_Days__c</field>
