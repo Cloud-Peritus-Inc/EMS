@@ -1,7 +1,7 @@
 <template>
   <template if:true={showonUi}>    
 <div  style="background-color:  #f2f2f2;border-radius: 5px;">
-    <div class="parent">
+    <div class="parent" style="padding:10px;">
           <div class="child1" style="padding-left:20px;width:10%">
                <lightning-icon icon-name="standard:goals" size="large" alternative-text="In Progress" title="In Progress"></lightning-icon>
                 
@@ -15,27 +15,27 @@
     <br/>
      
       <div class="parent">
-          <div class="child1">
+          <div class="child1" style="padding:10px;">
          <template for:each={datawrap1} for:item="task">
            <lightning-card key={task.subject}>
-             <div style="padding-left:10px;">
+             <div style="padding-left:5px;">
                <a href="#" data-id={task.taskid} onclick={handleClick}> <font size="3"> <b> {task.subject}  </b></font> </a> <br/>
                    
                      <!--   <lightning-formatted-rich-text value={task.description}>
                            </lightning-formatted-rich-text> -->
                     
-                      <b>Complete By  </b> <lightning-formatted-date-time value={task.mygoal.End_Date__c}></lightning-formatted-date-time>
+                      <b>Complete By : </b> <lightning-formatted-date-time value={task.mygoal.End_Date__c}></lightning-formatted-date-time>
                   </div>   
                   
            </lightning-card>  <br key={task.subject}/>
           </template>
           </div>
-           <div class="child2">
+           <div class="child2" style="padding:10px;">
             <template for:each={datawrap2} for:item="task">
            <lightning-card key={task.subject}>
              <div style="padding-left:10px;">
                <a href="#"  data-id={task.taskid} onclick={handleClick}> <font size="3"> <b> {task.subject}  </b></font> </a> <br/>
-               <b>Complete By  </b> <lightning-formatted-date-time value={task.mygoal.End_Date__c}></lightning-formatted-date-time> 
+               <b>Complete By :  </b> <lightning-formatted-date-time value={task.mygoal.End_Date__c}></lightning-formatted-date-time> 
                   </div>   
                   
            </lightning-card>  <br key={task.subject}/>
@@ -98,15 +98,16 @@
                                     </lightning-layout-item>
                                     </lightning-layout>
                                 
-                                   <center> <lightning-button
+                                   <center>  
+                                     <lightning-button label="Close" title="Close" icon-name="utility:close" onclick={handleCancel}></lightning-button>
+                                      &nbsp;&nbsp; &nbsp;&nbsp; <lightning-button
                                         class="slds-m-top_small"
                                         variant="brand"
                                         type="submit"
                                         name="update"
                                         label="Update"
                                     >
-                                    </lightning-button>  &nbsp;&nbsp; &nbsp;&nbsp;
-                                     <lightning-button label="Close" title="Close" icon-name="utility:close" onclick={handleCancel}></lightning-button></center>
+                                    </lightning-button></center>
                                 </lightning-record-edit-form>
                     
                 </div>

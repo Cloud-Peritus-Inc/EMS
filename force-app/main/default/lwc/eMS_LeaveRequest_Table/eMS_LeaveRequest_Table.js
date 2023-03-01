@@ -2,7 +2,6 @@ import { LightningElement, api } from 'lwc';
 import updateRejecteStatusAndComments from '@salesforce/apex/LeaveRequestRejectHandler.updateRejecteStatusAndComments';
 import updateApproveStatusAndComments from '@salesforce/apex/LeaveRequestApproveHandler.updateApproveStatusAndComments';
 import { NavigationMixin } from 'lightning/navigation';
-//import bulkLeaveReqApproval from '@salesforce/apex/LeaveRequestApproveHandler.bulkLeaveReqApproval';
 export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningElement) {
 
     approveComments;
@@ -13,6 +12,8 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
     isViewAll = false;
     nodata = false;
     _leaveReqData;
+    _wiredRefreshData
+    
     @api get leaveReq() {
         return this._leaveReqData;
     }
@@ -41,19 +42,6 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
         }
     }
 
-    //CheckBox
-    handleSelect(event) {
-        console.log('SELECTED RECORD : ');
-        const selectedRecordCheckboxId = event.currentTarget.dataset.id;
-        //  this.multipleApprovals.push(selectedRecordCheckboxId);
-        this.multipleApprovals = [... this.multipleApprovals, selectedRecordCheckboxId];
-        console.log('###  multipleApprovals Child: ', this.multipleApprovals);
-        const myApproveAllEvent = new CustomEvent('approveall', {
-            detail: this.multipleApprovals
-        });
-        this.dispatchEvent(myApproveAllEvent);
-    }
-
     //Approve Modal
     handleApproveComments(event) {
         this.approveComments = event.target.value;
@@ -70,7 +58,7 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
         updateApproveStatusAndComments({ leaveRequestId: selectedRecordApproveId, comments: this.approveComments })
             .then((result) => {
                 console.log('Leave Request: ', result);
-                window.location.reload();
+                //window.location.reload();
             }).catch((err) => {
                 console.log('ERROR : ', err);
             });
@@ -106,7 +94,7 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
                 .then((result) => {
                     console.log('Leave Request: ', result);
                     this.isShowModalReject = false;
-                    window.location.reload();
+                    //window.location.reload();
                 }).catch((err) => {
                     console.log('ERROR : ', err);
                 });
@@ -117,22 +105,6 @@ export default class EMS_LeaveRequest_Table extends NavigationMixin(LightningEle
         this.isShowModalApprove = false;
         this.isShowModalReject = false;
     }
-
-    //Approve All page navigation
-    /*   handlebulkNavigation(event) {
-           //var url = new URL("https://cpprd--dev.sandbox.my.site.com/CpLink/s/all-approvals");
-           var url = new URL ("https://cpprd--dev.sandbox.my.site.com/CpLink/s/leave-management")
-           console.log('### URL : ',url);
-           var params = new URLSearchParams();
-           params.append("bulkupdate", "value");
-           url.search += "&" + params.toString();
-           this[NavigationMixin.Navigate]({
-               type: 'standard__webPage',
-               attributes: {
-                   url: url.href
-               }
-           });
-       }*/
 
     //Approve All page navigation
     handlebulkNavigation(event) {

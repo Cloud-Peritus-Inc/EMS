@@ -7,17 +7,12 @@
 -->
 
 <template>
-	<div class="homeCard">
+	<div class="homeCard" style="">
 		<lightning-card variant="Narrow">
 			<div class="table-container">
 				<table>
 					<thead>
 						<tr>
-							<template if:true={isViewAll}>
-								<th scope="col">
-									<div class="slds-truncate" title="Name"></div>
-								</th>
-							</template>
 							<th scope="col">
 								<div class="slds-truncate" title="Name">Name</div>
 							</th>
@@ -28,16 +23,13 @@
 								<div class="slds-truncate" title="No of Date">No of Days</div>
 							</th>
 							<th class="" scope="col">
-								<div class="slds-truncate" title="Actions" if:false={isViewAll}> Actions</div>
+								<div class="slds-truncate" title="Actions"> Actions</div>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<template for:each={leaveReq} for:item="leave">
 							<tr key={leave.Id}>
-								<template if:true={isViewAll}>
-									<td> <input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={leave.Id}/> </td>
-								</template>
 								<td>{leave.EMS_LM_Contact__r.LastName}</td>
 								<td key={leave.Id}>
 									<lightning-formatted-date-time value={leave.EMS_LM_Leave_Start_Date__c}
@@ -47,15 +39,14 @@
 								</td>
 								<td>{leave.EMS_LM_Leave_Duration__c}</td>
 								<td>
-									<template if:false={isViewAll}>
-										<lightning-icon icon-name='action:approval' alternative-text='approval'
-											size='x-small' title='approval' data-key={leave.Id}
-											onclick={showModalApprovalBox}></lightning-icon>
+										<lightning-button-icon icon-name='action:approval' variant="brand"
+											alternative-text='approval' size='x-small' title='approval'
+											data-key={leave.Id} onclick={showModalApprovalBox}></lightning-button-icon>
 										&nbsp;
-										<lightning-icon icon-name='action:close' alternative-text='close' size='x-small'
-											title='close' data-key={leave.Id} onclick={showModalRejectBox}>
-										</lightning-icon>
-									</template>
+										<lightning-button-icon icon-name='action:close' alternative-text='close'
+											variant="brand" size='x-small' title='close' data-key={leave.Id}
+											onclick={showModalRejectBox}>
+										</lightning-button-icon>
 								</td>
 
 								<!-- APPROVE POP-UP-->
@@ -141,14 +132,18 @@
 			</div>
 			<template if:true={nodata}>
 				<div class="textAlign">
-					<h2>No active Leave Requests</h2>
+					<center>No requests found </center>
 				</div>
 			</template>
-			<footer class="slds-modal__footer" style="width:95%">
+			<div style="padding-left:5px;">
+			<footer class="slds-modal__footer" style="width:95%;">
+				<template if:false={isViewAll}>
 				<center>
-					<button class="slds-button " onclick={handlebulkNavigation} if:false={isViewAll}> View All My Requests</button>
+					<a href="#"  ><font class="uiOutputText" onclick={handlebulkNavigation}>View all my pending requests</font></a> 
 				</center>
+				</template>
 			</footer>
+			</div>
 		</lightning-card>
 	</div>
 </template>

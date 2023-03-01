@@ -123,11 +123,11 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
       user u =[Select id, ContactId, Email from user where id = :userid];
       try{
          if(u.ContactId !=null){
-            cnt = [select Id, Location__c,EMS_TM_Billable__c from Contact where Id = :u.ContactId Limit 1];
+            cnt = [select Id, Location__c,Work_Location__r.Country__c , EMS_TM_In_Billing__c from Contact where Id = :u.ContactId Limit 1];
            // location = c.Location__c;
          }
          else{
-            cnt = [select Id, Location__c,EMS_TM_Billable__c from Contact  where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid Limit 1];
+            cnt = [select Id, Location__c,Work_Location__r.Country__c , EMS_TM_In_Billing__c from Contact  where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid Limit 1];
            // location = c.Location__c;
          }
       }
@@ -234,46 +234,69 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
 }
 //this method is used to get the all Leave Hidtory records in the company to show in Admin View
 @AuraEnabled(Cacheable=true)
-   public static List<EMS_LM_Leave_History__c> getAdminLeaveHistory(String name,String stdate, String eddate,List<String> leaveType, List<String> status){
-      List<EMS_LM_Leave_History__c> lh = new List<EMS_LM_Leave_History__c>();
-      String query = 'Select Id, EMS_LM_Leave_Type_Name__c,EMS_LM_Leave_Start_Date__c,EMS_LM_Final_Approver__c,' + 
-      'EMS_LM_Leave_End_Date__c,EMS_LM_Leave_Duration__c,EMS_LM_Reason__c,EMS_LM_Status__c,EMS_LM_Approved_On__c,EMS_LM_Contact__R.Name,EMS_LM_Current_Approver__c From EMS_LM_Leave_History__c where CreatedDate !=null ';
+   public static List<EMS_LM_Leave_History__c> getAdminLeaveHistory(String employeeName, String startDate, String endDate, List<String> typeValues, List<String> statusValues){
+      List<EMS_LM_Leave_History__c> leaveHistories = new List<EMS_LM_Leave_History__c>();
+      String query = 'Select Id, EMS_LM_Leave_Type_Name__c, EMS_LM_Leave_Start_Date__c, EMS_LM_Final_Approver__c, ' + 
+      'EMS_LM_Leave_End_Date__c, EMS_LM_Leave_Duration__c, EMS_LM_Reason__c, EMS_LM_Status__c, EMS_LM_Approved_On__c, EMS_LM_Contact__R.Name, EMS_LM_Current_Approver__c From EMS_LM_Leave_History__c';
       system.debug(query); 
-      if(stdate !='' && stdate != null){
-         Date d = date.valueOf(stdate);
-         query = query + ' AND EMS_LM_Leave_Start_Date__c >= :d';    
+      if(startDate != '' && startDate != null){
+         Date startDateValue = Date.valueOf(startDate);
+         query = query + ' WHERE EMS_LM_Leave_Start_Date__c >= :startDateValue';    
       }
       system.debug(query); 
-      if(eddate !='' && eddate != null){
-         Date d1 = date.valueOf(eddate);
-         query = query + ' AND EMS_LM_Leave_End_Date__c <= :d1';
-      } 
-      system.debug(query); 
-      if(status.size() > 0){
-         query = query + ' AND EMS_LM_Status__c IN :status';
-      } 
-      system.debug(query); 
-      if(leaveType.size() > 0){
-         query = query + ' AND EMS_LM_Leave_Type_Name__c IN :leaveType';
-      } 
-      system.debug(query); 
-      if(name !='' && name != null){  
-        String name1 = '%'+name+'%';
-        system.debug(name1);
-        query = query + ' AND EMS_LM_Contact__R.Name Like \'%' + name + '%\' '; // \'%' + searchKeyword + '%\
+      if(endDate != '' && endDate != null){
+         Date endDateValue = Date.valueOf(endDate);
+          if (query.contains('WHERE')) {
+            query = query + ' AND EMS_LM_Leave_End_Date__c <= :endDateValue';  
+          }else {
+            query = query + ' WHERE EMS_LM_Leave_End_Date__c <= :endDateValue';  
+          }   
       }
-         query = query + ' ORDER BY CreatedDate DESC';
+       
+       system.debug(query);
+       Set<String> allowedStatusValues = new Set<String>{'Pending', 'Approver 1 pending', 'Approver 2 Pending', 'Approved', 'Rejected', 'Cancelled', 'Auto Approved'};
+    	if (!allowedStatusValues.containsAll(statusValues)) {
+        query = query;
+        System.debug('### statusValues null' + statusValues);
+    	} else if (query.contains('WHERE')) {
+        query += ' AND EMS_LM_Status__c IN :statusValues';
+        System.debug('## here statusValues ' + query);
+    }else {
+       query += ' WHERE EMS_LM_Status__c IN :statusValues'; 
+    }
 
-         system.debug(query);      
+    Set<String> allowedTypeValues = new Set<String>{'Annual Leave', 'Work from Home', 'Loss of Pay', 'Paternity Leave', 'Bereavement Leave', 'Maternity Leave', 'Compensatory Off'};
+    if (!allowedTypeValues.containsAll(typeValues)) {
+        query = query;
+    } else if(query.contains('WHERE')) {
+        query += ' AND EMS_LM_Leave_Type_Name__c IN :typeValues ';
+        System.debug('## here typeValues ' + query);
+    }else {
+       query += ' WHERE EMS_LM_Leave_Type_Name__c IN :typeValues'; 
+    }
+      system.debug(query); 
+
+           if (employeeName != null && employeeName != '') {  
+        String employeeNameWithWildcards = '%' + employeeName + '%';
+        if (query.contains('WHERE')) {
+            query += ' AND EMS_LM_Contact__R.Name LIKE :employeeNameWithWildcards';
+        }else {
+           	query += ' WHERE EMS_LM_Contact__R.Name LIKE :employeeNameWithWildcards'; 
+        }
+    }
+      query = query + ' ORDER BY CreatedDate DESC';
+      system.debug(query);      
       try{ 
-         lh = Database.query(query);
-         system.debug(lh);
+         leaveHistories = Database.query(query);
+         system.debug(leaveHistories);
       }
       catch(Exception e){
          system.debug(e.getMessage());
       }    
-      return lh;  
+      return leaveHistories;  
 }
+    
+
     @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> defaultAdminViewData () {
         List<EMS_LM_Leave_History__c> adminViewData = [Select Id, 
@@ -415,53 +438,3 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
      }
 }
 }
-
-
-
-
-
-
-  /* @AuraEnabled(Cacheable=true)
-   public static Decimal getLeaveBal(Id userid , String type, String Email){
-      Decimal leaves = 0;
-      List<Contact> cnt = new List<Contact>();
-         try{
-            if(userid !=null){
-               contact c = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c, EMS_LM_No_Of_Available_Compensatory_Off__c,Official_Mail__c,
-               EMS_LM_No_Of_Available_Maternity_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
-               EMS_LM_No_Of_Availble_Leaves__c from Contact where Id = :userid Limit 1];    
-               cnt.add(c);
-            }
-            else{
-               contact c = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c, EMS_LM_No_Of_Available_Compensatory_Off__c,Official_Mail__c,
-               EMS_LM_No_Of_Available_Maternity_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
-               EMS_LM_No_Of_Availble_Leaves__c from Contact where Official_Mail__c=:Email AND EMS_TM_User__c = :userid Limit 1];
-               cnt.add(c);
-            }
-
-         }
-         catch(Exception e){
-            system.debug(e.getMessage());
-         }               
-      if(cnt.size()!=0){
-         if(type =='Annual Leave'){
-            leaves = cnt[0].EMS_LM_No_Of_Availble_Leaves__c;
-         }
-         if(type =='Paternity Leave'){
-            leaves = cnt[0].EMS_LM_No_Of_Available_Paternity_Leave__c;
-         }
-         if(type =='Bereavement Leave'){
-            leaves = cnt[0].EMS_LM_No_Of_Available_Bereavement_Leave__c;
-         }
-         if(type =='Maternity Leave'){
-            leaves = cnt[0].EMS_LM_No_Of_Available_Maternity_Leave__c;
-         }
-         if(type =='Compensatory Off'){
-            leaves = cnt[0].EMS_LM_No_Of_Available_Compensatory_Off__c;
-         }
-         if(type =='Loss of Pay'){
-            leaves = 0 ;
-         }
-      }
-      return leaves;
-   }*/

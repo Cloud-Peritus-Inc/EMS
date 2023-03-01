@@ -10,8 +10,11 @@ datawrap = [];
     eventObj(value){
         const {data, error} = value;
         if(data){
-            this.showThetable = true;
+            
             this.datawrap = data;
+            if(data.length > 0){
+             this.showThetable = true;
+            }
         }else if(error){
             console.log('===error==='+JSON.stringify(error));
             this.datawrap = [];
