@@ -3,7 +3,7 @@ import leaveBanlance from '@salesforce/apex/LeaveManagementApexController.leaveB
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 export default class LeaveManagement_Tile extends NavigationMixin(LightningElement) {
 
-  contextText = 'This shows your total leave balance in days.This includes your annual leaves, comp off, etc. for which you are eligible and have balance.'
+  contextText = 'This shows your annual leave balance in days'
 
   @track leaveBalanceData;
 

@@ -7,7 +7,7 @@ public class LeaveRequestConstant {
      public static final String PENDING = 'Pending';
      public static final String CANCELLED = 'Cancelled';
      public static final String REJECTED = 'Rejected';
-     public static final String WORK_FROM_HOME= 'Work from Home';
+     public static final String WORK_FROM_HOME= 'Work From Home';
      public static final String AUTO_APPROVED = 'Auto Approved';
      public static final String LOSS_OF_PAY ='Loss of Pay';
      public static final String ANNUAL_LEAVE ='Annual Leave';
