@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Problem</fullName>
+        <default>false</default>
+        <label>Problem</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Feature Request</fullName>
+        <default>false</default>
+        <label>Feature Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Change Of Details</fullName>
+        <default>false</default>
+        <label>Change Of Details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Request for Special Leaves</fullName>
+        <default>false</default>
+        <label>Request for Special Leaves</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Apply Resignation</fullName>
+        <default>false</default>
+        <label>Apply Resignation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Others</fullName>
+        <default>false</default>
+        <label>Others</label>
+    </standardValue>
+</StandardValueSet>
