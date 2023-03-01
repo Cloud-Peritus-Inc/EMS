@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Request_Sub_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Request Sub Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Educational Details</fullName>
+                <default>false</default>
+                <label>Educational Details</label>
+            </value>
+            <value>
+                <fullName>Bank Details</fullName>
+                <default>false</default>
+                <label>Bank Details</label>
+            </value>
+            <value>
+                <fullName>Family/Dependent Information</fullName>
+                <default>false</default>
+                <label>Family/Dependent Information</label>
+            </value>
+            <value>
+                <fullName>Offboarding</fullName>
+                <default>false</default>
+                <label>Offboarding</label>
+            </value>
+            <value>
+                <fullName>Leave Request</fullName>
+                <default>false</default>
+                <label>Leave Request</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Problem</fullName>
+                <default>false</default>
+                <label>Problem</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Problem</controllingFieldValue>
+            <valueName>Problem</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Feature Request</controllingFieldValue>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Change Of Details</controllingFieldValue>
+            <valueName>Educational Details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Change Of Details</controllingFieldValue>
+            <valueName>Bank Details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Change Of Details</controllingFieldValue>
+            <valueName>Family/Dependent Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
+            <valueName>Leave Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Apply Resignation</controllingFieldValue>
+            <valueName>Offboarding</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
