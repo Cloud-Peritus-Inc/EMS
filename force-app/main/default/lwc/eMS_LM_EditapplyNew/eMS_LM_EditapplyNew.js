@@ -7,6 +7,10 @@ import getLeaveTypeId from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveT
 import getLocation from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLocation';
 import getLeaveBalance from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveBalance';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getwfhWFHweekends from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhWFHweekends';
+
+import getContentDistributionForFile from '@salesforce/apex/GetDataForLoginUser.getContentDistributionForFile';
+import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLoginUser.getRelatedFilesByRecordIdForPayForms';
 
 import updateleaveRequest from '@salesforce/apex/EMS_LM_EditLeaveRequest.updateleaveRequest';
 export default class EMS_LM_EditapplyNew extends LightningElement {
@@ -42,10 +46,12 @@ filecheck = true;
 fileData;
 wfhtodaydate;
 leavetypeId;
-firstsecondDay;
+firstsecondDay=false;
 dayhalfChange;
 firstseconday;
-hideInWorkfromHome=true;
+hideInotherleave=false;
+hideInWorkfromHome=false;
+weekendwfh = false;
 
 @wire(getLeaveType, { userid: '$uId' })
   wiredltype({ error, data }) {
@@ -77,7 +83,7 @@ hideInWorkfromHome=true;
   wiredlocation({ error, data }) {
     if (data) {
       this.Location = data.Location__c;
-      this.isbillable=data.EMS_TM_Billable__c;
+      this.isbillable=data.EMS_TM_In_Billing__c;
       console.log('this.isbillable-->',this.isbillable,'this.Location-->',this.Location);
       this.error = undefined;
     } else if (error) {
@@ -86,10 +92,71 @@ hideInWorkfromHome=true;
     }
   }
 
-  @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$Location', dayCheck: '$daycheck' })
+  @wire(getwfhWFHweekends, { stDate: '$startDate1', edDate: '$endDate1' } )
+  wirewfhWFHweekends({ error, data }) {
+    if (data) {
+      console.log('wfhWFHweekends-->',data);
+      this.weekendwfh = data;
+      this.error = undefined;
+    } else if (error) {
+      this.error = error;
+      this.weekendwfh = undefined;
+    }
+  }
+
+  @wire(getLeaveBalance, { userid: '$uId' })
+  wirelbalance({ error, data }) {
+    if (data) {
+      this.allavailabledays = data;
+      this.annualcompduration = data.EMS_LM_No_Of_Availble_Leaves__c + data.EMS_LM_No_Of_Available_Compensatory_Off__c + 5;
+      console.log(this.annualcompduration);
+      this.annualduration = data.EMS_LM_No_Of_Availble_Leaves__c;
+      console.log(this.annualduration);
+      this.cId = data.Id;
+      this.Email = data.Official_Mail__c;
+    } else if (error) {
+      console.log(error);
+      this.error = error;
+    }
+  }
+
+connectedCallback(){
+          
+          getLeaveRequestMethod({getrecordId: this.selecteditrecordid})
+          .then(result => {
+            console.log('result-->',result);
+            console.log('result'+JSON.stringify(result));
+            const employye = result;
+            console.log('employye'+employye);
+           this.startDate1 = employye.EMS_LM_Leave_Start_Date__c;
+           this.endDate1=employye.EMS_LM_Leave_End_Date__c;
+           this.duration=employye.EMS_LM_Leave_Duration__c;
+           this.reason=employye.EMS_LM_Reason__c;
+           this.value=employye.EMS_LM_Leave_Type_Name__c;
+            this.fullday=employye.EMS_LM_Day__c;      
+
+          if (this.fullday != 'Full Day') {
+                this.daycheck = true;
+                this.firstsecondDay=false;
+          }
+          else {
+                this.daycheck = false;
+                this.firstsecondDay=true;
+            }           
+           
+        })
+        .catch(error => {
+            this.error = error;
+            console.log('this.error-->'+JSON.stringify(this.error));
+        });
+
+    }
+
+ @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$Location', dayCheck: '$daycheck' })
   async wiredduration({ error, data }) {
     if (data) {
       if (this.value == 'Loss of Pay' || this.value == 'Annual Leave') {
+        this.hideInotherleave=true;
         if (this.value == 'Loss of Pay') {
           if (this.startDate != undefined || this.startDate != null) {
             let date = new Date(this.startDate);
@@ -163,6 +230,7 @@ hideInWorkfromHome=true;
       }
       else {
         if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
+          this.hideInotherleave = false;
           if (this.startDate != undefined || this.startDate != null) {
             let date = new Date(this.startDate);
             let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
@@ -201,8 +269,13 @@ hideInWorkfromHome=true;
               this.error = undefined;
             }
             else {
+              const evt = new ShowToastEvent({
+                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+                });
+                  this.dispatchEvent(evt);
               this.duration = data;
-              alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
+             // alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
               this.duration = undefined;
               this.error = undefined;
               this.submitcheck = true;
@@ -210,24 +283,8 @@ hideInWorkfromHome=true;
           }  
         }
         else{
-          if(this.value == 'Work from Home'){
-            this.submitcheck = false;
-            this.duration = data;
-            this.hideInWorkfromHome = false;
-          }else{
-            if (this.availabledays >= data) {
-            this.submitcheck = false;
-            this.duration = data;
-            this.error = undefined;
-          }
-          else {
-            this.duration = data;
-            alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
-            this.duration = undefined;
-            this.error = undefined;
-            this.submitcheck = true;
-          }
-        }
+          this.hideInWorkfromHome=true;
+          this.duration = data;     
           } 
       }
     } else if (error) {
@@ -236,60 +293,6 @@ hideInWorkfromHome=true;
       this.submitcheck = true;
     }
   }
-
-  @wire(getLeaveBalance, { userid: '$uId' })
-  wirelbalance({ error, data }) {
-    if (data) {
-      this.allavailabledays = data;
-      this.annualcompduration = data.EMS_LM_No_Of_Availble_Leaves__c + data.EMS_LM_No_Of_Available_Compensatory_Off__c + 5;
-      console.log(this.annualcompduration);
-      this.annualduration = data.EMS_LM_No_Of_Availble_Leaves__c;
-      console.log(this.annualduration);
-      this.cId = data.Id;
-      this.Email = data.Official_Mail__c;
-    } else if (error) {
-      console.log(error);
-      this.error = error;
-    }
-  }
-
-connectedCallback(){
-          
-          getLeaveRequestMethod({getrecordId: this.selecteditrecordid})
-          .then(result => {
-            console.log('result-->',result);
-            console.log('result'+JSON.stringify(result));
-            const employye = result;
-            console.log('employye'+employye);
-           this.startDate1 = employye.EMS_LM_Leave_Start_Date__c;
-           this.endDate1=employye.EMS_LM_Leave_End_Date__c;
-           this.duration=employye.EMS_LM_Leave_Duration__c;
-           this.reason=employye.EMS_LM_Reason__c;
-           this.value=employye.EMS_LM_Leave_Type_Name__c;
-            this.fullday=employye.EMS_LM_Day__c;      
-          
-           
-           
-
-          if (this.fullday != 'Full Day') {
-                this.daycheck = true;
-                this.firstsecondDay=false;
-          }
-          else {
-                this.daycheck = false;
-                this.firstsecondDay=true;
-            }           
-           
-        })
-        .catch(error => {
-            this.error = error;
-            console.log('this.error-->'+JSON.stringify(this.error));
-        });
-
-
-         
-    }
-
 
 
 
@@ -302,7 +305,7 @@ connectedCallback(){
     this.value = event.detail.value;
 
     if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
-      if (this.startDate == this.endDate) {
+      if (this.startDate1 == this.endDate1) {
         if (this.startDate == undefined || this.endDate == undefined) {
           this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
         }
@@ -332,18 +335,15 @@ connectedCallback(){
 
    datechange(event) {
     var namecheck = event.target.name;
-    let enteredDate = new Date(event.target.value);
+    let enteredDate = new Date(event.target.value + ' 00:00:00');
     let day =enteredDate.getDay();
     this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
     this.daycheck = false;
     if (namecheck == 'startDate1') {
-      this.startDate1 = event.detail.value;
+       this.startDate1 = event.detail.value + ' 00:00:00';
       this.startDate = event.detail.value;
-      if (this.startDate1 != null) {
-        this.startDate1 = event.detail.value + ' 00:00:00';
-      }
+      
       if(day==6 || day==0){
-        //alert('please select working days');
         const evt = new ShowToastEvent({
             message: 'You can apply leave on working days only, please select working days. ',
             variant: 'error',
@@ -351,72 +351,30 @@ connectedCallback(){
         this.dispatchEvent(evt);
         this.startDate1 = null;
       }
-      if (this.endDate < this.startDate && this.startDate != null && this.endDate != null) {
+      if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
         const evt = new ShowToastEvent({
             message: 'Please select a proper start date',
             variant: 'error',
         });
         this.dispatchEvent(evt);
-      //  alert('Please select a proper Start Date');
         this.startDate1 = null;
       }
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
-        if (this.startDate != this.endDate || this.startDate == undefined || this.endDate == undefined) {
-          let date = new Date(this.startDate);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if (new Date(todaydate1) < new Date(this.todaydate)) {      
-          /*  const evt = new ShowToastEvent({
-            message: 'Leave to be applied before 48Hrs',
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);*/
-       // this.submitcheck = true;
-            //alert('Leave to be applied before 48Hrs');
-          }
+        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+          
           this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
         }
         else {
-          let date = new Date(this.startDate);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if (new Date(todaydate1) < new Date(this.todaydate)) {
-            
-         /*   const evt = new ShowToastEvent({
-            message: 'Leave to be applied before 48Hrs',
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
-        this.submitcheck = true;*/
-            //alert('Leave to be applied before 48Hrs');
-          }
+          
           this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
         }
       }
-      if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
-        if (this.startDate != undefined || this.startDate != null) {
-          let date = new Date(this.startDate);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if (new Date(todaydate1) < new Date(this.todaydate)) {       
-         /*   const evt = new ShowToastEvent({
-            message: 'Leave to be applied before 48Hrs',
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
-        this.submitcheck = true;*/
-            //alert('Leave to be applied before 48Hrs');
-          }
-        }
-
-      }
+      
     }
     if (namecheck == 'endDate1') {
-      this.endDate1 = event.detail.value;
+      this.endDate1 = event.detail.value + ' 00:00:00';
       this.endDate = event.detail.value;
-      if (this.endDate1 != null) {
-        this.endDate1 = event.detail.value + ' 00:00:00';
-      }
+      
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
         if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
           this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
@@ -434,7 +392,7 @@ connectedCallback(){
         this.dispatchEvent(evt);
         this.endDate1 = null;
       }
-      if (this.endDate < this.startDate && this.startDate != null && this.endDate != null) {
+      if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
         console.log(this.endDate <= this.startDate);
         //alert('Please select a Valid End date');
         const evt = new ShowToastEvent({
@@ -444,6 +402,9 @@ connectedCallback(){
         this.dispatchEvent(evt);
         this.endDate1 = null;
       }   
+    }
+    if(this.startDate1!=null && this.endDate1!=null){
+      this.submitcheck = false;
     }
   }
 
@@ -472,6 +433,9 @@ connectedCallback(){
     if (this.reason != null) {
       if(this.availabledays >= this.duration){
         this.submitcheck = false;
+      } 
+      if(this.value == 'Loss of Pay' && this.annualcompduration < 0){
+        this.submitcheck = false;
       }      
     }
   }
@@ -486,6 +450,31 @@ connectedCallback(){
 
   submitme(){
 
+    if(this.weekendwfh > 1 && this.value == 'Work From Home'){
+      const evt = new ShowToastEvent({
+            message: 'Please apply Work from Home for same week',
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+        
+    }else{
+
+      if( this.reason == null && this.duration>3 && this.value == 'Work From Home'){
+        const evt = new ShowToastEvent({
+            message: 'Please mention the reason for your request',
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+      }else{
+
+    if((this.reason == null || this.reason == '') && this.value != 'Work From Home'){
+            const evt = new ShowToastEvent({
+            message: 'Please mention the reason for your leave request',
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+     // alert('Please Upload Proof');// need to chane the alert message
+    }else{
     let guestObj = { 'sobjectType': 'EMS_LM_Leave_History__c' };
         
         guestObj.EMS_LM_Leave_Start_Date__c = this.startDate;
@@ -517,7 +506,33 @@ connectedCallback(){
                 console.log('error-->',error);
                 console.log('this.error-->'+JSON.stringify(this.error));
             });
+          }
+      }
+    }
   }
 
+  handleDownloadFile(e) {
+    getContentDistributionForFile({
+      contentDocumentId: e.target.dataset.id
+    })
+      .then(response => {
+        //console.log('Disturbution----' + JSON.stringify(response));
+        window.open(response.ContentDownloadUrl);
+      })
+      .catch(error => {
+        console.log(JSON.stringify(error));
+      })
+  }
+
+  @track documents;
+  @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$selecteditrecordid' })
+  wiredResult({ data, error }) {
+    if (data) {
+      this.documents = data;
+    }
+    if (error) {
+      console.log(error)
+    }
+  }
   
 }

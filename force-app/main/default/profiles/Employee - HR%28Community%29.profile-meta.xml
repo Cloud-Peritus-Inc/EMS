@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>EMS_EM_CreationOnboard</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EMS_LM_MyRequestTabLeaveReq</apexClass>
+        <apexClass>LeaveRequestConstant</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Send_joining_date_confirmation_to_the_RM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <layoutAssignments>
+        <layout>EMS_TM_Assignment__c-Assignment Layout</layout>
+    </layoutAssignments>
     <userLicense>Customer Community</userLicense>
     <userPermissions>
         <enabled>true</enabled>
