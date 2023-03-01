@@ -42,7 +42,7 @@ public class EMS_TM_TimesheetClass {
                         IT_Admin_Access__c,
                         Hr_Access__c,
                                 (Select id, lastname,
-                                Location__c 
+                                Location__c,Work_Location__c
                                 from Contacts__r)
                                 FROM User 
                                 WHERE Id = :userId];
@@ -100,7 +100,7 @@ public class EMS_TM_TimesheetClass {
             }
         }
         
-        String location= user.Contacts__r[0].Location__c;
+        String location= user.Contacts__r[0].Work_Location__c;
 
         System.debug('location'+location);
 
@@ -150,11 +150,12 @@ public class EMS_TM_TimesheetClass {
         }
 
         List<EMS_TM_Calendar__c> holidays = [SELECT Id, Name, EMS_TM_Calendar_Date__c,
-                                                EMS_TM_Type_Of_Holiday__c, Location__c
+                                                EMS_TM_Type_Of_Holiday__c, Location__c,
+                                                Office_Location__c
                                                 FROM EMS_TM_Calendar__c
                                                 WHERE EMS_TM_Calendar_Date__c >= :weekStart
                                                 AND EMS_TM_Calendar_Date__c <= :weekEnd
-                                                AND Location__c = :location];
+                                                AND Office_Location__c = :location];
         
       // added for leave integration 89 to 115  
         set <Date> dates = new set<Date>(); 
@@ -166,7 +167,7 @@ public class EMS_TM_TimesheetClass {
         Date startDate = l1.EMS_LM_Leave_Start_Date__c;
         Date endDate = l1.EMS_LM_Leave_End_Date__c;
         Set<Date> holidaysSet = new Set<Date>();
-        for(EMS_TM_Calendar__c currHoliday : [Select EMS_TM_Calendar_Date__c from EMS_TM_Calendar__c where Location__c = :location])  // need to change Location
+        for(EMS_TM_Calendar__c currHoliday : [Select EMS_TM_Calendar_Date__c from EMS_TM_Calendar__c where Office_Location__c = :location])  // need to change Location
         {  
             holidaysSet.add(currHoliday.EMS_TM_Calendar_Date__c);  
         }

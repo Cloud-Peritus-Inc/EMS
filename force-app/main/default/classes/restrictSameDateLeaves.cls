@@ -61,7 +61,7 @@ public without sharing class restrictSameDateLeaves implements TriggerAction.Bef
         
         for(EMS_LM_Leave_History__c his : newlist){
             if(resourceWithLeaves.containsKey(his.EMS_LM_Contact__c)){
-               his.addError('There is already an applied leave which falls into selected start date or end date. please recheck the dates or review your leave request.'); 
+               his.addError('You have already applied for leave on selected leave dates. Consider applying for leave on some other dates.'); 
             }
         }
     }
