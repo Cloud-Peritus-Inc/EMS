@@ -48,7 +48,7 @@ global class BatchToCreateOnboardingTasksOnDOJ implements Database.Batchable<sOb
     global void execute(Database.BatchableContext BC, List<Contact> conList) {
          List<Task> finalTaskList = new List<Task>();
          List<Preonboarding_Task_Mapping__mdt> metaList = new List<Preonboarding_Task_Mapping__mdt>();
-        metaList = [SELECT Id,Assigned_To__c,Contact_API__c,Due_Date_Days__c,Task_Subject__c,Type__c,Unique_Identifier__c  FROM Preonboarding_Task_Mapping__mdt WHERE Onboarding_Task__c = 'Pre'];
+        metaList = [SELECT Id,Assigned_To__c,Contact_API__c,Due_Date_Days__c,Notification_Required_HR__c,Notification_Required_IT__c,Task_Subject__c,Type__c,Unique_Identifier__c  FROM Preonboarding_Task_Mapping__mdt WHERE Onboarding_Task__c = 'Pre'];
          Map<String,Id> QueueWithId = new Map<String,Id>();
          Set<String> queueNames = new Set<String>();
         for(Preonboarding_Task_Mapping__mdt ptm : metaList){
@@ -73,9 +73,12 @@ global class BatchToCreateOnboardingTasksOnDOJ implements Database.Batchable<sOb
                 t.Status = 'Open';
                 t.Priority = 'High';
                 t.IsReminderSet = true;
+                t.IsVisibleInSelfService = True;
                 t.Onboarding_UniqueKey__c  = ptm.Unique_Identifier__c;
                 t.WhoId = con.Id;
                 t.ActivityDate = con.EMS_EM_JD__c;
+                t.Notification_Required_HR__c = ptm.Notification_Required_HR__c;
+                t.Notification_Required_IT__c = ptm.Notification_Required_IT__c;
                 t.ReminderDateTime = DateTime.newInstance(con.EMS_EM_JD__c.year(), con.EMS_EM_JD__c.month(), con.EMS_EM_JD__c.day(), 20, 00, 00);
                 finalTaskList.add(t); 
             }  

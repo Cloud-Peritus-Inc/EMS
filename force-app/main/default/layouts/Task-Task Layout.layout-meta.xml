@@ -23,12 +23,24 @@
                 <field>Onboarding_UniqueKey__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsVisibleInSelfService</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Requires_Navigation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Navigation_address__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Notification_Required_IT__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Notification_Required_HR__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
