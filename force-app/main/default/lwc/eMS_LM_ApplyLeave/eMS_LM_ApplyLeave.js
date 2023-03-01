@@ -14,6 +14,7 @@ import { createRecord } from 'lightning/uiRecordApi';
 
 
 export default class EMS_LM_ApplyLeave extends LightningElement {
+  @track isLoading = false;
   check;
   uId = u_Id;
   Location;
@@ -44,7 +45,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   fileData;
   wfhtodaydate;
   leavetypeId;
-
+  currentLocation;
  
 
   connectedCallback() {
@@ -91,8 +92,9 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   wiredlocation({ error, data }) {
     if (data) {
       this.Location = data.Location__c;
-      this.isbillable=data.EMS_TM_Billable__c;
-      console.log('this.isbillable-->',this.isbillable,'this.Location-->',this.Location);
+      this.isbillable=data.EMS_TM_In_Billing__c;
+      this.currentLocation =data.Work_Location__r.Country__c;
+      console.log('this.isbillable-->',this.isbillable,'this.Location-->',this.Location ,'this.currentLocation-->',this.currentLocation);
       this.error = undefined;
     } else if (error) {
       this.error = error;
@@ -544,6 +546,7 @@ if(this.reason == null || this.reason == ''){
                 }),
             );
            // window.location.reload();
+           this.updateRecordView();
         }).catch(error => {
         
             console.log('error-->',error);
@@ -551,15 +554,29 @@ if(this.reason == null || this.reason == ''){
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error creating record',
-                    message: error.body.output.errors[0].errorCode + '- '+ error.body.output.errors[0].message,
+                    message: error.body.output.errors[0].message,
                     
                     variant: 'error',
                 }),
             );
+        }).finally(()=>{
+            this.handleIsLoading(false);
+            
         });
       }
   }
   }
+
+  handleIsLoading(isLoading) {
+        this.isLoading = isLoading;
+    }
+
+  updateRecordView() {
+       const refreshEvent = new CustomEvent('refresh', {
+    bubbles: true // This allows the event to bubble up to parent components
+});
+this.dispatchEvent(refreshEvent);
+    }
 
   dayChange(event) {
     this.fullday = event.detail.value;

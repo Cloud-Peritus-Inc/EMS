@@ -49,6 +49,7 @@ table {
 .table-container {
   max-height: 150px; /* set maximum height */
   overflow: auto; /* enable vertical scrollbar */
+  padding-left: 5px;
 }
 
 .table-container::-webkit-scrollbar {

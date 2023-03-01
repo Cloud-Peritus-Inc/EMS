@@ -1,17 +1,17 @@
 <template>
 	<div class="homeCard">
 		<div class="childparent" >
-           <div class="childtext">
+           <div class="childtext" style="padding-left: 20px;">
    
-          <lightning-icon icon-name="action:manage_perm_sets" size="x-small" alternative-text="Internal" title="Internal">  </lightning-icon>
-           <font size="4"  > &nbsp;&nbsp;<b>My Recent Requests </b> </font>
+          <lightning-icon icon-name="action:manage_perm_sets" size="small" alternative-text="Internal" title="Internal">  </lightning-icon>
+           <font size="4"  > &nbsp;&nbsp;<b>My Pending Approvals </b> </font>
             
            </div>
             <div class="childimage">
            
             </div>
         </div>
-		<div>
+		<div style="padding:10px;">
 			<c-e-m-s-_-leave-request-_-table leave-req={reqLeaveArray}>
 			</c-e-m-s-_-leave-request-_-table>
 		</div>

@@ -15,6 +15,7 @@ resourcerole = '';
 userid= '';
 resourceinsurence = '';
 rescodecurrency = '';
+resourceContactId = '';
 
 
 
@@ -30,6 +31,8 @@ rescodecurrency = '';
       this.resourcerole = data.resourceRole;
       this.userid = data.resourceUserId;
       this.resourceinsurence = data.resourceInsurence;
+      this.rescodecurrency = data.rescodecurrency;
+      this.resourceContactId = data.resourceContactId;
     } else if (error) {
       console.error(error);
     }
@@ -40,7 +43,7 @@ rescodecurrency = '';
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {
-                url: '/profile/'+this.userid
+                url: '/detail/'+this.resourceContactId
             }
         });
 }
