@@ -1145,6 +1145,7 @@ submitpopup(){
                         saveTimeSheetRecords({timeRecords: this.records, timesheet : this.timeSheetRecord})
                         .then(result => {
                             console.log('saveTimeSheetRecordsresult ',result);
+                          //  console.log('saveTimeSheetRecordsresult1 ',JSON.stringify(result));
                             if (result.includes('Success')) {
                                 this.recordId = result.slice(7);
                                 if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {
@@ -1163,7 +1164,7 @@ submitpopup(){
                                 this.dispatchEvent(
                                     new ShowToastEvent({
                                         title: 'Error while creating record',
-                                        message: 'Oops!... Please enter appropriate data Before Saving the Timesheet',
+                                        message: 'You didnot have the access or not enterd the proper data',
                                         variant: 'error',
                                     }),
                                 );
