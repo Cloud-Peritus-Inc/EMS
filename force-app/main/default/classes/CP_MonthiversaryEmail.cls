@@ -20,7 +20,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
     
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id, EMS_EM_JD__c, Name, Personal_Email__c, Post_Onboarding_Confirm__c, Official_Mail__c from Contact WHERE EMS_EM_JD__c != NULL AND (Official_Mail__c != NULL OR Personal_Email__c != NULL) AND RecordType.Name = \'Resource\'' 
+        	'SELECT id, EMS_EM_JD__c, Name, Personal_Email__c, Is_Email_Sent_Post_Onborading_Mail__c, Post_Onboarding_Confirm__c, Official_Mail__c from Contact WHERE EMS_EM_JD__c != NULL AND (Official_Mail__c != NULL OR Personal_Email__c != NULL) AND RecordType.Name = \'Resource\'' 
         );
     }    
     
@@ -47,6 +47,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
             if(contactRec.Post_Onboarding_Confirm__c == False){
                 sendReminderEmailToEmployee(contactRec.Official_Mail__c, contactRec.Id);
             }
+            
         }
     }
     

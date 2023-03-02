@@ -1,6 +1,14 @@
 <template>
+     <!-- loader -->
+     <div if:true={isLoading}>
+        <lightning-spinner
+            alternative-text="Loading..." variant="brand" class="slds-is-fixed">
+        </lightning-spinner>
+    </div>
+    <!-- /loader -->
+    
     <div class="slds-card slds-box slds-p-around_small">
-        <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
+        <div 
             class="slds-p-around_xx-small">
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
@@ -261,7 +269,7 @@
                                                     <lightning-input class="slds-p-top_small" value={dob} required
                                                         disabled={readonlyfield} onchange={dateOfBirth}
                                                         name="EMS_EM_DOB__c" type="date"
-                                                        label="Date Of Birth"></lightning-input>
+                                                        label="Date of Birth"></lightning-input>
                                                     <lightning-combobox class="slds-p-top_small" required
                                                         disabled={readonlyfield} name="EMS_EM_Gender__c" label="Gender"
                                                         value={gen} placeholder="Select" options={Gendervalue}
@@ -432,7 +440,7 @@
                                                         <lightning-output-field
                                                             field-name="EMS_RM_Employee_Id__c"></lightning-output-field>
                                                         <lightning-output-field
-                                                            field-name="Official_Mail__c"></lightning-output-field>
+                                                            field-name="Email"></lightning-output-field>
                                                         <lightning-output-field
                                                             field-name="Resource_Manager__c"></lightning-output-field>
                                                         <lightning-output-field
@@ -503,6 +511,7 @@
                                                         </div>
                                                         <div class="slds-col slds-size_1-of-12">
                                                             <lightning-input type="Checkbox" disabled={readonlyfield}
+                                                        
                                                                 value={inputcheckboxValue}
                                                                 onchange={AddressCheckboxChange}></lightning-input>
                                                         </div>
@@ -930,12 +939,12 @@
                                                             <div class="slds-grid slds-wrap" key={file.id}>
                                                                 <div
                                                                     class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                                    <p><strong>File Name - {file.name} - {file.fileExtension}</strong></p>
+                                                                    <p><strong>File Name </strong>- {file.name} - {file.fileExtension}</p>
                                                                 </div>
                                                                 <div>
                                                                     <a href="javascript:void(0);" data-id={file.id} onclick={handleDownloadFile}>Download</a> 
                                                                 </div>
-
+                                                                    
                                                             </div>
                                                                           
                                                         </template>

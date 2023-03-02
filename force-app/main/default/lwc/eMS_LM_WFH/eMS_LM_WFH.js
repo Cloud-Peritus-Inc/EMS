@@ -1,7 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import u_Id from '@salesforce/user/Id';
-import getLeaveType from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveType';
-import getLocation from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLocation';
+import getbilling from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getbilling';
 import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhDuration';
 import getwfhWFHweekends from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhWFHweekends';
 import createwfhRecord from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.createwfhRecord';
@@ -127,16 +126,15 @@ export default class EMS_LM_WFH extends LightningElement {
   }
 
   
-  @wire(getLocation, { userid: '$uId' })
-  wiredlocation({ error, data }) {
+  @wire(getbilling, { userid: '$uId' })
+  wiredbilling({ error, data }) {
     if (data) {
-      this.Location = data.Location__c;
-      this.conId = data.Id;
-      console.log('this.Location,-->',this.Location,'this.conId-->',this.conId)
+      this.conId = data.Id;   
+      this.Location = data.Work_Location__r.Country__c;   
+      console.log('this.isbillable-->',this.isbillable,'this.conId',this.conId);
       this.error = undefined;
     } else if (error) {
       this.error = error;
-      this.Location = undefined;
     }
   }
 
