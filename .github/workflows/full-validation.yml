@@ -1,7 +1,7 @@
 #Full Validation Job
 
 name: Full Validation Job 
-run-name: Full Validation for ${{ github.event.inputs.choice }}
+run-name: Full Validation for  ${{github.ref_name}} to ${{ github.event.inputs.choice }}
 
 # Controls when the workflow will run
 on:
