@@ -64,7 +64,7 @@ public class EMS_LM_ContactLeaveUpdate_Test {
         c.FirstName = 'nbk';
         c.AccountId = acc.id;
         c.LastName = 'jj';
-        c.Official_Mail__c = 'nbkjj121@gmail.com';
+       // c.Official_Mail__c = 'nbkjj121@gmail.com';
         c.EMS_Phone_Number__c = '8484158575';
         c.Location__c ='India';
         c.RecordTypeId = [SELECT Id FROM RecordType where name = 'Resource'].Id;
@@ -148,11 +148,11 @@ public class EMS_LM_ContactLeaveUpdate_Test {
             
         Test.startTest();
             EMS_LM_ContactLeaveUpdate.getLeaveType(us.Id);
-            EMS_LM_ContactLeaveUpdate.getLocation(us.Id);
+            EMS_LM_ContactLeaveUpdate.getbilling(us.Id);
             EMS_LM_ContactLeaveUpdate.getProfileName(us.Id);
             EMS_LM_ContactLeaveUpdate.getLeaveBalance(us.Id);
             EMS_LM_ContactLeaveUpdate.getLeaveType(us1.Id);
-            EMS_LM_ContactLeaveUpdate.getLocation(us1.Id);
+            EMS_LM_ContactLeaveUpdate.getbilling(us1.Id);
             EMS_LM_ContactLeaveUpdate.getProfileName(us1.Id);
             EMS_LM_ContactLeaveUpdate.getLeaveBalance(us1.Id);            
             EMS_LM_ContactLeaveUpdate.getUserInfo(us.Id);
@@ -172,7 +172,7 @@ public class EMS_LM_ContactLeaveUpdate_Test {
         contact c2 = new Contact();
         c2.FirstName = 'ab123';
         c2.LastName = 'efgh';
-        c2.Official_Mail__c = u.Email;
+      //  c2.Official_Mail__c = u.Email;
         c2.EMS_Phone_Number__c = '8615748522';
         c2.Location__c ='India';
         c2.RecordTypeId = [SELECT Id FROM RecordType where name = 'Resource'].Id;
