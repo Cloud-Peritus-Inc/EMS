@@ -202,6 +202,21 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
+        <name>Email_To_PM</name>
+        <label>Email To PM</label>
+        <locationX>842</locationX>
+        <locationY>695</locationY>
+        <actionName>EMS_LM_Leave_History__c.Leave_Approve_by_Lead_email_send_to_PM</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Leave_Approved_By_Approver2_Email_To_Employee</name>
         <label>Leave Approved By Approver2(Email To Employee)</label>
         <locationX>1370</locationX>
@@ -412,6 +427,9 @@
         <locationY>575</locationY>
         <actionName>EMS_LM_Leave_History__c.When_lead_approves_rejects_leave_request_of_employees_reporting_to_Lead</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Email_To_PM</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -501,6 +519,13 @@
                     <elementReference>$Record.EMS_LM_Status__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Employee - HR(Community)</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Copy_2_of_Applied_Leave_Request_Email_To_Employee</targetReference>
             </connector>
@@ -537,6 +562,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Copy_1_of_Approver1_approves_WFH_request_Email_To_Employee</targetReference>
             </connector>
@@ -566,6 +598,20 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Leave_Approved_By_Approver2_Email_To_Employee</targetReference>
             </connector>
@@ -580,7 +626,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_status_is_Pending</name>
-            <conditionLogic>(1 OR 2 ) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -593,13 +639,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Approver 1 pending</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Profile.Name</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Employee - HR(Community)</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -636,6 +675,20 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Employee - HR(Community)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_2nd_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -732,7 +785,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Rejected_By_User</name>
-            <conditionLogic>(1 AND 2 AND 4) OR (1 AND 3 AND 4)</conditionLogic>
+            <conditionLogic>(1 AND 2 AND 4 AND 5) OR (1 AND 3 AND 4 AND 5)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -756,6 +809,13 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.EMS_LM_Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -785,6 +845,20 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.EMS_LM_Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_2nd_Approver__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
