@@ -22,7 +22,7 @@ public  without sharing class EMS_LM_Leave_Duration_Handler {
         Date startDate = Date.valueOf(stDate);
         Date endDate = Date.valueOf(edDate);
         Set<Date> holidaysSet = new Set<Date>();
-        for(EMS_TM_Calendar__c currHoliday : [Select EMS_TM_Calendar_Date__c from EMS_TM_Calendar__c where Location__c = :Location])  
+        for(EMS_TM_Calendar__c currHoliday : [Select EMS_TM_Calendar_Date__c,Office_Location__r.Country__c from EMS_TM_Calendar__c where Office_Location__r.Country__c = :Location])  
         {  
             holidaysSet.add(currHoliday.EMS_TM_Calendar_Date__c);  
             system.debug(currHoliday.EMS_TM_Calendar_Date__c);
@@ -53,7 +53,7 @@ public  without sharing class EMS_LM_Leave_Duration_Handler {
         Date startDate = Date.valueOf(stDate);
         Date endDate = Date.valueOf(edDate);
         Set<Date> holidaysSet = new Set<Date>();
-        for(EMS_TM_Calendar__c currHoliday : [Select EMS_TM_Calendar_Date__c from EMS_TM_Calendar__c where Location__c = :Location])  
+        for(EMS_TM_Calendar__c currHoliday : [Select EMS_TM_Calendar_Date__c,Office_Location__r.Country__c from EMS_TM_Calendar__c where Office_Location__r.Country__c = :Location])  
         {  
             holidaysSet.add(currHoliday.EMS_TM_Calendar_Date__c);  
             system.debug(currHoliday.EMS_TM_Calendar_Date__c);

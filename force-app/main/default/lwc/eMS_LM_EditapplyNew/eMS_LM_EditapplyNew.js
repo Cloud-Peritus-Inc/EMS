@@ -4,7 +4,7 @@ import getLeaveRequestMethod from '@salesforce/apex/EMS_LM_EditLeaveRequest.getL
 import getLeaveType from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveType';
 import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getLeaveDuration';
 import getLeaveTypeId from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveTypeid';
-import getLocation from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLocation';
+import getbilling from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getbilling';
 import getLeaveBalance from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveBalance';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getwfhWFHweekends from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhWFHweekends';
@@ -79,16 +79,15 @@ weekendwfh = false;
     }
   }
 
-  @wire(getLocation, { userid: '$uId' })
-  wiredlocation({ error, data }) {
+  @wire(getbilling, { userid: '$uId' })
+  wiredbilling({ error, data }) {
     if (data) {
-      this.Location = data.Location__c;
-      this.isbillable=data.EMS_TM_In_Billing__c;
-      console.log('this.isbillable-->',this.isbillable,'this.Location-->',this.Location);
+      this.isbillable =data.EMS_TM_In_Billing__c;
+      this.Location = data.Work_Location__r.Country__c;   
+      console.log('this.isbillable-->',this.isbillable);
       this.error = undefined;
     } else if (error) {
       this.error = error;
-      this.Location = undefined;
     }
   }
 

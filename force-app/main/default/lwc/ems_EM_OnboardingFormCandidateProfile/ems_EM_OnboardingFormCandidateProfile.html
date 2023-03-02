@@ -111,13 +111,7 @@
     
                                     <lightning-input class="slds-p-top_small" value={lastName} message-when-pattern-mismatch = "Invalid name" required disabled={readonlyfield}
                                     onchange={LastName} name="LastName" onkeydown={handleFirstLastNameKeyDown} pattern="[A-Z a-z._-]{1,20}$" type="text" label="Last Name"></lightning-input>              
-                                    
-                                    <lightning-input class="slds-p-top_small" value={fName} message-when-pattern-mismatch = "Invalid name" required disabled={readonlyfield}
-                                    onchange={FatherName} name="EMS_EM_Father__c" onkeydown={handleFirstLastNameKeyDown} pattern="[A-Z a-z._-]{1,20}$" type="text" label="Father's Name"></lightning-input>
-                           
-                                    <lightning-input class="slds-p-top_small" value={mName} message-when-pattern-mismatch = "Invalid name" required disabled={readonlyfield}
-                                    onchange={MotherName} name="EMS_EM_Mother__c" onkeydown={handleFirstLastNameKeyDown} pattern="[A-Z a-z._-]{1,20}$" type="text" label="Mother's Name"></lightning-input>
-                                    
+                                  
                                     <lightning-input class="slds-p-top_small" value={dob} required disabled={readonlyfield}
                                                 onchange={DateofBirthValidation}  name="EMS_EM_DOB__c" type="date" label="Date of Birth"></lightning-input>
                                     <lightning-combobox class="slds-p-top_small"
@@ -283,7 +277,12 @@
                             <div class="slds-col slds-size_1-of-12">
                                 <lightning-input type="Checkbox" disabled={readonlyfield} value={inputcheckboxValue} onchange={AddressCheckboxChange} ></lightning-input>
                             </div>
-                            </div>                
+                            <template if:true={AddressCheckb}>
+                            <div class="slds-col slds-size_1-of-12">
+                                <lightning-input type="Checkbox" disabled={readonlyfield} checked="" value={inputcheckboxValue} onchange={AddressCheckboxChange} ></lightning-input>
+                            </div>
+                            </template>
+                            </div>                  
                         </span>
                         </div>
                         <div class="slds-col slds-size_1-of-2">
@@ -741,12 +740,21 @@
                 <div class="slds-col slds-size_1-of-13 slds-p-right_x-small">
                     Do you have work experience?
                 </div>
+                <template if:true={Workcheckbox}>
                 <div class="slds-col slds-size_1-of-12">
-                    <lightning-input type="Checkbox" value={inputcheckboxexperience} disabled={readonlyfield}
+                    <lightning-input type="Checkbox"  value={inputcheckboxexperience} disabled={readonlyfield}
                     onchange={experienceCheckboxChange} ></lightning-input>
                 </div>
+                </template>
+                <template if:true={showExperienceyouhave}>
+                    <div class="slds-col slds-size_1-of-12">
+                    <lightning-input type="Checkbox" checked="" onchange={experienceCheckboxChange} disabled={readonlyfield}
+                     ></lightning-input>
+                </div>
+                </template>
                 </div>          
-              <template if:true={showExperienceyouhave}>          
+              <template if:true={showExperienceyouhave}>   
+                         
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-size_2-of-2 ">
     

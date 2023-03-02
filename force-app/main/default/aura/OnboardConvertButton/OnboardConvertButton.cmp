@@ -12,5 +12,24 @@
         max-height:unset !important;
         }
     </aura:html>
-    <c:cP_ConvertButton oncloseQuickAction="{!c.closeQuickAction_AuraMethod}" recordId="{!v.recordId}" onsuccessaction="{!c.handleSuccess}"></c:cP_ConvertButton>
+    <aura:attribute type="EMS_EM_Onboarding_Request__c" name="Status"></aura:attribute>
+    <force:recordData aura:id="forceRecordCmp"
+        recordId="{!v.recordId}"
+
+        fields="Name,Status__c"
+
+
+        targetFields="{!v.Status}"
+        />
+
+    <aura:if isTrue="{!v.Status.Status__c=='Approved'}">
+      <c:cP_ConvertButton oncloseQuickAction="{!c.closeQuickAction_AuraMethod}" recordId="{!v.recordId}" onsuccessaction="{!c.handleSuccess}"></c:cP_ConvertButton>
+        <aura:set attribute="else">
+              <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">Error</span>
+            <h2>The status of the onboarding request should be 'Approved' to convert the Applicant to Resource</h2>
+        </div>
+        </aura:set>
+    </aura:if>
+   
 </aura:component>

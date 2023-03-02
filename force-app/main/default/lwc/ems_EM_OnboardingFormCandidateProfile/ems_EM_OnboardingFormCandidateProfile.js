@@ -161,6 +161,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Work Experience") {
       this.isWorkExperience = true;
+      this.isWorkExperienceCheckbox = true;
       this.isOtherCertifications = false;
       this.isEducationDetails = false;
       this.isShowPersonalDetails = false;
@@ -315,12 +316,13 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   connectedCallback() {
     updateOnboardingInfoOnPageLoads(this);
+    
   }
 
   selectStep1() {
     if (this.readonlyfield != true) {
       if (this.firstName != null && this.firstName != '' && this.lastName != null && this.lastName != ''
-        && this.fName != null && this.fName != '' && this.mName != null && this.mName != '' && this.ph.length == 10 && this.altphone.length == 10 &&
+        && this.ph.length == 10 && this.altphone.length == 10 &&
         this.nation != null && this.nation != '' && this.dob != null &&
         this.personalemail != null && this.gen != null &&
         this.fileName2 != null) {
@@ -563,8 +565,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   @track firstName;
   @track lastName;
   @track pfn;
-  @track fName;
-  @track mName;
   @track gen;
   @track ph;
   @track dob;
@@ -585,22 +585,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   message;
   error;
 
-  maritualS = [
-    { label: 'Married', value: 'Married' },
-    { label: 'Single', value: 'Single' }
-
-  ];
-
-  BloodG = [
-    { label: 'A RhD positive (A+)', value: 'A RhD positive (A+)' },
-    { label: 'A RhD negative (A-)', value: 'A RhD negative (A-)' },
-    { label: 'B RhD positive (B+)', value: 'B RhD positive (B+)' },
-    { label: 'B RhD negative (B-)', value: 'B RhD negative (B-)' },
-    { label: 'O RhD positive (O+)', value: 'O RhD positive (O+)' },
-    { label: 'O RhD negative (O-)', value: 'O RhD negative (O-)' },
-    { label: 'AB RhD positive (AB+)', value: 'AB RhD positive (AB+)' },
-    { label: 'AB RhD negative (AB-)', value: 'AB RhD negative (AB-)' },
-  ];
 
   Gendervalue = [
     { label: 'Male', value: 'Male' },
@@ -617,41 +601,16 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   ];
 
-  FatherName(event) {
-    this.fName = event.target.value;
-  }
+
   Dateofwedding(event) {
     this.dow = event.target.value;
 
   }
-
-  MotherName(event) {
-    this.mName = event.target.value;
-  }
-
   gender(event) {
     this.gen = event.target.value;
   }
-  marialinfo = false;
+ 
 
-  maritalstatus(event) {
-    this.mstatus = event.target.value;
-
-    if (this.mstatus == 'Married') {
-      this.marialinfo = true;
-    } else {
-      this.marialinfo = false;
-    }
-  }
-
-  bloodgroup(event) {
-    this.bg = event.target.value;
-
-  }
-
-  spousename(event) {
-    this.spouse = event.target.value;
-  }
   PFNumber(event) {
     this.pfn = event.target.value;
   }
@@ -750,6 +709,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   inputcheckboxValue;
   inputcheckboxexperience;
+  Workcheckbox = true;
   showExperienceyouhave = false;
 
   AddressCheckboxChange(event) {
@@ -780,10 +740,15 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
     if (this.inputcheckboxexperience == 'Checked') {
       this.showExperienceyouhave = true;
-    } else {
-      this.showExperienceyouhave = false;
+      this.Workcheckbox = false;
     }
+     else {
+      this.showExperienceyouhave = false;
+      this.Workcheckbox = true;
+    }
+    
   }
+
 
   //Documents code here....
   AdditionalrecordId;

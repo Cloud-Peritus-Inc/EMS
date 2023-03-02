@@ -30,10 +30,10 @@ public without sharing class Cp_CalculateLeaveDuration implements TriggerAction.
     Date startDate = leaveHistoryList[0].EMS_LM_Leave_Start_Date__c;
 	Date endDate = leaveHistoryList[0].EMS_LM_Leave_End_Date__c;
     String daycheck = leaveHistoryList[0].EMS_LM_Day__c;
-    String location =leaveHistoryList[0].EMS_LM_Contact__r.Location__c;
+    String location =leaveHistoryList[0].EMS_LM_Contact__r.Work_Location__r.Country__c;
         Set<Date> holidaysSet = new Set<Date>();
         
-        for(EMS_TM_Calendar__c currHoliday : [Select EMS_TM_Calendar_Date__c from EMS_TM_Calendar__c where Location__c = :location])  
+        for(EMS_TM_Calendar__c currHoliday : [Select EMS_TM_Calendar_Date__c ,Office_Location__r.Country__c from EMS_TM_Calendar__c where Office_Location__r.Country__c = :location])  
         {  
             holidaysSet.add(currHoliday.EMS_TM_Calendar_Date__c);  
             system.debug(currHoliday.EMS_TM_Calendar_Date__c);

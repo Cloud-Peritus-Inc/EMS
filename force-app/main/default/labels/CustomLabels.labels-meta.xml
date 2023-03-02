@@ -63,4 +63,11 @@
         <shortDescription>Contact Record URL</shortDescription>
         <value>https://cpprd--qa.sandbox.lightning.force.com/lightning/r/Contact/</value>
     </labels>
+    <labels>
+        <fullName>Onboarding_Request_Record_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding Request Record URL</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/onboarding/s/?</value>
+    </labels>
 </CustomLabels>

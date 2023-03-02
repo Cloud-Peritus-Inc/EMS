@@ -212,8 +212,6 @@ guestObj.Id = ts.onboardingformId;
 console.log('onboardingformId 2 => ' ,ts.onboardingformId);
 guestObj.EMS_EM_First_Name__c = ts.firstName;
 guestObj.EMS_EM_Last_Name__c = ts.lastName;
-guestObj.EMS_EM_Father__c =ts.fName;
-guestObj.EMS_EM_Mother__c =ts.mName,        
 guestObj.Phone_Number__c = ts.ph;
 guestObj.EMS_EM_Phone_Number__c= ts.altphone;
 guestObj.EMS_EM_DOB__c = ts.dob;
@@ -565,8 +563,6 @@ function updateOnboardingInfoOnPageLoads(ts){
              // this.readonlyfield=true;
               ts.firstName = onboarding.EMS_EM_First_Name__c;
               ts.lastName=onboarding.EMS_EM_Last_Name__c;
-              ts.fName=onboarding.EMS_EM_Father__c;
-              ts.mName=onboarding.EMS_EM_Mother__c;   
               ts.gen=onboarding.EMS_EM_Gender__c;
               ts.ph=onboarding.Phone_Number__c;
               ts.dob=onboarding.EMS_EM_DOB__c;
@@ -651,7 +647,11 @@ function updateOnboardingInfoOnPageLoads(ts){
               if(ts.jobtitle0 !=null || ts.fromdate0 != null || ts.todate0 !=null ||
                 ts.previouscompanyname0 !=null || ts.previouscomemailid !=null){
                        ts.showExperienceyouhave=true;
+                if(ts.showExperienceyouhave==true){
+                    ts.Workcheckbox = false;
+                  }          
              }
+             
               ts.jobtitle1=additionalDetails.EMS_EM_Job_Title1__c;
               ts.fromdate1=additionalDetails.EMS_EM_From_Date1__c;
               ts.todate1=additionalDetails.EMS_EM_To_Date1__c;
