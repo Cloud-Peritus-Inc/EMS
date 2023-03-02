@@ -1,7 +1,7 @@
 # This is a basic workflow to help you get started with Actions
 
 name: Deployment Job
-run-name: Deployment for ${{ github.event.inputs.choice }}
+run-name: Deploying  ${{github.ref_name}} to ${{ github.event.inputs.choice }}
 
 # Controls when the workflow will run
 on:
