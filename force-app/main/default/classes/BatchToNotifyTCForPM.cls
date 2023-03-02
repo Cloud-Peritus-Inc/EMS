@@ -56,6 +56,8 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
           managerIds.add(Urec.Id); 
          pmwithemail.put(Urec.Id,Urec);
         }
+        System.debug('***pmwithemail'+pmwithemail);
+         System.debug('***managerIds'+managerIds);
         Map<Id,List<EMS_TM_Project__c>> pmWithProjects = new Map<Id,List<EMS_TM_Project__c>>();
         Map<Id,List<String>> prjWithTimeCards = new Map<Id,List<String>>();
         Map<Id,List<EMS_LM_Leave_History__c>> appWithAbseReqts = new Map<Id,List<EMS_LM_Leave_History__c>>();
@@ -80,8 +82,8 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
                    }
                }
         }
-        
-      
+        SYstem.debug('pmWithProjects'+pmWithProjects);
+        SYstem.debug('resourceIds'+resourceIds);
          Map<Id,List<EMS_Timesheet__c>> prjWithTsheets = new  Map<Id,List<EMS_Timesheet__c>>();
         if(!pmWithProjects.isEmpty()){
             for(String pm : pmWithProjects.keySet()){
@@ -101,14 +103,15 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
         }
         
         System.debug('====prjWithTsheets==='+prjWithTsheets);
-
+        System.debug('====SIZEprjWithTsheets==='+prjWithTsheets.size());
         List<Messaging.SingleEmailMessage> allMails = new List<Messaging.SingleEmailMessage>();
         if(!prjWithTsheets.isEmpty()){
-           Id orgWideAddressId =[SELECT Id, DisplayName, Address FROM OrgWideEmailAddress where DisplayName = 'No Reply' LIMIT 1].Id;
+           Id orgWideAddressId =[SELECT Id, DisplayName, Address FROM OrgWideEmailAddress where DisplayName = 'Grid' LIMIT 1].Id;
             for(Id pmId : prjWithTsheets.keySet()){
                 list<string> toaddress = new list<string>();              
                 if(prjWithTsheets.containsKey(pmId) && prjWithTsheets.get(pmId).size() >0 && pmwithemail.containsKey(pmId)){
                    toaddress.add(pmwithemail.get(pmId).Email);
+                    System.debug('***ToAddress'+toaddress);
                   Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
                   email.setOrgWideEmailAddressId(orgWideAddressId);
                   email.setSubject('Employee timesheets overdue');

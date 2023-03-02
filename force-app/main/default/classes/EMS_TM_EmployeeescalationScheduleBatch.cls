@@ -30,7 +30,7 @@ global class EMS_TM_EmployeeescalationScheduleBatch implements Database.Batchabl
                                                Address, 
                                                DisplayName 
                                                FROM OrgWideEmailAddress 
-                                               WHERE DisplayName ='Cloud Peritus'];
+                                               WHERE DisplayName ='Grid'];
               for(contact contactRec :[SELECT Id,
                                                  LastName,
                                                  FirstName, 
