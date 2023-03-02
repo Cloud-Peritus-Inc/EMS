@@ -962,9 +962,9 @@ submitpopup(){
         } else if (event.detail.status === 'confirm') {
             event.target.name = 'Submitted';
             this.handleValidation(event);
-             if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
+            /* if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
                  this.handlesaveCompOffRecord();
-             }
+             }*/
         }
     }
 
@@ -1016,12 +1016,12 @@ submitpopup(){
             window.console.log('handlecheckCompOffRec ===> '+JSON.stringify(result));
             if(result == true){
                 this.compoffAlredyexist = true;
-               this.dispatchEvent(new ShowToastEvent({
+             /*  this.dispatchEvent(new ShowToastEvent({
                                         title:'you have alredy Compoff Record',
                                         message:'you have alredy Compoff Record in this week',
                                         variant: 'success',
                                     }),
-                                );
+                                );*/
             }else{
                  this.compoffAlredyexist = false;
             }
@@ -1046,12 +1046,12 @@ submitpopup(){
         })
         .catch(error => {
             console.log('compOffError'+JSON.stringify(error));
-            this.dispatchEvent(new ShowToastEvent({
+            /*this.dispatchEvent(new ShowToastEvent({
                                         title: error.body.message,
                                         message:error.body.message,
                                         variant: 'error',
                                     }),
-                                );
+                                );*/
             this.error = error.message;
         });
     }
@@ -1148,6 +1148,10 @@ submitpopup(){
                             if (result.includes('Success')) {
                                 this.recordId = result.slice(7);
                                 if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {
+                                    console.log('SubmittedTimesheet');
+                                     if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
+                                        this.handlesaveCompOffRecord();
+                                    }
                                     this.handleSuccess('Timesheet successfully created and submitted');
                                 } else if (this.timeSheetRecord.EMS_TM_Status__c === 'Saved') {
                                     this.handleSuccess('Timesheet successfully created');
@@ -1193,6 +1197,9 @@ submitpopup(){
                     if (result.includes('Success')) {
                         this.recordId = result.slice(7);
                         if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {
+                             if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
+                                        this.handlesaveCompOffRecord();
+                                    }
                             this.handleSuccess('Timesheet successfully updated and submitted');
                         } else if (this.timeSheetRecord.EMS_TM_Status__c === 'Saved') {
                             this.handleSuccess('Timesheet successfully updated');

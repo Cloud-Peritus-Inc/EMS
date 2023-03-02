@@ -986,13 +986,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record__Prior.EMS_LM_Status__c</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
@@ -1004,13 +997,6 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Profile.Name</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Employee - HR(Community)</stringValue>
                 </rightValue>
             </conditions>
             <connector>
