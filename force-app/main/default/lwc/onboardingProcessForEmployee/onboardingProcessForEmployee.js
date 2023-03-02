@@ -46,7 +46,7 @@ function uploadFilesFromThis(event, ts) {
     let fileNameToAdd = event.target.files[0].name;
     let fileTypeToAdd = event.target.files[0].type;
     let concatFileName;
-    console.log('nameOfInput-->', nameOfInput);
+    //console.log('nameOfInput-->', nameOfInput);
     if (nameOfInput === "Passport") {
       ts.fileName = uploadedFileName;
       concatFileName = 'Passport_' + fileNameToAdd;
@@ -215,7 +215,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       //this.contactMaritalStatus = result.EMS_EM_Mstatus__c;
       //console.log('this.contactMaritalStatus==>'+this.contactMaritalStatus);
       //console.log('this.contactID==>'+this.recordId);
-      console.log('this.contactID==>' + this.contactID);
+      //console.log('this.contactID==>' + this.contactID);
       const employye = result;
       if (employye != null) {
         //this.readonlyfield=true;
@@ -252,12 +252,25 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         this.VehicleNumber = employye.Vehicle_Number__c;
         if (this.Vehicletypeval != null) {
           this.showvehicle = true;
+          this.doyouhaveavehicleval = true;
         }
 
         if (this.PostOnboardingConfirm) {
           this.buttonDisable = true;
           this.readonlyfield = true;
         }
+
+        if(this.pazip === this.cazip){
+          console.log('address Same')
+          this.inputcheckboxValue = event.target.checked;
+          console.log('address Same' +             this.inputcheckboxValue);
+    
+        }
+        else{
+          this.inputcheckboxValue = 'Unchecked';
+        }
+
+        
 
         getPayrollInfo({ conId: this.contactID })
           .then(result => {
@@ -445,23 +458,26 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   AddressCheckboxChange(event) {
 
     this.inputcheckboxValue = event.target.checked ? 'Checked' : 'Unchecked';
-    console.log('this.inputcheckboxValue-->', this.inputcheckboxValue);
+    //console.log('this.inputcheckboxValue-->', this.inputcheckboxValue);
+    
 
-    if (this.inputcheckboxValue == 'Checked') {
-      console.log('address checked')
+    if (this.inputcheckboxValue == 'Checked') { 
+      //console.log('address checked')
       this.padrressline1 = this.cadrressline1;
       this.padrressline2 = this.cadrressline2;
       this.pastate = this.castate;
       this.pacity = this.cacity;
       this.pazip = this.cazip;
     } else {
-      console.log('address unchecked')
+      //console.log('address unchecked')
       this.padrressline1 = '';
       this.padrressline2 = '';
       this.pastate = '';
       this.pacity = '';
       this.pazip = '';
     }
+
+    
   }
 
   // Identity Information"....
@@ -552,7 +568,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
 
   selectedDetails(event) {
-    console.log(event.target.value);
+    //console.log(event.target.value);
     let seletedDetails = event.target.value
     this.isWelcomeaboard = false;
     this.isShowWelcomeaboard = false;
@@ -890,7 +906,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       contentDocumentId: e.target.dataset.id
     })
       .then(response => {
-        console.log('Disturbution----' + JSON.stringify(response));
+        //console.log('Disturbution----' + JSON.stringify(response));
         window.open(response.ContentDownloadUrl);
       })
       .catch(error => {
@@ -904,7 +920,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$pfId' })
   wiredResult({ data, error }) {
     if (data) {
-      console.log('Pf Forms Files-->' + JSON.stringify(data));
+      //console.log('Pf Forms Files-->' + JSON.stringify(data));
       /* this.filesList = Object.keys(data).map(item => ({
          "label": data[item],
          "value": item,
@@ -912,23 +928,25 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
        })) */
       this.documents = data;
 
-      console.log('' + JSON.stringify(this.documents));
+      //console.log('' + JSON.stringify(this.documents));
     }
     if (error) {
       console.log(error)
     }
   }
-  previewHandler(event) {
-    console.log(event.target.dataset.id)
+  previewHandler0(event) {
+    const fileId = event.target.dataset.id;
+    //console.log(event.target.dataset.id)
     this[NavigationMixin.Navigate]({
       type: 'standard__namedPage',
       attributes: {
-        pageName: 'filePreview'
+          pageName: 'filePreview'
       },
       state: {
-        selectedRecordId: event.target.dataset.id
+          recordIds: fileId,
+          selectedRecordId: fileId
       }
-    })
+  });
   }
   // For Documents Files
   filesList0 = []
@@ -936,7 +954,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$docId' })
   wiredResult0({ data, error }) {
     if (data) {
-      console.log('Documents Files-->' + JSON.stringify(data));
+      //console.log('Documents Files-->' + JSON.stringify(data));
       /* this.filesList0 = Object.keys(data).map(item => ({
          "label": data[item],
          "value": item,
@@ -945,10 +963,10 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       //console.log(this.filesList0)
       this.docs = data;
 
-      console.log('' + JSON.stringify(this.documents));
+      //console.log('' + JSON.stringify(this.documents));
     }
     if (error) {
-      console.log(error)
+     // console.log(error)
     }
   }
 
@@ -959,17 +977,17 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$policiesId' })
   wiredResult1({ data, error }) {
     if (data) {
-      console.log('Company Policies Files-->' + JSON.stringify(data));
+      //console.log('Company Policies Files-->' + JSON.stringify(data));
       /* this.filesList1 = Object.keys(data).map(item => ({
          "label": data[item],
          "value": item,
          "url": `/sfc/servlet.shepherd/document/download/${item}`
        }))*/
       this.cpPolicies = data;
-      console.log(this.cpPolicies)
+      //console.log(this.cpPolicies)
     }
     if (error) {
-      console.log(error)
+      //console.log(error)
     }
   }
 
@@ -984,11 +1002,11 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
-        console.log("this.dob", this.dob);
-        console.log("this.dow", this.dow);
-        console.log("this.graduationDate", this.graduationDate);
+        //console.log("this.dob", this.dob);
+        //console.log("this.dow", this.dow);
+        //console.log("this.graduationDate", this.graduationDate);
 
-        console.log("today", today);
+        //console.log("today", today);
         if (this.dob >= today) {
           //console.log("I am in if");
           this.dispatchEvent(
@@ -1253,12 +1271,12 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isIdentifyDetailsCheckbox = true;
-            console.log('isIdentityDetails');
+            //console.log('isIdentityDetails');
 
           })
           .catch(error => {
             this.error = error;
-            console.log('this.error-->' + JSON.stringify(this.error));
+            //console.log('this.error-->' + JSON.stringify(this.error));
           });
       }
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
@@ -1316,12 +1334,12 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isFinancialInformationCheckbox = true;
-            console.log('isIdentityDetails');
+            //console.log('isIdentityDetails');
 
           })
           .catch(error => {
             this.error = error;
-            console.log('this.error-->' + JSON.stringify(this.error));
+            //console.log('this.error-->' + JSON.stringify(this.error));
           });
       }
       else {
@@ -1362,7 +1380,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           })
           .catch(error => {
             this.error = error;
-            console.log('this.error-->' + JSON.stringify(this.error));
+            //console.log('this.error-->' + JSON.stringify(this.error));
           });
       }
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
@@ -1392,7 +1410,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           })
           .catch(error => {
             this.error = error;
-            console.log('this.error-->' + JSON.stringify(this.error));
+            //console.log('this.error-->' + JSON.stringify(this.error));
           });
       }
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
@@ -1419,7 +1437,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           })
           .catch(error => {
             this.error = error;
-            console.log('this.error-->' + JSON.stringify(this.error));
+            //console.log('this.error-->' + JSON.stringify(this.error));
           });
       }
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
@@ -1446,7 +1464,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       statusfield.Post_Onboarding_Confirm__c = this.PostOnboardingConfirm;
       updateStatus({ statusUpdate: statusfield, ConRecordid: this.contactID })
         .then(result => {
-          console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
+          //console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
           this.dispatchEvent(
             new ShowToastEvent({
               title: 'Success',
@@ -1465,7 +1483,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         variant: 'error'
       });
       this.dispatchEvent(even);
-      console.log('error', error);
+      //console.log('error', error);
       return false;
 
     }
@@ -1526,7 +1544,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     if (totalRecords.data) {
       if (totalRecords.data.listfamilyrecords && (totalRecords.data.listfamilyrecords.length > 0)) {
         this.dependenciesRecordsArray = totalRecords.data.listfamilyrecords;
-        console.log('this.dependenciesRecordsArray---> ' + JSON.stringify(this.dependenciesRecordsArray));
+        //console.log('this.dependenciesRecordsArray---> ' + JSON.stringify(this.dependenciesRecordsArray));
       }
     }
     if (totalRecords.error) {
@@ -1543,12 +1561,12 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   ];
 
   addRow() {
-    console.log("Length", this.itemList.length);
-    console.log("Length", this.dependenciesRecordsArray);
+    //console.log("Length", this.itemList.length);
+    //console.log("Length", this.dependenciesRecordsArray);
     if (this.dependenciesRecordsArray.length >= 5 || (this.dependenciesRecordsArray.length + this.itemList.length >= 5)) {
-      console.log("I WILL NOT EXECUETE")
+      //console.log("I WILL NOT EXECUETE")
     } else if (this.dependenciesRecordsArray.length <= 5 || (this.dependenciesRecordsArray.length + this.itemList.length <= 5)) {
-      console.log("Executed")
+      //console.log("Executed")
       ++this.keyIndex;
       var newItem = [{ id: this.keyIndex }];
       this.itemList = this.itemList.concat(newItem);
@@ -1588,6 +1606,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
 
   }
+  @track isLoading = false;
 
   handleSubmit1(event) {
     var isVal = true;
@@ -1600,6 +1619,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         //console.log("element", JSON.stringify(element));
         element.submit();
         this.showSpinner = true;
+        this.updateRecordView();
         this.dispatchEvent(
           new ShowToastEvent({
             title: 'Success',
@@ -1607,6 +1627,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
             variant: 'success',
           }),
         );
+        
         refreshApex(this.totalFamilyRecords);
         this.showSpinner = false;
         this.isFamilyInformationCheckbox = true;
@@ -1620,7 +1641,9 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           message: 'Please enter all the required fields',
           variant: 'error',
         }),
-      );
+      ).finally(()=>{
+        this.handleIsLoading(false);
+    });
     }
     if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
       || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
@@ -1630,6 +1653,17 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.buttonDisable = false;
     }
   }
+
+  //show/hide spinner
+   handleIsLoading(isLoading) {
+    this.isLoading = isLoading;
+}
+
+updateRecordView() {
+   setTimeout(() => {
+        eval("$A.get('e.force:refreshView').fire();");
+   }, 1000); 
+}
 
   deleteDependencyRecord(event) {
     const recordId = event.target.dataset.recordid;

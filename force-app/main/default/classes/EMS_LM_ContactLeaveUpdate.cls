@@ -114,21 +114,19 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
 }
 
 
-// this method is used get the location of that current logged in employee to check the Organization wide holidays of that Location
-   @AuraEnabled(Cacheable=true)
-   public static Contact getLocation(Id userid){
+// this method is used get the location of that current logged in employee to check the Organization wide holidays of that Location   
+    @AuraEnabled(Cacheable=true)
+   public static Contact getbilling(Id userid){
        Contact cnt = new Contact();
-      String location = '';
+      
       if(userid !=null){
       user u =[Select id, ContactId, Email from user where id = :userid];
       try{
          if(u.ContactId !=null){
-            cnt = [select Id, Location__c,Work_Location__r.Country__c , EMS_TM_In_Billing__c from Contact where Id = :u.ContactId Limit 1];
-           // location = c.Location__c;
+            cnt = [select Id, EMS_TM_In_Billing__c,Work_Location__r.Country__c from Contact where Id = :u.ContactId Limit 1];       
          }
          else{
-            cnt = [select Id, Location__c,Work_Location__r.Country__c , EMS_TM_In_Billing__c from Contact  where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid Limit 1];
-           // location = c.Location__c;
+            cnt = [select Id,EMS_TM_In_Billing__c,Work_Location__r.Country__c from Contact  where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid Limit 1];
          }
       }
       catch (Exception e){
