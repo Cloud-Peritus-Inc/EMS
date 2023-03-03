@@ -7,7 +7,9 @@
 		<div class="slds-col slds-size_1-of-2">
 			<c-time-sheet-tile></c-time-sheet-tile>
 			<c-goal-metrics></c-goal-metrics>
+			<template if:true={hidePendingTab}>
 			<c-recent-request-tile></c-recent-request-tile>
+			</template>
 		</div>
 		<div class="slds-col slds-size_1-of-2">
 			<c-leave-management-_-tile> </c-leave-management-_-tile>
