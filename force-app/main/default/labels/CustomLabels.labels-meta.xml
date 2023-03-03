@@ -40,7 +40,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TimeSheet Label</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/CpLink/s/timepage</value>
+        <value>https://cpprd--dev.sandbox.my.site.com/CpLink/s/timepage</value>
     </labels>
     <labels>
         <fullName>Pre_Onboarding_Form_URL</fullName>
@@ -69,5 +69,12 @@
         <protected>false</protected>
         <shortDescription>Onboarding Request Record URL</shortDescription>
         <value>https://cpprd--dev.sandbox.my.site.com/onboarding/s/?</value>
+    </labels>
+    <labels>
+        <fullName>Project_label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Project label</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-tm-project/EMS_TM_Project__c/Default</value>
     </labels>
 </CustomLabels>

@@ -1,0 +1,48 @@
+<template>
+
+    <div class="homeCard" style="border-top : 3px solid #9602c7;">
+    <lightning-card>
+        <div class="childparent">
+          <div class="childtext" style="padding-left:20px;">
+               <div style="padding-left:5px;"> 
+          <lightning-icon icon-name="utility:cases" size="medium" alternative-text="In Progress" title="In Progress"></lightning-icon>
+           <font size="4"  > &nbsp;&nbsp;<b>My Service Requests </b> </font> <br/>
+            </div> 
+          </div>
+           <div class="childimage">
+             
+           </div>
+        </div>
+
+     <div class="container">
+    <div class="box" style="width:35%"> <font size="48px"><b> {numberofOpen} </b></font> <br/><i> Open</i> </div>
+    <div class="box" style="width:35%"> <font size="48px"><b> {numberofInprogress} </b></font> <br/> <i>In Progress/Escalated</i> </div>
+    <div class="box" style="width:30%"><font size="48px"><b> {numberofCompleted} </b></font><br/><i> Closed</i> </div>
+    <div style="clear: both;"></div> 
+    </div>
+        <br/>
+  <center><div class="table-container"><table>
+    <thead>
+      <tr>
+        <th>Service Number</th>
+        <th>Open Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template for:each={caseList} for:item="row">
+        <tr key={row.id}>
+          <td><a href="#" data-id={row.caseid} onclick={handleCaseClick}>{row.caseNumber}</a></td>
+          <td><lightning-formatted-date-time value={row.CreatedDate}> </lightning-formatted-date-time></td>
+          <td>{row.Status}</td>
+        </tr>
+      </template>
+    </tbody>
+  </table></div> </center> <br/>
+  <footer class="slds-modal__footer">
+   <center> <a href="#"  ><font class="uiOutputText" onclick={handleClick}>My Service requests</font></a> </center>
+            
+                        </footer>
+    </lightning-card>
+    </div>
+</template>

@@ -39,6 +39,8 @@
                 <behavior>Edit</behavior>
                 <field>EMS_LM_Status__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EMS_LM_Approver__c</field>
@@ -68,7 +70,6 @@
                 <field>EMS_LM_Approved_On__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>

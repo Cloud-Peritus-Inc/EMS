@@ -21,7 +21,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
     	
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id, lastName, EMS_EM_JD__c, Email, Personal_Email__c, EMS_RM_LastName__c,Name, Is_Email_Sent__c from Contact WHERE EMS_EM_JD__c != NULL AND RecordType.Name = \'Applicant\'' 
+        	'SELECT id, lastName, EMS_EM_JD__c, Email, Is_PreOnboarding_Mail_Sent__c, Personal_Email__c, EMS_RM_LastName__c,Name, Is_Email_Sent__c from Contact WHERE EMS_EM_JD__c != NULL AND RecordType.Name = \'Applicant\'' 
         );
     }
     
@@ -29,14 +29,16 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         
         List<EMS_EM_Onboarding_Request__c> applicantsList = new List<EMS_EM_Onboarding_Request__c>();
         List<Contact> applicantsToSendMail = new List<Contact>();
+        List<Contact> finalContactList = new List<Contact>();
         
         for(Contact contactRec : contactList){
-            if(contactRec.EMS_EM_JD__c.addDays(-10) == System.today()){
+            if((contactRec.EMS_EM_JD__c.addDays(-10) == System.today() || contactRec.EMS_EM_JD__c.addDays(-11) == System.today()) && contactRec.Is_PreOnboarding_Mail_Sent__c == False){
                EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
                 applicantRec.EMS_EM_Personal_Email__c = contactRec.Personal_Email__c;
                 applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
                 applicantRec.ContactId1__c = contactRec.Id;
                 applicantsList.add(applicantRec);
+                applicantsToSendMail.add(contactRec);
                 String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id);
                 if(status == 'success'){
                     sendEmailToHR(contactRec.Id);
@@ -46,6 +48,13 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
             }
         }
         insert applicantsList;
+        if(applicantsToSendMail.size() > 0){
+            for(Contact con : applicantsToSendMail){
+                con.Is_PreOnboarding_Mail_Sent__c = True;
+                finalContactList.add(con);
+            }
+            update finalContactList;
+        }
         List<ems_EM_Additional_Detail__c> additionalDetailsList = new List<ems_EM_Additional_Detail__c>();
         for(EMS_EM_Onboarding_Request__c onboardingRecords : applicantsList){
             ems_EM_Additional_Detail__c applicantRec = new ems_EM_Additional_Detail__c();

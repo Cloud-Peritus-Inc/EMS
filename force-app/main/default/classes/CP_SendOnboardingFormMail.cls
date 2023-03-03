@@ -46,7 +46,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
     
     public void afterUpdate(List<Contact> newList, List<Contact> oldList) {      
          System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterUpdate() : BEGIN');
-         //sendOnboardingFormMail(newList);
+         sendOnboardingFormMail(newList);
          System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterUpdate() : END');       
      }
     
@@ -54,9 +54,25 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         
         List<EMS_EM_Onboarding_Request__c> applicantsList = new List<EMS_EM_Onboarding_Request__c>();
         List<Contact> applicantsToSendMail = new List<Contact>();
+        List<Task> tskList = new List<Task>();
+        Group itGroup = [select Id,Name from Group where  Type = 'Queue' AND NAME = 'TA Team'];
+        
         Id contRecordTypeId = [Select id from RecordType where sObjectType = 'Contact' and developerName ='Applicant' ].id ;
         
         for(Contact contactRec : contactList){
+            
+            Date reminderDate = contactRec.EMS_EM_JD__c.addDays(2);
+                    
+                    Task t = new Task();
+                    t.OwnerId = itGroup.Id;
+                    t.Subject = 'Send joining date confirmation to the respective Resource Manager';
+                    t.Status = 'Open';
+                    t.Priority = 'Normal';
+                    t.IsReminderSet = true;
+                    t.WhoId = contactRec.Id;
+                    t.ActivityDate = contactRec.EMS_EM_JD__c.addDays(1);
+                    t.ReminderDateTime = DateTime.newInstance(reminderDate.year(), reminderDate.month(), reminderDate.day(), 20, 00, 00);
+                    tskList.add(t);
         
             if(contactRec.EMS_EM_JD__c != NULL && contactRec.RecordTypeId == contRecordTypeId){
                 Date today = Date.today();
@@ -68,8 +84,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
                     applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
                     applicantRec.ContactId1__c = contactRec.Id;
                     applicantRec.Status__c = 'Triggered';
-                    applicantsList.add(applicantRec);
-                    
+                    applicantsList.add(applicantRec);                    
                     
                     String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id); 
                     if(status == 'success'){
@@ -82,6 +97,9 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         }
         if(applicantsList.size() > 0){
             insert applicantsList;
+        }
+        if(tskList!=null && tskList.size()>0){
+            insert tskList;
         }
         List<ems_EM_Additional_Detail__c> additionalDetailsList = new List<ems_EM_Additional_Detail__c>();
         for(EMS_EM_Onboarding_Request__c onboardingRecords : applicantsList){

@@ -17,7 +17,7 @@
 
 global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject>{
     
-    /**
+    /** 
 * @author Rohit Bhupati
 * @date 8/02/2023
 * @description start query to get the data of the object that required to process.
@@ -35,7 +35,7 @@ global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject
                                          EMS_LM_No_Of_Availble_Leaves__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
                                          EMS_LM_No_Of_Available_Maternity_Leave__c, EMS_LM_No_Of_Available_Compensatory_Off__c,
                                          EMS_LM_No_Of_Available_Bereavement_Leave__c,EMS_EM_JD__c,
-                                         (SELECT Id, EMS_LM_Employee__c,CreditedMonthYear__c FROM Leave_Credits__r)
+                                         (SELECT Id, EMS_LM_Employee__c,CreditedMonthYear__c,EMS_LM_Leave_Type__c FROM Leave_Credits__r)
                                          FROM Contact WHERE RecordTypeId =:ContactConstant.RESOURCE_RECORDTYPEID AND AccountId !=Null ]);
     }
     
@@ -83,7 +83,7 @@ global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject
              String uniqueKey = String.valueOf(processingMonth)+String.valueOf(isItlessthan15);
             
                 for(EMS_LM_Leave_Credit__C leaveCreds : conRec.Leave_Credits__r){
-                    if(leaveCreds.CreditedMonthYear__c == uniqueMonthYear){
+                    if(leaveCreds.CreditedMonthYear__c == uniqueMonthYear && leaveCreds.EMS_LM_Leave_Type__c ==AnnualLeaveTypeId){
                        shouldIcreatedTheBal = false; 
                     }
                 }

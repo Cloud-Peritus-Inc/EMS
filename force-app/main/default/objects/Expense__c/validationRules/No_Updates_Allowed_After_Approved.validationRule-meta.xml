@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Updates_Allowed_After_Approved</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+NOT( OR(ISCHANGED( Reimbursed_Date__c ), ISCHANGED( is_Reimbursed__c ))),
+ISPICKVAL(PRIORVALUE(Status__c),&quot;Approved&quot;)
+)</errorConditionFormula>
+    <errorMessage>No updates are allowed on Approved Expenses. Please contact the admin.</errorMessage>
+</ValidationRule>

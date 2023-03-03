@@ -5,19 +5,21 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Send Due Remainder to Employees</name>
     <style>freeForm</style>
-    <subject>Your timesheet is due please submit</subject>
+    <subject>Timesheet: Reminder to fill your timesheet for this week</subject>
     <textOnly>Dear Employees,
+
 
 This is a reminder that your weekly timesheet is due today. Please complete and submit your timesheet before the end of the day.
 
 If you have any questions about your timesheet, then please contact your supervisor.
-Access your timesheet at:Click Here
 
-*Please ignore this email if you have already submitted the timesheet.
+
+Access your timesheet here.
+
 
 Regards,
 
-Team Cloud Peritus</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

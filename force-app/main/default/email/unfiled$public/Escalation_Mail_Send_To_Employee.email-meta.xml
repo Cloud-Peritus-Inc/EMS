@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Escalation Mail Send To Employee</name>
+    <style>freeForm</style>
+    <subject>Timesheet: Your timesheet is overdue</subject>
+    <textOnly>Dear {!Contact.Name},
+
+
+You did not submit the timesheet that was due this week by the deadline on Friday. It is mandatory for all employees to submit their weekly timesheets by Friday end of the day every week.
+
+
+Please ensure that you are compliant with the company&apos;s timesheet policy.
+
+
+Access your timesheet here. Please submit the timesheet without delay.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
