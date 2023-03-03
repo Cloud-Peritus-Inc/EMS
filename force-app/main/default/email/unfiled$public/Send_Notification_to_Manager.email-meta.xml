@@ -5,14 +5,16 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Send Notification to Manager</name>
     <style>freeForm</style>
-    <subject>New project is assigned to you</subject>
+    <subject>Project Management: A new project is assigned to you</subject>
     <textOnly>Dear {!EMS_TM_Project__c.Project_Manager__c},
 
-The project {!EMS_TM_Project__c.Name} was created with you as the Project Manager. Please find the link to the project here: Click Here
+
+A new project {!EMS_TM_Project__c.Name} was created with you as the Project Manager. Please find the link to the project here.
+
 
 Regards,
 
-Team Cloud Peritus</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

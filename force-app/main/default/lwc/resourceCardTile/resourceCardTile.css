@@ -2,6 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-height: 125px;
+    max-height: 125px;
 	padding: 5px;
 }
 
@@ -65,7 +67,7 @@
 }
 .child3 {
     width: 30%;
-    padding: 5px;
+    
 }
 
 .profile-picture {

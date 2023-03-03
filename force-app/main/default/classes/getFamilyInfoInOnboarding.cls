@@ -31,7 +31,7 @@ public class getFamilyInfoInOnboarding {
                                  Relationships__c,
                                  Is_It_Emergency_Contact__c,
                                  Family_Member_Name__c
-                                 FROM Family_Information__c Where Resource__c =:contactId LIMIT 5];
+                                 FROM Family_Information__c Where Resource__c =:contactId];
         }Catch(Exception ex){
             System.debug('### Exception Occured With'+ex.getStackTraceString());
             System.debug('### Exception Occured With'+ex.getMessage());
