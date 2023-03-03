@@ -578,12 +578,10 @@
                                     <h6>Note: We are collecting family information primarily for emergency and medical insurance purposes. Please ensure that you enter the details of your father, mother, spouse and children (if applicable). Also, indicate your emergency contact.</h6>
                                 </div>
                                <br>
-                                <template for:each={itemList} for:item="item" for:index="index">
-                                    <lightning-record-edit-form key={item.id} object-api-name="Family_Information__c"
-                                        class="createDependenciesRecord" density="comfy">
+                                    <lightning-record-edit-form object-api-name="Family_Information__c" onsuccess={handlefamilySuccess} onsubmit={handlesubmitfamily} onerror={handlefamilyerror}>
                                         <div class="slds-grid slds-wrap">
-                                            <div class="slds-col slds-size_4-of-12" style="padding-left: 25px;">
-                                                <lightning-input-field field-name="Family_Member_Name__c" disabled={readonlyfield} onkeydown={handleFirstLastNameKeyDown}
+                                            <div class="slds-col slds-size_5-of-12" style="padding-left: 25px;">
+                                                <lightning-input-field field-name="Family_Member_Name__c" required disabled={readonlyfield} onkeydown={handleFirstLastNameKeyDown}
                                                     variant="label-stacked">
                                                 </lightning-input-field>
                                                 <lightning-input-field field-name="Is_It_Emergency_Contact__c"
@@ -595,8 +593,8 @@
                                                     class="inputValField" style="margin-top:28px;">
                                                 </lightning-input-field>
                                             </div>
-                                            <div class="slds-col slds-size_4-of-12">
-                                                <lightning-input-field field-name="Relationships__c"
+                                            <div class="slds-col slds-size_5-of-12">
+                                                <lightning-input-field field-name="Relationships__c" required
                                                     variant="label-stacked" disabled={readonlyfield} class="inputValField">
                                                 </lightning-input-field>
                                                 <lightning-input-field onkeydown={handleAadharNumberKeyDown} field-name="Contact_Phone_Number__c"
@@ -609,44 +607,22 @@
                                                 </lightning-input-field>
                                                 
                                             </div>
-                                            <div class="slds-col slds-size_2-of-12">
-                                                <lightning-input-field field-name="Resource__c" variant="label-stacked"
-                                                    class="slds-hide inputValField" disabled={readonlyfield} value={contactID} required>
-                                                </lightning-input-field>
-                                            </div>
-
-                                            <div class="slds-col slds-size_2-of-12" style="margin-top:18px">
-                                                &nbsp;&nbsp; <lightning-icon icon-name="action:new" access-key={item.id}
-                                                    id={index} alternative-text="Add Row" size="small" title="Add Row"
-                                                    onclick={addRow} disabled={readonlyfield} style="cursor:pointer">
-                                                </lightning-icon> &nbsp;&nbsp;
-                                                <lightning-icon icon-name="action:delete" access-key={item.id}
-                                                    id={index} alternative-text="Delete Row" size="small"
-                                                    title="Delete Row" disabled={readonlyfield} onclick={removeRow} style="cursor:pointer">
-                                                </lightning-icon>
-                                            </div>
                                         </div> &nbsp;&nbsp; &nbsp;&nbsp;
+                                        <div class="slds-align_absolute-center">
+                                            <lightning-button label="Save" type="submit" disabled={readonlyfield} title="Save"
+                                                variant="brand"></lightning-button>
+                                        </div>
                                     </lightning-record-edit-form>
-                                </template>
                                     <br><br>
-                                <lightning-layout>
-                                    <br>
-                                    <br>
-                                    <div class="slds-align_absolute-center">
-                                        <lightning-button label="Save" type="Submit" disabled={readonlyfield} onclick={handleSubmit1} title="Save"
-                                            variant="brand"></lightning-button>
+                                    <div if:true={isLoaded} class="cstm-spinner">
+                                        <lightning-spinner alternative-text="Loading..."></lightning-spinner>
                                     </div>
-                                </lightning-layout>
-                                <br /><br />
 
 
                                 <div class="slds-p-around_xx-small">
                                     <h3 class="slds-section__title slds-theme_shade" style="padding-left: 15px;">
                                         <span class="slds-truncate slds-p-horizontal_small">Existing Details</span>
                                     </h3> <br>
-                                    <div if:true={showSpinner}>
-                                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                                    </div>
                                     <template for:each={dependenciesRecordsArray} for:item="eachDepencies">
                                         <lightning-record-edit-form object-api-name="Family_Information__c"
                                             record-id={eachDepencies.Id} onsuccess={handleSuccess}
@@ -685,6 +661,7 @@
                                         </lightning-record-edit-form>
                                     </template>
                                 </div>
+                                <br><br>
                             </div>
                         </div>
                     </template>
@@ -763,7 +740,7 @@
                                             <div class="slds-col" style="padding-left: 25px;">
                                                 <span>
                                                     <lightning-input type="checkbox" name="Do_you_have_a_vehicle__c" disabled={readonlyfield}
-                                                        label="Do you have a vehicle?" value={doyouhaveavehicleval}
+                                                        label="Do you have a vehicle?" value={checkboxValue}
                                                         onchange={doyouhaveavehicle}></lightning-input>
                                                         <br><br>
 

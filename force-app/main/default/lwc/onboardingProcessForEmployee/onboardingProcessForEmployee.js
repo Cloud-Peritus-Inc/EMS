@@ -139,8 +139,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   isCompanyPolicies = false;
   isCompanyInformation = false;
   isConfirm = false;
-  showSpinner = false;
-
   correctImages = correctImage;
   wrongImages = wrongImage;
 
@@ -202,10 +200,18 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
 
   connectedCallback() {
+    const checkboxValue = window.localStorage.getItem('my-checkbox-value');
+     if (checkboxValue) {
+    // If the value exists, set the checkbox to the stored value
+    this.checkboxValue = JSON.parse(checkboxValue);
+  }
+
 
     var dateVar = new Date();
     //Current Time 
-    this.currenttime = new Date().toLocaleTimeString();;
+    this.currenttime = new Date().toLocaleTimeString();
+
+     
 
 
     getUserContactInfo({ userId: this.userId }).then(result => {
@@ -252,7 +258,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         this.VehicleNumber = employye.Vehicle_Number__c;
         if (this.Vehicletypeval != null) {
           this.showvehicle = true;
-          this.doyouhaveavehicleval = true;
+          this.checkboxValue = true;
         }
 
         if (this.PostOnboardingConfirm) {
@@ -547,10 +553,17 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     this.VehicleNumber = event.target.value;
   }
   doyouhaveavehicle(event) {
-    this.doyouhaveavehicleval = event.target.checked ? 'Checked' : 'Unchecked';
+      this.checkboxValue = event.target.checked;
+      console.log('this.checkboxValue--------->'  +  this.checkboxValue)
 
-    if (this.doyouhaveavehicleval == 'Checked') {
+  // Store the value in localStorage
+  window.localStorage.setItem('my-checkbox-value', JSON.stringify(this.checkboxValue));
+    //this.doyouhaveavehicleval = event.target.checked ? 'Checked' : 'Unchecked';
+
+    if (this.checkboxValue == true) {
       this.showvehicle = true;
+      this.checkboxValue = true
+      console.log('this.checkboxValue--------->'  +  this.checkboxValue)
     } else {
       this.showvehicle = false;
     }
@@ -1515,27 +1528,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @track totalFamilyRecords;
   @track dependenciesRecordsArray = [];
 
-  get getdependenciesRecordsArrayLength() {
-    return this.dependenciesRecordsArray.length === 5;
-  }
-  get showLabel() {
-    return this.dependenciesRecordsArray.length === 0 ? "Create" : "Edit";
-  }
-  get hideExsistingDependencies() {
-    return this.dependenciesRecordsArray.length === 0 ? false : true;
-  }
-  get checkForDependents() {
-    return this.dependenciesRecordsArray.length === 0 ? true : false;
-  }
-  get showMedicalDetails() {
-    return this.medicalInsuranceId ? true : false;
-  }
-  get showMedicalDetailsLabel() {
-    return this.medicalInsuranceId ? "Edit" : "Create";
-  }
-
-
-
   @wire(getFamilyInfo, { contactId: "$contactID" })
   getfamilyinformationrecords(totalRecords) {
     this.totalFamilyRecords = totalRecords;
@@ -1551,36 +1543,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       //console.log("Error OCcured With", totalRecords.error);
     }
   }
-
-
-  keyIndex = 0;
-  @track itemList = [
-    {
-      id: 0
-    }
-  ];
-
-  addRow() {
-    //console.log("Length", this.itemList.length);
-    //console.log("Length", this.dependenciesRecordsArray);
-    if (this.dependenciesRecordsArray.length >= 5 || (this.dependenciesRecordsArray.length + this.itemList.length >= 5)) {
-      //console.log("I WILL NOT EXECUETE")
-    } else if (this.dependenciesRecordsArray.length <= 5 || (this.dependenciesRecordsArray.length + this.itemList.length <= 5)) {
-      //console.log("Executed")
-      ++this.keyIndex;
-      var newItem = [{ id: this.keyIndex }];
-      this.itemList = this.itemList.concat(newItem);
-    }
-  }
-
-  removeRow(event) {
-    if (this.itemList.length >= 2) {
-      this.itemList = this.itemList.filter(function (element) {
-        return parseInt(element.id) !== parseInt(event.target.accessKey);
-      });
-    }
-  }
-
+  isLoaded = false;
   contactPhone = false;
   memberDateOfBirth = false;
   Emergencycheckboxval;
@@ -1606,45 +1569,25 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
 
   }
-  @track isLoading = false;
-
-  handleSubmit1(event) {
-    var isVal = true;
-    this.template.querySelectorAll('.inputValField').forEach(element => {
-      isVal = isVal && element.reportValidity();
-    });
-    if (isVal) {
-
-      this.template.querySelectorAll('.createDependenciesRecord').forEach(element => {
-        //console.log("element", JSON.stringify(element));
-        element.submit();
-        this.showSpinner = true;
-        this.updateRecordView();
-        this.dispatchEvent(
-          new ShowToastEvent({
-            title: 'Success',
-            message: 'Family record successfully created',
-            variant: 'success',
-          }),
-        );
-        
-        refreshApex(this.totalFamilyRecords);
-        this.showSpinner = false;
-        this.isFamilyInformationCheckbox = true;
-
+  
+  handlefamilySuccess(event){
+    this.dispatchEvent(
+      new ShowToastEvent({
+        title: 'Success',
+        message: 'Family Member Added successfully',
+        variant: 'success',
+      }),
+    );
+    
+    refreshApex(this.totalFamilyRecords);
+    const inputFields = this.template.querySelectorAll('lightning-input-field');
+    if (inputFields) {
+      inputFields.forEach(field => {
+          field.reset();
       });
+  } this.isLoaded = false;
+    this.isFamilyInformationCheckbox = true;
 
-    } else {
-      this.dispatchEvent(
-        new ShowToastEvent({
-          title: 'Error creating record',
-          message: 'Please enter all the required fields',
-          variant: 'error',
-        }),
-      ).finally(()=>{
-        this.handleIsLoading(false);
-    });
-    }
     if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
       || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
       this.buttonDisable = true;
@@ -1654,18 +1597,30 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
   }
 
-  //show/hide spinner
-   handleIsLoading(isLoading) {
-    this.isLoading = isLoading;
-}
+  handlesubmitfamily(event){
+    
+    event.preventDefault();
+    const fields = event.detail.fields;
+    fields.Resource__c = this.contactID;
+    this.template.querySelector('lightning-record-edit-form').submit(fields);
+    this.isLoaded = true;
+  }
 
-updateRecordView() {
-   setTimeout(() => {
-        eval("$A.get('e.force:refreshView').fire();");
-   }, 1000); 
-}
+  handlefamilyerror(event){
+    
+    this.dispatchEvent(
+      new ShowToastEvent({
+        title: 'error',
+        message: event.detail.detail,
+        variant: 'error',
+      }),
+    );
+    this.isLoaded = false;
+  }
+
 
   deleteDependencyRecord(event) {
+    this.isLoaded = true;
     const recordId = event.target.dataset.recordid;
     //console.log('record id--------> ' + event.target.dataset.recordid);
     deleteRecord(recordId)
@@ -1673,11 +1628,12 @@ updateRecordView() {
         this.dispatchEvent(
           new ShowToastEvent({
             title: 'Success',
-            message: 'Record  Deleted Suscessfully',
+            message: 'Family Member Deleted Suscessfully',
             variant: 'success'
           })
         );
         refreshApex(this.totalFamilyRecords);
+        this.isLoaded = false;
         this.isFamilyInformationCheckbox = true;
         if (this.totalFamilyRecords.data.listfamilyrecords.length === 1) {
           this.dependenciesRecordsArray = [];
