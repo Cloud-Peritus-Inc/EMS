@@ -122,7 +122,7 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Work_Location__c</field>
             </layoutItems>
         </layoutColumns>
@@ -160,7 +160,7 @@
                 <field>EMS_RM_Notice_Period__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Location__c</field>
             </layoutItems>
         </layoutColumns>
@@ -280,6 +280,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>NewTask</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>NewEvent</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -363,11 +368,6 @@
             <actionName>RecordShareHierarchy</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>17</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewTask</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>EnableCustomerPortal</actionName>
@@ -501,11 +501,22 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>EMS_EM_Membership_No__c</fields>
+        <fields>Amount__c</fields>
         <relatedList>EMS_EM_Benefits__c.EMS_EM_Nominee__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>OBJECT_ID</fields>
+        <relatedList>ems_EM_Additional_Detail__c.ContactId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>EMS_LM_Leave_Type__c</fields>
+        <fields>EMS_LM_Leaves_Credited__c</fields>
         <relatedList>EMS_LM_Leave_Credit__c.EMS_LM_Employee__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -517,67 +528,21 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Status__c</fields>
-        <relatedList>CP_Sales_Contact__c.Reports_To__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <fields>EMS_TM_ProjectName_Asgn__c</fields>
         <fields>EMS_TM_Status_Asgn__c</fields>
         <fields>EMS_TM_Billable__c</fields>
         <relatedList>EMS_TM_Assignment__c.EMS_TM_EmployeeName__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <relatedList>Resource_Resource_Relationship__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
-        <fields>Resource__c</fields>
-        <fields>Resource_Role__c</fields>
-        <fields>Reports_To_Role__c</fields>
-        <relatedList>Resource_Resource_Relationship__c.Resource_Reports_To__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
+        <fields>Type_Of_Project__c</fields>
+        <fields>EMS_TM_StartDate__c</fields>
+        <fields>EMS_TM_Status__c</fields>
         <relatedList>EMS_TM_Project__c.Project_Manager__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>FULL_NAME</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.PHONE1</fields>
-        <relatedList>Contact.Resource_Manager__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>OPPORTUNITY.NAME</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>OPPORTUNITY.CLOSE_DATE</fields>
-        <relatedList>Opportunity.Project_Manager__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Resource_Request__c.Requested_By__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>EMS_EM_Onboarding_Request__c.ContactId1__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Est_vs_Actuals__c.Project_Manager__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Est_vs_Actuals__c.Resource__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Expense__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Family_Member_Name__c</fields>
@@ -604,24 +569,20 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>EMS_Employee_referral__c.Resource_Referred_By__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>FULL_NAME</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.PHONE1</fields>
-        <relatedList>Contact.Buddy_Assigned__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
+        <fields>Assignment__c</fields>
+        <fields>EMS_TM_Status__c</fields>
         <relatedList>EMS_Timesheet__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Goal_Name__c</fields>
+        <fields>Status__c</fields>
         <relatedList>Goal__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Certification_Name__c</fields>
+        <fields>Completion_Date__c</fields>
         <relatedList>Certifications__c.Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>

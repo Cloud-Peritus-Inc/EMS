@@ -316,6 +316,15 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   connectedCallback() {
     updateOnboardingInfoOnPageLoads(this);
+    // if(this.padrressline1 != null && this.cadrressline1 != null && this.padrressline2 != null && this.cadrressline2 != null && 
+    //   this.pastate != null && this.castate != null && this.pacity != null && this.cacity != null && this.pazip != null && this.cazip != null
+    //   ){
+    //   if(this.padrressline1 === this.cadrressline1){
+    //     this.paFlag = true;
+    //     this.disableFlag = false;
+    //   }
+    // }
+    
     
   }
 
@@ -641,7 +650,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     this.altphone = event.target.value;
 
   }
-  inputcheckboxValue;
   onboardID;
 
 
@@ -654,7 +662,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   @track cadrressline1;
   @track cadrressline2;
-  @track padrressline1 = '';
+  @track padrressline1;
   @track padrressline2;
   @track castate;
   @track cacity;
@@ -664,8 +672,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   @track pazip;
   message;
   error;
-  addressId;
 
+  /*
   currentadrressline1(event) {
     this.cadrressline1 = event.target.value;
   }
@@ -707,25 +715,25 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     //window.console.log(this.getAccountRecord.Name); 
   }
 
+  */
+
   inputcheckboxValue;
-  inputcheckboxexperience;
-  Workcheckbox = true;
-  showExperienceyouhave = false;
+
 
   AddressCheckboxChange(event) {
 
     this.inputcheckboxValue = event.target.checked ? 'Checked' : 'Unchecked';
-    console.log('this.inputcheckboxValue-->', this.inputcheckboxValue);
+    //console.log('this.inputcheckboxValue-->', this.inputcheckboxValue);
 
     if (this.inputcheckboxValue == 'Checked') {
-      console.log('address checked')
+      //console.log('address checked')
       this.padrressline1 = this.cadrressline1;
       this.padrressline2 = this.cadrressline2;
       this.pastate = this.castate;
       this.pacity = this.cacity;
       this.pazip = this.cazip;
     } else {
-      console.log('address unchecked')
+      //console.log('address unchecked')
       this.padrressline1 = '';
       this.padrressline2 = '';
       this.pastate = '';
@@ -734,17 +742,161 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
   }
 
-  experienceCheckboxChange(event) {
-    this.inputcheckboxexperience = event.target.checked ? 'Checked' : 'Unchecked';
-    console.log('this.inputcheckboxexperience-->', this.inputcheckboxexperience);
+  @track paFlag;
+  @track addressFlag;
+  @track disableFlag = true;
 
-    if (this.inputcheckboxexperience == 'Checked') {
+  handleChange(event) {
+
+    this.addressFlag = true;
+        let addressList = this.template.querySelectorAll('.addressClass');
+        if (this.addressFlag) {
+          addressList.forEach((ele) => {
+            if (!ele.value) {
+              this.addressFlag = false;
+            }
+          });
+        }
+    this.disableFlag = this.addressFlag ? false : true;
+    if (!this.addressFlag) {
+      //console.log('1473');
+      this.paFlag = false;
+
+    }
+    const field = event.target.name;
+    if (field === 'Current_Address_Line_1__c') {
+        this.cadrressline1 = event.target.value;
+        //console.log('234',event.target.value);
+        if(event.target.value == ''){
+          //console.log('empty string');
+          this.cadrressline1 = null;
+
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.padrressline1 = this.cadrressline1;
+
+        }
+
+
+    }
+     if (field === 'Current_Address_Line_2__c') {
+        this.cadrressline2 = event.target.value;
+        //console.log(event.target.value);
+        if(event.target.value == ''){
+          this.cadrressline2 = null;
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.padrressline2 = this.cadrressline2;
+        }
+
+
+    }
+      if (field === 'EMS_EM_CA_State__c') {
+        this.castate = event.target.value;
+        //console.log(event.target.value);
+        if(event.target.value == ''){
+          this.castate = null;
+
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.pastate = this.castate;
+        }
+
+    }
+      if (field === 'EMS_EM_CA_City__c') {
+        this.cacity = event.target.value;
+        //console.log(event.target.value);
+        if(event.target.value == ''){
+          this.cacity = null;
+
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.pacity = this.cacity;
+        }
+
+    }
+     if (field === 'EMS_EM_CA_Zip__c') {
+        this.cazip = event.target.value;
+        //console.log(event.target.value);
+
+        if(event.target.value == ''){
+          this.cazip = null;
+
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.pazip = this.cazip;
+        }
+
+    }
+    //permanent address
+    if (field === 'Permanent_Address_Line_1__c') {
+        this.padrressline1 = event.target.value;
+        //console.log(event.target.value);
+        if(event.target.value == ''){
+          this.padrressline1 = null;
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.cadrressline1 = this.padrressline1;
+
+        }
+
+    }
+     if (field === 'Permanent_Address_Line_2__c') {
+        this.padrressline2 = event.target.value;
+        //console.log(event.target.value);
+        if(event.target.value == ''){
+          this.padrressline2 = null;
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.cadrressline2 = this.padrressline2;
+        }
+    }
+      if (field === 'EMS_EM_PA_State__c') {
+        this.pastate = event.target.value;
+        //console.log(event.target.value);
+        if(event.target.value == ''){
+          this.pastate = null;
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.castate = this.pastate;
+        }
+    }
+      if (field === 'EMS_EM_PA_City__c') {
+        this.pacity = event.target.value;
+        //console.log(event.target.value);
+        if(event.target.value == ''){
+          this.pacity = null;
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.cacity = this.pacity;
+        }
+    }
+      if (field === 'EMS_EM_PA_Zip__c') {
+        this.pazip = event.target.value;
+        //console.log(event.target.value);
+        if(event.target.value == ''){
+          this.pazip = null;
+        }
+        if (this.inputcheckboxValue == 'Checked'){
+          this.cazip = this.pazip;
+        }
+    }
+  }
+
+
+
+  inputcheckboxexperience;
+  showExperienceyouhave = false;
+  experienceCheckboxChange(event) {
+    this.inputcheckboxexperience = event.target.checked;
+    //console.log('this.inputcheckboxexperience-->', this.inputcheckboxexperience);
+
+    if (this.inputcheckboxexperience == true) {
       this.showExperienceyouhave = true;
-      this.Workcheckbox = false;
+      this.inputcheckboxexperience = true;
     }
      else {
       this.showExperienceyouhave = false;
-      this.Workcheckbox = true;
     }
     
   }

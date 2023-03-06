@@ -647,9 +647,7 @@ function updateOnboardingInfoOnPageLoads(ts){
               if(ts.jobtitle0 !=null || ts.fromdate0 != null || ts.todate0 !=null ||
                 ts.previouscompanyname0 !=null || ts.previouscomemailid !=null){
                        ts.showExperienceyouhave=true;
-                if(ts.showExperienceyouhave==true){
-                    ts.Workcheckbox = false;
-                  }          
+                       ts.inputcheckboxexperience = true;
              }
              
               ts.jobtitle1=additionalDetails.EMS_EM_Job_Title1__c;
