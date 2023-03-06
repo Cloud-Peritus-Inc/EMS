@@ -48,6 +48,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   isShowModalReject = false;
   disableButton;
   @track isLoading = false;
+  _wiredRefreshData
 
   //TO GET OBJECT INFO
   @wire(getObjectInfo, { objectApiName: LEAVEHISTORY_OBJECT })
@@ -67,8 +68,11 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
     }
   }
 
-  @wire(defaultAdminViewData)
-  wiredData({ error, data }) {
+  // TO SHOW DEFAULT ADMIN VIEW DATA
+ /* @wire(defaultAdminViewData)
+  wiredData(wireResult) {
+    const { data, error } = wireResult; // TO REFRESH THE DATA USED THIS BY STORING DATA AND ERROR IN A VARIABLE
+    this._wiredRefreshData = wireResult;
     if (data) {
       if (data.length > 0) {
         console.log('### defaultAdminViewData', data);
@@ -86,10 +90,13 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
     } else if (error) {
       console.log('Error:', error);
     }
-  }
+  }*/
 
+  // TO SHOW FILTERED DATA
   @wire(getAdminLeaveHistory, { employeeName: '$empName', startDate: '$startDate', endDate: '$endDate', typeValues: '$tValue', statusValues: '$sValue' })
-  wiredLeavHistory({ error, data }) {
+  wiredLeavHistory(wireResult) {
+    const { data, error } = wireResult;
+    this._wiredRefreshData = wireResult;
     if (data) {
       this.isLoading = false;
       if (data.length > 0) {
@@ -204,10 +211,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
-          //window.location.reload();
           this.isShowModalApproveAll = false;
-          eval("$A.get('e.force:refreshView').fire();");
-          refreshApex(this.datahistory);
+          return refreshApex(this._wiredRefreshData)
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -232,10 +237,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       bulkLeaveReqReject({ bulkRejectId: this.multipleApprovals, comments: this.rejectAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
-          //window.location.reload();
           this.isShowModalRejectAll = false;
-          eval("$A.get('e.force:refreshView').fire();");
-          refreshApex(this.datahistory);
+          return refreshApex(this._wiredRefreshData)
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -267,10 +270,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
     updateLeaveStatus({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
       .then((result) => {
         console.log('Leave Request: ', result);
-        //window.location.reload();
         this.isShowModalApprove = false;
-        eval("$A.get('e.force:refreshView').fire();");
-        refreshApex(this.datahistory);
+        return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
@@ -297,10 +298,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalReject = false;
-        //window.location.reload();
-        this.isShowModalReject = false;
-        eval("$A.get('e.force:refreshView').fire();");
-        refreshApex(this.datahistory);
+        return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
@@ -308,7 +306,6 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
 
   // TO cancel the leave record
   handleCancel(event) {
-    this.isLoading = true;
     const selectedRecordId = event.currentTarget.dataset.id;
     console.log('### handleCancel : ', selectedRecordId);
     cancleLeaveRequest({ leaveReqCancelId: selectedRecordId })
@@ -321,16 +318,9 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
           mode: 'pester'
         });
         this.dispatchEvent(evt);
-       this.updateAdminView();
+       return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('### err : ', JSON.stringify(err));
       });
-  }
-
-  //TO REFRESH THE COMPONENT
-  updateAdminView() {
-    setTimeout(() => {
-      eval("$A.get('e.force:refreshView').fire();");
-    }, 1000);
   }
 }

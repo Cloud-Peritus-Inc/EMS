@@ -88,15 +88,11 @@
 									<th>
 										<div title="Reason">Reason</div>
 									</th>
-									<th>
-										<div title="Approver">Approver</div>
-									</th>
+
 									<th>
 										<div title="Leave Status">Leave Status</div>
 									</th>
-									<th>
-										<div title="Approved On">Approved On</div>
-									</th>
+
 									<th class="slds-cell_action-mode" style="width:2.25rem">
 										<div>Actions</div>
 									</th>
@@ -106,53 +102,47 @@
 								<template for:each={datahistory} for:item="Req">
 									<tr key={Req.Id} style="border-bottom:0.5px solid #d4d4d4">
 										<td style="padding:7px">
-											<div class="slds-truncate dv-dynamic-width">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 												<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id} disabled ={Req.disableButton}/>
 									</div>
 										</td>
 										<td>
-											<div class="slds-truncate dv-dynamic-width">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 												{Req.EMS_LM_Contact__r.Name}</div>
 										</td>
 										<td>
-											<div class="slds-truncate dv-dynamic-width">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 												{Req.EMS_LM_Leave_Type_Name__c }</div>
 										</td>
 										<td>
-											<div class="slds-truncate dv-dynamic-width">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 												<lightning-formatted-date-time value={Req.EMS_LM_Leave_Start_Date__c}
 													month="numeric" day="numeric" year="numeric">
 												</lightning-formatted-date-time>
 											</div>
 										</td>
 										<td>
-											<div class="slds-truncate dv-dynamic-width">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 												<lightning-formatted-date-time value={Req.EMS_LM_Leave_End_Date__c}
 													month="numeric" day="numeric" year="numeric">
 												</lightning-formatted-date-time>
 											</div>
 										</td>
 										<td>
-											<div class="slds-truncate dv-dynamic-width">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 												{Req.EMS_LM_Leave_Duration__c}</div>
 										</td>
 										<td>
-											<div class="slds-truncate dv-dynamic-width">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 												{Req.EMS_LM_Reason__c}</div>
 										</td>
+
 										<td>
-											<div class="slds-truncate dv-dynamic-width">
-												{Req.EMS_LM_Current_Approver__c}</div>
-										</td>
-										<td>
-											<div class="slds-truncate dv-dynamic-width">
+											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 												{Req.EMS_LM_Status__c}</div>
 										</td>
-										<td>
-											<div class="slds-truncate dv-dynamic-width">
-												{Req.EMS_LM_Approved_On__c}</div>
-										</td>
-										<td class="slds-truncate dv-dynamic-width">
+
+										<td class="slds-truncate dv-dynamic-width" style={fixedWidth}>
 											<lightning-button-icon variant="brand" size="large"
 												icon-name="action:preview" alternative-text="View" onclick={handleView}
 												data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
@@ -164,10 +154,11 @@
 												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}
 												disabled={Req.disableButton}></lightning-button-icon>
 											&nbsp;&nbsp;
-											<lightning-button-icon variant="brand" size="large" icon-name="action:reject"
-												alternative-text="Reject" onclick={showModalRejectBox}
-												data-value={Req.EMS_LM_Status__c} key-field={Req.Id}
-												data-record-id={Req.Id} data-id={Req.Id} disabled={Req.disableButton}>
+											<lightning-button-icon variant="brand" size="large"
+												icon-name="action:reject" alternative-text="Reject"
+												onclick={showModalRejectBox} data-value={Req.EMS_LM_Status__c}
+												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}
+												disabled={Req.disableButton}>
 											</lightning-button-icon>
 										</td>
 									</tr>
@@ -313,8 +304,6 @@
 				</section>
 				<div key={Req.Id} class="slds-backdrop slds-backdrop_open"></div>
 			</template>
-
-
 		</lightning-card>
 		<template if:true={nodata}>
 			<h2> No requests found </h2>

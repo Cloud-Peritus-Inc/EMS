@@ -9,13 +9,14 @@ import updateRejecteStatusAndComments from '@salesforce/apex/LeaveRequestRejectH
 import updateApproveStatusAndComments from '@salesforce/apex/LeaveRequestApproveHandler.updateApproveStatusAndComments';
 import pendingOnMeLeaveReq from '@salesforce/apex/EMS_LM_PendingOnMeLeaveReq.pendingOnMeLeaveReq';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
+import { refreshApex } from '@salesforce/apex';
 
 export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(LightningElement) {
   requeststatus;
   outputStatus;
   outputId;
   @track empName = '';
-  //fixedWidth = "width:8rem;";
+  fixedWidth = "width:8rem;";
   @track reqRecordId;
   showcancelbutton = false;
   isShowViewRequest = false;
@@ -45,6 +46,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   @track isLoading = false;
   @track selectedLeaveReqIds = [];
   isCheck = false;
+  _wiredRefreshData
 
   @track currentPageReference;
   @wire(CurrentPageReference)
@@ -53,17 +55,16 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
 
    connectedCallback() {
-    this.pendingOnMeLeaveReqWiredData ();
+    //this.pendingOnMeLeaveReqWiredData ();
     
   }
 
   //TO SHOW DEFAULT DATA
-  pendingOnMeLeaveReqWiredData () {
+  /*pendingOnMeLeaveReqWiredData () {
     pendingOnMeLeaveReq().then((result) => {
         console.log('### pendingOnMeLeaveReq', result);
         if(result.length > 0 ) {
-        //console.log('user ID 1: ', uId);
-        //console.log('user ID : ', this.uId);
+      
         this.showdata = true;
         this.nodata = false;
         this.isCheck = true;
@@ -84,7 +85,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       console.error('Error:', error);
       
     });
-  }
+  }*/
   // WIRE METHOD TO SHOW THE DEFAULT DATA
  /* @wire(pendingOnMeLeaveReq)
   pendingOnMeLeaveReqWiredData({ error, data }) {
@@ -124,6 +125,13 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       //console.log('getPicklistValuesByRecordTypeData Pending Tab', data);
       this.leaveTypeValues = data.picklistFieldValues.EMS_LM_Leave_Type_Name__c.values;
       this.picklistValues = data.picklistFieldValues.EMS_LM_Status__c.values;
+      console.log('### picklistValues Pending Tab: ', this.picklistValues);
+
+      //Values to remove from picklistValues
+      const statusRemoved = ['Approved', 'Rejected', 'Cancelled', 'Auto Approved']
+      const filteredStatusList = this.picklistValues.filter(status => !statusRemoved.includes(status.label));
+      console.log('### filteredStatusList',filteredStatusList);
+      this.picklistValues = filteredStatusList;
       console.log('### picklistValues Pending Tab: ', this.picklistValues);
       console.log('### leaveTypeValues Pending Tab: ', this.leaveTypeValues);
     } else if (error) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Expense is Submitted - Email to Reporting Manager</name>
+    <style>freeForm</style>
+    <subject>Request for an Expense Reimbursement Received</subject>
+    <textOnly>Dear {!Expense__c.Approval_Manager__c},
+
+
+
+{!Expense__c.Resource__c} working for {!Expense__c.Project__c} has submitted an Expense Reimbursement for the amount of {!Expense__c.Amount__c} for the {!Expense__c.Expense_Type__c} on {!Expense__c.Expense_Date__c}. Please find time to review it and do the necessary.
+
+
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
