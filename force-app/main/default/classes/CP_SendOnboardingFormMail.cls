@@ -13,7 +13,7 @@
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,TriggerAction.AfterUpdate{
+public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert{
     /**
     * @author Eswar
     * @date 02/02/2023
@@ -32,36 +32,24 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
          System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterInsert() : END');       
      }
     
-    /**
-    * @author Eswar
-    * @date 02/02/2023
-    * @description After Update
-    *
-    * CHANGE HISTORY
-    * ====================================================================================================
-    * DATE          NAME                    DESCRIPTION
-    * N/A           N/A                     N/A
-    * ====================================================================================================
-    **/
-    
-    public void afterUpdate(List<Contact> newList, List<Contact> oldList) {      
-         System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterUpdate() : BEGIN');
-         sendOnboardingFormMail(newList);
-         System.debug(LoggingLevel.DEBUG, 'CP_SendOnboardingFormMail.afterUpdate() : END');       
-     }
-    
     private void sendOnboardingFormMail(List<Contact> contactList){
         
         List<EMS_EM_Onboarding_Request__c> applicantsList = new List<EMS_EM_Onboarding_Request__c>();
         List<Contact> applicantsToSendMail = new List<Contact>();
-        List<Task> tskList = new List<Task>();
+        //List<Task> tskList = new List<Task>();
         Group itGroup = [select Id,Name from Group where  Type = 'Queue' AND NAME = 'TA Team'];
-        
         Id contRecordTypeId = [Select id from RecordType where sObjectType = 'Contact' and developerName ='Applicant' ].id ;
         
         for(Contact contactRec : contactList){
-            
-            Date reminderDate = contactRec.EMS_EM_JD__c.addDays(2);
+            if(contactRec.RecordTypeId == contRecordTypeId){
+                    EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
+                    applicantRec.EMS_EM_Personal_Email__c = contactRec.Personal_Email__c;
+                    applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
+                    applicantRec.ContactId1__c = contactRec.Id;
+                    applicantRec.Status__c = 'Triggered';
+                    applicantsList.add(applicantRec); 
+                    
+                    /*Date reminderDate = contactRec.EMS_EM_JD__c.addDays(2);
                     
                     Task t = new Task();
                     t.OwnerId = itGroup.Id;
@@ -72,35 +60,15 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
                     t.WhoId = contactRec.Id;
                     t.ActivityDate = contactRec.EMS_EM_JD__c.addDays(1);
                     t.ReminderDateTime = DateTime.newInstance(reminderDate.year(), reminderDate.month(), reminderDate.day(), 20, 00, 00);
-                    tskList.add(t);
-        
-            if(contactRec.EMS_EM_JD__c != NULL && contactRec.RecordTypeId == contRecordTypeId){
-                Date today = Date.today();
-                Date sobjectDate = contactRec.EMS_EM_JD__c;
-                if(today.daysBetween(sobjectDate) < 10 && contactRec.EMS_EM_JD__c >= system.today()){
-                    EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
-                    //applicantRec.EMS_EM_Personal_Email__c = contactRec.Email;
-                    applicantRec.EMS_EM_Personal_Email__c = contactRec.Personal_Email__c;
-                    applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
-                    applicantRec.ContactId1__c = contactRec.Id;
-                    applicantRec.Status__c = 'Triggered';
-                    applicantsList.add(applicantRec);                    
-                    
-                    String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id); 
-                    if(status == 'success'){
-                        sendEmailToHR(contactRec.Id);
-                        sendEmailToTA(contactRec.Id);
-                        sendEmailToAdminTeam(contactRec.Id);
-                    }
-                }
+                    tskList.add(t);*/
             }   
         }
         if(applicantsList.size() > 0){
             insert applicantsList;
         }
-        if(tskList!=null && tskList.size()>0){
+        /*if(tskList!=null && tskList.size()>0){
             insert tskList;
-        }
+        }*/
         List<ems_EM_Additional_Detail__c> additionalDetailsList = new List<ems_EM_Additional_Detail__c>();
         for(EMS_EM_Onboarding_Request__c onboardingRecords : applicantsList){
             ems_EM_Additional_Detail__c applicantRec = new ems_EM_Additional_Detail__c();
@@ -110,6 +78,18 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         }
         insert additionalDetailsList;
     }
+    
+  /*  private void sendOnboardingFormMailUpdate(List<Contact> newlist, Map<Id,Contact> oldMap){
+        Id contRecordTypeId = [Select id from RecordType where sObjectType = 'Contact' and developerName ='Applicant' ].id;
+        List<Contact> updatedContactList = new List<Contact>();
+        for (Contact c : newlist){
+            if(c.RecordTypeId == contRecordTypeId){
+                c.EMS_EM_JD__c = oldMap.get(c.Id).EMS_EM_JD__c;
+                updatedContactList.add(c);
+            }
+        }
+        update updatedContactList;
+    }*/
     
     public static String sendOnboardingEmail(String email,string recordId){
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
@@ -131,14 +111,10 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         }
     }
     
-    public static void sendEmailToHR(string recordId){
+  /*  public static void sendEmailToHR(string recordId){
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
-                                      where name ='Notify To Hr After Onboarding Form Sent' LIMIT 1];
-       /* String hrTeamEmail = [SELECT id, email FROM Contact WHERE name = 'HR Team'].email;
-        List<String> hrEmailList = new List<String>();
-        hrEmailList.add(hrTeamEmail);*/
-        
+                                      where name ='Notify To Hr After Onboarding Form Sent' LIMIT 1];        
         String hrTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'HR_Team'].Email__c;
         List<String> hrEmailList = new List<String>();
         hrEmailList.add(hrTeamEmail);
@@ -156,9 +132,6 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Notify TA After Onboarding Form Sent' LIMIT 1];
-        /*String taTeamEmail = [SELECT id, email FROM Contact WHERE name = 'TA Team'].email;
-        List<String> taEmailList = new List<String>();
-        taEmailList.add(taTeamEmail);*/
         String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'TA_Team'].Email__c;
         List<String> taEmailList = new List<String>();
         taEmailList.add(taTeamEmail);
@@ -168,16 +141,14 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
-         message.setSaveAsActivity(false);
+        message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
-    }
+    }*/
+    
     public static void sendEmailToAdminTeam(string recordId){
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='After Applicant Record Inserted Admin' LIMIT 1];
-        /*String adminTeamEmail = [SELECT id, email FROM Contact WHERE name = 'Admin Team'].email;
-        List<String> adminEmailList = new List<String>();
-        adminEmailList.add(adminTeamEmail);*/
         
         String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'Admin_Team'].Email__c;
         List<String> adminEmailList = new List<String>();
@@ -188,7 +159,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert,Trig
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
-         message.setSaveAsActivity(false);
+        message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
 }

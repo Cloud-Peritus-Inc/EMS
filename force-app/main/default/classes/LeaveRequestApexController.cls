@@ -41,6 +41,9 @@ public without sharing class LeaveRequestApexController {
          List<EMS_LM_Leave_History__c> leaveRequestPendingList = new List<EMS_LM_Leave_History__c>();
          List<EMS_LM_Leave_History__c> leaveRequestApprover2List = new List<EMS_LM_Leave_History__c>();
          List<EMS_LM_Leave_History__c> leaveRequestApprover3List = new List<EMS_LM_Leave_History__c>();
+        Integer count1 = 0;
+        Integer count2 = 0;
+        Integer count3 = 0;
          for (EMS_LM_Leave_History__c emsLmLeave : [SELECT Id,
                                                             EMS_LM_Contact__r.LastName,
                                                             EMS_LM_Reason__c,
@@ -55,18 +58,23 @@ public without sharing class LeaveRequestApexController {
                                                    WHERE (EMS_LM_Approver__c =:LeaveRequestConstant.LOGGEDIN_USERID
                                                    OR EMS_LM_2nd_Approver__c =:LeaveRequestConstant.LOGGEDIN_USERID
                                                    OR Approver_3__c =:LeaveRequestConstant.LOGGEDIN_USERID)
-                                                   /*AND EMS_LM_Status__c !=: LeaveRequestConstant.APPROVED
+                                                   AND EMS_LM_Status__c !=: LeaveRequestConstant.APPROVED
                                                    AND EMS_LM_Status__c !=: LeaveRequestConstant.REJECTED
-                                                   AND EMS_LM_Status__c !=: LeaveRequestConstant.CANCELLED*/
-                                                   ORDER BY CreatedDate DESC Limit 50]){
-           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_Approver__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_2_WAITING) {
+                                                   AND EMS_LM_Status__c !=: LeaveRequestConstant.CANCELLED
+                                                   ORDER BY CreatedDate DESC]){
+                                                       System.debug('### emsLmLeave ' + emsLmLeave);
+           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_Approver__c && (emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_2_WAITING || emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.PENDING) && count1 < 5 ){
                	leaveRequestPendingList.add(emsLmLeave); //Approver 1
+                count1++;
+                System.debug('### leaveRequestPendingList 1' + leaveRequestPendingList);
            }
-           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_2nd_Approver__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING) {
+           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_2nd_Approver__c && (emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING || emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.PENDING) && count2 < 5) {
                	leaveRequestApprover2List.add(emsLmLeave); //Approver 2
+                count2++;
            }
-           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.Approver_3__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING) {
+           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.Approver_3__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING && count1 < 5) {
                	leaveRequestApprover3List.add(emsLmLeave); //Approver 3
+                count3++;
            }
     }
         leaveReqStatus.pendingList = leaveRequestPendingList;

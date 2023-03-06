@@ -20,7 +20,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
     
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id,name, EMS_EM_JD__c, Resource_Manager__c, Resource_Manager__r.Official_Mail__c, Resource_Manager__r.name, Designation__r.name FROM Contact WHERE EMS_EM_JD__c != NULL AND Resource_Manager__c != NULL AND RecordType.Name = \'Applicant\'' 
+        	'SELECT id,name, EMS_EM_JD__c, Resource_Manager__c, Resource_Manager__r.Official_Mail__c, Resource_Manager__r.name, Designation__r.name FROM Contact WHERE EMS_EM_JD__c != NULL AND Resource_Manager__c != NULL AND Resource_Manager__r.Official_Mail__c != NULL AND RecordType.Name = \'Applicant\'' 
         );
     }
     
@@ -33,7 +33,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
         for(Contact contactRec : contactList){
             if(contactRec.EMS_EM_JD__c.addDays(-7) == System.today() || contactRec.EMS_EM_JD__c.addDays(-2) == System.today()){
                 updatedContactList.add(contactRec);
-                Task t = new Task();
+               /* Task t = new Task();
                 t.OwnerId = itGroup.Id;
                 //System.debug('Resource manager 1 => '+Resource_Manager__r.id);
                 System.debug('Resource manager 2 => '+contactRec.Resource_Manager__r.id);
@@ -44,39 +44,32 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
                 t.WhoId = contactRec.Id;
                 t.ActivityDate = contactRec.EMS_EM_JD__c;
                 t.ReminderDateTime = DateTime.newInstance(contactRec.EMS_EM_JD__c.year(), contactRec.EMS_EM_JD__c.month(), contactRec.EMS_EM_JD__c.day(), 20, 00, 00);
-                tskList.add(t);
+                tskList.add(t);*/
             }
         }
-        sendOnboardingEmail(updatedContactList);
+        sendEmailToRM(updatedContactList);
+        
         if(tskList!=null && tskList.size()>0){
             insert tskList;
         }
     }
     
-    public static void sendOnboardingEmail(List<Contact> finalContactList){
-        /*EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
-                                      where name ='Onboarding Form Email' LIMIT 1];*/
-        //Here we can't use email template because if we use template then we need to use setTargetObjectId, if we use this then email is trigger  
-        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
-        List<String> sendTo = new List<String>();
+    public static void sendEmailToRM(List<Contact> finalContactList){
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+        	                          where name ='Notify Resource Manager About New Candidate' LIMIT 1];
+        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+        
         for(Contact con : finalContactList){
-            Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-            sendTo.add(con.Resource_Manager__r.Official_Mail__c);
-        	message.toAddresses = sendTo;
-            message.setSubject('Cloud Peritus :  Upcoming Employee Onboarding');
-            String body = 'Dear '+ con.Resource_Manager__r.name+', <br/><br/>';
-            body += 'The following candidate will join our company on '+ con.EMS_EM_JD__c + ': <br/>';
-            body += 'Name: '+ con.Name + ' <br/>';
-            body += 'Please be prepared to give an orientation session on their first day. Also, ensure that ';
-            body += 'training materials/sessions are organized for the employee for the first week, so that ';
-            body += 'the employee has all the necessary information to perform well in their new position. <br/><br/>';
-            body += 'Regards, <br/>';
-            body += 'Team Cloud Peritus';
-            message.setHtmlBody(body);
-            message.setSaveAsActivity(false);
-            mails.add(message);
-        }
-       Messaging.sendEmail(mails);
+            String resourceManagerEmail = con.Resource_Manager__r.Official_Mail__c;
+            Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
+            mail.setToAddresses(new list<string>{resourceManagerEmail});
+            mail.setTemplateID(emailTemplate.Id);
+            mail.setTargetObjectId(con.id);
+            mail.setTreatTargetObjectAsRecipient(false);
+            mail.setSaveAsActivity(false);         
+            mails.add(mail);
+        } 
+        Messaging.sendEmail(mails);
     }
     
     public void finish(Database.BatchableContext bc){
