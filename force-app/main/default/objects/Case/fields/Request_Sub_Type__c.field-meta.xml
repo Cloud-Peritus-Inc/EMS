@@ -34,11 +34,6 @@
                 <label>Offboarding</label>
             </value>
             <value>
-                <fullName>Leave Request</fullName>
-                <default>false</default>
-                <label>Leave Request</label>
-            </value>
-            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
@@ -48,15 +43,35 @@
                 <default>false</default>
                 <label>Problem</label>
             </value>
+            <value>
+                <fullName>Paternity</fullName>
+                <default>false</default>
+                <label>Paternity</label>
+            </value>
+            <value>
+                <fullName>Maternity</fullName>
+                <default>false</default>
+                <label>Maternity</label>
+            </value>
+            <value>
+                <fullName>Marriage</fullName>
+                <default>false</default>
+                <label>Marriage</label>
+            </value>
+            <value>
+                <fullName>Bereavement Leave</fullName>
+                <default>false</default>
+                <label>Bereavement Leave</label>
+            </value>
+            <value>
+                <fullName>Comp off</fullName>
+                <default>false</default>
+                <label>Comp off</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Problem</controllingFieldValue>
             <valueName>Problem</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Feature Request</controllingFieldValue>
-            <controllingFieldValue>Others</controllingFieldValue>
-            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Change Of Details</controllingFieldValue>
@@ -72,11 +87,31 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
-            <valueName>Leave Request</valueName>
+            <valueName>Paternity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
+            <valueName>Maternity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
+            <valueName>Marriage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
+            <valueName>Bereavement Leave</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
+            <valueName>Comp off</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Apply Resignation</controllingFieldValue>
             <valueName>Offboarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Other</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

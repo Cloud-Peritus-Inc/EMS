@@ -49,6 +49,11 @@
                     </div>
                   </lightning-layout-item>            
                 </template>
+                <lightning-layout-item padding="around-small" size="12">
+                  <div>
+                    <lightning-input type="number" label="Leave Duration" value={duration} disabled></lightning-input>
+                  </div>
+                </lightning-layout-item>
                 </template>
   
                 
@@ -72,16 +77,14 @@
                       onchange={datechange}></lightning-input>
                   </div>
                 </lightning-layout-item>
-                </template>
-                
-               
-  
                 <lightning-layout-item padding="around-small" size="12">
                   <div>
                     <lightning-input type="number" label="Leave Duration" value={duration} disabled></lightning-input>
                   </div>
                 </lightning-layout-item>
-  
+                </template>
+                
+               
                 <lightning-layout-item padding="around-small" size="12">
                   <div>
                     <lightning-textarea type="text" maxlength="250" label="Reason" value={reason} onchange={reasonChange}></lightning-textarea>            

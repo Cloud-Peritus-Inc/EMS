@@ -38,7 +38,7 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
 else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will retrieve the data using User Email which is mapped to contact as Official Email
    set<String> i = new set<String>();
    List<EMS_LM_Leave_Credit__c> i1 = new List<EMS_LM_Leave_Credit__c>();
-   contact c = [Select Id from contact where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid];
+   contact c = [Select Id from contact where Email=:u.Email AND EMS_TM_User__c = :userid];
    i1 = [SELECT Leave_Type_Name__c
                FROM EMS_LM_Leave_Credit__c
                WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :c.Id ORDER BY Leave_Type_Name__c ASC];
@@ -83,7 +83,7 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
          query = query + ' where EMS_LM_Contact__c = :cid ';
       }
       if(u.ContactId == null){//if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will retrieve the data using User Email which is mapped to contact as Official Email
-         Contact c = [select Id from Contact where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userId Limit 1];
+         Contact c = [select Id from Contact where Email=:u.Email AND EMS_TM_User__c = :userId Limit 1];
          cid = c.Id;
           query = query + ' where EMS_LM_Contact__c = :cid ';    
       }
@@ -126,7 +126,7 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
             cnt = [select Id, EMS_TM_In_Billing__c,Work_Location__r.Country__c from Contact where Id = :u.ContactId Limit 1];       
          }
          else{
-            cnt = [select Id,EMS_TM_In_Billing__c,Work_Location__r.Country__c from Contact  where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid Limit 1];
+            cnt = [select Id,EMS_TM_In_Billing__c,Work_Location__r.Country__c from Contact  where Email=:u.Email AND EMS_TM_User__c = :userid Limit 1];
          }
       }
       catch (Exception e){
@@ -162,14 +162,14 @@ else{ //if contact Id is null(For Org Users(Like Sys Admin Profiles)) we will re
          try{
             user u =[Select id, ContactId, Email from user where id =: userid];
             if(u.ContactId !=null){
-               cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c, Official_Mail__c , EMS_LM_No_Of_Available_Compensatory_Off__c,
+               cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c, Email , EMS_LM_No_Of_Available_Compensatory_Off__c,
                EMS_LM_No_Of_Available_Maternity_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
                EMS_LM_No_Of_Availble_Leaves__c from Contact where Id = :u.ContactId Limit 1];         
             }
             else{
-               cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c,Official_Mail__c, EMS_LM_No_Of_Available_Compensatory_Off__c,
+               cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c,Email, EMS_LM_No_Of_Available_Compensatory_Off__c,
                EMS_LM_No_Of_Available_Maternity_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
-               EMS_LM_No_Of_Availble_Leaves__c from Contact where Official_Mail__c=:u.Email AND EMS_TM_User__c = :userid Limit 1];
+               EMS_LM_No_Of_Availble_Leaves__c from Contact where Email=:u.Email AND EMS_TM_User__c = :userid Limit 1];
             }
          }
          catch(Exception e){

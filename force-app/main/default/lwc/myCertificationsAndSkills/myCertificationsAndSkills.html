@@ -1,0 +1,155 @@
+<template>
+
+    <div class="homeCard" style="border-top : 3px solid #9602c7;">
+    <lightning-card>
+        <div class="childparent">
+          <div class="childtext" style="padding-left:20px;">
+               <div style="padding-left:5px;"> 
+          <lightning-icon icon-name="standard:skill_entity" size="medium" alternative-text="In Progress" title="In Progress"></lightning-icon>
+           <font size="4"  > &nbsp;&nbsp;<b>My Skills and Certifications </b> </font> <br/>
+            </div> 
+          </div>
+           <div class="childimage">
+             
+           </div>
+        </div>
+
+     <div class="container">
+    <div class="box" style="width:50%">  </div>
+    <div class="box" style="width:50%"> <lightning-button variant="brand" label="Add new Skill/Certification" title="New Claim" onclick={handleClick}></lightning-button> </div>
+   
+    <div style="clear: both;"></div> 
+    </div>
+        <br/>
+  <center><div class="table-container"><table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>completion date/Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template if:true={showtable}>
+      <template for:each={skillList} for:item="row">
+        <tr key={row.expid}>
+          <td><a href="#" data-id={row.recordid} onclick={handleexpClick}>{row.name}</a></td>
+          <td>{row.typeval}</td>
+          <td>
+              <template if:true={row.isSkill}>
+                  {row.rating}
+              </template>
+              <template if:false={row.isSkill}>
+                  <lightning-formatted-date-time value={row.certifcationdate}> </lightning-formatted-date-time>
+              </template>
+              
+        </td>
+          
+        </tr>
+      </template>
+      <br/>
+      </template>
+      
+    </tbody>
+    
+  </table></div> </center>
+   <template if:false={showtable}>
+        <center> No skills or certification found. <br/> </center>
+      </template>
+  <footer class="slds-modal__footer">
+   <center> <a href="#"  ><font class="uiOutputText" onclick={handleNavClick}>My Skills and Certifications</font></a> </center>
+            
+                        </footer>
+    </lightning-card>
+
+
+      <template if:true={openModal}>
+       <div data-modal="custom-modal" class="modalclass">
+            <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" 
+                                            class="slds-modal__close " 
+                                            alternative-text="Close" 
+                                            title="Close"
+                                            size="large"
+                                            variant="bare-inverse"
+                                            onclick={handleCancel} >
+ 
+                    </lightning-button-icon>
+                <font size="5">New Expense</font>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium"
+                    id="modal-content-id-1">
+                   <template if:false={showFileUpload}>
+                    <lightning-record-edit-form
+                                    object-api-name="Certifications__c"
+                                    onsuccess={handleSuccess} 
+                                    onerror={handleError} >
+                                    <lightning-messages> </lightning-messages>
+                                    <lightning-layout>
+                                      <lightning-layout-item flexibility="auto" padding="around-small">
+                                    <lightning-input-field field-name="Type__c" required onchange={handleTypeChange}></lightning-input-field>
+                                      </lightning-layout-item>
+                                       <lightning-layout-item flexibility="auto" padding="around-small">
+                                        
+                                   </lightning-layout-item></lightning-layout>
+                                   <template if:true={showskill}>
+                                    <lightning-layout>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+                                     <lightning-input-field field-name="Skill__c" required></lightning-input-field>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+                                      <lightning-input-field field-name="Skill_Rating__c" required></lightning-input-field>
+                                    </lightning-layout-item>
+                                    </lightning-layout>
+                                   </template>
+                                  <template if:true={showcertification}>
+                                    <lightning-layout>
+                                    <lightning-layout-item flexibility="auto" padding="around-small">
+                                     <lightning-input-field field-name="Certification_Name__c" required></lightning-input-field>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item flexibility="auto" padding="around-small">
+                                      <lightning-input-field field-name="Completion_Date__c" required></lightning-input-field>
+                                    </lightning-layout-item>
+                                    </lightning-layout>
+                                  </template>
+                                    <lightning-layout>
+                                
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+                                      <lightning-input-field field-name="Contact__c" value={resourceId} disabled></lightning-input-field>
+                                    </lightning-layout-item>
+                                    </lightning-layout>
+                                
+                                   <center>  
+                                     <lightning-button label="Close" title="Close" icon-name="utility:close" onclick={handleCancel}></lightning-button>
+                                      &nbsp;&nbsp; &nbsp;&nbsp; <lightning-button
+                                        class="slds-m-top_small"
+                                        variant="brand"
+                                        type="submit"
+                                        name="update"
+                                        label="Save"
+                                    >
+                                    </lightning-button></center>
+                                </lightning-record-edit-form>
+                   </template>
+                               
+                                
+                    
+                </div>
+               
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+       </div>
+    </template>
+
+
+    </div>
+</template>

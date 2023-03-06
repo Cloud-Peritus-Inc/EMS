@@ -21,7 +21,7 @@ public without Sharing class GetDataForLoginUser {
     }
     
     @AuraEnabled
-    public static contact getUserContactInfo(Id userId){
+    public static ContactWithFiles getUserContactInfo(Id userId){
         user u =[Select id,
                  name,
                  Contactid 
@@ -51,7 +51,7 @@ public without Sharing class GetDataForLoginUser {
                                  EMS_EM_OLocation__c,
                                  AccountId,
                                  Location__c,
-                                 Official_Mail__c,
+                                 Email,
                                  Work_Experience__c,
                                  EMS_EM_HR_Assigned__c,
                                  EMS_EM_JD__c,
@@ -73,8 +73,40 @@ public without Sharing class GetDataForLoginUser {
                                  Post_Onboarding_Confirm__c
                                  From Contact where id =: u.contactid];
         
-        return contactDetails;
+        List<ContentDocumentLink> fileLinks = [SELECT Id, ContentDocumentId, LinkedEntityId, ContentDocument.Title, ContentDocument.FileType
+                                               FROM ContentDocumentLink 
+                                               WHERE LinkedEntityId = :u.ContactId];
         
+        List<FileDetails> fileDetailsList = new List<FileDetails>();
+        for(ContentDocumentLink link : fileLinks) {
+            fileDetailsList.add(new FileDetails(link.ContentDocumentId, link.ContentDocument.Title, link.ContentDocument.FileType));
+        }
+        
+        ContactWithFiles contactWithFiles = new ContactWithFiles(contactDetails, fileDetailsList);
+        return contactWithFiles;
+        
+    }
+    
+    public class ContactWithFiles {
+        @AuraEnabled public Contact contactDetails;
+        @AuraEnabled public List<FileDetails> fileDetailsList;
+        
+        public ContactWithFiles(Contact contactDetails, List<FileDetails> fileDetailsList) {
+            this.contactDetails = contactDetails;
+            this.fileDetailsList = fileDetailsList;
+        }
+    }
+    
+    public class FileDetails {
+        @AuraEnabled public Id fileId;
+        @AuraEnabled public String title;
+        @AuraEnabled public String fileType;
+        
+        public FileDetails(Id fileId, String title, String fileType) {
+            this.fileId = fileId;
+            this.title = title;
+            this.fileType = fileType;
+        }
     }
     
     @AuraEnabled(cacheable=true)
@@ -221,7 +253,7 @@ public without Sharing class GetDataForLoginUser {
         
         statusUpdate.Id=ConRecordid;
         update statusUpdate;
-
+        
         return statusUpdate;
         
     }
@@ -237,53 +269,54 @@ public without Sharing class GetDataForLoginUser {
     
     @AuraEnabled(cacheable=true)
     public static List<DocumentWrapper> getRelatedFilesByRecordIdForPayForms(String recordId) {
-   
-         Map<Id, ContentDocumentLink> contentDocumentLinks = new Map<Id, ContentDocumentLink>([ SELECT Id, LinkedEntityId, ContentDocumentId
-                                                                                               FROM ContentDocumentLink
-                                                                                               WHERE LinkedEntityId =:recordId ]);
+        
+        Map<Id, ContentDocumentLink> contentDocumentLinks = new Map<Id, ContentDocumentLink>([ SELECT Id, LinkedEntityId, ContentDocumentId
+                                                                                              FROM ContentDocumentLink
+                                                                                              WHERE LinkedEntityId =:recordId ]);
         List<ContentVersion> docs = [SELECT ContentDocumentId, FileExtension, Title 
                                      FROM ContentVersion WHERE ContentDocumentId IN : contentDocumentLinks.keySet()];
         Map<ID, String> mapIdTitle = new Map<ID, String>();
         for (ContentVersion docLink : docs) {
             mapIdTitle.put(docLink.ContentDocumentId, docLink.Title);
         }
- 
+        
         Map<Id, ContentDocument> contentDocuments = new Map<Id, ContentDocument>([ SELECT Id, Title, FileExtension
-                                                                                   FROM ContentDocument
-                                                                                   WHERE Id IN: getContentDocumentIds(contentDocumentLinks.values()) ]);
- 
+                                                                                  FROM ContentDocument
+                                                                                  WHERE Id IN: getContentDocumentIds(contentDocumentLinks.values()) ]);
+        
         Map<Id, List<ContentDocument>> documentIdToContentDocumentsList = prepareDocumentIdToContentDocumentListMap(contentDocumentLinks.values(), contentDocuments);
- 
-       return prepareDocumentWrapperResponse(documentIdToContentDocumentsList, mapIdTitle);  
-    }    
+        
+        return prepareDocumentWrapperResponse(documentIdToContentDocumentsList, mapIdTitle);  
+    } 
+    
     
     @AuraEnabled
     public static ContentDistribution getContentDistributionForFile(Id contentDocumentId){
- 
+        
         ContentVersion contentVersion = [ SELECT Id, ContentDocumentId, IsMajorVersion, IsLatest
-                                          FROM ContentVersion 
-                                          WHERE ContentDocumentId =: contentDocumentId
-                                            AND IsLatest = true
-                                          LIMIT 1 ];
- 
+                                         FROM ContentVersion 
+                                         WHERE ContentDocumentId =: contentDocumentId
+                                         AND IsLatest = true
+                                         LIMIT 1 ];
+        
         List<ContentDistribution> contentDistribution = [ SELECT Id, Name, ContentDownloadUrl, ContentVersionId 
-                                                          FROM ContentDistribution 
-                                                          WHERE ContentVersionId =: contentVersion.Id ];
+                                                         FROM ContentDistribution 
+                                                         WHERE ContentVersionId =: contentVersion.Id ];
         if (!contentDistribution.isEmpty()) {
             return contentDistribution[0];
         }
         // else create new contentDistribution
         ContentDistribution newContentDistribution = new ContentDistribution( Name = contentVersion.ContentDocumentId,
-                                                                              ContentVersionId = contentVersion.Id,
-                                                                              PreferencesAllowViewInBrowser = true );
+                                                                             ContentVersionId = contentVersion.Id,
+                                                                             PreferencesAllowViewInBrowser = true );
         insert newContentDistribution;
- 
+        
         return  [ SELECT Id, Name, ContentDownloadUrl, ContentDocumentId 
-                  FROM ContentDistribution 
-                  WHERE Id =: newContentDistribution.Id 
-                  LIMIT 1 ];
+                 FROM ContentDistribution 
+                 WHERE Id =: newContentDistribution.Id 
+                 LIMIT 1 ];
     }
- 
+    
     private static List<Id> getContentDocumentIds(List<ContentDocumentLink> contentDocumentsLinks) {
         List<Id> contentDocumentsIds = new List<Id>();
         for (ContentDocumentLink contentDocumentLink : contentDocumentsLinks) {
@@ -291,7 +324,7 @@ public without Sharing class GetDataForLoginUser {
         }
         return contentDocumentsIds;
     }
- 
+    
     private static Map<Id, List<ContentDocument>> prepareDocumentIdToContentDocumentListMap(List<ContentDocumentLink> contentDocumentsLinks, Map<Id, ContentDocument> contentDocuments) {
         Map<Id, List<ContentDocument>> documentIdToContentDocumentsList = new Map<Id, List<ContentDocument>>();
         for (ContentDocumentLink contentDocumentLink : contentDocumentsLinks) {
@@ -306,12 +339,12 @@ public without Sharing class GetDataForLoginUser {
         }
         return documentIdToContentDocumentsList;
     }
- 
+    
     private static List<DocumentWrapper> prepareDocumentWrapperResponse(Map<Id, List<ContentDocument>> documentIdToContentDocumentsList, Map<ID, String> fileWithTitle) {
         List<DocumentWrapper> documentsAndFiles = new List<DocumentWrapper>();
- 
+        
         for (Id documentId : documentIdToContentDocumentsList.keySet()) {
-           List<FileWrapper> filwWrap = new List<FileWrapper>();
+            List<FileWrapper> filwWrap = new List<FileWrapper>();
             for (ContentDocument contentDocument : documentIdToContentDocumentsList.get(documentId)) {
                 FileWrapper fileWrapper = new FileWrapper();
                 fileWrapper.id = contentDocument.Id;
@@ -320,30 +353,30 @@ public without Sharing class GetDataForLoginUser {
                 filwWrap.add(fileWrapper);
             }
             
-             DocumentWrapper documentWrapper = new DocumentWrapper();
+            DocumentWrapper documentWrapper = new DocumentWrapper();
             documentWrapper.id = documentId;
             documentWrapper.name = fileWithTitle.get(documentId);
             documentWrapper.description = fileWithTitle.get(documentId);
             documentWrapper.files = filwWrap;
             documentsAndFiles.add(documentWrapper);
         }
- 
+        
         return documentsAndFiles;
     }
     
     
     public class DocumentWrapper {
-    @AuraEnabled
-    public Id id;
-    @AuraEnabled
-    public String name;
-    @AuraEnabled
-    public String description;
-    @AuraEnabled
-    public List<FileWrapper> files;
-}
+        @AuraEnabled
+        public Id id;
+        @AuraEnabled
+        public String name;
+        @AuraEnabled
+        public String description;
+        @AuraEnabled
+        public List<FileWrapper> files;
+    }
     
-     
+    
     public class FileWrapper {
         @AuraEnabled
         public Id id;

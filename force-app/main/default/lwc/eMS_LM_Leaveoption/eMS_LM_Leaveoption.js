@@ -7,7 +7,7 @@ openWfh;
 get options() {
         return [
             { label: 'Leave', value: 'Leave' },
-            { label: 'Work from Home', value: 'Work from Home' },
+            { label: 'Work From Home', value: 'Work from Home' },
         ];
     }
 
