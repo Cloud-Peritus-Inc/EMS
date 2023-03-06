@@ -94,10 +94,10 @@
 									<div title="Reason">Reason</div>
 								</th>
 								<th>
-									<div title="Approver">Approver</div>
+									<div title="Leave Status">Leave Status</div>
 								</th>
 								<th>
-									<div title="Leave Status">Leave Status</div>
+									<div title="Approver">Approved By</div>
 								</th>
 								<th>
 									<div title="Approved On">Approved On</div>
@@ -146,11 +146,11 @@
 									</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width">
-											{Req.EMS_LM_Current_Approver__c}</div>
+											{Req.EMS_LM_Status__c}</div>
 									</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width">
-											{Req.EMS_LM_Status__c}</div>
+											{Req.EMS_LM_Current_Approver__c}</div>
 									</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width">
@@ -183,7 +183,7 @@
 			</lightning-card>
 		</template>
 	</lightning-card>
-
+	<!--disabled={Req.disableButton}-->
 
 	<!-- APPROVE ALL POP-UP-->
 	<template if:true={isShowModalApproveAll}>
@@ -321,6 +321,6 @@
 		<div key={Req.Id} class="slds-backdrop slds-backdrop_open"></div>
 	</template>
 	<template if:true={nodata}>
-		<h2> No requests found.</h2>
+		<h2> No requests found </h2>
 	</template>
 </template>

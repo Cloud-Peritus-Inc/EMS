@@ -48,7 +48,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     selectEditRecordId;
     isCheck = false;
     testdata
-    _wiredMarketData;
+    _wiredRefreshData;
 
     //CREATED THIS TO SHOW THE LEAVE STATUSES BASED ON THE LEVEL OF APPROVAL A LOGGED IN USER HAD.
     @track listStatus = {
@@ -135,18 +135,13 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     }
 
     //TO SHOW DEFAULT DATA
-    @wire(defaultMyRequestData)
+  /*  @wire(defaultMyRequestData)
     defaultMyRequestDataWiredData(wireResult) {
         const { data, error } = wireResult;
-        this._wiredMarketData = wireResult;
+        this._wiredRefreshData = wireResult;
         if (data) {
             if (data.length > 0) {
-               /* if (!this.datahistory) {
-                    setTimeout(() => {
-                        this.defaultMyRequestDataWiredData(wireResult);
-                    }, 1000);
-                    return;
-                }*/
+              
                 console.log('### defaultMyRequestData', data);
                 this.showdata = true;
                 this.nodata = false;
@@ -163,11 +158,13 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         } else if (error) {
             console.error('Error:', error);
         }
-    }
+    }*/
 
     //TO SHOW FILTER DATA
     @wire(getLMHistory, { startDateStr: '$startDate', endDateStr: '$endDate', statusValues: '$sValue', typeValues: '$value' })
-    wiredLeavHistory({ error, data }) {
+    wiredLeavHistory(wireResult) {
+        const { data, error } = wireResult; // TO REFRESH THE DATA USED THIS BY STORING DATA AND ERROR IN A VARIABLE
+        this._wiredRefreshData = wireResult;
         if (data) {
             this.isLoading = false;
             console.log('OUTPUT : ', this.isLoading);
@@ -274,19 +271,10 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                         variant: 'success',
                     })
                 );
-                //this.dispatchEvent(evt);
-                //this.updateMyRequestTabView();
-                return refreshApex(this._wiredMarketData)
+                return refreshApex(this._wiredRefreshData)
             }).catch((err) => {
                 console.log('### err : ', JSON.stringify(err));
             });
-    }
-
-    //TO REFRESH THE COMPONENT
-    updateMyRequestTabView() {
-        setTimeout(() => {
-            eval("$A.get('e.force:refreshView').fire();");
-        }, 1000);
     }
 
 }
