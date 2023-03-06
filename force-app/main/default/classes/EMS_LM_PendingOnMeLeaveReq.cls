@@ -5,7 +5,7 @@
 *            
 *
 *               Test code coverage provided by the following test class:
-*               - LeaveHistoryApexControllerTest
+*               - EMS_LM_PendingOnMeLeaveReqTest
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -48,16 +48,20 @@ public class EMS_LM_PendingOnMeLeaveReq {
         query += ' AND EMS_LM_Contact__R.Name LIKE :employeeNameWithWildcards';
     }
         
-    Set<String> allowedStatusValues = new Set<String>{'Pending', 'Approver 1 Pending', 'Approver 2 Pending', 'Approved', 'Rejected', 'Cancelled', 'Auto Approved'};
-    if (!allowedStatusValues.containsAll(statusValues)) {
-        query = query;
-        System.debug('### statusValues null' + statusValues);
-    } else if (statusValues != null && statusValues.size() > 0) {
-        query += ' AND EMS_LM_Status__c IN :statusValues';
-        System.debug('## here statusValues ' + query);
-    }else {
-        System.debug(' hello nothing status');
+    if (statusValues != null && statusValues.size() > 0) {
+    Set<String> allowedStatusValues = new Set<String>{'Pending', 'Approver 1 Pending', 'Approver 2 Pending'};
+    if (allowedStatusValues.containsAll(statusValues)) {
+            query += ' AND EMS_LM_Status__c IN :statusValues';
+            System.debug('## here statusValues ' + query);
+        } else {
+            System.debug('### Invalid statusValues: '+ statusValues);
+        }
+    } else {
+        System.debug('### No statusValues provided');
     }
+
+	// Added an additional condition to exclude unwanted records
+	query += ' AND EMS_LM_Status__c NOT IN (\'Rejected\', \'Approved\', \'Auto Approved\', \'Cancelled\')';
 
     Set<String> allowedTypeValues = new Set<String>{'Annual Leave', 'Work From Home', 'Loss of Pay', 'Paternity Leave', 'Bereavement Leave', 'Maternity Leave', 'Compensatory Off'};
     if (!allowedTypeValues.containsAll(typeValues) ) {
@@ -71,6 +75,8 @@ public class EMS_LM_PendingOnMeLeaveReq {
     }else {
         System.debug('### hello nothing types');
     }
+    
+        query = query + ' ORDER BY CreatedDate ASC, EMS_LM_Leave_Type_Name__c ASC';
     System.debug('### Final QUERY ' + query);
     try { 
         leaveHistoryList = Database.query(query);

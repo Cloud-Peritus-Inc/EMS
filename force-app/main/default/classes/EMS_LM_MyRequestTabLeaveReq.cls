@@ -5,7 +5,7 @@
 *            
 *
 *               Test code coverage provided by the following test class:
-*               - LeaveHistoryApexControllerTest
+*               - EMS_LM_MyRequestTabLeaveReqTest
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -53,15 +53,6 @@ public static List<EMS_LM_Leave_History__c> getLMHistory(String startDateStr, St
         Date endDate = Date.valueOf(endDateStr.split(' ')[0]); 
         query += 'AND EMS_LM_Leave_End_Date__c <= :endDate ';
     } 
-
-   /* if (statusValues != null && statusValues.size() > 0) {
-        System.debug('### I am here');
-        query += 'AND EMS_LM_Status__c IN :statusValues ';
-    }
-    if (statusValues.isEmpty() ) {
-       query = query;
-        System.debug('### Status null ' + query);
-    }*/
     Set<String> allowedStatusValues = new Set<String>{'Pending', 'Approver 1 Pending', 'Approver 2 Pending', 'Approved', 'Rejected', 'Cancelled', 'Auto Approved'};
     if (!allowedStatusValues.containsAll(statusValues)) {
         query = query;

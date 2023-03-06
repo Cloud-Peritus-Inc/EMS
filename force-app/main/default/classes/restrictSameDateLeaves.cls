@@ -46,15 +46,19 @@ public without sharing class restrictSameDateLeaves implements TriggerAction.Bef
         set<Date> endDate = new set<Date>();
         for(EMS_LM_Leave_History__c his : newlist){
               System.debug('======his========'+his);
-           resourcId.add(his.EMS_LM_Contact__c);
-           startDate.add(his.EMS_LM_Leave_Start_Date__c);
-           endDate.add(his.EMS_LM_Leave_End_Date__c); 
+            
+                resourcId.add(his.EMS_LM_Contact__c);
+           		startDate.add(his.EMS_LM_Leave_Start_Date__c);
+           		endDate.add(his.EMS_LM_Leave_End_Date__c);
+           
         }
          System.debug('======resourcId========'+resourcId);
          System.debug('======startDate========'+startDate);
          System.debug('======endDate========'+endDate);
         Map<Id,EMS_LM_Leave_History__c> resourceWithLeaves = new Map<Id,EMS_LM_Leave_History__c>();
-        for(EMS_LM_Leave_History__c leave : [SELECT Id,EMS_LM_Contact__c FROM EMS_LM_Leave_History__c WHERE EMS_LM_Contact__c IN:resourcId AND EMS_LM_Leave_Start_Date__c >=:startDate AND EMS_LM_Leave_End_Date__c <=: endDate  ]){
+        for(EMS_LM_Leave_History__c leave : [SELECT Id FROM EMS_LM_Leave_History__c 
+                                             WHERE EMS_LM_Status__c !='Cancelled' AND EMS_LM_Status__c !='Rejected' AND EMS_LM_Contact__c IN:resourcId AND 
+                                             EMS_LM_Leave_Start_Date__c >= :startDate AND EMS_LM_Leave_End_Date__c <= :endDate ]){
             resourceWithLeaves.put(leave.EMS_LM_Contact__c,leave);
         }
        System.debug('======resourceWithLeaves========'+resourceWithLeaves);

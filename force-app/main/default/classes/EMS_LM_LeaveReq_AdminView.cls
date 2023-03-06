@@ -5,7 +5,7 @@
 *            
 *
 *               Test code coverage provided by the following test class:
-*               - LeaveHistoryApexControllerTest
+*               - EMS_LM_LeaveReq_AdminViewTest
 *
 * CHANGE HISTORY
 * ====================================================================================================
