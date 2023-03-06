@@ -143,24 +143,22 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <enableActivities>true</enableActivities>
+    <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>Skills &amp; Certification</label>
+    <label>Skill</label>
     <nameField>
-        <displayFormat>CT.NO-{0000000}</displayFormat>
-        <label>Certifications</label>
-        <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
+        <label>Skill Name</label>
+        <type>Text</type>
     </nameField>
-    <pluralLabel>Certifications</pluralLabel>
+    <pluralLabel>Skills</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

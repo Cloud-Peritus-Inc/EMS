@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>ServiceResuest-CP</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <assignedTo>HR_Executive_Queue</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Type</field>
+                <operation>equals</operation>
+                <value>Change Of Details</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Request_Sub_Type__c</field>
+                <operation>equals</operation>
+                <value>Educational Details,Bank Details,Family/Dependent Information</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>HR_Executive_Queue</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Type</field>
+                <operation>equals</operation>
+                <value>Request for Special Leaves</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Request_Sub_Type__c</field>
+                <operation>equals</operation>
+                <value>Maternity</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Grid_Support</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Type</field>
+                <operation>equals</operation>
+                <value>Problem</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Request_Sub_Type__c</field>
+                <operation>equals</operation>
+                <value>Problem</value>
+            </criteriaItems>
+        </ruleEntry>
+    </assignmentRule>
+</AssignmentRules>

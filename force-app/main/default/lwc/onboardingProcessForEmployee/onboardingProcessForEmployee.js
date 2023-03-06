@@ -200,11 +200,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
 
   connectedCallback() {
-    const checkboxValue = window.localStorage.getItem('my-checkbox-value');
-     if (checkboxValue) {
-    // If the value exists, set the checkbox to the stored value
-    this.checkboxValue = JSON.parse(checkboxValue);
-  }
+    
 
 
     var dateVar = new Date();
@@ -215,14 +211,12 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
 
     getUserContactInfo({ userId: this.userId }).then(result => {
-      this.contactID = result.Id;
+      console.log('getUserContactInfo------------->' ,result.contactDetails);
+      console.log('getUserContactInfo------------->' ,result.fileDetailsList);
+      this.contactID = result.contactDetails.Id;
 
-      this.UserName = result.Name;
-      //this.contactMaritalStatus = result.EMS_EM_Mstatus__c;
-      //console.log('this.contactMaritalStatus==>'+this.contactMaritalStatus);
-      //console.log('this.contactID==>'+this.recordId);
-      //console.log('this.contactID==>' + this.contactID);
-      const employye = result;
+      this.UserName = result.contactDetails.Name;
+      const employye = result.contactDetails;
       if (employye != null) {
         //this.readonlyfield=true;
 
@@ -260,31 +254,57 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           this.showvehicle = true;
           this.checkboxValue = true;
         }
-
-        if (this.PostOnboardingConfirm) {
+        if (this.PostOnboardingConfirm == true) {
           this.buttonDisable = true;
           this.readonlyfield = true;
         }
+        if(this.padrressline1 === this.cadrressline1){
+          this.paFlag = true;
+          this.disableFlag = false;
+        }
 
-        if(this.pazip === this.cazip){
-          console.log('address Same')
-          this.inputcheckboxValue = event.target.checked;
-          console.log('address Same' +             this.inputcheckboxValue);
-    
-        }
-        else{
-          this.inputcheckboxValue = 'Unchecked';
-        }
+        result.fileDetailsList.forEach((currentItem) => {
+          console.log("currentItem.Title==============>>", currentItem.title);
+          if(currentItem.title.includes('Passport_')){
+          this.fileName = currentItem.title;
+          console.log('passport',this.fileName);
+          }
+         else if(currentItem.title.includes('DrivingLicense_')){
+          this.fileName1 = currentItem.title;
+            console.log('DrivingLicense_',this.fileName1);
+            }
+         else if(currentItem.title.includes('Form11_')){
+          this.fileName2 = currentItem.title;
+              console.log('Form11_',this.fileName2);
+         }
+         else if(currentItem.title.includes('Form2_')){
+          this.fileName3 = currentItem.title;
+          console.log('Form2_ photo',this.fileName3);
+         }
+         else if(currentItem.title.includes('Documents1_')){
+          this.fileName4 = currentItem.title;
+          console.log('Documents1 photo',this.fileName4);
+         }
+         else if(currentItem.title.includes('Documents2_')){
+          this.fileName5 = currentItem.title;
+          console.log('certificate photo',this.fileName5);
+         }
+         else if(currentItem.title.includes('Documents3_')){
+          this.fileName6 = currentItem.title;
+          this.ShowDocumentUpload = true;
+          this.hideDocumentUpload = false;
+          console.log('certificate photo',this.fileName6);
+         }
+         else if(currentItem.title.includes('Documents4_')){
+          this.fileName7 = currentItem.title;
+          console.log('certificate photo',this.fileName7);
+         }
+        })
 
         
 
         getPayrollInfo({ conId: this.contactID })
           .then(result => {
-
-            // this.payrollId = result[0].Id;
-            //console.log('Dataaaa-->' +JSON.stringify(result) );
-            //console.log('Dataaaa-->' +result[0].Beneficiary_Name__c );
-            // console.log('payroll result-->' + this.payrollId);
             const employye = result[0];
             if (employye != null) {
 
@@ -293,22 +313,14 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
               this.branchname = employye.Branch__c;
               this.accountNumber = employye.Beneficiary_Account_Number__c;
               this.iFSCRoutingNumber = employye.IFSC_Routing_Number__c;
-
             }
-
           }).catch(err => {
             //console.log('err----->',err);
-
           });
-
       }
-
     }).catch(err => {
       console.log(err);
-
     });
-
-
   }
 
   FirstName(event) {
@@ -406,7 +418,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
   @track cadrressline1;
   @track cadrressline2;
-  @track padrressline1 = '';
+  @track padrressline1;
   @track padrressline2;
   @track castate;
   @track cacity;
@@ -416,8 +428,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @track pazip;
   message;
   error;
-  addressId;
-
+  /*
   currentadrressline1(event) {
     this.cadrressline1 = event.target.value;
   }
@@ -458,6 +469,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     this.pazip = event.target.value;
     //window.console.log(this.getAccountRecord.Name); 
   }
+  */
 
   inputcheckboxValue;
 
@@ -485,6 +497,146 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
     
   }
+  @track paFlag;
+  @track addressFlag;
+  @track disableFlag = true;
+
+    handleChange(event) {
+
+      this.addressFlag = true;
+          let addressList = this.template.querySelectorAll('.addressClass');
+          if (this.addressFlag) {
+            addressList.forEach((ele) => {
+              if (!ele.value) {
+                this.addressFlag = false;
+              }
+            });
+          }
+      this.disableFlag = this.addressFlag ? false : true;
+      if (!this.addressFlag) {
+        //console.log('1473');
+        this.paFlag = false;
+
+      }
+      const field = event.target.name;
+      if (field === 'EMS_EM_CAddress_Line_1__c') {
+          this.cadrressline1 = event.target.value;
+          //console.log('234',event.target.value);
+          if(event.target.value == ''){
+            //console.log('empty string');
+            this.cadrressline1 = null;
+
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.padrressline1 = this.cadrressline1;
+
+          }
+
+
+      }
+       if (field === 'EMS_EM_CAddress_Line_2__c') {
+          this.cadrressline2 = event.target.value;
+          //console.log(event.target.value);
+          if(event.target.value == ''){
+            this.cadrressline2 = null;
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.padrressline2 = this.cadrressline2;
+          }
+
+
+      }
+        if (field === 'EMS_EM_CA_State__c') {
+          this.castate = event.target.value;
+          //console.log(event.target.value);
+          if(event.target.value == ''){
+            this.castate = null;
+
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.pastate = this.castate;
+          }
+
+      }
+        if (field === 'EMS_EM_CA_City__c') {
+          this.cacity = event.target.value;
+          //console.log(event.target.value);
+          if(event.target.value == ''){
+            this.cacity = null;
+
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.pacity = this.cacity;
+          }
+
+      }
+       if (field === 'EMS_EM_CA_Zip__c') {
+          this.cazip = event.target.value;
+          //console.log(event.target.value);
+
+          if(event.target.value == ''){
+            this.cazip = null;
+
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.pazip = this.cazip;
+          }
+
+      }
+      //permanent address
+      if (field === 'EMS_EM_PAddress_Line_1__c') {
+          this.padrressline1 = event.target.value;
+          //console.log(event.target.value);
+          if(event.target.value == ''){
+            this.padrressline1 = null;
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.cadrressline1 = this.padrressline1;
+
+          }
+
+      }
+       if (field === 'EMS_EM_PAddress_Line_2__c') {
+          this.padrressline2 = event.target.value;
+          //console.log(event.target.value);
+          if(event.target.value == ''){
+            this.padrressline2 = null;
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.cadrressline2 = this.padrressline2;
+          }
+      }
+        if (field === 'EMS_EM_PA_State__c') {
+          this.pastate = event.target.value;
+          //console.log(event.target.value);
+          if(event.target.value == ''){
+            this.pastate = null;
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.castate = this.pastate;
+          }
+      }
+        if (field === 'EMS_EM_PA_City__c') {
+          this.pacity = event.target.value;
+          //console.log(event.target.value);
+          if(event.target.value == ''){
+            this.pacity = null;
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.cacity = this.pacity;
+          }
+      }
+        if (field === 'EMS_EM_PA_Zip__c') {
+          this.pazip = event.target.value;
+          //console.log(event.target.value);
+          if(event.target.value == ''){
+            this.pazip = null;
+          }
+          if (this.inputcheckboxValue == 'Checked'){
+            this.cazip = this.pazip;
+          }
+      }
+    }
 
   // Identity Information"....
 
@@ -554,16 +706,11 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
   doyouhaveavehicle(event) {
       this.checkboxValue = event.target.checked;
-      console.log('this.checkboxValue--------->'  +  this.checkboxValue)
-
-  // Store the value in localStorage
-  window.localStorage.setItem('my-checkbox-value', JSON.stringify(this.checkboxValue));
-    //this.doyouhaveavehicleval = event.target.checked ? 'Checked' : 'Unchecked';
-
+      //console.log('this.checkboxValue--------->'  +  this.checkboxValue)
     if (this.checkboxValue == true) {
       this.showvehicle = true;
       this.checkboxValue = true
-      console.log('this.checkboxValue--------->'  +  this.checkboxValue)
+      //console.log('this.checkboxValue--------->'  +  this.checkboxValue)
     } else {
       this.showvehicle = false;
     }

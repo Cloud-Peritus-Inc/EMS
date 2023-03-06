@@ -8,7 +8,7 @@ import getbilling from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getbilling';
 import getLeaveBalance from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveBalance';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getwfhWFHweekends from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhWFHweekends';
-
+import LightningConfirm from "lightning/confirm";
 import getContentDistributionForFile from '@salesforce/apex/GetDataForLoginUser.getContentDistributionForFile';
 import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLoginUser.getRelatedFilesByRecordIdForPayForms';
 
@@ -36,7 +36,6 @@ submitcheck;//need to changed based on condition LD < ALD
 @track reason;
 daycheck = false;
 cId;
-Email;
 todaydate;
 isbillable;
 fileuploadRequired=false;
@@ -106,19 +105,22 @@ weekendwfh = false;
   @wire(getLeaveBalance, { userid: '$uId' })
   wirelbalance({ error, data }) {
     if (data) {
+      console.log('data duration'+data);
       this.allavailabledays = data;
       this.annualcompduration = data.EMS_LM_No_Of_Availble_Leaves__c + data.EMS_LM_No_Of_Available_Compensatory_Off__c + 5;
       console.log(this.annualcompduration);
       this.annualduration = data.EMS_LM_No_Of_Availble_Leaves__c;
-      console.log(this.annualduration);
+      console.log('annual duration'+this.annualduration);
       this.cId = data.Id;
-      this.Email = data.Official_Mail__c;
+      if (this.value == 'Annual Leave') {
+            this.availabledays = this.annualduration;
+          }
     } else if (error) {
       console.log(error);
       this.error = error;
     }
   }
-
+  
 connectedCallback(){
           
           getLeaveRequestMethod({getrecordId: this.selecteditrecordid})
@@ -133,7 +135,7 @@ connectedCallback(){
            this.reason=employye.EMS_LM_Reason__c;
            this.value=employye.EMS_LM_Leave_Type_Name__c;
             this.fullday=employye.EMS_LM_Day__c;      
-
+          
           if (this.fullday != 'Full Day') {
                 this.daycheck = true;
                 this.firstsecondDay=false;
@@ -151,33 +153,18 @@ connectedCallback(){
 
     }
 
- @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$Location', dayCheck: '$daycheck' })
+ @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$Location', dayCheck: false })
   async wiredduration({ error, data }) {
     if (data) {
       if (this.value == 'Loss of Pay' || this.value == 'Annual Leave') {
         this.hideInotherleave=true;
         if (this.value == 'Loss of Pay') {
           if (this.startDate != undefined || this.startDate != null) {
-            let date = new Date(this.startDate);
-            let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            let todaydate1 = formattedDate;
-            if (new Date(todaydate1) < new Date(this.todaydate)) {
-                   
-             /* const evt = new ShowToastEvent({
-              message: 'Leave to be applied before 48Hrs',
-              variant: 'error',
-              });
-              this.dispatchEvent(evt);*/
-              //this.submitcheck = true;
-              //alert('Leave to be applied before 48Hrs');
-            }
-            else{
              this.submitcheck =false;
-             this.duration = data;
-            }
+             this.duration = data; 
           }
         }
-        if (this.value == 'Annual Leave') {
+      if (this.value == 'Annual Leave') {
           if (this.annualduration >= data) {
             this.submitcheck = false;
             this.duration = data;
@@ -316,10 +303,13 @@ connectedCallback(){
     else {
       this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
     }
+     if (this.value == 'Annual Leave') {
+      this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
+      this.fileuploadRequired=true;
+    }
     
     if (this.value == 'Loss of Pay') {
       if (this.annualcompduration > 0) {
-        console.log(this.annualcompduration);
         this.submitcheck = true;
         const evt = new ShowToastEvent({
             message: 'Loss of Pay will effect your monthly pay check, consider applying leave of annual or comp off type. ',
@@ -339,8 +329,11 @@ connectedCallback(){
     this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
     this.daycheck = false;
     if (namecheck == 'startDate1') {
-       this.startDate1 = event.detail.value + ' 00:00:00';
+       this.startDate1 = event.detail.value;
       this.startDate = event.detail.value;
+      if (this.startDate1 != null) {
+        this.startDate1 = event.detail.value + ' 00:00:00';
+      }
       
       if(day==6 || day==0){
         const evt = new ShowToastEvent({
