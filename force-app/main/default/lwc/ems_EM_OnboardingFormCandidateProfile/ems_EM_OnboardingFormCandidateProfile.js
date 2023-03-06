@@ -316,14 +316,12 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   connectedCallback() {
     updateOnboardingInfoOnPageLoads(this);
-    // if(this.padrressline1 != null && this.cadrressline1 != null && this.padrressline2 != null && this.cadrressline2 != null && 
-    //   this.pastate != null && this.castate != null && this.pacity != null && this.cacity != null && this.pazip != null && this.cazip != null
-    //   ){
-    //   if(this.padrressline1 === this.cadrressline1){
-    //     this.paFlag = true;
-    //     this.disableFlag = false;
-    //   }
-    // }
+    if(this.cazip != null){
+      if(this.padrressline1 === this.cadrressline1){
+        this.paFlag = true;
+        this.disableFlag = false;
+      }
+    }
     
     
   }
