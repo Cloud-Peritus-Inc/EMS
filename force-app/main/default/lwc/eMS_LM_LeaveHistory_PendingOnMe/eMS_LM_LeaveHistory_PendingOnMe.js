@@ -46,7 +46,8 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   @track isLoading = false;
   @track selectedLeaveReqIds = [];
   isCheck = false;
-  _wiredRefreshData
+  _wiredRefreshData;
+  checkBox;
 
   @track currentPageReference;
   @wire(CurrentPageReference)
@@ -54,10 +55,6 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     this.currentPageReference = currentPageReference;
   }
 
-   connectedCallback() {
-    //this.pendingOnMeLeaveReqWiredData ();
-    
-  }
 
   //TO SHOW DEFAULT DATA
   /*pendingOnMeLeaveReqWiredData () {
@@ -87,32 +84,32 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     });
   }*/
   // WIRE METHOD TO SHOW THE DEFAULT DATA
- /* @wire(pendingOnMeLeaveReq)
-  pendingOnMeLeaveReqWiredData({ error, data }) {
-    if (data) {
-      if (data.length > 0) {
-        console.log('### pendingOnMeLeaveReq', data);
-        //console.log('user ID 1: ', uId);
-        //console.log('user ID : ', this.uId);
-        this.showdata = true;
-        console.log('pendingOnMeLeaveReq : ',this.showdata);
-        this.nodata = false;
-        this.datahistory = JSON.parse(JSON.stringify(data));
-        console.log('### non filter : ', this.datahistory);
-        this.datahistory.forEach(req => {
-          // req.disableButton = req.EMS_LM_Status__c !== 'Pending' && (req.EMS_LM_Status__c ===  'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c  !== this.uId || req.EMS_LM_Status__c ===  'Approver 1 Pending' && req.EMS_LM_Approver__c !== this.uId);
-          //console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
-          req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 pending' && req.EMS_LM_Approver__c === this.uId));
-          //console.log('### req.EMS_LM_2nd_Approver__c default: ', req.EMS_LM_2nd_Approver__c);
-        });
-      } else {
-        this.nodata = true;
-        this.disableButton = this.nodata === true;
-      }
-    } else if (error) {
-      console.error('Error:', error);
-    }
-  }*/
+  /* @wire(pendingOnMeLeaveReq)
+   pendingOnMeLeaveReqWiredData({ error, data }) {
+     if (data) {
+       if (data.length > 0) {
+         console.log('### pendingOnMeLeaveReq', data);
+         //console.log('user ID 1: ', uId);
+         //console.log('user ID : ', this.uId);
+         this.showdata = true;
+         console.log('pendingOnMeLeaveReq : ',this.showdata);
+         this.nodata = false;
+         this.datahistory = JSON.parse(JSON.stringify(data));
+         console.log('### non filter : ', this.datahistory);
+         this.datahistory.forEach(req => {
+           // req.disableButton = req.EMS_LM_Status__c !== 'Pending' && (req.EMS_LM_Status__c ===  'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c  !== this.uId || req.EMS_LM_Status__c ===  'Approver 1 Pending' && req.EMS_LM_Approver__c !== this.uId);
+           //console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
+           req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 pending' && req.EMS_LM_Approver__c === this.uId));
+           //console.log('### req.EMS_LM_2nd_Approver__c default: ', req.EMS_LM_2nd_Approver__c);
+         });
+       } else {
+         this.nodata = true;
+         this.disableButton = this.nodata === true;
+       }
+     } else if (error) {
+       console.error('Error:', error);
+     }
+   }*/
 
   //TO GET OBJECT INFO
   @wire(getObjectInfo, { objectApiName: LEAVEHISTORY_OBJECT })
@@ -130,7 +127,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       //Values to remove from picklistValues
       const statusRemoved = ['Approved', 'Rejected', 'Cancelled', 'Auto Approved']
       const filteredStatusList = this.picklistValues.filter(status => !statusRemoved.includes(status.label));
-      console.log('### filteredStatusList',filteredStatusList);
+      console.log('### filteredStatusList', filteredStatusList);
       this.picklistValues = filteredStatusList;
       console.log('### picklistValues Pending Tab: ', this.picklistValues);
       console.log('### leaveTypeValues Pending Tab: ', this.leaveTypeValues);
@@ -141,7 +138,9 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   // WIRE METHOD TO FILTERED DATA
   @wire(getPendingLeaveHistory, { employeeName: '$empName', startDateStr: '$startDate', endDateStr: '$endDate', statusValues: '$sValue', typeValues: '$value' })
-  wiredLeavHistory({ error, data }) {
+  wiredLeavHistory(wireResult) {
+    const { data, error } = wireResult; // TO REFRESH THE DATA USED THIS BY STORING DATA AND ERROR IN A VARIABLE
+    this._wiredRefreshData = wireResult;
     if (data) {
       this.isLoading = false;
       this.showdata = true;
@@ -160,7 +159,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         });
         console.log('### datahistory', this.datahistory);
         this.error = undefined;
-      } else if (!this.isCheck){
+      } else if (!this.isCheck) {
         this.nodata = true;
         console.log('### DATA BEFORE esle before: ', data, this.showdata);
         this.showdata = false;
@@ -226,7 +225,8 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     console.log('SELECTED RECORD : ');
     const selectedRecordCheckboxId = event.currentTarget.dataset.id;
     console.log('### selectedRecordCheckboxId : ', selectedRecordCheckboxId);
-    if (!event.target.checked) {
+    this.checkBox = event.target.checked
+    if (!this.checkBox) {
       const index = this.multipleApprovals.indexOf(selectedRecordCheckboxId);
       this.multipleApprovals.splice(index, 1);
     } else {
@@ -238,7 +238,8 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   //TO SELECT ALL THE CHECKBOXES
   handleSelectAll(event) {
     console.log('OUTPUT : ');
-    if (event.target.checked) {
+    this.checkBox = event.target.checked 
+    if (this.checkBox) {
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
       const selectedRecordIds = [];
       checkboxElements.forEach(element => {
@@ -252,9 +253,8 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       console.log('Selected Record Ids:', selectedRecordIds);
       this.multipleApprovals = selectedRecordIds.map(item => item.id);
       console.log('### multipleApprovals', this.multipleApprovals);
-    } else if (!event.target.checked) {
+    } else if (!this.checkBox) {
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
-      //const selectedRecordIds = [];
       checkboxElements.forEach(element => {
         element.checked = false;
         this.multipleApprovals = [];
@@ -284,7 +284,8 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         .then((result) => {
           console.log('Leave Request: ', result);
           this.isShowModalApproveAll = false;
-          this.updateMyRequestTabView();
+          this.checkBox = false;
+          return refreshApex(this._wiredRefreshData)
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -309,9 +310,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       bulkLeaveReqReject({ bulkRejectId: this.multipleApprovals, comments: this.rejectAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
-          //window.location.reload();
           this.isShowModalRejectAll = false;
-          this.updateMyRequestTabView();
+          this.checkBox = false;
+          return refreshApex(this._wiredRefreshData)
+
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -343,9 +345,9 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     updateApproveStatusAndComments({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
       .then((result) => {
         console.log('Leave Request: ', result);
-        //window.location.reload();
         this.isShowModalApprove = false;
-        this.updateMyRequestTabView();
+        this.checkBox = false;
+        return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
@@ -373,13 +375,14 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalReject = false;
-        this.updateMyRequestTabView();
+        this.checkBox = false;
+        return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
   }
 
-  //TO VIEW THE RECORD
+  //TO VIEW THE LEAVE RECORD
   handleView(event) {
     const selectedRecordId = event.currentTarget.dataset.id;
     console.log('### handleView : ', selectedRecordId);
@@ -393,10 +396,19 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     });
   }
 
-  //TO REFRESH THE COMPONENT
-  updateMyRequestTabView() {
-    setTimeout(() => {
-      eval("$A.get('e.force:refreshView').fire();");
-    }, 1000);
+  //TO VIEW THE CONTACT RECORD
+  handlConClick(event) {
+    let selectCon = event.currentTarget.dataset.id;
+    console.log('### selectCon : ', selectCon);
+    this[NavigationMixin.Navigate]({
+      type: 'standard__recordPage',
+      attributes: {
+        recordId: selectCon,
+        objectApiName: 'Contact',
+        actionName: 'view',
+      },
+    });
   }
+
+
 }

@@ -20,7 +20,9 @@ global date weekEnd ;
     
   global  BatchToCreateTimesheets(){
         date todaydate = system.today();
+        System.debug('todaydate'+todaydate);
         Date considerDate = todaydate.toStartofWeek();
+      System.debug('considerDate'+considerDate);
         this.weekStart = considerDate.toStartofWeek().addDays(1);
         this.weekEnd = considerDate.toStartofWeek().addDays(7); 
     }
@@ -38,9 +40,12 @@ global date weekEnd ;
     global Database.QueryLocator start(Database.BatchableContext BC) {
         
         date dt = system.today();
+        SYstem.debug('****dt'+dt);
+        SYstem.debug('Week_End_Date__c'+weekEnd);
+        System.debug('weekStart'+weekStart);
         return Database.getQueryLocator([SELECT Id,Email,Name,EMS_TM_user__c,
                                          (SELECT Id,EMS_TM_ProjectName_Asgn__c,EMS_TM_EmployeeName__c,EMS_TM_AssignedAs__c FROM Assignments__r 
-                                         	WHERE EMS_TM_StartDate_Asgn__c <=:dt AND EMS_TM_EndDate_Asgn__c >=:dt ),
+                                         	WHERE EMS_TM_StartDate_Asgn__c <=:dt AND (EMS_TM_EndDate_Asgn__c >=:dt OR EMS_TM_EndDate_Asgn__c =NULL)),
                                          (SELECT Id,Week_Start_Date__c,Week_End_Date__c,EMS_TM_Week__c FROM Timesheets__r 
                                           WHERE Week_Start_Date__c >=:weekStart AND Week_End_Date__c<=:weekEnd  )
                                          FROM Contact 
@@ -65,7 +70,12 @@ global date weekEnd ;
        List<EMS_Timesheet__c> timesheetList = new List<EMS_Timesheet__c>();
        List<EMS_TM_Timesheet_Record__c> timesheetlineItemsList = new List<EMS_TM_Timesheet_Record__c>();
        List<Contact> filteredList = new List<Contact>();
+        System.debug('*******conList***'+conList);
+         System.debug('*******conListSIZE***'+conList.size());
         for(Contact conRec : conList){
+            SYstem.debug('*****conRec'+conRec);
+            System.debug('conRec.Timesheets__r'+conRec.Timesheets__r+'....SIZE'+conRec.Timesheets__r);
+            System.debug('conRec.Assignments__r'+conRec.Assignments__r+'....SIZE'+conRec.Assignments__r);
             if(conRec.Timesheets__r.isEmpty() && !conRec.Assignments__r.isEmpty()){
                 filteredList.add(conRec);
                 EMS_Timesheet__c timesheet = new EMS_Timesheet__c();
@@ -104,7 +114,7 @@ global date weekEnd ;
             for(EMS_TM_Assignment__c assignments : con.Assignments__r){
                 EMS_TM_Timesheet_Record__c lineitem = new EMS_TM_Timesheet_Record__c();
                 lineitem.EMS_Timesheet__c = timesheetMap.get(con.id).Id;
-                lineitem.OwnerId = timesheetMap.get(con.id).OwnerId;
+                lineitem.OwnerId = timesheetMap.get(con.id).User__c;
                 lineitem.EMS_TM_ProjectTask__c = assignments.EMS_TM_AssignedAs__c;
                 lineitem.Assignment__c = assignments.Id;
                 lineitem.EMS_TM_Project__c = assignments.EMS_TM_ProjectName_Asgn__c;

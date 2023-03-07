@@ -66,7 +66,7 @@
 								<tr style="border-top:0.5px solid #d4d4d4;border-bottom:0.5px solid #d4d4d4">
 									<th style="padding:8px">
 										<div>
-											<lightning-input type="checkbox" variant="standard" label="Select All"
+											<lightning-input type="checkbox" variant="standard"
 												onclick={handleSelectAll}></lightning-input>
 										</div>
 									</th>
@@ -108,7 +108,10 @@
 										</td>
 										<td>
 											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-												{Req.EMS_LM_Contact__r.Name}</div>
+												<a href="#" data-id={Req.EMS_LM_Contact__c} onclick={handlConClick}>
+													{Req.EMS_LM_Contact__r.Name}
+												</a>
+											</div>
 										</td>
 										<td>
 											<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
