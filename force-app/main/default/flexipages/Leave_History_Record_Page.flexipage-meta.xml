@@ -7,65 +7,19 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>FeedItem.TextPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.ContentPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.QuestionPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Global.NewTask</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Edit</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!Record.EMS_LM_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Pending</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Global.NewEvent</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Global.NewContact</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Global.LogACall</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Global.NewOpportunity</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Global.NewLead</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.ContentNote</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.PollPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.RypplePost</value>
+                            <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Delete</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Clone</value>
                         </valueListItems>
                         <valueListItems>
                             <value>ChangeOwnerOne</value>
                         </valueListItems>
                         <valueListItems>
                             <value>ChangeRecordType</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>PrintableView</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

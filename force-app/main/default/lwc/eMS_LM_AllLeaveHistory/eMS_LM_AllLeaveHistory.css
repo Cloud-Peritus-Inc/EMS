@@ -16,23 +16,7 @@
   overflow-y: scroll; /* enable vertical scrollbar */
   position: relative;
 }
-.table-container::-webkit-scrollbar {
-  width: 10px;
-}
 
-.table-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  /*background: #888;*/
-  background : rgb(223, 185, 235);
-  border-radius: 4px;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
 table {
   border-collapse: collapse;
   width: 100%;

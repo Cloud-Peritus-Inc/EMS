@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Contact_API__c</field>
-        <value xsi:type="xsd:string">Send_joining_date_to_resource_manager__c</value>
+        <value xsi:type="xsd:string">Send_joining_date_confirmation_to_the_RM__c</value>
     </values>
     <values>
         <field>Due_Date_Days__c</field>

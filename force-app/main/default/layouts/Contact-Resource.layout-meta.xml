@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <feedLayout>
         <autocollapsePublisher>true</autocollapsePublisher>
@@ -52,7 +54,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Trailblazer_ID_or_Public_URL__c</field>
+                <field>PF_Forms_Check__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -103,10 +105,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_LR__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Department__c</field>
             </layoutItems>
             <layoutItems>
@@ -122,18 +120,18 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Work_Location__c</field>
+                <behavior>Edit</behavior>
+                <field>Timesheet_NoNeed__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_EM_OLocation__c</field>
+                <behavior>Required</behavior>
+                <field>Work_Location__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Official_Mail__c</field>
+                <field>EMS_RM_Resource_Email_id__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -161,7 +159,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Location__c</field>
+                <field>Current_Active_Assignments__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Trailblazer_ID_or_Public_URL__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -270,6 +272,89 @@
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Leave Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_Of_Leaves_Credit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_Of_Utilized_Leaves__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EMS_LM_No_Of_Availble_Leaves__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_Of_Carry_Forward_Leaves__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_Of_Utilized_Loss_Of_Pay__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_Of_Compensatory_Off_Credit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_OF_Utilized_Compensatory_Off__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EMS_LM_No_Of_Available_Compensatory_Off__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>No_OF_Utilized_Work_from_Home__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Override_the_standard_level_of_approval__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Level_of_Approval__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_Of_Paternity_Leaves_Credit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EMS_LM_No_Of_Available_Paternity_Leave__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_Of_Maternity_Leaves_Credit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EMS_LM_No_Of_Available_Maternity_Leave__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_of_Bereavement_Leaves_Credit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_Of_Utilized_Bereavement_Leaves__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EMS_LM_No_Of_Available_Bereavement_Leave__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
         <layoutColumns/>
@@ -338,11 +423,6 @@
             <actionName>FeedItem.PollPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>11</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.ContentPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>12</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>ContactHierarchy</actionName>
@@ -430,6 +510,11 @@
             <sortOrder>29</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>FeedItem.ContentPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>12</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Submit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>30</sortOrder>
@@ -501,12 +586,17 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>EMS_EM_Membership_No__c</fields>
-        <fields>Amount__c</fields>
-        <relatedList>EMS_EM_Benefits__c.EMS_EM_Nominee__c</relatedList>
+        <fields>EMS_TM_ProjectName_Asgn__c</fields>
+        <fields>EMS_TM_Status_Asgn__c</fields>
+        <fields>EMS_TM_Billable__c</fields>
+        <relatedList>EMS_TM_Assignment__c.EMS_TM_EmployeeName__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedFileList</relatedList>
+        <fields>NAME</fields>
+        <fields>Resource_Role__c</fields>
+        <fields>Resource_Reports_To__c</fields>
+        <fields>Reports_To_Role__c</fields>
+        <relatedList>Resource_Resource_Relationship__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -515,40 +605,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>EMS_LM_Leave_Type__c</fields>
-        <fields>EMS_LM_Leaves_Credited__c</fields>
-        <relatedList>EMS_LM_Leave_Credit__c.EMS_LM_Employee__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>EMS_LM_Leave_Start_Date__c</fields>
-        <fields>EMS_LM_Leave_End_Date__c</fields>
-        <fields>EMS_LM_Status__c</fields>
-        <relatedList>EMS_LM_Leave_History__c.EMS_LM_Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>EMS_TM_ProjectName_Asgn__c</fields>
-        <fields>EMS_TM_Status_Asgn__c</fields>
-        <fields>EMS_TM_Billable__c</fields>
-        <relatedList>EMS_TM_Assignment__c.EMS_TM_EmployeeName__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Resource_Resource_Relationship__c.Resource__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Type_Of_Project__c</fields>
-        <fields>EMS_TM_StartDate__c</fields>
-        <fields>EMS_TM_Status__c</fields>
-        <relatedList>EMS_TM_Project__c.Project_Manager__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>Family_Member_Name__c</fields>
         <fields>Relationships__c</fields>
         <fields>Is_It_Emergency_Contact__c</fields>
-        <fields>Is_It_Dependent_Contact__c</fields>
         <relatedList>Family_Information__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -561,23 +620,36 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Off_boarding_Request__c.Resource__c</relatedList>
+        <fields>EMS_LM_Leave_Type__c</fields>
+        <fields>EMS_LM_Leaves_Credited__c</fields>
+        <relatedList>EMS_LM_Leave_Credit__c.EMS_LM_Employee__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Off_boarding_Request__c.Request_Approver__c</relatedList>
+        <fields>EMS_LM_Leave_Type__c</fields>
+        <fields>EMS_LM_Leave_Start_Date__c</fields>
+        <fields>EMS_LM_Leave_End_Date__c</fields>
+        <fields>EMS_LM_Status__c</fields>
+        <relatedList>EMS_LM_Leave_History__c.EMS_LM_Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Assignment__c</fields>
+        <fields>Type_Of_Project__c</fields>
+        <fields>EMS_TM_StartDate__c</fields>
         <fields>EMS_TM_Status__c</fields>
-        <relatedList>EMS_Timesheet__c.Resource__c</relatedList>
+        <relatedList>EMS_TM_Project__c.Project_Manager__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Goal_Name__c</fields>
         <fields>Status__c</fields>
         <relatedList>Goal__c.Resource__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EMS_EM_Membership_No__c</fields>
+        <fields>Amount__c</fields>
+        <relatedList>EMS_EM_Benefits__c.EMS_EM_Nominee__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -1,0 +1,30 @@
+<template>
+	<lightning-card variant="Narrow" title="Leave Request" icon-name="standard:account">
+		<lightning-record-view-form record-id={recordId} object-api-name={objectName}>
+			<div class="slds-grid slds-gutters slds-var-m-around_medium">
+				<div class="slds-col slds-size_6-of-12">
+					<lightning-output-field field-name="EMS_LM_Contact__c"></lightning-output-field>
+					<lightning-output-field field-name="EMS_LM_Leave_Type__c"></lightning-output-field>
+					<lightning-output-field field-name="EMS_LM_Leave_Start_Date__c"></lightning-output-field>
+					<lightning-output-field field-name="EMS_LM_Leave_End_Date__c"></lightning-output-field>
+					<lightning-output-field field-name="EMS_LM_Leave_Duration__c"></lightning-output-field>
+					<lightning-output-field field-name="EMS_LM_Day__c"></lightning-output-field>
+					<lightning-output-field field-name="EMS_LM_Reason__c"></lightning-output-field>
+					<lightning-output-field field-name="EMS_LM_Status__c"></lightning-output-field>
+					<lightning-output-field field-name="CreatedById"></lightning-output-field>
+				</div>
+				<div class="slds-col slds-size_6-of-12">
+					<lightning-output-field field-name="EMS_LM_Approver__c"></lightning-output-field>
+					<lightning-output-field field-name="Approver_1_Approved_Comments__c"></lightning-output-field><br/>
+					<lightning-output-field field-name="EMS_LM_2nd_Approver__c"></lightning-output-field>
+					<lightning-output-field field-name="Approver_2_Approved_Comments__c"></lightning-output-field><br/>
+					<lightning-output-field field-name="EMS_LM_Current_Approver__c"></lightning-output-field>
+					<lightning-output-field field-name="EMS_LM_Remarks__c"></lightning-output-field><br/>
+					<lightning-output-field field-name="EMS_LM_Approved_On__c"></lightning-output-field>
+                    <lightning-output-field field-name="LastModifiedById"></lightning-output-field>
+				</div>
+			</div>
+		</lightning-record-view-form>
+	</lightning-card>
+
+</template>

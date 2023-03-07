@@ -16,7 +16,7 @@
                 <field>EMS_TM_ProjectName_Asgn__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>EMS_TM_AssignedAs__c</field>
             </layoutItems>
             <layoutItems>

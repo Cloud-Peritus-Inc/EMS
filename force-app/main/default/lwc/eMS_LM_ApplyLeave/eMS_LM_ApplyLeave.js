@@ -11,7 +11,7 @@ import getLeaveTypeId from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveT
 import LightningConfirm from "lightning/confirm";
 import { createRecord } from 'lightning/uiRecordApi';
 
-
+import { refreshApex } from '@salesforce/apex';
 
 export default class EMS_LM_ApplyLeave extends LightningElement {
   @track isLoading = false;
@@ -35,8 +35,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   @track reason;
   daycheck = false;
   cId;
-  Email;
-  todaydate;
+  email;
   isbillable;
   fileuploadRequired=false;
   annualduration;
@@ -46,20 +45,6 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   wfhtodaydate;
   leavetypeId;
   currentLocation;
- 
-
-  connectedCallback() {
-    let today = new Date();
-    console.log('this.today-->',today);
-    let dd = today.getDate()+2 ;
-    let mm = today.getMonth() + 1;
-    let y = today.getFullYear();
-    let date = Date.parse(y + '-' + mm + '-' + dd);
-    let date1 = new Date(date);
-    console.log('date-->',date,dd,mm,y,date1);
-    let formattedDate = date1.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-    this.todaydate = formattedDate;
-  }
 
 
   @wire(getLeaveType, { userid: '$uId' })
@@ -106,23 +91,8 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       if (this.value == 'Loss of Pay' || this.value == 'Annual Leave') {
         if (this.value == 'Loss of Pay') {
           if (this.startDate != undefined || this.startDate != null) {
-            let date = new Date(this.startDate);
-            let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            let todaydate1 = formattedDate;
-            if (new Date(todaydate1) < new Date(this.todaydate)) {
-                   
-             /* const evt = new ShowToastEvent({
-              message: 'Leave to be applied before 48Hrs',
-              variant: 'error',
-              });
-              this.dispatchEvent(evt);*/
-              //this.submitcheck = true;
-              //alert('Leave to be applied before 48Hrs');
-            }
-            else{
              this.submitcheck =false;
-             this.duration = data;
-            }
+             this.duration = data;      
           }
         }
         if (this.value == 'Annual Leave') {
@@ -178,20 +148,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       else {
         if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
           if (this.startDate != undefined || this.startDate != null) {
-            let date = new Date(this.startDate);
-            let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            let todaydate1 = formattedDate;
-            if (new Date(todaydate1) < new Date(this.todaydate)) {
-              
-            /*  const evt = new ShowToastEvent({
-              message: 'Leave to be applied before 48Hrs',
-              variant: 'error',
-              });
-              this.dispatchEvent(evt);*/
-             // this.submitcheck = true;
-              //alert('Leave to be applied before 48Hrs');
-            }
-            else{
+ 
               if(this.availabledays >= data){
                 this.submitcheck = false;
                 this.duration = data;
@@ -204,9 +161,8 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
                 });
                 this.dispatchEvent(evt);
                 this.submitcheck = true;
-               // alert('You dont have enough balance to apply leave');
               }             
-             }
+             
           }
           else{
             if (this.availabledays >= data) {
@@ -221,7 +177,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
                 variant: 'error',
                 });
                 this.dispatchEvent(evt);
-             // alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
+            
               this.duration = data;
               this.duration = undefined;
               this.error = undefined;
@@ -242,7 +198,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
                 variant: 'error',
                 });
                 this.dispatchEvent(evt);
-           // alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
+           
             this.duration = data;
             this.duration = undefined;
             this.error = undefined;
@@ -266,7 +222,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       this.annualduration = data.EMS_LM_No_Of_Availble_Leaves__c;
       console.log(this.annualduration);
       this.cId = data.Id;
-      this.Email = data.Official_Mail__c;
+      this.email = data.Email;
     } else if (error) {
       console.log(error);
       this.error = error;
@@ -390,55 +346,18 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
         this.dispatchEvent(evt);
       //  alert('Please select a proper Start Date');
         this.startDate1 = null;
+        this.endDate1 = null;
       }
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
         if (this.startDate != this.endDate || this.startDate == undefined || this.endDate == undefined) {
-          let date = new Date(this.startDate);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if (new Date(todaydate1) < new Date(this.todaydate)) {      
-          /*  const evt = new ShowToastEvent({
-            message: 'Leave to be applied before 48Hrs',
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);*/
-       // this.submitcheck = true;
-            //alert('Leave to be applied before 48Hrs');
-          }
+    
           this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
         }
-        else {
-          let date = new Date(this.startDate);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if (new Date(todaydate1) < new Date(this.todaydate)) {
-            
-         /*   const evt = new ShowToastEvent({
-            message: 'Leave to be applied before 48Hrs',
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
-        this.submitcheck = true;*/
-            //alert('Leave to be applied before 48Hrs');
-          }
+        else { 
           this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
         }
       }
       if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
-        if (this.startDate != undefined || this.startDate != null) {
-          let date = new Date(this.startDate);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if (new Date(todaydate1) < new Date(this.todaydate)) {       
-         /*   const evt = new ShowToastEvent({
-            message: 'Leave to be applied before 48Hrs',
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
-        this.submitcheck = true;*/
-            //alert('Leave to be applied before 48Hrs');
-          }
-        }
 
       }
     }
@@ -466,6 +385,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
         });
         this.dispatchEvent(evt);
         this.endDate1 = null;
+        this.startDate1 = null;
       }
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
         if (this.startDate != this.endDate || this.startDate == undefined || this.endDate == undefined) {
@@ -499,7 +419,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   }
   submitme(event) {
 
-if(this.reason == null || this.reason == ''){
+    if(this.reason == null || this.reason == ''){
             const evt = new ShowToastEvent({
             message: 'Please mention the reason for your leave request',
             variant: 'error',
@@ -515,7 +435,7 @@ if(this.reason == null || this.reason == ''){
         });
         this.dispatchEvent(evt);
       }else{
-        
+        this.isLoading=true;
         //step1 create fields list
         const fields ={'EMS_LM_Leave_Start_Date__c':this.startDate1, 'EMS_LM_Leave_End_Date__c':this.endDate1 ,
         'EMS_LM_Leave_Type_Name__c':this.value , 'EMS_LM_Contact__c':this.cId , 'EMS_LM_Reason__c':this.reason ,'EMS_LM_Day__c':this.fullday ,
@@ -530,7 +450,8 @@ if(this.reason == null || this.reason == ''){
               uploadFile({ base64 : this.fileData.base64 , filename : this.fileData.filename , recordId : this.rId }).then(res=>{
                 console.log(res);
               }).catch(error=> {  console.error(error.body.message);});
-            }            
+            } 
+            this.isLoading=false;           
             this.check = false;
             const getlvalue = new CustomEvent('getlvalue', {
               detail: this.check
@@ -544,8 +465,7 @@ if(this.reason == null || this.reason == ''){
                     variant: 'success',
                 }),
             );
-           // window.location.reload();
-           this.updateRecordView();
+            window.location.reload();
         }).catch(error => {
         
             console.log('error-->',error);
@@ -558,25 +478,11 @@ if(this.reason == null || this.reason == ''){
                     variant: 'error',
                 }),
             );
-        }).finally(()=>{
-            this.handleIsLoading(false);
-            
         });
       }
   }
   }
-
-  handleIsLoading(isLoading) {
-        this.isLoading = isLoading;
-    }
-
-  updateRecordView() {
-       const refreshEvent = new CustomEvent('refresh', {
-    bubbles: true // This allows the event to bubble up to parent components
-});
-this.dispatchEvent(refreshEvent);
-    }
-
+  
   dayChange(event) {
     this.fullday = event.detail.value;
     if (this.fullday != 'Full Day') {

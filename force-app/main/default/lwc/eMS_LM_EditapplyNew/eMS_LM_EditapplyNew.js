@@ -14,7 +14,7 @@ import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLog
 
 import updateleaveRequest from '@salesforce/apex/EMS_LM_EditLeaveRequest.updateleaveRequest';
 export default class EMS_LM_EditapplyNew extends LightningElement {
-
+ @track isLoading = false;
 uId = u_Id;
 @api selecteditrecordid;
 closeleavepopup;
@@ -218,20 +218,7 @@ connectedCallback(){
         if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
           this.hideInotherleave = false;
           if (this.startDate != undefined || this.startDate != null) {
-            let date = new Date(this.startDate);
-            let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            let todaydate1 = formattedDate;
-            if (new Date(todaydate1) < new Date(this.todaydate)) {
-              
-            /*  const evt = new ShowToastEvent({
-              message: 'Leave to be applied before 48Hrs',
-              variant: 'error',
-              });
-              this.dispatchEvent(evt);*/
-             // this.submitcheck = true;
-              //alert('Leave to be applied before 48Hrs');
-            }
-            else{
+
               if(this.availabledays >= data){
                 this.submitcheck = false;
                 this.duration = data;
@@ -246,7 +233,7 @@ connectedCallback(){
                 this.submitcheck = true;
                // alert('You dont have enough balance to apply leave');
               }             
-             }
+             
           }
           else{
             if (this.availabledays >= data) {
@@ -281,47 +268,6 @@ connectedCallback(){
   }
 
 
-
-  handleChange(event) {
-   
-    this.daycheck = false;
-    this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
-
-    this.submitcheck = true;
-    this.value = event.detail.value;
-
-    if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
-      if (this.startDate1 == this.endDate1) {
-        if (this.startDate == undefined || this.endDate == undefined) {
-          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
-        }
-        else {
-          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
-        }
-      }
-    }
-    else {
-      this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
-    }
-     if (this.value == 'Annual Leave') {
-      this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
-      this.fileuploadRequired=true;
-    }
-    
-    if (this.value == 'Loss of Pay') {
-      if (this.annualcompduration > 0) {
-        this.submitcheck = true;
-        const evt = new ShowToastEvent({
-            message: 'Loss of Pay will effect your monthly pay check, consider applying leave of annual or comp off type. ',
-            variant: 'warning',
-        });
-        this.dispatchEvent(evt);
-        //alert('Please Utilise Your Leaves(Annual / Comp Off) before applying for Loss Of Pay');
-      }
-       
-    }
-  }
-
    datechange(event) {
     var namecheck = event.target.name;
     let enteredDate = new Date(event.target.value + ' 00:00:00');
@@ -350,6 +296,7 @@ connectedCallback(){
         });
         this.dispatchEvent(evt);
         this.startDate1 = null;
+        this.endDate1 = null;
       }
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
         if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
@@ -386,12 +333,12 @@ connectedCallback(){
       }
       if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
         console.log(this.endDate <= this.startDate);
-        //alert('Please select a Valid End date');
         const evt = new ShowToastEvent({
             message: 'Please select a valid end date',
             variant: 'error',
         });
         this.dispatchEvent(evt);
+        this.startDate1 = null;
         this.endDate1 = null;
       }   
     }
@@ -451,7 +398,7 @@ connectedCallback(){
         
     }else{
 
-      if( this.reason == null && this.duration>3 && this.value == 'Work From Home'){
+      if( (this.reason == null || this.reason == '') && this.duration>3 && this.value == 'Work From Home'){
         const evt = new ShowToastEvent({
             message: 'Please mention the reason for your request',
             variant: 'error',
@@ -467,6 +414,7 @@ connectedCallback(){
         this.dispatchEvent(evt);
      // alert('Please Upload Proof');// need to chane the alert message
     }else{
+      this.isLoading=true;
     let guestObj = { 'sobjectType': 'EMS_LM_Leave_History__c' };
         
         guestObj.EMS_LM_Leave_Start_Date__c = this.startDate;
@@ -481,9 +429,10 @@ connectedCallback(){
     updateleaveRequest({newRecord: guestObj , recordId:this.selecteditrecordid})
             .then(result => {
                 console.log('sdf-->',result);
+              this.isLoading=false;
                 const event = new ShowToastEvent({
                   title: 'Save',
-                  message: 'Your leave request has been updated successfully!',
+                  message: 'Your request has been updated successfully!',
                   variant: 'success'
                  
               });
