@@ -435,7 +435,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
         });
         this.dispatchEvent(evt);
       }else{
-        
+        this.isLoading=true;
         //step1 create fields list
         const fields ={'EMS_LM_Leave_Start_Date__c':this.startDate1, 'EMS_LM_Leave_End_Date__c':this.endDate1 ,
         'EMS_LM_Leave_Type_Name__c':this.value , 'EMS_LM_Contact__c':this.cId , 'EMS_LM_Reason__c':this.reason ,'EMS_LM_Day__c':this.fullday ,
@@ -450,7 +450,8 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
               uploadFile({ base64 : this.fileData.base64 , filename : this.fileData.filename , recordId : this.rId }).then(res=>{
                 console.log(res);
               }).catch(error=> {  console.error(error.body.message);});
-            }            
+            } 
+            this.isLoading=false;           
             this.check = false;
             const getlvalue = new CustomEvent('getlvalue', {
               detail: this.check

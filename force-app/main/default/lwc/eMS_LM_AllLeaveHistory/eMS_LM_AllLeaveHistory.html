@@ -69,10 +69,10 @@
 									<div title="Leave Status">Leave Status</div>
 								</th>
 								<th>
-									<div title="Approver">Approved By</div>
+									<div title="Approved By">Approved By</div>
 								</th>
 								<th>
-									<div title="Approved On">Approved On</div>
+									<div title="Approval/Rejection Date">Approved On</div>
 								</th>
 								<th>
 									<div title="Actions">Actions</div>
@@ -122,7 +122,7 @@
 									</td>
 									<td>
 										<lightning-button-icon size="large" variant="brand" icon-name="utility:preview"
-											alternative-text="view" onclick={handleView} data-id={Req.Id}
+											alternative-text="View" onclick={handleView} data-id={Req.Id}
 											class="changeIconColorView">
 										</lightning-button-icon>
 										&nbsp;&nbsp;
@@ -131,7 +131,7 @@
 											disabled={Req.disableButton}></lightning-button-icon>
 										&nbsp; &nbsp;
 										<lightning-button-icon size="large" variant="brand"
-											icon-name="utility:cancel_file_request" alternative-text="cancel"
+											icon-name="utility:cancel_file_request" alternative-text="Cancel"
 											onclick={handleCancel} data-id={Req.Id} disabled={Req.disableButton}>
 										</lightning-button-icon>
 									</td>

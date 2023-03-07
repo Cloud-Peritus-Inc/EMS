@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Reminder_Email_to_Approver</name>
-        <label>Reminder Email to Approver</label>
-        <locationX>578</locationX>
-        <locationY>396</locationY>
-        <actionName>EMS_LM_Leave_History__c.Reminder_Email_to_Approver1</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
         <name>Reminder_Email_to_Approver1</name>
         <label>Reminder Email to Approver1</label>
         <locationX>50</locationX>
@@ -45,6 +30,21 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <actionCalls>
+        <name>Reminder_Email_to_Approver_on_pending_status</name>
+        <label>Reminder Email to Approver on pending status</label>
+        <locationX>578</locationX>
+        <locationY>396</locationY>
+        <actionName>EMS_LM_Leave_History__c.Reminder_Email_to_Approver_on_pending_status</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>57.0</apiVersion>
     <decisions>
         <name>Status_of_Leave_Request</name>
@@ -53,7 +53,7 @@
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Pending_or_Approver_1_pending</name>
+            <name>Approver_1_pending</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
@@ -76,10 +76,17 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_2nd_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Reminder_Email_to_Approver1</targetReference>
             </connector>
-            <label>Pending or Approver 1 pending</label>
+            <label>Approver 1 pending</label>
         </rules>
         <rules>
             <name>Approver_2_Pending</name>
@@ -135,7 +142,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Reminder_Email_to_Approver</targetReference>
+                <targetReference>Reminder_Email_to_Approver_on_pending_status</targetReference>
             </connector>
             <label>Pending</label>
         </rules>

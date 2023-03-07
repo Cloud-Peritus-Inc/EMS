@@ -101,9 +101,9 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                         this.pickListRecords.oooPicklist.push({value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c});
                     } else if (value.EMS_TM_Type__c === 'Bench') {
                         this.pickListRecords.benchPicklist.push({value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c});
-                    } else if (value.EMS_TM_Type__c === 'Other') {
-                        this.pickListRecords.otherPicklist.push({value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c});
-                    }
+                    } //else if (value.EMS_TM_Type__c === 'Other') {
+                    //     this.pickListRecords.otherPicklist.push({value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c});
+                    // }
                 });
             }
             this.renderAssignmentRecords(data);
@@ -217,8 +217,8 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
                             } else if (project.EMS_TM_Project_Type__c === 'Bench') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
-                            } else if (project.EMS_TM_Project_Type__c === 'Other') {
-                                element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
+                            // } else if (project.EMS_TM_Project_Type__c === 'Other') {
+                            //     element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
                             }
                             console.log('record.EMS_TM_OtherTask__c ',record.EMS_TM_OtherTask__c);
                             element.projectValueAvailable = true;
@@ -794,8 +794,8 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             picklist = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
         } else if (type === 'Bench') {
             picklist = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
-        } else if (type === 'Other') {
-            picklist = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
+        // } else if (type === 'Other') {
+        //     picklist = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
         }
         this.records[index].projectTaskOptions = picklist;
     }

@@ -70,6 +70,17 @@ public without Sharing class GetDataForLoginUser {
                                  Do_you_have_a_vehicle__c,
                                  Vehicle_Number__c,
                                  Vehicle_Type__c,
+                                 ProfileConfirm__c,
+                                 IdentityInformationCheck__c,
+                                 EmploymentDetailsCheck__c,
+                                 Address_Details_Check__c,
+                                 Family_Information_Check__c,
+                                 Financial_Information_Check__c,
+                                 Vehicle_Details_Check__c,
+                                 PF_Forms_Check__c,
+                                 Documents_Check__c,
+                                 Company_Policies_Check__c,
+                                 Company_Information_Check__c,
                                  Post_Onboarding_Confirm__c
                                  From Contact where id =: u.contactid];
         

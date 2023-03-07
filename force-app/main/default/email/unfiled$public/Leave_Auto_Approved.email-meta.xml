@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Leave Auto Approved</name>
     <style>freeForm</style>
-    <subject>Leave:  {!EMS_LM_Leave_History__c.Leave_Type_Name__c} Request has been {!EMS_LM_Leave_History__c.EMS_LM_Status__c}</subject>
+    <subject>{!EMS_LM_Leave_History__c.Leave_Type_Name__c} request has been {!EMS_LM_Leave_History__c.EMS_LM_Status__c}</subject>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

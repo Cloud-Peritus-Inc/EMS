@@ -1,46 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Notify_TA_After_Onboarding_Form_Sent</name>
-        <label>Notify TA After Onboarding Form Sent</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
-        <actionName>Contact.Notify_TA_After_Onboarding_Form_Sent</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>Send_Pre_Onboarding_Form_Mail</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Notify_To_Hr_After_Onboarding_Form_Sent</name>
-        <label>Notify To Hr After Onboarding Form Sent</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
-        <actionName>Contact.Notify_To_Hr_After_Onboarding_Form_Sent</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>Notify_TA_After_Onboarding_Form_Sent</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
         <name>Send_Pre_Onboarding_Form_Mail</name>
         <label>Send Pre-Onboarding Form Mail</label>
         <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationY>455</locationY>
         <actionName>Contact.Send_Pre_Onboarding_Form_Mail</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -69,7 +33,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Notify_To_Hr_After_Onboarding_Form_Sent</targetReference>
+                <targetReference>Send_Pre_Onboarding_Form_Mail</targetReference>
             </connector>
             <label>DOJ Less Than 10 Days</label>
         </rules>
@@ -107,6 +71,7 @@
         <connector>
             <targetReference>Check_DOJ</targetReference>
         </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Personal_Email__c</field>

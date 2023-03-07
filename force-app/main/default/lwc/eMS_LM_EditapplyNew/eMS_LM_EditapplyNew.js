@@ -14,7 +14,7 @@ import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLog
 
 import updateleaveRequest from '@salesforce/apex/EMS_LM_EditLeaveRequest.updateleaveRequest';
 export default class EMS_LM_EditapplyNew extends LightningElement {
-
+ @track isLoading = false;
 uId = u_Id;
 @api selecteditrecordid;
 closeleavepopup;
@@ -398,7 +398,7 @@ connectedCallback(){
         
     }else{
 
-      if( this.reason == null && this.duration>3 && this.value == 'Work From Home'){
+      if( (this.reason == null || this.reason == '') && this.duration>3 && this.value == 'Work From Home'){
         const evt = new ShowToastEvent({
             message: 'Please mention the reason for your request',
             variant: 'error',
@@ -414,6 +414,7 @@ connectedCallback(){
         this.dispatchEvent(evt);
      // alert('Please Upload Proof');// need to chane the alert message
     }else{
+      this.isLoading=true;
     let guestObj = { 'sobjectType': 'EMS_LM_Leave_History__c' };
         
         guestObj.EMS_LM_Leave_Start_Date__c = this.startDate;
@@ -428,9 +429,10 @@ connectedCallback(){
     updateleaveRequest({newRecord: guestObj , recordId:this.selecteditrecordid})
             .then(result => {
                 console.log('sdf-->',result);
+              this.isLoading=false;
                 const event = new ShowToastEvent({
                   title: 'Save',
-                  message: 'Your leave request has been updated successfully!',
+                  message: 'Your request has been updated successfully!',
                   variant: 'success'
                  
               });
