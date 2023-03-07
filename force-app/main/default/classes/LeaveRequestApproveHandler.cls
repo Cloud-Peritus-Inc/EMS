@@ -62,7 +62,7 @@ public without sharing class LeaveRequestApproveHandler {
                 System.debug('### APP 2');
                 leaveReqStatus.EMS_LM_Status__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? LeaveRequestConstant.APPROVER_4_WAITING: LeaveRequestConstant.APPROVED;
                 leaveReqStatus.Approver_2_Approved_Comments__c = comments;
-                leaveReqStatus.EMS_LM_Current_Approver__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? leaveReqStatus.Approver_3__r.LastName + leaveReqStatus.Approver_3__r.FirstName : leaveReqStatus.EMS_LM_2nd_Approver__r.LastName + ' ' +  leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName ;
+                leaveReqStatus.EMS_LM_Current_Approver__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? leaveReqStatus.Approver_3__r.FirstName + leaveReqStatus.Approver_3__r.LastName : leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName + ' ' +  leaveReqStatus.EMS_LM_2nd_Approver__r.LastName ;
                 if(leaveReqStatus.EMS_LM_Status__c == LeaveRequestConstant.APPROVED ) {
                    leaveReqStatus.EMS_LM_Approved_On__c	 = System.today();
                 }
@@ -73,7 +73,7 @@ public without sharing class LeaveRequestApproveHandler {
                 System.debug('### APP 3');
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.APPROVED;
                 leaveReqStatus.Approver_3_Approved_Comments__c = comments;
-                leaveReqStatus.EMS_LM_Current_Approver__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? leaveReqStatus.Approver_3__r.LastName + leaveReqStatus.Approver_3__r.FirstName : NUll;
+                leaveReqStatus.EMS_LM_Current_Approver__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? leaveReqStatus.Approver_3__r.FirstName + leaveReqStatus.Approver_3__r.LastName : NUll;
                 updatedLeaveReqList.add(leaveReqStatus); 
             }
         }
@@ -135,7 +135,7 @@ public without sharing class LeaveRequestApproveHandler {
             else if (LeaveRequestConstant.LOGGEDIN_USERID == bulkleaveReqApproval.EMS_LM_2nd_Approver__c && bulkleaveReqApproval.EMS_LM_Status__c != LeaveRequestConstant.APPROVER_2_WAITING) {
                 bulkleaveReqApproval.EMS_LM_Status__c = String.isNotBlank(bulkleaveReqApproval.Approver_3__c) ? LeaveRequestConstant.APPROVER_4_WAITING: LeaveRequestConstant.APPROVED;
                 bulkleaveReqApproval.Approver_2_Approved_Comments__c = comments;
-                bulkleaveReqApproval.EMS_LM_Current_Approver__c = String.isNotBlank(bulkleaveReqApproval.Approver_3__c) ? bulkleaveReqApproval.Approver_3__r.LastName + bulkleaveReqApproval.Approver_3__r.FirstName : bulkleaveReqApproval.EMS_LM_2nd_Approver__r.LastName + ' ' +  bulkleaveReqApproval.EMS_LM_2nd_Approver__r.FirstName ;
+                bulkleaveReqApproval.EMS_LM_Current_Approver__c = String.isNotBlank(bulkleaveReqApproval.Approver_3__c) ? bulkleaveReqApproval.Approver_3__r.FirstName + bulkleaveReqApproval.Approver_3__r.LastName : bulkleaveReqApproval.EMS_LM_2nd_Approver__r.FirstName + ' ' +  bulkleaveReqApproval.EMS_LM_2nd_Approver__r.LastName ;
                 if(bulkleaveReqApproval.EMS_LM_Status__c == LeaveRequestConstant.APPROVED ) {
                    bulkleaveReqApproval.EMS_LM_Approved_On__c	 = System.today();
                 }
@@ -145,7 +145,7 @@ public without sharing class LeaveRequestApproveHandler {
             else if (LeaveRequestConstant.LOGGEDIN_USERID == bulkleaveReqApproval.Approver_3__c) {
                 bulkleaveReqApproval.EMS_LM_Status__c = LeaveRequestConstant.APPROVED ;
                 bulkleaveReqApproval.Approver_3_Approved_Comments__c = comments;
-                bulkleaveReqApproval.EMS_LM_Current_Approver__c = String.isNotBlank(bulkleaveReqApproval.Approver_3__c) ? bulkleaveReqApproval.Approver_3__r.LastName + bulkleaveReqApproval.Approver_3__r.FirstName : Null;
+                bulkleaveReqApproval.EMS_LM_Current_Approver__c = String.isNotBlank(bulkleaveReqApproval.Approver_3__c) ? bulkleaveReqApproval.Approver_3__r.FirstName + bulkleaveReqApproval.Approver_3__r.LastName : Null;
                 bulkupdatedLeaveReqList.add(bulkleaveReqApproval); 
             }
         }
