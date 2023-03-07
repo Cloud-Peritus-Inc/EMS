@@ -17,8 +17,6 @@ public without sharing class LeaveRequestHRRejectHandler {
         for (EMS_LM_Leave_History__c leaveReqStatus : [SELECT Id,
                                                     		 EMS_LM_Status__c,
                                                              EMS_LM_Approver__c,
-                                                             EMS_LM_Approver__r.LastName,
-                                                       	     EMS_LM_Approver__r.FirstName,
                                                        		 EMS_LM_Current_Approver__c,
                                                        		 EMS_LM_Remarks__c,
                                                              EMS_LM_Approved_On__c
@@ -26,7 +24,7 @@ public without sharing class LeaveRequestHRRejectHandler {
                                                         WHERE Id =: leaveRequestId]) {
                                                                 
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
-                leaveReqStatus.EMS_LM_Current_Approver__c = usr.LastName + ' ' + usr.FirstName;
+                leaveReqStatus.EMS_LM_Current_Approver__c = usr.FirstName + ' ' + usr.LastName;
                 leaveReqStatus.EMS_LM_Remarks__c = comments;
                 leaveReqStatus.EMS_LM_Approved_On__c= System.today();                                       
                 leaveReqList.add(leaveReqStatus); 
@@ -63,8 +61,6 @@ public without sharing class LeaveRequestHRRejectHandler {
         for (EMS_LM_Leave_History__c bulkleaveReqReject : [SELECT Id,
                                                              EMS_LM_Status__c,
                                                              EMS_LM_Approver__c,
-                                                       		 EMS_LM_Approver__r.LastName,
-                                                       	     EMS_LM_Approver__r.FirstName,
                                                        		 EMS_LM_Current_Approver__c, 
                                                        	     EMS_LM_Approved_On__c,
                                                       		 EMS_LM_Remarks__c
@@ -72,7 +68,7 @@ public without sharing class LeaveRequestHRRejectHandler {
                                                        WHERE Id =: bulkleaveReqId]){                                              
                   bulkleaveReqReject.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                   bulkleaveReqReject.EMS_LM_Approved_On__c	 = System.today();
-                  bulkleaveReqReject.EMS_LM_Current_Approver__c = usr.LastName + ' ' + usr.FirstName;
+                  bulkleaveReqReject.EMS_LM_Current_Approver__c = usr.FirstName + ' ' + usr.LastName;
                   bulkleaveReqReject.EMS_LM_Remarks__c = comments;
                   bulkLeaveReqList.add(bulkleaveReqReject); 
                }

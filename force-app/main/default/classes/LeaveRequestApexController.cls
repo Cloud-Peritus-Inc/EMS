@@ -61,7 +61,7 @@ public without sharing class LeaveRequestApexController {
                                                    AND EMS_LM_Status__c !=: LeaveRequestConstant.APPROVED
                                                    AND EMS_LM_Status__c !=: LeaveRequestConstant.REJECTED
                                                    AND EMS_LM_Status__c !=: LeaveRequestConstant.CANCELLED
-                                                   ORDER BY CreatedDate DESC]){
+                                                   ORDER BY CreatedDate ASC]){
                                                        System.debug('### emsLmLeave ' + emsLmLeave);
            if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_Approver__c && (emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_2_WAITING || emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.PENDING) && count1 < 5 ){
                	leaveRequestPendingList.add(emsLmLeave); //Approver 1

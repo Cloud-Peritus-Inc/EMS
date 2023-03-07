@@ -17,8 +17,6 @@ public without sharing class LeaveRequestHRApproveHandler {
         for(EMS_LM_Leave_History__c  leaveReqStatus: [SELECT Id,
                                                              EMS_LM_Status__c,
                                                              EMS_LM_Approver__c,
-                                                       		 EMS_LM_Approver__r.LastName,
-                                                       	     EMS_LM_Approver__r.FirstName,
                                                        		 EMS_LM_Current_Approver__c, 
                                                        	     EMS_LM_Approved_On__c,
                                                       		 EMS_LM_Remarks__c
@@ -26,7 +24,7 @@ public without sharing class LeaveRequestHRApproveHandler {
                                                        WHERE Id =: leaveRequestId]){                                              
                   leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.APPROVED;
                   leaveReqStatus.EMS_LM_Approved_On__c	 = System.today();
-                  leaveReqStatus.EMS_LM_Current_Approver__c = usr.LastName + ' ' + usr.FirstName;
+                  leaveReqStatus.EMS_LM_Current_Approver__c = usr.FirstName + ' ' + usr.LastName;
                   leaveReqStatus.EMS_LM_Remarks__c = comments;
                   leaveReqList.add(leaveReqStatus); 
               }
@@ -49,9 +47,9 @@ public without sharing class LeaveRequestHRApproveHandler {
         System.debug('### Comments ' + comments);
         
                 User usr = [SELECT Id, 
-                           Hr_Access__c,
-                           LastName,
-                           FirstName
+                           		   Hr_Access__c,
+                                   LastName,
+                                   FirstName
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID]; 
         
@@ -60,8 +58,6 @@ public without sharing class LeaveRequestHRApproveHandler {
         for (EMS_LM_Leave_History__c bulkleaveReqApproval : [SELECT Id,
                                                              EMS_LM_Status__c,
                                                              EMS_LM_Approver__c,
-                                                       		 EMS_LM_Approver__r.LastName,
-                                                       	     EMS_LM_Approver__r.FirstName,
                                                        		 EMS_LM_Current_Approver__c, 
                                                        	     EMS_LM_Approved_On__c,
                                                       		 EMS_LM_Remarks__c
@@ -69,7 +65,7 @@ public without sharing class LeaveRequestHRApproveHandler {
                                                        WHERE Id =: bulkleaveReqId]){                                              
                   bulkleaveReqApproval.EMS_LM_Status__c = LeaveRequestConstant.APPROVED;
                   bulkleaveReqApproval.EMS_LM_Approved_On__c= System.today();
-                  bulkleaveReqApproval.EMS_LM_Current_Approver__c = usr.LastName + ' ' + usr.FirstName;
+                  bulkleaveReqApproval.EMS_LM_Current_Approver__c = usr.FirstName + ' ' + usr.LastName;
                   bulkleaveReqApproval.EMS_LM_Remarks__c = comments;
                   bulkLeaveReqList.add(bulkleaveReqApproval); 
                }
