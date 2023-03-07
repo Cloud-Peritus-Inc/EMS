@@ -31,7 +31,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   approveAllComments;
   rejectAllComments;
   value = '';
-  //fixedWidth = "width:8rem;";
+  fixedWidth = "width:8rem;";
   leaveTypeValues;
   tValue = '';
   sValue = ' ';
@@ -48,7 +48,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   isShowModalReject = false;
   disableButton;
   @track isLoading = false;
-  _wiredRefreshData
+  _wiredRefreshData;
+  checkBox;
 
   //TO GET OBJECT INFO
   @wire(getObjectInfo, { objectApiName: LEAVEHISTORY_OBJECT })
@@ -69,28 +70,28 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   }
 
   // TO SHOW DEFAULT ADMIN VIEW DATA
- /* @wire(defaultAdminViewData)
-  wiredData(wireResult) {
-    const { data, error } = wireResult; // TO REFRESH THE DATA USED THIS BY STORING DATA AND ERROR IN A VARIABLE
-    this._wiredRefreshData = wireResult;
-    if (data) {
-      if (data.length > 0) {
-        console.log('### defaultAdminViewData', data);
-        this.showdata = true;
-        this.nodata = false;
-        this.datahistory = JSON.parse(JSON.stringify(data));
-        console.log('###  defaultAdminViewData datahistory ', this.datahistory);
-        this.datahistory.forEach(req => {
-          req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
-        });
-      } else {
-        this.nodata = true;
-        this.disableButton = this.nodata === true;
-      }
-    } else if (error) {
-      console.log('Error:', error);
-    }
-  }*/
+  /* @wire(defaultAdminViewData)
+   wiredData(wireResult) {
+     const { data, error } = wireResult; // TO REFRESH THE DATA USED THIS BY STORING DATA AND ERROR IN A VARIABLE
+     this._wiredRefreshData = wireResult;
+     if (data) {
+       if (data.length > 0) {
+         console.log('### defaultAdminViewData', data);
+         this.showdata = true;
+         this.nodata = false;
+         this.datahistory = JSON.parse(JSON.stringify(data));
+         console.log('###  defaultAdminViewData datahistory ', this.datahistory);
+         this.datahistory.forEach(req => {
+           req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Status__c !== 'Approver 2 Pending';
+         });
+       } else {
+         this.nodata = true;
+         this.disableButton = this.nodata === true;
+       }
+     } else if (error) {
+       console.log('Error:', error);
+     }
+   }*/
 
   // TO SHOW FILTERED DATA
   @wire(getAdminLeaveHistory, { employeeName: '$empName', startDate: '$startDate', endDate: '$endDate', typeValues: '$tValue', statusValues: '$sValue' })
@@ -165,10 +166,26 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
     console.log(this.value);
   }
 
+  //CheckBox
+  handleSelect(event) {
+    console.log('SELECTED RECORD : ');
+    const selectedRecordCheckboxId = event.currentTarget.dataset.id;
+    console.log('### selectedRecordCheckboxId : ', selectedRecordCheckboxId);
+    this.checkBox = event.target.checked
+    if (!this.checkBox) {
+      const index = this.multipleApprovals.indexOf(selectedRecordCheckboxId);
+      this.multipleApprovals.splice(index, 1);
+    } else {
+      this.multipleApprovals = [... this.multipleApprovals, selectedRecordCheckboxId];
+    }
+    console.log('###  multipleApprovals Child: ', this.multipleApprovals);
+  }
+
   //TO SELECT ALL THE CHECKBOXES
   handleSelectAll(event) {
     console.log('OUTPUT : ');
-    if (event.target.checked) {
+    this.checkBox = event.target.checked
+    if (this.checkBox) {
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
       const selectedRecordIds = [];
       checkboxElements.forEach(element => {
@@ -181,7 +198,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       console.log('Selected Record Ids:', selectedRecordIds);
       this.multipleApprovals = selectedRecordIds.map(item => item.id);
       console.log('### multipleApprovals', this.multipleApprovals);
-    } else if (!event.target.checked) {
+    } else if (!this.checkBox) {
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
       //const selectedRecordIds = [];
       checkboxElements.forEach(element => {
@@ -212,6 +229,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         .then((result) => {
           console.log('Leave Request: ', result);
           this.isShowModalApproveAll = false;
+          this.checkBox = false;
           return refreshApex(this._wiredRefreshData)
         }).catch((err) => {
           console.log('ERROR : ', err);
@@ -238,6 +256,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         .then((result) => {
           console.log('Leave Request: ', result);
           this.isShowModalRejectAll = false;
+          this.checkBox = false;
           return refreshApex(this._wiredRefreshData)
         }).catch((err) => {
           console.log('ERROR : ', err);
@@ -271,6 +290,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalApprove = false;
+        this.checkBox = false;
         return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('ERROR : ', err);
@@ -298,6 +318,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalReject = false;
+        this.checkBox = false;
         return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('ERROR : ', err);
@@ -318,7 +339,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
           mode: 'pester'
         });
         this.dispatchEvent(evt);
-       return refreshApex(this._wiredRefreshData)
+        return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('### err : ', JSON.stringify(err));
       });
