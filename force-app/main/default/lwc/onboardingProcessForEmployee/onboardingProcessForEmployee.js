@@ -97,6 +97,32 @@ function uploadFilesFromThis(event, ts) {
   }
 }
 
+function updateStatusFields(ts) {
+   let statusfield = { 'sobjectType': 'Contact' };
+   statusfield.Post_Onboarding_Confirm__c = ts.PostOnboardingConfirm;
+   statusfield.ProfileConfirm__c = ts.isPersonalUpdateCheckbox;
+   statusfield.IdentityInformationCheck__c = ts.isIdentifyDetailsCheckbox;
+   statusfield.EmploymentDetailsCheck__c = ts.isEmploymentDetailsCheckbox;
+   statusfield.Address_Details_Check__c = ts.isAddressDetailsCheckbox;
+   statusfield.Family_Information_Check__c = ts.isFamilyInformationCheckbox;
+   statusfield.Financial_Information_Check__c = ts.isFinancialInformationCheckbox;
+   statusfield.Vehicle_Details_Check__c = ts.isVehicleDetailsCheckbox;
+   statusfield.PF_Forms_Check__c = ts.isPFFormsCheckbox;
+   statusfield.Documents_Check__c = ts.isDocumentsValueChecked;
+   statusfield.Company_Policies_Check__c = ts.isCompanyPoliciesValueChecked;
+   statusfield.Company_Information_Check__c = ts.isCompanyInformationValueChecked;
+   updateStatus({ statusUpdate: statusfield, ConRecordid: ts.contactID })
+   .then(result => {
+    
+    console.log('result' , result);
+
+  })
+  .catch(error => {
+    this.error = error;
+    console.log('this.error-->' + JSON.stringify(this.error));
+  });
+}
+
 const isAllowedKeyCode = keyCode => {
   if (keyCode === 8 // backspace
     || keyCode === 9 // tab
@@ -229,6 +255,17 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         this.bg = employye.EMS_EM_BG__c;
         this.nation = employye.EMS_EM_Nationality__c;
         this.PostOnboardingConfirm = employye.Post_Onboarding_Confirm__c;
+        this.isPersonalUpdateCheckbox = employye.ProfileConfirm__c;
+        this.isIdentifyDetailsCheckbox = employye.IdentityInformationCheck__c;
+        this.isEmploymentDetailsCheckbox = employye.EmploymentDetailsCheck__c;
+        this.isAddressDetailsCheckbox = employye.Address_Details_Check__c;
+        this.isFamilyInformationCheckbox = employye.Family_Information_Check__c;
+        this.isFinancialInformationCheckbox = employye.Financial_Information_Check__c;
+        this.isVehicleDetailsCheckbox = employye.Vehicle_Details_Check__c;
+        this.isPFFormsCheckbox = employye.PF_Forms_Check__c;
+        this.isDocumentsValueChecked = employye.Documents_Check__c;
+        this.isCompanyPoliciesValueChecked = employye.Company_Policies_Check__c;
+        this.isCompanyInformationValueChecked = employye.Company_Information_Check__c;
 
         this.aadhaarNo = employye.EMS_EM_AadhaarNo__c;
         this.UANNo = employye.EMS_EM_PFno__c;
@@ -300,9 +337,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           console.log('certificate photo',this.fileName7);
          }
         })
-
-        
-
+    
         getPayrollInfo({ conId: this.contactID })
           .then(result => {
             const employye = result[0];
@@ -428,49 +463,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @track pazip;
   message;
   error;
-  /*
-  currentadrressline1(event) {
-    this.cadrressline1 = event.target.value;
-  }
-
-  currentadrressline2(event) {
-    this.cadrressline2 = event.target.value;
-  }
-  CAState(event) {
-    this.castate = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-
-  CACity(event) {
-    this.cacity = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-  CAZip(event) {
-    this.cazip = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-  permanentadrressline1(event) {
-    this.padrressline1 = event.target.value;
-  }
-  permanentadrressline2(event) {
-    this.padrressline2 = event.target.value;
-  }
-
-  PAState(event) {
-    this.pastate = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-  PACity(event) {
-    this.pacity = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-
-  PAZip(event) {
-    this.pazip = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-  */
-
+ 
   inputcheckboxValue;
 
   AddressCheckboxChange(event) {
@@ -792,6 +785,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.isIdentityDetails = false;
       this.isEmploymentDetails = true;
       this.isEmploymentDetailsCheckbox = true;
+      updateStatusFields(this)
       this.isAddressDetails = false;
       this.isFamilyInformation = false;
       this.isShowFinacialFrom = false;
@@ -863,6 +857,8 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.isFamilyInformation = false;
       this.isShowFinacialFrom = false;
       this.isShowVehicleFrom = true;
+      this.isVehicleDetailsCheckbox = true;
+      updateStatusFields(this)
       this.isPFForms = false;
       this.isDocuments = false;
       this.isCompanyPolicies = false;
@@ -912,6 +908,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.isDocuments = false;
       this.isCompanyPolicies = true;
       this.isCompanyPoliciesValueChecked = true;
+      updateStatusFields(this)
       this.isCompanyInformation = false;
       this.isConfirm = false;
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
@@ -936,6 +933,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.isCompanyPolicies = false;
       this.isCompanyInformation = true;
       this.isCompanyInformationValueChecked = true;
+      updateStatusFields(this)
       this.isConfirm = false;
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
         || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
@@ -1402,6 +1400,8 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isPersonalUpdateCheckbox = true;
+            updateStatusFields(this)
+            
 
           })
           .catch(error => {
@@ -1420,7 +1420,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
     if (this.isIdentityDetails == true) {
       if (this.selectStep2) {
-        console.log('selectStep2');
+        //console.log('selectStep2');
         updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj, files: this.filesUploaded })
 
           .then(result => {
@@ -1431,6 +1431,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isIdentifyDetailsCheckbox = true;
+            updateStatusFields(this)
             //console.log('isIdentityDetails');
 
           })
@@ -1459,6 +1460,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isAddressDetailsCheckbox = true;
+            updateStatusFields(this)
 
           })
           .catch(error => {
@@ -1494,6 +1496,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isFinancialInformationCheckbox = true;
+            updateStatusFields(this)
             //console.log('isIdentityDetails');
 
           })
@@ -1536,6 +1539,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isVehicleDetailsCheckbox = true;
+            updateStatusFields(this)
 
           })
           .catch(error => {
@@ -1565,6 +1569,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isPFFormsCheckbox = true;
+            updateStatusFields(this)
             //console.log('isIdentityDetails');
 
           })
@@ -1593,6 +1598,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                 variant: 'success',
               }),
             ); this.isDocumentsValueChecked = true;
+            updateStatusFields(this)
 
           })
           .catch(error => {
@@ -1609,21 +1615,15 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       }
     }
 
-
-
-
   }
+  
 
   confirmSubmit(event) {
     if (this.isWelcomeaboardValueChecked && this.isPersonalUpdateCheckbox && this.isIdentifyDetailsCheckbox && this.isEmploymentDetailsCheckbox && this.isAddressDetailsCheckbox && this.isFamilyInformationCheckbox && this.isFinancialInformationCheckbox
       && this.isVehicleDetailsCheckbox && this.isPFFormsCheckbox && this.isDocumentsValueChecked && this.isCompanyPoliciesValueChecked && this.isCompanyInformationValueChecked) {
       this.PostOnboardingConfirm = true;
       this.readonlyfield = true;
-
-      let statusfield = { 'sobjectType': 'Contact' };
-      statusfield.Post_Onboarding_Confirm__c = this.PostOnboardingConfirm;
-      updateStatus({ statusUpdate: statusfield, ConRecordid: this.contactID })
-        .then(result => {
+      updateStatusFields(this)
           //console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
           this.dispatchEvent(
             new ShowToastEvent({
@@ -1632,11 +1632,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
               variant: 'success',
             }),
           ); this.buttonDisable = true;
-        });
-
-
     }
-
     else {
       const even = new ShowToastEvent({
         message: 'Please complete all the required section',
@@ -1645,7 +1641,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.dispatchEvent(even);
       //console.log('error', error);
       return false;
-
     }
   }
 
@@ -1677,19 +1672,19 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
   @wire(getFamilyInfo, { contactId: "$contactID" })
   getfamilyinformationrecords(totalRecords) {
-    this.totalFamilyRecords = totalRecords;
-    refreshApex(this.totalFamilyRecords);
-    //console.log('this.totalFamilyRecords---> ' + JSON.stringify(this.totalFamilyRecords));
-    if (totalRecords.data) {
-      if (totalRecords.data.listfamilyrecords && (totalRecords.data.listfamilyrecords.length > 0)) {
-        this.dependenciesRecordsArray = totalRecords.data.listfamilyrecords;
-        //console.log('this.dependenciesRecordsArray---> ' + JSON.stringify(this.dependenciesRecordsArray));
-      }
-    }
-    if (totalRecords.error) {
-      //console.log("Error OCcured With", totalRecords.error);
-    }
-  }
+     this.totalFamilyRecords = totalRecords;
+     refreshApex(this.totalFamilyRecords);
+     //console.log('this.totalFamilyRecords---> ' + JSON.stringify(this.totalFamilyRecords));
+     if (totalRecords.data) {
+       if (totalRecords.data.listfamilyrecords && (totalRecords.data.listfamilyrecords.length > 0)) {
+         this.dependenciesRecordsArray = totalRecords.data.listfamilyrecords;
+         //console.log('this.dependenciesRecordsArray---> ' + JSON.stringify(this.dependenciesRecordsArray));
+       }
+     }
+     if (totalRecords.error) {
+       //console.log("Error OCcured With", totalRecords.error);
+     }
+   }
   isLoaded = false;
   contactPhone = false;
   memberDateOfBirth = false;
@@ -1734,6 +1729,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       });
   } this.isLoaded = false;
     this.isFamilyInformationCheckbox = true;
+    updateStatusFields(this)
 
     if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
       || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
@@ -1782,6 +1778,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         refreshApex(this.totalFamilyRecords);
         this.isLoaded = false;
         this.isFamilyInformationCheckbox = true;
+        updateStatusFields(this)
         if (this.totalFamilyRecords.data.listfamilyrecords.length === 1) {
           this.dependenciesRecordsArray = [];
         }

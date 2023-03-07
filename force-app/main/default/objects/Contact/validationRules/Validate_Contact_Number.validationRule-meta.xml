@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Validate_Contact_Number</fullName>
-    <active>false</active>
+    <active>true</active>
     <errorConditionFormula>OR( 
 OR( 
 LEN(  EMS_Phone_Number__c  ) &lt;= 9 , 
-LEN( EMS_Phone_Number__c ) &gt;= 10 
+LEN( EMS_Phone_Number__c ) &gt;= 11
 ), 
 NOT( 
 OR( 

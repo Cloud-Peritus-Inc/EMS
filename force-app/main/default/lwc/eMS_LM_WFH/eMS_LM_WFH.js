@@ -188,14 +188,14 @@ export default class EMS_LM_WFH extends LightningElement {
         
     }else{
 
-      if( this.reason == null && this.duration>3){
+      if( (this.reason == null || this.reason == '') && this.duration>3){
         const evt = new ShowToastEvent({
             message: 'Please mention the reason for your request',
             variant: 'error',
         });
         this.dispatchEvent(evt);
       }else{
-
+      this.isLoading = true;
       createwfhRecord({ cId: this.conId, duration: this.duration, stDate: this.startDate1, edDate: this.endDate1, reason: this.reason})
         .then(result => {
             this.wfhrecordId = result;
@@ -204,12 +204,14 @@ export default class EMS_LM_WFH extends LightningElement {
               uploadFile({ base64 : this.fileData.base64 , filename : this.fileData.filename , recordId : this.wfhrecordId }).then(res=>{
                 console.log(res);
               }).catch(error=> {  console.error(error.body.message);});
-            }            
+            } 
+            this.isLoading = false;           
             this.check1 = false;
             const gethvalue = new CustomEvent('gethvalue',{
               detail : this.check1
             });
             this.dispatchEvent(gethvalue);
+  
             this.dispatchEvent(new ShowToastEvent({
               title: 'Success!!',
               message: 'Your Work From Home request has been successfully applied!',

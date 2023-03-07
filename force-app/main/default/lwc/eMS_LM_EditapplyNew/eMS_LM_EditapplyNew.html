@@ -1,4 +1,11 @@
 <template>
+  <!--is Load-->
+  <div if:true={isLoading}>
+        <lightning-spinner
+            alternative-text="Loading..." variant="brand" class="slds-is-fixed">
+        </lightning-spinner>
+    </div>
+    <!--Body-->
   <!-- This component is used to apply the Leave For current Logged in Employee  -->
     <div class="slds-box slds-theme_shade">
       <div class="slds-modal slds-fade-in-open slds-backdrop">
