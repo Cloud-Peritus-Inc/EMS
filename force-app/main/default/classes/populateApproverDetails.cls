@@ -77,10 +77,12 @@ public without sharing class populateApproverDetails implements TriggerAction.Be
                 contact conRes = resourceMap.get(newRec.EMS_LM_Contact__c);
                 newRec.Level_of_Approval__c = conRes.Override_the_standard_level_of_approval__c ? conRes.Level_of_Approval__c : conRes.Resource_Role__r.Level_of_Approval__c;
                 newRec.EMS_LM_Auto_Approve__c = conRes.Resource_Role__r.Auto_Approve__c;
+                System.debug('### true ' +newRec.EMS_LM_Auto_Approve__c);
                 System.debug('### newRec.Level_of_Approval__c '+ newRec.Level_of_Approval__c);
                 system.debug('====conRes.Resource_Role__r.Level_of_Approval__c===='+conRes.Resource_Role__r.Level_of_Approval__c);
                 system.debug('====cnewRec.Level_of_Approval__c===='+newRec.Level_of_Approval__c);
                 system.debug('### newRec.EMS_LM_Auto_Approve__c ' + newRec.EMS_LM_Auto_Approve__c);
+                System.debug('### conRes.Resource_Resource_Relationships__r.size()' + conRes.Resource_Resource_Relationships__r.size());
                 if(newRec.Level_of_Approval__c > 0 && conRes.Resource_Resource_Relationships__r.size() > 0 && !newRec.EMS_LM_Auto_Approve__c){
                     System.debug('### 1');
                     String appManager1 = resourceHiearchyMap.containsKey(conRes.Id)? resourceHiearchyMap.get(conRes.Id) : null;
@@ -102,13 +104,14 @@ public without sharing class populateApproverDetails implements TriggerAction.Be
                         newRec.Approver_3__c = resourceMap.containsKey(appManager3) ? resourceMap.get(appManager3).EMS_TM_User__c : null;
                     }           
                 }// Added by Pavan Regarding Auto Approve
-                else {
-                    System.debug('### here 3');
+                
+                else if(newRec.EMS_LM_Auto_Approve__c) {
+                    System.debug('### here 3' + newRec.EMS_LM_Auto_Approve__c);
                     User usr = [SELECT Id, FirstName, LastName FROM USER WHERE ID =:LeaveRequestConstant.LOGGEDIN_USERID];
                     newRec.EMS_LM_Status__c = LeaveRequestConstant.AUTO_APPROVED;
                     newRec.EMS_LM_Auto_Approve__c = true;
                     newRec.EMS_LM_Approved_On__c = system.today();
-                    newRec.EMS_LM_Current_Approver__c = usr.LastName + usr.FirstName;
+                    newRec.EMS_LM_Current_Approver__c = usr.FirstName + usr.LastName;
                 }
                 // Added by Pavan Regarding WFH
             } else if (resourceMap.containsKey(newRec.EMS_LM_Contact__c) && newRec.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.WORK_FROM_HOME) {
@@ -133,9 +136,10 @@ public without sharing class populateApproverDetails implements TriggerAction.Be
                     newRec.EMS_LM_Approver__c = resourceMap.containsKey(appManager1) ? resourceMap.get(appManager1).EMS_TM_User__c : null; 
                     //newRec.EMS_LM_Current_Approver__c = resourceMap.containsKey(appManager1) ? resourceMap.get(appManager1).EMS_TM_User__r.LastName : null;                  
                 } else /*if (newRec.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.WORK_FROM_HOME && newRec.Level_of_Approval__c == 0)*/ {
+                    User usr = [SELECT Id, FirstName, LastName FROM USER WHERE ID =:LeaveRequestConstant.LOGGEDIN_USERID];
                     newRec.EMS_LM_Status__c = LeaveRequestConstant.AUTO_APPROVED;
                     newRec.EMS_LM_Auto_Approve__c = true;
-                    newRec.EMS_LM_Current_Approver__c = newRec.EMS_LM_Contact__r.LastName + newRec.EMS_LM_Contact__r.FirstName;
+                    newRec.EMS_LM_Current_Approver__c = usr.FirstName + usr.LastName;
                     newRec.EMS_LM_Approved_On__c = system.today();
                 }
             }

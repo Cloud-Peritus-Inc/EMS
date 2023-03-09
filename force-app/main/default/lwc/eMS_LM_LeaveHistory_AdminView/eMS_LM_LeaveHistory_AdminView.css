@@ -1,5 +1,5 @@
 .table-container {
-  max-height: calc(11 * 40px + 40px);
+  max-height: calc(9 * 40px + 40px);
   overflow-y: scroll; /* enable vertical scrollbar */
 }
 
