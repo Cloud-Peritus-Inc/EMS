@@ -51,9 +51,9 @@ public without sharing class LeaveRequestApproveHandler {
                 System.debug('### APP 1');
             	leaveReqStatus.EMS_LM_Status__c = String.isNotBlank(leaveReqStatus.EMS_LM_2nd_Approver__c) ? LeaveRequestConstant.APPROVER_3_WAITING : LeaveRequestConstant.APPROVED;
             	leaveReqStatus.Approver_1_Approved_Comments__c = comments;
-                //leaveReqStatus.EMS_LM_Current_Approver__c = String.isNotBlank(leaveReqStatus.EMS_LM_2nd_Approver__c) ? leaveReqStatus.EMS_LM_2nd_Approver__r.LastName + ' ' +  leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName : leaveReqStatus.EMS_LM_Approver__r.LastName + ' ' + leaveReqStatus.EMS_LM_Approver__r.FirstName;
                 if(leaveReqStatus.EMS_LM_Status__c == LeaveRequestConstant.APPROVED ) {
                    leaveReqStatus.EMS_LM_Approved_On__c	 = System.today();
+                   leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.EMS_LM_Approver__r.FirstName + ' ' + leaveReqStatus.EMS_LM_Approver__r.LastName;
                 }
             	updatedLeaveReqList.add(leaveReqStatus); 
             }

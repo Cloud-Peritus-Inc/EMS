@@ -514,19 +514,19 @@ public class EMS_TM_TimesheetClass {
 
 
 List<EMS_Timesheet__c> timesheetList = [SELECT EMS_TM_Total__c,
-                                                             enddate__c,
+                                                             Week_End_Date__c,
                                                              OwnerId
                                                              FROM EMS_Timesheet__c
                                                              WHERE OwnerId =: UserInfo.getUserId() 
-                                                             AND enddate__c < THIS_WEEK
-                                                             ORDER BY enddate__c DESC
+                                                             AND Week_Start_Date__c < THIS_WEEK
+                                                             ORDER BY Week_End_Date__c DESC
                                                              LIMIT 5];
                                                              //return timesheetList;
         List<EMS_Timesheet__c> emlsheet = new List<EMS_Timesheet__c>();
-     emlsheet =[ SELECT EMS_TM_Total__c,enddate__c,
+     emlsheet =[ SELECT EMS_TM_Total__c,Week_End_Date__c,
                                                     OwnerId 
                                                     FROM EMS_Timesheet__c 
-                                                    WHERE enddate__c = THIS_WEEK
+                                                    WHERE Week_Start_Date__c = THIS_WEEK
                                                     AND OwnerId =: UserInfo.getUserId()];
                 wrappergetTimeSheetHours newgethours = new wrappergetTimeSheetHours();
                                         newgethours.timeSheetrecord = emlsheet.size()>0? emlsheet[0].EMS_TM_Total__c : 0;

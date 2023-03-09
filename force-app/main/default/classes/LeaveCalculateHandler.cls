@@ -39,11 +39,11 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                                             From EMS_LM_Leave_History__c 
                       						where EMS_LM_Contact__c=:setId 
                                             		And CreatedDate = This_Year 
-                                            		AND (EMS_LM_Status__c =: LeaveRequestConstant.PENDING 
-                                                     	OR EMS_LM_Status__c=: LeaveRequestConstant.APPROVED 
-                                                     	OR EMS_LM_Status__c=: LeaveRequestConstant.APPROVER_2_WAITING  
-                                                     	OR EMS_LM_Status__c=: LeaveRequestConstant.APPROVER_3_WAITING 
-                                                        OR EMS_LM_Status__c=: LeaveRequestConstant.APPROVER_4_WAITING)];
+                                            		AND (EMS_LM_Status__c=: LeaveRequestConstant.PENDING
+                                                        OR EMS_LM_Status__c =: LeaveRequestConstant.APPROVED 
+                                                     	OR EMS_LM_Status__c=: LeaveRequestConstant.APPROVER_2_WAITING
+                                                        OR EMS_LM_Status__c=: LeaveRequestConstant.APPROVER_3_WAITING
+                                                        OR EMS_LM_Status__c=: LeaveRequestConstant.AUTO_APPROVED)];
        
        //AND (EMS_LM_Leave_Type_Name__c = 'Annual Leave' OR EMS_LM_Leave_Type_Name__c ='Compensatory Off')
         
@@ -59,8 +59,8 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
         for(EMS_LM_Leave_History__c l2 : l1){
                   if(l2.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.ANNUAL_LEAVE && l2.EMS_LM_Leave_Duration__c !=Null  && 
                      (l2.EMS_LM_Status__c== LeaveRequestConstant.PENDING || l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED  || 
-                                                                                              	l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING|| 
-                                                                                               	l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING))
+                      l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING|| l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
+                     l2.EMS_LM_Status__c== LeaveRequestConstant.AUTO_APPROVED))
                   {
                       Utilized_Leaves = Utilized_Leaves + l2.EMS_LM_Leave_Duration__c;
                   } 

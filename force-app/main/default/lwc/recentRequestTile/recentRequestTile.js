@@ -43,7 +43,6 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
     }
     showModalApprovalBox(event) {
         console.log('BUTTON CLICKED : ');
-        console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
         this.selectedRecordApproveId = event.currentTarget.dataset.id;
         console.log('### selectedRecordApproveId : ', this.selectedRecordApproveId);
         this.isShowModalApprove = true;
@@ -54,7 +53,6 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
             .then((result) => {
                 console.log('Leave Request: ', result);
                 this.isShowModalApprove = false;
-                this.checkBox = false;
                 return refreshApex(this._wiredRefreshData)
             }).catch((err) => {
                 console.log('ERROR : ', err);
@@ -90,7 +88,6 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
 
     showModalRejectBox(event) {
         console.log('BUTTON CLICKED Reject: ');
-        console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
         console.log('### event id: ', JSON.stringify(event.currentTarget.dataset.id));
         this.selectedRecordRejectId = event.currentTarget.dataset.id;
         console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
@@ -127,7 +124,7 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
                 .then((result) => {
                     console.log('Leave Request: ', result);
                     this.isShowModalReject = false;
-                    this.checkBox = false;
+                    this.rejectComments = '';
                     return refreshApex(this._wiredRefreshData)
                 }).catch((err) => {
                     console.log('ERROR : ', err);

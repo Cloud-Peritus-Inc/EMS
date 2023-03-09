@@ -18,7 +18,7 @@
 				</template>
 			</div>
 			<div slot="actions">
-				<lightning-button variant="success" label="Approve All" title="Approve ALl" onclick={handleApproveAll}
+				<lightning-button variant="success" label="Approve All" title="Approve All" onclick={handleApproveAll}
 					disabled={disableButton}>
 				</lightning-button>
 				&nbsp;&nbsp;
@@ -100,7 +100,7 @@
 									<div title="Approved By">Approved By</div>
 								</th>
 								<th>
-									<div title="Approval/Rejection Date">Approved On</div>
+									<div title="Approved On">Approved On</div>
 								</th>
 								<th class="slds-cell_action-mode" style="width:2.25rem">
 									<div>Actions</div>
@@ -112,11 +112,16 @@
 								<tr key={Req.Id}
 									style="border-top:0.5px solid #d4d4d4;border-bottom:0.5px solid #d4d4d4">
 									<td style="padding:8px">
-										<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id}/>
-                					</td>
+										<div class="slds-truncate dv-dynamic-width">
+											<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id}/>
+										</div>
+									</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
-											{Req.EMS_LM_Contact__r.Name}</div>
+											<a href="#" data-id={Req.EMS_LM_Contact__c} onclick={handlConClick}>
+												{Req.EMS_LM_Contact__r.Name}
+											</a>
+										</div>
 									</td>
 									<td>
 										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>

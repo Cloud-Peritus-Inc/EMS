@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getPicklistValues, getObjectInfo, getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
 import u_Id from '@salesforce/user/Id';
@@ -9,11 +9,13 @@ import bulkLeaveReqReject from '@salesforce/apex/LeaveRequestHRRejectHandler.bul
 import updateRejectStatus from '@salesforce/apex/LeaveRequestHRRejectHandler.updateRejectStatus';
 import cancleLeaveRequest from '@salesforce/apex/LeaveManagementApexController.cancleLeaveRequest';
 import getAdminLeaveHistory from '@salesforce/apex/EMS_LM_LeaveReq_AdminView.getAdminLeaveHistory';
+import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import defaultAdminViewData from '@salesforce/apex/EMS_LM_LeaveReq_AdminView.defaultAdminViewData';
 import { refreshApex } from '@salesforce/apex';
 
-export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
+export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin (LightningElement) {
   @track empName = '';
+  @api recordId;
   requeststatus;
   outputStatus;
   outputId;
@@ -31,7 +33,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   approveAllComments;
   rejectAllComments;
   value = '';
-  fixedWidth = "width:8rem;";
+  fixedWidth = "width:5rem;";
   leaveTypeValues;
   tValue = '';
   sValue = ' ';
@@ -50,6 +52,14 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
   @track isLoading = false;
   _wiredRefreshData;
   checkBox;
+
+
+  @track currentPageReference;
+  @wire(CurrentPageReference)
+  setCurrentPageReference(currentPageReference) {
+    this.currentPageReference = currentPageReference;
+  }
+
 
   //TO GET OBJECT INFO
   @wire(getObjectInfo, { objectApiName: LEAVEHISTORY_OBJECT })
@@ -344,4 +354,19 @@ export default class EMS_LM_LeaveHistory_AdminView extends LightningElement {
         console.log('### err : ', JSON.stringify(err));
       });
   }
+
+  //TO VIEW THE CONTACT RECORD
+  handlConClick(event) {
+    let selectCon = event.currentTarget.dataset.id;
+    console.log('### selectCon : ', selectCon);
+    this[NavigationMixin.Navigate]({
+      type: 'standard__recordPage',
+      attributes: {
+        recordId: selectCon,
+        objectApiName: 'Contact',
+        actionName: 'view',
+      },
+    });
+  }
+
 }
