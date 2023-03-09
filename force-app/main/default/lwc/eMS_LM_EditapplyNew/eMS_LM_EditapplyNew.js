@@ -443,6 +443,7 @@ connectedCallback(){
               this.dispatchEvent(myEvent); 
             })
             .catch(error => {
+                this.isLoading=false;
                 this.error = error;
                 console.log('error-->',error);
                 console.log('this.error-->'+JSON.stringify(this.error));
