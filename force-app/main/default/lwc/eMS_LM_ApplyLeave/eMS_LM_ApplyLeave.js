@@ -467,7 +467,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             );
             window.location.reload();
         }).catch(error => {
-        
+            this.isLoading=false;
             console.log('error-->',error);
             console.log('error msg-->',error.body.message);
             this.dispatchEvent(

@@ -45,7 +45,7 @@ global class BatchToUpdateUserAccess  implements Database.Batchable<sObject> {
         return Database.getQueryLocator([SELECT Id,Email,Name,
                                          (SELECT permissionsetid,PermissionSet.Name FROM permissionsetassignments WHERE PermissionSet.Name IN:accesswithApi.keySet())
                                          FROM USER 
-                                         WHERE isActive = true]);
+                                         WHERE isActive = true ]);
     }
 
 
@@ -61,26 +61,16 @@ global class BatchToUpdateUserAccess  implements Database.Batchable<sObject> {
 * ====================================================================================================
 **/
     global void execute(Database.BatchableContext BC, List<User> userList) {
-        
-        for(String str : accesswithApi.keySet()){
             for(User urec : userList){
-                if(!urec.permissionsetassignments.isEmpty()){
-                    Set<String> existingPermissionSets = new Set<String>();
-                    for(permissionsetassignment psa : urec.permissionsetassignments){
-                        existingPermissionSets.add(psa.PermissionSet.Name);
-                    }
-                    if(existingPermissionSets.contains(str)){
-                      urec.put(accesswithApi.get(str),true);  
-                    }else{
-                      urec.put(accesswithApi.get(str),false);
-                    }
-                }else{
-                  urec.put(accesswithApi.get(str),false);  
-                } 
-            }  
-        }
-        
-        
+                for(String strApi : accesswithApi.values()){
+                     urec.put(strApi,false);
+                }
+                for(permissionsetassignment psa : urec.permissionsetassignments){
+                        if(accesswithApi.containsKey(psa.PermissionSet.Name)){
+                            urec.put(accesswithApi.get(psa.PermissionSet.Name),true);
+                        }
+                }
+            }
          try{
            update userList; 
         }catch(exception ex){

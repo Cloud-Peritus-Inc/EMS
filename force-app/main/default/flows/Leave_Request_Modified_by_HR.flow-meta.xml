@@ -27,6 +27,18 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>emailSubject</name>
             <value>
                 <stringValue> Leave Request is {!Status} by {!HRName}</stringValue>
@@ -60,6 +72,18 @@
             <name>sendRichBody</name>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -168,6 +192,18 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>emailSubject</name>
             <value>
                 <stringValue> Leave Request is {!Status} by {!HRName}</stringValue>
@@ -204,6 +240,18 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>emailSubject</name>
             <value>
                 <stringValue>Leave Request is {!Status} by {!HRName}</stringValue>
@@ -237,6 +285,18 @@
             <name>sendRichBody</name>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -826,6 +886,16 @@
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>&lt;p&gt;Dear Employee&lt;/p&gt;&lt;p&gt;Your Leave Request has been modified by HR.&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Request Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Modified Leave Request Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Day&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;{!OldStartDate} To {!OldEndDate}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;{!NewStartDate} To {!NewEndDate} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt;{!Status}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;{!Day}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;Reason:  &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Regards,&lt;/p&gt;&lt;p&gt;Cloud Peritus India Pvt. Ltd.&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>CPEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+        </value>
+    </variables>
     <variables>
         <name>Day</name>
         <dataType>Picklist</dataType>

@@ -222,6 +222,7 @@ export default class EMS_LM_WFH extends LightningElement {
           this.updateRecordView();
         }).catch(error => {
           this.check1 = false;
+          this.isLoading = false;
           console.error('Error creating record: ', error);
         //  console.error('Error creating record: ', error.body.message);
           this.dispatchEvent(new ShowToastEvent({

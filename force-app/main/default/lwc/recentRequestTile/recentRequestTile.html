@@ -40,55 +40,69 @@
 									</td>
 									<td>{leave.EMS_LM_Leave_Duration__c}</td>
 									<td>
-										<lightning-button-icon icon-name='action:approval' variant="brand"
-											alternative-text='approval' size='x-small' title='approval'
-											data-key={leave.Id} onclick={showModalApprovalBox}></lightning-button-icon>
+
+										<lightning-button-icon variant="brand" size="x-small"
+											icon-name="action:approval" alternative-text="Approve"
+											onclick={showModalApprovalBox} data-value={leave.EMS_LM_Status__c}
+											key-field={leave.Id} data-record-id={leave.Id} data-id={leave.Id}>
+										</lightning-button-icon>
+										&nbsp;&nbsp;
+										<lightning-button-icon variant="brand" size="x-small" icon-name="action:reject"
+											alternative-text="Reject" onclick={showModalRejectBox}
+											data-value={leave.EMS_LM_Status__c} key-field={leave.Id}
+											data-record-id={leave.Id} data-id={leave.Id}> </lightning-button-icon>
+										<!--lightning-button-icon icon-name='action:approval' variant="brand"
+											alternative-text='Approve' size='x-small' title='Approve' data-id={leave.Id}
+											key-field={leave.Id} data-record-id={leave.Id}
+											onclick={showModalApprovalBox}></lightning-button-icon>
 										&nbsp;
 										<lightning-button-icon icon-name='action:close' alternative-text='close'
-											variant="brand" size='x-small' title='close' data-key={leave.Id}
-											onclick={showModalRejectBox}>
-										</lightning-button-icon>
+											variant="brand" size='x-small' title='Reject' data-id={leave.Id}
+											key-field={leave.Id} data-record-id={leave.Id} onclick={showModalRejectBox}>
+											</lightning-button-icon-->
 									</td>
 
-									<!-- APPROVE POP-UP-->
+
+
+									<!-- APPROVE  POP-UP-->
 									<template if:true={isShowModalApprove}>
-										<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+										<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03"
 											aria-modal="true" aria-describedby="modal-content-id-1"
 											class="slds-modal slds-fade-in-open">
 											<div class="slds-modal__container">
 												<!-- modal header start -->
 												<header class="slds-modal__header">
-													<h2 id="modal-heading-01"
+													<h2 id="modal-heading-03"
 														class="slds-text-heading_medium slds-hyphenate">
 														Confirmation</h2>
 												</header>
 
 												<!-- modal body start -->
 												<div class="slds-modal__content slds-p-around_medium"
-													id="modal-content-id-1">
+													id="modal-content-id-3">
 													<p style="font-size:20px;">Please Enter the Approve Comments</p><br>
 													<lightning-textarea name="input" required value=""
 														placeholder="Type comments here..." label="Comments"
 														maxlength="140"
 														message-when-too-long="A maximum of 140 characters are allowed."
 														message-when-value-missing="Please add comments."
-														onchange={handleApproveComments}></lightning-textarea>
+														onchange={handleApproveComments}>
+													</lightning-textarea>
 												</div>
 
 												<!-- modal footer start-->
 												<footer class="slds-modal__footer">
 
-													<button class="slds-button slds-button_neutral" onclick={handleClose}
-										data-id={leave.Id}>Cancel</button>
+													<button class="slds-button slds-button_neutral" onclick={handleCloseAll}
+										>Cancel</button>
 													<button class="slds-button slds-button_neutral" onclick={handleApproveSave}
-										data-id={leave.Id}>Save</button>
+										>Save</button>
 												</footer>
-
 											</div>
 										</section>
 										<div key={leave.Id} class="slds-backdrop slds-backdrop_open"></div>
 									</template>
-									<!-- REJECT POP-UP-->
+									<!-- REJECT  POP-UP-->
 									<template if:true={isShowModalReject}>
 										<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02"
 											aria-modal="true" aria-describedby="modal-content-id-1"
@@ -96,14 +110,14 @@
 											<div class="slds-modal__container">
 												<!-- modal header start -->
 												<header class="slds-modal__header">
-													<h2 id="modal-heading-02"
+													<h2 id="modal-heading-04"
 														class="slds-text-heading_medium slds-hyphenate">
 														Confirmation</h2>
 												</header>
 
 												<!-- modal body start -->
 												<div class="slds-modal__content slds-p-around_medium"
-													id="modal-content-id-2">
+													id="modal-content-id-4">
 													<p style="font-size:20px;">Please Enter the Reject Comments</p><br>
 													<lightning-textarea name="input" required value={rejectComments}
 														placeholder="Type comments here..." label="Comments"
@@ -118,10 +132,10 @@
 												<!-- modal footer start-->
 												<footer class="slds-modal__footer">
 
-													<button class="slds-button slds-button_neutral" onclick={handleClose}
-										data-id={leave.Id}>Cancel</button>
+													<button class="slds-button slds-button_neutral" onclick={handleCloseAll}
+										>Cancel</button>
 													<button class="slds-button slds-button_neutral" onclick={handleRejectSave}
-										data-id={leave.Id}>Save</button>
+										>Save</button>
 												</footer>
 											</div>
 										</section>
@@ -135,6 +149,17 @@
 						<h2> No requests found
 						</h2>
 					</template>
+					<center>
+						<div style="width:100%">
+							<footer class="slds-modal__footer">
+								<!---->
+
+								<center> <a href="#" onclick={handleLMNavigation}> View All Request</a> </center>
+								<!--	 -->
+							</footer>
+
+						</div>
+					</center>
 				</div>
 			</center>
 		</div>

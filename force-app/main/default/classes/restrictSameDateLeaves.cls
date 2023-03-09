@@ -56,7 +56,7 @@ public without sharing class restrictSameDateLeaves implements TriggerAction.Bef
          System.debug('======startDate========'+startDate);
          System.debug('======endDate========'+endDate);
         Map<Id,EMS_LM_Leave_History__c> resourceWithLeaves = new Map<Id,EMS_LM_Leave_History__c>();
-        for(EMS_LM_Leave_History__c leave : [SELECT Id FROM EMS_LM_Leave_History__c 
+        for(EMS_LM_Leave_History__c leave : [SELECT Id,EMS_LM_Status__c,EMS_LM_Contact__c,EMS_LM_Leave_Start_Date__c,EMS_LM_Leave_End_Date__c FROM EMS_LM_Leave_History__c 
                                              WHERE EMS_LM_Status__c !='Cancelled' AND EMS_LM_Status__c !='Rejected' AND EMS_LM_Contact__c IN:resourcId AND 
                                              EMS_LM_Leave_Start_Date__c >= :startDate AND EMS_LM_Leave_End_Date__c <= :endDate ]){
             resourceWithLeaves.put(leave.EMS_LM_Contact__c,leave);

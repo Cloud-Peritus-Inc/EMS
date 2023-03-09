@@ -9,6 +9,7 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
     reqLeaveData;
     approveComments;
     rejectComments;
+    selectedRecordApproveId;
     isShowModalApprove = false;
     isShowModalReject = false;
     nodata = false;
@@ -40,9 +41,32 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
     handleApproveComments(event) {
         this.approveComments = event.target.value;
     }
-
-    showModalApprovalBox() {
+    showModalApprovalBox(event) {
         console.log('BUTTON CLICKED : ');
+        console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
+        this.selectedRecordApproveId = event.currentTarget.dataset.id;
+        console.log('### selectedRecordApproveId : ', this.selectedRecordApproveId);
+        this.isShowModalApprove = true;
+    }
+
+    handleApproveSave(event) {
+        updateApproveStatusAndComments({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
+            .then((result) => {
+                console.log('Leave Request: ', result);
+                this.isShowModalApprove = false;
+                this.checkBox = false;
+                return refreshApex(this._wiredRefreshData)
+            }).catch((err) => {
+                console.log('ERROR : ', err);
+            });
+    }
+    /*
+    showModalApprovalBox(event) {
+        console.log('@@@ : ', JSON.stringify(event));
+        console.log('BUTTON CLICKED : ');
+        console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
+        this.selectedRecordApproveId = event.currentTarget.dataset.id;
+        console.log('### selectedRecordApproveId : ', this.selectedRecordApproveId);
         this.isShowModalApprove = true;
     }
 
@@ -52,20 +76,26 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
         updateApproveStatusAndComments({ leaveRequestId: selectedRecordApproveId, comments: this.approveComments })
             .then((result) => {
                 console.log('Leave Request: ', result);
+                this.isShowModalApprove = false;
                 return refreshApex(this._wiredRefreshData)
             }).catch((err) => {
                 console.log('ERROR : ', err);
             });
-    }
+    }*/
 
     //Reject Modal
     handleRejectComments(event) {
         this.rejectComments = event.target.value;
     }
 
-    showModalRejectBox() {
-        console.log('BUTTON CLICKED : ');
+    showModalRejectBox(event) {
+        console.log('BUTTON CLICKED Reject: ');
+        console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
+        console.log('### event id: ', JSON.stringify(event.currentTarget.dataset.id));
+        this.selectedRecordRejectId = event.currentTarget.dataset.id;
+        console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
         this.isShowModalReject = true;
+
     }
 
     handleRejectSave(event) {
@@ -82,12 +112,22 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
         });
 
         if (letReject) {
-            const selectedRecordRejectId = event.currentTarget.dataset.id;
-            console.log('### selectedRecordRejectId : ', selectedRecordRejectId);
-            updateRejecteStatusAndComments({ leaveRequestId: selectedRecordRejectId, comments: this.rejectComments })
+            /* const selectedRecordRejectId = event.currentTarget.dataset.id;
+             console.log('### selectedRecordRejectId : ', selectedRecordRejectId);
+             updateRejecteStatusAndComments({ leaveRequestId: selectedRecordRejectId, comments: this.rejectComments })
+                 .then((result) => {
+                     console.log('Leave Request: ', result);
+                     this.isShowModalReject = false;
+                     return refreshApex(this._wiredRefreshData)
+                 }).catch((err) => {
+                     console.log('ERROR : ', err);
+                 });*/
+            console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
+            updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
                 .then((result) => {
                     console.log('Leave Request: ', result);
                     this.isShowModalReject = false;
+                    this.checkBox = false;
                     return refreshApex(this._wiredRefreshData)
                 }).catch((err) => {
                     console.log('ERROR : ', err);
@@ -95,7 +135,7 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
         }
     }
 
-    handleClose() {
+    handleCloseAll() {
         this.isShowModalApprove = false;
         this.isShowModalReject = false;
     }
