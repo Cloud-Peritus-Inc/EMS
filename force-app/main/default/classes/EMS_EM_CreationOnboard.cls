@@ -122,7 +122,7 @@ public without Sharing class EMS_EM_CreationOnboard {
     @AuraEnabled
     public static EMS_EM_Onboarding_Request__c getUserOnboardInfo(String recordId){
         
-        EMS_EM_Onboarding_Request__c onboardlist=[Select EMS_EM_First_Name__c,EMS_EM_Last_Name__c,EMS_EM_Father__c,Name,EMS_EM_Mother__c,EMS_EM_Gender__c,Phone_Number__c,
+        EMS_EM_Onboarding_Request__c onboardlist=[Select EMS_EM_First_Name__c,EMS_EM_Last_Name__c,EMS_EM_Father__c,Name,EMS_EM_Mother__c,EMS_EM_Gender__c,Phone_Number__c, Trailblazer_ID_or_Public_URL__c,ContactId1__c,
                                                   EMS_EM_Phone_Number__c,EMS_EM_DOB__c,EMS_EM_Mstatus__c,EMS_EM_Spouse__c,EMS_EM_DOW__c,Status__c,EMS_EM_BG__c,EMS_EM_Personal_Email__c, 
                                                   EMS_EM_AadhaarNo__c,EMS_EM_PanNo__c,EMS_EM_PassportNo__c,EMS_EM_UAN_Number__c,EMS_EM_Nationality__c,Permanent_Address_Line_1__c,Permanent_Address_Line_2__c,
                                                   Current_Address_Line_1__c,Current_Address_Line_2__c,EMS_EM_CA_State__c,EMS_EM_PA_State__c,EMS_EM_CA_Zip__c,EMS_EM_PA_Zip__c,EMS_EM_CA_City__c,EMS_EM_PA_City__c,
@@ -298,11 +298,42 @@ public without Sharing class EMS_EM_CreationOnboard {
         }
     }
     
+    @AuraEnabled( cacheable = true )
+    public static List<Certifications__c> fetchCertifications(String recordId) {
+        return [SELECT Id, 
+                Onboarding_Request__c, 
+                Contact__c, 
+                Other__c,
+                Certification_Name__c, 
+                Completion_Date__c, Type__c 
+                FROM Certifications__c WHERE Onboarding_Request__c =:recordId AND Type__c = 'Certification' LIMIT 20];
+    }
+    
     @AuraEnabled
-    public static List<Certifications__c> createRecords(List<Certifications__c> certifications) {
-        insert certifications;
-
-        return certifications;
+    public static string dmlOnCertifications(Object data, String removeCertificationIds) {
+        List<Certifications__c> updateCertifications = (List<Certifications__c>) JSON.deserialize(JSON.serialize(data), List<Certifications__c>.class);
+        List<Certifications__c> deleteCertifications = new List<Certifications__c>();
+        
+        if(String.isNotBlank(removeCertificationIds)){
+            List<Id> CertificationIds = removeCertificationIds.split(',');
+            deleteCertifications = [SELECT Id FROM Certifications__c WHERE Id IN :CertificationIds];
+        }
+        
+        try {
+            if(updateCertifications != null && !updateCertifications.isEmpty()){
+                upsert updateCertifications;
+            }
+            
+            if(deleteCertifications != null && !deleteCertifications.isEmpty()){    
+                delete deleteCertifications;
+            }
+            return 'Success: Contact(s) upsert/delete successfully';
+        }
+        catch (Exception e) {
+            String errorMsg = 'The following exception has occurred: ' + e.getMessage();
+            throw new AuraHandledException(ErrorMsg);
+        }
+        // return '';
     }
     
     

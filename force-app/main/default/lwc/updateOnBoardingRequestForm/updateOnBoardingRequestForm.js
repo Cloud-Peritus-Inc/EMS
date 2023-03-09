@@ -212,6 +212,7 @@ guestObj.Id = ts.onboardingformId;
 console.log('onboardingformId 2 => ' ,ts.onboardingformId);
 guestObj.EMS_EM_First_Name__c = ts.firstName;
 guestObj.EMS_EM_Last_Name__c = ts.lastName;
+guestObj.Trailblazer_ID_or_Public_URL__c=ts.Trailblazerval;
 guestObj.Phone_Number__c = ts.ph;
 guestObj.EMS_EM_Phone_Number__c= ts.altphone;
 guestObj.EMS_EM_DOB__c = ts.dob;
@@ -563,6 +564,7 @@ function updateOnboardingInfoOnPageLoads(ts){
              // this.readonlyfield=true;
               ts.firstName = onboarding.EMS_EM_First_Name__c;
               ts.lastName=onboarding.EMS_EM_Last_Name__c;
+              ts.Trailblazerval = onboarding.Trailblazer_ID_or_Public_URL__c;
               ts.gen=onboarding.EMS_EM_Gender__c;
               ts.ph=onboarding.Phone_Number__c;
               ts.dob=onboarding.EMS_EM_DOB__c;
@@ -807,11 +809,13 @@ function updateOnboardingInfoOnPageLoads(ts){
                 ts.isPersonalUpdateCheckbox = true;
                 ts.statusUpdate = 'In Progress';
                 console.log('check box personal',ts.isPersonalUpdateCheckbox);
+                console.log('statusUpdate',ts.statusUpdate);
                 }
                 if(result.onboarding.Identify_Details_Value_Filled__c === true){
                   ts.isIdentifyDetailsCheckbox = true;
                   ts.isIdentityStatusUpdate = 'In Progress';
                   console.log('check box personal',ts.isIdentifyDetailsCheckbox);
+                  console.log('isIdentityStatusUpdate',ts.isIdentityStatusUpdate);
                 }
                 if(result.onboarding.Address_Details_Value_Filled__c === true){
                   ts.isAddressDetailsCheckbox = true;

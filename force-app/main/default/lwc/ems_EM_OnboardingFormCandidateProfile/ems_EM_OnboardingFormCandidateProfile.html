@@ -204,7 +204,7 @@
                                     <br />
                                     <div style="text-align:center">
                                         <lightning-button style="margin:5px;" label="Save" type="brand"
-                                            onclick={SaveSubmitOnboarding} title="Next"
+                                            onclick={SaveSubmitOnboarding}
                                             variant="brand"></lightning-button>
                                     </div>
                                     <br><br>
@@ -291,7 +291,7 @@
                                 <br /><br />
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitOnboarding} title="Next" variant="brand"></lightning-button>
+                                        onclick={SaveSubmitOnboarding}  variant="brand"></lightning-button>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +319,7 @@
                                                         disabled={readonlyfield} required onchange={handleChange}
                                                         name="Current_Address_Line_1__c" type="text"
                                                         label="Address Line 1"></lightning-input>
-                                                    <lightning-input class="slds-p-top_small addressClass" value={cadrressline2}
+                                                    <lightning-input class="slds-p-top_small " value={cadrressline2}
                                                         disabled={readonlyfield} onchange={handleChange}
                                                         name="Current_Address_Line_2__c" type="text"
                                                         label="Address Line 2"></lightning-input>
@@ -383,7 +383,7 @@
                                         <br /><br />
                                         <div style="text-align:center">
                                             <lightning-button style="margin:5px;" label="Save" type="brand"
-                                                onclick={SaveSubmitOnboarding} title="Next"
+                                                onclick={SaveSubmitOnboarding} 
                                                 variant="brand"></lightning-button>
                                         </div>
                                     </div>
@@ -881,59 +881,95 @@
                                     <span class="slds-truncate slds-p-horizontal_small"
                                         title="Certification Documents">Other Certification Documents</span>
                                 </h3>
-                                <div aria-hidden="false" class="slds-section__content" style="padding-left: 15px;">
-                                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
-                                        <!--
-                                <thead>
-                                    <tr class="slds-text-title_caps">
-                                        <th scope="col">
-                                            <div class="slds-truncate" title="Certification Name">Certification Name</div>
-                                        </th>
-                                        <th scope="col">
-                                            <div class="slds-truncate" title="Completion Date">Completion Date</div>
-                                        </th>
-                                        <th scope="col">
-                                            <div class="slds-truncate" title="Action">Action</div>
-                                        </th>
-                                    </tr>
-                                </thead> -->
-                                        <tbody>
-                                            <template for:each={accountRecList} for:item="account" for:index="index">
-
-                                                <tr key={keyIndex}>
-                                                    <td>
-                                                        <lightning-combobox class="slds-p-top_small" value={account.bg}
-                                                            access-key={index} id={index} required
-                                                            onchange={changeHandler} options={certificationName}
-                                                            placeholder="Select" name="Certification_Name__c"
-                                                            label="Certification Name"></lightning-combobox>
-                                                    </td>
-                                                    <td>
-                                                        <lightning-input class="slds-p-top_small" value={account.dob}
-                                                            required access-key={index} id={index}
-                                                            onchange={changeHandler} name="Completion_Date__c"
-                                                            type="date" label="Completion Date"></lightning-input>
-                                                    </td>
-                                                    <td>
-                                                        <lightning-icon icon-name="action:delete" access-key={index}
-                                                            id={index} alternative-text="Click to Call" size="small"
-                                                            title="large size" onclick={removeRow}>
-                                                        </lightning-icon>
-                                                    </td>
-                                                </tr>
-                                            </template>
-                                        </tbody>
-                                    </table>
-
-                                    <br /><br />
-                                    <div style="text-align:center">
-                                        <lightning-button label="Add" variant="brand" onclick={addRow}>
-                                        </lightning-button>&nbsp;
-                                        <lightning-button label="Save" variant="brand" onclick={saveMultipleAccounts}>
-                                        </lightning-button>
+                                <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none modalBodyy"
+                                    style="padding-left: 15px; ">
+                                    <template if:true={isLoading}>
+                                        <lightning-spinner alternative-text="Loading" size="medium"
+                                            class="spinnerClass"></lightning-spinner>
+                                    </template>
+                                    <div class="slds-grid slds-gutters ">
+                                        <div class="slds-col slds-size_1-of-2" style="padding-left: 54px;">
+                                            <lightning-input type="url" class="slds-p-top_small" value={Trailblazerval}
+                                                disabled={readonlyfield} onchange={TrailblazerIDorPublic}
+                                                name="Trailblazer_ID_or_Public_URL__c"
+                                                label="Trailblazer ID or Public URL"> </lightning-input>
+                                        </div>
                                     </div>
-                                    <br /><br />
+                                    <lightning-card >
+                                        <lightning-button style="padding-right: 15px; " label="Add Certifications" slot="actions"
+                                            disabled={readonlyfield} icon-name="utility:add" 
+                                            onclick={addRow}></lightning-button>
+                                        <div class="slds-m-around_medium" style="padding-right: 15px; ">
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                                                aria-labelledby="element-with-table-label other-element-with-table-label">
+                                                <thead>
+                                                    <tr class="slds-text-title_caps">
+                                                        <th scope="col">
+                                                            <div class="slds-truncate" title="Certification Name">
+                                                                Certification Name</div>
+                                                        </th>
+                                                        <template if:true={otherfield}>
+                                                        <th scope="col">
+                                                            <div class="slds-truncate" title="Other">
+                                                                Other</div>
+                                                        </th>
+                                                    </template>
+                                                        <th scope="col">
+                                                            <div class="slds-truncate" title="Completion Date">
+                                                                Completion Date</div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template for:each={records} for:item="obj">
+                                                        <tr class="inputRows" key={obj.Id}>
+                                                            <td>
+                                                                <lightning-combobox class="fields"
+                                                                    variant="label-hidden"
+                                                                    value={obj.Certification_Name__c} data-id={obj.Id}
+                                                                    onchange={updateValues} options={certificationName}
+                                                                    required placeholder="Select"
+                                                                    name="Certification_Name__c"
+                                                                    disabled={readonlyfield}
+                                                                    label="Certification Name"></lightning-combobox>
+                                                            </td>
+                                                            <template if:true={otherfield}>
+                                                                <td>
+                                                                    <lightning-input class="fields" variant="label-hidden"
+                                                                        value={obj.Other__c} data-id={obj.Id}
+                                                                        onchange={updateValues} name="Other__c"
+                                                                        required type="text" disabled={readonlyfield}
+                                                                        label="Other"></lightning-input>
+                                                                </td>
+                                                            </template>
+                                                            
+                                                            <td>
+                                                                <lightning-input class="fields" variant="label-hidden"
+                                                                    value={obj.Completion_Date__c} data-id={obj.Id}
+                                                                    onchange={updateValues} name="Completion_Date__c"
+                                                                    required type="date" disabled={readonlyfield}
+                                                                    label="Completion Date"></lightning-input>
+                                                            </td>
+
+                                                            <td >
+                                                                <lightning-button-icon icon-name="action:delete"
+                                                                    disabled={readonlyfield} alternative-text="Delete"
+                                                                    title="Delete" data-id={obj.Id}
+                                                                    onclick={handleDeleteAction}></lightning-button-icon>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </lightning-card>
                                 </div>
+                                <br><br>
+                                <div slot="footer" style="text-align:center">
+                                    <lightning-button style="margin:5px;" variant="brand" label="Save"
+                                        onclick={handleSaveAction} disabled={readonlyfield}></lightning-button>
+                                </div>
+                                <br><br>
                             </div>
                         </div>
                     </template>

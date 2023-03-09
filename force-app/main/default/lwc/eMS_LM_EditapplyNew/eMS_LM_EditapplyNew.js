@@ -153,6 +153,8 @@ connectedCallback(){
 
     }
 
+    totalannualduration;
+
  @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$Location', dayCheck: false })
   async wiredduration({ error, data }) {
     if (data) {
@@ -165,20 +167,16 @@ connectedCallback(){
           }
         }
       if (this.value == 'Annual Leave') {
-          if (this.annualduration >= data) {
+        this.totalannualduration=this.annualduration+this.duration;
+        console.log('this.totalannualduration',this.totalannualduration,'data',data);
+          if (this.totalannualduration >= data) {
             this.submitcheck = false;
             this.duration = data;
             this.error = undefined;
           }
           else {
-            const result = await LightningConfirm.open({
-              message: "To apply this leave, you have to avail additional leaves from next quarter. You can take a leave loan upto 5 days.",
-              variant: "default", // headerless
-              theme: 'error', // more would be success, info, warning
-              label: "Avail Advance Annual Leaves"
-            });
-            if (result) {
-              this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c + 5;
+           
+              this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c + 5+this.duration;
               if (this.availabledays >= data) {
                 this.submitcheck = false;
                 this.duration = data;
@@ -195,22 +193,9 @@ connectedCallback(){
                 this.duration = undefined;
                 this.error = undefined;
                 this.submitcheck = true;
-                this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
+                this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c+this.duration;
               }
-            }
-            else {
-              this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
-              const evt = new ShowToastEvent({
-                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
-                variant: 'error',
-                });
-                  this.dispatchEvent(evt);
-              //alert('You dont have enough balance to apply leave');
-              this.duration = undefined;
-              this.error = undefined;
-              this.submitcheck = true;
-              this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
-            }
+            
           }
         }
       }
@@ -340,7 +325,16 @@ connectedCallback(){
         this.dispatchEvent(evt);
         this.startDate1 = null;
         this.endDate1 = null;
-      }   
+      }  
+     /* if(this.annualduration < this.duration){
+        const evt = new ShowToastEvent({
+            message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+        this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
+        this.submitcheck = true;      
+      } */
     }
     if(this.startDate1!=null && this.endDate1!=null){
       this.submitcheck = false;
@@ -431,7 +425,6 @@ connectedCallback(){
                 console.log('sdf-->',result);
               this.isLoading=false;
                 const event = new ShowToastEvent({
-                  title: 'Save',
                   message: 'Your request has been updated successfully!',
                   variant: 'success'
                  
@@ -440,7 +433,8 @@ connectedCallback(){
               const myEvent = new CustomEvent('closeleave',{
               detail:this.closeleavepopup
               });
-              this.dispatchEvent(myEvent); 
+              this.dispatchEvent(myEvent);
+              window.location.reload(); 
             })
             .catch(error => {
                 this.isLoading=false;

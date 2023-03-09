@@ -52,17 +52,20 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert{
         Id contRecordTypeId = [Select id from RecordType where sObjectType = 'Contact' and developerName ='Applicant' ].id ;
         
         for(Contact contactRec : contactList){
-            if(contactRec.EMS_EM_JD__c != NULL && contactRec.RecordTypeId == contRecordTypeId){
+            if(contactRec.RecordTypeId == contRecordTypeId){
                 Date today = Date.today();
                 Date sobjectDate = contactRec.EMS_EM_JD__c;
-                if(today.daysBetween(sobjectDate) < 10 && contactRec.EMS_EM_JD__c >= system.today()){
-                    EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
-                    applicantRec.EMS_EM_Personal_Email__c = contactRec.Personal_Email__c;
-                    applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
-                    applicantRec.ContactId1__c = contactRec.Id;
-                    applicantRec.Status__c = 'Triggered';
-                    applicantsList.add(applicantRec); 
-
+                
+                EMS_EM_Onboarding_Request__c applicantRec = new EMS_EM_Onboarding_Request__c();
+                applicantRec.EMS_EM_Personal_Email__c = contactRec.Personal_Email__c;
+                applicantRec.ContactId1__c = contactRec.Id;
+                applicantRec.EMS_EM_First_Name__c = contactRec.FirstName;
+                applicantRec.EMS_EM_Last_Name__c = contactRec.LastName;
+                applicantRec.Phone_Number__c = contactRec.EMS_Phone_Number__c;
+                applicantRec.Status__c = 'Triggered';
+                applicantsList.add(applicantRec);
+                
+                if(contactRec.EMS_EM_JD__c != NULL && today.daysBetween(sobjectDate) < 10 && contactRec.EMS_EM_JD__c >= system.today()){
                     sendEmailToHR(contactRec.Id);
                     sendEmailToAdminTeam(contactRec.Id);
                 }

@@ -46,15 +46,17 @@
               </lightning-layout-item>
               
             </lightning-layout>
-            <div class="slds-align_absolute-center">
-                  <div class="slds-var-m-around_medium">
+            <div>
+                  <div class="slds-var-m-around_medium slds-align_absolute-center">
                   <lightning-input type="file"
                   accept=".png, .doc, .docx, .pdf , .jpg, .jpeg"
                   label="Upload Supporting Document" onchange={openfileUpload}></lightning-input>
                 </div>
+                <div class="slds-align_absolute-center">
                 <template if:true={fileData}>
                   <p>{fileData.filename}</p>
               </template>
+                </div>
             </div>
           </div>
           <footer class="slds-modal__footer slds-align_absolute-center">

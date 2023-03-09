@@ -213,7 +213,6 @@ export default class EMS_LM_WFH extends LightningElement {
             this.dispatchEvent(gethvalue);
   
             this.dispatchEvent(new ShowToastEvent({
-              title: 'Success!!',
               message: 'Your Work From Home request has been successfully applied!',
               variant: 'success'
             }));
@@ -230,7 +229,7 @@ export default class EMS_LM_WFH extends LightningElement {
             message: 'There is already an Leave or Work from Home on this date. please recheck the dates or review your leave request.',
             variant: 'error'
           }));
-         
+         window.location.reload();
         }).finally(()=>{
             this.handleIsLoading(false);
         });  
