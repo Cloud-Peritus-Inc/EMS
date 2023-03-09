@@ -63,16 +63,16 @@ public without sharing class LeaveRequestApexController {
                                                    AND EMS_LM_Status__c !=: LeaveRequestConstant.CANCELLED
                                                    ORDER BY CreatedDate ASC]){
                                                        System.debug('### emsLmLeave ' + emsLmLeave);
-           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_Approver__c && (emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_2_WAITING || emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.PENDING) && count1 < 5 ){
+           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_Approver__c && (emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_2_WAITING || emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.PENDING) && count1 < 10 ){
                	leaveRequestPendingList.add(emsLmLeave); //Approver 1
                 count1++;
                 System.debug('### leaveRequestPendingList 1' + leaveRequestPendingList);
            }
-           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_2nd_Approver__c && (emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING || emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.PENDING) && count2 < 5) {
+           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.EMS_LM_2nd_Approver__c && (emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING || emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.PENDING) && count2 < 10) {
                	leaveRequestApprover2List.add(emsLmLeave); //Approver 2
                 count2++;
            }
-           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.Approver_3__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING && count1 < 5) {
+           if (LeaveRequestConstant.LOGGEDIN_USERID == emsLmLeave.Approver_3__c && emsLmLeave.EMS_LM_Status__c == LeaveRequestConstant.APPROVER_3_WAITING && count1 < 10) {
                	leaveRequestApprover3List.add(emsLmLeave); //Approver 3
                 count3++;
            }

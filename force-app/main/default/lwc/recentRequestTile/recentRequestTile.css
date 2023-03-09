@@ -1,4 +1,6 @@
 table {
+  border-collapse: collapse;
+  width: 100%;
   margin-bottom: 20px;
   padding-left: 10px;
   padding-right: 10px;
@@ -33,6 +35,32 @@ th, td {
   border: 1px solid #ddd;
 }
 
+.childparent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+	padding-top: 5px;
+}
+
+.childimage {
+    width: 30%;
+	padding:0px;
+	border-right: 1px black;
+}
+
+.childtext {
+    width: 70%;
+    padding-left : 3px;
+}
+
+.homeCard {
+    background-color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(226, 162, 237, 0.2), 0 6px 20px 0 rgba(216, 170, 238, 0.19);
+    margin-top: 20px; /* increased from 10px */
+    margin-bottom: 30px; /* increased from 20px */
+	border-radius: 5px;
+}
+
 th {
   background-color: #f2f2f2;
   text-align: left;
@@ -49,6 +77,9 @@ td {
   padding: 8px;
 }
 
+td:first-child {
+  font-weight: bold;
+}
 
 tr:hover {
   background-color: #f9f0ff;
@@ -60,4 +91,14 @@ tr.selected {
 
 tr:focus {
   outline: none;
+}
+
+.container {
+  text-align: center; /* Optional, to center the boxes */
+}
+
+.box {
+  display: inline-block;
+  /* Set the width of the boxes as per your requirement */
+  /* Optional, to add some spacing between the boxes */
 }

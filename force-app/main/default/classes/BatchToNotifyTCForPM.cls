@@ -52,6 +52,7 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
         Date weekEnd = considerDate.toStartofWeek().addDays(7);
         System.debug('===weekStart==='+weekStart);
         System.debug('===weekEnd==='+weekEnd);
+        
         for(Contact Urec : conList){
           managerIds.add(Urec.Id); 
          pmwithemail.put(Urec.Id,Urec);
@@ -65,11 +66,17 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
         set<string> resourceIds = new set<String>();
         for(EMS_TM_Project__c prj : [SELECT id,Project_Manager__c,
                                      (SELECT Id,EMS_TM_EmployeeName__c,Resource_User_Id__c FROM Assignments__r WHERE EMS_TM_Status_Asgn__c = 'Active' ),
-                                     (SELECT Id,User__c,Week_Start_Date__c,Week_End_Date__c,EMS_TM_Project__c,week__c,Resource__r.Name,Resource__r.EMS_RM_Employee_Id__c,EMS_TM_Project__r.Name,Assignment__c FROM Timesheets__r 
-                                      WHERE User__r.isActive = true 
-                                      AND Week_Start_Date__c>=:weekStart 
-                                      AND Week_End_Date__c<=:weekEnd AND (EMS_TM_Total__c < 40 OR EMS_TM_Status__c = 'NEW' OR EMS_TM_Status__c = 'Saved' OR EMS_TM_Status__c = 'Not Approved'))
+                                     (SELECT Id, Status__c, EMS_TM_Project__c, EMS_Timesheet__c,
+                                        EMS_Timesheet__r.Week_Start_Date__c,EMS_Timesheet__r.Week_End_Date__c,EMS_Timesheet__r.User__r.isActive,
+                                        EMS_TM_Project__r.Name,EMS_Timesheet__r.Resource__r.Name,
+                                        EMS_Timesheet__r.Resource__r.EMS_RM_Employee_Id__c FROM Timecard_Splits__r 
+                                      WHERE EMS_Timesheet__r.User__r.isActive = true 
+                                      AND EMS_Timesheet__r.Week_Start_Date__c>=:weekStart 
+                                      AND EMS_Timesheet__r.Week_End_Date__c<=:weekEnd AND (EMS_Timesheet__r.EMS_TM_Total__c < 40 
+                                     OR EMS_Timesheet__r.EMS_TM_Status__c = 'NEW' OR EMS_Timesheet__r.EMS_TM_Status__c = 'Saved' 
+                                     OR EMS_Timesheet__r.EMS_TM_Status__c = 'Not Approved'))
                                      FROM EMS_TM_Project__c WHERE Project_Manager__c IN:managerIds AND EMS_TM_Status__c = 'Ongoing']){
+                                         System.debug('DATA_Proj'+prj);
             prjIds.add(prj.Id);
             if(pmWithProjects.containsKey(prj.Project_Manager__c)){
                 pmWithProjects.get(prj.Project_Manager__c).add(prj);
@@ -82,22 +89,26 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
                    }
                }
         }
-        SYstem.debug('pmWithProjects'+pmWithProjects);
-        SYstem.debug('resourceIds'+resourceIds);
-         Map<Id,List<EMS_Timesheet__c>> prjWithTsheets = new  Map<Id,List<EMS_Timesheet__c>>();
+        SYstem.debug('***pmWithProjects'+pmWithProjects+'.....'+pmWithProjects.size());
+        SYstem.debug('***resourceIds'+resourceIds+'.....'+resourceIds.size());
+        SYstem.debug('***prjIds'+prjIds+'....'+prjIds);
+         Map<Id,List<EMS_TM_Timesheet_Record__c>> prjWithTsheets = new  Map<Id,List<EMS_TM_Timesheet_Record__c>>();
         if(!pmWithProjects.isEmpty()){
             for(String pm : pmWithProjects.keySet()){
-               List<EMS_Timesheet__c> timesheetsList = new List<EMS_Timesheet__c>(); 
+                System.debug('pm'+pm);
+               List<EMS_TM_Timesheet_Record__c> timesheetsList = new List<EMS_TM_Timesheet_Record__c>(); 
               if(pmWithProjects.containsKey(pm)){
                     for(EMS_TM_Project__c proj : pmWithProjects.get(pm)){
-                        if(proj.timesheets__r.size() >0){
-                           for(EMS_Timesheet__c ts : proj.timesheets__r){
+                        System.debug('proj'+proj);
+                        if(proj.Timecard_Splits__r.size() >0){
+                           for(EMS_TM_Timesheet_Record__c ts : proj.Timecard_Splits__r){
                                timesheetsList.add(ts);
                               }
                          }
                         
                     } 
                 }
+                SYstem.debug('timesheetsList'+timesheetsList +'.......'+timesheetsList.size());
               prjWithTsheets.put(pm,timesheetsList);  
             }
         }
@@ -108,13 +119,17 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
         if(!prjWithTsheets.isEmpty()){
            Id orgWideAddressId =[SELECT Id, DisplayName, Address FROM OrgWideEmailAddress where DisplayName = 'Grid' LIMIT 1].Id;
             for(Id pmId : prjWithTsheets.keySet()){
-                list<string> toaddress = new list<string>();              
-                if(prjWithTsheets.containsKey(pmId) && prjWithTsheets.get(pmId).size() >0 && pmwithemail.containsKey(pmId)){
+                System.debug('***pmId***'+pmId);
+                list<string> toaddress = new list<string>();   
+                //if(prjWithTsheets.containsKey(pmId) && prjWithTsheets.get(pmId).size() >0 && pmwithemail.containsKey(pmId)){
+                if(prjWithTsheets.containsKey(pmId)&& pmwithemail.containsKey(pmId)){
+                    System.debug('toadress EMAil'+pmwithemail.get(pmId).Email);
                    toaddress.add(pmwithemail.get(pmId).Email);
                     System.debug('***ToAddress'+toaddress);
                   Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
                   email.setOrgWideEmailAddressId(orgWideAddressId);
                   email.setSubject('Employee timesheets overdue');
+                    System.debug('**TimesheetData'+prjWithTsheets.get(pmId));
                    string  emailbody = getTableEmailBody(prjWithTsheets.get(pmId));
                    email.setHtmlBody('Dear '+pmwithemail.get(pmId).Name+',<br/><br/>The weekly timesheets of the following employees are overdue:<br/><br/>'+ emailbody + '<br/><br/><h3 style="text-align: center">DO NOT REPLY TO THIS EMAIL</h3>');
                    email.setToAddresses(toaddress);
@@ -132,9 +147,9 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
         
     } 
     
-    public  string getTableEmailBody(list<EMS_Timesheet__c> timesheets){
+    public  string getTableEmailBody(list<EMS_TM_Timesheet_Record__c> timesheets){
         
-        
+        System.debug('timesheets'+timesheets);
         
         String sday ;
         String smonth ;
@@ -153,7 +168,7 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
         {
             for(integer i = 0;i<timesheets.size();i++)
             {
-                htmlBody += '<tr><td><center>' + (i+1) + '</center></td><td><center> <a href="'+link+'/'+timesheets[i].Id+'">'+timesheets[i].Resource__r.EMS_RM_Employee_Id__c+'</a></center></td><td>'+timesheets[i].Resource__r.Name+'</td><td><center> '+timesheets[i].week__c +'</center> </td></tr>';  
+                htmlBody += '<tr><td><center>' + (i+1) + '</center></td><td><center> <a href="'+link+'/'+timesheets[i].Id+'">'+timesheets[i].EMS_Timesheet__r.Resource__r.Name+'</a></center></td><td>'+timesheets[i].EMS_Timesheet__r.Resource__r.Name+'</td><td><center> '+timesheets[i].EMS_Timesheet__r.Week_End_Date__c +'</center> </td></tr>';  
             }
         }
         //close table...
