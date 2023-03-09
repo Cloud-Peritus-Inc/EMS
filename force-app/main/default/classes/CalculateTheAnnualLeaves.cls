@@ -13,7 +13,7 @@
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-public without sharing class CalculateTheAnnualLeaves implements TriggerAction.AfterInsert{
+public without sharing class CalculateTheAnnualLeaves implements TriggerAction.AfterInsert,TriggerAction.AfterUpdate{
      /**
      * @author Subba Kalavala
      * @date 10/01/2023
@@ -27,7 +27,24 @@ public without sharing class CalculateTheAnnualLeaves implements TriggerAction.A
      **/
      public void afterInsert(List<Contact> newList) {      
          System.debug(LoggingLevel.DEBUG, 'CalculateTheAnnualLeaves.afterInsert() : BEGIN');
-         updateResourceLeaves(newList);
+         updateResourceLeaves(newList,null);
+         System.debug(LoggingLevel.DEBUG, 'CalculateTheAnnualLeaves.afterInsert() : END');       
+     }
+    
+     /**
+     * @author Subba Kalavala
+     * @date 10/01/2023
+     * @description After Insert 
+     *
+     * CHANGE HISTORY
+     * ====================================================================================================
+     * DATE          NAME                    DESCRIPTION
+     * N/A           N/A                     N/A
+     * ====================================================================================================
+     **/
+     public void afterUpdate(List<Contact> newList,List<Contact> oldList) {      
+         System.debug(LoggingLevel.DEBUG, 'CalculateTheAnnualLeaves.afterInsert() : BEGIN');
+         updateResourceLeaves(newList, new Map<Id,Contact>(oldList));
          System.debug(LoggingLevel.DEBUG, 'CalculateTheAnnualLeaves.afterInsert() : END');       
      }
      /**
@@ -39,13 +56,14 @@ public without sharing class CalculateTheAnnualLeaves implements TriggerAction.A
      *   N/A         N/A                     N/A
      *   ====================================================================================================
      **/
-     private void updateResourceLeaves(List<Contact> contactList) {
+     private void updateResourceLeaves(List<Contact> contactList,Map<Id,Contact> oldMap) {
       Map<String,Decimal> leaveMap = new Map<String,Decimal>();
       Id AnnualLeaveTypeId = [Select Id FROM EMS_LM_Leave__c  Where Name = 'Annual Leave'].Id;
       List<EMS_LM_Leave_Credit__c> leaveCreditList = new List<EMS_LM_Leave_Credit__c>();
         List<Contact> filteredList = new List<Contact>();
         for(Contact conRec : contactList) {
-             if(conRec.RecordTypeId == ContactConstant.RESOURCE_RECORDTYPEID && conRec.EMS_EM_JD__c != null ){
+            contact oldCon = oldMap != null ? oldMap.get(conRec.Id) : null;
+             if(conRec.RecordTypeId == ContactConstant.RESOURCE_RECORDTYPEID && conRec.EMS_EM_JD__c != null && (oldCon == null || conRec.RecordTypeId != oldCon.RecordTypeId ) ){
                  filteredList.add(conRec);
              }
          }

@@ -367,9 +367,9 @@ guestObj.Status__c = ts.confirmStatusUpdate;
        if(ts.isEducationDetails){
           displayShowtoastMessage('Success','Onboarding Form Educational Details Saved Successfully','success',ts); 
        }
-       if(ts.isOtherCertifications){
-        displayShowtoastMessage('Success','Onboarding Form Other Certification Details Saved Successfully','success',ts);
-       }
+      //  if(ts.isOtherCertifications){
+      //   displayShowtoastMessage('Success','Onboarding Form Other Certification Details Saved Successfully','success',ts);
+      //  }
        if(ts.isWorkExperience){
           displayShowtoastMessage('Success','Onboarding Form Work Experience Details Saved Successfully','success',ts); 
        }
@@ -402,6 +402,9 @@ function updateOnboardingInfoOnPageLoads(ts){
             const additionalDetails = result.additionalDetails;
             ts.additionalDetailsRecordId = result.additionalDetails.Id;
             ts.onboardingformId = onboarding.Id;
+            ts.firstName = onboarding.EMS_EM_First_Name__c;
+            ts.lastName=onboarding.EMS_EM_Last_Name__c;
+            ts.ph=onboarding.Phone_Number__c;
             ts.companyInformation = result.gridConfiguration;
             console.log("result.gridConfiguration", JSON.stringify(result.gridConfiguration));
             console.log('onboarding'+onboarding);
@@ -842,6 +845,7 @@ function updateOnboardingInfoOnPageLoads(ts){
                   ts.readonlyfield=true;
                   ts.confirmStatusUpdate = 'Submitted for Review';
                   ts.buttonDisable = true;
+                  console.log('Is_Confirm__c',ts.confirmStatusUpdate);
                 }
                 
             }

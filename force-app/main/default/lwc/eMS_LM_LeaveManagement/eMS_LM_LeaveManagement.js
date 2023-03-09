@@ -1,5 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import u_Id from '@salesforce/user/Id';
+//import recentReqtoPending from '@salesforce/messageChannel/recentReqtoPending__C';
+import { APPLICATION_SCOPE, publish, subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 import getLoggedInUserResReportsSize from '@salesforce/apex/LeaveHistoryApexController.getLoggedInUserResReportsSize';
 import getUserProfileInfo from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getProfileName';
 
@@ -36,7 +38,7 @@ export default class EMS_LM_LeaveManagement extends LightningElement {
             if (data > 0) {
                 this.hidePendingTab = data;
             }
-            console.log('### hidePendingTab : ',this.hidePendingTab);
+            console.log('### hidePendingTab : ', this.hidePendingTab);
         } else if (error) {
             console.error('Error:', error);
         }
