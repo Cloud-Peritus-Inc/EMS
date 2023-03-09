@@ -13,7 +13,7 @@ import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import defaultAdminViewData from '@salesforce/apex/EMS_LM_LeaveReq_AdminView.defaultAdminViewData';
 import { refreshApex } from '@salesforce/apex';
 
-export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin (LightningElement) {
+export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(LightningElement) {
   @track empName = '';
   @api recordId;
   requeststatus;
@@ -33,7 +33,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin (Ligh
   approveAllComments;
   rejectAllComments;
   value = '';
-  fixedWidth = "width:5rem;";
+  fixedWidth = "width:10rem;";
+  durationfixedWidth = "width:5rem;"
   leaveTypeValues;
   tValue = '';
   sValue = ' ';
@@ -333,6 +334,20 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin (Ligh
       }).catch((err) => {
         console.log('ERROR : ', err);
       });
+  }
+
+  //TO VIEW THE LEAVE RECORD
+  handleView(event) {
+    const selectedRecordId = event.currentTarget.dataset.id;
+    console.log('### handleView : ', selectedRecordId);
+    this[NavigationMixin.Navigate]({
+      type: 'standard__recordPage',
+      attributes: {
+        recordId: selectedRecordId,
+        objectApiName: 'EMS_LM_Leave_History__c',
+        actionName: 'view',
+      },
+    });
   }
 
   // TO cancel the leave record

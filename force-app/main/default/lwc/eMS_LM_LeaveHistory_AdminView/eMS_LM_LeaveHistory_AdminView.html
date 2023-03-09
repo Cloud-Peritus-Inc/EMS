@@ -117,32 +117,32 @@
 										</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											<a href="#" data-id={Req.EMS_LM_Contact__c} onclick={handlConClick}>
 												{Req.EMS_LM_Contact__r.Name}
 											</a>
 										</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Leave_Type_Name__c }</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											<lightning-formatted-date-time value={Req.EMS_LM_Leave_Start_Date__c}
 												month="numeric" day="numeric" year="numeric">
 											</lightning-formatted-date-time>
 										</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											<lightning-formatted-date-time value={Req.EMS_LM_Leave_End_Date__c}
 												month="numeric" day="numeric" year="numeric">
 											</lightning-formatted-date-time>
 										</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Leave_Duration__c}</div>
 									</td>
 									<td>
@@ -150,21 +150,26 @@
 											{Req.EMS_LM_Reason__c}</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											{Req.EMS_LM_Status__c}</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width" style={durationfixedWidth}>
 											{Req.EMS_LM_Current_Approver__c}</div>
 									</td>
 									<td>
-										<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<div class="slds-truncate dv-dynamic-width">
 											<lightning-formatted-date-time value={Req.EMS_LM_Approved_On__c}
 												month="numeric" day="numeric" year="numeric">
 											</lightning-formatted-date-time>
 										</div>
 									</td>
-									<td class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+									<td class="slds-truncate dv-dynamic-width">
+										<lightning-button-icon variant="brand" size="large" icon-name="action:preview"
+											alternative-text="View" onclick={handleView}
+											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}
+											data-id={Req.Id}></lightning-button-icon>
+										&nbsp;&nbsp;
 										<lightning-button-icon variant="brand" size="large" icon-name="action:approval"
 											alternative-text="Approve" onclick={showModalApprovalBox}
 											data-value={Req.EMS_LM_Status__c} key-field={Req.Id} data-record-id={Req.Id}

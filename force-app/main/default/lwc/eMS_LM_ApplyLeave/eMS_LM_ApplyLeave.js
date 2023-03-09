@@ -460,7 +460,6 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             console.log('### getlvalue : ',this.check);
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'Success!!',
                     message: 'Your leave request has been successfully applied!',
                     variant: 'success',
                 }),
@@ -472,9 +471,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             console.log('error msg-->',error.body.message);
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'Error creating record',
-                    message: error.body.output.errors[0].message,
-                    
+                    message: error.body.output.errors[0].message,  
                     variant: 'error',
                 }),
             );

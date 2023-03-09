@@ -1,8 +1,10 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import createGuest from '@salesforce/apex/EMS_EM_CreationOnboard.createGuest';
-import createRecords from '@salesforce/apex/EMS_EM_CreationOnboard.createRecords';
 import getCompanyInformation from '@salesforce/apex/EMS_EM_GridConfigurationSettings.getCompanyInformation';
+import fetchCertifications from '@salesforce/apex/EMS_EM_CreationOnboard.fetchCertifications';
+import dmlOnCertifications from '@salesforce/apex/EMS_EM_CreationOnboard.dmlOnCertifications';
+import { refreshApex } from '@salesforce/apex';
 import { uploadFilesFromThis, updateOnBoardingRequest, updateOnboardingInfoOnPageLoads, displayShowtoastMessage } from 'c/updateOnBoardingRequestForm';
 import getonOnboardformInfo from '@salesforce/apex/EMS_EM_CreationOnboard.getonOnboardformInfo';
 	
@@ -571,6 +573,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   @track firstName;
   @track lastName;
+  @track Trailblazerval;
   @track pfn;
   @track gen;
   @track ph;
@@ -609,10 +612,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   ];
 
 
-  Dateofwedding(event) {
-    this.dow = event.target.value;
-
-  }
+  
   gender(event) {
     this.gen = event.target.value;
   }
@@ -635,7 +635,10 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
     this.lastName = event.target.value;
   }
+  TrailblazerIDorPublic(event) {
 
+    this.Trailblazerval = event.target.value;
+  }
 
 
   changepreviouscompanyname(event) {
@@ -671,49 +674,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   message;
   error;
 
-  /*
-  currentadrressline1(event) {
-    this.cadrressline1 = event.target.value;
-  }
-
-  currentadrressline2(event) {
-    this.cadrressline2 = event.target.value;
-  }
-  CAState(event) {
-    this.castate = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-
-  CACity(event) {
-    this.cacity = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-  CAZip(event) {
-    this.cazip = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-  permanentadrressline1(event) {
-    this.padrressline1 = event.target.value;
-  }
-  permanentadrressline2(event) {
-    this.padrressline2 = event.target.value;
-  }
-
-  PAState(event) {
-    this.pastate = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-  PACity(event) {
-    this.pacity = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-
-  PAZip(event) {
-    this.pazip = event.target.value;
-    //window.console.log(this.getAccountRecord.Name); 
-  }
-
-  */
+  
 
   inputcheckboxValue;
 
@@ -2373,93 +2334,174 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     // uploadFiles(event,this);
     uploadFilesFromThis(event, this);
   }
-  // ---------------------->>>>>>>.
 
-  @track keyIndex = 0;  
-    @track error;
-    @track message;
-    @track accountRecList = [
-        {                      
-            Certification_Name__c: '',
-            Completion_Date__c: ''
+  // other certifications 
+
+@track isLoading = true;
+@track records;
+wiredRecords;
+contactId;
+error;
+@track deleteCertificationIds = '';
+
+certificationName = [
+    { label: 'Salesforce Certified Associate', value: 'Salesforce Certified Associate' },
+    { label: 'Salesforce Certified Administrator', value: 'Salesforce Certified Administrator' },
+    { label: 'Salesforce Certified Advanced Administrator', value: 'Salesforce Certified Advanced Administrator' },
+    { label: 'Salesforce Certified Business Analyst', value: 'Salesforce Certified Business Analyst' },
+    { label: 'Salesforce Certified Platform App Builder', value: 'Salesforce Certified Platform App Builder' },
+    { label: 'Salesforce Certified Data Architect', value: 'Salesforce Certified Data Architect' },
+    { label: 'Salesforce Certified Development Lifecycle and Deployment Architect', value: 'Salesforce Certified Development Lifecycle and Deployment Architect' },
+    { label: 'Salesforce Certified Identity and Access Management Architect', value: 'Salesforce Certified Identity and Access Management Architect' },
+    { label: 'Salesforce Certified Integration Architect', value: 'Salesforce Certified Integration Architect' },
+    { label: 'Salesforce Certified Sharing and Visibility Architect', value: 'Salesforce Certified Sharing and Visibility Architect' },
+    { label: 'Salesforce Certified System Architect', value: 'Salesforce Certified System Architect' },
+    { label: 'Salesforce Certified Application Architect', value: 'Salesforce Certified Application Architect' },
+    { label: 'Salesforce Certified Heroku Architect', value: 'Salesforce Certified Heroku Architect' },
+    { label: 'Salesforce Certified B2B Solution Architect', value: 'Salesforce Certified B2B Solution Architect' },
+    { label: 'Salesforce Certified B2C Commerce Architect', value: 'Salesforce Certified B2C Commerce Architect' },
+    { label: 'Salesforce Certified B2C Solution Architect', value: 'Salesforce Certified B2C Solution Architect' },
+    { label: 'Certified Technical Architect (CTA)', value: 'Certified Technical Architect (CTA)' },
+    { label: 'Salesforce Certified Education Cloud Consultant', value: 'Salesforce Certified Education Cloud Consultant' },
+    { label: 'Salesforce Certified Experience Cloud Consultant', value: 'Salesforce Certified Experience Cloud Consultant' },
+    { label: 'Salesforce Certified Field Service Consultant', value: 'Salesforce Certified Field Service Consultant' },
+    { label: 'Salesforce Certified Nonprofit Cloud Consultant', value: 'Salesforce Certified Nonprofit Cloud Consultant' },
+    { label: 'Salesforce Certified OmniStudio Consultant', value: 'Salesforce Certified OmniStudio Consultant' },
+    { label: 'Salesforce Certified Sales Cloud Consultant', value: 'Salesforce Certified Sales Cloud Consultant' },
+    { label: 'Salesforce Certified Service Cloud Consultant', value: 'Salesforce Certified Service Cloud Consultant' },
+    { label: 'Salesforce Certified Tableau CRM and Einstein Discovery Consultant', value: 'Salesforce Certified Tableau CRM and Einstein Discovery Consultant' },
+    { label: 'Salesforce Certified CPQ Specialist', value: 'Salesforce Certified CPQ Specialist' },
+    { label: 'Salesforce Certified User Experience Designer', value: 'Salesforce Certified User Experience Designer' },
+    { label: 'Salesforce Certified Strategy Designer', value: 'Salesforce Certified Strategy Designer' },
+    { label: 'Salesforce Certified B2C Commerce Developer', value: 'Salesforce Certified B2C Commerce Developer' },
+    { label: 'Salesforce Certified Industries CPQ Developer', value: 'Salesforce Certified Industries CPQ Developer' },
+    { label: 'Salesforce Certified JavaScript Developer I – Multiple Choice', value: 'Salesforce Certified JavaScript Developer I – Multiple Choice' },
+    { label: 'Salesforce Certified OmniStudio Developer', value: 'Salesforce Certified OmniStudio Developer' },
+    { label: 'Salesforce Certified Platform Developer', value: 'Salesforce Certified Platform Developer' },
+    { label: 'Salesforce Certified Platform Developer II – Multiple Choice', value: 'Salesforce Certified Platform Developer II – Multiple Choice' },
+    { label: 'Salesforce Certified Marketing Cloud Administrator', value: 'Salesforce Certified Marketing Cloud Administrator' },
+    { label: 'Salesforce Certified Marketing Cloud Consultant', value: 'Salesforce Certified Marketing Cloud Consultant' },
+    { label: 'Salesforce Certified Marketing Cloud Developer', value: 'Salesforce Certified Marketing Cloud Developer' },
+    { label: 'Salesforce Certified Marketing Cloud Email Specialist', value: 'Salesforce Certified Marketing Cloud Email Specialist' },
+    { label: 'Salesforce Certified Pardot Consultant', value: 'Salesforce Certified Pardot Consultant' },
+    { label: 'Salesforce Certified Pardot Specialist', value: 'Salesforce Certified Pardot Specialist' },
+    { label: 'Other', value: 'Other' }
+  ];
+
+//to add row
+addRow() {
+    let randomId = Math.random() * 16;
+    let myNewElement = { Type__c: 'Certification' ,  Certification_Name__c: "", Other__c: "", Id: randomId, Completion_Date__c: "", Contact__c: this.contactId, Onboarding_Request__c: this.onboardingformId};
+    this.records = [...this.records, myNewElement];
+}
+
+get isDisable(){
+    return (this.isLoading || (this.wiredRecords.data.length == 0 && this.records.length == 0));
+}
+
+
+//show/hide spinner
+handleIsLoading(isLoading) {
+    this.isLoading = isLoading;
+}
+otherfield = false;
+//update table row values in list
+updateValues(event){
+    var foundelement = this.records.find(ele => ele.Id == event.target.dataset.id);
+    if(event.target.name === 'Certification_Name__c'){
+        foundelement.Certification_Name__c = event.target.value;
+        if(foundelement.Certification_Name__c === 'Other'){
+          this.otherfield = true;
         }
-    ];
-
-    certificationName = [
-        { label: 'Salesforce Certified Associate', value: 'Salesforce Certified Associate' },
-        { label: 'Salesforce Certified Administrator', value: 'Salesforce Certified Administrator' },
-        { label: 'Salesforce Certified Advanced Administrator', value: 'Salesforce Certified Advanced Administrator' },
-      ];
-
-    //Add Row 
-    addRow() {
-        this.keyIndex+1;   
-        this.accountRecList.push ({                      
-            Certification_Name__c: '',
-            Completion_Date__c: ''
-        });
-        console.log('Enter ',this.accountRecList);
-        console.log('Enter ',this.accountRecList);
-    }
-    changeHandler(event){       
-       // alert(event.target.id.split('-'));
-        console.log('Access key2:'+event.target.accessKey);
-        console.log('id:'+event.target.id);
-        console.log('value:'+event.target.value);       
-        if(event.target.name==='Certification_Name__c')
-            this.accountRecList[event.target.accessKey].Certification_Name__c = event.target.value;
-        else if(event.target.name==='Completion_Date__c'){
-            this.accountRecList[event.target.accessKey].Completion_Date__c = event.target.value;
+        else{
+          this.otherfield = false;
         }
-    }
-    //Save Accounts
-     saveMultipleAccounts() {
+    } else if(event.target.name === 'Completion_Date__c'){
+        foundelement.Completion_Date__c = event.target.value;
+    }else if(event.target.name === 'Other__c'){
+      foundelement.Other__c = event.target.value;
+  }
+  
+}
 
-        console.log("accountlist"+JSON.stringify(this.accountRecList));
-        createRecords({ certifications : this.accountRecList })
-            .then(result => {
-                this.message = result;
-                this.error = undefined;                
-                this.accountRecList.forEach(function(item){                   
-                    item.Certification_Name__c='';
-                    item.Completion_Date__c='';
-                });
+// get otherfield() {
+//   return foundelement.Certification_Name__c === 'Other' ? true : false;
+// }
 
-                //this.accountRecList = [];
-                if(this.message !== undefined) {
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Success',
-                            message: 'Certifications Created!',
-                            variant: 'success',
-                        }),
-                    );
-                }
-                
-                console.log(JSON.stringify(result));
-                console.log("result", this.message);
-            })
-            .catch(error => {
-                this.message = undefined;
-                this.error = error;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error creating records',
-                        message: error.body.message,
-                        variant: 'error',
-                    }),
-                );
-                console.log("error", JSON.stringify(this.error));
-            });
+//handle save and process dml 
+handleSaveAction(){
+    this.handleIsLoading(true);
+
+    if(this.deleteCertificationIds !== ''){
+        this.deleteCertificationIds = this.deleteCertificationIds.substring(1);
     }
-    removeRow(event){       
-        console.log('Access key2:'+event.target.accessKey);
-        console.log(event.target.id.split('-')[0]);
-        if(this.accountRecList.length>=1){             
-             this.accountRecList.splice(event.target.accessKey,1);
-             this.keyIndex-1;
+
+    this.records.forEach(res =>{
+        if(!isNaN(res.Id)){
+            res.Id = null;
         }
-    }
+    });
+     
+    dmlOnCertifications({data: this.records, removeCertificationIds : this.deleteCertificationIds})
+    .then( result => {
+        this.handleIsLoading(false);
+        refreshApex(this.wiredRecords);
+        this.updateRecordView(this.onboardingformId);
+        updateOnBoardingRequest(this);
+        this.dispatchEvent(
+          new ShowToastEvent({
+            title: 'Success',
+            message: 'Onboarding Form Other Certification Details Saved Successfully',
+            variant: 'success',
+          }),
+        );
+        //this.showToast('Success', result, 'Success', 'dismissable');
+    }).catch( error => {
+        this.handleIsLoading(false);
+        console.log(error);
+        this.showToast('Error updating or refreshing records', error.body.message, 'Error', 'dismissable');
+    });
+}
 
+//remove records from table
+handleDeleteAction(event){
+    if(isNaN(event.target.dataset.id)){
+        this.deleteCertificationIds = this.deleteCertificationIds + ',' + event.target.dataset.id;
+    }
+    this.records.splice(this.records.findIndex(row => row.Id === event.target.dataset.id), 1);
+}
+
+//fetch fetch Certifications records
+@wire(fetchCertifications, {recordId : '$onboardingformId'})  
+wiredContact(result) {
+    this.wiredRecords = result; // track the provisioned value
+    const { data, error } = result;
+
+    if(data) {
+        this.records = JSON.parse(JSON.stringify(data));
+        this.error = undefined;
+        this.handleIsLoading(false);
+    } else if(error) {
+        this.error = error;
+        this.records = undefined;
+        this.handleIsLoading(false);
+    }
+} 
+
+showToast(title, message, variant, mode) {
+    const event = new ShowToastEvent({
+        title: title,
+        message: message,
+        variant: variant,
+        mode: mode
+    });
+    this.dispatchEvent(event);
+}
+
+updateRecordView() {
+  //  setTimeout(() => {
+  //       eval("$A.get('e.force:refreshView').fire();");
+  //  }, 3000); 
+}
 
 }

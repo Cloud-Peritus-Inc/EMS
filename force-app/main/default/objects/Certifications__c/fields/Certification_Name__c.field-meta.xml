@@ -62,14 +62,14 @@
                 <label>Salesforce Certified Sharing and Visibility Architect</label>
             </value>
             <value>
-                <fullName>Salesforce Certified System Architect*</fullName>
+                <fullName>Salesforce Certified System Architect</fullName>
                 <default>false</default>
-                <label>Salesforce Certified System Architect*</label>
+                <label>Salesforce Certified System Architect</label>
             </value>
             <value>
-                <fullName>Salesforce Certified Application Architect**</fullName>
+                <fullName>Salesforce Certified Application Architect</fullName>
                 <default>false</default>
-                <label>Salesforce Certified Application Architect**</label>
+                <label>Salesforce Certified Application Architect</label>
             </value>
             <value>
                 <fullName>Salesforce Certified Heroku Architect</fullName>
@@ -210,6 +210,11 @@
                 <fullName>Salesforce Certified Pardot Specialist</fullName>
                 <default>false</default>
                 <label>Salesforce Certified Pardot Specialist</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
         </valueSetDefinition>
     </valueSet>

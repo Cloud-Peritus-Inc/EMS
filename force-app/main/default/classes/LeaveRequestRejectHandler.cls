@@ -42,22 +42,26 @@ public without sharing class LeaveRequestRejectHandler {
                                                        		 EMS_LM_Current_Approver__c,
                                                              Approver_3__c,
                                                              Approver_3__r.LastName,
-                                                             Approver_3__r.FirstName
+                                                             Approver_3__r.FirstName,
+                                                             EMS_LM_Approved_On__c
                                                     FROM EMS_LM_Leave_History__c
                                                     WHERE Id =:leaveRequestId]) {
            if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_Approver__c) {
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_1_Approved_Comments__c = comments;
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.EMS_LM_Approver__r.FirstName + ' ' + leaveReqStatus.EMS_LM_Approver__r.LastName ;
+                leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 updatedLeaveReqList.add(leaveReqStatus); 
             }else if(LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_2nd_Approver__c) {
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_2_Approved_Comments__c = comments;
+                leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName + ' ' + leaveReqStatus.EMS_LM_2nd_Approver__r.LastName ;
                 updatedLeaveReqList.add(leaveReqStatus); 
             }else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.Approver_3__c){
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_3_Approved_Comments__c = comments;
+                leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.Approver_3__r.FirstName + ' ' + leaveReqStatus.Approver_3__r.LastName ;
                 updatedLeaveReqList.add(leaveReqStatus); 
             }
@@ -102,22 +106,26 @@ public without sharing class LeaveRequestRejectHandler {
                                                        		 EMS_LM_Current_Approver__c,
                                                              Approver_3__c,
                                                              Approver_3__r.LastName,
-                                                             Approver_3__r.FirstName
+                                                             Approver_3__r.FirstName,
+                                                             EMS_LM_Approved_On__c
                                                     FROM EMS_LM_Leave_History__c
                                                     WHERE Id =:bulkRejectId]) {
            if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_Approver__c) {
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_1_Approved_Comments__c = comments;
+                leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.EMS_LM_Approver__r.FirstName + ' ' + leaveReqStatus.EMS_LM_Approver__r.LastName ;
                 bulkupdatedLeaveReqList.add(leaveReqStatus); 
             }else if(LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_2nd_Approver__c) {
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_2_Approved_Comments__c = comments;
+                leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName + ' ' + leaveReqStatus.EMS_LM_2nd_Approver__r.LastName ;
                 bulkupdatedLeaveReqList.add(leaveReqStatus); 
             }else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.Approver_3__c){
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_3_Approved_Comments__c = comments;
+                leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.Approver_3__r.FirstName + ' ' + leaveReqStatus.Approver_3__r.LastName ;
                 bulkupdatedLeaveReqList.add(leaveReqStatus); 
             }
