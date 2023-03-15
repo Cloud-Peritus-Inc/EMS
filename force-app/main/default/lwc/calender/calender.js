@@ -58,7 +58,7 @@ console.log('=====EVENTS==AFTER===='+JSON.stringify(this.events));
       this.initialiseCalendarJs();
     })
     .catch(error => {
-        alert(error);
+       console.log(error);
         new ShowToastEvent({
             title: 'Error!',
             message: error,

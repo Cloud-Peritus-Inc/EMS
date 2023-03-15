@@ -75,6 +75,12 @@ this[NavigationMixin.Navigate]({
 }
 
 handleFormSubmit(event) {
+console.log('In Submit ====');
+     event.preventDefault();
+    const fields = event.detail.fields;
+    fields.Contact__c = this.resourceId;
+    this.template
+        .querySelector('lightning-record-edit-form').submit(fields);
 
 }
 
@@ -84,7 +90,7 @@ handleFormSubmit(event) {
          .then(result => {
             const even = new ShowToastEvent({
             title: 'Success!',
-            message: 'Successfully created the record!',
+            message: 'Successfully added your skill/certification. keep up the learning spirit!',
             variant: 'success'
         });
         this.dispatchEvent(even);

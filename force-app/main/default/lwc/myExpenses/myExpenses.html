@@ -5,7 +5,7 @@
         <div class="childparent">
           <div class="childtext" style="padding-left:20px;">
                <div style="padding-left:5px;"> 
-          <lightning-icon icon-name="standard:expense_report" size="medium" alternative-text="In Progress" title="In Progress"></lightning-icon>
+          <lightning-icon icon-name="standard:expense_report" size="medium" alternative-text="In Progress" ></lightning-icon>
            <font size="4"  > &nbsp;&nbsp;<b>My Expenses </b> </font> <br/>
             </div> 
           </div>
@@ -16,7 +16,7 @@
 
      <div class="container">
     <div class="box" style="width:50%"> <font size="48px"><b> {reimbursment} </b></font> <i> <b>INR</b></i> <br/> Reimbursement Pending </div>
-    <div class="box" style="width:50%"> <lightning-button variant="brand" label="New Claim" title="New Claim" onclick={handleClick}></lightning-button> </div>
+    <div class="box" style="width:50%;text-align:right;padding-right:10px"> <lightning-button variant="brand" label="New Claim"  onclick={handleClick}></lightning-button> </div>
    
     <div style="clear: both;"></div> 
     </div>
@@ -49,7 +49,8 @@
     
   </table></div> </center>
    <template if:false={showtable}>
-        <center> No expense claims yet. <br/> </center>
+        <center> No expense claims yet </center>
+        </br>
       </template>
   <footer class="slds-modal__footer">
    <center> <a href="#"  ><font class="uiOutputText" onclick={handleNavClick}>My Expenses</font></a> </center>

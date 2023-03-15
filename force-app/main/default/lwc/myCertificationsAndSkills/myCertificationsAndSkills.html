@@ -5,7 +5,7 @@
         <div class="childparent">
           <div class="childtext" style="padding-left:20px;">
                <div style="padding-left:5px;"> 
-          <lightning-icon icon-name="standard:skill_entity" size="medium" alternative-text="In Progress" title="In Progress"></lightning-icon>
+          <lightning-icon icon-name="standard:skill_entity" size="medium" alternative-text="In Progress" ></lightning-icon>
            <font size="4"  > &nbsp;&nbsp;<b>My Skills and Certifications </b> </font> <br/>
             </div> 
           </div>
@@ -16,7 +16,7 @@
 
      <div class="container">
     <div class="box" style="width:50%">  </div>
-    <div class="box" style="width:50%"> <lightning-button variant="brand" label="Add new Skill/Certification" title="New Claim" onclick={handleClick}></lightning-button> </div>
+    <div class="box" style="width:50%"> <lightning-button variant="brand" label="Add new Skill/Certification"  onclick={handleClick}></lightning-button> </div>
    
     <div style="clear: both;"></div> 
     </div>
@@ -26,7 +26,7 @@
       <tr>
         <th>Name</th>
         <th>Type</th>
-        <th>completion date/Rating</th>
+        <th>Completion Date/Rating</th>
       </tr>
     </thead>
     <tbody>
@@ -54,7 +54,8 @@
     
   </table></div> </center>
    <template if:false={showtable}>
-        <center> No skills or certification found. <br/> </center>
+        <center> No skills or certification found <br/> </center>
+        </br>
       </template>
   <footer class="slds-modal__footer">
    <center> <a href="#"  ><font class="uiOutputText" onclick={handleNavClick}>My Skills and Certifications</font></a> </center>
@@ -91,6 +92,7 @@
                     <lightning-record-edit-form
                                     object-api-name="Certifications__c"
                                     onsuccess={handleSuccess} 
+                                    onsubmit={handleFormSubmit}
                                     onerror={handleError} >
                                     <lightning-messages> </lightning-messages>
                                     <lightning-layout>

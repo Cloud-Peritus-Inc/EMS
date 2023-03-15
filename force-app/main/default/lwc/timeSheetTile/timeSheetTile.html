@@ -6,11 +6,11 @@
                                 <div class="child1">
                                    <center>  <canvas class="canvas" width={width} height={height}></canvas> </center>
                                 </div>
-                                <div class="child2" style="padding-right:5px;">
+                                <div class="child2" style="padding-right:10px;">
                                     <font size="4"  > <b>Time entered this week </b> </font> <br/> <br/>
                                     <p> Make sure to enter 40 hours per week to stay complaint </p><br/><br/>
 
-                                   <lightning-button variant="brand" label="Enter Time" title="titleName" icon-name="utility:connected_apps" onclick={handleClick}></lightning-button>
+                                   <lightning-button variant="brand" label="Enter Time"  icon-name="utility:connected_apps" onclick={handleClick}></lightning-button>
 
                                 </div>
                             </div> 
@@ -39,7 +39,7 @@
                                 <tr key={timerec.Id}>
                                 
                                     <td key={timerec.Id} scope="row">
-                                        <lightning-formatted-date-time value={timerec.Week_End_Date__c} month="numeric"
+                                        <lightning-formatted-date-time value={timerec.enddate__c} month="numeric"
                                             day="numeric" year="numeric"></lightning-formatted-date-time>					
                                     </td>
                                     <td> {timerec.EMS_TM_Total__c}</td>

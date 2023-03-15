@@ -28,30 +28,16 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
         
         List<Contact> updatedContactList = new List<Contact>();
         Group itGroup = [select Id from Group where  Type = 'Queue' AND NAME = 'Resource Manager'];
-        List<Task> tskList = new List<Task>();
         
         for(Contact contactRec : contactList){
             if(contactRec.EMS_EM_JD__c.addDays(-7) == System.today() || contactRec.EMS_EM_JD__c.addDays(-2) == System.today()){
                 updatedContactList.add(contactRec);
-               /* Task t = new Task();
-                t.OwnerId = itGroup.Id;
-                //System.debug('Resource manager 1 => '+Resource_Manager__r.id);
-                System.debug('Resource manager 2 => '+contactRec.Resource_Manager__r.id);
-                t.Subject = 'Conduct One to One Onboarding for the new employee';
-                t.Status = 'Open';
-                t.Priority = 'High';
-                t.IsReminderSet = true;
-                t.WhoId = contactRec.Id;
-                t.ActivityDate = contactRec.EMS_EM_JD__c;
-                t.ReminderDateTime = DateTime.newInstance(contactRec.EMS_EM_JD__c.year(), contactRec.EMS_EM_JD__c.month(), contactRec.EMS_EM_JD__c.day(), 20, 00, 00);
-                tskList.add(t);*/
+            }else if(contactRec.EMS_EM_JD__c == System.today().addDays(1) || contactRec.EMS_EM_JD__c == System.today()){
+                updatedContactList.add(contactRec);
             }
         }
         sendEmailToRM(updatedContactList);
         
-        if(tskList!=null && tskList.size()>0){
-            insert tskList;
-        }
     }
     
     public static void sendEmailToRM(List<Contact> finalContactList){

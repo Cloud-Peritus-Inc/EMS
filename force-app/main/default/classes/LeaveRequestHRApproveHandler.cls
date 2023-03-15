@@ -1,5 +1,28 @@
+/**
+* @author Pavan
+* @date 11/01/2023
+* @description  To update the leave request status to Approve for admim view tab.
+*            
+*
+*               Test code coverage provided by the following test class:
+*               -LeaveRequestHRApproveHandlerTest
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 public without sharing class LeaveRequestHRApproveHandler {
-    
+                /**
+*   {Purpose} - Method used to update leave request status to Approve.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
     @AuraEnabled
   public static void updateLeaveStatus( String leaveRequestId, String comments){
        System.debug( '### LeaveRequestId' + leaveRequestId);
@@ -40,7 +63,15 @@ public without sharing class LeaveRequestHRApproveHandler {
         	}
    		}
 	}
-    
+                /**
+*   {Purpose} - Method used for bulk rejection of leave request status for bulk Approval.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
      @AuraEnabled
     public static void bulkLeaveReqApproval(List<Id> bulkleaveReqId, String comments) {
         System.debug('### bulkleaveReqId ' + bulkleaveReqId);
@@ -80,6 +111,6 @@ public without sharing class LeaveRequestHRApproveHandler {
                 System.debug('### Exception ' + ex.getMessage());
         	}
     
-    }
+    	}
     }
 }

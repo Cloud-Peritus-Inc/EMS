@@ -46,6 +46,7 @@ th, td {
     width: 30%;
 	padding:0px;
 	border-right: 1px black;
+  padding-right: 6px;
 }
 
 .childtext {
@@ -60,6 +61,7 @@ th, td {
     margin-top: 20px; /* increased from 10px */
     margin-bottom: 30px; /* increased from 20px */
 	/*font-family: 'sans-serif';*/
+  border-radius: 5px;
 }
 
 th {

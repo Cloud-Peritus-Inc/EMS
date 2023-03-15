@@ -1,6 +1,28 @@
+/**
+* @author Pavan
+* @date 11/01/2023
+* @description  To update the leave request status to Rejected for admim view tab.
+*            
+*
+*               Test code coverage provided by the following test class:
+*               -LeaveRequestHRRejectHandlerTest
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 public without sharing class LeaveRequestHRRejectHandler {
-
-    
+                /**
+*   {Purpose} - Method used to update leave request status to Rejected.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
     @AuraEnabled
     public static void updateRejectStatus(String leaveRequestId , String comments){
         System.debug('### LeaveRequestId ' + leaveRequestId);
@@ -44,6 +66,16 @@ public without sharing class LeaveRequestHRRejectHandler {
       }
         
     }
+    
+                /**
+*   {Purpose} - Method used for bulk rejection of leave request status for bulk Rejection.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
          @AuraEnabled
     public static void bulkLeaveReqReject(List<Id> bulkleaveReqId, String comments) {
         System.debug('### bulkleaveReqId ' + bulkleaveReqId);
@@ -83,6 +115,6 @@ public without sharing class LeaveRequestHRRejectHandler {
                 System.debug('### Exception ' + ex.getMessage());
         	}
     
-    }
-}
+    	}
+	}
 }

@@ -1686,29 +1686,29 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
      }
    }
   isLoaded = false;
-  contactPhone = false;
-  memberDateOfBirth = false;
   Emergencycheckboxval;
   inputcheckboxdependent;
+  memberDateOfBirth = false;
+  contactPhone = false;
 
   Emergencycheckbox(event) {
     this.Emergencycheckboxval = event.target.value;
     //console.log('this.Emergencycheckboxval-->', this.Emergencycheckboxval);
-    if (this.Emergencycheckboxval == true) {
-      this.contactPhone = true;
-    } else {
-      this.contactPhone = false;
-    }
+     if (this.Emergencycheckboxval == true) {
+       this.contactPhone = true;
+     } else {
+       this.contactPhone = false;
+     }
   }
 
   Dependentcheckbox(event) {
     this.inputcheckboxdependent = event.target.value;
     //console.log('this.Dependentcheckbox-->', this.inputcheckboxdependent);
-    if (this.inputcheckboxdependent == true) {
-      this.memberDateOfBirth = true;
-    } else {
-      this.memberDateOfBirth = false;
-    }
+     if (this.inputcheckboxdependent == true) {
+    this.memberDateOfBirth = true;
+     } else {
+       this.memberDateOfBirth = false;
+     }
 
   }
   
@@ -1730,6 +1730,8 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   } this.isLoaded = false;
     this.isFamilyInformationCheckbox = true;
     updateStatusFields(this)
+    this.memberDateOfBirth = false;
+    this.contactPhone = false;
 
     if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
       || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
@@ -1739,7 +1741,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.buttonDisable = false;
     }
   }
-
+  
   handlesubmitfamily(event){
     
     event.preventDefault();

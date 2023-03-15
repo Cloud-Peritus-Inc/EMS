@@ -16,11 +16,11 @@
 				</template>
 			</div>
 			<div slot="actions">
-				<lightning-button variant="success" label="Approve All" title="Approve ALl" onclick={handleApproveAll}
+				<lightning-button variant="success" label="Approve All"  onclick={handleApproveAll}
 					disabled={disableButton}>
 				</lightning-button>
 				&nbsp;&nbsp;
-				<lightning-button variant="destructive" label="Reject All" title="Reject All" onclick={handleRejectAll}
+				<lightning-button variant="destructive" label="Reject All"  onclick={handleRejectAll}
 					disabled={disableButton}>
 				</lightning-button>
 			</div>
@@ -184,10 +184,9 @@
 
 						<!-- modal body start -->
 						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-							<p style="font-size:20px;">Please Enter the Approve Comments</p><br>
-							<lightning-textarea name="input" placeholder="Type comments here..."
-								label="Comments" maxlength="140"
-								message-when-too-long="A maximum of 140 characters are allowed."
+							<p style="font-size:20px;">Please enter the approval comments</p><br>
+							<lightning-textarea name="input" placeholder="Type comments here..." label="Comments"
+								maxlength="140" message-when-too-long="A maximum of 140 characters are allowed."
 								message-when-value-missing="Please add comments." onchange={handleApproveAllComments}>
 							</lightning-textarea>
 						</div>
@@ -218,13 +217,16 @@
 
 						<!-- modal body start -->
 						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
-							<p style="font-size:20px;">Please Enter the Reject Comments</p><br>
+							<p style="font-size:20px;">Please enter the rejection comments</p><br>
 							<lightning-textarea name="input" required value={rejectComments}
 								placeholder="Type comments here..." label="Comments" maxlength="140"
 								message-when-too-long="A maximum of 140 characters are allowed."
 								message-when-value-missing="Please add comments." onchange={handleRejectAllComments}
 								class="isRequired" data-id="validateValue">
 							</lightning-textarea>
+							<template if:true={errorMessage}>
+								<div class="slds-text-color_error">{errorMessage}</div>
+							</template>
 						</div>
 
 						<!-- modal footer start-->
@@ -253,8 +255,8 @@
 
 						<!-- modal body start -->
 						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
-							<p style="font-size:20px;">Please Enter the Approve Comments</p><br>
-							<lightning-textarea name="input" required value="" placeholder="Type comments here..."
+							<p style="font-size:20px;">Please enter the approval comments</p><br>
+							<lightning-textarea name="input" value="" placeholder="Type comments here..."
 								label="Comments" maxlength="140"
 								message-when-too-long="A maximum of 140 characters are allowed."
 								message-when-value-missing="Please add comments." onchange={handleApproveComments}>
@@ -286,13 +288,16 @@
 
 						<!-- modal body start -->
 						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
-							<p style="font-size:20px;">Please Enter the Reject Comments</p><br>
+							<p style="font-size:20px;">Please enter the rejection comments</p><br>
 							<lightning-textarea name="input" required value={rejectComments}
 								placeholder="Type comments here..." label="Comments" maxlength="140"
 								message-when-too-long="A maximum of 140 characters are allowed."
 								message-when-value-missing="Please add comments." onchange={handleRejectComments}
 								class="isRequired" data-id="validateValue">
 							</lightning-textarea>
+							<template if:true={errorMessage}>
+								<div class="slds-text-color_error">{errorMessage}</div>
+							</template>
 						</div>
 
 						<!-- modal footer start-->
@@ -309,7 +314,7 @@
 			</template>
 		</lightning-card>
 		<template if:true={nodata}>
-			<h2> No requests found </h2>
+		<center> No requests found </center>
 		</template>
 	</div>
 </template>

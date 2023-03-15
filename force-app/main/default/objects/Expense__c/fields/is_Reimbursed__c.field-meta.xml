@@ -3,7 +3,7 @@
     <fullName>is_Reimbursed__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>is Reimbursed ?</label>
+    <label>Is Reimbursed ?</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>

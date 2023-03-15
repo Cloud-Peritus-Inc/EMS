@@ -131,12 +131,11 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             }
             else {
               this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
-              const evt = new ShowToastEvent({
+             /* const evt = new ShowToastEvent({
                 message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
                 });
-                  this.dispatchEvent(evt);
-              //alert('You dont have enough balance to apply leave');
+                  this.dispatchEvent(evt);*/
               this.duration = undefined;
               this.error = undefined;
               this.submitcheck = true;
@@ -336,7 +335,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             variant: 'error',
         });
         this.dispatchEvent(evt);
-        this.startDate1 = null;
+        this.startDate = this.startDate1 = undefined;
       }
       if (this.endDate < this.startDate && this.startDate != null && this.endDate != null) {
         const evt = new ShowToastEvent({
@@ -345,8 +344,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
         });
         this.dispatchEvent(evt);
       //  alert('Please select a proper Start Date');
-        this.startDate1 = null;
-        this.endDate1 = null;
+       this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
       }
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
         if (this.startDate != this.endDate || this.startDate == undefined || this.endDate == undefined) {
@@ -374,7 +372,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             variant: 'error',
         });
         this.dispatchEvent(evt);
-        this.endDate1 = null;
+        this.endDate = this.endDate1 = this.duration = undefined;
       }
       if (this.endDate < this.startDate && this.startDate != null && this.endDate != null) {
         console.log(this.endDate <= this.startDate);
@@ -384,8 +382,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             variant: 'error',
         });
         this.dispatchEvent(evt);
-        this.endDate1 = null;
-        this.startDate1 = null;
+       this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
       }
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
         if (this.startDate != this.endDate || this.startDate == undefined || this.endDate == undefined) {
@@ -437,7 +434,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       }else{
         this.isLoading=true;
         //step1 create fields list
-        const fields ={'EMS_LM_Leave_Start_Date__c':this.startDate1, 'EMS_LM_Leave_End_Date__c':this.endDate1 ,
+        const fields ={'EMS_LM_Leave_Start_Date__c':this.startDate1, 'EMS_LM_Leave_End_Date__c':this.endDate1 , 'EMS_LM_Leave_Duration__c':this.duration,
         'EMS_LM_Leave_Type_Name__c':this.value , 'EMS_LM_Contact__c':this.cId , 'EMS_LM_Reason__c':this.reason ,'EMS_LM_Day__c':this.fullday ,
       'EMS_LM_Leave_Type__c': this.leavetypeId};
         //step2 create API record with above fields

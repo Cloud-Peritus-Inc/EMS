@@ -2,14 +2,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 10px;
+    margin-bottom: 30px;
+    
 }
 
 .child1 {
     width: 50%;
+    
 }
 
 .child2 {
     width: 50%;
+ 
 }
 
 .table-container {
@@ -46,7 +51,9 @@
   position: absolute;
   bottom: 8px;
   left: 16px;
+  
 }
+
 
 .top-left {
   position: absolute;

@@ -3,7 +3,7 @@
     <fullName>No_OF_Utilized_Work_from_Home__c</fullName>
     <defaultValue>0</defaultValue>
     <externalId>false</externalId>
-    <label>No OF Utilized Work from Home</label>
+    <label>No of Utilized Work from Home</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

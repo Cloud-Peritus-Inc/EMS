@@ -1,7 +1,7 @@
 /**
 * @author Pavan
 * @date 11/01/2023
-* @description  To update the leave request status to Rejected and Rejected comments
+* @description  To update the leave request status to Rejected
 *            
 *
 *               Test code coverage provided by the following test class:

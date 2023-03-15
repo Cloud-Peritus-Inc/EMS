@@ -21,6 +21,7 @@ public class ems_EM_AddComments {
         EMS_EM_Onboarding_Request__c onBoardingRequest = EMS_EM_CreationOnboard.returnOnboardingDetailsBasedOnRecordId(recordId);
         onBoardingRequest.Comments__c = comments;
         onBoardingRequest.Is_Confirm__c = false;
+        onBoardingRequest.Status__c = 'Reopened';
         Update onBoardingRequest;
         Messaging.singleEmailMessage emailMessage = new Messaging.singleEmailMessage();
         emailMessage.setToAddresses(new List<String>{onBoardingRequest.EMS_EM_Personal_Email__c});

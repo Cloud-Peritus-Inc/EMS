@@ -4,6 +4,7 @@
     margin-top: 20px; /* increased from 10px */
     margin-bottom: 30px; /* increased from 20px */
 	/*font-family: 'sans-serif';*/
+    border-radius: 5px;
 }
     .header {
         background-color: white;

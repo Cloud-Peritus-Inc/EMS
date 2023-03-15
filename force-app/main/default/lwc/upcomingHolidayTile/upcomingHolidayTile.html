@@ -32,6 +32,7 @@
       </tr>
     </thead>
     <tbody>
+      <template if:true={showtable}>
       <template for:each={holidaydata} for:item="row">
         <tr key={row.id} tabindex="0"  onclick={handleRowClick} onkeydown={handleRowKeyDown}>
           <td>{row.holidayType}</td>
@@ -39,8 +40,15 @@
           <td>{row.status}</td>
         </tr>
       </template>
+      </template>
+      
     </tbody>
-  </table></div> </center> <br/>
+  </table>
+  <template if:false={showtable}>
+        
+       <center> No upcoming holidays for this year </center>
+      </template>
+      </div> </center> <br/>
     </lightning-card>
     </div>
 </template>

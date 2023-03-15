@@ -173,11 +173,10 @@
                         </lightning-accordion-section>
                     </lightning-accordion>
                 </div>
-                <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                <div style="border-left: solid 1px #b9b9b9" class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
                     <!-- Welcome aboard Page Start -->
                     <template if:true={isShowWelcomeaboard}>
-                        <div class="slds-modal__content slds-p-around_medium"
-                            style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;">
+                        <div class="slds-modal__content slds-p-around_medium">
                             <section role="log" class="slds-chat">
                                 <ul class="slds-chat-list">
                                     <li class="slds-chat-listitem slds-chat-listitem_bookend">
@@ -242,8 +241,7 @@
                     <!--Personal Details Page Start-->
                     <template if:true={isShowPersonalDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div
-                                style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px">
+                            <div>                                
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -311,7 +309,7 @@
 
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} title="Next" disabled={readonlyfield} variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield} variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
 
@@ -323,8 +321,7 @@
                     <!--Identify Details Page Start-->
                     <template if:true={isIdentityDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -363,8 +360,8 @@
                                                         pattern="([A-Z]){5}([0-9]){4}([A-Z]){1}$"
                                                         label="PAN"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={UANNo}
-                                                        disabled={readonlyfield} onchange={UanChange}
-                                                        name="EMS_EM_PFno__c" type="text"
+                                                        disabled={readonlyfield} onchange={UanChange} maxlength="12"
+                                                        name="EMS_EM_PFno__c" type="text" onkeydown={handleAadharNumberKeyDown}
                                                         message-when-pattern-mismatch="Invalid UAN Number"
                                                         pattern="[0-9]{12}$" label="UAN"></lightning-input>
                                                 </span>
@@ -415,7 +412,7 @@
                                 <br /><br />
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} title="Next" disabled={readonlyfield} variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield} variant="brand"></lightning-button>
                                 </div>
                             </div>
                         </div>
@@ -424,8 +421,7 @@
                     <!-- Employment Details Start -->
                     <template if:true={isEmploymentDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -443,12 +439,10 @@
                                                             field-name="Email"></lightning-output-field>
                                                         <lightning-output-field
                                                             field-name="Resource_Manager__c"></lightning-output-field>
-                                                        <lightning-output-field
-                                                            field-name="EMS_RM_Current_Job_Role__c"></lightning-output-field>
+                                                        
                                                         <lightning-output-field
                                                             field-name="EMS_EM_HR_Assigned__c"></lightning-output-field>
-                                                        <lightning-output-field
-                                                            field-name="EMS_RM_Industry__c"></lightning-output-field>
+                                                       
                                                     </div>
                                                 </lightning-record-view-form>
                                             </div>
@@ -464,8 +458,7 @@
                     <!--Address Details Page Start-->
                     <template if:true={isAddressDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -569,8 +562,7 @@
                     <template if:true={isFamilyInformation}>
 
                         <div class="slds-modal__content slds-p-around_medium" >
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px "
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <h3 class="slds-section__title slds-theme_shade">
                                     <span class="slds-truncate slds-p-horizontal_small">Family Information</span>
                                 </h3>
@@ -588,7 +580,7 @@
                                                     variant="label-stacked" disabled={readonlyfield} onchange={Emergencycheckbox}
                                                     class="inputValField" style="margin-top:10px;">
                                                 </lightning-input-field>
-                                                <lightning-input-field field-name="Is_It_Dependent_Contact__c"
+                                                <lightning-input-field field-name="Is_It_Dependent_Contact__c" 
                                                     variant="label-stacked" disabled={readonlyfield} onchange={Dependentcheckbox}
                                                     class="inputValField" style="margin-top:28px;">
                                                 </lightning-input-field>
@@ -601,8 +593,8 @@
                                                     variant="label-stacked" disabled={readonlyfield} pattern="[0-9]{10}$" message-when-pattern-mismatch="Invalid Contact Number" required={contactPhone}
                                                     class="inputValField">
                                                 </lightning-input-field>
-                                                <lightning-input-field field-name="Date_of_Birth__c"
-                                                    variant="label-stacked" disabled={readonlyfield} required={memberDateOfBirth}
+                                                <lightning-input-field field-name="Date_of_Birth__c" required={memberDateOfBirth}
+                                                    variant="label-stacked" disabled={readonlyfield}
                                                     class="inputValField">
                                                 </lightning-input-field>
                                                 
@@ -669,8 +661,7 @@
                     <!--Finacial From Page Start-->
                     <template if:true={isShowFinacialFrom}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div
-                                style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px">
+                            <div>
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -728,8 +719,7 @@
                     <!--Vehicle From Page Start-->
                     <template if:true={isShowVehicleFrom}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div
-                                style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px">
+                            <div>
                                 <div class="slds-section slds-is-open" style="padding-left: 15px;">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -763,7 +753,7 @@
                                 <br /><br />
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} title="Next" disabled={readonlyfield} variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield} variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
 
@@ -775,8 +765,7 @@
                     <!--PF Forms Page Starts-->
                     <template if:true={isPFForms}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <div style="padding-left: 25px; padding-right: 25px;">
                                     <br>
                                     <strong>
@@ -878,8 +867,7 @@
                     <!--Documents Page Starts-->
                     <template if:true={isDocuments}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <div style="padding-left: 25px; padding-right: 25px;">
                                     <br>
                                     <strong>
@@ -1013,7 +1001,7 @@
                     <template if:true={isCompanyPolicies}>
                         <div class="slds-modal__content slds-p-around_medium">
                            
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;" class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                             <div style="padding-left: 25px; padding-right: 25px;">
                                 <br>
                                 <strong>
@@ -1051,8 +1039,7 @@
                     <!--Company Information Page Starts-->
                     <template if:true={isCompanyInformation}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <div style="padding-left: 25px;">
                                     <br>
                                     <strong>
@@ -1068,8 +1055,7 @@
                     <!-- Confirm Page Start-->
                     <template if:true={isConfirm}>
                         <div class="slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
                                     active-section-name={activeSectionsConfirm}>
                                     <lightning-accordion-section name="Welcome aboard" label="Welcome aboard">

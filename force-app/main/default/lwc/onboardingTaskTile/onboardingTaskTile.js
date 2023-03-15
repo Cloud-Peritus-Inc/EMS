@@ -53,7 +53,7 @@ async handleClick(event){
             message: 'Are you sure you want to mark this task as complete ?',
             variant: 'header',
             label: 'Please Confirm',
-            theme: 'error',
+            theme: 'info',
         });
      
         if(result==true){
@@ -61,6 +61,7 @@ async handleClick(event){
              taskid : clickedId
          })
          .then(data => {
+             console.log('=======data=='+JSON.stringify(data));
              window.location.reload();
             
               refreshApex(this.eventObj);
@@ -79,6 +80,7 @@ async handleClick(event){
              this.loaded = false;
          })
          .catch(error => {
+              console.log('=======error=='+JSON.stringify(error));
              const event = new ShowToastEvent({
                  title : 'Error',
                  message : 'Error updating task as completed. Please Contact System Admin',

@@ -3,7 +3,7 @@
     <fullName>EMS_LM_No_Of_Utilized_Maternity_Leaves__c</fullName>
     <defaultValue>0</defaultValue>
     <externalId>false</externalId>
-    <label>No Of Utilized Maternity Leaves</label>
+    <label>No of Utilized Maternity Leaves</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

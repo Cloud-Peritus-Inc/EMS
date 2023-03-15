@@ -131,7 +131,7 @@ export default class EMS_LM_WFH extends LightningElement {
     if (data) {
       this.conId = data.Id;   
       this.Location = data.Work_Location__r.Country__c;   
-      console.log('this.isbillable-->',this.isbillable,'this.conId',this.conId);
+      console.log('this.conId',this.conId,'this.Location',this.Location);
       this.error = undefined;
     } else if (error) {
       this.error = error;
@@ -147,6 +147,7 @@ export default class EMS_LM_WFH extends LightningElement {
       this.error = undefined;
     } else if (error) {
       this.error = error;
+      console.log('this.error ',this.error );
       this.duration = undefined;
     }
   }

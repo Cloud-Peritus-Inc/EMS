@@ -6,6 +6,7 @@ export default class UpcomingHolidayTile extends LightningElement {
 @track value ;
 loclist = [];
  mapdata =  [];
+ showtable = false;
 
 connectedCallback() {
   
@@ -16,6 +17,9 @@ loaded = false
     wiredLabels({error, data}){
         if(data){
              this.holidaydata = data.datalist;
+             if(this.holidaydata.length > 0){
+               this.showtable = true;
+             }
              this.value = data.resourceLocation;
             var consts = data.locationList;
             for(var key in consts){
@@ -24,18 +28,23 @@ loaded = false
         this.loaded = true;
     }
     if(error){
+        console.log('==ERROR===='+error);
         this.error=error;
     }
     }
 
 
 handleChange(event) {
+    this.showtable = false;
         this.value = event.detail.value;
        
         getSelectLocList({ locationId: this.value })
             .then((result) => {
              
-                this.holidaydata = result;  
+                this.holidaydata = result; 
+                if(this.holidaydata.length > 0){
+               this.showtable = true;
+               } 
             })
             .catch((error) => {
             console.log('====='+error);

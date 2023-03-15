@@ -1,9 +1,11 @@
 <template>
+    <div style="margin-bottom:15px">
+            <img src={imageUrl}  width="100%"/>
+    </div>
     <div class="slds-card slds-box slds-p-around_small">
-        <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
-            class="slds-p-around_xx-small">
+        <div class="slds-p-around_xx-small">
             <div class="slds-grid slds-wrap">
-                <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                <div style="padding-right: 15px" class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
                     <!--Accordino Section Start-->
                     <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
                         active-section-name={activeSections}>
@@ -110,12 +112,11 @@
                     </lightning-accordion>
                     <!--Accordino Section Ends-->
                 </div>
-                <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                <div style="border-left: solid 1px #b9b9b9" class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
                     <!--Personal Details Page Start-->
                     <template if:true={isShowPersonalDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div
-                                style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px">
+                            <div >
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -153,13 +154,13 @@
                                                 <span>
                                                     <lightning-input class="slds-p-top_small" value={ph}
                                                         message-when-pattern-mismatch="Invalid Contact number" required
-                                                        disabled={readonlyfield} onchange={phonenumber}
+                                                        disabled={readonlyfield} onchange={phonenumber} maxlength="10"
                                                         name="Phone_Number__c" onkeydown={handleAadharNumberKeyDown}
                                                         pattern="[0-9]{10}$" type="phone"
                                                         label="Contact Number"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={altphone}
-                                                        message-when-pattern-mismatch="Invalid Phone number" required
-                                                        disabled={readonlyfield} pattern="[0-9]{10}$"
+                                                        message-when-pattern-mismatch="Invalid Phone number"
+                                                        disabled={readonlyfield} pattern="[0-9]{10}$" maxlength="10"
                                                         onchange={altephone} onkeydown={handleAadharNumberKeyDown}
                                                         name="EMS_EM_Phone_Number__c" type="phone"
                                                         label="Alternate Contact Number"></lightning-input>
@@ -202,9 +203,9 @@
                                         </span>
                                     </div>
                                     <br />
-                                    <div style="text-align:center">
+                                    <div style="text-align: center"  >
                                         <lightning-button style="margin:5px;" label="Save" type="brand"
-                                            onclick={SaveSubmitOnboarding}
+                                            onclick={SaveSubmitOnboarding} disabled={readonlyfield}
                                             variant="brand"></lightning-button>
                                     </div>
                                     <br><br>
@@ -217,8 +218,7 @@
                     <!--Identify Details Page Start-->
                     <template if:true={isIdentifyDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -241,12 +241,12 @@
                                             </div>
                                             <div class="slds-col ">
                                                 <span>
-                                                    <lightning-input class="slds-p-top_small" value={panNo} required
+                                                    <lightning-input class="slds-p-top_small panCard" value={panNo} required
                                                         disabled={readonlyfield} onfocusin={handlePanNumberFocusIn}
                                                         onchange={PANNumber} onfocusout={handlePanNumberFocusOut}
                                                         autocomplete="off" name="EMS_EM_PanNo__c" type="text"
-                                                        message-when-pattern-mismatch="Invalid PAN Number"
-                                                        pattern="([A-Z]){5}([0-9]){4}([A-Z]){1}$"
+                                                        
+                                                        
                                                         label="PAN"></lightning-input>
                                                 </span>
                                             </div>
@@ -260,10 +260,11 @@
                                         <span class="slds-truncate slds-p-horizontal_small"
                                             title="Upload Documents">Upload Documents</span>
                                     </h3>
-                                    <div style="padding-left: 25px;">
-                                        <span>
-
-                                            <label class="slds-form-element__label" for="text-input-id-1">
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col" style="padding-left: 25px;">
+                                                <span>
+                                                    <label class="slds-form-element__label" for="text-input-id-1">
                                                 <abbr class="slds-required" title="required">*</abbr>
                                                 Aadhaar Card
                                             </label>
@@ -273,8 +274,12 @@
                                                 accept={accept} title="aadharCard"
                                                 disabled={readonlyfield}></lightning-input>
                                             <p>{fileName}</p>
-                                            <br>
-                                            <label class="slds-form-element__label" for="text-input-id-1">
+                                                    <br>
+                                                </span>
+                                            </div>
+                                            <div class="slds-col">
+                                                <span>
+                                                    <label class="slds-form-element__label" for="text-input-id-1">
                                                 <abbr class="slds-required" title="required">*</abbr>
                                                 PAN Card
                                             </label>
@@ -284,13 +289,15 @@
                                                 title="PAN Card" disabled={readonlyfield}
                                                 accept={accept}></lightning-input>
                                             <p>{fileName1}</p>
-                                            <br>
-                                        </span>
-                                    </div>
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>                                    
                                 </div>
                                 <br /><br />
                                 <div style="text-align:center">
-                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                    <lightning-button style="margin:5px;" label="Save" type="brand" disabled={readonlyfield}
                                         onclick={SaveSubmitOnboarding}  variant="brand"></lightning-button>
                                 </div>
                             </div>
@@ -300,7 +307,7 @@
                     <!--Address Details Page Start-->
                     <template if:true={isAddressDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding-right: 13px"
+                            <div
                                 class="slds-p-around_xx-small">
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
@@ -381,9 +388,9 @@
                                             </div>
                                         </div>
                                         <br /><br />
-                                        <div style="text-align:center">
+                                        <div style="text-align:center" >
                                             <lightning-button style="margin:5px;" label="Save" type="brand"
-                                                onclick={SaveSubmitOnboarding} 
+                                                onclick={SaveSubmitOnboarding}  disabled={readonlyfield}
                                                 variant="brand"></lightning-button>
                                         </div>
                                     </div>
@@ -395,8 +402,7 @@
                     <!--Education Details Page Start-->
                     <template if:true={isEducationDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; padding-right: 13px"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <div class="slds-grid slds-wrap">
                                     <div class="slds-col slds-size_2-of-2 ">
 
@@ -643,12 +649,7 @@
                                                             style="padding-left: 25px;">
                                                             <span>
 
-                                                                <lightning-combobox disabled={readonlyfield} required
-                                                                    name="EMS_EM_Education3__c"
-                                                                    label="Level of Education" value={levleofedu3}
-                                                                    placeholder="Select"
-                                                                    options={LevelofEducationValue3}
-                                                                    onchange={LevelofEducation3}></lightning-combobox>
+                                                                <lightning-combobox disabled={readonlyfield} required name="EMS_EM_Education3__c" label="Level of Education" value={levleofedu3} placeholder="Select" options={LevelofEducationValue3} onchange={LevelofEducation3}></lightning-combobox>
 
                                                                 <lightning-input class="slds-p-top_small"
                                                                     value={fieldOfStudy3} disabled={readonlyfield}
@@ -864,7 +865,7 @@
                                     <br>
                                 </template>
                                 <div style="text-align:center">
-                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                    <lightning-button style="margin:5px;" label="Save" type="brand" disabled={readonlyfield}
                                         onclick={SaveSubmitOnboarding} title="save" variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
@@ -875,8 +876,7 @@
                     <!--Other Certification Code Starts here-->
                     <template if:true={isOtherCertifications}>
                         <div class="slds-section slds-is-open">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <h3 class="slds-section__title slds-theme_shade">
                                     <span class="slds-truncate slds-p-horizontal_small"
                                         title="Certification Documents">Other Certification Documents</span>
@@ -888,7 +888,7 @@
                                             class="spinnerClass"></lightning-spinner>
                                     </template>
                                     <div class="slds-grid slds-gutters ">
-                                        <div class="slds-col slds-size_1-of-2" style="padding-left: 54px;">
+                                        <div class="slds-col slds-size_1-of-2" style="padding-left: 25px;">
                                             <lightning-input type="url" class="slds-p-top_small" value={Trailblazerval}
                                                 disabled={readonlyfield} onchange={TrailblazerIDorPublic}
                                                 name="Trailblazer_ID_or_Public_URL__c"
@@ -977,8 +977,7 @@
                     <!-- Work Experience details starts -->
                     <template if:true={isWorkExperience}>
                         <div class="slds-modal__content slds-p-around_medium" style="padding-left: 25px;">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; padding-right: 13px"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <h3 class="slds-section__title slds-theme_shade">
                                     <span class="slds-truncate slds-p-horizontal_small" title="Work Experience">Work
                                         Experience</span>
@@ -1041,9 +1040,11 @@
                                                     </div>
                                                 </div>
                                                 <br>
-                                                <div style="padding-left: 25px;">
-                                                    <span>
-                                                        <label class="slds-form-element__label" for="text-input-id-1">
+                                                <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col" style="padding-left: 25px;">
+                                                <span>
+                                                   <label class="slds-form-element__label" for="text-input-id-1">
                                                             <abbr class="slds-required" title="required">*</abbr>
                                                             Appointment Letter
                                                         </label>
@@ -1067,7 +1068,11 @@
                                                             name="Certificate27"></lightning-input>
                                                         <p>{fileName10}</p>
                                                         <br>
-                                                        <label class="slds-form-element__label" for="text-input-id-1">
+                                                </span>
+                                            </div>
+                                            <div class="slds-col">
+                                                <span>
+                                                    <label class="slds-form-element__label" for="text-input-id-1">
                                                             &nbsp; Experience Letter
                                                         </label>
                                                         <lightning-helptext
@@ -1089,8 +1094,11 @@
                                                             disabled={readonlyfield}
                                                             name="Certificate29"></lightning-input>
                                                         <p>{fileName12}</p>
-                                                    </span>
-                                                </div>
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>  
                                             </div>
                                         </div>
                                     </div>
@@ -1436,8 +1444,8 @@
                                         </div>
                                     </template>
                                 </template>
-                                <div style="text-align:center">
-                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                <div style="text-align:center" >
+                                    <lightning-button style="margin:5px;" label="Save" type="brand" disabled={readonlyfield}
                                         onclick={SaveSubmitOnboarding} title="save" variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
@@ -1447,21 +1455,23 @@
                     <!--Company Information Page Starts-->
                     <template if:true={isCompanyInformation}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
+                            <div 
                                 class="slds-p-around_xx-small">
-                                <template if:true={companyInformation}>
-                                    <h1>{companyInformation.Grid_Configuration_Type__c}</h1>
-                                    <lightning-formatted-rich-text
-                                        value={companyInformation.Description__c}></lightning-formatted-rich-text>
-                                </template>
+                                <div style="padding-left: 25px;">
+                                    <br>
+                                    <template if:true={companyInformation}>
+                                       <strong><h1>{companyInformation.Grid_Configuration_Type__c}</h1></strong> 
+                                        <lightning-formatted-rich-text
+                                            value={companyInformation.Description__c}></lightning-formatted-rich-text>
+                                    </template>
+                                </div>
                             </div>
                         </div>
                     </template>
                     <!--Company Information Page Ends-->
                     <template if:true={isConfirm}>
                         <div class="slds-p-around_medium">
-                            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
-                                class="slds-p-around_xx-small">
+                            <div class="slds-p-around_xx-small">
                                 <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
                                     active-section-name={activeSectionsConfirm}>
                                     <lightning-accordion-section name="Profile" label="Profile">

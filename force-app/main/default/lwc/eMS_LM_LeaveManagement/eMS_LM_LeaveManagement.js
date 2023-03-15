@@ -1,7 +1,5 @@
 import { LightningElement, wire } from 'lwc';
 import u_Id from '@salesforce/user/Id';
-//import recentReqtoPending from '@salesforce/messageChannel/recentReqtoPending__C';
-import { APPLICATION_SCOPE, publish, subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 import getLoggedInUserResReportsSize from '@salesforce/apex/LeaveHistoryApexController.getLoggedInUserResReportsSize';
 import getUserProfileInfo from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getProfileName';
 
@@ -10,6 +8,7 @@ export default class EMS_LM_LeaveManagement extends LightningElement {
     profileName;
     showTabAdmin = false;
     hidePendingTab;
+    activeTabValue;
 
     connectedCallback() {
         getUserProfileInfo({ userid: this.uId }).then(result => {
@@ -21,15 +20,20 @@ export default class EMS_LM_LeaveManagement extends LightningElement {
         }).catch(err => {
             console.log(err);
         });
+
+        var params = new URLSearchParams(location.search);
+        if (params.has('pendingTab')) {
+            this.activeTabValue = 'two';
+        }
     }
 
-    handleRefresh() {
-        const lwc1 = this.template.querySelector('c-e-m-s-_-l-m-_-leave-balance');
-        const lwc2 = this.template.querySelector('c-e-m-s-_-l-m-_-apply-new');
-
-        lwc1.refresh();
-        lwc2.refresh();
-    }
+      handleRefresh() {
+          const lwc1 = this.template.querySelector('c-e-m-s-_-l-m-_-leave-balance');
+          const lwc2 = this.template.querySelector('c-e-m-s-_-l-m-_-apply-new');
+  
+          lwc1.refresh();
+          lwc2.refresh();
+      }
 
     @wire(getLoggedInUserResReportsSize)
     getLoggedInUserResReportsSizeWiredData({ error, data }) {

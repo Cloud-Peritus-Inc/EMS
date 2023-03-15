@@ -4,7 +4,7 @@
     <defaultValue>0</defaultValue>
     <description>Annual available leaves of employee</description>
     <externalId>false</externalId>
-    <label>No Of Utilised Annual Leaves</label>
+    <label>No of Utilized Annual Leaves</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

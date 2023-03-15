@@ -77,4 +77,11 @@
         <shortDescription>Project label</shortDescription>
         <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-tm-project/EMS_TM_Project__c/Default</value>
     </labels>
+    <labels>
+        <fullName>Grid_Portal_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Grid Portal Link</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid</value>
+    </labels>
 </CustomLabels>

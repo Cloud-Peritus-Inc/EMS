@@ -1,9 +1,17 @@
+<!--
+  @description       : This component is used to shown leave balance and latest leave records in home page. 
+  @author            : Pavan
+  @group             : 
+  @last modified on  : 12-01-2023
+  @last modified by  : 
+-->
+
 <template>
 	<div class="homeCard" style="border-top : 3px solid #9602c7;">
 		<lightning-card>
 			<div class="childparent">
-				<div class="childimage" style="width:18%;Padding-left:20px;" >
-                  <lightning-icon icon-name='action:defer' alternative-text='defer' size='medium' title='defer'>
+				<div class="childimage" style="width:18%;Padding-left:10px;" >
+                  <lightning-icon icon-name='action:defer' alternative-text='defer' size='large' >
 				</lightning-icon> 	
 				</div>
 				<div class="childtext" style="width:82%;">
@@ -12,7 +20,7 @@
 					
 								<div class="childparent">
 				        <div class="childtext"><font size="9"> <b> {leaveBalanceData}</b> </font> <font size="2"><b>days</b></font></div>
-				     <div class="childimage" style="padding-left:25px;"> 	<c-e-m-s-_-l-m-_-apply-new istile="true"></c-e-m-s-_-l-m-_-apply-new></div>
+				     <div class="childimage" style="float:right;"> 	<c-e-m-s-_-l-m-_-apply-new istile="true"></c-e-m-s-_-l-m-_-apply-new></div>
 
 							</div>
 						
@@ -27,7 +35,7 @@
 				<footer class="slds-modal__footer">
 					<!---->
 
-					<center> <a href="#" onclick={handleLMNavigation}> View All Request</a> </center>
+					<center> <a href="#" onclick={handleLMNavigation}> View All Requests</a> </center>
 					<!--	 -->
 				</footer>
 

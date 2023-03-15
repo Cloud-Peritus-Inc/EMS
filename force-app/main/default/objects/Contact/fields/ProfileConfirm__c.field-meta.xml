@@ -3,7 +3,7 @@
     <fullName>ProfileConfirm__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>ProfileConfirm</label>
+    <label>Profile Confirm</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -131,7 +131,13 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Fri","Saturday"];
             let day = weekday[firstDay.getDay()];
             console.log('day'+day);
-            if(day != 'Monday'){
+            if(day == 'Sunday'){
+             firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff +1));
+                 let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 7));
+                 console.log('SunIF-firstDayallBacak'+firstDay);
+                  console.log('SunIF-lastDayallBacak'+lastDay);
+            }
+            else if(day != 'Monday'){
                 firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff-1));
                  let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 5));
                  console.log('IF-firstDayallBacak'+firstDay);
@@ -393,7 +399,13 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                      const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Fri","Saturday"];
             let day = weekday[firstDay.getDay()];
             console.log('day'+day);
-            if(day != 'Monday'){
+            if(day == 'Sunday'){
+             firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff +1));
+                 let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 7));
+                 console.log('SunIF-firstDayallBacak'+firstDay);
+                  console.log('SunIF-lastDayallBacak'+lastDay);
+            }
+             else if(day != 'Monday'){
                 firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff-1));
                  let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 5));
                  console.log('IF-firstDayallBacak'+firstDay);
@@ -484,6 +496,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     */
     showDates() {
         let week = new Date(this.timeSheetRecord.EMS_TM_Week__c);
+        
         console.log('**WEEK'+week);
         console.log('WEEKValue'+week.valueOf());
         let dates = [];
