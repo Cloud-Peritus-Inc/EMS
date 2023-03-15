@@ -62,6 +62,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert{
                 applicantRec.EMS_EM_First_Name__c = contactRec.FirstName;
                 applicantRec.EMS_EM_Last_Name__c = contactRec.LastName;
                 applicantRec.Phone_Number__c = contactRec.EMS_Phone_Number__c;
+                applicantRec.Date_of_Joining__c = contactRec.EMS_EM_JD__c;
                 applicantRec.Status__c = 'Triggered';
                 applicantsList.add(applicantRec);
                 
