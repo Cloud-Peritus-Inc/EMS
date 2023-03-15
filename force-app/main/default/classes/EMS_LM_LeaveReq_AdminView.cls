@@ -13,7 +13,7 @@
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-public class EMS_LM_LeaveReq_AdminView {
+public without Sharing class EMS_LM_LeaveReq_AdminView {
     
                 /**
 *   {Purpose} - This method returns a list of leave history records based on the search criteria for the admin view tab
@@ -36,7 +36,7 @@ public class EMS_LM_LeaveReq_AdminView {
     
     String query = 'SELECT Id, EMS_LM_Leave_Type_Name__c, EMS_LM_Leave_Start_Date__c, EMS_LM_Final_Approver__c, ' + 
         'EMS_LM_Leave_End_Date__c, EMS_LM_Leave_Duration__c, EMS_LM_Reason__c, EMS_LM_Status__c, EMS_LM_Approved_On__c, ' +
-        'EMS_LM_Contact__R.Name, EMS_LM_Current_Approver__c FROM EMS_LM_Leave_History__c WHERE CreatedDate != NULL ';
+        'EMS_LM_Contact__R.Name, EMS_LM_Contact__R.Resource_Role__R.Name, EMS_LM_Current_Approver__c FROM EMS_LM_Leave_History__c WHERE CreatedDate != NULL ';
     
     if (startDate != '' && startDate != null) {
         Date startDateValue = Date.valueOf(startDate);
@@ -101,8 +101,10 @@ public class EMS_LM_LeaveReq_AdminView {
 *   Date        Name                    Description
 *   N/A         N/A                     N/A
 *   ====================================================================================================
+
+	NOTE: NO NEED TEST CLASS NOT USING THIS METHOD IN CURRENT SCOPE(Enhancement)
 **/    
-    @AuraEnabled(Cacheable=true)
+   /* @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> defaultAdminViewData () {
         List<EMS_LM_Leave_History__c> adminViewData = [Select Id, 
                                                        		  EMS_LM_Leave_Type_Name__c,
@@ -120,5 +122,5 @@ public class EMS_LM_LeaveReq_AdminView {
                                                        ];
         System.debug('### adminViewData ' + adminViewData);
         return adminViewData;
-    }
+    }*/
 }
