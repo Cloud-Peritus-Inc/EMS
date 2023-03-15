@@ -54,7 +54,7 @@ public without sharing class createPortalUserForResource implements TriggerActio
              system.debug('===con.RecordTypeId==='+con.EMS_TM_User__c);
             if(con.RecordTypeId == ContactConstant.RESOURCE_RECORDTYPEID 
                && con.EMS_EM_JD__c != null && con.Email != null 
-               && con.EMS_TM_User__c == null && con.EMS_EM_JD__c == dt && (con.RecordTypeId != conold.RecordTypeId || con.EMS_EM_JD__c != conold.EMS_EM_JD__c ) ){
+               && con.EMS_TM_User__c == null && con.EMS_EM_JD__c == dt && (con.Email != conold.Email  || con.RecordTypeId != conold.RecordTypeId || con.EMS_EM_JD__c != conold.EMS_EM_JD__c ) ){
               filteredList.add(con);
                    conIds.add(con.Id);
             }

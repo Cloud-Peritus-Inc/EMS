@@ -75,8 +75,8 @@
 }
 
 .round {
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
+   border-radius: 50%;
   object-fit: cover;
+  height: 85px;
+  width: 85px;
 }
