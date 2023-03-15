@@ -237,26 +237,6 @@ guestObj.Current_Address_Line_1__c=ts.cadrressline1;
 guestObj.Current_Address_Line_2__c=ts.cadrressline2;
 guestObj.Permanent_Address_Line_1__c=ts.padrressline1;
 guestObj.Permanent_Address_Line_2__c=ts.padrressline2;
-guestObj.EMS_EM_Certification_Name__c=ts.Certificationname1;
-guestObj.EMS_EM_Certification_Name1__c=ts.Certificationname2;
-guestObj.EMS_EM_Certification_Name2__c=ts.Certificationname3;
-guestObj.EMS_EM_Certification_Name3__c=ts.Certificationname4;
-guestObj.EMS_EM_Certification_Name4__c=ts.Certificationname5;
-guestObj.EMS_EM_Certification_Name5__c=ts.Certificationname6;
-guestObj.EMS_EM_Certification_Name6__c=ts.Certificationname7;
-guestObj.EMS_EM_Certification_Name7__c=ts.Certificationname8;
-guestObj.EMS_EM_Certification_Name8__c=ts.Certificationname9;
-guestObj.EMS_EM_Certification_Name9__c=ts.Certificationname10;
-guestObj.EMS_EM_Certification_Name10__c=ts.Certificationname11;
-guestObj.EMS_EM_Certification_Name11__c=ts.Certificationname12;
-guestObj.EMS_EM_Certification_Name12__c=ts.Certificationname13;
-guestObj.EMS_EM_Certification_Name13__c=ts.Certificationname14;
-guestObj.EMS_EM_Certification_Name14__c=ts.Certificationname15;
-guestObj.EMS_EM_Certification_Name15__c=ts.Certificationname16;
-guestObj.EMS_EM_Certification_Name16__c=ts.Certificationname17;
-guestObj.EMS_EM_Certification_Name17__c=ts.Certificationname18;
-guestObj.EMS_EM_Certification_Name18__c=ts.Certificationname19;
-guestObj.EMS_EM_Certification_Name19__c=ts.Certificationname20;
 guestObj.Personal_Details_Value_Filled__c = ts.isPersonalUpdateCheckbox;
 guestObj.Identify_Details_Value_Filled__c = ts.isIdentifyDetailsCheckbox;
 guestObj.Other_Certifications_Value_Filled__c=ts.isOtherCertificationsCheckbox;
@@ -392,8 +372,12 @@ function updateOnboardingInfoOnPageLoads(ts){
           const queryString = window.location.search;
           const urlParams = new URLSearchParams(queryString);
           ts.personalemail = urlParams.get('emailid');
-          console.log('emailid==>',ts.personalemail);
-
+          var completedu = decodeURIComponent(urlParams);
+          console.log('=completedu===='+completedu);
+          const myArray = completedu.split("=");
+         let word = myArray[1];
+          ts.personalemail = word;
+          console.log('=completedu===='+ts.personalemail);
           getonOnboardformInfo({onboardEmailid: ts.personalemail})
           .then(result => {
             console.log('result-->',result);
@@ -405,6 +389,8 @@ function updateOnboardingInfoOnPageLoads(ts){
             ts.firstName = onboarding.EMS_EM_First_Name__c;
             ts.lastName=onboarding.EMS_EM_Last_Name__c;
             ts.ph=onboarding.Phone_Number__c;
+            ts.contactId = onboarding.ContactId1__c;
+            console.log('contactId------>' +ts.contactId);
             ts.companyInformation = result.gridConfiguration;
             console.log("result.gridConfiguration", JSON.stringify(result.gridConfiguration));
             console.log('onboarding'+onboarding);
@@ -571,14 +557,8 @@ function updateOnboardingInfoOnPageLoads(ts){
               ts.gen=onboarding.EMS_EM_Gender__c;
               ts.ph=onboarding.Phone_Number__c;
               ts.dob=onboarding.EMS_EM_DOB__c;
-              ts.mstatus=onboarding.EMS_EM_Mstatus__c;
-              ts.spouse=onboarding.EMS_EM_Spouse__c;
-              ts.dow=onboarding.EMS_EM_DOW__c;
-              ts.bg=onboarding.EMS_EM_BG__c;
               ts.aadhaarNo=maskAccountNumber(onboarding.EMS_EM_AadhaarNo__c);
-              ts.pfn=onboarding.EMS_EM_UAN_Number__c;
               ts.panNo=maskPanNumber(onboarding.EMS_EM_PanNo__c);
-              ts.pNum=onboarding.EMS_EM_PassportNo__c;
               ts.nation=onboarding.EMS_EM_Nationality__c;
               ts.cd=onboarding.EMS_EM_Current_Address__c;
               ts.altphone=onboarding.EMS_EM_Phone_Number__c;
@@ -593,27 +573,16 @@ function updateOnboardingInfoOnPageLoads(ts){
               ts.cadrressline2=onboarding.Current_Address_Line_2__c;
               ts.padrressline1=onboarding.Permanent_Address_Line_1__c;
               ts.padrressline2=onboarding.Permanent_Address_Line_2__c;
-              ts.Certificationname1=onboarding.EMS_EM_Certification_Name__c;
-              ts.Certificationname2=onboarding.EMS_EM_Certification_Name1__c;
-              ts.Certificationname3=onboarding.EMS_EM_Certification_Name2__c;
-              ts.Certificationname4=onboarding.EMS_EM_Certification_Name3__c;
-              ts.Certificationname5=onboarding.EMS_EM_Certification_Name4__c;
-              ts.Certificationname6=onboarding.EMS_EM_Certification_Name5__c;
-              ts.Certificationname7=onboarding.EMS_EM_Certification_Name6__c;
-              ts.Certificationname8=onboarding.EMS_EM_Certification_Name7__c;
-              ts.Certificationname9=onboarding.EMS_EM_Certification_Name8__c;
-              ts.Certificationname10=onboarding.EMS_EM_Certification_Name9__c;
-              ts.Certificationname11=onboarding.EMS_EM_Certification_Name10__c;
-              ts.Certificationname12=onboarding.EMS_EM_Certification_Name11__c;
-              ts.Certificationname13=onboarding.EMS_EM_Certification_Name12__c;
-              ts.Certificationname14=onboarding.EMS_EM_Certification_Name13__c;
-              ts.Certificationname15=onboarding.EMS_EM_Certification_Name14__c;
-              ts.Certificationname16=onboarding.EMS_EM_Certification_Name15__c;
-              ts.Certificationname17=onboarding.EMS_EM_Certification_Name16__c;
-              ts.Certificationname17=onboarding.EMS_EM_Certification_Name16__c;
-              ts.Certificationname18=onboarding.EMS_EM_Certification_Name17__c;
-              ts.Certificationname19=onboarding.EMS_EM_Certification_Name18__c;
-              ts.Certificationname20=onboarding.EMS_EM_Certification_Name19__c;
+              if(ts.cadrressline1 !=null && ts.padrressline1 != null){
+                if(ts.cadrressline1 === ts.padrressline1){
+                  ts.paFlag = true;
+                  ts.disableFlag = false;
+                  }
+                  else{
+                    ts.disableFlag = false;
+                  }
+               }
+                       
               ts.levleofedu=additionalDetails.EMS_EM_Education__c;
               ts.fieldOfStudy=additionalDetails.EMS_EM_Field_of_Study__c;
               ts.instutionname=additionalDetails.EMS_EM_IName__c;
@@ -712,82 +681,7 @@ function updateOnboardingInfoOnPageLoads(ts){
                 ts.extraempfields3 = true;
                 ts.hideextraadd3 = false;
               }
-              if(ts.Certificationname2){
-                ts.ShowCertification1 = true;
-                ts.hideCertification2 = false;
-              }
-              if(ts.Certificationname3){
-                ts.ShowCertification2 = true;
-                ts.hideCertification3 = false;
-              }
-              if(ts.Certificationname4){
-                ts.ShowCertification3 = true;
-                ts.hideCertification4 = false;
-              }
-              if(ts.Certificationname5){
-                ts.ShowCertification4 = true;
-                ts.hideCertification5 = false;
-              }
-              if(ts.Certificationname6){
-                ts.ShowCertification5 = true;
-                ts.hideCertification6 = false;
-              }
-              if(ts.Certificationname7){
-                ts.ShowCertification6 = true;
-                ts.hideCertification7 = false;
-              }
-              if(ts.Certificationname8){
-                ts.ShowCertification7 = true;
-                ts.hideCertification8 = false;
-              }
-              if(ts.Certificationname9){
-                ts.ShowCertification8 = true;
-                ts.hideCertification9 = false;
-              }
-              if(ts.Certificationname10){
-                ts.ShowCertification9 = true;
-                ts.hideCertification10 = false;
-              }
-              if(ts.Certificationname11){
-                ts.ShowCertification10 = true;
-                ts.hideCertification11 = false;
-              }
-              if(ts.Certificationname12){
-                ts.ShowCertification11 = true;
-                ts.hideCertification12 = false;
-              }
-              if(ts.Certificationname13){
-                ts.ShowCertification12 = true;
-                ts.hideCertification13 = false;
-              }
-              if(ts.Certificationname14){
-                ts.ShowCertification13 = true;
-                ts.hideCertification14 = false;
-              }
-              if(ts.Certificationname15){
-                ts.ShowCertification14 = true;
-                ts.hideCertification15 = false;
-              }
-              if(ts.Certificationname16){
-                ts.ShowCertification15 = true;
-                ts.hideCertification16 = false;
-              }
-              if(ts.Certificationname17){
-                ts.ShowCertification16 = true;
-                ts.hideCertification17 = false;
-              }
-              if(ts.Certificationname18){
-                ts.ShowCertification17 = true;
-                ts.hideCertification18 = false;
-              }
-              if(ts.Certificationname19){
-                ts.ShowCertification18 = true;
-                ts.hideCertification19 = false;
-              }
-              if(ts.Certificationname20){
-                ts.ShowCertification19 = true;
-                ts.hideCertification20 = false;
-              }
+              
               if(ts.jobtitle1){
                 ts.addmoreworkfields = true;
                 ts.hideplus1 = false;
