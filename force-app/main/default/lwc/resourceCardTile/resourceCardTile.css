@@ -31,8 +31,8 @@
 .homeCard {
     background-color: white !important;
     box-shadow: 0 4px 8px 0 rgba(226, 162, 237, 0.2), 0 6px 20px 0 rgba(216, 170, 238, 0.19);
-    margin-top: 20px; /* increased from 10px */
-    margin-bottom: 30px; /* increased from 20px */
+    /* increased from 10px */
+    margin-bottom: 10px; /* increased from 20px */
     border-radius: 5px;
 }
     .header {
@@ -78,4 +78,5 @@
   width: 100%;
   height: auto;
   border-radius: 50%;
+  object-fit: cover;
 }

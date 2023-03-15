@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Welcome Email</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus : Welcome Aboard!</subject>
+    <subject>Onboarding: Welcome Aboard!</subject>
     <textOnly>Dear {!Contact.Name},
 
 

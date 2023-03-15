@@ -75,7 +75,8 @@ public class CP_OnboardingToResourceConvert {
                                                                                EMS_EM_CA_City__c = eachOnboardingRequestRecord.EMS_EM_CA_City__c,	
                                                                                EMS_EM_PA_City__c = 	eachOnboardingRequestRecord.EMS_EM_PA_City__c,	
                                                                                EMS_EM_CA_Zip__c = eachOnboardingRequestRecord.EMS_EM_CA_Zip__c,	
-                                                                               EMS_EM_PA_Zip__c = eachOnboardingRequestRecord.EMS_EM_PA_Zip__c);
+                                                                               EMS_EM_PA_Zip__c = eachOnboardingRequestRecord.EMS_EM_PA_Zip__c,
+                                                                               Trailblazer_ID_or_Public_URL__c = eachOnboardingRequestRecord.Trailblazer_ID_or_Public_URL__c);
                                 												
                                                                            contactRecordsList.add(contactRecord);
                                                                            for(ContentDocumentLink contentDocumentEach : eachOnboardingRequestRecord.ContentDocumentLinks){

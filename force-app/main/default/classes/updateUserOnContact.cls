@@ -27,7 +27,9 @@ public class updateUserOnContact implements TriggerAction.AfterInsert {
     **/    
     public void afterInsert(List<user> newList) {      
         System.debug(LoggingLevel.DEBUG, 'updateUserOnContact.afterInsert() : BEGIN');
+        if(!System.isFuture() && !System.isQueueable()){
         updateCommunityUser(newList);
+        }
         System.debug(LoggingLevel.DEBUG, 'updateUserOnContact.afterInsert() : END');
         
     }

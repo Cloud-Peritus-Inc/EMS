@@ -21,8 +21,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 130px;
-    max-height: 130px;
+    min-height: 135px;
+    max-height: 135px;
 }
 
 .child1 {

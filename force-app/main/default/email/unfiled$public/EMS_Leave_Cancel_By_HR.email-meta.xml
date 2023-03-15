@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>EMS_Leave_Cancel By HR(Email To Employee))</name>
     <style>freeForm</style>
-    <subject>{!EMS_LM_Leave_History__c.Leave_Type_Name__c} Request Canceled</subject>
+    <subject>Leave: Your {!EMS_LM_Leave_History__c.Leave_Type_Name__c} Request Canceled</subject>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

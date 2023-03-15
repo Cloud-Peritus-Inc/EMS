@@ -15,6 +15,10 @@ public without sharing class holidayTitleController {
                            AND EMS_TM_Calendar_Date__c >:dt  
                            ];
         
+        for(Office_Location__c offLoc : [SELECT Id,Name FROM Office_Location__c]){
+             locationWithId.put(offLoc.Name,offLoc.id);
+        }
+        
         for(EMS_TM_Calendar__c holi : holidayCalender){
             system.debug('====holi.Office_Location__c=='+holi.Office_Location__c);
              system.debug('==== uREc.contact.Work_Location__c=='+ uREc.contact.Work_Location__c);
@@ -30,6 +34,8 @@ public without sharing class holidayTitleController {
             
             locationWithId.put(holi.Office_Location__r.Name,holi.Office_Location__c);
         }
+        
+        
         
       locaList.addAll(locationWithId.keySet());
          dataList.sort();

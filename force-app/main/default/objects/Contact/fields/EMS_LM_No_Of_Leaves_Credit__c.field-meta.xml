@@ -3,7 +3,7 @@
     <fullName>EMS_LM_No_Of_Leaves_Credit__c</fullName>
     <defaultValue>0</defaultValue>
     <externalId>false</externalId>
-    <label>No Of Annual Leaves Credit</label>
+    <label>No of Annual Leaves Credit</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

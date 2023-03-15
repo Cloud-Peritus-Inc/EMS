@@ -3,7 +3,7 @@
     <fullName>Send_joining_date_confirmation_to_the_RM__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Send joining date confirmation to the RM</label>
+    <label>Send Joining Date Confirmation to RM</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

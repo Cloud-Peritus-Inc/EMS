@@ -6,7 +6,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import getLMHistory from '@salesforce/apex/EMS_LM_MyRequestTabLeaveReq.getLMHistory';
 import getLeaveTypesForUser from '@salesforce/apex/LeaveHistoryApexController.getLeaveTypesForUser';
 import userLevelOfApproval from '@salesforce/apex/LeaveHistoryApexController.userLevelOfApproval';
-import defaultMyRequestData from '@salesforce/apex/EMS_LM_MyRequestTabLeaveReq.defaultMyRequestData';
+//import defaultMyRequestData from '@salesforce/apex/EMS_LM_MyRequestTabLeaveReq.defaultMyRequestData';
 import { refreshApex } from '@salesforce/apex';
 
 const columns = [

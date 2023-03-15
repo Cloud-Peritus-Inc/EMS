@@ -1,7 +1,7 @@
 /**
 * @author Pavan
 * @date 01/02/2023
-* @description  Getting the Leave Request data for my Request Tab and Pending on Me Tab based on the loggedIn user.
+* @description  Getting the Leave Types availabe, auto-approval, level of approval and reports to information of logged in user.
 *            
 *
 *               Test code coverage provided by the following test class:
@@ -14,15 +14,6 @@
 * ====================================================================================================
 **/
 
-	/**
-*   {Purpose} - This method returns a list of leave history records based on the search criteria for the my request tab
-*
-*   CHANGE HISTORY
-*   ====================================================================================================
-*   Date        Name                    Description
-*   N/A         N/A                     N/A
-*   ====================================================================================================
-**/
 public without Sharing class LeaveHistoryApexController {
                 /**
 *   {Purpose} - Method used to get Leave Types based on the LoggedIn user.
@@ -123,7 +114,7 @@ public without Sharing class LeaveHistoryApexController {
 
     
                 /**
-*   {Purpose} - Method used to show default pending or approver 1 pending records on Pending on me tab.
+*   {Purpose} - Method used to get information regarding whether any one is reporting to the loggedIn user to hide the pending on me tab and recent request tile in home page.
 *
 *   CHANGE HISTORY
 *   ====================================================================================================

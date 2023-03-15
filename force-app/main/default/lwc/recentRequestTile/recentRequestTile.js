@@ -4,18 +4,27 @@ import updateRejecteStatusAndComments from '@salesforce/apex/LeaveRequestRejectH
 import updateApproveStatusAndComments from '@salesforce/apex/LeaveRequestApproveHandler.updateApproveStatusAndComments';
 import { NavigationMixin } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class RecentRequestTile extends NavigationMixin(LightningElement) {
 
     reqLeaveData;
-    approveComments;
-    rejectComments;
+    approveComments = '';
+    rejectComments = '';
     selectedRecordApproveId;
     isShowModalApprove = false;
     isShowModalReject = false;
     nodata = false;
     @track reqLeaveArray;
+    errorMessage = ''
     _wiredRefreshData;
 
+    connectedCallback() {
+        this.a_Record_URL = window.location.origin;
+        console.log('Base Url' + this.a_Record_URL);
+    }
+
+
+    // TO GET THE LEAVE REQUEST DATA
     @wire(getLeaveReqData)
     getLeaveReqDataWiredData(wireResult) {
         const { data, error } = wireResult; // TO REFRESH THE DATA USED THIS BY STORING DATA AND ERROR IN A VARIABLE
@@ -53,37 +62,26 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
             .then((result) => {
                 console.log('Leave Request: ', result);
                 this.isShowModalApprove = false;
+                const evt = new ShowToastEvent({
+                    message: 'Leave Request was updated successfully',
+                    variant: 'success',
+                });
+                this.dispatchEvent(evt);
                 return refreshApex(this._wiredRefreshData)
             }).catch((err) => {
                 console.log('ERROR : ', err);
             });
     }
-    /*
-    showModalApprovalBox(event) {
-        console.log('@@@ : ', JSON.stringify(event));
-        console.log('BUTTON CLICKED : ');
-        console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
-        this.selectedRecordApproveId = event.currentTarget.dataset.id;
-        console.log('### selectedRecordApproveId : ', this.selectedRecordApproveId);
-        this.isShowModalApprove = true;
-    }
-
-    handleApproveSave(event) {
-        const selectedRecordApproveId = event.currentTarget.dataset.id;
-        console.log('### selectedRecordApproveId : ', selectedRecordApproveId);
-        updateApproveStatusAndComments({ leaveRequestId: selectedRecordApproveId, comments: this.approveComments })
-            .then((result) => {
-                console.log('Leave Request: ', result);
-                this.isShowModalApprove = false;
-                return refreshApex(this._wiredRefreshData)
-            }).catch((err) => {
-                console.log('ERROR : ', err);
-            });
-    }*/
 
     //Reject Modal
     handleRejectComments(event) {
-        this.rejectComments = event.target.value;
+        if (event.target.value) {
+            this.errorMessage = '';
+            this.rejectComments = event.target.value;
+
+        } else {
+            this.errorMessage = 'This field is required.';
+        }
     }
 
     showModalRejectBox(event) {
@@ -95,36 +93,19 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
 
     }
 
-    handleRejectSave(event) {
-        let getelement = this.template.querySelectorAll(".isRequired");
-        console.log("getelement", JSON.stringify(getelement));
-        let letReject = true;
-        getelement.forEach(currentItem => {
-            if (!currentItem.value || !currentItem.checkValidity()) {
-                currentItem.reportValidity();
-                console.log(" currentItem.reportValidity();", currentItem.reportValidity());
-                currentItem.setCustomValidity("Please entre this fields");
-                letReject = false;
-            }
-        });
-
-        if (letReject) {
-            /* const selectedRecordRejectId = event.currentTarget.dataset.id;
-             console.log('### selectedRecordRejectId : ', selectedRecordRejectId);
-             updateRejecteStatusAndComments({ leaveRequestId: selectedRecordRejectId, comments: this.rejectComments })
-                 .then((result) => {
-                     console.log('Leave Request: ', result);
-                     this.isShowModalReject = false;
-                     return refreshApex(this._wiredRefreshData)
-                 }).catch((err) => {
-                     console.log('ERROR : ', err);
-                 });*/
+    handleRejectSave() {
+        if (this.template.querySelector('lightning-textarea').reportValidity()) {
             console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
             updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
                 .then((result) => {
                     console.log('Leave Request: ', result);
                     this.isShowModalReject = false;
                     this.rejectComments = '';
+                    const evt = new ShowToastEvent({
+                        message: 'Leave Request was rejected successfully',
+                        variant: 'success',
+                    });
+                    this.dispatchEvent(evt);
                     return refreshApex(this._wiredRefreshData)
                 }).catch((err) => {
                     console.log('ERROR : ', err);
@@ -132,14 +113,52 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
         }
     }
 
+    /* handleRejectSave(event) {
+         let getelement = this.template.querySelectorAll(".isRequired");
+         console.log("getelement", JSON.stringify(getelement));
+         console.log('### getelement : ',getelement);
+         let letReject = true;
+         getelement.forEach(currentItem => {
+             if (!currentItem.value || !currentItem.checkValidity()) {
+                 currentItem.reportValidity();
+                 console.log("Validation failed for element:", currentItem);
+                 currentItem.setCustomValidity("Please enter the comments");
+                 letReject = false;
+             } else {
+                 console.log("Validation passed for element:", currentItem);
+                 currentItem.setCustomValidity(""); // clear the error message
+             }
+         });
+ 
+         if (!letReject) {
+             console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
+             updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
+                 .then((result) => {
+                     console.log('Leave Request: ', result);
+                     this.isShowModalReject = false;
+                     this.rejectComments = '';
+                     return refreshApex(this._wiredRefreshData)
+                 }).catch((err) => {
+                     console.log('ERROR : ', err);
+                 });
+         }
+     }*/
+
+
+
+
+
     handleCloseAll() {
         this.isShowModalApprove = false;
         this.isShowModalReject = false;
     }
 
     //Approve All page navigation
-    handlebulkNavigation(event) {
+    handleLMNavigation(event) {
         var url = new URL(this.a_Record_URL + '/Grid/s/leave-management');
+        var params = new URLSearchParams();
+        params.append("pendingTab", "value");
+        url.search += "&" + params.toString();
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {

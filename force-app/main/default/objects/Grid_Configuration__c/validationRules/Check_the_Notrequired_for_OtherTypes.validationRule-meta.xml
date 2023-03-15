@@ -5,6 +5,8 @@
     <errorConditionFormula>AND(
 NOT(TEXT(Grid_Configuration_Type__c) == &quot;Org Level Goal&quot;),
 NOT(TEXT(Grid_Configuration_Type__c) == &quot;Resource Role Level Goal&quot;),
+NOT(TEXT(Grid_Configuration_Type__c) == &quot;Resource Role Alert&quot;),
+NOT(TEXT(Grid_Configuration_Type__c) == &quot;Org Level Alert&quot;),
 OR(
 NOT(ISNULL(Goal_Start_Date__c)),
 NOT(ISBLANK(Goal_End_Date__c)),

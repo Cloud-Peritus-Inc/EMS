@@ -94,8 +94,10 @@ public class EMS_LM_PendingOnMeLeaveReq {
 *   Date        Name                    Description
 *   N/A         N/A                     N/A
 *   ====================================================================================================
+	
+	NOTE: NO NEED TEST CLASS NOT USING THIS METHOD IN CURRENT SCOPE(Enhancement)
 **/
-    @AuraEnabled(Cacheable=true)
+   /* @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> pendingOnMeLeaveReq(){
         List<EMS_LM_Leave_History__c> mypendingReq = [SELECT Id,
                                                      	     EMS_LM_Leave_Type_Name__c,
@@ -118,5 +120,5 @@ public class EMS_LM_PendingOnMeLeaveReq {
                                                        ORDER BY EMS_LM_Leave_Type_Name__c ASC, CreatedDate DESC
                                                      		 ];
         return mypendingReq;
-    }   
+    } */  
 }

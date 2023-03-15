@@ -102,9 +102,11 @@ public static List<EMS_LM_Leave_History__c> getLMHistory(String startDateStr, St
 *   Date        Name                    Description
 *   N/A         N/A                     N/A
 *   ====================================================================================================
+	
+	NOTE: NO NEED TEST CLASS NOT USING THIS METHOD IN CURRENT SCOPE(Enhancement)
 **/
     
-    @AuraEnabled(Cacheable=true)
+  /*  @AuraEnabled(Cacheable=true)
     public static List<EMS_LM_Leave_History__c> defaultMyRequestData(){
         user usr =[Select Id, ContactId, Email from user where Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         List<EMS_LM_Leave_History__c> myLeaveReq = [SELECT Id,
@@ -128,5 +130,5 @@ public static List<EMS_LM_Leave_History__c> getLMHistory(String startDateStr, St
                                                     ORDER BY CreatedDate DESC, EMS_LM_Leave_Type_Name__c ASC
                                                     ];
         return myLeaveReq;
-    }
+    }*/
 }

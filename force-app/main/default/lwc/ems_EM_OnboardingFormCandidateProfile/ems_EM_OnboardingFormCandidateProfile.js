@@ -5,6 +5,7 @@ import getCompanyInformation from '@salesforce/apex/EMS_EM_GridConfigurationSett
 import fetchCertifications from '@salesforce/apex/EMS_EM_CreationOnboard.fetchCertifications';
 import dmlOnCertifications from '@salesforce/apex/EMS_EM_CreationOnboard.dmlOnCertifications';
 import { refreshApex } from '@salesforce/apex';
+import BannerPreOn from '@salesforce/resourceUrl/BannerPreOn';
 import { uploadFilesFromThis, updateOnBoardingRequest, updateOnboardingInfoOnPageLoads, displayShowtoastMessage } from 'c/updateOnBoardingRequestForm';
 import getonOnboardformInfo from '@salesforce/apex/EMS_EM_CreationOnboard.getonOnboardformInfo';
 	
@@ -94,6 +95,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   isWorkExperienceStatusUpdate;
   buttonDisable = false;
 
+  @track imageUrl = BannerPreOn;
+
 
   handleSectionToggle(event) {
     const openSections = event.detail.openSections;
@@ -132,6 +135,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Address Details") {
       this.isAddressDetails = true;
+      
+       
       this.isShowPersonalDetails = false;
       this.isIdentifyDetails = false;
       this.isEducationDetails = false;
@@ -190,7 +195,14 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     else if (seletedDetails === "Company Information") {
       this.isCompanyInformation = true;
       this.isCompanyInformationValueChecked = true;
-      updateOnBoardingRequest(this); 
+      updateOnBoardingRequest(this);
+      if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+        {
+          this.buttonDisable = true;
+        }
+        else{
+          this.buttonDisable = false;
+        } 
       console.log('Company Info', this.isCompanyInformation);
       this.isAddressDetails = false;
       this.isShowPersonalDetails = false;
@@ -318,20 +330,13 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   connectedCallback() {
     updateOnboardingInfoOnPageLoads(this);
-    if(this.cazip != null){
-      if(this.padrressline1 === this.cadrressline1){
-        this.paFlag = true;
-        this.disableFlag = false;
-      }
-    }
-    
     
   }
 
   selectStep1() {
     if (this.readonlyfield != true) {
       if (this.firstName != null && this.firstName != '' && this.lastName != null && this.lastName != ''
-        && this.ph.length == 10 && this.altphone.length == 10 &&
+        && this.ph.length == 10 &&
         this.nation != null && this.nation != '' && this.dob != null &&
         this.personalemail != null && this.gen != null &&
         this.fileName2 != null) {
@@ -379,21 +384,37 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
    return true;
   }
  }
- selectStep2(){
-  if(  this.readonlyfield!=true){
-    if(this.aadhaarNo.length==12 && this.panNo !=null &&
-      this.fileName!=null && this.fileName1!=null ){ 
-          return true;
-     }else{
+ selectStep2() {
+  if (!this.readonlyfield) {
+    if (this.aadhaarNo.length === 12 && this.panNo != null && this.fileName != null && this.fileName1 != null) {
+      const panCardRegex = /[A-Z]{5}[*]{4}[A-Z]{1}$/;
+      let panCard = this.template.querySelector(".panCard");
+      let panCardVal = this.panNo;
+      if (panCardRegex.test(panCardVal)) {
+        panCard.setCustomValidity("");
+        panCard.reportValidity();
+        return true;
+      } else {
+        panCard.setCustomValidity("Please enter a valid PAN card number");
+        panCard.reportValidity();
+        const even = new ShowToastEvent({
+          message: "Please enter a valid PAN card number",
+          variant: "error"
+        });
+        this.dispatchEvent(even);
+        return false;
+      }
+    } else {
       const even = new ShowToastEvent({
-        message: 'Please complete required field & avoid invalid data!',
-        variant: 'error'
-    });
-    this.dispatchEvent(even);
-    return false;
+        message: "Please complete required fields and avoid invalid data!",
+        variant: "error"
+      });
+      this.dispatchEvent(even);
+      return false;
     }
   }
 }
+
   selectStep3() {
     if (this.readonlyfield != true) {
       const isInputsCorrect = [...this.template.querySelectorAll('lightning-input')]
@@ -691,6 +712,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       this.pastate = this.castate;
       this.pacity = this.cacity;
       this.pazip = this.cazip;
+      this.paFlag = true;
+      
     } else {
       //console.log('address unchecked')
       this.padrressline1 = '';
@@ -698,6 +721,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       this.pastate = '';
       this.pacity = '';
       this.pazip = '';
+  this.paFlag = false;
     }
   }
 
@@ -953,411 +977,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   graduationDate4;
   graduationDate5;
 
-  // Certification Add more
 
-  Certificationname1;
-  Certificationname2;
-  Certificationname3;
-  Certificationname4;
-  Certificationname5;
-  Certificationname6;
-  Certificationname7;
-  Certificationname8;
-  Certificationname9;
-  Certificationname10;
-  Certificationname11;
-  Certificationname12;
-  Certificationname13;
-  Certificationname14;
-  Certificationname15;
-  Certificationname16;
-  Certificationname17;
-  Certificationname18;
-  Certificationname19;
-  Certificationname20;
-
-  ShowCertification = false;
-  ShowCertification1 = false;
-  ShowCertification2 = false;
-  ShowCertification3 = false;
-  ShowCertification4 = false;
-  ShowCertification5 = false;
-  ShowCertification6 = false;
-  ShowCertification7 = false;
-  ShowCertification8 = false;
-  ShowCertification9 = false;
-  ShowCertification10 = false;
-  ShowCertification11 = false;
-  ShowCertification12 = false;
-  ShowCertification13 = false;
-  ShowCertification14 = false;
-  ShowCertification15 = false;
-  ShowCertification16 = false;
-  ShowCertification17 = false;
-  ShowCertification18 = false;
-  ShowCertification19 = false;
-  ShowCertification20 = false;
-  hideCertification2 = true;
-  hideCertification3 = true;
-  hideCertification4 = true;
-  hideCertification5 = true;
-  hideCertification6 = true;
-  hideCertification7 = true;
-  hideCertification8 = true;
-  hideCertification9 = true;
-  hideCertification10 = true;
-  hideCertification11 = true;
-  hideCertification12 = true;
-  hideCertification13 = true;
-  hideCertification14 = true;
-  hideCertification15 = true;
-  hideCertification16 = true;
-  hideCertification17 = true;
-  hideCertification18 = true;
-  hideCertification19 = true;
-  hideCertification20 = true;
-
-  handleraddCertification1(event) {
-    if (this.ShowCertification1 == false) {
-      this.ShowCertification1 = true;
-      this.hideCertification2 = false;
-    } else {
-      this.ShowCertification1 = true;
-    }
-  }
-
-  removeCertification1(event) {
-    if (this.ShowCertification1 == true) {
-      this.ShowCertification1 = false;
-      this.hideCertification2 = true;
-    } else {
-      this.ShowCertification1 = true;
-    }
-  }
-
-  handleraddCertification2(event) {
-    if (this.ShowCertification2 == false) {
-      this.ShowCertification2 = true;
-      this.hideCertification3 = false;
-    } else {
-      this.ShowCertification2 = true;
-    }
-  }
-
-  removeCertification2(event) {
-    if (this.ShowCertification2 == true) {
-      this.ShowCertification2 = false;
-      this.hideCertification3 = true;
-    } else {
-      this.ShowCertification2 = true;
-    }
-  }
-
-  handleraddCertification3(event) {
-    if (this.ShowCertification3 == false) {
-      this.ShowCertification3 = true;
-      this.hideCertification4 = false;
-    } else {
-      this.ShowCertification3 = true;
-    }
-  }
-
-  removeCertification3(event) {
-    if (this.ShowCertification3 == true) {
-      this.ShowCertification3 = false;
-      this.hideCertification4 = true;
-    } else {
-      this.ShowCertification3 = true;
-    }
-  }
-
-  handleraddCertification4(event) {
-    if (this.ShowCertification4 == false) {
-      this.ShowCertification4 = true;
-      this.hideCertification5 = false;
-    } else {
-      this.ShowCertification4 = true;
-    }
-  }
-
-  removeCertification4(event) {
-    if (this.ShowCertification4 == true) {
-      this.ShowCertification4 = false;
-      this.hideCertification5 = true;
-    } else {
-      this.ShowCertification4 = true;
-    }
-  }
-
-  handleraddCertification5(event) {
-    if (this.ShowCertification5 == false) {
-      this.ShowCertification5 = true;
-      this.hideCertification6 = false;
-    } else {
-      this.ShowCertification5 = true;
-    }
-  }
-
-  removeCertification5(event) {
-    if (this.ShowCertification5 == true) {
-      this.ShowCertification5 = false;
-      this.hideCertification6 = true;
-    } else {
-      this.ShowCertification5 = true;
-    }
-  }
-
-  handleraddCertification6(event) {
-    if (this.ShowCertification6 == false) {
-      this.ShowCertification6 = true;
-      this.hideCertification7 = false;
-    } else {
-      this.ShowCertification6 = true;
-    }
-  }
-
-  removeCertification6(event) {
-    if (this.ShowCertification6 == true) {
-      this.ShowCertification6 = false;
-      this.hideCertification7 = true;
-    } else {
-      this.ShowCertification6 = true;
-    }
-  }
-
-  handleraddCertification7(event) {
-    if (this.ShowCertification7 == false) {
-      this.ShowCertification7 = true;
-      this.hideCertification8 = false;
-    } else {
-      this.ShowCertification7 = true;
-    }
-  }
-
-  removeCertification7(event) {
-    if (this.ShowCertification7 == true) {
-      this.ShowCertification7 = false;
-      this.hideCertification8 = true;
-    } else {
-      this.ShowCertification7 = true;
-    }
-  }
-
-  handleraddCertification8(event) {
-    if (this.ShowCertification8 == false) {
-      this.ShowCertification8 = true;
-      this.hideCertification9 = false;
-    } else {
-      this.ShowCertification8 = true;
-    }
-  }
-
-  removeCertification8(event) {
-    if (this.ShowCertification8 == true) {
-      this.ShowCertification8 = false;
-      this.hideCertification9 = true;
-    } else {
-      this.ShowCertification8 = true;
-    }
-  }
-
-  handleraddCertification9(event) {
-    if (this.ShowCertification9 == false) {
-      this.ShowCertification9 = true;
-      this.hideCertification10 = false;
-    } else {
-      this.ShowCertification9 = true;
-    }
-  }
-
-  removeCertification9(event) {
-    if (this.ShowCertification9 == true) {
-      this.ShowCertification9 = false;
-      this.hideCertification10 = true;
-    } else {
-      this.ShowCertification9 = true;
-    }
-  }
-
-  handleraddCertification10(event) {
-    if (this.ShowCertification10 == false) {
-      this.ShowCertification10 = true;
-      this.hideCertification11 = false;
-    } else {
-      this.ShowCertification10 = true;
-    }
-  }
-
-  removeCertification10(event) {
-    if (this.ShowCertification10 == true) {
-      this.ShowCertification10 = false;
-      this.hideCertification11 = true;
-    } else {
-      this.ShowCertification10 = true;
-    }
-  }
-
-  handleraddCertification11(event) {
-    if (this.ShowCertification11 == false) {
-      this.ShowCertification11 = true;
-      this.hideCertification12 = false;
-    } else {
-      this.ShowCertification11 = true;
-    }
-  }
-
-  removeCertification11(event) {
-    if (this.ShowCertification11 == true) {
-      this.ShowCertification11 = false;
-      this.hideCertification12 = true;
-    } else {
-      this.ShowCertification11 = true;
-    }
-  }
-
-  handleraddCertification12(event) {
-    if (this.ShowCertification12 == false) {
-      this.ShowCertification12 = true;
-      this.hideCertification13 = false;
-    } else {
-      this.ShowCertification12 = true;
-    }
-  }
-
-  removeCertification12(event) {
-    if (this.ShowCertification12 == true) {
-      this.ShowCertification12 = false;
-      this.hideCertification13 = true;
-    } else {
-      this.ShowCertification12 = true;
-    }
-  }
-
-  handleraddCertification13(event) {
-    if (this.ShowCertification13 == false) {
-      this.ShowCertification13 = true;
-      this.hideCertification14 = false;
-    } else {
-      this.ShowCertification13 = true;
-    }
-  }
-
-  removeCertification13(event) {
-    if (this.ShowCertification13 == true) {
-      this.ShowCertification13 = false;
-      this.hideCertification14 = true;
-    } else {
-      this.ShowCertification13 = true;
-    }
-  }
-
-  handleraddCertification14(event) {
-    if (this.ShowCertification14 == false) {
-      this.ShowCertification14 = true;
-      this.hideCertification15 = false;
-    } else {
-      this.ShowCertification14 = true;
-    }
-  }
-
-  removeCertification14(event) {
-    if (this.ShowCertification14 == true) {
-      this.ShowCertification14 = false;
-      this.hideCertification15 = true;
-    } else {
-      this.ShowCertification14 = true;
-    }
-  }
-
-  handleraddCertification15(event) {
-    if (this.ShowCertification15 == false) {
-      this.ShowCertification15 = true;
-      this.hideCertification16 = false;
-    } else {
-      this.ShowCertification15 = true;
-    }
-  }
-
-  removeCertification15(event) {
-    if (this.ShowCertification15 == true) {
-      this.ShowCertification15 = false;
-      this.hideCertification16 = true;
-    } else {
-      this.ShowCertification15 = true;
-    }
-  }
-
-  handleraddCertification16(event) {
-    if (this.ShowCertification16 == false) {
-      this.ShowCertification16 = true;
-      this.hideCertification17 = false;
-    } else {
-      this.ShowCertification16 = true;
-    }
-  }
-
-  removeCertification16(event) {
-    if (this.ShowCertification16 == true) {
-      this.ShowCertification16 = false;
-      this.hideCertification17 = true;
-    } else {
-      this.ShowCertification16 = true;
-    }
-  }
-
-  handleraddCertification17(event) {
-    if (this.ShowCertification17 == false) {
-      this.ShowCertification17 = true;
-      this.hideCertification18 = false;
-    } else {
-      this.ShowCertification17 = true;
-    }
-  }
-
-  removeCertification17(event) {
-    if (this.ShowCertification17 == true) {
-      this.ShowCertification17 = false;
-      this.hideCertification18 = true;
-    } else {
-      this.ShowCertification17 = true;
-    }
-  }
-
-  handleraddCertification18(event) {
-    if (this.ShowCertification18 == false) {
-      this.ShowCertification18 = true;
-      this.hideCertification19 = false;
-    } else {
-      this.ShowCertification18 = true;
-    }
-  }
-
-  removeCertification18(event) {
-    if (this.ShowCertification18 == true) {
-      this.ShowCertification18 = false;
-      this.hideCertification19 = true;
-    } else {
-      this.ShowCertification18 = true;
-    }
-  }
-
-  handleraddCertification19(event) {
-    if (this.ShowCertification19 == false) {
-      this.ShowCertification19 = true;
-      this.hideCertification20 = false;
-    } else {
-      this.ShowCertification19 = true;
-    }
-  }
-
-  removeCertification19(event) {
-    if (this.ShowCertification19 == true) {
-      this.ShowCertification19 = false;
-      this.hideCertification20 = true;
-    } else {
-      this.ShowCertification19 = true;
-    }
-  }
   educationalId;
 
   Degree(event) {
@@ -1556,66 +1176,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
   }
 
-  certificationnamee1(event) {
-    this.Certificationname1 = event.target.value;
-  }
-  certificationnamee2(event) {
-    this.Certificationname2 = event.target.value;
-  }
-  certificationnamee3(event) {
-    this.Certificationname3 = event.target.value;
-  }
-  certificationnamee4(event) {
-    this.Certificationname4 = event.target.value;
-  }
-  certificationnamee5(event) {
-    this.Certificationname5 = event.target.value;
-  }
-  certificationnamee6(event) {
-    this.Certificationname6 = event.target.value;
-  }
-  certificationnamee7(event) {
-    this.Certificationname7 = event.target.value;
-  }
-  certificationnamee8(event) {
-    this.Certificationname8 = event.target.value;
-  }
-  certificationnamee9(event) {
-    this.Certificationname9 = event.target.value;
-  }
-  certificationnamee10(event) {
-    this.Certificationname10 = event.target.value;
-  }
-  certificationnamee11(event) {
-    this.Certificationname11 = event.target.value;
-  }
-  certificationnamee12(event) {
-    this.Certificationname12 = event.target.value;
-  }
-  certificationnamee13(event) {
-    this.Certificationname13 = event.target.value;
-  }
-  certificationnamee14(event) {
-    this.Certificationname14 = event.target.value;
-  }
-  certificationnamee15(event) {
-    this.Certificationname15 = event.target.value;
-  }
-  certificationnamee16(event) {
-    this.Certificationname16 = event.target.value;
-  }
-  certificationnamee17(event) {
-    this.Certificationname17 = event.target.value;
-  }
-  certificationnamee18(event) {
-    this.Certificationname18 = event.target.value;
-  }
-  certificationnamee19(event) {
-    this.Certificationname19 = event.target.value;
-  }
-  certificationnamee20(event) {
-    this.Certificationname20 = event.target.value;
-  }
+
 
 
   addmoreempfields = false;
@@ -2010,11 +1571,13 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   SaveSubmitOnboarding(event) {
     if(this.isShowPersonalDetails){
       if(this.selectStep1()){
-        console.log('step1 => ',this.selectStep1);
+        //console.log('step1 => ',this.selectStep1);
         this.isPersonalUpdateCheckbox = true;
        this.statusUpdate = 'In Progress';
-        console.log('check box',this.isPersonalUpdateCheckbox);
+        //console.log('check box',this.isPersonalUpdateCheckbox);
+        console.log('check box',this.statusUpdate);
         updateOnBoardingRequest(this);  
+        console.log('check box',this.statusUpdate);
         if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
           this.buttonDisable = true;

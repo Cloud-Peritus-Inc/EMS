@@ -52,18 +52,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Marital_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_EM_DOW__c</field>
+                <field>EMS_EM_Gender__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_EM_Gender__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EMS_EM_BG__c</field>
@@ -378,9 +370,44 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>NewTask</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
+            <actionName>RecordShareHierarchy</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>17</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EnableCustomerPortal</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>18</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>CreateSurveyInvitation</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>19</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ViewCustomerPortal</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>20</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>23</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>CreateCallList</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>24</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>NewEvent</actionName>
@@ -463,44 +490,9 @@
             <sortOrder>16</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>RecordShareHierarchy</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>17</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>EnableCustomerPortal</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>18</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>CreateSurveyInvitation</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>19</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ViewCustomerPortal</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>20</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>21</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>22</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>23</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>CreateCallList</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>24</sortOrder>
+            <actionName>NewTask</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>LoginToNetworkAsUser</actionName>
@@ -599,6 +591,20 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Resource_Role__c</fields>
+        <fields>Resource_Reports_To__c</fields>
+        <fields>Reports_To_Role__c</fields>
+        <relatedList>Resource_Resource_Relationship__c.Resource__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Type_Of_Project__c</fields>
+        <fields>EMS_TM_StartDate__c</fields>
+        <fields>EMS_TM_Status__c</fields>
+        <relatedList>EMS_TM_Project__c.Project_Manager__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>EMS_TM_ProjectName_Asgn__c</fields>
         <fields>EMS_TM_Status_Asgn__c</fields>
         <fields>EMS_TM_Billable__c</fields>
@@ -606,10 +612,33 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Resource_Role__c</fields>
-        <fields>Resource_Reports_To__c</fields>
-        <fields>Reports_To_Role__c</fields>
-        <relatedList>Resource_Resource_Relationship__c.Resource__c</relatedList>
+        <relatedList>EMS_Timesheet__c.Resource__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EMS_LM_Leave_Type__c</fields>
+        <fields>EMS_LM_Leave_Duration__c</fields>
+        <fields>EMS_LM_Status__c</fields>
+        <relatedList>EMS_LM_Leave_History__c.EMS_LM_Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EMS_LM_Leave_Type__c</fields>
+        <fields>EMS_LM_Leaves_Credited__c</fields>
+        <fields>EMS_LM_Leave_Credited_Date__c</fields>
+        <relatedList>EMS_LM_Leave_Credit__c.EMS_LM_Employee__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Goal_Name__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>Goal__c.Resource__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Certification_Name__c</fields>
+        <fields>Completion_Date__c</fields>
+        <relatedList>Certifications__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -624,54 +653,13 @@
         <relatedList>Family_Information__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>Beneficiary_Name__c</fields>
-        <fields>Bank_Name__c</fields>
-        <fields>Branch__c</fields>
-        <fields>Beneficiary_Account_Number__c</fields>
-        <fields>IFSC_Routing_Number__c</fields>
-        <relatedList>PayRoll__c.Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>EMS_LM_Leave_Type__c</fields>
-        <fields>EMS_LM_Leaves_Credited__c</fields>
-        <fields>EMS_LM_Leave_Credited_Date__c</fields>
-        <relatedList>EMS_LM_Leave_Credit__c.EMS_LM_Employee__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>EMS_LM_Leave_Type__c</fields>
-        <fields>EMS_LM_Leave_Duration__c</fields>
-        <fields>EMS_LM_Status__c</fields>
-        <relatedList>EMS_LM_Leave_History__c.EMS_LM_Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Type_Of_Project__c</fields>
-        <fields>EMS_TM_StartDate__c</fields>
-        <fields>EMS_TM_Status__c</fields>
-        <relatedList>EMS_TM_Project__c.Project_Manager__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Goal_Name__c</fields>
-        <fields>Status__c</fields>
-        <relatedList>Goal__c.Resource__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>EMS_EM_Membership_No__c</fields>
         <fields>Amount__c</fields>
         <relatedList>EMS_EM_Benefits__c.EMS_EM_Nominee__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>Certification_Name__c</fields>
-        <fields>Completion_Date__c</fields>
-        <relatedList>Certifications__c.Contact__c</relatedList>
+        <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

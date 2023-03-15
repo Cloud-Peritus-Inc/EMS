@@ -3,7 +3,7 @@
     <fullName>EMS_LM_No_Of_Utilized_Loss_Of_Pay__c</fullName>
     <defaultValue>0</defaultValue>
     <externalId>false</externalId>
-    <label>No Of Utilized Loss Of Pay</label>
+    <label>No of Utilized Loss of Pay</label>
     <precision>18</precision>
     <required>false</required>
     <scale>1</scale>

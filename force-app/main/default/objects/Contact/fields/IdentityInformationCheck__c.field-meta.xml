@@ -3,7 +3,7 @@
     <fullName>IdentityInformationCheck__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>IdentityInformationCheck</label>
+    <label>Identity Information Check</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

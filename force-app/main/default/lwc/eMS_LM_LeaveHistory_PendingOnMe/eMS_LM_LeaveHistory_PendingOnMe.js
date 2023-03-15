@@ -7,7 +7,8 @@ import bulkLeaveReqApproval from '@salesforce/apex/LeaveRequestApproveHandler.bu
 import bulkLeaveReqReject from '@salesforce/apex/LeaveRequestRejectHandler.bulkLeaveReqReject';
 import updateRejecteStatusAndComments from '@salesforce/apex/LeaveRequestRejectHandler.updateRejecteStatusAndComments';
 import updateApproveStatusAndComments from '@salesforce/apex/LeaveRequestApproveHandler.updateApproveStatusAndComments';
-import pendingOnMeLeaveReq from '@salesforce/apex/EMS_LM_PendingOnMeLeaveReq.pendingOnMeLeaveReq';
+//import pendingOnMeLeaveReq from '@salesforce/apex/EMS_LM_PendingOnMeLeaveReq.pendingOnMeLeaveReq';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
 
@@ -46,6 +47,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   @track isLoading = false;
   @track selectedLeaveReqIds = [];
   isCheck = false;
+  errorMessage = '';
   _wiredRefreshData;
   checkBox;
 
@@ -150,6 +152,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         this.showdata = true;
         this.nodata = false;
         this.datahistory = JSON.parse(JSON.stringify(data));
+        this.disableButton = false;
         console.log('### datahistory JSON : ', this.datahistory);
         this.datahistory.forEach(req => {
           //console.log('#### req for approval', req);
@@ -169,11 +172,14 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     } else if (error) {
       this.error = error;
       this.nodata = true;
+
       this.isLoading = false;
       this.datahistory = undefined;
     } else {
       this.nodata = true;
       this.isLoading = true;
+      console.log('### disableButton ELSE : ',);
+      this.disableButton = this.nodata === true;
       this.showdata = false;
       this.error = undefined;
     }
@@ -238,7 +244,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   //TO SELECT ALL THE CHECKBOXES
   handleSelectAll(event) {
     console.log('OUTPUT : ');
-    this.checkBox = event.target.checked 
+    this.checkBox = event.target.checked
     if (this.checkBox) {
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
       const selectedRecordIds = [];
@@ -270,50 +276,76 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
 
   handleApproveAll() {
-    this.isShowModalApproveAll = true;
+    if (this.multipleApprovals.length === 0) {
+      const evt = new ShowToastEvent({
+        message: 'Please select at least one record',
+        variant: 'error',
+      });
+      this.dispatchEvent(evt);
+    } else {
+      this.isShowModalApproveAll = true;
+    }
     console.log(' APPROVE MODAL OPEN : ');
+
   }
 
   handleApproveAllSave() {
     console.log('OUTPUT : ');
     console.log('OUTPUT multipleApprovals: ', JSON.stringify(this.multipleApprovals));
-    if (this.multipleApprovals.length === 0) {
-      alert('Please select at least one record');
-    } else {
-      bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
-        .then((result) => {
-          console.log('Leave Request: ', result);
-          this.isShowModalApproveAll = false;
-          this.checkBox = false;
-          return refreshApex(this._wiredRefreshData)
-        }).catch((err) => {
-          console.log('ERROR : ', err);
+    bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
+      .then((result) => {
+        console.log('Leave Request: ', result);
+        this.isShowModalApproveAll = false;
+        this.checkBox = false;
+        const evt = new ShowToastEvent({
+          message: 'Leave Request was updated successfully',
+          variant: 'success',
         });
-    }
+        this.dispatchEvent(evt);
+        return refreshApex(this._wiredRefreshData)
+      }).catch((err) => {
+        console.log('ERROR : ', err);
+      });
   }
 
   //Reject All
   handleRejectAllComments(event) {
-    this.rejectAllComments = event.target.value
+    if (event.target.value) {
+      this.errorMessage = '';
+      this.rejectAllComments = event.target.value
+    } else {
+      this.errorMessage = 'Please enter the comments';
+    }
+
   }
 
   handleRejectAll() {
-    this.isShowModalRejectAll = true;
+    if (this.multipleApprovals.length === 0) {
+      const evt = new ShowToastEvent({
+        message: 'Please select at least one record',
+        variant: 'error',
+      });
+      this.dispatchEvent(evt);
+    } else {
+      this.isShowModalRejectAll = true;
+    }
     console.log(' REJECT MODAL OPEN : ');
   }
 
   handleRejectAllSave() {
     console.log('REJECT SAVE : ');
-    if (this.multipleApprovals.length === 0) {
-      alert('Please select at least one record');
-    } else {
+    if (this.template.querySelector('lightning-textarea').reportValidity()) {
       bulkLeaveReqReject({ bulkRejectId: this.multipleApprovals, comments: this.rejectAllComments })
         .then((result) => {
           console.log('Leave Request: ', result);
           this.isShowModalRejectAll = false;
           this.checkBox = false;
+          const evt = new ShowToastEvent({
+            message: 'Leave Request was rejected successfully',
+            variant: 'success',
+          });
+          this.dispatchEvent(evt);
           return refreshApex(this._wiredRefreshData)
-
         }).catch((err) => {
           console.log('ERROR : ', err);
         });
@@ -347,6 +379,11 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         console.log('Leave Request: ', result);
         this.isShowModalApprove = false;
         this.checkBox = false;
+        const evt = new ShowToastEvent({
+          message: 'Leave Request was updated successfully',
+          variant: 'success',
+        });
+        this.dispatchEvent(evt);
         return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('ERROR : ', err);
@@ -355,7 +392,13 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   //Reject Modal
   handleRejectComments(event) {
-    this.rejectComments = event.target.value;
+    if (event.target.value) {
+      this.errorMessage = '';
+      this.rejectComments = event.target.value;
+    } else {
+      this.errorMessage = 'Please enter the comments';
+    }
+
   }
 
   showModalRejectBox(event) {
@@ -369,17 +412,23 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
 
   handleRejectSave(event) {
-    //const selectedRecordRejectId = event.currentTarget.dataset.id;
     console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
-    updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
-      .then((result) => {
-        console.log('Leave Request: ', result);
-        this.isShowModalReject = false;
-        this.checkBox = false;
-        return refreshApex(this._wiredRefreshData)
-      }).catch((err) => {
-        console.log('ERROR : ', err);
-      });
+    if (this.template.querySelector('lightning-textarea').reportValidity()) {
+      updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
+        .then((result) => {
+          console.log('Leave Request: ', result);
+          this.isShowModalReject = false;
+          this.checkBox = false;
+          const evt = new ShowToastEvent({
+            message: 'Leave Request was rejected successfully',
+            variant: 'success',
+          });
+          this.dispatchEvent(evt);
+          return refreshApex(this._wiredRefreshData)
+        }).catch((err) => {
+          console.log('ERROR : ', err);
+        });
+    }
   }
 
   //TO VIEW THE LEAVE RECORD

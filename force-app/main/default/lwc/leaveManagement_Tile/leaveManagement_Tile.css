@@ -2,13 +2,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-	
+	margin: 0px;
+    padding: 0px;
 }
 
 .childimage {
     width: 30%;
 	padding-left : 0px;
 	border-right: 1px black;
+    padding-right: 10px;
+    text-align:right;
 }
 
 .childimage2 {

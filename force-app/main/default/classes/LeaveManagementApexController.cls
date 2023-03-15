@@ -70,12 +70,12 @@ public Without Sharing class LeaveManagementApexController {
 **/
     @AuraEnabled(Cacheable = true)
     public static Contact leaveBanlance(){
-        User usrConId = [SELECT Id, ContactId__c FROM User WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
-        Contact empLeaveBalance = [SELECT Id,
+        User usrConId = [SELECT Id, ContactId FROM User WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
+        List<Contact> empLeaveBalance = [SELECT Id,
                                           EMS_LM_No_Of_Availble_Leaves__c
                                    FROM Contact
-                                   WHERE Id =: usrConId.ContactId__c ];
-        return empLeaveBalance;
+                                   WHERE Id =:usrConId.ContactId LIMIT 1 ];
+        return empLeaveBalance.isEmpty() ? null : empLeaveBalance[0];
     }
     
     /**
