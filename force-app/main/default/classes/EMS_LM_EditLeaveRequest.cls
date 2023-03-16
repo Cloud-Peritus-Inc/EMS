@@ -15,7 +15,7 @@
 public without sharing class EMS_LM_EditLeaveRequest {
     
     
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static EMS_LM_Leave_History__c getLeaveRequestMethod( String getrecordId ) {
         if(getrecordId != Null){
             EMS_LM_Leave_History__c leaverecord = [Select id , EMS_LM_Leave_Start_Date__c , EMS_LM_Leave_End_Date__c , EMS_LM_Leave_Duration__c,
