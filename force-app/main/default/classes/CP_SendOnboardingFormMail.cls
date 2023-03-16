@@ -91,6 +91,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert{
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Notify To Hr After Onboarding Form Sent' LIMIT 1];        
         String hrTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'HR_Team'].Email__c;
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         List<String> hrEmailList = new List<String>();
         hrEmailList.add(hrTeamEmail);
         
@@ -99,6 +100,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert{
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
+        message.setOrgWideEmailAddressId(fromEmail);
         message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
@@ -109,6 +111,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert{
                                       where name ='After Applicant Record Inserted Admin' LIMIT 1];
         
         String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'Admin_Team'].Email__c;
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         List<String> adminEmailList = new List<String>();
         adminEmailList.add(taTeamEmail);
         
@@ -117,6 +120,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert{
         message.setTemplateID(emailTemplate.Id);
         message.setTargetObjectId(recordId);
         message.setTreatTargetObjectAsRecipient(false);
+        message.setOrgWideEmailAddressId(fromEmail);
         message.setSaveAsActivity(false);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
