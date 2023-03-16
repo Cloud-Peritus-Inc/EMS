@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Annual_Insufficient_Leave_Balance</fullName>
+    <active>true</active>
+    <errorConditionFormula>EMS_LM_Contact__r.EMS_LM_No_Of_Availble_Leaves__c   &lt;-5</errorConditionFormula>
+    <errorMessage>You don&apos;t have enough leave balance. Consider applying for leave of some other type.</errorMessage>
+</ValidationRule>

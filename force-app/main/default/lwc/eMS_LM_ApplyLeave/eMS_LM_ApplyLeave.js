@@ -465,7 +465,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
         }).catch(error => {
             this.isLoading=false;
             console.log('error-->',error);
-            console.log('error msg-->',error.body.message);
+            console.log('error msg-->',error.body.pageErrors);
             this.dispatchEvent(
                 new ShowToastEvent({
                     message: error.body.output.errors[0].message,  

@@ -40,25 +40,25 @@
                       onchange={datechange}></lightning-input>
                   </div>
                 </lightning-layout-item>
-                 <template if:true={firstsecondDay}>
+                 <!--template if:true={firstsecondDay}-->
                   <lightning-layout-item padding="around-small" size="6">
                     <div>
                       <lightning-combobox name='selectday' label='Select Day' placeholder='Full Day' value={fullday}
                         options={dOptions} onchange={dayChange}></lightning-combobox>
                     </div>
                   </lightning-layout-item> 
-                </template>
-                <template if:false={firstsecondDay}>
+                <!--/template-->
+                <!--template if:false={firstsecondDay}>
                   <lightning-layout-item padding="around-small" size="6">
                     <div>
                       <lightning-combobox name='selectday' label='Select Day' placeholder='Select Day' value={fullday}
                         options={halfOptions} onchange={dayhalfChange}></lightning-combobox>
                     </div>
                   </lightning-layout-item>            
-                </template>
+                </template-->
                 <lightning-layout-item padding="around-small" size="12">
                   <div>
-                    <lightning-input type="text" label="Leave Duration" value={formattedDuration} disabled></lightning-input>
+                    <lightning-input type="text" label="Leave Duration" value={duration} disabled></lightning-input>
                   </div>
                 </lightning-layout-item>
                 </template>
