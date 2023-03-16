@@ -23,7 +23,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   dOptions = [{ label: 'Full Day', value: 'Full Day' }];
   halfOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
   fullday;
-  Location;
+  location;
   error;
   startDate1;//To apply Leave start date
   endDate1;//To apply Leave end date
@@ -34,7 +34,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   @track availabledays;
   @track allavailabledays;
   @track reason;
-  daycheck = false;
+  daycheck;
   cId;
   todaydate;
   isbillable;
@@ -51,6 +51,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   hideInotherleave = false;
   hideInWorkfromHome = false;
   weekendwfh = false;
+  currentAnnualleaves = 0;
 
   @wire(getLeaveType, { userid: '$uId' })
   wiredltype({ error, data }) {
@@ -82,7 +83,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   wiredbilling({ error, data }) {
     if (data) {
       this.isbillable = data.EMS_TM_In_Billing__c;
-      this.Location = data.Work_Location__r.Country__c;
+      this.location = data.Work_Location__r.Country__c;
       console.log('this.isbillable-->', this.isbillable);
       this.error = undefined;
     } else if (error) {
@@ -107,7 +108,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     if (data) {
       console.log('data duration' + data);
       this.allavailabledays = data;
-      this.annualcompduration = data.EMS_LM_No_Of_Availble_Leaves__c + data.EMS_LM_No_Of_Available_Compensatory_Off__c + 5;
+      this.annualcompduration = data.EMS_LM_No_Of_Availble_Leaves__c + data.EMS_LM_No_Of_Available_Compensatory_Off__c;
       console.log(this.annualcompduration);
       this.annualduration = data.EMS_LM_No_Of_Availble_Leaves__c;
       console.log('annual duration' + this.annualduration);
@@ -121,141 +122,149 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     }
   }
 
-  get formattedDuration() {
-    // Use parseFloat to convert duration to a float and prevent rounding issues
-    return parseFloat(this.duration).toFixed(1);
-  }
+@wire(getLeaveRequestMethod, { getrecordId: '$selecteditrecordid' })
+wiredleaveRequest({ error, data }) {
+    if (data) {
+      console.log('resultsan-->', data);
+       console.log('resultsan-->', data.EMS_LM_Leave_Start_Date__c);
+      
+       
+        this.startDate1 = data.EMS_LM_Leave_Start_Date__c;
+        this.endDate1 = data.EMS_LM_Leave_End_Date__c;
+        this.duration = data.EMS_LM_Leave_Duration__c;
+        this.reason = data.EMS_LM_Reason__c;
+        this.value = data.EMS_LM_Leave_Type_Name__c;
+        this.fullday = data.EMS_LM_Day__c;
 
-  connectedCallback() {
-
-    getLeaveRequestMethod({ getrecordId: this.selecteditrecordid })
-      .then(result => {
-        console.log('result-->', result);
-        console.log('result' + JSON.stringify(result));
-        const employye = result;
-        console.log('employye' + employye);
-        this.startDate1 = result.EMS_LM_Leave_Start_Date__c;
-        this.endDate1 = result.EMS_LM_Leave_End_Date__c;
-        this.duration = result.EMS_LM_Leave_Duration__c;
-        console.log('### duration : ', this.duration);
-        this.reason = result.EMS_LM_Reason__c;
-        this.value = result.EMS_LM_Leave_Type_Name__c;
-        this.fullday = result.EMS_LM_Day__c;
-
-
-
-
-        if (this.fullday != 'Full Day') {
-          this.daycheck = true;
-          this.firstsecondDay = false;
+        if(this.value!='Work From Home'){
+          this.hideInotherleave=true;
+        }else{
+          this.hideInWorkfromHome=true;
         }
-        else {
+        
+        if (data.EMS_LM_Day__c == 'Full Day') {
           this.daycheck = false;
           this.firstsecondDay = true;
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+          console.log('this.daycheck',this.daycheck,'this.fullday',this.fullday);
         }
+        else {
+          this.daycheck = true;
+          this.firstsecondDay = false; 
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];  
+          console.log('this.daycheck',this.daycheck,'this.fullday',this.fullday);
+        }
+    }else if (error) {
+      this.error = error;
+      console.log('this.error',this.error);
+      this.submitcheck = true;
+    }
+    }
 
 
-      })
-      .catch(error => {
-        this.error = error;
-        console.log('this.error-->' + JSON.stringify(this.error));
-      });
+  
 
-
-
-  }
-
-  totalannualduration;
-
-  @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$Location', dayCheck: false })
+ @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$location', dayCheck: '$daycheck' })
   async wiredduration({ error, data }) {
     if (data) {
       if (this.value == 'Loss of Pay' || this.value == 'Annual Leave') {
-        this.hideInotherleave = true;
         if (this.value == 'Loss of Pay') {
           if (this.startDate != undefined || this.startDate != null) {
-            this.submitcheck = false;
-            this.duration = data;
+             this.submitcheck =false;
+             this.duration = data;      
           }
         }
         if (this.value == 'Annual Leave') {
-          this.totalannualduration = this.annualduration + this.duration;
-          console.log('this.totalannualduration', this.totalannualduration, 'data', data);
-          if (this.totalannualduration >= data) {
+         // if (this.annualduration >= data) {
             this.submitcheck = false;
             this.duration = data;
+            this.currentAnnualleaves=this.duration + this.annualduration;
+            this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
+            console.log('this.currentAnnualleaves-->',this.currentAnnualleaves,'this.availabledays',this.availabledays);
             this.error = undefined;
-          }
-          else {
-
-            this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c + 5 + this.duration;
-            if (this.availabledays >= data) {
-              this.submitcheck = false;
-              this.duration = data;
-              this.error = undefined;
-            }
-            else {
-              this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
-              const evt = new ShowToastEvent({
+      //    }
+        //  else {
+           /* const result = await LightningConfirm.open({
+              message: "To apply this leave, you have to avail additional leaves from next quarter. You can take a leave loan upto 5 days.",
+              variant: "default", // headerless
+              theme: 'error', // more would be success, info, warning
+              label: "Avail Advance Annual Leaves"
+            });*/
+            if (result) {
+              this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c + 5;
+              if (this.availabledays >= data) {
+                this.submitcheck = false;
+                this.duration = data;
+                this.error = undefined;
+              }
+              else {
+              /*  this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
+                const evt = new ShowToastEvent({
                 message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
-              });
-              this.dispatchEvent(evt);
-              // alert('You dont have enough balance to apply leave');
-              this.duration = undefined;
-              this.error = undefined;
-              this.submitcheck = true;
-              this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c + this.duration;
+                });
+                  this.dispatchEvent(evt);
+               // alert('You dont have enough balance to apply leave');
+                this.duration = undefined;
+                this.error = undefined;
+                this.submitcheck = true;
+                this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;*/
+              }
             }
-
-          }
+            else {
+            //  this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
+           //   this.duration = undefined;
+           //   this.error = undefined;
+           //   this.submitcheck = true;
+           //   this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
+            }
+         // }
         }
       }
       else {
         if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
-          this.hideInotherleave = false;
           if (this.startDate != undefined || this.startDate != null) {
-
-            if (this.availabledays >= data) {
-              this.submitcheck = false;
-              this.duration = data;
-            }
-            else {
-
-              const evt = new ShowToastEvent({
+ 
+              if(this.availabledays >= data){
+                this.submitcheck = false;
+                this.duration = data;
+              } 
+              else{
+                
+                const evt = new ShowToastEvent({
                 message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
-              });
-              this.dispatchEvent(evt);
-              this.submitcheck = true;
-              // alert('You dont have enough balance to apply leave');
-            }
-
+                });
+                this.dispatchEvent(evt);
+                this.submitcheck = true;
+              }             
+             
           }
-          else {
+          else{
             if (this.availabledays >= data) {
               this.submitcheck = false;
               this.duration = data;
               this.error = undefined;
             }
             else {
-              const evt = new ShowToastEvent({
+              
+               const evt = new ShowToastEvent({
                 message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
-              });
-              this.dispatchEvent(evt);
+                });
+                this.dispatchEvent(evt);
+            
               this.duration = data;
-              // alert('Sorry !! You dont have enough leave balance. Consider applying leave of some other type.');
               this.duration = undefined;
               this.error = undefined;
               this.submitcheck = true;
             }
-          }
+          }  
         }
-        else {
+        else{
           this.hideInWorkfromHome = true;
           this.duration = data;
-        }
+          } 
       }
     } else if (error) {
       this.error = error;
@@ -456,6 +465,14 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
               this.error = error;
               console.log('error-->', error);
               console.log('this.error-->' + JSON.stringify(this.error));
+              console.log('error-->', error.body.pageErrors[0].message.substring(200, 250));
+              
+              this.dispatchEvent(
+                new ShowToastEvent({
+                    message: error.body.pageErrors[0].message.substring(197, 282),  
+                    variant: 'error',
+                }),
+            );
             });
         }
       }
