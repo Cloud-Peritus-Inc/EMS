@@ -44,7 +44,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
         	                          where name ='Notify Resource Manager About New Candidate' LIMIT 1];
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
-        
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         for(Contact con : finalContactList){
             String resourceManagerEmail = con.Resource_Manager__r.Official_Mail__c;
             Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
@@ -52,6 +52,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
             mail.setTemplateID(emailTemplate.Id);
             mail.setTargetObjectId(con.id);
             mail.setTreatTargetObjectAsRecipient(false);
+            mail.setOrgWideEmailAddressId(fromEmail);
             mail.setSaveAsActivity(false);         
             mails.add(mail);
         } 

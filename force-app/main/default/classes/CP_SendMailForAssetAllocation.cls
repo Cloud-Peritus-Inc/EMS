@@ -57,7 +57,6 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
         }
         if(contactListForIT.size() > 0){
             sendEmailToITTeam(contactListForIT);
-        	sendEmailToITTeamToAddCandidate(contactListForIT);
         }
     }
     
@@ -66,11 +65,13 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Email To IT Team For Assets' LIMIT 1];
         String itEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'IT_Team' LIMIT 1].Email__c;
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         for(Contact contactRec : contactRecordsList){
             Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
             mail.setToAddresses(new list<string>{itEmail});
             mail.setTemplateID(emailTemplate.Id);
             mail.setTargetObjectId(contactRec.id);
+            mail.setOrgWideEmailAddressId(fromEmail);
             mail.setTreatTargetObjectAsRecipient(false);
             mail.setSaveAsActivity(false);         
             mails.add(mail);
@@ -89,34 +90,18 @@ public class CP_SendMailForAssetAllocation implements Database.Batchable<sObject
                                       where name ='Mail for Create Official Mail'];
         //String emailList = [SELECT id, email FROM Contact WHERE name = 'IT Departement'].email;
         String itEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'IT_Team' LIMIT 1].Email__c;
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         for(Contact contactRec : contactRecordsList){
             Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
             mail.setToAddresses(new list<string>{itEmail});
             mail.setTemplateID(emailTemplate.Id);
             mail.setTargetObjectId(contactRec.id);
+            mail.setOrgWideEmailAddressId(fromEmail);
             mail.setTreatTargetObjectAsRecipient(false);
             mail.setSaveAsActivity(false);         
             mails.add(mail);
         }
         Messaging.sendEmail(mails);
-    }
-    
-    public void sendEmailToITTeamToAddCandidate(List<Contact> contactRecordsList){
-        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
-        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
-                                      where DeveloperName = 'Mail_for_Add_Email_to_Company_Mail_Group'];
-        //String emailList = [SELECT id, email FROM Contact WHERE name = 'IT Departement'].email;
-        String itEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'IT_Team' LIMIT 1].Email__c;
-        for(Contact contactRec : contactRecordsList){
-            Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
-            mail.setToAddresses(new list<string>{itEmail});
-            mail.setTemplateID(emailTemplate.Id);
-            mail.setTargetObjectId(contactRec.id);
-            mail.setTreatTargetObjectAsRecipient(false);
-            mail.setSaveAsActivity(false);         
-            mails.add(mail);
-        }
-          Messaging.sendEmail(mails);  
     }
     
     public void finish(Database.BatchableContext bc){

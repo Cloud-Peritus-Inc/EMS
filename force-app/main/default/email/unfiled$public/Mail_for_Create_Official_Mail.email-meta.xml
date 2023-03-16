@@ -5,30 +5,33 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Mail for Create Official Mail</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus : Date of joining tasks</subject>
+    <subject>Onboarding: Date of joining tasks</subject>
     <textOnly>Dear IT Team,
 
 
-Please find the details of the candidate who is going to join us today :
+Please find the details of the candidate who is going to join us today:
 
-First Name: {!Contact.FirstName}
-
-Last Name: {!Contact.LastName}
+Name: {!Contact.Name}
 
 Contact Number: {!Contact.EMS_Phone_Number__c}
 
 Personal Email ID: {!Contact.Personal_Email__c}
 
+Designation: {!Contact.Resource_Role__c}
 
-An official email id needs to be generated for this candidate. Also, please ensure that the IT assets are set-up for the new employee for their first day at work.
+
+An Official email ID needs to be generated for this candidate today. Also, please ensure that the IT assets are set-up for the new employee for their first day at work.
 
 
-Reply to this email with the official mail id of the employee once created, so that the HR executive can take the necessary actions.
+Send an email to hr.india@cloudperitus.com with the Official email ID of the employee once created, so that the HR executive can take the necessary actions.
+
+
+Please ensure that the new employee’s Official email id is also added to the company’s email groups.
 
 
 Regards,
 
-Team Cloud Peritus</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
