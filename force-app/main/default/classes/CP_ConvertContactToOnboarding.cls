@@ -93,11 +93,13 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setTreatTargetObjectAsRecipient(false);
         message.setOrgWideEmailAddressId(fromEmail);
         message.setSaveAsActivity(false);
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
+        mails.add(message);
+        
+        Messaging.sendEmail(mails);
+        //Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
     
      public static void sendEmailToAdminTeam(string recordId){
-        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='After Applicant Record Inserted Admin' LIMIT 1];
          
@@ -105,7 +107,9 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         List<String> adminEmailList = new List<String>();
         adminEmailList.add(taTeamEmail);
-        
+         
+        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+		
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
         message.toAddresses = adminEmailList;
         message.setTemplateID(emailTemplate.Id);
@@ -113,7 +117,9 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setTreatTargetObjectAsRecipient(false);
         message.setSaveAsActivity(false);
         message.setOrgWideEmailAddressId(fromEmail);
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
+        mails.add(message);
+         
+        Messaging.sendEmail(mails);
     }
     public void finish(Database.BatchableContext bc){
         
