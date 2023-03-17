@@ -57,6 +57,7 @@ public class TestDataFactory {
 			opp.accountId = accountid;
 			opp.amount = 1000;
 			opp.closeDate = Date.today().addDays(5);
+            opp.Contract_End_Date__c = System.today()+20;
 			opp.stageName = 'Prospecting';
 			opps.add(opp);
 		}
@@ -91,13 +92,32 @@ public class TestDataFactory {
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
                 ContactId = conId,
-                timezonesidkey='America/Los_Angeles', username='testemail@'+string.valueOf(system.now()));
+                timezonesidkey='America/Los_Angeles', username='testemail'/*+string.valueOf(system.now())*/+'@gmail.com');
         if(doInsert){
         insert user;
         }
         
         return user;
      }
+    
+    public static Grid_Configuration__c createGridConfig(String name, String description,String typeval,String resourcRole,Boolean isCreate){
+          Grid_Configuration__c gc = new Grid_Configuration__c();
+        gc.Name = name;
+        gc.Description__c = description;
+        gc.Goal_Start_Date__c = system.today().adddays(1);
+        gc.Goal_End_Date__c = system.today().adddays(12);
+        gc.Grid_Configuration_Type__c = typeval;
+        if(resourcRole != null){
+         gc.Resource_Role__c = resourcRole;   
+        }
+        
+        if(isCreate){
+        insert gc;
+        }
+        
+        return gc;
+        
+    }
     
     public static Resource_Role__c createResourceRole(Boolean doInsert){
         Resource_Role__c rr = createResourceRole('Software Engineer',doInsert);

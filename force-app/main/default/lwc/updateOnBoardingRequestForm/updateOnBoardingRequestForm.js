@@ -244,12 +244,7 @@ guestObj.Address_Details_Value_Filled__c = ts.isAddressDetailsCheckbox;
 guestObj.Company_Information_Viewed__c = ts.isCompanyInformationValueChecked;
 guestObj.Is_Confirm__c = ts.isConfirmSubmit;
 guestObj.Status__c = ts.statusUpdate;
-guestObj.Status__c = ts.isIdentityStatusUpdate;
-guestObj.Status__c = ts.isAdressStatusUpdate;
-guestObj.Status__c = ts.isEducationStatusUpdate;
-guestObj.Status__c = ts.isCertificationStatusUpdate;
-guestObj.Status__c = ts.isWorkExperienceStatusUpdate;
-guestObj.Status__c = ts.confirmStatusUpdate;
+
 
   console.log('guestObj-->'+guestObj);
   

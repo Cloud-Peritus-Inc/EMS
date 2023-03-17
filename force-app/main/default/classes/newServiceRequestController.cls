@@ -1,7 +1,7 @@
 public without sharing class newServiceRequestController {
     
     @AuraEnabled(cacheable=true)
-    public static datawrapper getTheCurrentData(String selectedOption){
+    public static datawrapper getTheCurrentData(){
         User uRec = [SELECT Id,ContactId FROM User Where Id=:Userinfo.getUserId()];
             integer openCases = 0;
             integer inprogressCases = 0;
@@ -34,9 +34,26 @@ public without sharing class newServiceRequestController {
         
     }
     
+     @AuraEnabled(cacheable=true)
+    public static casewrapper getTheCurrentAccAndContactId(){
+        User urec = [SELECT Id,ContactId,Contact.AccountId FROM User Where Id=:Userinfo.getUserId()];
+        casewrapper  cw = new casewrapper();
+        cw.contactid = urec.ContactId;
+        cw.accountid = urec.Contact.AccountId;
+        cw.conRec = [SELECT Id,Name, LastName, FirstName, AccountId,EMS_RM_Employee_Id__c, Department__c, Department__r.Name, Resource_Role__r.Name,
+                     Resource_Role__r.Id, Resource_Role__c,Work_Experience__c, EMS_RM_Notice_Period__c FROM Contact WHERE Id=:urec.ContactId];
+        return cw;
+    }    
+    
     public class casewrapper{
         @AuraEnabled
         public string caseid;
+        @AuraEnabled
+        public string contactid;
+        @AuraEnabled
+        public string accountid;
+         @AuraEnabled
+        public Contact conRec;
          @AuraEnabled
         public string caseNumber;
          @AuraEnabled

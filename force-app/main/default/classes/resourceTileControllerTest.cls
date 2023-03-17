@@ -14,14 +14,22 @@ public class resourceTileControllerTest {
     public static testmethod void checkTheLoggedInUserResourceDetails(){
          Resource_Role__c role = TestDataFactory.createResourceRole(true);
          TestDataFactory.createLeaveType(true);
+        List<Grid_Configuration__c> gCon = new List<Grid_Configuration__c>();
+        gCon.add(Testdatafactory.createGridConfig('namevalue','test description','Org Level Alert',null,false));
+        gCon.add(Testdatafactory.createGridConfig('namevalue','test description','Resource Role Alert',role.id,false));
+        insert gCon;
          Account acc = TestDataFactory.createAccount(true);
 		 Contact con=  TestDataFactory.createResourceContact(acc.id, false);
          con.EMS_RM_Employee_Id__c = 'CP10234';
          con.Resource_Role__c = role.Id;
          insert con;
-         User u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,false);
+
+         User u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
          Test.startTest();
-         resourceTileController.getUserInfo(u.Id);
+          resourceTileController.getTheCurrentAlerts();
+          system.runAs(u){
+             resourceTileController.getUserInfo(u.Id);
+           }
          Test.stopTest();
     }
 }

@@ -405,472 +405,83 @@
                             <div class="slds-p-around_xx-small">
                                 <div class="slds-grid slds-wrap">
                                     <div class="slds-col slds-size_2-of-2 ">
-
                                         <div class="slds-section slds-is-open">
-                                            <h3 class="slds-section__title slds-theme_shade">
+                                            <h3 class=" slds-theme_shade">
                                                 <span class="slds-truncate slds-p-horizontal_small"
                                                     title="Educational Details">Education Details</span>
                                             </h3>
-                                            <div aria-hidden="false" class="slds-section__content">
-                                                <div class="slds-grid slds-gutters">
-                                                    <div class="slds-col slds-size_1-of-2" style="padding-left: 25px;">
-                                                        <span>
-
-                                                            <lightning-combobox class="slds-p-top_small"
-                                                                disabled={readonlyfield} name="EMS_EM_Education__c"
-                                                                label="Level of Education" required value={levleofedu}
-                                                                placeholder="Select" options={LevelofEducationValue}
-                                                                onchange={LevelofEducation}></lightning-combobox>
-
-                                                            <lightning-input class="slds-p-top_small"
-                                                                disabled={readonlyfield} value={fieldOfStudy}
-                                                                onchange={fieldofStudy} name="EMS_EM_Field_of_Study__c"
-                                                                type="text" label="Field of Study"></lightning-input>
-                                                            <lightning-input class="slds-p-top_small"
-                                                                disabled={readonlyfield} value={graduationDate} required
-                                                                onchange={GraduationDate} name="EMS_EM_GDate__c"
-                                                                type="date" label="Graduation Date "></lightning-input>
-
-                                                        </span>
-                                                    </div>
-                                                    <div class="slds-col slds-size_1-of-2">
-                                                        <span>
-                                                            <lightning-input class="slds-p-top_small" value={degree}
-                                                                disabled={readonlyfield} required onchange={Degree}
-                                                                name="EMS_EM_Degree__c" type="text"
-                                                                label="Degree "></lightning-input>
-
-                                                            <lightning-input class="slds-p-top_small"
-                                                                disabled={readonlyfield} required value={instutionname}
-                                                                onchange={InstitutionName} name="EMS_EM_IName__c"
-                                                                type="text" label="Institution Name"></lightning-input>
-                                                        </span>
-                                                    </div>
+                                            <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none modalBodyy">
+                                                 <lightning-card>
+                                                    <lightning-button style="padding-right: 15px; " label="Add More" slot="actions"
+                                                    disabled={readonlyfield} icon-name="utility:add" 
+                                                    onclick={addRowEdu}></lightning-button>
+                                                     <!-- <div slot="actions">
+                                                         <lightning-button label="Add More" slot="actions" icon-name="utility:add" onclick={addRow1}></lightning-button>
+                                                     </div> -->
+                                                 
+                                                     <!-- Use a template to iterate over the records array and display each row -->
+                                                     <template for:each={edurecords} for:item="obj">
+                                                         <div key={obj.Id}  class="slds-grid slds-gutters">
+                                                            
+                                                             <div class="slds-col" style="padding-left: 25px;">
+                                                                 <span>
+                                                                     <lightning-combobox class="fields" value={obj.EMS_EM_Education__c} data-id={obj.Id} onchange={eduupdateValues} 
+                                                                                                    options={LevelofEducationValue} placeholder="Select" name="EMS_EM_Education__c"
+                                                                                                    label="Level of Education"></lightning-combobox>
+                                                                     <lightning-input class="fields"  value={obj.EMS_EM_Degree__c} data-id={obj.Id} onchange={eduupdateValues}
+                                                                                                    name="EMS_EM_Degree__c" type="text"
+                                                                                                    label="Degree"></lightning-input>
+                                                                     <lightning-input class="fields"  value={obj.EMS_EM_Field_of_Study__c} data-id={obj.Id} onchange={eduupdateValues}
+                                                                                                    name="EMS_EM_Field_of_Study__c" type="Text"
+                                                                                                    label="Field of Study"></lightning-input>
+                                                                 </span>
+                                                                 <br>
+                                                                 <div class="slds-p-around_medium lgc-bg">
+                                                                     <label class="slds-form-element__label" for="text-input-id-1">
+                                                                         <abbr class="slds-required" title="required">*</abbr>
+                                                                         Certificate
+                                                                     </label>
+                                                                     <lightning-helptext
+                                                                         content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
+                                                                     <lightning-input type="file" disabled={readonlyfield}
+                                                                         onchange={onFileUpload4} name="certificate1" multiple="true"
+                                                                         accept={accept}></lightning-input>
+                                                                     <p>{fileName4}</p>
+                                                                 </div>
+                                                                 <br><br>
+                                                             </div>
+                                                             <div class="slds-col ">
+                                                                 <span>
+                                                                     <lightning-input class="fields"  value={obj.EMS_EM_IName__c} data-id={obj.Id} onchange={eduupdateValues}
+                                                                                                 name="EMS_EM_IName__c" type="Text"
+                                                                                                 label="Institution Name"></lightning-input>
+                                                                     <lightning-input class="fields"  value={obj.EMS_EM_GDate__c} data-id={obj.Id} onchange={eduupdateValues}
+                                                                                                    name="EMS_EM_GDate__c" type="date"
+                                                                                                    label="Graduation Date"></lightning-input>
+                                                                 </span>
+                                                             </div>
+                                                             <div class="slds-col">
+                                                                <br>
+                                                             <lightning-button-icon icon-name="action:delete"  alternative-text="Delete" title="Delete" data-id={obj1.Id} onclick={handleDeleteEdu}></lightning-button-icon>
+                                                         </div>
+                                                         
+                                                         </div>
+                                                     </template>
+                                                 </lightning-card>
                                                 </div>
-                                            </div>
-                                            <br>
-                                            <div class="slds-p-around_medium lgc-bg">
-                                                <label class="slds-form-element__label" for="text-input-id-1">
-                                                    <abbr class="slds-required" title="required">*</abbr>
-                                                    Certificate
-                                                </label>
-                                                <lightning-helptext
-                                                    content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                <lightning-input type="file" disabled={readonlyfield}
-                                                    onchange={onFileUpload3} title="Certificate" name="certificate"
-                                                    multiple="true" accept={accept}></lightning-input>
-                                                <p> {fileName3}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Add-New Button Starts  -->
-                                <template if:true={hideplus}>
-                                    <lightning-button-icon style="padding-left: 14px;" icon-name="action:new"
-                                        alternative-text="Add" class="slds-m-left_xx-small" title="add"
-                                        onclick={handleraddmore}>
-                                    </lightning-button-icon>
-                                    <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                                </template>
-                                <template if:true={addmoreempfields}>
-                                    <lightning-button-icon icon-name="utility:delete" style="padding-left: 14px;"
-                                        alternative-text="Delete" class="slds-m-left_xx-small" title="Delete"
-                                        onclick={removesectionemp}></lightning-button-icon>
-
-                                    <div class="slds-grid slds-wrap">
-                                        <div class="slds-col slds-size_2-of-2 ">
-
-                                            <div class="slds-section slds-is-open">
-                                                <h3 class="slds-section__title slds-theme_shade">
-                                                    <span class="slds-truncate slds-p-horizontal_small"
-                                                        title="Educational Details">Additional Educational
-                                                        Details</span>
-                                                </h3>
-                                                <div aria-hidden="false" class="slds-section__content">
-                                                    <div class="slds-grid slds-gutters ">
-                                                        <div class="slds-col slds-size_1-of-2"
-                                                            style="padding-left: 25px;">
-                                                            <span>
-
-                                                                <lightning-combobox disabled={readonlyfield} required
-                                                                    name="EMS_EM_Education1__c"
-                                                                    label="Level of Education" value={levleofedu1}
-                                                                    placeholder="Select"
-                                                                    options={LevelofEducationValue1}
-                                                                    onchange={LevelofEducation1}></lightning-combobox>
-
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    disabled={readonlyfield} value={fieldOfStudy1}
-                                                                    onchange={fieldofStudy1}
-                                                                    name="EMS_EM_Field_of_Study1__c" type="text"
-                                                                    label="Field of Study"></lightning-input>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={graduationDate1} disabled={readonlyfield}
-                                                                    required onchange={GraduationDate1}
-                                                                    name="EMS_EM_GDate1__c" type="date"
-                                                                    label="Graduation Date "></lightning-input>
-
-
-                                                            </span>
-                                                        </div>
-                                                        <div class="slds-col slds-size_1-of-2">
-                                                            <span>
-                                                                <lightning-input value={degree1}
-                                                                    disabled={readonlyfield} required onchange={Degree1}
-                                                                    name="EMS_EM_Degree1__c" type="text"
-                                                                    label="Degree "></lightning-input>
-
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={instutionname1} disabled={readonlyfield}
-                                                                    required onchange={InstitutionName1}
-                                                                    name="EMS_EM_IName1__c" type="text"
-                                                                    label="Institution Name"></lightning-input>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="slds-p-around_medium lgc-bg">
-                                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                                        <abbr class="slds-required" title="required">*</abbr>
-                                                        Certificate
-                                                    </label>
-                                                    <lightning-helptext
-                                                        content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                    <lightning-input type="file" disabled={readonlyfield}
-                                                        onchange={onFileUpload4} name="certificate1" multiple="true"
-                                                        accept={accept}></lightning-input>
-                                                    <p>{fileName4}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <template if:true={hideextraadd}>
-                                        <lightning-button-icon icon-name="action:new" style="padding-left: 14px;"
-                                            alternative-text="Add" class="slds-m-left_xx-small" title="add"
-                                            onclick={handlerEmpExtra}></lightning-button-icon>
-                                        <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                                    </template>
-                                </template>
-                                <template if:true={extraempfields}>
-                                    <lightning-button-icon icon-name="utility:delete" style="padding-left: 14px;"
-                                        alternative-text="Delete" class="slds-m-left_xx-small" title="Delete"
-                                        onclick={removesectionextra}></lightning-button-icon>
-                                    <div class="slds-grid slds-wrap">
-                                        <div class="slds-col slds-size_2-of-2 ">
-                                            <div class="slds-section slds-is-open">
-                                                <h3 class="slds-section__title slds-theme_shade">
-                                                    <span class="slds-truncate slds-p-horizontal_small"
-                                                        title="Educational Details">Additional Educational
-                                                        Details</span>
-                                                </h3>
-                                                <div aria-hidden="false" class="slds-section__content">
-                                                    <div class="slds-grid slds-gutters ">
-                                                        <div class="slds-col slds-size_1-of-2"
-                                                            style="padding-left: 25px;">
-                                                            <span>
-                                                                <lightning-combobox disabled={readonlyfield} required
-                                                                    class="slds-p-top_small" name="EMS_EM_Education2__c"
-                                                                    label="Level of Education" value={levleofedu2}
-                                                                    placeholder="Select"
-                                                                    options={LevelofEducationValue2}
-                                                                    onchange={LevelofEducation2}></lightning-combobox>
-
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={fieldOfStudy2} disabled={readonlyfield}
-                                                                    onchange={fieldofStudy2}
-                                                                    name="EMS_EM_Field_of_Study2__c" type="text"
-                                                                    label="Field of Study"></lightning-input>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={graduationDate2} disabled={readonlyfield}
-                                                                    required onchange={GraduationDate2}
-                                                                    name="EMS_EM_GDate2__c" type="date"
-                                                                    label="Graduation Date "></lightning-input>
-                                                            </span>
-                                                        </div>
-                                                        <div class="slds-col slds-size_1-of-2">
-                                                            <span>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={degree2} disabled={readonlyfield} required
-                                                                    onchange={Degree2} name="EMS_EM_Degree2__c"
-                                                                    type="text" label="Degree "></lightning-input>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={instutionname2} disabled={readonlyfield}
-                                                                    required onchange={InstitutionName2}
-                                                                    name="EMS_EM_IName2__c" type="text"
-                                                                    label="Institution Name"></lightning-input>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-
-                                                <div class="slds-p-around_medium lgc-bg">
-                                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                                        <abbr class="slds-required" title="required">*</abbr>
-                                                        Certificate
-                                                    </label>
-                                                    <lightning-helptext
-                                                        content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                    <lightning-input type="file" disabled={readonlyfield}
-                                                        onchange={onFileUpload5} name="certificate2" multiple="true"
-                                                        accept={accept}></lightning-input>
-                                                    <p>{fileName5}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <template if:true={hideextraadd1}>
-                                        <lightning-button-icon icon-name="action:new" style="padding-left: 14px;"
-                                            alternative-text="Add" class="slds-m-left_xx-small" title="add"
-                                            onclick={handlerEmpExtra1}></lightning-button-icon>
-                                        <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                                    </template>
-                                </template>
-
-                                <template if:true={extraempfields1}>
-                                    <lightning-button-icon icon-name="utility:delete" style="padding-left: 14px;"
-                                        alternative-text="Delete" class="slds-m-left_xx-small" title="Delete"
-                                        onclick={removesectionextra1}></lightning-button-icon>
-                                    <div class="slds-grid slds-wrap">
-                                        <div class="slds-col slds-size_2-of-2 ">
-
-                                            <div class="slds-section slds-is-open">
-                                                <h3 class="slds-section__title slds-theme_shade">
-                                                    <span class="slds-truncate slds-p-horizontal_small"
-                                                        title="Educational Details">Additional Educational
-                                                        Details</span>
-                                                </h3>
-                                                <div aria-hidden="false" class="slds-section__content">
-                                                    <div class="slds-grid slds-gutters ">
-                                                        <div class="slds-col slds-size_1-of-2"
-                                                            style="padding-left: 25px;">
-                                                            <span>
-
-                                                                <lightning-combobox disabled={readonlyfield} required name="EMS_EM_Education3__c" label="Level of Education" value={levleofedu3} placeholder="Select" options={LevelofEducationValue3} onchange={LevelofEducation3}></lightning-combobox>
-
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={fieldOfStudy3} disabled={readonlyfield}
-                                                                    onchange={fieldofStudy3}
-                                                                    name="EMS_EM_Field_of_Study3__c" type="text"
-                                                                    label="Field of Study"></lightning-input>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={graduationDate3} required
-                                                                    disabled={readonlyfield} onchange={GraduationDate3}
-                                                                    name="EMS_EM_GDate3__c" type="date"
-                                                                    label="Graduation Date "></lightning-input>
-                                                            </span>
-                                                        </div>
-                                                        <div class="slds-col slds-size_1-of-2">
-                                                            <span>
-                                                                <lightning-input value={degree3}
-                                                                    disabled={readonlyfield} onchange={Degree3} required
-                                                                    name="EMS_EM_Degree3__c" type="text"
-                                                                    label="Degree "></lightning-input>
-
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={instutionname3} required
-                                                                    disabled={readonlyfield} onchange={InstitutionName3}
-                                                                    name="EMS_EM_IName3__c" type="text"
-                                                                    label="Institution Name"></lightning-input>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-
-                                                <div class="slds-p-around_medium lgc-bg">
-                                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                                        <abbr class="slds-required" title="required">*</abbr>
-                                                        Certificate
-                                                    </label>
-                                                    <lightning-helptext
-                                                        content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                    <lightning-input type="file" disabled={readonlyfield}
-                                                        onchange={onFileUpload6} name="certificate3" multiple="true"
-                                                        accept={accept}></lightning-input>
-                                                    <p>{fileName6}</p>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <template if:true={hideextraadd2}>
-                                        <lightning-button-icon icon-name="action:new" style="padding-left: 14px;"
-                                            alternative-text="Add" class="slds-m-left_xx-small" title="add"
-                                            onclick={handlerEmpExtra2}></lightning-button-icon>
-                                        <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                                    </template>
-                                </template>
-
-                                <template if:true={extraempfields2}>
-                                    <lightning-button-icon icon-name="utility:delete" style="padding-left: 14px;"
-                                        alternative-text="Delete" class="slds-m-left_xx-small" title="Delete"
-                                        onclick={removesectionextra2}></lightning-button-icon>
-                                    <div class="slds-grid slds-wrap">
-                                        <div class="slds-col slds-size_2-of-2 ">
-
-                                            <div class="slds-section slds-is-open">
-                                                <h3 class="slds-section__title slds-theme_shade">
-                                                    <span class="slds-truncate slds-p-horizontal_small"
-                                                        title="Educational Details">Additional Educational
-                                                        Details</span>
-                                                </h3>
-                                                <div aria-hidden="false" class="slds-section__content">
-                                                    <div class="slds-grid slds-gutters ">
-                                                        <div class="slds-col slds-size_1-of-2"
-                                                            style="padding-left: 25px;">
-                                                            <span>
-
-                                                                <lightning-combobox disabled={readonlyfield} required
-                                                                    name="EMS_EM_Education4__c"
-                                                                    label="Level of Education" value={levleofedu4}
-                                                                    placeholder="Select"
-                                                                    options={LevelofEducationValue4}
-                                                                    onchange={LevelofEducation4}></lightning-combobox>
-
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={fieldOfStudy4} disabled={readonlyfield}
-                                                                    onchange={fieldofStudy4}
-                                                                    name="EMS_EM_Field_of_Study4__c" type="text"
-                                                                    label="Field of Study"></lightning-input>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={graduationDate4} required
-                                                                    disabled={readonlyfield} onchange={GraduationDate4}
-                                                                    name="EMS_EM_GDate4__c" type="date"
-                                                                    label="Graduation Date "></lightning-input>
-
-                                                            </span>
-                                                        </div>
-                                                        <div class="slds-col slds-size_1-of-2">
-                                                            <span>
-                                                                <lightning-input value={degree4}
-                                                                    disabled={readonlyfield} onchange={Degree4} required
-                                                                    name="EMS_EM_Degree4__c" type="text"
-                                                                    label="Degree "></lightning-input>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={instutionname4} required
-                                                                    disabled={readonlyfield} onchange={InstitutionName4}
-                                                                    name="EMS_EM_IName4__c" type="text"
-                                                                    label="Institution Name"></lightning-input>
-
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="slds-p-around_medium lgc-bg">
-                                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                                        <abbr class="slds-required" title="required">*</abbr>
-                                                        Certificate
-                                                    </label>
-                                                    <lightning-helptext
-                                                        content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                    <lightning-input type="file" disabled={readonlyfield}
-                                                        onchange={onFileUpload7} name="certificate4" multiple="true"
-                                                        accept={accept}></lightning-input>
-                                                    <p>{fileName7}</p>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <template if:true={hideextraadd3}>
-                                        <lightning-button-icon icon-name="action:new" style="padding-left: 14px;"
-                                            alternative-text="Add" class="slds-m-left_xx-small" title="add"
-                                            onclick={handlerEmpExtra3}></lightning-button-icon>
-                                        <p class="slds-m-left_xx-small stylingForAdd">Add More</p>
-                                    </template>
-                                </template>
-
-                                <template if:true={extraempfields3}>
-                                    <lightning-button-icon icon-name="utility:delete" style="padding-left: 14px;"
-                                        alternative-text="Delete" class="slds-m-left_xx-small" title="Delete"
-                                        onclick={removesectionextra3}></lightning-button-icon>
-                                    <div class="slds-grid slds-wrap">
-                                        <div class="slds-col slds-size_2-of-2 ">
-
-                                            <div class="slds-section slds-is-open">
-                                                <h3 class="slds-section__title slds-theme_shade">
-                                                    <span class="slds-truncate slds-p-horizontal_small"
-                                                        title="Educational Details">Additional Educational
-                                                        Details</span>
-                                                </h3>
-                                                <div aria-hidden="false" class="slds-section__content">
-                                                    <div class="slds-grid slds-gutters ">
-                                                        <div class="slds-col slds-size_1-of-2"
-                                                            style="padding-left: 25px;">
-                                                            <span>
-
-
-                                                                <lightning-combobox disabled={readonlyfield} required
-                                                                    name="EMS_EM_Education5__c"
-                                                                    label="Level of Education" value={levleofedu5}
-                                                                    placeholder="Select"
-                                                                    options={LevelofEducationValue5}
-                                                                    onchange={LevelofEducation5}></lightning-combobox>
-
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={fieldOfStudy5} disabled={readonlyfield}
-                                                                    onchange={fieldofStudy5}
-                                                                    name="EMS_EM_Field_of_Study5__c" type="text"
-                                                                    label="Field of Study"></lightning-input>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={graduationDate5} required
-                                                                    disabled={readonlyfield} onchange={GraduationDate5}
-                                                                    name="EMS_EM_GDate5__c" type="date"
-                                                                    label="Graduation Date "></lightning-input>
-
-                                                            </span>
-                                                        </div>
-                                                        <div class="slds-col slds-size_1-of-2">
-                                                            <span>
-                                                                <lightning-input value={degree5}
-                                                                    disabled={readonlyfield} required onchange={Degree5}
-                                                                    name="EMS_EM_Degree5__c" type="text"
-                                                                    label="Degree "></lightning-input>
-                                                                <lightning-input class="slds-p-top_small"
-                                                                    value={instutionname5} required
-                                                                    disabled={readonlyfield} onchange={InstitutionName5}
-                                                                    name="EMS_EM_IName5__c" type="text"
-                                                                    label="Institution Name"></lightning-input>
-
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-
-                                                <div class="slds-p-around_medium lgc-bg">
-                                                    <label class="slds-form-element__label" for="text-input-id-1">
-                                                        <abbr class="slds-required" title="required">*</abbr>
-                                                        Certificate
-                                                    </label>
-                                                    <lightning-helptext
-                                                        content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                    <lightning-input type="file" disabled={readonlyfield}
-                                                        onchange={onFileUpload8} name="certificate5" multiple="true"
-                                                        accept={accept}></lightning-input>
-                                                    <p>{fileName8}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                </template>
-                                <div style="text-align:center">
-                                    <lightning-button style="margin:5px;" label="Save" type="brand" disabled={readonlyfield}
-                                        onclick={SaveSubmitOnboarding} title="save" variant="brand"></lightning-button>
+                                                <br><br>
+                                <div slot="footer" style="text-align:center">
+                                    <lightning-button style="margin:5px;" variant="brand" label="Save"
+                                        onclick={handleSaveEdu} disabled={readonlyfield}></lightning-button>
                                 </div>
                                 <br><br>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        
                     </template>
                     <!--Education Details Code Ends here-->
                     <!--Other Certification Code Starts here-->

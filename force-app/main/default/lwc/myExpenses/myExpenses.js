@@ -77,7 +77,7 @@ handleFormSubmit(event) {
     fields.Resource__c = this.resourceId;
 
     // Push the updated fields though for the actual submission itself
-    this.template.querySelector('lightning-record-form').submit(fields);
+    this.template.querySelector('lightning-record-edit-form').submit(fields);
 }
 
  handleSuccess(event) {

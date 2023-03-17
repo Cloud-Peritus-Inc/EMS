@@ -181,78 +181,6 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
-        <name>Copy_1_of_HR_approves_rejects_leave_request_of_emp_reporting_to_lead</name>
-        <label>HR approves/rejects leave request of emp reporting to lead(Email To Lead)</label>
-        <locationX>842</locationX>
-        <locationY>935</locationY>
-        <actionName>EMS_LM_Leave_History__c.HR_approves_rejects_leave_request_of_employees_reporting_to_lead_instead_of_lea</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>HR_approves_leave_request_of_emp_reporting_to_PM_Email_To_PM</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Copy_1_of_HR_Rejects_leave_request_of_emp_reporting_to_Approver1_Email_To_Approv</name>
-        <label>HR Rejects leave request of emp reporting to Approver1(Email To Approver1)</label>
-        <locationX>2426</locationX>
-        <locationY>935</locationY>
-        <actionName>EMS_LM_Leave_History__c.HR_Rejects_leave_request_of_emp_reporting_to_Approver1_Email_To_Approver1</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>HR_Rejects_leave_request_of_emp_reporting_to_PM_Email_To_Approver2</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Copy_1_of_When_HR_approves_Leave_Email_To_Employee</name>
-        <label>Copy 1 of When HR approves Leave (Email To Employee)</label>
-        <locationX>842</locationX>
-        <locationY>815</locationY>
-        <actionName>EMS_LM_Leave_History__c.When_HR_approves_Leave_Email_To_Employee</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>Copy_1_of_HR_approves_rejects_leave_request_of_emp_reporting_to_lead</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Copy_1_of_When_HR_rejects_Leave_request_Email_To_Employee</name>
-        <label>Copy 1 of When HR rejects Leave request(Email To Employee)</label>
-        <locationX>2426</locationX>
-        <locationY>815</locationY>
-        <actionName>EMS_LM_Leave_History__c.When_HR_rejects_Leave_request_Email_To_Employee</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>Copy_1_of_HR_Rejects_leave_request_of_emp_reporting_to_Approver1_Email_To_Approv</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
         <name>Email_To_HR_on_Approval_of_leave_Request</name>
         <label>Email To HR on Approval of leave Request</label>
         <locationX>50</locationX>
@@ -406,6 +334,42 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
+        <name>HR_approves_Leave_Email_To_Employee</name>
+        <label>HR approves Leave (Email To Employee)</label>
+        <locationX>842</locationX>
+        <locationY>815</locationY>
+        <actionName>EMS_LM_Leave_History__c.When_HR_approves_Leave_Email_To_Employee_Copy1</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>HR_approves_leave_request_Email_to_Approver1</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>HR_approves_leave_request_Email_to_Approver1</name>
+        <label>HR approves leave request(Email to Approver1)</label>
+        <locationX>842</locationX>
+        <locationY>935</locationY>
+        <actionName>EMS_LM_Leave_History__c.HR_approves_rejects_leave_request_of_emp_reporting_to_lead_instead_of_lead_Copy1</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>HR_approves_leave_request_of_emp_reporting_to_PM_Email_To_PM</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>HR_approves_leave_request_of_emp_reporting_to_PM_Email_To_PM</name>
         <label>HR approves leave request of emp reporting to PM,(Email To PM)</label>
         <locationX>842</locationX>
@@ -442,6 +406,24 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
+        <name>HR_rejects_Leave_request_Email_To_Employee</name>
+        <label>HR rejects Leave request(Email To Employee)</label>
+        <locationX>2426</locationX>
+        <locationY>815</locationY>
+        <actionName>EMS_LM_Leave_History__c.When_HR_rejects_Leave_request_Email_To_Employee_Copy1</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>R_Rejects_leave_request_of_emp_Email_To_Approver1</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>HR_Rejects_leave_request_of_emp_reporting_to_Approver1_Email_To_Approver1</name>
         <label>HR Rejects leave request of emp reporting to Approver1(Email To Approver1)</label>
         <locationX>1766</locationX>
@@ -468,6 +450,24 @@
         <actionType>emailAlert</actionType>
         <connector>
             <targetReference>Get_user_records_of_App1</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>R_Rejects_leave_request_of_emp_Email_To_Approver1</name>
+        <label>HR Rejects leave request of emp(Email To Approver1)</label>
+        <locationX>2426</locationX>
+        <locationY>935</locationY>
+        <actionName>EMS_LM_Leave_History__c.HR_Rejects_leave_request_of_emp_reporting_to_Approver1_Email_To_Approver1_Copy1</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>HR_Rejects_leave_request_of_emp_reporting_to_PM_Email_To_Approver2</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -709,7 +709,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_When_HR_rejects_Leave_request_Email_To_Employee</targetReference>
+                <targetReference>HR_rejects_Leave_request_Email_To_Employee</targetReference>
             </connector>
             <label>HR rejects leave on behalf of approver 1 oR 2(Email to App1 &amp; App2)</label>
         </rules>
@@ -1032,7 +1032,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_When_HR_approves_Leave_Email_To_Employee</targetReference>
+                <targetReference>HR_approves_Leave_Email_To_Employee</targetReference>
             </connector>
             <label>HR approves leave on behalf of an approver 1 OR 2(Email To App1 &amp; App2)</label>
         </rules>

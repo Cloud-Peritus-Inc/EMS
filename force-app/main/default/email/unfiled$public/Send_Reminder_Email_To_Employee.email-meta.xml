@@ -5,24 +5,19 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Send Reminder Email To Employee</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus : Gentle Reminder</subject>
+    <subject>Onboarding: Gentle Reminder to complete onboarding process</subject>
     <textOnly>Dear {!Contact.Name},
 
 
-This is a gentle reminder to complete your onboarding formalities by the end of day.
-
-
-If you are unable to provide any of the documents or details please contact the HR executive.
+This is a gentle reminder to complete your onboarding formalities by the end of day. If you are unable to provide any of the documents or details please contact the HR executive.
 
 
 Thanks for your cooperation!
 
 
-Best wishes,
+Regards,
 
-HR Team
-
-Cloud Peritus.</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
