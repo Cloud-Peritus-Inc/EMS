@@ -9,5 +9,5 @@
     <relationshipName>Resource_Requests</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Auto Number</type>
+    <type>AutoNumber</type>
 </CustomField>
