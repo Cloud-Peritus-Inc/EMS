@@ -91,8 +91,19 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       if (this.value == 'Loss of Pay' || this.value == 'Annual Leave') {
         if (this.value == 'Loss of Pay') {
           if (this.startDate != undefined || this.startDate != null) {
-             this.submitcheck =false;
-             this.duration = data;      
+            if(data>90){
+              this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration= undefined;
+              this.submitcheck =true;
+              const evt = new ShowToastEvent({
+                message: 'Sorry !! You cannot take this leave more than 90 days',
+                variant: 'error',
+                });
+                this.dispatchEvent(evt);
+            }else{
+              this.submitcheck =false;
+              this.duration = data;
+            }
+                   
           }
         }
         if (this.value == 'Annual Leave') {

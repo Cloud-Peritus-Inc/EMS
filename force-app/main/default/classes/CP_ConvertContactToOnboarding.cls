@@ -29,6 +29,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         
         List<Contact> applicantsToSendMail = new List<Contact>();
         List<Contact> finalContactList = new List<Contact>();
+        List<Messaging.SingleEmailMessage> lstMails = new List<Messaging.SingleEmailMessage>();
         
         for(Contact contactRec : contactList){
             if((contactRec.EMS_EM_JD__c.addDays(-10) == System.today() || contactRec.EMS_EM_JD__c.addDays(-11) == System.today()) && contactRec.Is_PreOnboarding_Mail_Sent__c == False){
@@ -39,10 +40,12 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
                 String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id);
                 if(status == 'success'){
                     sendEmailToHR(contactRec.Id);
-                    sendEmailToAdminTeam(contactRec.Id);                
+                    Messaging.SingleEmailMessage message = sendEmailToAdminTeam(contactRec.Id);
+                    lstMails.add(message);
                 }  
             }
         }
+        Messaging.sendEmail(lstMails);
         
         if(applicantsToSendMail.size() > 0){
             for(Contact con : applicantsToSendMail){
@@ -99,7 +102,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         //Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
     }
     
-     public static void sendEmailToAdminTeam(string recordId){
+     public static Messaging.SingleEmailMessage sendEmailToAdminTeam(string recordId){
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='After Applicant Record Inserted Admin' LIMIT 1];
          
@@ -108,7 +111,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         List<String> adminEmailList = new List<String>();
         adminEmailList.add(taTeamEmail);
          
-        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+        //List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 		
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
         message.toAddresses = adminEmailList;
@@ -117,9 +120,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setTreatTargetObjectAsRecipient(false);
         message.setSaveAsActivity(false);
         message.setOrgWideEmailAddressId(fromEmail);
-        mails.add(message);
-         
-        Messaging.sendEmail(mails);
+        return message;
     }
     public void finish(Database.BatchableContext bc){
         

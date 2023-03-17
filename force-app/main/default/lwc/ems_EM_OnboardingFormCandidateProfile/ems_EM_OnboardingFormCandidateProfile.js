@@ -1590,7 +1590,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     if(this.isIdentifyDetails){
       if(this.selectStep2()){
         this.isIdentifyDetailsCheckbox = true;
-        this.isIdentityStatusUpdate = 'In Progress';
+        this.statusUpdate = 'In Progress';
         updateOnBoardingRequest(this); 
         if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1604,7 +1604,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   if(this.isAddressDetails){
     if(this.selectStep3()){
       this.isAddressDetailsCheckbox = true;
-      this.isAdressStatusUpdate = 'In Progress';
+      this.statusUpdate = 'In Progress';
       updateOnBoardingRequest(this); 
       if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1618,7 +1618,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   if(this.isEducationDetails){
    if(this.selectStep4()) {  
     this.isEducationDetailsCheckbox = true;
-    this.isEducationStatusUpdate = 'In Progress';
+    this.statusUpdate = 'In Progress';
       updateOnBoardingRequest(this);
       if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1631,7 +1631,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   }
   if(this.isOtherCertifications){
     this.isOtherCertificationsCheckbox = true;
-    this.isCertificationStatusUpdate = 'In Progress';
+    this.statusUpdate = 'In Progress';
     updateOnBoardingRequest(this);
     if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1644,7 +1644,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   if(this.isWorkExperience){
     if(this.selectStep5()){
      this.isWorkExperienceCheckbox = true;
-     this.isWorkExperienceStatusUpdate = 'In Progress';
+     this.statusUpdate = 'In Progress';
     updateOnBoardingRequest(this);
     if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -1661,7 +1661,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   {
     this.isConfirmSubmit = true;
     this.readonlyfield = true;
-    this.confirmStatusUpdate = 'Submitted for Review';
+    this.statusUpdate = 'Submitted for Review';
     updateOnBoardingRequest(this);
     displayShowtoastMessage('Success','Onboarding Form Submitted Successfully','success',this);
     this.buttonDisable = true;

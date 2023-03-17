@@ -5,18 +5,22 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Monthiversary Email</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus :  Happy Monthiversary!</subject>
+    <subject>Onboarding: Happy monthiversary!</subject>
     <textOnly>Dear {!Contact.Name},
 
-Congratulations on successfully completing one month at Cloud Peritus! We hope you have settled into your role here and have gained the necessary clarity on your responsibilities. We look forward to your esteemed contributions. We would love to hear from you if you have any feedback for us on your onboarding experience. Please reply to this mail to share your thoughts.
+
+Congratulations on successfully completing one month at Cloud Peritus! We hope you have settled into your role here and have gained the necessary clarity on your responsibilities. We look forward to your esteemed contributions.
+
+
+We would love to hear from you if you have any feedback for us on your onboarding experience. Please please send an email to hr.india@cloudperitus.com to share your thoughts.
+
 
 Once again, Congratulations !!!
 
-Best Wishes,
 
-HR Team
+Regards,
 
-Cloud Peritus</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
