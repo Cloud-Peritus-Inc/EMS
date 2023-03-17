@@ -47,15 +47,7 @@
                         options={dOptions} onchange={dayChange}></lightning-combobox>
                     </div>
                   </lightning-layout-item> 
-                <!--/template-->
-                <!--template if:false={firstsecondDay}>
-                  <lightning-layout-item padding="around-small" size="6">
-                    <div>
-                      <lightning-combobox name='selectday' label='Select Day' placeholder='Select Day' value={fullday}
-                        options={halfOptions} onchange={dayhalfChange}></lightning-combobox>
-                    </div>
-                  </lightning-layout-item>            
-                </template-->
+                
                 <lightning-layout-item padding="around-small" size="12">
                   <div>
                     <lightning-input type="text" label="Leave Duration" value={duration} disabled></lightning-input>
@@ -67,7 +59,7 @@
                 <template if:true={hideInWorkfromHome}>
                   <lightning-layout-item padding="around-small" size="12">
                   <div>
-                    <lightning-combobox name="leavetype" label="Leave Type"  disabled placeholder="Work from Home"
+                    <lightning-combobox name="leavetype" label="Leave Type"  disabled placeholder="Work From Home"
                        required></lightning-combobox>
                   </div>
                 </lightning-layout-item>

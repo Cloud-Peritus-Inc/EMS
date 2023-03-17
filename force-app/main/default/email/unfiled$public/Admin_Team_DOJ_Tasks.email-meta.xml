@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Admin Team DOJ Tasks</name>
+    <style>freeForm</style>
+    <subject>Cloud Peritus: Date of joining tasks</subject>
+    <textOnly>Dear Admin Team,
+
+
+Today is the following candidate’s date of joining:
+
+First Name: {!Contact.FirstName}
+
+Last Name: {!Contact.LastName}
+
+Designation: {!Contact.Resource_Role__c}
+
+
+Please ensure that the joining kit is ready for the new employee.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
