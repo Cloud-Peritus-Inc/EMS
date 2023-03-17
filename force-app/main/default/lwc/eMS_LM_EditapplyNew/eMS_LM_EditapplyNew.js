@@ -21,7 +21,6 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   duration;
   @track lOptions = [];
   dOptions = [{ label: 'Full Day', value: 'Full Day' }];
-  halfOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
   fullday;
   location;
   error;
@@ -52,6 +51,18 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   hideInWorkfromHome = false;
   weekendwfh = false;
   currentAnnualleaves = 0;
+
+  connectedCallback() {
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let y = today.getFullYear();
+    let date = Date.parse(y + '-' + mm + '-' + dd);
+    let date1 = new Date(date);
+    console.log('date-->',date);
+    let formattedDate = date1.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+    this.todaydate = formattedDate;
+  }
 
   @wire(getLeaveType, { userid: '$uId' })
   wiredltype({ error, data }) {
@@ -232,7 +243,7 @@ wiredleaveRequest({ error, data }) {
               else{
                 
                 const evt = new ShowToastEvent({
-                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
                 });
                 this.dispatchEvent(evt);
@@ -249,7 +260,7 @@ wiredleaveRequest({ error, data }) {
             else {
               
                const evt = new ShowToastEvent({
-                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
                 });
                 this.dispatchEvent(evt);
@@ -305,6 +316,19 @@ wiredleaveRequest({ error, data }) {
         this.startDate = this.startDate1 = this.endDate = this.endDate1 =this.duration= undefined;
         this.submitcheck=true;
       }
+       let date = new Date(this.startDate1);
+          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+          let todaydate1 = formattedDate;
+          if ((new Date(todaydate1) < new Date(this.todaydate)) && this.value=='Work From Home' ) {
+            this.disabledSubmitted = true;
+           this.startDate1=null;
+            const evt = new ShowToastEvent({
+            message: 'You have selected past date, please select future date.',
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+          }
+
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
         if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
 
@@ -349,6 +373,19 @@ wiredleaveRequest({ error, data }) {
         this.startDate = this.startDate1 = this.endDate = this.endDate1 =this.duration= undefined;
         this.submitcheck=true;
       }
+
+       let date = new Date(this.endDate1);
+          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+          let todaydate1 = formattedDate;
+          if ((new Date(todaydate1) < new Date(this.todaydate)) && this.value=='Work From Home' ) {
+            this.disabledSubmitted = true;
+           this.endDate1=null;
+            const evt = new ShowToastEvent({
+            message: 'You have selected past date, please select future date.',
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+          }
       /* if(this.annualduration < this.duration){
          const evt = new ShowToastEvent({
              message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',

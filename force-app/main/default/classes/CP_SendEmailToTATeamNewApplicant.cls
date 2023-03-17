@@ -45,6 +45,7 @@ public class CP_SendEmailToTATeamNewApplicant implements TriggerAction.AfterInse
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='After Applicant Record Inserted TA'];
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         
         for(Contact contactRec : contactList){
             if(contactRec.RecordTypeId == contRecordTypeId){
@@ -53,6 +54,7 @@ public class CP_SendEmailToTATeamNewApplicant implements TriggerAction.AfterInse
                 mail.setTemplateID(emailTemplate.Id);
                 mail.setTargetObjectId(contactRec.id);
                 mail.setTreatTargetObjectAsRecipient(false);
+                mail.setOrgWideEmailAddressId(fromEmail);
                 mail.setSaveAsActivity(false);         
                 mails.add(mail);
             }   

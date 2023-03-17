@@ -30,6 +30,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         List<Contact> applicantsToSendMail = new List<Contact>();
         List<Contact> finalContactList = new List<Contact>();
         List<Messaging.SingleEmailMessage> lstMails = new List<Messaging.SingleEmailMessage>();
+        List<Messaging.SingleEmailMessage> adminTeamListForTasks = new List<Messaging.SingleEmailMessage>();
         
         for(Contact contactRec : contactList){
             if((contactRec.EMS_EM_JD__c.addDays(-10) == System.today() || contactRec.EMS_EM_JD__c.addDays(-11) == System.today()) && contactRec.Is_PreOnboarding_Mail_Sent__c == False){
@@ -41,11 +42,16 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
                 if(status == 'success'){
                     sendEmailToHR(contactRec.Id);
                     Messaging.SingleEmailMessage message = sendEmailToAdminTeam(contactRec.Id);
-                    lstMails.add(message);
+                    adminTeamListForTasks.add(message);
                 }  
+            }
+            if(contactRec.EMS_EM_JD__c == System.today()){
+                Messaging.SingleEmailMessage message = adminTeamDOJTasks(contactRec.Id);
+                lstMails.add(message);
             }
         }
         Messaging.sendEmail(lstMails);
+        Messaging.sendEmail(adminTeamListForTasks);
         
         if(applicantsToSendMail.size() > 0){
             for(Contact con : applicantsToSendMail){
@@ -122,6 +128,28 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setOrgWideEmailAddressId(fromEmail);
         return message;
     }
+    
+    public static Messaging.SingleEmailMessage adminTeamDOJTasks(string recordId){
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Admin Team DOJ Tasks' LIMIT 1];
+         
+        String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'Admin_Team'].Email__c;
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
+        List<String> adminEmailList = new List<String>();
+        adminEmailList.add(taTeamEmail);
+         
+        //List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+		
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.toAddresses = adminEmailList;
+        message.setTemplateID(emailTemplate.Id);
+        message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
+        message.setSaveAsActivity(false);
+        message.setOrgWideEmailAddressId(fromEmail);
+        return message;
+    }
+    
     public void finish(Database.BatchableContext bc){
         
     }
