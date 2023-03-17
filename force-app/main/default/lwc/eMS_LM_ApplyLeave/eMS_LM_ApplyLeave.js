@@ -129,7 +129,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
               else {
                 this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
                 const evt = new ShowToastEvent({
-                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
                 });
                   this.dispatchEvent(evt);
@@ -166,7 +166,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
               else{
                 
                 const evt = new ShowToastEvent({
-                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
                 });
                 this.dispatchEvent(evt);
@@ -183,7 +183,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             else {
               
                const evt = new ShowToastEvent({
-                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
                 });
                 this.dispatchEvent(evt);
@@ -204,7 +204,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
           else {
             
              const evt = new ShowToastEvent({
-                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
                 });
                 this.dispatchEvent(evt);
