@@ -5,18 +5,16 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Pre-onboarding Completed</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus : Pre-onboarding Completed</subject>
-    <textOnly>Dear {!EMS_EM_Onboarding_Request__c.EMS_EM_First_Name__c},
+    <subject>Cloud Peritus: Pre-onboarding completed</subject>
+    <textOnly>Dear {!EMS_EM_Onboarding_Request__c.EMS_EM_First_Name__c} {!EMS_EM_Onboarding_Request__c.EMS_EM_Last_Name__c},
 
 
 Thank you for completing the pre-onboarding formalities. Our HR Executive will get in touch with you for any clarifications or action needed from your end.
 
 
-Best wishes,
+Regards,
 
-HR Team
-
-Cloud Peritus</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
