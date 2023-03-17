@@ -12,10 +12,6 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>EMS_TM_Project_Type__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Project_Manager__c</field>
             </layoutItems>
@@ -28,12 +24,12 @@
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_TM_Industry__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Type_Of_Project__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_TM_Budget__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -60,10 +56,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EMS_TM_Billable__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_TM_Budget__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -173,12 +165,13 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Expected_Start_Date__c</fields>
         <fields>Requested_By__c</fields>
         <fields>Skills__c</fields>
         <fields>Notes__c</fields>
-        <fields>Resource_Role1__c</fields>
         <fields>Request_Priority__c</fields>
         <fields>Status__c</fields>
         <relatedList>Resource_Request__c.Project__c</relatedList>

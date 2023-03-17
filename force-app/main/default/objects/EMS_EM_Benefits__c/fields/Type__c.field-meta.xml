@@ -13,7 +13,7 @@
             <value>
                 <fullName>Medical Insurence</fullName>
                 <default>false</default>
-                <label>Medical Insurence</label>
+                <label>Medical Insurance</label>
             </value>
             <value>
                 <fullName>PF</fullName>
@@ -23,7 +23,7 @@
             <value>
                 <fullName>Phone Expense</fullName>
                 <default>false</default>
-                <label>Phone Expense</label>
+                <label>Phone Expenses</label>
             </value>
             <value>
                 <fullName>Internet Bills</fullName>
