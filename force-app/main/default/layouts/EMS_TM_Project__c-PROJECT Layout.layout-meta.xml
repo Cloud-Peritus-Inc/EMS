@@ -178,7 +178,7 @@
         <fields>Requested_By__c</fields>
         <fields>Skills__c</fields>
         <fields>Notes__c</fields>
-        <fields>Resource_Role1__c</fields>
+        <fields>Resource_Role__c</fields>
         <fields>Request_Priority__c</fields>
         <fields>Status__c</fields>
         <relatedList>Resource_Request__c.Project__c</relatedList>
