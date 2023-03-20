@@ -181,6 +181,21 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
+        <name>Email_To_Approver1</name>
+        <label>Email To Approver1</label>
+        <locationX>3218</locationX>
+        <locationY>935</locationY>
+        <actionName>EMS_LM_Leave_History__c.Email_sent_to_lead_when_Employee_cancels_leave_request</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Email_To_HR_on_Approval_of_leave_Request</name>
         <label>Email To HR on Approval of leave Request</label>
         <locationX>50</locationX>
@@ -228,13 +243,10 @@
     <actionCalls>
         <name>Email_To_Hr_When_leave_is_Cancelled</name>
         <label>Email To Hr When leave is Cancelled</label>
-        <locationX>3218</locationX>
-        <locationY>695</locationY>
+        <locationX>3482</locationX>
+        <locationY>935</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
-        <connector>
-            <targetReference>EMS_Leave_Cancel_By_HR_Email_To_Employee</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -321,10 +333,13 @@
     <actionCalls>
         <name>EMS_Leave_Cancel_By_HR_Email_To_Employee</name>
         <label>EMS_Leave_Cancel By HR(Email To Employee)</label>
-        <locationX>3218</locationX>
-        <locationY>815</locationY>
+        <locationX>3482</locationX>
+        <locationY>695</locationY>
         <actionName>EMS_LM_Leave_History__c.EMS_Leave_Cancel_By_HR_Email_To_Employee</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Check_HR_or_Not</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -517,7 +532,7 @@
     <assignments>
         <name>Store_Old_Value</name>
         <label>Store Old Value</label>
-        <locationX>2129</locationX>
+        <locationX>2393</locationX>
         <locationY>455</locationY>
         <assignmentItems>
             <assignToReference>OldStartDate</assignToReference>
@@ -712,6 +727,57 @@
                 <targetReference>HR_rejects_Leave_request_Email_To_Employee</targetReference>
             </connector>
             <label>HR rejects leave on behalf of approver 1 oR 2(Email to App1 &amp; App2)</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_HR_or_Not</name>
+        <label>Check HR or Not</label>
+        <locationX>3482</locationX>
+        <locationY>815</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_HR_or_Not1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__r.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Employee - HR(Community)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_TM_User__r.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Employee - HR(Community)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_To_Approver1</targetReference>
+            </connector>
+            <label>Check HR or Not</label>
+        </rules>
+        <rules>
+            <name>Check_Approver1_is_Null_or_Not</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_To_Hr_When_leave_is_Cancelled</targetReference>
+            </connector>
+            <label>Check Approver1 is Null or Not</label>
         </rules>
     </decisions>
     <decisions>
@@ -1040,7 +1106,7 @@
     <decisions>
         <name>IF_Leave_Request_Is_Edited_or_Not</name>
         <label>IF Leave Request Is Edited or Not</label>
-        <locationX>2129</locationX>
+        <locationX>2393</locationX>
         <locationY>575</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1119,7 +1185,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Email_To_Hr_When_leave_is_Cancelled</targetReference>
+                <targetReference>EMS_Leave_Cancel_By_HR_Email_To_Employee</targetReference>
             </connector>
             <label>IF HR Cancelled Leave Request</label>
         </rules>
@@ -1170,7 +1236,7 @@
     <recordLookups>
         <name>Get_Leave_Request_Records</name>
         <label>Get Leave Request Records</label>
-        <locationX>2129</locationX>
+        <locationX>2393</locationX>
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1294,7 +1360,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>2003</locationX>
+        <locationX>2267</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Leave_Request_Records</targetReference>

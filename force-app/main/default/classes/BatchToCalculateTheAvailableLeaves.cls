@@ -38,7 +38,7 @@ global without sharing class BatchToCalculateTheAvailableLeaves implements Datab
                                           EMS_LM_Leave_Type__c,EMS_LM_Leaves_Credited__c  FROM Leave_Credits__r WHERE EMS_LM_Leave_Credited_Date__c = THIS_YEAR ),
                                          (SELECT Id,Leave_Type_Name__c,EMS_LM_Leave_Duration__c FROM Leaves_History__r 
                                           WHERE EMS_LM_Leave_End_Date__c = THIS_YEAR AND EMS_LM_Status__c != 'Cancelled' AND EMS_LM_Status__c != 'Rejected' )
-                                         FROM CONTACT WHERE RecordTypeId =:ContactConstant.RESOURCE_RECORDTYPEID ]);
+                                         FROM CONTACT WHERE RecordTypeId =:ContactConstant.RESOURCE_RECORDTYPEID AND EMS_RM_ApplicantStatus_Update__c = 'Active' ]);
     }
   
 /**
@@ -67,10 +67,17 @@ global without sharing class BatchToCalculateTheAvailableLeaves implements Datab
             contactRec.EMS_LM_No_Of_Utilized_Maternity_Leaves__c = 0 ;
             contactRec.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c = 0 ;           
         for(EMS_LM_Leave_Credit__c leaveCreditRec : contactRec.Leave_Credits__r){
+            system.debug('------------Leave record-----'+leaveCreditRec);
                 String leaveTypeRec = leaveCreditRec.Leave_Type_Name__c ;
                 Switch on leaveTypeRec{
+            
                     when 'Annual Leave'{
                         contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;
+                         if(contactRec.EMS_LM_No_Of_Leaves_Credit__c >30){
+                            contactRec.EMS_LM_No_Of_Leaves_Credit__c = 30;
+                        }else{
+                          contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;  
+                        }
                     }
                     when 'Compensatory Off'{
                         contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c = contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;
@@ -113,7 +120,6 @@ global without sharing class BatchToCalculateTheAvailableLeaves implements Datab
         
        try{
             if(finalContactList.size()>0){
-                system.debug('===finalContactList==='+finalContactList);
                 Update finalContactList;   
             }
         }

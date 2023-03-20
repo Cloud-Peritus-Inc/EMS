@@ -115,7 +115,10 @@
                                   <template if:true={showcertification}>
                                     <lightning-layout>
                                     <lightning-layout-item flexibility="auto" padding="around-small">
-                                     <lightning-input-field field-name="Certification_Name__c" required></lightning-input-field>
+                                     <lightning-input-field field-name="Certification_Name__c" onchange={handleChange} required ></lightning-input-field>
+                                     <template if:true={showOther}>
+                                     <lightning-input-field field-name="Other__c" required ></lightning-input-field>
+                                     </template>
                                     </lightning-layout-item>
                                     <lightning-layout-item flexibility="auto" padding="around-small">
                                       <lightning-input-field field-name="Completion_Date__c" required></lightning-input-field>

@@ -32,7 +32,7 @@ public without sharing  class EMS_LM_LoptoResource implements TriggerAction.Afte
     }
         
         
-    EMS_LM_Leave__c leavetype = [SELECT Id , EMS_LM_Leave_Type__c FROM EMS_LM_Leave__c WHERE EMS_LM_Leave_Type__c = :LeaveRequestConstant.LOSS_OF_PAY LIMIT 1]; 
+    EMS_LM_Leave__c leavetype = [SELECT Id , EMS_LM_Leave_Type__c FROM EMS_LM_Leave__c WHERE Name = :LeaveRequestConstant.LOSS_OF_PAY LIMIT 1]; 
      
         
 

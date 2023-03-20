@@ -1,3 +1,17 @@
+/**
+* @author Subba Kalavala
+* @date 01/03/2023
+* @description  resourceTileController Class to show the data on Home page Resource details
+*
+*               Test code coverage provided by the following test class:
+*               - resourceTileControllerTest
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 public without sharing class resourceTileController {
 @AuraEnabled(cacheable=true)
     public static datawrapper getUserInfo(Id userId) {

@@ -10,6 +10,7 @@ showtable = false;
 resourceId;
 showskill = false;
 showcertification = false;
+showOther = false;
 createdRecordId ;
 connectedCallback(){
 
@@ -38,6 +39,8 @@ loaded = false
 
     handleCancel(event) {
       this.openModal = false;
+      this.showskill = false;
+      this.showcertification = false;
     }
 
 handleTypeChange(event){
@@ -85,6 +88,7 @@ console.log('In Submit ====');
 }
 
  handleSuccess(event) {
+     this.skillList = [];
     console.log('=====event.detail.id====='+event.detail.id);
         getMyCertificationsAndSkills()
          .then(result => {
@@ -122,6 +126,15 @@ console.log('In Submit ====');
             mode:'dismissable'
         });
         this.dispatchEvent(evt);
+    }
+
+    handleChange(event) {
+        if(event.detail.value == 'Other'){
+        this.showOther = true;
+        }else{
+         this.showOther = false;
+        }
+      
     }
 
 

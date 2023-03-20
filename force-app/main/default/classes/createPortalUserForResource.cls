@@ -13,7 +13,7 @@
 * ====================================================================================================
 **/
 public without sharing class createPortalUserForResource implements TriggerAction.AfterUpdate{
-    /**
+/**
 * @author Subba Kalavala
 * @date 2/22/2023
 * @description afterUpdate
@@ -80,7 +80,8 @@ public without sharing class createPortalUserForResource implements TriggerActio
                     contactId = con.Id,
                     timezonesidkey = 'America/Los_Angeles',
                     username = con.email+System.now().millisecond(),
-                    CommunityNickname = con.firstName+con.LastName,
+                    CommunityNickname = con.firstName+' '+con.LastName,
+                    CompanyName = 'Cloud Peritus Inc',
                     ProfileId = communityProfile.Id,
                     IsActive = true);
                     usrList.add(newUser); 

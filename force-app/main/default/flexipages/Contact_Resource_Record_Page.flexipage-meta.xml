@@ -10,97 +10,25 @@
                             <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Global.NewTask</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Global.NewEvent</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Global.LogACall</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.ContentNote</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.TextPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.RypplePost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.QuestionPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Global.NewContact</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.PollPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.ContentPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>ContactHierarchy</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>LoginToPortalAsUser</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>StartOutboundConversation</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>PrintableView</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>RecordShareHierarchy</value>
                         </valueListItems>
                         <valueListItems>
                             <value>EnableCustomerPortal</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CreateSurveyInvitation</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>ViewCustomerPortal</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Share</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Delete</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CreateCallList</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>LoginToNetworkAsUser</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>ChangeRecordType</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Clone</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>XClean</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>DisableCustomerPortal</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Submit</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>ChangeOwnerOne</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CallHighlightAction</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>SmsHighlightAction</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>EmailHighlightAction</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -161,26 +89,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Personal_Email__c</fieldItem>
                 <identifier>RecordPersonal_Email_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_EM_Mstatus__c</fieldItem>
-                <identifier>RecordEMS_EM_Mstatus_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_EM_DOW__c</fieldItem>
-                <identifier>RecordEMS_EM_DOW_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f9e8d231-3c86-4795-83fd-d9eb8c7cbcaf</name>
@@ -371,8 +279,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Timesheet_NoNeed__c</fieldItem>
-                <identifier>RecordTimesheet_NoNeed_cField2</identifier>
+                <fieldItem>Record.Level_of_Approval__c</fieldItem>
+                <identifier>RecordLevel_of_Approval_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-3293107c-5557-4656-9f97-8024e672fd10</name>
@@ -397,6 +305,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Email</fieldItem>
                 <identifier>RecordEmailField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_TM_User__c</fieldItem>
+                <identifier>RecordEMS_TM_User_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -475,8 +393,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Level_of_Approval__c</fieldItem>
-                <identifier>RecordLevel_of_Approval_cField</identifier>
+                <fieldItem>Record.Timesheet_NoNeed__c</fieldItem>
+                <identifier>RecordTimesheet_NoNeed_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ec348e39-0716-4e28-9239-d218b12e384b</name>
@@ -639,6 +557,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Location__c</fieldItem>
+                <identifier>RecordLocation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.EMS_EM_CA_City__c</fieldItem>
                 <identifier>RecordEMS_EM_CA_City_cField</identifier>
             </fieldInstance>
@@ -713,6 +641,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.EMS_EM_PAddress_Line_2__c</fieldItem>
                 <identifier>RecordEMS_EM_PAddress_Line_2_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Location__c</fieldItem>
+                <identifier>RecordLocation_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -947,18 +885,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Carry_Forward_Leaves__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Carry_Forward_Leaves_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Override_the_standard_level_of_approval__c</fieldItem>
-                <identifier>RecordOverride_the_standard_level_of_approval_cField</identifier>
+                <fieldItem>Record.EMS_LM_No_of_Off_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_of_Off_Credit_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -977,6 +905,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_of_Available_Loss_of_Pay__c</fieldItem>
+                <identifier>RecordEMS_LM_No_of_Available_Loss_of_Pay_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.EMS_LM_No_Of_Compensatory_Off_Credit__c</fieldItem>
                 <identifier>RecordEMS_LM_No_Of_Compensatory_Off_Credit_cField</identifier>
             </fieldInstance>
@@ -987,8 +925,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Available_Compensatory_Off__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Available_Compensatory_Off_cField</identifier>
+                <fieldItem>Record.EMS_LM_No_OF_Utilized_Compensatory_Off__c</fieldItem>
+                <identifier>RecordEMS_LM_No_OF_Utilized_Compensatory_Off_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -997,8 +935,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_OF_Utilized_Compensatory_Off__c</fieldItem>
-                <identifier>RecordEMS_LM_No_OF_Utilized_Compensatory_Off_cField</identifier>
+                <fieldItem>Record.EMS_LM_No_Of_Available_Compensatory_Off__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Available_Compensatory_Off_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1053,6 +991,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.EMS_LM_No_Of_Available_Maternity_Leave__c</fieldItem>
                 <identifier>RecordEMS_LM_No_Of_Available_Maternity_Leave_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Maternity_Leaves_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Maternity_Leaves_Credit_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

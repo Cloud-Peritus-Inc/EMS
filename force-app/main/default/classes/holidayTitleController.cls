@@ -1,3 +1,17 @@
+/**
+* @author Subba Kalavala
+* @date 01/03/2023
+* @description  holidayTitleController Class to show the data on Home page for Holiday
+*
+*               Test code coverage provided by the following test class:
+*               - holidayTitleControllerTest
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 public without sharing class holidayTitleController {
     
   @AuraEnabled(cacheable=true)
@@ -64,6 +78,7 @@ public without sharing class holidayTitleController {
             dtwrap.holidayType =  holi.Name;
             dataList.add(dtwrap);
         }
+        dataList.sort();
         return dataList;
     }
     

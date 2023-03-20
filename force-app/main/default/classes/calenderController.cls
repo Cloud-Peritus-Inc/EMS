@@ -1,3 +1,17 @@
+/**
+* @author Subba Kalavala
+* @date 01/03/2023
+* @description  calenderController Class to show the data on Home page for Org Calender
+*
+*               Test code coverage provided by the following test class:
+*               - calenderControllerTest
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 public without sharing class calenderController {
 @AuraEnabled(cacheable=true)
     public static List<datawrapper> getEvents() {
