@@ -1,5 +1,5 @@
 <template>
-    <lightning-card  variant="Narrow"  title="Org Level PTO's" icon-name="standard:account">
+    <lightning-card  variant="Narrow"  title="Org Wide PTO's" icon-name="standard:account">
     
     <template if:true={showThetable}>
     <c-calender events={events} oneventclicked={handleEvent}></c-calender>
@@ -30,12 +30,20 @@
                     id="modal-content-id-1">
                     {recorddata}
                     <lightning-record-view-form record-id={recordvalue} object-api-name="EMS_LM_Leave_History__c" >
-                        <div class="slds-box slds-theme_default">
+                         <div class="slds-box slds-theme_default">
+                            <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2">
                         <lightning-output-field field-name="Name"> </lightning-output-field>
                         <lightning-output-field field-name="EMS_LM_Contact__c"> </lightning-output-field>
+                        <lightning-output-field field-name="Leave_Type_Name__c"> </lightning-output-field>
+                         <lightning-output-field field-name="EMS_LM_Status__c"> </lightning-output-field>
+                         </div>
+                         <div class="slds-col slds-size_1-of-2">
                         <lightning-output-field field-name="EMS_LM_Leave_Start_Date__c"> </lightning-output-field>
                         <lightning-output-field field-name="EMS_LM_Leave_End_Date__c"> </lightning-output-field>
                          <lightning-output-field field-name="EMS_LM_Leave_Duration__c"> </lightning-output-field>
+                         </div>
+                        </div>
                         </div>
                     </lightning-record-view-form>
                 </div>

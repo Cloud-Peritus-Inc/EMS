@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>New Service Request -- Email to Grid Support</name>
+    <style>freeForm</style>
+    <subject>New Service Request is created</subject>
+    <textOnly>Dear HR Team,
+
+
+{!Case.Contact} has raised a request for {!Case.Type}, we would like to request that you take appropriate action to the request.
+
+
+Request Type : {!Case.Type}
+
+Subject  : {!Case.Subject}
+
+Description : {!Case.Description}
+
+Reason : {!Case.Reason__c}
+
+
+
+To review the details of the request, please click here.
+
+Thank you for your cooperation and support.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
