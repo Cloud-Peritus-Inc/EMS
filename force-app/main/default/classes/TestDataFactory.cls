@@ -30,7 +30,10 @@ public class TestDataFactory {
 	}
 	
 	public static Contact createResourceContact(Id accountId, Boolean doInsert) {
-		Contact c = new Contact(firstName = 'Test',EMS_Phone_Number__c= '9090909090',Email='testEmail@cloudperitus.com', lastName = 'Employee', accountId = accountId, recordtypeId = ContactConstant.RESOURCE_RECORDTYPEID);
+		Contact c = new Contact(firstName = 'Test',EMS_Phone_Number__c= '9090909090',
+                                Email='testEmail+test@cloudperitus.com', lastName = 'Employee',
+                                accountId = accountId, Work_Location__c = createOfficeLocation(true).Id, 
+                                recordtypeId = ContactConstant.RESOURCE_RECORDTYPEID);
 		if(doInsert) {
 			insert c;
 		}
@@ -73,6 +76,8 @@ public class TestDataFactory {
         Resource_Role__c role = createResourceRole(true);
 		Contact con=  createResourceContact(acc.id, false);
         con.Resource_Role__c = role.Id;
+        con.EMS_RM_ApplicantStatus_Update__c = 'Active';
+        con.Work_Location__c = createOfficeLocation(true).Id;
         insert con;
         User user = new User(alias = 'test123', email=con.Email,
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
@@ -88,10 +93,11 @@ public class TestDataFactory {
     
      public static User createCommunityUserWithAccAndContact(Id accId,Id conId,Boolean doInsert){
       Id p = [select id from profile where name='Employee - Resource(Community)'].id;
+      UserRole userrole = [Select Id, DeveloperName From UserRole Where DeveloperName = 'EmployeeCommunity' Limit 1];
       User user = new User(alias = 'test123', email= 'testemail@testclass.com.they',
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
-                ContactId = conId,
+                ContactId = conId, UserRoleId = userRole.Id,
                 timezonesidkey='America/Los_Angeles', username='testemail'/*+string.valueOf(system.now())*/+'@gmail.com');
         if(doInsert){
         insert user;
@@ -135,7 +141,7 @@ public class TestDataFactory {
         return rr;
     }
     
-     public static EMS_LM_Leave__c createLeaveType(Boolean doInsert){
+    public static EMS_LM_Leave__c createLeaveType(Boolean doInsert){
         EMS_LM_Leave__c leaveType = createLeaveType('Annual Leave',doInsert);
         return leaveType;
     }
@@ -147,6 +153,74 @@ public class TestDataFactory {
              insert leaveType;
          }
        return leaveType;
+    }
+    
+    public static Office_Location__c createOfficeLocation(Boolean doInsert){
+        Office_Location__c officeLoc = createOfficeLocation('Hyderabad',doInsert);
+        return officeLoc;
+    }
+    
+    public static Office_Location__c createOfficeLocation(String name, Boolean doInsert){
+        Office_Location__c officeLoc = new Office_Location__c(); 
+        officeLoc.Name = name;
+        officeLoc.Address__c = 'test Address';
+        officeLoc.Country__c = 'India';
+        if(doInsert){
+             insert officeLoc;
+         }
+       return officeLoc;
+    }
+    
+  
+    
+    public static EMS_LM_Leave_History__c createLeaveRequest(String conid,Date startDate,Date endDate,String leaveTypeId, Boolean doInsert, String leaveStatus){
+        EMS_LM_Leave_History__c leaveReq = new EMS_LM_Leave_History__c(); 
+        leaveReq.EMS_LM_Contact__c = conid;
+        leaveReq.EMS_LM_Day__c = 'Full Day';
+        leaveReq.EMS_LM_Leave_Start_Date__c = startDate;
+        leaveReq.EMS_LM_Leave_End_Date__c = endDate;
+        leaveReq.EMS_LM_Leave_Type__c = leaveTypeId;
+        leaveReq.EMS_LM_Leave_Duration__c = startDate.daysBetween(endDate);
+        leaveReq.EMS_LM_Reason__c = 'Test Reason';
+        leaveReq.EMS_LM_Status__c = leaveStatus;
+       
+        if(doInsert){
+             insert leaveReq;
+         }
+       return leaveReq;
+    }
+    
+    
+     public static EMS_LM_Leave_Credit__c createLeaveCredit(String conid,Date creditDate,decimal creditValue,String leaveTypeId, Boolean doInsert){
+        EMS_LM_Leave_Credit__c leaveCredit = new EMS_LM_Leave_Credit__c(); 
+        leaveCredit.EMS_LM_Employee__c = conid;
+        leaveCredit.EMS_LM_Leaves_Credited__c = creditValue;
+        leaveCredit.EMS_LM_Leave_Credited_Date__c = creditDate;
+        leaveCredit.EMS_LM_Leave_Type__c = leaveTypeId;
+        
+       
+        if(doInsert){
+             insert leaveCredit;
+         }
+       return leaveCredit;
+    }
+    
+    public static case createCaseWithAccAndContact(String accid, String conid, 
+                                                   String typeval, String subRequest,
+                                                   String subjectVal, String descr, Boolean isinsert){
+      Case caseREc = new Case();
+      caseREc.Subject =  subjectVal;
+      caseREc.AccountId =  accid;
+      caseREc.ContactId =  conid;
+      caseREc.Description =  descr;
+      caseREc.Type =  typeval;
+      caseREc.Request_Sub_Type__c =  subRequest;
+      caseREc.Status =  'New';
+         if(isinsert){
+             insert caseREc;
+         }
+                                                       
+      return caseREc;
     }
     
     

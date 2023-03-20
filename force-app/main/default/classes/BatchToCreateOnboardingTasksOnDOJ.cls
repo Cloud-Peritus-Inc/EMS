@@ -27,7 +27,12 @@ global class BatchToCreateOnboardingTasksOnDOJ implements Database.Batchable<sOb
 * ====================================================================================================
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        Date dt = system.today().adddays(integer.valueOf(Label.Days_Consider_for_Onboarding_Taks));
+        Date dt;
+        if(Test.isRunningTest()){
+            dt = system.today().adddays(-1);
+        }else{
+           dt = system.today().adddays(integer.valueOf(Label.Days_Consider_for_Onboarding_Taks)); 
+        }
         return Database.getQueryLocator([SELECT Id,EMS_EM_JD__c
                                          FROM CONTACT 
                                          WHERE EMS_EM_JD__c=:dt

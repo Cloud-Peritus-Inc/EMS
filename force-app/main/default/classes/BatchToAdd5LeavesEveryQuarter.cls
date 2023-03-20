@@ -75,6 +75,7 @@ global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject
         }
         
         for(Contact conRec : conList){
+            
             Boolean shouldIcreatedTheBal = true;
             Date processingDate = system.today();
              Integer processingDay = processingDate.day();
@@ -97,6 +98,7 @@ global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject
                 if(contactWithCarryFwdBalance.containsKey(conRec.Id)){
                     leaveCredit.EMS_LM_Leaves_Credited__c = contactWithCarryFwdBalance.get(conRec.Id)+leaveMap.get(uniqueKey);
                    leaveCredit.Comments__c  = 'Included the Last Year Carry Forward Balance of '+contactWithCarryFwdBalance.get(conRec.Id);
+                    
                 }else{
                  leaveCredit.EMS_LM_Leaves_Credited__c = leaveMap.get(uniqueKey);
                 }
@@ -106,7 +108,7 @@ global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject
          system.debug('===leaveCreditList=='+leaveCreditList);
         
         database.insert(leaveCreditList,false);
-       
+        
     }
     
     global void finish(Database.BatchableContext BC) {

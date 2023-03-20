@@ -484,6 +484,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         let firstDate = firstDay.getDate() >= 10 ? firstDay.getDate() : '0'+(firstDay.getDate());
         let lastDate = lastDay.getDate() >= 10 ? lastDay.getDate() : '0'+(lastDay.getDate());
         this.timeSheetRecord.EMS_TM_Week__c = firstDay.getFullYear() + '-' + firstMonth +'-'+ firstDate;
+        this.timeSheetRecord.Week_End_Date__c = lastDay.getFullYear() + '-' + lastMonth +'-'+ lastDate;
         this.timeSheetRecord.Week__c = firstDay.getFullYear() + '-' + firstMonth + '-' + firstDate + ' - ' + lastDay.getFullYear() + '-' + lastMonth + '-' + lastDate;
         this.disableNextButtons = this.thisWeek > this.timeSheetRecord.EMS_TM_Week__c ? false : true;
         this.showDates();

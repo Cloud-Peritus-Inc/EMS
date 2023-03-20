@@ -73,16 +73,16 @@ public class CalculateAvailableLeaveBalance implements TriggerAction.AfterInsert
                         contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c != null ? contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
                     }
                     when 'Compensatory Off'{
-                        contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c = contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;
+                        contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c = contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c != null ? contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
                     }
                     when 'Maternity Leave'{
-                        contactRec.EMS_LM_No_Of_Maternity_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Maternity_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;
+                        contactRec.EMS_LM_No_Of_Maternity_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Maternity_Leaves_Credit__c != null ? contactRec.EMS_LM_No_Of_Maternity_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
                     }
                     when 'Bereavement Leave'{
-                        contactRec.EMS_LM_No_of_Bereavement_Leaves_Credit__c = contactRec.EMS_LM_No_of_Bereavement_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;
+                        contactRec.EMS_LM_No_of_Bereavement_Leaves_Credit__c = contactRec.EMS_LM_No_of_Bereavement_Leaves_Credit__c != null ? contactRec.EMS_LM_No_of_Bereavement_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
                     }
                     when 'Paternity Leave'{
-                        contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;
+                        contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c != null ? contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
                     }
                 }
                finalContactList.add(contactRec); 
