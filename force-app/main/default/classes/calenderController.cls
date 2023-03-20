@@ -19,7 +19,7 @@ public without sharing class calenderController {
         
         List<EMS_LM_Leave_History__c> evtList = [SELECT Id,EMS_LM_Contact__c,EMS_LM_Contact__r.Name, EMS_LM_Leave_Start_Date__c,
                                                  EMS_LM_Leave_End_Date__c,EMS_LM_Status__c ,EMS_LM_Approved_On__c, EMS_LM_Final_Approver__c  ,EMS_LM_Leave_Duration__c , EMS_LM_Reason__c  
-                                                 FROM EMS_LM_Leave_History__c WHERE EMS_LM_Status__c  != 'Cancelled' AND EMS_LM_Status__c  != 'Rejected '  ORDER BY CreatedDate DESC
+                                                 FROM EMS_LM_Leave_History__c WHERE EMS_LM_Status__c  != 'Cancelled' AND EMS_LM_Status__c  != 'Rejected' AND Leave_Type_Name__c != 'Work From Home'   ORDER BY CreatedDate DESC
               ];
         
         For(EMS_LM_Leave_History__c evt :  evtList){
