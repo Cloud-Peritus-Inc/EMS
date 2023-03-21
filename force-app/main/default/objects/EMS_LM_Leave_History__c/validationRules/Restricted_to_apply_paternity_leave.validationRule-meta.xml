@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restricted_to_apply_paternity_leave</fullName>
+    <active>false</active>
+    <description>You are not eligible to apply Paternity Leave</description>
+    <errorConditionFormula>AND(
+OR(ISPICKVAL(EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c, &apos;Paternity Leave&apos;), ISPICKVAL(EMS_LM_Leave_Type_Name__c, &apos;Paternity Leave&apos;)),
+ISPICKVAL(EMS_LM_Contact__r.EMS_LM_Gender__c, &apos;Female&apos;))</errorConditionFormula>
+    <errorMessage>You are not eligible to apply Paternity Leave</errorMessage>
+</ValidationRule>
