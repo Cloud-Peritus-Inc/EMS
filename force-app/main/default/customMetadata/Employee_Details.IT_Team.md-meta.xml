@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>Email__c</field>
-        <value xsi:type="xsd:string">eswar.tangudu@cloudperitus.com</value>
+        <value xsi:type="xsd:string">rajesh.ravula@cloudperitus.com</value>
     </values>
 </CustomMetadata>
