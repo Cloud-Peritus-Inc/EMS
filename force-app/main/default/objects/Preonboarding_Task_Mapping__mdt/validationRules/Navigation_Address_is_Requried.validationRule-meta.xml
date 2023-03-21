@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Navigation_Address_is_Requried</fullName>
+    <active>true</active>
+    <errorConditionFormula>Navigation_Required__c &amp;&amp; ISBLANK( Navigation_address__c )</errorConditionFormula>
+    <errorDisplayField>Navigation_address__c</errorDisplayField>
+    <errorMessage>Navigation Address is Required.</errorMessage>
+</ValidationRule>
