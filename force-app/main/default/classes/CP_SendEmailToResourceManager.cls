@@ -20,7 +20,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
     
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id,name, EMS_EM_JD__c, Resource_Manager__c, Resource_Manager__r.Official_Mail__c, Resource_Manager__r.name, Designation__r.name FROM Contact WHERE EMS_EM_JD__c != NULL AND Resource_Manager__c != NULL AND Resource_Manager__r.Official_Mail__c != NULL AND RecordType.Name = \'Applicant\'' 
+        	'SELECT id,name, EMS_EM_JD__c, Resource_Manager__c, Resource_Manager__r.Email, Resource_Manager__r.name, Designation__r.name FROM Contact WHERE EMS_EM_JD__c != NULL AND Resource_Manager__c != NULL AND Resource_Manager__r.Email != NULL AND RecordType.Name = \'Applicant\'' 
         );
     }
     
@@ -46,7 +46,7 @@ public class CP_SendEmailToResourceManager implements Database.Batchable<sObject
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
         String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         for(Contact con : finalContactList){
-            String resourceManagerEmail = con.Resource_Manager__r.Official_Mail__c;
+            String resourceManagerEmail = con.Resource_Manager__r.Email;
             Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
             mail.setToAddresses(new list<string>{resourceManagerEmail});
             mail.setTemplateID(emailTemplate.Id);

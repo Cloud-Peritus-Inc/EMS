@@ -20,7 +20,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
     
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id, EMS_EM_JD__c, Name, Personal_Email__c, Post_Onboarding_Confirm__c, Email from Contact WHERE EMS_EM_JD__c != NULL AND (Email != NULL OR Personal_Email__c != NULL) AND RecordType.Name = \'Resource\'' 
+        	'SELECT id, EMS_EM_JD__c, Name, Personal_Email__c, RecordType.Name, Post_Onboarding_Confirm__c, Email from Contact WHERE EMS_EM_JD__c != NULL AND (Email != NULL OR Personal_Email__c != NULL)' 
         );
     }    
     
@@ -34,30 +34,30 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
             Integer days = Date.today().daysBetween(contactRec.EMS_EM_JD__c);
             System.debug('Month => '+monthNumber);
             System.debug('Days => '+days);
-            if(monthNumber == 2 && days == -26){
+            if(monthNumber == 2 && days == -26 && contactRec.RecordType.Name == 'Resource'){
                 //sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 Messaging.SingleEmailMessage message = sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 monthiversaryMailsList.add(message);
-            }else if((monthNumber == 1 || monthNumber == 3 || monthNumber == 5 || monthNumber == 8 || monthNumber == 10 || monthNumber == 12) && days == -29){
+            }else if((monthNumber == 1 || monthNumber == 3 || monthNumber == 5 || monthNumber == 8 || monthNumber == 10 || monthNumber == 12) && days == -29 && contactRec.RecordType.Name == 'Resource'){
                 //sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 Messaging.SingleEmailMessage message = sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 monthiversaryMailsList.add(message);
-            }else if((monthNumber == 2 || monthNumber == 4 || monthNumber == 6 || monthNumber == 7 || monthNumber == 9 || monthNumber == 11) && days == -28){
+            }else if((monthNumber == 2 || monthNumber == 4 || monthNumber == 6 || monthNumber == 7 || monthNumber == 9 || monthNumber == 11) && days == -28 && contactRec.RecordType.Name == 'Resource'){
                 //sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 Messaging.SingleEmailMessage message = sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 monthiversaryMailsList.add(message);
             }
-            if(contactRec.EMS_EM_JD__c == System.today()){
+            if(contactRec.EMS_EM_JD__c == System.today() && contactRec.Email != NULL && contactRec.RecordType.Name == 'Resource'){
                 //sendEmailOnDOJ(contactRec.Email, contactRec.Id);
                 Messaging.SingleEmailMessage message = sendEmailOnDOJ(contactRec.Email, contactRec.Id);
                 dojMailsList.add(message);
             }
-            if(contactRec.EMS_EM_JD__c.addDays(-1) == System.today()){
+            if(contactRec.EMS_EM_JD__c.addDays(-1) == System.today() && contactRec.RecordType.Name == 'Applicant'){
                 System.debug('Inside condition');
                 Messaging.SingleEmailMessage message = sendReminderEmail(contactRec.Personal_Email__c, contactRec.Id);
                 reminderMailsList.add(message);
             }
-            if(contactRec.Post_Onboarding_Confirm__c == False  && contactRec.Email != NULL){
+            if(contactRec.Post_Onboarding_Confirm__c == False  && contactRec.Email != NULL && contactRec.RecordType.Name == 'Resource'){
                 system.debug('Inside condition ==>');
                 system.debug('Email => '+ contactRec.Email);
                 system.debug('Email => '+ contactRec.Personal_Email__c);
