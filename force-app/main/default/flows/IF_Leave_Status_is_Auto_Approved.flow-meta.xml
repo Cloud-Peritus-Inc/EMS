@@ -87,6 +87,14 @@
         <connector>
             <targetReference>Check_If_Auto_Approve_Checkbox_is_checked</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EMS_LM_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Auto Approved</stringValue>
+            </value>
+        </filters>
         <object>EMS_LM_Leave_History__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>

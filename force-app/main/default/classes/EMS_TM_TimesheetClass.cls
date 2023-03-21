@@ -407,6 +407,7 @@ public class EMS_TM_TimesheetClass {
         timeSheetRecord.EMS_TM_Week__c                      = timesheet.EMS_TM_Week__c;
         timeSheetRecord.Week_Start_Date__c                  = timesheet.EMS_TM_Week__c;
         timeSheetRecord.Week_End_Date__c                    = timesheet.Week_End_Date__c;
+        timeSheetRecord.Resource__c                         = timesheet.Resource__c ;
        // timeSheetRecord.Complete_Week__c                  = timesheet.Complete_Week__c;
         timeSheetRecord.EMS_TM_Remarks__c                   = timesheet.EMS_TM_Remarks__c;
         timeSheetRecord.EMS_TM_Status__c                    = timesheet.EMS_TM_Status__c;
@@ -434,7 +435,7 @@ public class EMS_TM_TimesheetClass {
         timeRecordRow.EMS_TM_Remarks__c                   = timerecord.EMS_TM_Remarks__c;
         timeRecordRow.EMS_Timesheet__c                    = timesheetId;
         timeRecordRow.Status__c                           = timerecord.Status__c;
-
+        System.debug(timeRecordRow.EMS_TM_Remarks__c+'    '+timerecord.EMS_TM_Remarks__c);
         return timeRecordRow;
     }
 

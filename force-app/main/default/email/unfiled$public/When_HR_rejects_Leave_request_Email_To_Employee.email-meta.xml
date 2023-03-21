@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>When HR rejects Leave request(Email To Employee)</name>
     <style>freeForm</style>
-    <subject>Leave: {!EMS_LM_Leave_History__c.EMS_LM_Leave_Type_Name__c} request is rejected by {!EMS_LM_Leave_History__c.EMS_LM_Current_Approver__c}</subject>
+    <subject>Leave: Your {!EMS_LM_Leave_History__c.EMS_LM_Leave_Type_Name__c} request is rejected by {!EMS_LM_Leave_History__c.EMS_LM_Current_Approver__c}</subject>
     <textOnly>Dear {!Contact.FirstName} {!Contact.LastName},
 
 Your Leave request type {!EMS_LM_Leave_History__c.EMS_LM_Leave_Type_Name__c} for the following date(s) has been rejected by {!EMS_LM_Leave_History__c.EMS_LM_Approver__c}.

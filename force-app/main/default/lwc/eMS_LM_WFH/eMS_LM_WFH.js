@@ -218,7 +218,6 @@ export default class EMS_LM_WFH extends LightningElement {
               variant: 'success'
             }));
             
-            window.location.reload();
           this.updateRecordView();
         }).catch(error => {
           this.check1 = false;
@@ -226,8 +225,7 @@ export default class EMS_LM_WFH extends LightningElement {
           console.error('Error creating record: ', error);
         //  console.error('Error creating record: ', error.body.message);
           this.dispatchEvent(new ShowToastEvent({
-            title: 'Unable to Apply Work From Home!!',
-            message: 'There is already an Leave or Work from Home on this date. please recheck the dates or review your leave request.',
+            message:  error.body.pageErrors[0].message, 
             variant: 'error'
           }));
          

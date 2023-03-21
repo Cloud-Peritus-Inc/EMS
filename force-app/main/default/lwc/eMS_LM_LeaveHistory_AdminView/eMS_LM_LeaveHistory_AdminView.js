@@ -55,6 +55,8 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
   _wiredRefreshData;
   checkBox;
   role;
+  approvalLevel;
+  autoApproval;
 
 
   @track currentPageReference;
@@ -81,6 +83,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
       console.error('Error:', error);
     }
   }
+
 
   // TO SHOW DEFAULT ADMIN VIEW DATA
   /* @wire(defaultAdminViewData)
@@ -112,6 +115,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
     const { data, error } = wireResult;
     this._wiredRefreshData = wireResult;
     if (data) {
+      console.log('### data : ',data);
       this.isLoading = false;
       if (data.length > 0) {
         this.showdata = true;
@@ -130,9 +134,10 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
             req.disableCancelButton = true; // disable cancel button only
           } else {
             req.disableButton = false; // enable all buttons
-          } if (req.EMS_LM_Contact__r !== null && req.EMS_LM_Contact__r.Resource_Role__r !== null && req.EMS_LM_Contact__r.Resource_Role__r.Name === 'HR Director') {
+          } if (req.EMS_LM_Contact__r.Resource_Role__r.Level_of_Approval__c === 0) {
+            //req.EMS_LM_Contact__r !== null && req.EMS_LM_Contact__r.Resource_Role__r !== null && req.EMS_LM_Contact__r.Resource_Role__r.Name === 'HR Director' && req.EMS_LM_Contact__r.Resource_Role__r.Name === 'TA Director'
             req.disableButton = true;
-            req.disableCancelButton = true;
+            //req.disableCancelButton = true;
           }
         });
         this.error = undefined;

@@ -25,18 +25,18 @@ public without sharing class ServiceRequestApexHandler {
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-	@AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=true)
     public static PayRoll__c getPayrollInfo(){
         User usr = [SELECT Id, 
-						   contactId__c
+                           contactId__c
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         PayRoll__c payRolldata = [SELECT Id, 
-                                  		 Name, 
-                                  		 Contact__c, 
-                                  		 Bank_Name__c, 
+                                         Name, 
+                                         Contact__c, 
+                                         Bank_Name__c, 
                                          IFSC_Routing_Number__c,
-                                  		 Beneficiary_Account_Number__c 
+                                         Beneficiary_Account_Number__c 
                                   FROM PayRoll__c
                                   WHERE Contact__c =: usr.contactId__c
                                   LIMIT 1];
@@ -57,11 +57,11 @@ public without sharing class ServiceRequestApexHandler {
     @AuraEnabled(cacheable=true)
     public static List<Family_Information__c> getLoggedInUserFamilyData(){
         User usr = [SELECT Id, 
-						   contactId__c
+                           contactId__c
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         List<Family_Information__c> familyDataList = [SELECT Id, 
-                                             	    	     Resource__c,
+                                                             Resource__c,
                                                              Family_Member_Name__c,
                                                              Relationships__c,
                                                              Is_It_Emergency_Contact__c,
@@ -89,22 +89,22 @@ public without sharing class ServiceRequestApexHandler {
     @AuraEnabled(cacheable=true)
     public static contact getLoggedInUserContactData() {
         User usr = [SELECT Id, 
-						   contactId
+                           contactId
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         Contact contact = [SELECT Id,
                                   Name,
-                          		  LastName,
-                           		  FirstName,
+                                  LastName,
+                                  FirstName,
                                   AccountId,
-                           		  EMS_RM_Employee_Id__c,
+                                  EMS_RM_Employee_Id__c,
                                   Department__c,
-                           		  Department__r.Name,
-                           		  Resource_Role__r.Name,
+                                  Department__r.Name,
+                                  Resource_Role__r.Name,
                                   Resource_Role__r.Id,
                                   Resource_Role__c,
-                           		  Work_Experience__c,
-                           		  EMS_RM_Notice_Period__c
+                                  Work_Experience__c,
+                                  Notice_Period__c
                            FROM CONTACT
                            WHERE Id =:usr.contactId 
                           ];
