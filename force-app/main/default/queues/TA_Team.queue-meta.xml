@@ -2,11 +2,6 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>TA Team</name>
-    <queueMembers>
-        <users>
-            <user>eswar.tangudu@cloudperitus.com</user>
-        </users>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Task</sobjectType>
     </queueSobject>
