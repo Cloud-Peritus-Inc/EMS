@@ -39,7 +39,6 @@ export default class ServiceRequestResignationForm extends NavigationMixin(Light
     }
 
      handleSuccess(event) {
-
         const even = new ShowToastEvent({
             title: 'Success!',
             message: 'Successfully created the service request!',
@@ -87,9 +86,11 @@ export default class ServiceRequestResignationForm extends NavigationMixin(Light
     fields.Designation__c = this.contactRecord.Resource_Role__c;
     fields.ContactId = this.contactRecord.Id;
     fields.AccountId = this.contactRecord.AccountId;
-    fields.Subject = this.empId+'-'+this.contactRecord.FirstName+' '+this.contactRecord.LastName+'- Resignation Request';
+    fields.Notice_Period__c =this.contactRecord.EMS_RM_Notice_Period__c;
+    fields.Subject = this.contactRecord.EMS_RM_Employee_Id__c+'-'+this.contactRecord.Name+'- Resignation Request';
    
-   /* */
+   /*    fields.Subject = this.EMS_RM_Employee_Id__c+'-'+this.contactRecord.FirstName+' '+this.contactRecord.LastName+'- Resignation Request';
+ */
 
     // Push the updated fields though for the actual submission itself
     this.template.querySelector('lightning-record-edit-form').submit(fields);

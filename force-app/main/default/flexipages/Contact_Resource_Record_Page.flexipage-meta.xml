@@ -363,8 +363,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.EMS_RM_Notice_Period__c</fieldItem>
-                <identifier>RecordEMS_RM_Notice_Period_cField</identifier>
+                <fieldItem>Record.Notice_Period__c</fieldItem>
+                <identifier>RecordNotice_Period_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

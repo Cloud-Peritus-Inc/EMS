@@ -25,7 +25,9 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
                     List<EMS_LM_Leave_Credit__c> i1 = new List<EMS_LM_Leave_Credit__c>();
                     i1 = [SELECT Leave_Type_Name__c
                           FROM EMS_LM_Leave_Credit__c
-                          WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :u.ContactId ORDER BY Leave_Type_Name__c ASC];
+                          WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND Leave_Available__c!=0 
+                          		AND EMS_LM_Leave_Credited_Date__c = THIS_YEAR AND EMS_LM_Employee__c = :u.ContactId 
+                          ORDER BY Leave_Type_Name__c ASC];
                     for(EMS_LM_Leave_Credit__c i2:i1){
                         i.add(i2.Leave_Type_Name__c);
                     }
@@ -41,7 +43,8 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
                     contact c = [Select Id from contact where Email=:u.Email AND EMS_TM_User__c = :userid];
                     i1 = [SELECT Leave_Type_Name__c
                           FROM EMS_LM_Leave_Credit__c
-                          WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND EMS_LM_Employee__c = :c.Id ORDER BY Leave_Type_Name__c ASC];
+                          WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND Leave_Available__c!=0 
+                          AND EMS_LM_Leave_Credited_Date__c = THIS_YEAR AND EMS_LM_Employee__c = :c.Id ORDER BY Leave_Type_Name__c ASC];
                     for(EMS_LM_Leave_Credit__c i2:i1){
                         i.add(i2.Leave_Type_Name__c);
                     }
