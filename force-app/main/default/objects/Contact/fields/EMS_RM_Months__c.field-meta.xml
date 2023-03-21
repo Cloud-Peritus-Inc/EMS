@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EMS_Employee_Type__c</fullName>
+    <fullName>EMS_RM_Months__c</fullName>
     <externalId>false</externalId>
-    <label>Employment Type</label>
+    <label>Experience Months</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
@@ -11,57 +11,59 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Permanent</fullName>
+                <fullName>1</fullName>
                 <default>false</default>
-                <label>Permanent</label>
+                <label>1</label>
             </value>
             <value>
-                <fullName>Contract</fullName>
+                <fullName>2</fullName>
                 <default>false</default>
-                <label>Contract</label>
+                <label>2</label>
             </value>
             <value>
-                <fullName>Intern</fullName>
+                <fullName>3</fullName>
                 <default>false</default>
-                <label>Intern</label>
+                <label>3</label>
             </value>
             <value>
-                <fullName>Third party</fullName>
+                <fullName>4</fullName>
                 <default>false</default>
-                <label>Third party</label>
+                <label>4</label>
             </value>
             <value>
-                <fullName>Consultant</fullName>
+                <fullName>5</fullName>
                 <default>false</default>
-                <label>Consultant</label>
+                <label>5</label>
             </value>
             <value>
-                <fullName>Freelancer</fullName>
+                <fullName>6</fullName>
                 <default>false</default>
-                <label>Freelancer</label>
+                <label>6</label>
             </value>
             <value>
-                <fullName>Part-time</fullName>
+                <fullName>7</fullName>
                 <default>false</default>
-                <label>Part-time</label>
+                <label>7</label>
             </value>
             <value>
-                <fullName>Contractor</fullName>
+                <fullName>8</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Contractor</label>
+                <label>8</label>
             </value>
             <value>
-                <fullName>Full-time</fullName>
+                <fullName>9</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Full-time</label>
+                <label>9</label>
             </value>
             <value>
-                <fullName>Part Time</fullName>
+                <fullName>10</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Part Time</label>
+                <label>10</label>
+            </value>
+            <value>
+                <fullName>11</fullName>
+                <default>false</default>
+                <label>11</label>
             </value>
         </valueSetDefinition>
     </valueSet>

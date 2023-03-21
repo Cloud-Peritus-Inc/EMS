@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Client_Project_Assignments</fullName>
+    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+    <columns>NAME</columns>
+    <columns>EMS_TM_EmployeeName__c</columns>
+    <columns>EMS_TM_ProjectName_Asgn__c</columns>
+    <columns>EMS_TM_StartDate_Asgn__c</columns>
+    <columns>EMS_TM_EndDate_Asgn__c</columns>
+    <columns>EMS_TM_AssignedAs__c</columns>
+    <columns>EMS_TM_Billable__c</columns>
+    <columns>EMS_TM_Status_Asgn__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>EMS_TM_ProjectName_Asgn__c</field>
+        <operation>equals</operation>
+        <value>Juniper</value>
+    </filters>
+    <filters>
+        <field>EMS_TM_ProjectName_Asgn__c</field>
+        <operation>equals</operation>
+        <value>Juniper Mobile</value>
+    </filters>
+    <filters>
+        <field>EMS_TM_ProjectName_Asgn__c</field>
+        <operation>equals</operation>
+        <value>PennyMac</value>
+    </filters>
+    <label>All Client Project Assignments</label>
+</ListView>
