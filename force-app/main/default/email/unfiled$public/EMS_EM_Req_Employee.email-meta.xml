@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When Employee is Raise the request Employee will get New Request Raised Email</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>EMS_EM_Req_Employee</name>
+    <style>none</style>
+    <subject>New Request Raised</subject>
+    <textOnly>Dear {!EMS_EM_Request__c.Contact__c},
+
+You have successfully raised a new request to change your {!EMS_EM_Request__c.EMS_EM_Request_Type__c}.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

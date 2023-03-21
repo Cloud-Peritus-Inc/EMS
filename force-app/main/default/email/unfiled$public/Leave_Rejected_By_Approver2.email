@@ -1,0 +1,19 @@
+<p>Dear {!Contact.FirstName} {!Contact.LastName},</p>
+<p>Your Leave request type {!EMS_LM_Leave_History__c.EMS_LM_Leave_Type_Name__c} for the following date(s) has been rejected.
+<table style="border-collapse: collapse; width: 80.4918%; height: 107px;" border="1">
+<tbody>
+</tr>
+<tr style="height: 51px;">
+<td style="width: 28.8085%; height: 51px;">{!EMS_LM_Leave_History__c.EMS_LM_Leave_Start_Date__c} TO {!EMS_LM_Leave_History__c.EMS_LM_Leave_End_Date__c}</td>
+<td style="width: 26.6812%; height: 51px;">{!EMS_LM_Leave_History__c.EMS_LM_Status__c}</td>
+<td style="width: 28.4206%; height: 51px;">
+{!EMS_LM_Leave_History__c.EMS_LM_Day__c}
+</td>
+</tr>
+</tbody>
+</table>
+<p>Remarks:  </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Regards,</p>
+<p>Cloud Peritus India Pvt. Ltd.</p>

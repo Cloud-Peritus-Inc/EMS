@@ -12,4 +12,50 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Pre_onboarding_Completed</template>
     </alerts>
+    <alerts>
+        <fullName>Applicant_Email_Alert</fullName>
+        <description>When Applicant  Submitted the Onboarding Form then he will get Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_EM_Personal_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/EMS_EM_Onboarding_Submitter</template>
+    </alerts>
+    <alerts>
+        <fullName>HR_reopens_the_portal</fullName>
+        <description>HR reopens the portal</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_EM_Personal_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/HR_reopens_the_portal</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_HR_After_PreOnboarding_Completion</fullName>
+        <description>Notify HR After PreOnboarding Completion</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Notify_HR_After_PreOnboarding_Completion</template>
+    </alerts>
+    <alerts>
+        <fullName>Reminder_Email_To_Candidate</fullName>
+        <description>Reminder Email To Candidate</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_EM_Personal_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Reminder_Email_To_Candidate</template>
+    </alerts>
 </Workflow>
