@@ -59,6 +59,10 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     weekendEnteredValue = 0;
     hideSpinner = false;
     leaveRecords;
+    selectdUserId;
+    selectdcompoffuserId;
+    disableRemarks = false;
+    disableWeekend = false;
     @track compoffCheck = false;
 
     @track showModalPopUp = false;
@@ -80,6 +84,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         if (data) {
             console.log('result ',data);
             // this.timeSheetRecord.User__c = data.User.Id;
+            this.timeSheetRecord.Resource__c = data.User.Contacts__r[0].Id;
             this.enableManagerView = data.enableManagerView;
             if (this.enableManagerView) {
                 // let profileIds = [];
@@ -237,6 +242,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                             if (record.EMS_TM_Sun__c > 0 || record.EMS_TM_Sat__c > 0) {
                                 this.showWeekend = true;
                                 this.showRemarks = true;
+                                element.remarkRequired = true;
                                 this.template.querySelector('[data-id="remarkToggle"]').checked = true;
                                 this.template.querySelector('[data-id="weekendToggle"]').checked = true;
                                 // this.showOtherTask = true;
@@ -578,6 +584,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         this.hideSpinner = false;
         console.log('handleUserselection event ', event);
         console.log('handleUserselection  userID', event.detail.value);
+        this.selectdUserId = event.detail.value;
         this.timeSheetRecord.User__c = event.detail.value;
         this.timeSheetRecord.EMS_TM_Week__c = this.thisWeek;
         this.disableRevise = true;
@@ -585,6 +592,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         this.deletedRecordsList = [];
         this.userSelected = true;
         // this.hideSpinner = true;
+        this.connectedCallback();
     }
 
     handleUserRemove(event) {
@@ -733,12 +741,13 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             this.calculateTotalHours();
         } else {
             this.records[index][fieldName] = value;
-        
         }
         if ((fieldName === 'EMS_TM_Sat__c' || fieldName === 'EMS_TM_Sun__c') && parseFloat(value) > 0) {
-            this.showRemarks = true;
-            this.template.querySelector('[data-id="remarkToggle"]').checked = true;
             this.records[index].remarkRequired = true;
+            this.showRemarks = true;
+            this.disableRemarks = true;
+            this.disableWeekend = true;
+            this.template.querySelector('[data-id="remarkToggle"]').checked = true;
         } else {
             this.records[index].remarkRequired = false;
         }
@@ -919,6 +928,10 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         }
         this.totalHours.value = letTotalHours;
         this.weekendEnteredValue = weekendHours;
+        if (this.weekendEnteredValue == 0) {
+            this.disableRemarks = false;
+            this.disableWeekend = false;
+        }
          if (this.totalHours.value > 168) {
             this.totalHours.error = true;
          } else {
@@ -1003,7 +1016,15 @@ submitpopup(){
     }
     connectedCallback() {
         var comoff = null;
-              checkcomppRec({userId:user_Id,compOffweek :this.comoff})
+        if(this.selectdUserId != null || this.selectdUserId !=''){
+          this.selectdcompoffuserId = this.selectdUserId;
+          console.log('IfCompFF'+this.selectdcompoffuserId);
+        }else{
+           this.selectdcompoffuserId = user_Id; 
+           console.log('ELSECompFF'+this.selectdcompoffuserId);
+        }
+
+              checkcomppRec({userId:this.selectdcompoffuserId,compOffweek :this.comoff})
         .then(result => {
             window.console.log('handlecheckCompOffRec ===> '+JSON.stringify(result));
             if(result == true){
@@ -1046,6 +1067,13 @@ submitpopup(){
     }
 
     handlesaveCompOffRecord(){
+        if(this.selectdUserId != null || this.selectdUserId !=''){
+          this.selectdcompoffuserId = this.selectdUserId;
+          console.log('IfCompFF'+this.selectdcompoffuserId);
+        }else{
+           this.selectdcompoffuserId = user_Id; 
+           console.log('ELSECompFF'+this.selectdcompoffuserId);
+        }
            console.log('data'+this.thisWeek);
             savecomppRec({userId:user_Id,compoffhours:this.weekendEnteredValue,compOffweek :this.thisWeek})
         .then(result => {

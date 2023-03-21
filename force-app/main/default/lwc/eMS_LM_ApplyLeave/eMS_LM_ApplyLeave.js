@@ -11,7 +11,8 @@ import getLeaveTypeId from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveT
 import LightningConfirm from "lightning/confirm";
 import { createRecord } from 'lightning/uiRecordApi';
 
-import { refreshApex } from '@salesforce/apex';
+import { createMessageContext, publish } from 'lightning/messageService';
+import MY_REFRESH_CHANNEL from '@salesforce/messageChannel/refreshothercomponent__c';
 
 export default class EMS_LM_ApplyLeave extends LightningElement {
   @track isLoading = false;
@@ -472,7 +473,12 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
                     variant: 'success',
                 }),
             );
-            window.location.reload();
+           // window.location.reload();
+           const messageContext = createMessageContext();
+        const payload = {
+            refresh: true
+        };
+        publish(messageContext, MY_REFRESH_CHANNEL, payload);
         }).catch(error => {
             this.isLoading=false;
             console.log('error-->',error);

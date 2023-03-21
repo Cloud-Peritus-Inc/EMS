@@ -56,7 +56,7 @@ public without Sharing class GetDataForLoginUser {
                                  EMS_EM_HR_Assigned__c,
                                  EMS_EM_JD__c,
                                  EMS_EM_PP__c,
-                                 EMS_RM_Notice_Period__c,
+                                 Notice_Period__c,
                                  EMS_EM_CAddress_Line_1__c,
                                  EMS_EM_PAddress_Line_1__c,
                                  EMS_EM_CAddress_Line_2__c,
@@ -322,7 +322,7 @@ public without Sharing class GetDataForLoginUser {
                                                                              PreferencesAllowViewInBrowser = true );
         insert newContentDistribution;
         
-        return  [ SELECT Id, Name, ContentDownloadUrl, ContentDocumentId 
+        return  [ SELECT Id, Name, ContentDownloadUrl, ContentDocumentId ,DistributionPublicUrl
                  FROM ContentDistribution 
                  WHERE Id =: newContentDistribution.Id 
                  LIMIT 1 ];

@@ -41,7 +41,7 @@ public without sharing class newServiceRequestController {
         cw.contactid = urec.ContactId;
         cw.accountid = urec.Contact.AccountId;
         cw.conRec = [SELECT Id,Name, LastName, FirstName, AccountId,EMS_RM_Employee_Id__c, Department__c, Department__r.Name, Resource_Role__r.Name,
-                     Resource_Role__r.Id, Resource_Role__c,Work_Experience__c, EMS_RM_Notice_Period__c FROM Contact WHERE Id=:urec.ContactId];
+                     Resource_Role__r.Id, Resource_Role__c,Work_Experience__c, Notice_Period__c FROM Contact WHERE Id=:urec.ContactId];
         return cw;
     }    
     

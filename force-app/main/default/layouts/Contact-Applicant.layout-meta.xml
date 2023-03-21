@@ -27,11 +27,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Personal_Email__c</field>
+                <field>EMS_Phone_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>EMS_Phone_Number__c</field>
+                <field>Personal_Email__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -97,7 +97,7 @@
                 <field>Department__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Resource_Role__c</field>
             </layoutItems>
         </layoutColumns>
@@ -206,6 +206,10 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Reward_And_Recognition__c.Resource__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

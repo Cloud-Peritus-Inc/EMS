@@ -51,7 +51,7 @@
                 <lightning-icon icon-name="standard:business_hours"
                     alternative-text="Event"
                     title="Event"></lightning-icon>
-                <label class="slds-p-left_medium timeSheet">Time Sheet</label>
+                <label class="slds-p-left_medium timeSheet">Timesheet</label>
             </div>  
             <div if:true={enableManagerView}>
                 <lightning-input data-id="toggle"
@@ -78,14 +78,16 @@
         <div class="slds-size_1-of-6"></div>
         <div class="slds-grid alignCenter slds-p-around_medium slds-size_1-of-3">
             <lightning-input class="slds-p-right_large"
-            data-id="weekendToggle" type="toggle" label="Weekend"
-            onchange={handleWeekendToggle}
+                data-id="weekendToggle" type="toggle" label="Weekend"
+                onchange={handleWeekendToggle}
                 message-toggle-active=""
-                message-toggle-inactive=""></lightning-input>
+                message-toggle-inactive=""
+                disabled={disableWeekend}></lightning-input>
             <lightning-input class="slds-p-right_large"
                 name="EMS_TM_Remarks__c" data-id="remarkToggle" type="toggle"
                 label="Remark" onchange={handleRemarkToggle}
-                message-toggle-active="" message-toggle-inactive="">
+                message-toggle-active="" message-toggle-inactive=""
+                disabled={disableRemarks}>
             </lightning-input>
             <lightning-button label="Copy Previous Week"
                 variant="brand" onclick={copyPreviousWeek}

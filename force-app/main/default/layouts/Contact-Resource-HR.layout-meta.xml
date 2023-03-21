@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -19,24 +21,12 @@
                 <behavior>Edit</behavior>
                 <field>Personal_Email__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EMS_EM_Gender__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_LM_No_of_Off_Credit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>EMS_LM_No_of_Available_Loss_of_Pay__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Probationary_Period_End_Date__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EMS_EM_BG__c</field>
@@ -56,7 +46,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Employee Details</label>
+        <label>Employment Details</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -118,6 +108,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>EMS_TM_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>EMS_EM_Exp__c</field>
             </layoutItems>
             <layoutItems>
@@ -133,8 +127,8 @@
                 <field>EMS_EM_PP__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_RM_Notice_Period__c</field>
+                <behavior>Readonly</behavior>
+                <field>Notice_Period__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -194,17 +188,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_CA_City__c</field>
+                <field>EMS_EM_PAddress_Line_2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_CA_Zip__c</field>
+                <field>EMS_EM_CA_City__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_PAddress_Line_2__c</field>
+                <field>EMS_EM_CA_Zip__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -225,17 +219,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_PA_City__c</field>
+                <field>EMS_EM_CAddress_Line_2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_PA_Zip__c</field>
+                <field>EMS_EM_PA_City__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_CAddress_Line_2__c</field>
+                <field>EMS_EM_PA_Zip__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -283,11 +277,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_LM_No_Of_Carry_Forward_Leaves__c</field>
+                <field>EMS_LM_No_of_Off_Credit__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EMS_LM_No_Of_Utilized_Loss_Of_Pay__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EMS_LM_No_of_Available_Loss_of_Pay__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -351,21 +349,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>DisableCustomerPortal</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ChangeRecordType</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>LoginToPortalAsUser</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -389,6 +372,21 @@
             <actionName>LoginToNetworkAsUser</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeRecordType</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>DisableCustomerPortal</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -437,7 +435,6 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Resource_Role__c</fields>
         <fields>Resource_Reports_To__c</fields>
         <fields>Reports_To_Role__c</fields>
         <relatedList>Resource_Resource_Relationship__c.Resource__c</relatedList>
@@ -477,18 +474,20 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Goal_Name__c</fields>
-        <fields>Status__c</fields>
+        <fields>Start_Date__c</fields>
+        <fields>End_Date__c</fields>
         <relatedList>Goal__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>OBJECT_ID</fields>
+        <fields>Type__c</fields>
         <fields>Certification_Name__c</fields>
-        <fields>Completion_Date__c</fields>
+        <fields>Skill__c</fields>
         <relatedList>Certifications__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
         <fields>OBJECT_ID</fields>
+        <fields>RECORDTYPE</fields>
         <relatedList>ems_EM_Additional_Detail__c.ContactId__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -499,19 +498,25 @@
         <relatedList>Family_Information__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>EMS_EM_Membership_No__c</fields>
+        <fields>OBJECT_ID</fields>
+        <fields>Type__c</fields>
         <fields>Amount__c</fields>
+        <fields>EMS_EM_Valid_From__c</fields>
         <relatedList>EMS_EM_Benefits__c.EMS_EM_Nominee__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>Bank_Name__c</fields>
         <fields>Beneficiary_Account_Number__c</fields>
+        <fields>Bank_Name__c</fields>
+        <fields>Branch__c</fields>
+        <fields>IFSC_Routing_Number__c</fields>
         <relatedList>PayRoll__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Reward_And_Recognition__c.Resource__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
