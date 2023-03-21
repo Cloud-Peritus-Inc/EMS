@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_LM_LeaveReq_Edit_ValidationRule</fullName>
+    <active>false</active>
+    <description>This rule will fire when the record owner tries to update the record when the leave status is not pending or Approver 1 is pending.</description>
+    <errorConditionFormula>AND(
+NOT(ISNEW()),
+OR(
+ISPICKVAL(PRIORVALUE(EMS_LM_Status__c), &quot;Approver 2 Pending&quot;),
+ISPICKVAL(PRIORVALUE(EMS_LM_Status__c), &quot;Cancelled&quot;),
+ISPICKVAL(PRIORVALUE(EMS_LM_Status__c), &quot;Rejected&quot;),
+				ISPICKVAL(PRIORVALUE(EMS_LM_Status__c), &quot;Approved&quot;)
+),
+				EMS_LM_Contact__r.Id == $User.ContactId
+
+)</errorConditionFormula>
+    <errorMessage>You can not edit the record</errorMessage>
+</ValidationRule>
