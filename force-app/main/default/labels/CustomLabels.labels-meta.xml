@@ -82,6 +82,13 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Grid Portal Link</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/Grid>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid></value>
+    </labels>
+    <labels>
+        <fullName>Resource_Recordtype_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Resource Recordtype Id</shortDescription>
+        <value>0125e000000qrLTAAY</value>
     </labels>
 </CustomLabels>

@@ -1,0 +1,191 @@
+<template>
+	<template if:false={openModal}>
+		<lightning-card variant="Narrow" size="large">
+			<div data-modal="custom-modal" class="modalclass">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" cd vf class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<lightning-button-icon icon-name="utility:close" class="slds-modal__close "
+								alternative-text="Close" title="Close" size="large" variant="bare-inverse"
+								onclick={handleCancel}>
+							</lightning-button-icon>
+							<font size="5">Apply a Service Request</font>
+						</header>
+
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+							<div
+								class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+								<lightning-layout>
+									<lightning-layout-item padding="around-small" flexibility="auto">
+										<div class=" slds-p-around_medium slds-text-align_center">
+											<lightning-input type="text" value={requestType} disabled variant="standard"
+												label="Request Type">
+											</lightning-input>
+										</div>
+									</lightning-layout-item>
+									<lightning-layout-item padding="around-small" flexibility="auto">
+										<div class=" slds-p-around_medium slds-text-align_center">
+											<template if:true={reqSubTypeValues}>
+												<lightning-combobox name="SubTypeReq"
+													label="Select the type of details you would like to update"
+													value={selectedSubTypeReq} options={reqSubTypeValues}
+													onchange={handleChange}>
+												</lightning-combobox>
+											</template>
+										</div>
+									</lightning-layout-item>
+									<lightning-layout-item padding="around-small" flexibility="auto">
+										<div class=" slds-p-around_medium slds-text-align_center">
+											<template if:true={priorityValues}>
+												<lightning-combobox name="Priority" label="Priority"
+													value={selectedPriority} options={priorityValues}
+													onchange={handleChange}>
+												</lightning-combobox>
+											</template>
+										</div>
+									</lightning-layout-item>
+								</lightning-layout>
+							</div>
+
+							<!------------------------------------   TO SHOW BANK DETAILS   --------------------------------------------->
+							<template if:true={renderBankField}>
+
+								<lightning-layout multiple-rows>
+									<lightning-layout-item size="6" class="slds-p-around_xx-small">
+										<strong>Previous Details</strong>
+										<lightning-input type="text" variant="standard" label="Bank Name"
+											value={bankName} disabled={inputDisabled}>
+										</lightning-input>
+										<lightning-input type="text" variant="standard" label="Bank Account Number"
+											value={accountNumber} disabled={inputDisabled}>
+										</lightning-input>
+										<lightning-input type="text" variant="standard" label="IFSC Code"
+											value={ifscCode} disabled={inputDisabled}></lightning-input>
+										<lightning-input type="text" variant="standard" label="Bank Account Holder Name"
+											value={accHolderName} disabled={inputDisabled}>
+										</lightning-input>
+									</lightning-layout-item>
+									<lightning-layout-item size="6" class="slds-p-around_xx-small">
+										<strong>Updated Details</strong>
+										<lightning-record-edit-form object-api-name="Case" onsuccess={handleSuccess}
+											onerror={handleError} onsubmit={onSubmitHandler}>
+											<lightning-messages></lightning-messages>
+											<lightning-input-field field-name="Bank_Name__c" required>
+											</lightning-input-field>
+											<lightning-input-field field-name="Bank_Account_Number__c" required>
+											</lightning-input-field>
+											<lightning-input-field field-name="IFSC_Code__c" required>
+											</lightning-input-field>
+											<lightning-input-field field-name="Bank_Account_Holder_Name__c" required>
+											</lightning-input-field>
+											<!-- submit -->
+											<center>
+												<lightning-button label="Close" title="Close" icon-name="utility:close"
+													onclick={handleCancel}>
+												</lightning-button>
+												&nbsp;&nbsp; <lightning-button class="slds-m-top_small" variant="brand"
+													type="submit" name="update" label="Save">
+												</lightning-button>
+											</center>
+										</lightning-record-edit-form>
+									</lightning-layout-item>
+								</lightning-layout>
+
+
+
+							</template>
+
+							<!------------------------------------   TO SHOW EDUCATION DETAILS   --------------------------------------------->
+							<template if:true={renderEducationField}>
+								<strong>Enter New Eductation Details</strong>
+								<div class="slds-var-m-around_medium">
+									<template for:each={itemList} for:item="item" for:index="index">
+
+										<lightning-record-edit-form id="recordViewForm" record-id={recordId}
+											object-api-name={objectName} key={item.id} onsuccess={handleSuccess}>
+											<lightning-layout multiple-rows>
+												<lightning-layout-item size="6" class="slds-p-around_xx-small">
+													<lightning-input-field field-name="Level_of_Education__c">
+													</lightning-input-field>
+													<lightning-input-field field-name="Degree__c">
+													</lightning-input-field>
+													<lightning-input-field field-name="Field_of_Study__c">
+													</lightning-input-field>
+												</lightning-layout-item>
+												<lightning-layout-item size="6" class="slds-p-around_xx-small">
+													<lightning-input-field field-name="Institution_Name__c">
+													</lightning-input-field>
+													<lightning-input-field field-name="Graduation_Date__c">
+													</lightning-input-field>
+												</lightning-layout-item>
+											</lightning-layout>
+
+											<div class="slds-p-top_medium">
+												<lightning-button-icon icon-name="action:new" access-key={item.id}
+													id={index} alternative-text="Add Row" size="small" title="Add Row"
+													onclick={addRow} variant="brand">
+												</lightning-button-icon> &nbsp;&nbsp;
+												<lightning-button-icon icon-name="action:delete" access-key={item.id}
+													id={index} alternative-text="Delete Row" size="small"
+													title="Delete Row" onclick={removeRow} variant="brand">
+												</lightning-button-icon>
+											</div>
+										</lightning-record-edit-form>
+									</template>
+									<div class="slds-align_absolute-center">
+										<lightning-button label="Close" title="Close" icon-name="utility:close"
+											onclick={handleCancel}>
+										</lightning-button>&nbsp;&nbsp;
+										<lightning-button variant="brand" onclick={handleSubmit} name="submit"
+											label="Save">
+										</lightning-button>
+									</div>
+								</div>
+							</template>
+
+							<!------------------------------------   TO SHOW FAMILY DETAILS   --------------------------------------------->
+							<template if:true={renderFamilyField}>
+								<strong>Previous Details</strong>
+								<lightning-datatable key-field="id" data={tableData} show-row-number-column
+									row-number-offset={rowOffset} suppress-bottom-bar columns={tableColumns}>
+								</lightning-datatable>
+								<strong>Enter Details</strong>
+
+								<lightning-record-edit-form object-api-name="Case" onsuccess={handleSuccess}
+									onerror={handleError} onsubmit={onSubmitHandler}>
+									<lightning-layout multiple-rows>
+										<lightning-layout-item size="6" class="slds-p-around_xx-small">
+											<lightning-messages></lightning-messages>
+											<lightning-input-field field-name="Family_Member_Name__c">
+											</lightning-input-field>
+											<lightning-input-field field-name="Is_It_Emergency_Contact__c">
+											</lightning-input-field>
+											<lightning-input-field field-name="Is_it_Dependant_Contact__c">
+											</lightning-input-field>
+										</lightning-layout-item>
+										<lightning-layout-item size="6" class="slds-p-around_xx-small">
+											<lightning-input-field field-name="Relationships__c">
+											</lightning-input-field>
+											<lightning-input-field field-name="Phone"></lightning-input-field>
+											<lightning-input-field field-name="Date_of_Birth__c">
+											</lightning-input-field>
+										</lightning-layout-item>
+									</lightning-layout>
+									<center>
+										<lightning-button label="Close" title="Close" icon-name="utility:close"
+											onclick={handleCancel}></lightning-button>
+										&nbsp;&nbsp; <lightning-button class="slds-m-top_small" variant="brand"
+											type="submit" name="update" label="Save">
+										</lightning-button>
+									</center>
+								</lightning-record-edit-form>
+							</template>
+						</div>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+		</lightning-card>
+	</template>
+</template>
