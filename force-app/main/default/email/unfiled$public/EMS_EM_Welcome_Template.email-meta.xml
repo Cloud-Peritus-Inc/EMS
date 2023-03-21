@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>EMS_EM_Welcome_Template</name>
+    <style>none</style>
+    <subject>Welcome to Cloud Peritus!</subject>
+    <textOnly>Dear [Employee&apos;s first name] [Employee&apos;s last name],
+
+We welcome you to the family. We are so excited to have you on board. We value your association with us and would like to ensure that you have an enriching and enduring tenure with us. Wish you great success and a rewarding career with Cloud Peritus.
+
+As an employee of Cloud Peritus, you have been granted access to the company&apos;s employee portal: CP Link. Click here [hyperlink &apos;here&apos; with the employee portal&apos;s link] to log in to the portal.
+
+Also, we need you to complete the rest of the onboarding formalities in the portal. Please follow the instructions below:
+
+Instructions: 
+1. Click on the CP Link URL and you will be directed to the login page of CP Link. 
+2. Click on the Google icon to log in with your official Gmail credentials.
+3. On the Homepage of CP Link, you will find the My Details card. Click on the card.
+4. Please fill in your Bank Account, PF, Vehicle, Emergency, and Sodexo details under the My Info tab. Click on Submit.
+5. Please fill in your dependent details in the Benefits tab for medical insurance purposes. Click on Submit.
+
+Note: You will be able to edit your Bank Account, PF, Vehicle, Emergency, Sodexo, and dependent details only once. For subsequent changes, you can request for changing the details in the portal.
+
+Team HR
+CloudPeritus</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

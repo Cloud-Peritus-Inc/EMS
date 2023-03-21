@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When request is Approved Employee will get Approved Email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>EMS_EM_Req_Approved</name>
+    <style>none</style>
+    <subject>Request Approved</subject>
+    <textOnly>Dear {!EMS_EM_Request__c.Contact__c},
+Your {!EMS_EM_Request__c.EMS_EM_Request_Type__c} change request has been approved. Click the View Request button to view the request.
+{!ApprovalRequest.Comments}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
