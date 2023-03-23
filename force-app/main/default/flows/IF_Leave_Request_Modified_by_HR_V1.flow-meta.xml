@@ -91,6 +91,24 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
+        <name>Copy_1_of_Email_To_HR_Contact</name>
+        <label>Copy 1 of Email To HR Contact</label>
+        <locationX>4010</locationX>
+        <locationY>935</locationY>
+        <actionName>EMS_LM_Leave_History__c.EMS_Leave_Cancel_By_HR_Email_To_HR_Contact</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Copy_1_of_Email_To_HR_when_he_cancels_other_HR_s_Request</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Copy_1_of_Email_To_HR_on_Approval_of_leave_Request</name>
         <label>Copy 1 of Email To HR on Approval of leave Request</label>
         <locationX>578</locationX>
@@ -132,6 +150,21 @@
             <name>emailSubject</name>
             <value>
                 <stringValue>Leave: {!LeaveType} request is {!Status} by {!HRName}</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Copy_1_of_Email_To_HR_when_he_cancels_other_HR_s_Request</name>
+        <label>Copy 1 of Email To HR when he cancels other HR&apos;s Request</label>
+        <locationX>4010</locationX>
+        <locationY>1055</locationY>
+        <actionName>EMS_LM_Leave_History__c.Email_sent_to_HR_when_HR_cancels_leave_request</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -181,10 +214,43 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
-        <name>Email_To_Approver1</name>
+        <name>Copy_1_of_EMS_Leave_Cancel_By_HR_Email_To_Employee</name>
+        <label>Copy 1 of EMS_Leave_Cancel By HR(Email To Employee)</label>
+        <locationX>4274</locationX>
+        <locationY>935</locationY>
+        <actionName>EMS_LM_Leave_History__c.EMS_Leave_Cancel_By_HR_Email_To_Employee</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Email_To_HR_Contact</name>
+        <label>Email To HR Contact</label>
+        <locationX>3746</locationX>
+        <locationY>935</locationY>
+        <actionName>EMS_LM_Leave_History__c.EMS_Leave_Cancel_By_HR_Email_To_HR_Contact</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Email_To_HR_when_he_cancels_other_HR_s_Request</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Email_To_HR_Employee</name>
         <label>Email To Approver1</label>
         <locationX>3218</locationX>
-        <locationY>935</locationY>
+        <locationY>1175</locationY>
         <actionName>EMS_LM_Leave_History__c.Email_sent_to_lead_when_Employee_cancels_leave_request</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -241,47 +307,17 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
-        <name>Email_To_Hr_When_leave_is_Cancelled</name>
-        <label>Email To Hr When leave is Cancelled</label>
-        <locationX>3482</locationX>
-        <locationY>935</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
+        <name>Email_To_HR_when_he_cancels_other_HR_s_Request</name>
+        <label>Email To HR when he cancels other HR&apos;s Request</label>
+        <locationX>3746</locationX>
+        <locationY>1055</locationY>
+        <actionName>EMS_LM_Leave_History__c.Email_sent_to_HR_when_HR_cancels_leave_request</actionName>
+        <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>emailBody</name>
+            <name>SObjectRowId</name>
             <value>
-                <elementReference>EmailToHRWhenLeaveCancelledByHR</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>HrEmail</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>sendRichBody</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderAddress</name>
-            <value>
-                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderType</name>
-            <value>
-                <stringValue>OrgWideEmailAddress</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <stringValue>Leave: {!LeaveType} cancellation notification</stringValue>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -333,12 +369,12 @@
     <actionCalls>
         <name>EMS_Leave_Cancel_By_HR_Email_To_Employee</name>
         <label>EMS_Leave_Cancel By HR(Email To Employee)</label>
-        <locationX>3482</locationX>
-        <locationY>695</locationY>
+        <locationX>3350</locationX>
+        <locationY>935</locationY>
         <actionName>EMS_LM_Leave_History__c.EMS_Leave_Cancel_By_HR_Email_To_Employee</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>Check_HR_or_Not</targetReference>
+            <targetReference>Check_Approver_1_value_is_Null_or_Not</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -532,7 +568,7 @@
     <assignments>
         <name>Store_Old_Value</name>
         <label>Store Old Value</label>
-        <locationX>2393</locationX>
+        <locationX>2789</locationX>
         <locationY>455</locationY>
         <assignmentItems>
             <assignToReference>OldStartDate</assignToReference>
@@ -622,6 +658,28 @@
             <targetReference>IF_Leave_Request_Is_Edited_or_Not</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_Approver_1_value_is_Null_or_Not</name>
+        <label>Check Approver 1 value is Null or Not</label>
+        <locationX>3350</locationX>
+        <locationY>1055</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Approver_1_value_is_Null_or_Not1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_To_HR_Employee</targetReference>
+            </connector>
+            <label>Check Approver 1 value is Null or Not</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_HR_approves_rejects_leave_on_behalf_of_an_approver_1</name>
         <label>Check HR rejects leave on behalf of an approver 1/Approver2</label>
@@ -732,17 +790,46 @@
     <decisions>
         <name>Check_HR_or_Not</name>
         <label>Check HR or Not</label>
-        <locationX>3482</locationX>
+        <locationX>3944</locationX>
         <locationY>815</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Check_HR_or_Not1</name>
+            <name>When_HR_cancels_his_own_leave_request</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.EMS_LM_Approver__r.Profile.Name</leftValueReference>
+                <leftValueReference>$Record.EMS_LM_Contact__r.ContactName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Last_Modified_By_User_Records.Name</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastModifiedById</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_TM_User__r.Profile.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Employee - HR(Community)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EMS_Leave_Cancel_By_HR_Email_To_Employee</targetReference>
+            </connector>
+            <label>When HR cancels his own leave request</label>
+        </rules>
+        <rules>
+            <name>When_HR_Cancels_Leave_of_his_below_level_Employees</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Contact__r.ContactName__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Last_Modified_By_User_Records.Name</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -753,31 +840,95 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <leftValueReference>$Record.LastModifiedBy.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Employee - HR(Community)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastModifiedById</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Email_To_Approver1</targetReference>
+                <targetReference>Email_To_HR_Contact</targetReference>
             </connector>
-            <label>Check HR or Not</label>
+            <label>When HR Cancels Leave of his below level Employees</label>
         </rules>
         <rules>
-            <name>Check_Approver1_is_Null_or_Not</name>
+            <name>When_HR_Cancels_employee_leave_behalf_of_approvers</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.EMS_LM_Approver__c</leftValueReference>
+                <leftValueReference>$Record.EMS_LM_Contact__r.ContactName__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Last_Modified_By_User_Records.Name</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_TM_User__r.Profile.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Employee - HR(Community)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastModifiedBy.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Employee - HR(Community)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastModifiedById</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Email_To_Hr_When_leave_is_Cancelled</targetReference>
+                <targetReference>Copy_1_of_Email_To_HR_Contact</targetReference>
             </connector>
-            <label>Check Approver1 is Null or Not</label>
+            <label>When HR Cancels employee leave behalf of approvers</label>
+        </rules>
+        <rules>
+            <name>When_HR_director_cancels_his_own_Request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.EMS_LM_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Auto Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Contact__r.ContactName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Last_Modified_By_User_Records.Name</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_EMS_Leave_Cancel_By_HR_Email_To_Employee</targetReference>
+            </connector>
+            <label>When HR director cancels his own Request</label>
         </rules>
     </decisions>
     <decisions>
@@ -1106,7 +1257,7 @@
     <decisions>
         <name>IF_Leave_Request_Is_Edited_or_Not</name>
         <label>IF Leave Request Is Edited or Not</label>
-        <locationX>2393</locationX>
+        <locationX>2789</locationX>
         <locationY>575</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1185,7 +1336,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>EMS_Leave_Cancel_By_HR_Email_To_Employee</targetReference>
+                <targetReference>Get_Last_Modified_By_User_Records</targetReference>
             </connector>
             <label>IF HR Cancelled Leave Request</label>
         </rules>
@@ -1234,9 +1385,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Last_Modified_By_User_Records</name>
+        <label>Get Last Modified By User Records</label>
+        <locationX>3944</locationX>
+        <locationY>695</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_HR_or_Not</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.LastModifiedById</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Leave_Request_Records</name>
         <label>Get Leave Request Records</label>
-        <locationX>2393</locationX>
+        <locationX>2789</locationX>
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1360,7 +1532,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>2267</locationX>
+        <locationX>2663</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Leave_Request_Records</targetReference>

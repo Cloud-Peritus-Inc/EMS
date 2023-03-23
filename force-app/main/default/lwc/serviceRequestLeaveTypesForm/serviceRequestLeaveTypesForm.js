@@ -124,61 +124,6 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
         }
     }
 
-    datechange(event) {
-        var namecheck = event.target.name;
-        if (namecheck == 'startDate1') {
-            this.startDate1 = event.detail.value;
-            let date = new Date(this.startDate1);
-            let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            let todaydate1 = formattedDate;
-            if (new Date(todaydate1) > new Date(this.todaydate)) {
-
-                this.startDate1 = null;
-                const evt = new ShowToastEvent({
-                    message: 'You have selected future date, please select past date.',
-                    variant: 'error',
-                });
-                this.dispatchEvent(evt);
-            }
-
-            if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
-                const evt = new ShowToastEvent({
-                    message: 'Please select a proper start date',
-                    variant: 'error',
-                });
-                this.dispatchEvent(evt);
-                //alert('Please select a proper Start Date');
-                this.startDate1 = null;
-                this.endDate1 = null;
-            }
-        }
-        if (namecheck == 'endDate1') {
-            this.endDate1 = event.detail.value;
-            let datessend = new Date(this.endDate1);
-            let formattedendDate = datessend.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            let todaydate2 = formattedendDate;
-            if (new Date(todaydate2) < new Date(this.todaydate)) {
-                this.endDate1 = null;
-                const evts = new ShowToastEvent({
-                    message: 'You have selected past date, please select future date.',
-                    variant: 'error',
-                });
-                this.dispatchEvent(evts);
-            }
-
-            if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
-                const evt = new ShowToastEvent({
-                    message: 'Please select a Valid End date',
-                    variant: 'error',
-                });
-                this.dispatchEvent(evt);
-                //alert('Please select a Valid End date');
-                this.startDate1 = null;
-                this.endDate1 = null;
-            }
-        }
-    }
-
 
     //TO GET PRIORITY PICKLIST VALUES
     @wire(getPicklistValuesByRecordType, { objectApiName: CASE_OBJECT, recordTypeId: '$caseObjectInfo.defaultRecordTypeId' })
@@ -188,12 +133,12 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
             this.priorityValues = this.picklistGenerator(data.picklistFieldValues.Priority);
             this.dayValues = this.picklistGenerator(data.picklistFieldValues.Day__c);
             this.leaveTypeValues = this.picklistGenerator(data.picklistFieldValues.Request_Sub_Type__c)
-            const leaveTypessRemoved = [ "Educational Details", "Bank Details", "Family/Dependent Information", "Offboarding", "Other", "Problem",]
+            const leaveTypessRemoved = ["Educational Details", "Bank Details", "Family/Dependent Information", "Offboarding", "Other", "Problem",]
             const filteredLeaveTypeList = this.leaveTypeValues.filter(status => !leaveTypessRemoved.includes(status.label));
             this.leaveTypeValues = filteredLeaveTypeList;
-            console.log('### leaveTypeValues filter: ', this.leaveTypeValues);           
+            console.log('### leaveTypeValues filter: ', this.leaveTypeValues);
             console.log('### priorityValues : ', this.priorityValues);
-            console.log('### day : ',this.dayValues);
+            console.log('### day : ', this.dayValues);
         } else if (error) {
             console.error('Error:', error);
         }
@@ -216,7 +161,7 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
 
         if (name === 'selectedDay') {
             this.selectedDay = value;
-            console.log('### selectedDay : ',this.selectedDay);
+            console.log('### selectedDay : ', this.selectedDay);
         }
     }
 
@@ -280,9 +225,67 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
     }
 
 
-    // SUBMIT HANDLER FOR MATERNITY LEAVE
+    //FOR MATERNITY LEAVE STRAT DATE CHECK
+    datechange(event) {
+        var namecheck = event.target.name;
+        if (namecheck == 'startDate1') {
+            this.startDate1 = event.detail.value;
+            let date = new Date(this.startDate1);
+            let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+            let todaydate1 = formattedDate;
+            if (new Date(todaydate1) < new Date(this.todaydate)) {
+
+                this.startDate1 = null;
+                const evt = new ShowToastEvent({
+                    message: 'You have selected past date, please select future date.',
+                    variant: 'error',
+                });
+                this.dispatchEvent(evt);
+            }
+
+            if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
+                const evt = new ShowToastEvent({
+                    message: 'Please select a proper start date',
+                    variant: 'error',
+                });
+                this.dispatchEvent(evt);
+                //alert('Please select a proper Start Date');
+                this.startDate1 = null;
+                this.endDate1 = null;
+            }
+        }
+
+/*===================================================================================== */
+        //FOR MATERNITY LEAVE END DATE CHECK
+        if (namecheck == 'endDate1') {
+            this.endDate1 = event.detail.value;
+            let datessend = new Date(this.endDate1);
+            let formattedendDate = datessend.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+            let todaydate2 = formattedendDate;
+            if (new Date(todaydate2) < new Date(this.todaydate)) {
+                this.endDate1 = null;
+                const evts = new ShowToastEvent({
+                    message: 'You have selected past date, please select future date.',
+                    variant: 'error',
+                });
+                this.dispatchEvent(evts);
+            }
+
+            if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
+                const evt = new ShowToastEvent({
+                    message: 'Please select a Valid End date',
+                    variant: 'error',
+                });
+                this.dispatchEvent(evt);
+                //alert('Please select a Valid End date');
+                this.startDate1 = null;
+                this.endDate1 = null;
+            }
+        }
+    }
+
+    //SUBMIT HANDLER FOR MATERNITY LEAVE
     submitcase(event) {
-        //step1 create fields list
         console.log('### test : ');
         const fields = {
             'Leave_Start_Date__c': this.startDate1, 'Leave_End_Date__c': this.endDate1, 'Leave_Duration__c': this.duration,
@@ -292,9 +295,7 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
             'Subject': this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedLeaveTypes
         };
         console.log('##fields : ', fields);
-        //step2 create API record with above fields
         const recordData = { apiName: 'Case', fields };
-        //step3 call the imperation and handle it
         createRecord(recordData).then(result => {
             this.rId = result.id;
             console.log('this.rId------>', JSON.stringify(result));
@@ -304,19 +305,19 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
                 }).catch(error => { console.error(error.body.message); });
             }
 
-            const even = new ShowToastEvent({
-                title: 'Success!',
-                message: 'Successfully created the service request!',
-                variant: 'success'
-            });
-            this.dispatchEvent(even);
-
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success!',
+                    message: 'Successfully created the service request!',
+                    variant: 'success'
+                }),
+            );
             this[NavigationMixin.Navigate]({
                 type: "standard__recordPage",
                 attributes: {
                     objectApiName: "Account",
                     actionName: "view",
-                    recordId: event.detail.id
+                    recordId: this.rId
                 }
             });
             this.openModal = false;
@@ -347,6 +348,8 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
         this.submitcheck = false;
     }
 
+    /*===================================================================================== */
+   
     // SUBMIT HANDLER FOR COMP-OFF
     handelCompSave(event) {
         const fields = {
@@ -360,7 +363,8 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
         const recordData = { apiName: 'Case', fields };
         createRecord(recordData).then(result => {
             this.rId = result.id;
-            console.log('this.rId------>', JSON.stringify(result));
+            //console.log('this.rId------>', JSON.stringify(result));
+            console.log('this.rId------>', this.rId);
             const even = new ShowToastEvent({
                 title: 'Success!',
                 message: 'Successfully created the service request!',
@@ -373,7 +377,7 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
                 attributes: {
                     objectApiName: "Account",
                     actionName: "view",
-                    recordId: event.detail.id
+                    recordId: this.rId
                 }
             });
             this.openModal = false;

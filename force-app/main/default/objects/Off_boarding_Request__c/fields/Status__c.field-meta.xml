@@ -12,39 +12,29 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Request Initiated</fullName>
-                <default>true</default>
-                <label>Request Initiated</label>
-            </value>
-            <value>
                 <fullName>Approved</fullName>
                 <default>false</default>
-                <label>Approved</label>
+                <label>Approved - Scheduled</label>
             </value>
             <value>
-                <fullName>Offboarding Due</fullName>
+                <fullName>Recalled</fullName>
                 <default>false</default>
-                <label>Offboarding Due</label>
-            </value>
-            <value>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-                <label>Rejected</label>
-            </value>
-            <value>
-                <fullName>Canceled</fullName>
-                <default>false</default>
-                <label>Canceled</label>
-            </value>
-            <value>
-                <fullName>Feedback Request Initiated</fullName>
-                <default>false</default>
-                <label>Feedback Request Initiated</label>
+                <label>Recalled</label>
             </value>
             <value>
                 <fullName>Completed</fullName>
                 <default>false</default>
                 <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Offboarding In Progress</fullName>
+                <default>false</default>
+                <label>Offboarding In Progress</label>
+            </value>
+            <value>
+                <fullName>Offboarding Tasks Completed</fullName>
+                <default>false</default>
+                <label>Offboarding Tasks Completed</label>
             </value>
         </valueSetDefinition>
     </valueSet>
