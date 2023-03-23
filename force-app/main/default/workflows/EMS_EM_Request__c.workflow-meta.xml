@@ -30,4 +30,44 @@
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/EMS_EM_Req_Rejected</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>Final_status</fullName>
+        <field>EMS_EM_Request_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Final status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Initial_status</fullName>
+        <field>EMS_EM_Request_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Initial status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Rejection_Status</fullName>
+        <field>EMS_EM_Request_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Rejection Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>StatusCancelled</fullName>
+        <field>EMS_EM_Request_Status__c</field>
+        <literalValue>Cancelled</literalValue>
+        <name>StatusCancelled</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
 </Workflow>

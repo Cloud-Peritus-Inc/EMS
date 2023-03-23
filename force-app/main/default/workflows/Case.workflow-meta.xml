@@ -17,7 +17,7 @@
         <description>New Service Request : Email to Grid Support</description>
         <protected>false</protected>
         <recipients>
-            <recipient>HR_Team</recipient>
+            <recipient>Support_Team</recipient>
             <type>group</type>
         </recipients>
         <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
@@ -48,4 +48,14 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Service_Request_Closed_Email_to_Employee</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>ChangePriorityToHigh</fullName>
+        <field>Priority</field>
+        <literalValue>High</literalValue>
+        <name>Changes the case priority to high.</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
 </Workflow>

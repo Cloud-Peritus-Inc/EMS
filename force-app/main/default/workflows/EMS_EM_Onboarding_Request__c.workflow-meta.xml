@@ -58,4 +58,14 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Reminder_Email_To_Candidate</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>Status_After</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Status After</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
 </Workflow>

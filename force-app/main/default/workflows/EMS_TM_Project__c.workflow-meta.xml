@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Project_is_created_send_mail_to_manager</fullName>
+        <description>Project is created send mail to manager</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Project_Manager__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Send_Notification_to_Manager</template>
+    </alerts>
+    <alerts>
         <fullName>Send_mail_to_Project_is_completed_before_2_Days</fullName>
         <description>Send mail to Project is completed  before 2 Days</description>
         <protected>false</protected>
