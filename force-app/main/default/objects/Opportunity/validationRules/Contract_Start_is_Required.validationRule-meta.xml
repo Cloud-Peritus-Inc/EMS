@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Contract_Start_is_Required</fullName>
-    <active>true</active>
-    <errorConditionFormula>TEXT(StageName) == &quot;Closed Won&quot; &amp;&amp; ISBLANK(Contract_Start_Date__c)</errorConditionFormula>
-    <errorDisplayField>Contract_Start_Date__c</errorDisplayField>
-    <errorMessage>A Contract Start Date is required when the Opportunity is Closed Won</errorMessage>
-</ValidationRule>

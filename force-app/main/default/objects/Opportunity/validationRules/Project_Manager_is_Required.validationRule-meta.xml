@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Project_Manager_is_Required</fullName>
-    <active>true</active>
-    <errorConditionFormula>TEXT(StageName) == &quot;Closed Won&quot; &amp;&amp; ISBLANK(Project_Manager__c)</errorConditionFormula>
-    <errorDisplayField>Project_Manager__c</errorDisplayField>
-    <errorMessage>Project Manager is Required When Opportunity is Closed Won</errorMessage>
-</ValidationRule>

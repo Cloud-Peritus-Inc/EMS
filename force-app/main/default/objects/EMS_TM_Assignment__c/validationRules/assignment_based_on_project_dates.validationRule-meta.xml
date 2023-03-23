@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>assignment_based_on_project_dates</fullName>
-    <active>true</active>
-    <errorConditionFormula>EMS_TM_EndDate_Asgn__c  &gt;  EMS_TM_ProjectName_Asgn__r.EMS_TM_EndDate__c   ||  EMS_TM_EndDate_Asgn__c  &lt;  EMS_TM_ProjectName_Asgn__r.EMS_TM_StartDate__c</errorConditionFormula>
-    <errorDisplayField>EMS_TM_EndDate_Asgn__c</errorDisplayField>
-    <errorMessage>End Date of your Assignment should be in between the project Start Date and End Date</errorMessage>
-</ValidationRule>
