@@ -10,7 +10,6 @@
     <type>Picklist</type>
     <valueSet>
         <controllingField>Type</controllingField>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -59,54 +58,54 @@
                 <label>Marriage</label>
             </value>
             <value>
-                <fullName>Bereavement Leave</fullName>
+                <fullName>Bereavement</fullName>
                 <default>false</default>
-                <label>Bereavement Leave</label>
+                <label>Bereavement</label>
             </value>
             <value>
-                <fullName>Comp off</fullName>
+                <fullName>Compensatory Off</fullName>
                 <default>false</default>
-                <label>Comp off</label>
+                <label>Compensatory Off</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Problem</controllingFieldValue>
+            <controllingFieldValue>Technical Issues</controllingFieldValue>
             <valueName>Problem</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Change Of Details</controllingFieldValue>
+            <controllingFieldValue>Change of Details</controllingFieldValue>
             <valueName>Educational Details</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Change Of Details</controllingFieldValue>
+            <controllingFieldValue>Change of Details</controllingFieldValue>
             <valueName>Bank Details</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Change Of Details</controllingFieldValue>
+            <controllingFieldValue>Change of Details</controllingFieldValue>
             <valueName>Family/Dependent Information</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
+            <controllingFieldValue>Special Leaves</controllingFieldValue>
             <valueName>Paternity</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
+            <controllingFieldValue>Special Leaves</controllingFieldValue>
             <valueName>Maternity</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
+            <controllingFieldValue>Special Leaves</controllingFieldValue>
             <valueName>Marriage</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
-            <valueName>Bereavement Leave</valueName>
+            <controllingFieldValue>Special Leaves</controllingFieldValue>
+            <valueName>Bereavement</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Request for Special Leaves</controllingFieldValue>
-            <valueName>Comp off</valueName>
+            <controllingFieldValue>Special Leaves</controllingFieldValue>
+            <valueName>Compensatory Off</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Apply Resignation</controllingFieldValue>
+            <controllingFieldValue>Resignation</controllingFieldValue>
             <valueName>Offboarding</valueName>
         </valueSettings>
         <valueSettings>
