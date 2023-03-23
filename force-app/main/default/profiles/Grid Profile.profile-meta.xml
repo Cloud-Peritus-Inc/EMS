@@ -742,10 +742,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>LeaveCalculateHandler_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>LeaveHistoryApexController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
