@@ -106,17 +106,17 @@
 											object-api-name={objectName} key={item.id} onsuccess={handleSuccess}>
 											<lightning-layout multiple-rows>
 												<lightning-layout-item size="6" class="slds-p-around_xx-small">
-													<lightning-input-field field-name="Level_of_Education__c">
+													<lightning-input-field field-name="Level_of_Education__c" required>
 													</lightning-input-field>
-													<lightning-input-field field-name="Degree__c">
+													<lightning-input-field field-name="Degree__c" required>
 													</lightning-input-field>
-													<lightning-input-field field-name="Field_of_Study__c">
+													<lightning-input-field field-name="Field_of_Study__c" required>
 													</lightning-input-field>
 												</lightning-layout-item>
 												<lightning-layout-item size="6" class="slds-p-around_xx-small">
-													<lightning-input-field field-name="Institution_Name__c">
+													<lightning-input-field field-name="Institution_Name__c" required>
 													</lightning-input-field>
-													<lightning-input-field field-name="Graduation_Date__c">
+													<lightning-input-field field-name="Graduation_Date__c" required>
 													</lightning-input-field>
 												</lightning-layout-item>
 											</lightning-layout>
@@ -137,8 +137,7 @@
 										<lightning-button label="Close" title="Close" icon-name="utility:close"
 											onclick={handleCancel}>
 										</lightning-button>&nbsp;&nbsp;
-										<lightning-button variant="brand" onclick={handleSubmit} name="submit"
-											label="Save">
+										<lightning-button variant="brand" name="submit" label="Save" onclick={handleSubmit}>
 										</lightning-button>
 									</div>
 								</div>
@@ -157,18 +156,18 @@
 									<lightning-layout multiple-rows>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
 											<lightning-messages></lightning-messages>
-											<lightning-input-field field-name="Family_Member_Name__c">
+											<lightning-input-field field-name="Family_Member_Name__c" required>
 											</lightning-input-field>
-											<lightning-input-field field-name="Is_It_Emergency_Contact__c">
+											<lightning-input-field field-name="Is_It_Emergency_Contact__c" required>
 											</lightning-input-field>
-											<lightning-input-field field-name="Is_it_Dependant_Contact__c">
+											<lightning-input-field field-name="Is_it_Dependant_Contact__c" required>
 											</lightning-input-field>
 										</lightning-layout-item>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
-											<lightning-input-field field-name="Relationships__c">
+											<lightning-input-field field-name="Relationships__c" required>
 											</lightning-input-field>
-											<lightning-input-field field-name="Phone"></lightning-input-field>
-											<lightning-input-field field-name="Date_of_Birth__c">
+											<lightning-input-field field-name="SuppliedPhone" required></lightning-input-field>
+											<lightning-input-field field-name="Date_of_Birth__c" required>
 											</lightning-input-field>
 										</lightning-layout-item>
 									</lightning-layout>

@@ -45,6 +45,53 @@ public without sharing class newServiceRequestController {
         return cw;
     }    
     
+     @AuraEnabled(cacheable=true)
+    public static casewrapper getTheCaseDetails(Id caseid){
+        Case newCase = [SELECT Id,CreatedDate,Status,OwnerId,IsEscalated FROM Case WHERE Id=:caseid];
+         casewrapper  cw = new casewrapper();
+         cw.caseid = newCase.Id;
+         cw.enableEscalate = daysBetweenExcludingWeekends(newCase.CreatedDate,system.now()) > 5 ? false : true;
+         cw.enableClose = (newCase.Status == 'Closed' || newCase.Status == 'Resignation Approved' || newCase.Status == '	Resignation Rejected');  
+         cw.enableEscalate = cw.enableClose ? true :  cw.enableEscalate; 
+         
+         return cw;
+    }
+    
+    @AuraEnabled
+    public static casewrapper processTheCaseUpdate(String caseid,String comments, Boolean isEsacalted){
+        Case newcase = new Case();
+        newcase.id = caseid;
+        if(isEsacalted){
+          newcase.Escalation_Reason__c = comments;
+          newcase.IsEscalated = true;
+          newcase.Status = 'Escalated';
+        }else{
+            newcase.Comments = comments;
+            newcase.Status = 'Closed';
+        }
+        
+        try{
+            update newcase;
+            return getTheCaseDetails(newcase.id);
+        }catch(exception ex){
+            throw new AuraHandledException(ex.getMessage());
+        }
+        
+    }
+    
+    public static Integer daysBetweenExcludingWeekends(Datetime startDate, Datetime endDate) {
+        Integer days = startDate.date().daysBetween(endDate.date());
+        days -= ((integer)Math.floor((days / 7)) * 2);
+    
+        if (startDate.format('E') != 'Sat') {
+            days -= 1;
+        } else if (startDate.format('E') != 'Sun') {
+            days -= 2;
+        }
+    
+        return days;
+    }
+    
     public class casewrapper{
         @AuraEnabled
         public string caseid;
@@ -60,6 +107,10 @@ public without sharing class newServiceRequestController {
         public string Status;
          @AuraEnabled
         public Date CreatedDate;
+        @AuraEnabled
+        public boolean enableEscalate;
+         @AuraEnabled
+        public boolean enableClose;
         
     }
     

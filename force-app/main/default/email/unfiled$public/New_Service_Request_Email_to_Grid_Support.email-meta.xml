@@ -14,11 +14,13 @@
 
 Request Type : {!Case.Type}
 
-Subject  : {!Case.Subject}
+Request Sub Type : {!Case.Request_Sub_Type__c}
+
+Subject : {!Case.Subject}
 
 Description : {!Case.Description}
 
-Reason : {!Case.Reason__c}
+
 
 
 
