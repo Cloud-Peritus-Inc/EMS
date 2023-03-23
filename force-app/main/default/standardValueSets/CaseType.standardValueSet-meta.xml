@@ -2,29 +2,24 @@
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>false</sorted>
     <standardValue>
-        <fullName>Problem</fullName>
+        <fullName>Change of Details</fullName>
         <default>false</default>
-        <label>Problem</label>
+        <label>Change of Details</label>
     </standardValue>
     <standardValue>
-        <fullName>Feature Request</fullName>
+        <fullName>Special Leaves</fullName>
         <default>false</default>
-        <label>Feature Request</label>
+        <label>Special Leaves</label>
     </standardValue>
     <standardValue>
-        <fullName>Change Of Details</fullName>
+        <fullName>Resignation</fullName>
         <default>false</default>
-        <label>Change Of Details</label>
+        <label>Resignation</label>
     </standardValue>
     <standardValue>
-        <fullName>Request for Special Leaves</fullName>
+        <fullName>Technical Issues</fullName>
         <default>false</default>
-        <label>Request for Special Leaves</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Apply Resignation</fullName>
-        <default>false</default>
-        <label>Apply Resignation</label>
+        <label>Technical Issues</label>
     </standardValue>
     <standardValue>
         <fullName>Others</fullName>

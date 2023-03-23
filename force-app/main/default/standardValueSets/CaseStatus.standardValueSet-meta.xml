@@ -31,4 +31,22 @@
         <label>In Progress</label>
         <closed>false</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Waiting for Resource To Respond</fullName>
+        <default>false</default>
+        <label>Waiting for Resource To Respond</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Resignation Approved</fullName>
+        <default>false</default>
+        <label>Resignation Approved</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Resignation Rejected</fullName>
+        <default>false</default>
+        <label>Resignation Rejected</label>
+        <closed>true</closed>
+    </standardValue>
 </StandardValueSet>
