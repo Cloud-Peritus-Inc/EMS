@@ -7,6 +7,9 @@ import createwfhRecord from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.createwf
 import uploadFile from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.uploadFile';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+import { createMessageContext, publish } from 'lightning/messageService';
+import MY_REFRESH_CHANNEL from '@salesforce/messageChannel/refreshothercomponent__c';
+
 export default class EMS_LM_WFH extends LightningElement {
     @track isLoading = false;
     check1;
@@ -218,7 +221,11 @@ export default class EMS_LM_WFH extends LightningElement {
               variant: 'success'
             }));
             
-          this.updateRecordView();
+          const messageContext = createMessageContext();
+        const payload = {
+            refresh: true
+        };
+        publish(messageContext, MY_REFRESH_CHANNEL, payload);
         }).catch(error => {
           this.check1 = false;
           this.isLoading = false;
@@ -237,12 +244,6 @@ export default class EMS_LM_WFH extends LightningElement {
 
   handleIsLoading(isLoading) {
         this.isLoading = isLoading;
-    }
-
-  updateRecordView() {
-       setTimeout(() => {
-            eval("$A.get('e.force:refreshView').fire();");
-       }, 1000); 
     }
 
   get acceptedFormats() {

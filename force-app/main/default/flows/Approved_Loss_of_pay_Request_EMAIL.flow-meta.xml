@@ -17,7 +17,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>$Record__Prior.EMS_LM_Contact__r.EMS_EM_HR_Assigned__r.Official_Mail__c</elementReference>
+                <stringValue>{!Financeteamemail},{!AsignHR}</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -79,4 +79,24 @@
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>Loss of Pay Request Approved by {!$Record.EMS_LM_Final_Approver__c}</text>
     </textTemplates>
+    <variables>
+        <name>AsignHR</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>{!$Record__Prior.EMS_LM_Contact__r.EMS_EM_HR_Assigned__r.Official_Mail__c} </stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Financeteamemail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Label.Finance_team_Email</elementReference>
+        </value>
+    </variables>
 </Flow>

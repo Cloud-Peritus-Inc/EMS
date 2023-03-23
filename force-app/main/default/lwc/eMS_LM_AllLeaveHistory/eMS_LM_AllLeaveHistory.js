@@ -12,6 +12,8 @@ import { refreshApex } from '@salesforce/apex';
 import { createMessageContext, publish } from 'lightning/messageService';
 import MY_REFRESH_CHANNEL from '@salesforce/messageChannel/refreshothercomponent__c';
 
+import { subscribe, unsubscribe } from 'lightning/messageService';
+
 const columns = [
     { label: 'Leave Type', fieldName: 'EMS_LM_Leave_Type_Name__c' },
     { label: 'Leave Start Date', fieldName: 'EMS_LM_Leave_Start_Date__c', type: 'date' },
@@ -76,6 +78,10 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
 
     connectedCallback() {
         this.LevelOfApproval();
+         const messageContext = createMessageContext();
+        this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
+            this.handleRefreshMessage(message);
+        });
     }
 
 
@@ -285,7 +291,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             });
     }
 
-  /*  handleRefresh() {
+    handleRefresh() {
          const refreshEvent = new CustomEvent('refresh', {
     bubbles: true
 });
@@ -294,13 +300,6 @@ this.dispatchEvent(refreshEvent);
 
       // for refresh using LMS
     subscription = null;
-
-    connectedCallback() {
-        const messageContext = createMessageContext();
-        this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
-            this.handleRefreshMessage(message);
-        });
-    }
 
     disconnectedCallback() {
         unsubscribe(this.subscription);
@@ -311,6 +310,6 @@ this.dispatchEvent(refreshEvent);
         if (message.refresh) {
             refreshApex(this._wiredRefreshData)
         }
-    }*/
+    }
 
 }
