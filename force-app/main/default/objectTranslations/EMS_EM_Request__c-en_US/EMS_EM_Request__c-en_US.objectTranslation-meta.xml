@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Requests</value>
+    </caseValues>
+    <layouts>
+        <layout>Request Layout</layout>
+        <sections>
+            <label></label>
+            <section>Bank Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Certificate</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Changes Requested</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Contact Info</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Current Address</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Degree</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Education Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Emergency Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Marital Status</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Permanent Address</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Vehicle Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

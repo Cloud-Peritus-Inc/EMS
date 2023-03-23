@@ -1,0 +1,410 @@
+<template>
+    <div class="slds-card slds-box slds-p-around_small">
+		<h3 class="slds-section__title slds-theme_shade">
+			<span style="font-size:16px;font-weight:bold;" class="slds-truncate slds-p-horizontal_small">{TopDisplayText}</span>
+		</h3> <br>
+        <template if:true={OtherInfo}>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2">
+                <span>
+                    <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+                        class="slds-p-around_xx-small">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small">Current Details</span>
+                        </h3>
+                        </br>
+                        
+                        <template if:true={DisplayAddressDetails}>
+                                <lightning-record-view-form
+                                        record-id={recordId}
+                                        object-api-name="EMS_EM_Request__c">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <b><h1>Current Address</h1></b>
+                                            </br>
+                                                <strong><lightning-output-field field-name="EMS_EM_CAddress_Line_1_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_CAddress_Line_2_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_CA_State_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_CA_City_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_CA_Zip_Old__c"></lightning-output-field></strong>
+                                            </div>
+
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <b> <h1>Permanent Address</h1></b>
+                                            </br>
+                                                <strong><lightning-output-field field-name="EMS_EM_PAddress_Line_1_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_PAddress_Line_2_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_PA_State_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_PA_City_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_PA_Zip_Old__c"></lightning-output-field></strong>
+                                            </div>
+                                        </div>
+                            </lightning-record-view-form>
+                        
+                        </template>
+
+                        
+
+                        <!-- Old Bank details -->
+                        <template if:true={DisplayBankDetails}>
+                            <lightning-record-view-form
+                                        record-id={recordId}
+                                        object-api-name="EMS_EM_Request__c">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="EMS_EM_Bank_Name_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_Account_Number_Old__c"></lightning-output-field></strong>
+
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="EMS_EM_IFSC_Code_Old__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_Account_Holder_Name_Old__c"></lightning-output-field></strong>
+
+                                            </div>
+                                        </div>
+                            </lightning-record-view-form>
+                        </template>
+
+                        <!-- old Emergency details -->
+                        <template if:true={DisplayEmergencyDetails}>
+                            <lightning-record-view-form
+                                record-id={recordId}
+                                object-api-name="EMS_EM_Request__c">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Name_Old__c"></lightning-output-field></strong>
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Relation_Old__c"></lightning-output-field></strong>
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Address_Old__c"></lightning-output-field></strong>
+
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Phone_Old__c"></lightning-output-field></strong>
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Email_Old__c"></lightning-output-field></strong>
+                                    </div>
+                                </div>
+                            </lightning-record-view-form>
+                        </template>
+
+                        <!-- old vehicle details -->
+
+                        <template if:true={DisplayVehicleDetails}>
+                            <lightning-record-view-form
+                                        record-id={recordId}
+                                        object-api-name="EMS_EM_Request__c">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="EMS_EM_Vehicle_Type_old__c"></lightning-output-field></strong>
+
+
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="EMS_EM_Vehicle_Number_old__c"></lightning-output-field></strong>
+
+                                            </div>
+                                        </div>
+                            </lightning-record-view-form>
+                        </template>
+
+                        <!-- old personal info -->
+
+                        <template if:true={DisplayContactInfo}>
+                            <lightning-record-view-form
+                                            record-id={recordId}
+                                            object-api-name="EMS_EM_Request__c">
+                                            <div class="slds-grid">
+                                                <div class="slds-col slds-size_1-of-2">
+                                                    <strong><lightning-output-field field-name="EMS_EM_Contact_Number_Old__c"></lightning-output-field></strong>
+
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="Personal_Email_Id_Old__c"></lightning-output-field></strong>
+
+                                                </div>
+                                            </div>
+
+                            </lightning-record-view-form>
+                        </template>
+
+                        <!-- old marital status -->
+                        <template if:true={DisplayMaritalStatus}>
+                                <template if:true={oldMarStatusToggle}>
+                                <lightning-record-view-form
+                                            record-id={recordId}
+                                            object-api-name="EMS_EM_Request__c">
+                                            <div class="slds-grid">
+                                                <div class="slds-col slds-size_1-of-2">
+                                                    <strong><lightning-output-field field-name="EMS_EM_Mstatus_Old__c"></lightning-output-field></strong>
+                                                    <strong><lightning-output-field field-name="EMS_EM_Spouse_Name_Old__c"></lightning-output-field></strong>
+
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="EMS_EM_DOW_Old__c"></lightning-output-field></strong>
+
+                                                </div>
+                                            </div>
+                            </lightning-record-view-form>
+                                </template>
+                                <template if:false={oldMarStatusToggle}>
+                                    <lightning-record-view-form
+                                            record-id={recordId}
+                                            object-api-name="EMS_EM_Request__c">
+
+
+                                                <div class="slds-grid">
+                                                    <div class="slds-col slds-size_1-of-2">
+                                                        <strong><lightning-output-field field-name="EMS_EM_Mstatus_Old__c"></lightning-output-field></strong>
+                                                        
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+
+                                    </lightning-record-view-form>
+                                    </br>
+                                                        </br></br>
+                                </template>
+                        </template>
+                        <br>
+                    </div>
+                </span>
+            </div>
+<!-- ALl new details display starts -->
+            <div class="slds-col slds-size_1-of-2">
+                <span>
+                    <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+                        class="slds-p-around_xx-small">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small">Updated Details</span>
+                        </h3>
+                        </br>
+                        
+
+                        <template if:true={DisplayAddressDetails}>
+                                <lightning-record-view-form
+                                        record-id={recordId}
+                                        object-api-name="EMS_EM_Request__c">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <b><h1>Current Address</h1></b>
+                                            </br>
+
+                                                <strong><lightning-output-field field-name="EMS_EM_CAddress_Line_1__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_CAddress_Line_2__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_CA_State__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_CA_City__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_CA_Zip__c"></lightning-output-field></strong>
+
+                                                
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <b><h1>Permanent Address</h1></b>
+                                            </br>
+                                                <strong><lightning-output-field field-name="EMS_EM_PAddress_Line_1__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_PAddress_Line_2__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_PA_State__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_PA_City__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="EMS_EM_PA_Zip__c"></lightning-output-field></strong>
+                                            </div>
+                                        </div>
+                            </lightning-record-view-form>
+                        </template>
+                        
+
+                        <!-- new bank details -->
+                        <template if:true={DisplayBankDetails}>
+                            <lightning-record-view-form
+                                        record-id={recordId}
+                                        object-api-name="EMS_EM_Request__c">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="Bank_Name__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="Account_Number__c"></lightning-output-field></strong>
+
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="IFSC_Code__c"></lightning-output-field></strong>
+                                                <strong><lightning-output-field field-name="Account_Holder_Name__c"></lightning-output-field></strong>
+
+                                            </div>
+                                        </div>
+                            </lightning-record-view-form>
+                        </template>
+
+                        <!-- new Emergency details -->
+                        <template if:true={DisplayEmergencyDetails}>
+                            <lightning-record-view-form
+                                record-id={recordId}
+                                object-api-name="EMS_EM_Request__c">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Name__c"></lightning-output-field></strong>
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Relation__c"></lightning-output-field></strong>
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Address__c"></lightning-output-field></strong>
+
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Phone__c"></lightning-output-field></strong>
+                                        <strong><lightning-output-field field-name="EMS_EM_ED_Email__c"></lightning-output-field></strong>
+                                    </div>
+                                </div>
+                            </lightning-record-view-form>
+                        </template>
+
+                        <!-- new vehicle details -->
+
+                        <template if:true={DisplayVehicleDetails}>
+                            <lightning-record-view-form
+                                        record-id={recordId}
+                                        object-api-name="EMS_EM_Request__c">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="Vehicle_Type__c"></lightning-output-field></strong>
+
+
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="Vehicle_Number__c"></lightning-output-field></strong>
+
+                                            </div>
+                                        </div>
+                            </lightning-record-view-form>
+                        </template>
+
+                        <!-- new personal info -->
+
+                        <template if:true={DisplayContactInfo}>
+                        <lightning-record-view-form
+                                        record-id={recordId}
+                                        object-api-name="EMS_EM_Request__c">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <strong><lightning-output-field field-name="EMS_EM_Contact_Number__c"></lightning-output-field></strong>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                            <strong><lightning-output-field field-name="Personal_Email_Id__c"></lightning-output-field></strong>
+
+                                            </div>
+                                        </div>
+
+                            </lightning-record-view-form>
+                        </template>
+
+                        <!-- new marital info -->
+                        <template if:true={DisplayMaritalStatus}>
+                                <template if:true={newMarStatusToggle}>
+                                <lightning-record-view-form
+                                                record-id={recordId}
+                                                object-api-name="EMS_EM_Request__c">
+
+
+                                                <div class="slds-grid">
+                                                    <div class="slds-col slds-size_1-of-2">
+                                                        <strong><lightning-output-field field-name="EMS_EM_Mstatus__c"></lightning-output-field></strong>
+                                                        <strong><lightning-output-field field-name="EMS_EM_Spouse_Name__c"></lightning-output-field></strong>
+
+                                                    </div>
+                                                    <div class="slds-col slds-size_1-of-2">
+                                                    <strong><lightning-output-field field-name="EMS_EM_DOW__c"></lightning-output-field></strong>
+
+                                                    </div>
+                                                </div>
+
+                                    </lightning-record-view-form>
+                                </template>
+                                <template if:false={newMarStatusToggle}>
+                                    <lightning-record-view-form
+                                                record-id={recordId}
+                                                object-api-name="EMS_EM_Request__c">
+
+
+                                                <div class="slds-grid">
+                                                    <div class="slds-col slds-size_1-of-2">
+                                                        <strong><lightning-output-field field-name="EMS_EM_Mstatus__c" ></lightning-output-field></strong>
+                                                        
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+
+                                    </lightning-record-view-form>
+                                    </br>
+                                                        </br></br>
+                                </template>
+                        </template>
+
+                        </br>
+
+                    </div>
+                </span>
+            </div>
+        </div>
+        <!-- resume update section display -->
+        </template>
+        <template if:true={DisplayUpdatedResume}>
+            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+                        class="slds-p-around_xx-small">
+                        </br>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col" style="margin-left:1rem">
+                                <span> <h1><b>NOTE: </b>Employee has uploaded an updated Resume. Please check in attachments section and provide your Approval/Rejection.</h1></span>
+                            </div>
+                        </div>
+                        </br>
+            </div>
+        </template>
+
+        <!-- degree addition section -->
+
+        <template if:true={DisplayDegreeInfo}>
+            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+                        class="slds-p-around_xx-small">
+                        </br>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col" style="margin-left:1rem">
+                                <span>
+                                    <lightning-record-view-form
+                                            record-id={recordId}
+                                            object-api-name="EMS_EM_Request__c">
+
+                                                    <strong><lightning-output-field field-name="EMS_EM_Level_of_Education__c"></lightning-output-field></strong>
+                                                    <strong><lightning-output-field field-name="EMS_EM_Degree__c"></lightning-output-field></strong>
+                                                    <strong><lightning-output-field field-name="EMS_EM_IName__c"></lightning-output-field></strong>
+                                                    <strong><lightning-output-field field-name="EMS_EM_Field_of_Study__c"></lightning-output-field></strong>
+                                                    <strong><lightning-output-field field-name="EMS_EM_GDate__c"></lightning-output-field></strong>
+                                                    <h1><b> NOTE: </b>Employee has uploaded a Degree Certificate. Please check in attachments section and provide your Approval/Rejection.</h1>
+
+                                </lightning-record-view-form>
+                                </b></span>
+                            </div>
+                        </div>
+                        </br>
+            </div>
+        </template>
+
+        <!-- Certificate addition -->
+
+        <template if:true={DisplayCertificateInfo}>
+            <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+                        class="slds-p-around_xx-small">
+                        </br>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col" style="margin-left:1rem">
+                                <span><b> 
+                                    <lightning-record-view-form
+                                                record-id={recordId}
+                                                object-api-name="EMS_EM_Request__c">
+                                                        <strong><lightning-output-field field-name="EMS_EM_Certification_Name__c"></lightning-output-field></strong>
+
+                                                    <h1><b>NOTE: </b>Employee has uploaded a Certificate. Please check in attachments section and provide your Approval/Rejection.</h1>
+
+                                    </lightning-record-view-form>
+                                    </b></span>
+                            </div>
+                        </div>
+                        </br>
+            </div>
+        </template>
+        
+
+    </div>
+</template>

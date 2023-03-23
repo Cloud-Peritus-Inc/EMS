@@ -1,0 +1,45 @@
+<apex:page controller="SendEmailQickActionCtrl" lightningStyleSheets="true">  
+  
+
+  <apex:form >
+    <apex:pageMessages />
+    <apex:pageBlock title="Send On-Boarding Email" >
+
+      <apex:pageBlockSection >
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Full Name" for="email"/>
+          <apex:inputText value="{!fullName}" id="fullName"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Email Id" for="email"/>
+          <apex:inputText value="{!email}" id="email"/>
+        </apex:pageBlockSectionItem>
+
+      </apex:pageBlockSection>
+	 <apex:pageBlockSection >
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="CC" for="email"/>
+          <apex:inputText value="{!ccEmail}" id="ccEmail" />
+        </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+        
+        <apex:pageBlockSection >
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="BCC" for="email"/>
+          <apex:inputText value="{!bccEmail}" id="bccEmail" />
+        </apex:pageBlockSectionItem>
+		
+      </apex:pageBlockSection>
+        
+         
+                <div align="center" draggable="false" >
+            	<apex:commandButton value="Send Email" action="{!sendOnBoardingEmail}" style="float:center;"/>
+                </div>
+
+    </apex:pageBlock>
+  </apex:form>
+
+</apex:page>

@@ -1,0 +1,26 @@
+<template>
+    <lightning-card  title="">
+        <lightning-record-view-form
+                    record-id={recordId}
+                    object-api-name="EMS_TM_Assignment__c">
+        <div class="slds-grid slds-gutters" >
+        <div class="slds-col slds-size_1-of-2 ">
+           <span>
+                <lightning-output-field field-name="Name"><hr style="margin-top:2px"></lightning-output-field>
+                <lightning-output-field field-name="EMS_TM_ProjectName_Asgn__c"><hr style="margin-top:2px"></lightning-output-field>
+                <lightning-output-field field-name="EMS_TM_StartDate_Asgn__c"><hr style="margin-top:2px"></lightning-output-field>
+                <lightning-output-field field-name="EMS_TM_AssignedAs__c"><hr style="margin-top:2px"></lightning-output-field>
+            </span>
+        </div>
+        <div class="slds-col slds-size_1-of-2 ">
+           <span>
+                <lightning-output-field field-name="EMS_TM_EmployeeName__c"><hr style="margin-top:2px"></lightning-output-field>
+                <lightning-output-field field-name="EMS_TM_Status_Asgn__c"><hr style="margin-top:2px"></lightning-output-field>
+                <lightning-output-field field-name="EMS_TM_EndDate_Asgn__c"><hr style="margin-top:2px"></lightning-output-field>
+                <lightning-output-field field-name="EMS_TM_Billable__c"><hr style="margin-top:2px"></lightning-output-field>
+            </span>
+         </div>
+         </div>         
+        </lightning-record-view-form>
+     </lightning-card>
+</template>

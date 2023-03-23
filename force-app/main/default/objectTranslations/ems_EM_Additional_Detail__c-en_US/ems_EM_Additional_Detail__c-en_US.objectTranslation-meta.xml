@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Additional Detail</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Additional Details</value>
+    </caseValues>
+    <layouts>
+        <layout>Additional Detail Layout</layout>
+        <sections>
+            <label></label>
+            <section>Additional Educational Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Additional Work Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Education Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Work Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Education Details</layout>
+        <sections>
+            <label></label>
+            <section>Additional Educational Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Education Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Work Details</layout>
+        <sections>
+            <label></label>
+            <section>Additional Work Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Work Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Work Experience Details 3</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Work Experience Details 4</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Work Experience Details 5</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Work Experience Details 6</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label></label>
+        <name>Education_Details</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Work_Details</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

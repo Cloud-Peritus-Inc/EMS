@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Number_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT(ISBLANK( Phone_Number__c )),
+OR(
+NOT(REGEX(Phone_Number__c , &quot;\\D*?(\\d\\D*?){10}&quot;)),
+(LEN(Phone_Number__c ) &lt;&gt; 10)
+))</errorConditionFormula>
+    <errorDisplayField>Phone_Number__c</errorDisplayField>
+    <errorMessage>Enter a valid Phone Number</errorMessage>
+</ValidationRule>

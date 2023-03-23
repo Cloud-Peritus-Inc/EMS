@@ -1,0 +1,153 @@
+<template>
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+    <div class="acc-container">
+        <lightning-record-Edit-form record-id={recordId} object-api-name="Contact"
+        onsuccess={handleSuccess}>
+            <lightning-accordion-section name="personDetail" class="slds-form-element_compound slds-truncate" label="Personal Details" style="font-weight:bold;">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <strong><lightning-input-field field-name="ContactName__c"></lightning-input-field></strong>
+                    <strong><lightning-input-field field-name="Personal_Email__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Father__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Gender__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_BG__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_DOW__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_AadhaarNo__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_PassportNo__c"></lightning-input-field></strong>
+          <strong><lightning-input-field field-name="EMS_EM_PFno__c"></lightning-input-field></strong>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <strong><lightning-input-field field-name="EMS_Phone_Number__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Nationality__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Mother__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_DOB__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Mstatus__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Spouse__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_PanNo__c"></lightning-input-field></strong>
+                </div>
+            </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="workDetail" class="slds-form-element_compound slds-truncate" label="Employment Details" style="font-weight:bold;">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <strong><lightning-input-field field-name="EMS_RM_Employee_Id__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_RM_Current_Job_Role__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="Official_Mail__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_ShiftStart__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_LR__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_Employee_Type__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_OLocation__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Exp__c" type="decimal" step="0.01"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_RM_Notice_Period__c"></lightning-input-field></strong>
+					<label for="fieldid">Probation Period</label>
+					<strong><lightning-input-field id="fieldid" field-name="EMS_EM_PP__c" variant="label-hidden" class="inputWidth"></lightning-input-field></strong>
+					<label for="fieldid">Domain/Technology</label>
+					<strong><lightning-input-field id="fieldid1" field-name="EMS_Domain_Technology__c" variant="label-hidden" class="inputWidth"></lightning-input-field></strong>
+					<label for="fieldid">Current Active Assignments</label>
+					<strong><lightning-input-field id="fieldid2" field-name="Current_Active_Assignments__c" variant="label-hidden" class="inputWidth"></lightning-input-field></strong>
+				</div>
+                <div class="slds-col slds-size_1-of-2">
+                    <strong><lightning-input-field field-name="EMS_EM_ReportingM__c" class="inputfieldWidth" variant="label-inline"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="Department"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Shift__c" variant="label-inline"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_ShiftEnd__c"></lightning-input-field></strong>
+					<!--<strong><lightning-input-field field-name="AccountName"></lightning-input-field></strong>-->
+					<strong><lightning-input-field field-name="Location__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_HR_Assigned__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_RM_ApplicantStatus_Update__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_JD__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="AccountId"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_TM_Billable__c" variant= "label-inline"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_TM_In_Billing__c" variant= "label-inline"></lightning-input-field></strong>
+				</div>
+            </div>
+            </lightning-accordion-section>
+			<lightning-accordion-section name="workDetail" class="slds-form-element_compound slds-truncate" label="Address Details" style="font-weight:bold;">
+			<div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_CAddress_Line_1__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_CAddress_Line_2__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_CA_State__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_CA_City__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_CA_Zip__c"></lightning-input-field></strong>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_PAddress_Line_1__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_PAddress_Line_2__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_PA_State__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_PA_City__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_PA_Zip__c"></lightning-input-field></strong>
+
+                </div>
+            </div>
+			</lightning-accordion-section>
+			<lightning-accordion-section name="workDetail" class="slds-form-element_compound slds-truncate" label="Emergency Details" style="font-weight:bold;">
+			<div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_ED_Name__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_ED_Phone__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_ED_Address__c"></lightning-input-field></strong>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_ED_Relation__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_ED_Email__c"></lightning-input-field></strong>
+                </div>
+            </div>
+			</lightning-accordion-section>
+			<!--<lightning-accordion-section name="workDetail" class="slds-form-element_compound slds-truncate" label="Education Details" style="font-weight:bold;">
+			<div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_Level_of_Education__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_IName__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_GDate__c"></lightning-input-field></strong>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_Degree__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_Field_of_Study__c"></lightning-input-field></strong>
+                </div>
+            </div>
+			</lightning-accordion-section>
+			<lightning-accordion-section name="workDetail" class="slds-form-element_compound slds-truncate" label="Work Experience Details" style="font-weight:bold;">
+			<div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_Job_Title__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="From_Date__c"></lightning-input-field></strong>
+					<label for="fieldid3">Previous Company Name</label>
+					<strong><lightning-input-field id="fieldid3" field-name="EMS_RM_Previous_Company_Name__c" variant="label-hidden" class="inputWidth"></lightning-input-field></strong>
+				</div>
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="To_Date__c"></lightning-input-field></strong>
+				</div>
+            </div>
+			</lightning-accordion-section>--->
+			<lightning-accordion-section name="workDetail" class="slds-form-element_compound slds-truncate" label="Bank Details" style="font-weight:bold;">
+			<div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="Bank_Name__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="Account_Number__c"></lightning-input-field></strong>
+					<label for="fieldid4" class="label">Account Holder Name</label>
+					<strong><lightning-input-field id="fieldid4" field-name="Account_Holder_Name__c" variant="label-hidden" class="inputWidth"></lightning-input-field></strong>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="IFSC_Code__c"></lightning-input-field></strong>
+                </div>
+            </div>
+			</lightning-accordion-section>
+			<lightning-accordion-section name="workDetail" class="slds-form-element_compound slds-truncate" label="Vehicle Details" style="font-weight:bold;">
+			<div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="Vehicle_Type__c"></lightning-input-field></strong>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="Vehicle_Number__c"></lightning-input-field></strong>
+                </div>
+            </div>
+			</lightning-accordion-section>
+            <div class="slds-align_absolute-center">
+            <span><lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="btn_name "></lightning-button></span>
+            <span><lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save"></lightning-button></span>
+            </div>
+        </lightning-record-Edit-form>
+    </div>
+    </lightning-accordion>
+</template>

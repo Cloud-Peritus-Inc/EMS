@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Family Information</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Family Informations</value>
+    </caseValues>
+    <layouts>
+        <layout>Family Information Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Contact_Phone_number</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>DOB_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Date_of_birth_validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Phone_is_Required</name>
+    </validationRules>
+</CustomObjectTranslation>

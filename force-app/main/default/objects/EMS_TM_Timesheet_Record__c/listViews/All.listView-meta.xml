@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>EMS_Timesheet__c</columns>
+    <columns>Status__c</columns>
+    <columns>EMS_TM_Project__c</columns>
+    <columns>EMS_TM_Mon__c</columns>
+    <columns>EMS_TM_Tue__c</columns>
+    <columns>EMS_TM_Wed__c</columns>
+    <columns>EMS_TM_Thu__c</columns>
+    <columns>EMS_TM_Fri__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

@@ -1,0 +1,3 @@
+.masked  .slds-input {
+    -webkit-text-security: disc;
+}

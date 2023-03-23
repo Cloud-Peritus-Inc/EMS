@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Grid Configuration</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Grid Configurations</value>
+    </caseValues>
+    <layouts>
+        <layout>Grid Configuration Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Goal Settings</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Check_the_Notrequired_for_OtherTypes</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Check_the_required_for_Org_Goals</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Check_the_required_for_Resource_Goals</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Navigation_Address_is_Requried</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Start_Date_should_be_in_Future</name>
+    </validationRules>
+</CustomObjectTranslation>

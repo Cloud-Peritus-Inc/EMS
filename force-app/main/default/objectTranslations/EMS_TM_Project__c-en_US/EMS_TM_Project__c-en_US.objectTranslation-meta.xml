@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Project</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Projects</value>
+    </caseValues>
+    <layouts>
+        <layout>PROJECT Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label></label>
+        <name>AssignMultipleResorces</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Assingment</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>New_Assignment</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Raise_Resource_Request</name>
+    </quickActions>
+    <recordTypes>
+        <label></label>
+        <name>Client_Projects</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Global_Projects</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Internal_Projects</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Project_end_date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Project_start_date</name>
+    </validationRules>
+</CustomObjectTranslation>

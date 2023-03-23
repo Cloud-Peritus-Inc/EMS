@@ -1,0 +1,956 @@
+<template>
+    <lightning-card>
+
+    
+        <template if:false={buttonvisiable}>
+            <lightning-button label="Edit" slot="actions" onclick={fullmyInfopage}></lightning-button>
+        </template>
+        <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+        
+    
+        <lightning-record-view-form record-id={contactID} object-api-name="Contact">
+        <lightning-accordion-section name="personDetail" class="slds-form-element_compound slds-truncate" label="Personal Details" style="font-weight:bold;">
+                   
+         <div class="slds-section slds-is-open slds-p-around_medium">
+              <div aria-hidden="false" class="slds-section__content">
+                  <div class="slds-grid slds-gutters ">
+                          <div class="slds-col">
+                             <span>
+                                 <lightning-output-field field-name="Name"><hr style="margin-top:2px"></lightning-output-field>
+
+                                 <lightning-output-field field-name="EMS_EM_Father__c"><hr style="margin-top:2px"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_Mother__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                 <lightning-output-field field-name="EMS_EM_Gender__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                 <lightning-output-field field-name="EMS_RM_Phone_Number__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                 <lightning-output-field field-name="EMS_EM_DOB__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                 <lightning-output-field field-name="EMS_EM_Mstatus__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                 <lightning-output-field field-name="EMS_EM_Spouse__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                 <lightning-output-field field-name="EMS_EM_DOW__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                 <lightning-output-field field-name="EMS_EM_BG__c"><hr style="margin-top:2px"></lightning-output-field>
+                                </span>
+                            </div>
+                            <div class="slds-col">
+                               <span>
+                                  <lightning-output-field field-name="Email"><hr style="margin-top:2px"></lightning-output-field>
+                                   <lightning-output-field field-name="EMS_EM_AadhaarNo__c"><hr style="margin-top:2px"></lightning-output-field>
+                                   <lightning-output-field field-name="EMS_EM_PanNo__c"><hr style="margin-top:2px"></lightning-output-field>
+                                   <lightning-output-field field-name="EMS_EM_PassportNo__c"><hr style="margin-top:2px"></lightning-output-field>
+                                   <lightning-output-field field-name="EMS_EM_PFno__c"><hr style="margin-top:2px"></lightning-output-field>
+                                   <lightning-output-field field-name="EMS_EM_Nationality__c"><hr style="margin-top:2px"></lightning-output-field>
+                                  
+                                </span>
+                           </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="EmploymentDetails " class="slds-form-element_compound slds-truncate" label="Employment Details " style="font-weight:bold;">   
+                    <div class="slds-section slds-is-open slds-p-around_medium">
+                  <div aria-hidden="false" class="slds-section__content">
+                      <div class="slds-grid slds-gutters ">
+                              <div class="slds-col">
+                                 <span>    
+                                     <lightning-output-field field-name="EMS_RM_Employee_Id__c"><hr style="margin-top:2px"></lightning-output-field>
+                                     <lightning-output-field field-name="ReportsToId"><hr style="margin-top:2px"></lightning-output-field> 
+                                     <lightning-output-field field-name="EMS_RM_Current_Job_Role__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                     <lightning-output-field field-name="EMS_EM_Shift__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                     <lightning-output-field field-name="EMS_EM_ShiftStart__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                     <lightning-output-field field-name="EMS_EM_ShiftEnd__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                     <lightning-output-field field-name="EMS_EM_LR__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                     <lightning-output-field field-name="Department"><hr style="margin-top:2px"></lightning-output-field> 
+                                     <lightning-output-field field-name="EMS_Employee_Type__c"><hr style="margin-top:2px"></lightning-output-field>
+                                     <lightning-output-field field-name="EMS_EM_JD__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <lightning-output-field field-name="EMS_EM_PP__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <lightning-output-field field-name="EMS_EM_NP__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    </span>
+                                </div>
+                                <div class="slds-col">
+                                   <span>
+                                       <lightning-output-field field-label="Account Name" field-name="AccountId"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_EM_OLocation__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="Official_Mail__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_EM_Exp__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_RM_ApplicantStatus_Update__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_RM_Certifications__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="Current_Active_Assignments__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_RM_Domain_Technology__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_TM_Billable__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_TM_In_Billing__c"><hr style="margin-top:2px"></lightning-output-field>
+
+                                    </span>
+                               </div>
+                        </div>
+                    </div>
+                    </div>      
+                </lightning-accordion-section>
+                <lightning-accordion-section name="AddressDetails" class="slds-form-element_compound slds-truncate" label="Address Details" style="font-weight:bold;">
+                             
+                        <div class="slds-section slds-is-open slds-p-around_medium">
+                    <div aria-hidden="false" class="slds-section__content">
+                        <div class="slds-grid slds-gutters ">
+                                 <div class="slds-col">
+                                   <span> 
+                                    <h3 class="slds-section__title slds-theme_shade"><p>Current Address</p></h3>      
+                                       <lightning-output-field field-name="EMS_EM_CAddress_Line_1__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_EM_CAddress_Line_2__c"><hr style="margin-top:2px"></lightning-output-field>
+                                       <lightning-output-field field-name="EMS_EM_CA_State__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                       <lightning-output-field field-name="EMS_EM_CA_City__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                       <lightning-output-field field-name="EMS_EM_CA_Zip__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                      
+                                      </span>
+                                  </div>
+                                  <div class="slds-col">
+                                     <span>
+                                        <h3 class="slds-section__title slds-theme_shade"><p>Permanent Address</p></h3> 
+                                         <lightning-output-field field-name="EMS_EM_PAddress_Line_1__c"><hr style="margin-top:2px"></lightning-output-field>
+                                         <lightning-output-field field-name="EMS_EM_PAddress_Line_2__c"><hr style="margin-top:2px"></lightning-output-field>
+                                         <lightning-output-field field-name="EMS_EM_PA_State__c"><hr style="margin-top:2px"></lightning-output-field>
+                                         <lightning-output-field field-name="EMS_EM_PA_City__c"><hr style="margin-top:2px"></lightning-output-field>
+                                         <lightning-output-field field-name="EMS_EM_PA_Zip__c"><hr style="margin-top:2px"></lightning-output-field>
+                                      </span>
+                                 </div>
+                        </div>      
+                    </div>
+                        </div>         
+        </lightning-accordion-section>
+        <lightning-accordion-section name="EmergencyDetails" class="slds-form-element_compound slds-truncate" label="Emergency Details" style="font-weight:bold;">
+           
+                     
+                <div class="slds-section slds-is-open slds-p-around_medium">
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                            <lightning-output-field field-name="EMS_EM_ED_Name__c"><hr style="margin-top:2px"></lightning-output-field>
+                            <lightning-output-field field-name="EMS_EM_ED_Relation__c"><hr style="margin-top:2px"></lightning-output-field> 
+                            <lightning-output-field field-name="EMS_EM_ED_Address__c"><hr style="margin-top:2px"></lightning-output-field> 
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_ED_Phone__c"><hr style="margin-top:2px"></lightning-output-field> 
+                                <lightning-output-field field-name="EMS_EM_ED_Email__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>      
+            </div>
+                </div>
+    
+</lightning-accordion-section>
+            <lightning-accordion-section name="VehicleDetails" class="slds-form-element_compound slds-truncate" label="Vehicle Details" style="font-weight:bold;">     
+            <div class="slds-section slds-is-open">
+  
+                <div aria-hidden="false" class="slds-section__content">
+                    <div class="slds-grid slds-gutters ">
+                             <div class="slds-col">
+                               <span>      
+                                   <lightning-output-field field-name="Vehicle_Number__c"><hr style="margin-top:2px"></lightning-output-field>
+                                  </span>
+                              </div>
+                              <div class="slds-col">
+                                 <span>
+                                     <lightning-output-field field-name="Vehicle_Type__c"><hr style="margin-top:2px"></lightning-output-field>
+                                  </span>
+                             </div>
+                    </div>
+                      
+                </div>
+            </div>
+        </lightning-accordion-section>
+           
+                <lightning-accordion-section name="BankDetails" class="slds-form-element_compound slds-truncate" label="Bank Details" style="font-weight:bold;">    
+            <div class="slds-section slds-is-open">
+  
+                <div aria-hidden="false" class="slds-section__content">
+                    <div class="slds-grid slds-gutters ">
+                             <div class="slds-col">
+                               <span>      
+                                   <lightning-output-field field-name="Bank_Name__c"><hr style="margin-top:2px"></lightning-output-field>
+                                   <lightning-output-field field-name="Account_Number__c"><hr style="margin-top:2px"></lightning-output-field>
+
+                                  </span>
+                              </div>
+                              <div class="slds-col">
+                                 <span>
+                                    <lightning-output-field field-name="IFSC_Code__c"><hr style="margin-top:2px"></lightning-output-field>
+                                     <lightning-output-field field-name="Account_Holder_Name__c"><hr style="margin-top:2px"></lightning-output-field>
+                                  </span>
+                             </div>
+                    </div>   
+                </div>
+            </div>
+        </lightning-accordion-section>
+            
+</lightning-record-view-form>
+<lightning-record-view-form record-id={additionaldetailId} object-api-name="ems_EM_Additional_Detail__c">
+    <lightning-accordion-section name="EducationDetails" class="slds-form-element_compound slds-truncate" label="Education Details" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Education__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_Field_of_Study__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_GDate__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Degree__c"><hr style="margin-top:2px"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_IName__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+    <template if:true={additionalEducation1}>
+    <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Education1__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_Field_of_Study1__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_GDate1__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Degree1__c"><hr style="margin-top:2px"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_IName1__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+</template>
+<template if:true={additionalEducation2}>
+
+    <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Education2__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_Field_of_Study2__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_GDate2__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Degree2__c"><hr style="margin-top:2px"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_IName2__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>   
+</template>
+<template if:true={additionalEducation3}>
+    <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Education3__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_Field_of_Study3__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_GDate3__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Degree3__c"><hr style="margin-top:2px"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_IName3__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+</template>
+<template if:true={additionalEducation4}>
+    <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Education4__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_Field_of_Study4__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_GDate4__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Degree4__c"><hr style="margin-top:2px"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_IName4__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+</template> 
+    <template if:true={additionalEducation5}>
+        <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details" style="font-weight:bold;">    
+            <div class="slds-section slds-is-open">
+    
+                <div aria-hidden="false" class="slds-section__content">
+                    <div class="slds-grid slds-gutters ">
+                             <div class="slds-col">
+                               <span>      
+                                   <lightning-output-field field-name="EMS_EM_Education5__c"><hr style="margin-top:2px"></lightning-output-field>
+                                   <lightning-output-field field-name="EMS_EM_Field_of_Study5__c"><hr style="margin-top:2px"></lightning-output-field>
+                                   <lightning-output-field field-name="EMS_EM_GDate5__c"><hr style="margin-top:2px"></lightning-output-field>
+                                  </span>
+                              </div>
+                              <div class="slds-col">
+                                 <span>
+                                    <lightning-output-field field-name="EMS_EM_Degree5__c"><hr style="margin-top:2px"></lightning-output-field>
+                                     <lightning-output-field field-name="EMS_EM_IName5__c"><hr style="margin-top:2px"></lightning-output-field>
+                                  </span>
+                             </div>
+                    </div>   
+                </div>
+            </div>
+        </lightning-accordion-section>
+    </template>
+
+    <lightning-accordion-section name="WorkExperience" class="slds-form-element_compound slds-truncate" label="Work Experience" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Job_Title__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_From_Date__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_To_Date__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Previous_Company_Name__c"><hr style="margin-top:2px"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_Previous_Company_HR_EmailId__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+<template if:true={workExperience1}>
+    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Job_Title1__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_From_Date1__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_To_Date1__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Previous_Company_Name1__c"><hr style="margin-top:2px"></lightning-output-field>
+                                
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+</template>
+    
+<template if:true={workExperience2}>
+    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Job_Title2__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_From_Date2__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_To_Date2__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Previous_Company_Name2__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+</template>
+    
+<template if:true={workExperience3}>
+    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Job_Title3__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_From_Date3__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_To_Date3__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Previous_Company_Name3__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+</template>
+    
+<template if:true={workExperience4}>
+    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Job_Title4__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_From_Date4__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_To_Date4__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Previous_Company_Name4__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+</template>
+    
+<template if:true={workExperience5}>
+    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience" style="font-weight:bold;">    
+        <div class="slds-section slds-is-open">
+
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                         <div class="slds-col">
+                           <span>      
+                               <lightning-output-field field-name="EMS_EM_Job_Title5__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_From_Date5__c"><hr style="margin-top:2px"></lightning-output-field>
+                               <lightning-output-field field-name="EMS_EM_To_Date5__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                          </div>
+                          <div class="slds-col">
+                             <span>
+                                <lightning-output-field field-name="EMS_EM_Previous_Company_Name5__c"><hr style="margin-top:2px"></lightning-output-field>
+                              </span>
+                         </div>
+                </div>   
+            </div>
+        </div>
+    </lightning-accordion-section>
+</template>  
+</lightning-record-view-form>
+</lightning-accordion>
+<!--full my info Details modal start -->      
+ <template if:true={isfullmyinfoModal}>
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        
+    <!-- modal header start -->
+      <header class="slds-modal__header">
+         <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+            <lightning-icon icon-name="utility:close"
+               alternative-text="close"
+               variant="inverse"
+               size="small" ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+         </button>
+         <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-truncate slds-p-horizontal_small">My Info</span>
+          </h3>
+        
+      </header>
+     
+      <!-- modal body start -->
+      <div class="slds-modal__content slds-p-around_medium">
+        <lightning-accordion>
+        <lightning-record-edit-form object-api-name="Contact" data-id="accountForm"
+        record-id={contactID} onsuccess={handleAccountSuccess} onerror={Handlererror} onsubmit={HandlerSubmit}>
+       
+            <lightning-accordion-section name="name" class="slds-form-element_compound" label="Personal Details">
+                
+            <div class="slds-section slds-is-open">
+                 <div aria-hidden="false" class="slds-section__content">
+                     <div class="slds-grid slds-gutters ">
+                             <div class="slds-col">
+                                <span>
+                                    <lightning-input-field field-name="Name"><hr style="margin-top:2px"></lightning-input-field>
+   
+                                    <lightning-input-field pattern="[A-Z a-z._-]{2,20}$" message-when-pattern-mismatch = "Invalid name" field-name="EMS_EM_Father__c"><hr style="margin-top:2px"></lightning-input-field>
+                                    <lightning-input-field pattern="[A-Z a-z._-]{2,20}$" message-when-pattern-mismatch = "Invalid name" field-name="EMS_EM_Mother__c"><hr style="margin-top:2px"></lightning-input-field> 
+                                    <lightning-input-field field-name="EMS_EM_Gender__c"><hr style="margin-top:2px"></lightning-input-field> 
+                                    <lightning-input-field  pattern="[0-9]{10}$" message-when-pattern-mismatch = "Invalid Contact number" field-name="EMS_RM_Phone_Number__c"><hr style="margin-top:2px"></lightning-input-field> 
+                                    <lightning-input-field field-name="EMS_EM_DOB__c"><hr style="margin-top:2px"></lightning-input-field> 
+                                    <lightning-input-field field-name="EMS_EM_BG__c"><hr style="margin-top:2px"></lightning-input-field>
+                                    <lightning-input-field field-name="EMS_EM_Mstatus__c" onchange={changemstatues}><hr style="margin-top:2px"></lightning-input-field> 
+                                    
+                                <template if:true={marialinfo}>
+                                    <lightning-input-field pattern="[A-Z a-z._-]{2,20}$" message-when-pattern-mismatch = "Invalid name" field-name="EMS_EM_Spouse__c"><hr style="margin-top:2px"></lightning-input-field>
+                                    <lightning-input-field field-name="EMS_EM_DOW__c"><hr style="margin-top:2px"></lightning-input-field> 
+                                </template>
+                                    
+                                    
+                                   </span>
+                               </div>
+                               <div class="slds-col">
+                                  <span>
+                                     <lightning-input-field field-name="Email"><hr style="margin-top:2px"></lightning-input-field>
+                                      <lightning-input-field field-name="EMS_EM_AadhaarNo__c" pattern="[0-9]{12}$" message-when-pattern-mismatch = "Invalid Aadhar Number"><hr style="margin-top:2px"></lightning-input-field>
+                                      <lightning-input-field field-name="EMS_EM_PanNo__c" pattern="[0-9]{10}$" message-when-pattern-mismatch = "Invalid PAN Number"><hr style="margin-top:2px"></lightning-input-field>
+                                      <lightning-input-field field-name="EMS_EM_PassportNo__c"><hr style="margin-top:2px"></lightning-input-field>
+                                      <lightning-input-field field-name="EMS_EM_PFno__c"><hr style="margin-top:2px"></lightning-input-field>
+                                      <lightning-input-field field-name="EMS_EM_Nationality__c"><hr style="margin-top:2px"></lightning-input-field>
+                                      <lightning-input-field field-name="visiable_to_edit__c" data-id="visiabletoedit" class="hidden" ><hr style="margin-top:2px"></lightning-input-field>
+                                   </span>
+                              </div>
+                       </div>
+                       
+                   </div>
+               </div>
+               </lightning-accordion-section>
+   <lightning-accordion-section name="name" class="slds-form-element_compound" label="Address Details">
+                   <div class="slds-section slds-is-open">
+                      
+                       <div aria-hidden="false" class="slds-section__content">
+                           <div class="slds-grid slds-gutters ">
+                                    <div class="slds-col">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <p>Current Address</p>
+                                       </h3>
+                                      <span>    
+                                        <lightning-input-field field-name="EMS_EM_CAddress_Line_1__c" value={CurrentAddressLine1} ><hr style="margin-top:2px"></lightning-input-field>
+                                        <lightning-input-field field-name="EMS_EM_CAddress_Line_2__c" value={EMS_EM_CAddress_Line_2__c}><hr style="margin-top:2px"></lightning-input-field>  
+                                          <lightning-input-field field-name="EMS_EM_CA_State__c" value={castate} ><hr style="margin-top:2px"></lightning-input-field> 
+                                          <lightning-input-field field-name="EMS_EM_CA_City__c" value={cacity}><hr style="margin-top:2px"></lightning-input-field> 
+                                          <lightning-input-field field-name="EMS_EM_CA_Zip__c" value={cazip}><hr style="margin-top:2px"></lightning-input-field> 
+                                      <!--    <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-13 slds-p-right_x-small">
+                                                Permanent Address same as Current Address?
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12">
+                                                <lightning-input type="Checkbox" value={inputcheckboxValue} onchange={AddressCheckboxChange} ></lightning-input>
+                                            </div>
+                                            </div> -->
+                                         </span>
+                                     </div>
+                                     <div class="slds-col">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <p>Permanent Address</p>
+                                       </h3> 
+                                        <span>
+                                            <lightning-input-field field-name="EMS_EM_PAddress_Line_1__c" value={permanentAddressLine1}><hr style="margin-top:2px"></lightning-input-field>
+                                            <lightning-input-field field-name="EMS_EM_PAddress_Line_2__c" value={padrressline2}><hr style="margin-top:2px"></lightning-input-field>
+                                            <lightning-input-field field-name="EMS_EM_PA_State__c" value={pastate}><hr style="margin-top:2px"></lightning-input-field>
+                                            <lightning-input-field field-name="EMS_EM_PA_City__c" value={pacity}><hr style="margin-top:2px"></lightning-input-field>
+                                            <lightning-input-field field-name="EMS_EM_PA_Zip__c" value={pazip}><hr style="margin-top:2px"></lightning-input-field>
+                                         </span>
+                                    </div>
+                           </div>
+                             
+                       </div>
+                   </div>
+                   </lightning-accordion-section>
+   <lightning-accordion-section name="name" class="slds-form-element_compound" label="Emergency Details">
+                     <div class="slds-section slds-is-open">
+                      
+                       <div aria-hidden="false" class="slds-section__content">
+                           <div class="slds-grid slds-gutters ">
+                                   <div class="slds-col">
+                                      <span>      
+                                          <lightning-input-field field-name="EMS_EM_ED_Name__c" pattern="[A-Z a-z._-]{2,20}$" message-when-pattern-mismatch = "Invalid name"><hr style="margin-top:2px"></lightning-input-field>
+                                          
+                                          <lightning-input-field field-name="EMS_EM_ED_Relation__c"><hr style="margin-top:2px"></lightning-input-field> 
+                                          <lightning-input-field field-name="EMS_EM_ED_Address__c"><hr style="margin-top:2px"></lightning-input-field> 
+                                         
+                                         </span>
+                                     </div>
+                                     <div class="slds-col">
+                                        <span>
+                                           <lightning-input-field field-name="EMS_EM_ED_Phone__c"><hr style="margin-top:2px"></lightning-input-field> 
+                                           <lightning-input-field field-name="EMS_EM_ED_Email__c"><hr style="margin-top:2px"></lightning-input-field>
+                                         </span>
+                                    </div>
+                             </div>
+                             
+                         </div>
+                     </div>
+   </lightning-accordion-section>
+   <lightning-accordion-section name="name" class="slds-form-element_compound" label="Vehicle Details">
+                   <div class="slds-section slds-is-open">
+                      
+                       <div aria-hidden="false" class="slds-section__content">
+                           <div class="slds-grid slds-gutters ">
+                                    <div class="slds-col">
+                                      <span>      
+                                          <lightning-input-field field-name="Vehicle_Number__c"><hr style="margin-top:2px"></lightning-input-field>
+                                         </span>
+                                     </div>
+                                     <div class="slds-col">
+                                        <span>
+                                            <lightning-input-field field-name="Vehicle_Type__c"><hr style="margin-top:2px"></lightning-input-field>
+                                         </span>
+                                    </div>
+                           </div>
+                             
+                       </div>
+                   </div>
+                   </lightning-accordion-section>
+   <lightning-accordion-section name="name" class="slds-form-element_compound" label="Bank Details">
+                   <div class="slds-section slds-is-open">
+                      
+                       <div aria-hidden="false" class="slds-section__content">
+                           <div class="slds-grid slds-gutters ">
+                                    <div class="slds-col">
+                                      <span>      
+                                          <lightning-input-field field-name="Bank_Name__c"><hr style="margin-top:2px"></lightning-input-field>
+                                          <lightning-input-field field-name="Account_Number__c"><hr style="margin-top:2px"></lightning-input-field>
+   
+                                         </span>
+                                     </div>
+                                     <div class="slds-col">
+                                        <span>
+                                           <lightning-input-field field-name="IFSC_Code__c"><hr style="margin-top:2px"></lightning-input-field>
+                                            <lightning-input-field field-name="Account_Holder_Name__c"><hr style="margin-top:2px"></lightning-input-field>
+                                         </span>
+                                    </div>
+                           </div>
+                             
+                       </div>
+                   </div>
+                   </lightning-accordion-section>
+                   
+            </lightning-record-edit-form>
+<!-- updating additional detail -->
+            <lightning-record-edit-form object-api-name="ems_EM_Additional_Detail__c" onsuccess={handleContactSaveSuccess} data-id="contactForm" record-id={additionaldetailId}>
+                <lightning-accordion-section name="EducationDetails" class="slds-form-element_compound slds-truncate" label="Education Details">    
+                    <div class="slds-section slds-is-open">
+            
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                     <div class="slds-col">
+                                       <span>      
+                                           <lightning-input-field field-name="EMS_EM_Education__c"><hr style="margin-top:2px"></lightning-input-field>
+                                           <lightning-input-field field-name="EMS_EM_Field_of_Study__c"><hr style="margin-top:2px"></lightning-input-field>
+                                           <lightning-input-field field-name="EMS_EM_GDate__c"><hr style="margin-top:2px"></lightning-input-field>
+                                          </span>
+                                      </div>
+                                      <div class="slds-col">
+                                         <span>
+                                            <lightning-input-field field-name="EMS_EM_Degree__c"><hr style="margin-top:2px"></lightning-input-field>
+                                             <lightning-input-field field-name="EMS_EM_IName__c"><hr style="margin-top:2px"></lightning-input-field>
+                                          </span>
+                                     </div>
+                            </div>   
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <template if:true={additionalEducation1}>
+                    <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details">    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Education1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_Field_of_Study1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_GDate1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                  </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Degree1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                 <lightning-input-field field-name="EMS_EM_IName1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={additionalEducation2}>
+                
+                    <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details">    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Education2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_Field_of_Study2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_GDate2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Degree2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                 <lightning-input-field field-name="EMS_EM_IName2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>   
+                </template>
+                <template if:true={additionalEducation3}>
+                    <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details" >    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Education3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_Field_of_Study3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_GDate3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Degree3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                 <lightning-input-field field-name="EMS_EM_IName3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={additionalEducation4}>
+                    <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details">    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Education4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_Field_of_Study4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_GDate4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Degree4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                 <lightning-input-field field-name="EMS_EM_IName4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template> 
+                    <template if:true={additionalEducation5}>
+                        <lightning-accordion-section name="AdditionalEducationalDetails" class="slds-form-element_compound slds-truncate" label="Additional Educational Details">    
+                            <div class="slds-section slds-is-open">
+                    
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-grid slds-gutters ">
+                                             <div class="slds-col">
+                                               <span>      
+                                                   <lightning-input-field field-name="EMS_EM_Education5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                   <lightning-input-field field-name="EMS_EM_Field_of_Study5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                   <lightning-input-field field-name="EMS_EM_GDate5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                  </span>
+                                              </div>
+                                              <div class="slds-col">
+                                                 <span>
+                                                    <lightning-input-field field-name="EMS_EM_Degree5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                     <lightning-input-field field-name="EMS_EM_IName5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                  </span>
+                                             </div>
+                                    </div>   
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                <lightning-accordion-section name="WorkExperience" class="slds-form-element_compound slds-truncate" label="Work Experience" >    
+                    <div class="slds-section slds-is-open">
+            
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                     <div class="slds-col">
+                                       <span>      
+                                           <lightning-input-field field-name="EMS_EM_Job_Title__c"><hr style="margin-top:2px"></lightning-input-field>
+                                           <lightning-input-field field-name="EMS_EM_From_Date__c"><hr style="margin-top:2px"></lightning-input-field>
+                                           <lightning-input-field field-name="EMS_EM_To_Date__c"><hr style="margin-top:2px"></lightning-input-field>
+                                          </span>
+                                      </div>
+                                      <div class="slds-col">
+                                         <span>
+                                            <lightning-input-field field-name="EMS_EM_Previous_Company_Name__c"><hr style="margin-top:2px"></lightning-input-field>
+                                             <lightning-input-field field-name="EMS_EM_Previous_Company_HR_EmailId__c"><hr style="margin-top:2px"></lightning-input-field>
+                                          </span>
+                                     </div>
+                            </div>   
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <template if:true={workExperience1}>
+                    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience">    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Job_Title1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_From_Date1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_To_Date1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Previous_Company_Name1__c"><hr style="margin-top:2px"></lightning-input-field>
+                                                
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                    
+                <template if:true={workExperience2}>
+                    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience">    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Job_Title2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_From_Date2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_To_Date2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Previous_Company_Name2__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                    
+                <template if:true={workExperience3}>
+                    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience">    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Job_Title3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_From_Date3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_To_Date3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Previous_Company_Name3__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                    
+                <template if:true={workExperience4}>
+                    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience">    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Job_Title4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_From_Date4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_To_Date4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Previous_Company_Name4__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                    
+                <template if:true={workExperience5}>
+                    <lightning-accordion-section name="AdditionalWorkExperience" class="slds-form-element_compound slds-truncate" label="Additional Work Experience">    
+                        <div class="slds-section slds-is-open">
+                
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid slds-gutters ">
+                                         <div class="slds-col">
+                                           <span>      
+                                               <lightning-input-field field-name="EMS_EM_Job_Title5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_From_Date5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                               <lightning-input-field field-name="EMS_EM_To_Date5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                          </div>
+                                          <div class="slds-col">
+                                             <span>
+                                                <lightning-input-field field-name="EMS_EM_Previous_Company_Name5__c"><hr style="margin-top:2px"></lightning-input-field>
+                                              </span>
+                                         </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>  
+            </lightning-record-edit-form>
+            </lightning-accordion>
+            <footer class="slds-modal__footer">
+                <lightning-button type="button" variant="brand" onclick={handleSave} label="Save" ></lightning-button>                
+                <lightning-button onclick={hideModalBox} label="Cancel"></lightning-button>
+            </footer>
+    </div>
+</div>
+    </section>
+    
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!--full my info Details modal Ends -->
+</lightning-card>
+</template>

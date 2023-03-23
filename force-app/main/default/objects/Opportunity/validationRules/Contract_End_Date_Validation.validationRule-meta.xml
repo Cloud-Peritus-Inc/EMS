@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contract_End_Date_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>Contract_End_Date__c &lt; TODAY()  &amp;&amp;  Contract_End_Date__c &lt; CloseDate</errorConditionFormula>
+    <errorDisplayField>Contract_End_Date__c</errorDisplayField>
+    <errorMessage>Contract End Date must be feature dates only</errorMessage>
+</ValidationRule>

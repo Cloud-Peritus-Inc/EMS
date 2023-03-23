@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>loss_of_pay_email_action</name>
+        <label>loss of pay email action</label>
+        <locationX>584</locationX>
+        <locationY>383</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>BODY</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <stringValue>{!Financeteamemail},{!AsignHR}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <environments>Default</environments>
+    <interviewLabel>Approved Loss of pay Request {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Approved Loss of pay Request EMAIL</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>458</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>loss_of_pay_email_action</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>AND( {!$Record.EMS_LM_Contact__r.EMS_EM_HR_Assigned__c}&lt;&gt;NULL , ISPICKVAL( {!$Record.EMS_LM_Status__c}  , &apos;Approved&apos;)  , ISPICKVAL( {!$Record.EMS_LM_Leave_Type_Name__c} , &apos;Loss of Pay&apos; ))</filterFormula>
+        <object>EMS_LM_Leave_History__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>BODY</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Dear  {!$Record.EMS_LM_Contact__r.EMS_EM_HR_Assigned__r.FirstName}, &lt;/p&gt;&lt;p&gt;The Loss of Pay request of the {!$Record.EMS_LM_Contact__r.FirstName} {!$Record.EMS_LM_Contact__r.LastName} ( {!$Record.EMS_LM_Contact__r.EMS_RM_Employee_Id__c}) for the following date(s) has been approved by {!$Record.EMS_LM_Final_Approver__c}&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Start Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave End Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Day&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt; {!$Record.EMS_LM_Leave_Start_Date__c}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;{!$Record.EMS_LM_Leave_End_Date__c} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt; {!$Record.EMS_LM_Status__c}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;{!$Record.EMS_LM_Day__c}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Approve/Reject Name : {!$Record.EMS_LM_Final_Approver__c} &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Regards,&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Cloud Peritus India Pvt. Ltd.&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Subject</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Loss of Pay Request Approved by {!$Record.EMS_LM_Final_Approver__c}</text>
+    </textTemplates>
+    <variables>
+        <name>AsignHR</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>{!$Record__Prior.EMS_LM_Contact__r.EMS_EM_HR_Assigned__r.Official_Mail__c} </stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Financeteamemail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Label.Finance_team_Email</elementReference>
+        </value>
+    </variables>
+</Flow>
