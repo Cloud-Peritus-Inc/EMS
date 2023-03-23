@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
-    <executionUser>ramakrishna.papana@cloudperitus.com.qa</executionUser>
+    <executionUser>deploymentuser-uat@cloudperitus.com</executionUser>
     <friendlyName>Cloud Peritus Email</friendlyName>
     <iconUrl>https://login.salesforce.com/icons/google-colored.png</iconUrl>
     <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
