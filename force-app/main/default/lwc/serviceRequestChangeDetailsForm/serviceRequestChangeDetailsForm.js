@@ -226,83 +226,48 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
         }
     }
 
-    /* handleSubmit(event) {
-         console.log('OUTPUT : 123');
-         event.preventDefault(); // stop the form from submitting
-         const fields = {
-             Priority: this.selectedPriority,
-             Type: this.requestType,
-             Request_Sub_Type__c: this.selectedReqSubType,
-             ContactId: this.contactRecord.Id,
-             AccountId: this.contactRecord.AccountId,
-             Subject: this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedReqSubType
-         };
-         console.log('### fields : ', fields);
- 
-         const inputFields = this.template.querySelectorAll('lightning-input-field');
-         inputFields.forEach(field => {
-             fields[field.fieldName] = field.value;
-             console.log('### inputFields : ',inputFields);
-         });
-         let isValid = true;
-         this.template.querySelectorAll('lightning-input-field').forEach(field => {
-             isValid = isValid && field.reportValidity();
-         });
-         if (isValid) {
-             this.template.querySelectorAll('lightning-record-edit-form').forEach(element => {
-                 element.submit(fields);
-             });
-         }
-         const even = new ShowToastEvent({
-             title: 'Success!',
-             message: 'Successfully created the service request!',
-             variant: 'success'
-         });
-         this.dispatchEvent(even);
-         this[NavigationMixin.Navigate]({
-             type: "standard__recordPage",
-             attributes: {
-                 objectApiName: "Account",
-                 actionName: "view",
-                 recordId: event.detail.id
-             }
-         });
-         this.openModal = false;
-     }*/
-    handleSubmit() {
+    handleSubmit(event) {
         console.log('OUTPUT : 123');
-        var isVal = true;
-        this.template.querySelectorAll('lightning-input-field').forEach(element => {
-            isVal = isVal && element.reportValidity();
+        event.preventDefault(); // stop the form from submitting
+        const fields = {
+            Priority: this.selectedPriority,
+            Type: this.requestType,
+            Request_Sub_Type__c: this.selectedReqSubType,
+            ContactId: this.contactRecord.Id,
+            AccountId: this.contactRecord.AccountId,
+            Subject: this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedReqSubType
+        };
+        console.log('### fields : ', fields);
+
+        const inputFields = this.template.querySelectorAll('lightning-input-field');
+        inputFields.forEach(field => {
+            fields[field.fieldName] = field.value;
+            console.log('### inputFields : ', inputFields);
         });
-        if (isVal) {
+        let isValid = true;
+        this.template.querySelectorAll('lightning-input-field').forEach(field => {
+            isValid = isValid && field.reportValidity();
+        });
+        if (isValid) {
             this.template.querySelectorAll('lightning-record-edit-form').forEach(element => {
-                element.submit();
+                element.submit(fields);
             });
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success!',
-                    message: 'Successfully created the service request!',
-                    variant: 'success'
-                }),
-            );
-            // Navigate to the Account home page
-            /*this[NavigationMixin.Navigate]({
-                type: 'standard__objectPage',
-                attributes: {
-                    objectApiName: 'Contact',
-                    actionName: 'home',
-                },
-            });*/
-        } else {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error creating record',
-                    message: 'Please enter all the required fields',
-                    variant: 'error',
-                }),
-            );
         }
+        const even = new ShowToastEvent({
+            title: 'Success!',
+            message: 'Successfully created the service request!',
+            variant: 'success'
+        });
+        this.dispatchEvent(even);
+        this[NavigationMixin.Navigate]({
+            type: "standard__recordPage",
+            attributes: {
+                objectApiName: "Account",
+                actionName: "view",
+                recordId: event.detail.id
+            }
+        });
+        this.openModal = false;
     }
 
     /*handleCloseOnParent(event) {

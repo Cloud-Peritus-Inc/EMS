@@ -12,7 +12,7 @@
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-public without sharing class updateReportOnResource implements TriggerAction.AfterInsert{
+public without sharing class updateReportOnResource implements TriggerAction.AfterInsert, TriggerAction.AfterUpdate {
  /**
     * @author Subba Kalavala
     * @date 10/01/2023
@@ -28,6 +28,12 @@ public without sharing class updateReportOnResource implements TriggerAction.Aft
         System.debug(LoggingLevel.DEBUG, 'updateReportOnResource.AfterInsert() : BEGIN');
         populateTheReportsTo(newList);
         System.debug(LoggingLevel.DEBUG, 'updateReportOnResource.AfterInsert() : END');       
+    }
+    
+    public void AfterUpdate(List<Resource_Resource_Relationship__c> newList, List<Resource_Resource_Relationship__c> oldList) {      
+        System.debug(LoggingLevel.DEBUG, 'updateReportOnResource.AfterUpdate() : BEGIN');
+        populateTheReportsTo(newList);
+        System.debug(LoggingLevel.DEBUG, 'updateReportOnResource.AfterUpdate() : END');       
     }
     
     

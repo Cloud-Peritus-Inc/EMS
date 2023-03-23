@@ -137,7 +137,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
           } if (req.EMS_LM_Contact__r.Resource_Role__r.Level_of_Approval__c === 0) {
             //req.EMS_LM_Contact__r !== null && req.EMS_LM_Contact__r.Resource_Role__r !== null && req.EMS_LM_Contact__r.Resource_Role__r.Name === 'HR Director' && req.EMS_LM_Contact__r.Resource_Role__r.Name === 'TA Director'
             req.disableButton = true;
-            //req.disableCancelButton = true;
+            req.disableCancelButton = true;
           }
         });
         this.error = undefined;
@@ -444,6 +444,11 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
           variant: 'success',
         });
         this.dispatchEvent(evt);
+          const messageContext = createMessageContext();
+                const payload = {
+                    refresh: true
+                };
+                publish(messageContext, MY_REFRESH_CHANNEL, payload);
         return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('### err : ', JSON.stringify(err));

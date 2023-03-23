@@ -17,6 +17,7 @@ handleCancel(event){
         updateComments({recordId:this.recordId,comments : this.inputValue})
         .then((result) =>{
             console.log("result" + result)
+            this.updateRecordView();
             this.dispatchEvent(
                  new ShowToastEvent({
               title: 'Success',
@@ -31,7 +32,10 @@ handleCancel(event){
         })
 
         }
-        
-
+    }
+    updateRecordView() {
+       setTimeout(() => {
+            eval("$A.get('e.force:refreshView').fire();");
+       }, 500); 
     }
 }

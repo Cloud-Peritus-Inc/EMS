@@ -91,4 +91,11 @@
         <shortDescription>Resource Recordtype Id</shortDescription>
         <value>0125e000000qrLTAAY</value>
     </labels>
+    <labels>
+        <fullName>Days_to_Consider_For_Offboarding_Creation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Days to Consider For Offboarding Creation</shortDescription>
+        <value>-10</value>
+    </labels>
 </CustomLabels>

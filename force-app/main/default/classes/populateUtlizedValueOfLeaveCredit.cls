@@ -27,7 +27,7 @@ public without sharing class populateUtlizedValueOfLeaveCredit implements Trigge
 **/
     public void afterInsert(List<EMS_LM_Leave_History__c> newList) {      
         System.debug(LoggingLevel.DEBUG, 'populateUtlizedValueOfLeaveCredit.afterInsert() : BEGIN');
-        populateValuesOnLeaveCredit(newList,null);
+     //   populateValuesOnLeaveCredit(newList,null);
         System.debug(LoggingLevel.DEBUG, 'populateUtlizedValueOfLeaveCredit.afterInsert() : END');       
     }
     
@@ -44,7 +44,7 @@ public without sharing class populateUtlizedValueOfLeaveCredit implements Trigge
 **/
     public void afterUpdate(List<EMS_LM_Leave_History__c> newList,List<EMS_LM_Leave_History__c> oldList) {      
         System.debug(LoggingLevel.DEBUG, 'populateUtlizedValueOfLeaveCredit.afterUpdate() : BEGIN');
-        populateValuesOnLeaveCredit(newList,new Map<Id,EMS_LM_Leave_History__c>(oldList));
+      //  populateValuesOnLeaveCredit(newList,new Map<Id,EMS_LM_Leave_History__c>(oldList));
         System.debug(LoggingLevel.DEBUG, 'populateUtlizedValueOfLeaveCredit.afterUpdate() : END');       
     }
     
@@ -65,12 +65,15 @@ public without sharing class populateUtlizedValueOfLeaveCredit implements Trigge
         Map<Id,Map<String,EMS_LM_Leave_Credit__c>> resourceCred = new Map<Id,Map<String,EMS_LM_Leave_Credit__c>>();
         List<EMS_LM_Leave_Credit__c> updateCredit = new List<EMS_LM_Leave_Credit__c>();
         for(EMS_LM_Leave_History__c newRec : newlist){
+            if(newRec.EMS_LM_Leave_Type__r.Name != LeaveRequestConstant.ANNUAL_LEAVE 
+               && newRec.EMS_LM_Leave_Type__r.Name != LeaveRequestConstant.LOSS_OF_PAY && newRec.EMS_LM_Leave_Type__r.Name != LeaveRequestConstant.WORK_FROM_HOME){
             resourceIdSet.add(newRec.EMS_LM_Contact__c);
             leaveTypes.add(newRec.EMS_LM_Leave_Type__c);
             if(conWithLeaves.containsKey(newRec.EMS_LM_Contact__c)){
                 conWithLeaves.get(newRec.EMS_LM_Contact__c).add(newRec);
             }else{
                 conWithLeaves.put(newRec.EMS_LM_Contact__c,new List<EMS_LM_Leave_History__c>{newRec}); 
+            }
             }
         }
         
