@@ -28,11 +28,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_TM_Wed__c</field>
+                <field>EMS_TM_Tue__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_TM_Fri__c</field>
+                <field>EMS_TM_Thu__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_TM_Sat__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -58,15 +62,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_TM_Tue__c</field>
+                <field>EMS_TM_Wed__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_TM_Thu__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_TM_Sat__c</field>
+                <field>EMS_TM_Fri__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

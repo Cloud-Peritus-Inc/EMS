@@ -131,7 +131,7 @@ public class EMS_TM_TimesheetClass {
                                                 EMS_TM_Numberofallocatedhours__c, 
                                                 EMS_TM_ProjectName_Asgn__c,
                                                 EMS_TM_StartDate_Asgn__c, EMS_TM_EndDate_Asgn__c, 
-                                                EMS_TM_AssignedAs__c
+                                                EMS_TM_AssignedAs__c, Name
                                                 FROM EMS_TM_Assignment__c 
                                                 WHERE EMS_TM_EmployeeName__r.EMS_TM_User__c= :userId
                                                 AND EMS_TM_StartDate_Asgn__c <= :weekEnd];
@@ -428,6 +428,7 @@ public class EMS_TM_TimesheetClass {
         timeRecordRow.EMS_TM_Fri__c                       = timerecord.EMS_TM_Fri__c;
         timeRecordRow.EMS_TM_Sat__c                       = timerecord.EMS_TM_Sat__c;
         timeRecordRow.EMS_TM_Project__c                   = timerecord.EMS_TM_Project__c;
+        timeRecordRow.Assignment__c                       = timerecord.Assignment__c;
         timeRecordRow.EMS_TM_ProjectTask__c               = timerecord.EMS_TM_ProjectTask__c;
         timeRecordRow.EMS_TM_OtherTask__c                 = timerecord.EMS_TM_OtherTask__c;
         timeRecordRow.EMS_TM_Week__c                      = timesheet.EMS_TM_Week__c;
@@ -442,6 +443,25 @@ public class EMS_TM_TimesheetClass {
     @AuraEnabled
     public static String reviseTimesheet( EMS_Timesheet__c timesheet ) {
         String returnStatement;
+        Set<Id> timesheetLineItemId = new Set<Id>();
+         for(EMS_TM_Timesheet_Record__c lineItem: [Select Id,EMS_Timesheet__c from EMS_TM_Timesheet_Record__c 
+                                                            WHERE EMS_Timesheet__c =:timesheet.Id]){
+                                                   timesheetLineItemId.add(lineItem.Id);
+                                                            } 
+
+        List<Approval.ProcessWorkitemRequest> processRequestList = new List<Approval.ProcessWorkitemRequest>();
+        for(ProcessInstanceWorkItem pIWorkItem : [SELECT Id, ProcessInstanceId,
+                                                        IsDeleted, CreatedDate, CreatedById, SystemModstamp,ProcessInstance.targetObjectId 
+                                                        FROM ProcessInstanceWorkitem
+                                                        WHERE ProcessInstance.targetObjectId IN:timesheetLineItemId]){
+        Approval.ProcessWorkitemRequest workItemRequest = new Approval.ProcessWorkitemRequest();
+        workItemRequest.setAction('Removed');
+        workItemRequest.setWorkitemId(pIWorkItem.Id);
+        processRequestList.add(workItemRequest);
+        }
+        if(!processRequestList.isEmpty()){
+        List<Approval.ProcessResult> processResults = Approval.process(processRequestList);
+        }
         try {
             List<EMS_Timesheet__c> timeSheetValues = [SELECT Id, User__c, User__r.Name,
                                                     EMS_TM_Week__c, EMS_TM_Status__c

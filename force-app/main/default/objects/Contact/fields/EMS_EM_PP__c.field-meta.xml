@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EMS_EM_PP__c</fullName>
     <externalId>false</externalId>
-    <label>Probation Period (Days)</label>
+    <label>Probation Period (In Days)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

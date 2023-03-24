@@ -29,7 +29,7 @@ public class EMS_LM_PendingOnMeLeaveReq {
     public static List<EMS_LM_Leave_History__c> getPendingLeaveHistory(String employeeName, String startDateStr, String endDateStr, List<String> statusValues, List<String> typeValues) {
     List<EMS_LM_Leave_History__c> leaveHistoryList = new List<EMS_LM_Leave_History__c>();
         
-    String query = 'SELECT Id, EMS_LM_Leave_Type_Name__c, EMS_LM_Leave_Start_Date__c, EMS_LM_Current_Approver__c, EMS_LM_Leave_End_Date__c, EMS_LM_Leave_Duration__c, EMS_LM_Reason__c, EMS_LM_Status__c, EMS_LM_Approved_On__c, EMS_LM_Contact__R.Name, EMS_LM_Approver__c, EMS_LM_2nd_Approver__c FROM EMS_LM_Leave_History__c';
+    String query = 'SELECT Id, EMS_LM_Leave_Type__r.Name, EMS_LM_Leave_Start_Date__c, EMS_LM_Current_Approver__c, EMS_LM_Leave_End_Date__c, EMS_LM_Leave_Duration__c, EMS_LM_Reason__c, EMS_LM_Status__c, EMS_LM_Approved_On__c, EMS_LM_Contact__R.Name, EMS_LM_Approver__c, EMS_LM_2nd_Approver__c FROM EMS_LM_Leave_History__c';
     String currentUserId = UserInfo.getUserId();
   	query += ' WHERE (EMS_LM_Approver__c = :currentUserId OR EMS_LM_2nd_Approver__c = :currentUserId)';
     

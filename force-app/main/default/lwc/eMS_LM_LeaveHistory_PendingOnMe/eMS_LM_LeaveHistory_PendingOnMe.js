@@ -50,6 +50,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   errorMessage = '';
   _wiredRefreshData;
   checkBox;
+  isModalOpen = false;
 
   @track currentPageReference;
   @wire(CurrentPageReference)
@@ -178,7 +179,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     } else {
       this.nodata = true;
       this.isLoading = true;
-      console.log('### disableButton ELSE : ',);
+      console.log('### disableButton ELSE : ');
       this.disableButton = this.nodata === true;
       this.showdata = false;
       this.error = undefined;
@@ -242,6 +243,34 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
 
   //TO SELECT ALL THE CHECKBOXES
+  /* handleSelectAll(event) {
+     console.log('OUTPUT : ');
+     this.checkBox = event.target.checked
+     if (this.checkBox) {
+       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+       const selectedRecordIds = [];
+       checkboxElements.forEach(element => {
+         element.checked = !element.disabled && true;
+ 
+         console.log('### element.disableButton : ', element.disabled);
+         //console.log('### element.dataset : ', JSON.stringify(element.dataset));
+         selectedRecordIds.push(element.dataset);
+         //console.log('### selectedRecordIds : ', selectedRecordIds);
+       });
+       console.log('Selected Record Ids:', selectedRecordIds);
+       this.multipleApprovals = selectedRecordIds.map(item => item.id);
+       console.log('### multipleApprovals', this.multipleApprovals);
+     } else if (!this.checkBox) {
+       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+       checkboxElements.forEach(element => {
+         element.checked = false;
+         this.multipleApprovals = [];
+         console.log('### else multipleApprovals : ', this.multipleApprovals);
+       });
+     }
+   }*/
+
+  //TO SELECT ALL THE CHECKBOXES
   handleSelectAll(event) {
     console.log('OUTPUT : ');
     this.checkBox = event.target.checked
@@ -249,15 +278,14 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
       const selectedRecordIds = [];
       checkboxElements.forEach(element => {
-        element.checked = !element.disabled && true;
-
-        console.log('### element.disableButton : ', element.disabled);
-        //console.log('### element.dataset : ', JSON.stringify(element.dataset));
-        selectedRecordIds.push(element.dataset);
-        //console.log('### selectedRecordIds : ', selectedRecordIds);
+        if (!element.disabled) {
+          element.checked = true;
+          const dataId = element.dataset.id;
+          selectedRecordIds.push(dataId);
+        }
       });
       console.log('Selected Record Ids:', selectedRecordIds);
-      this.multipleApprovals = selectedRecordIds.map(item => item.id);
+      this.multipleApprovals = selectedRecordIds;
       console.log('### multipleApprovals', this.multipleApprovals);
     } else if (!this.checkBox) {
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
@@ -268,6 +296,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       });
     }
   }
+
 
 
   //Approve All
@@ -296,7 +325,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalApproveAll = false;
-        this.checkBox = false;
+        const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+        checkboxElements.forEach(element => {
+          element.checked = false;
+        });
         const evt = new ShowToastEvent({
           message: 'Leave Request was updated successfully',
           variant: 'success',
@@ -339,7 +371,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         .then((result) => {
           console.log('Leave Request: ', result);
           this.isShowModalRejectAll = false;
-          this.checkBox = false;
+          const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+          checkboxElements.forEach(element => {
+            element.checked = false;
+          });
           const evt = new ShowToastEvent({
             message: 'Leave Request was rejected successfully',
             variant: 'success',
@@ -378,7 +413,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalApprove = false;
-        this.checkBox = false;
+        const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+        checkboxElements.forEach(element => {
+          element.checked = false;
+        });
         const evt = new ShowToastEvent({
           message: 'Leave Request was updated successfully',
           variant: 'success',
@@ -418,7 +456,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         .then((result) => {
           console.log('Leave Request: ', result);
           this.isShowModalReject = false;
-          this.checkBox = false;
+          const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+          checkboxElements.forEach(element => {
+            element.checked = false;
+          });
           const evt = new ShowToastEvent({
             message: 'Leave Request was rejected successfully',
             variant: 'success',
@@ -443,6 +484,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
         actionName: 'view',
       },
     });
+    // this.isModalOpen = true;
   }
 
   //TO VIEW THE CONTACT RECORD

@@ -115,7 +115,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
     const { data, error } = wireResult;
     this._wiredRefreshData = wireResult;
     if (data) {
-      console.log('### data : ',data);
+      console.log('### data : ', data);
       this.isLoading = false;
       if (data.length > 0) {
         this.showdata = true;
@@ -284,7 +284,11 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalApproveAll = false;
-        this.checkBox = false;
+        const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+        checkboxElements.forEach(element => {
+          element.checked = false;
+        });
+        console.log('### checkBox : ', this.checkBox);
         const evt = new ShowToastEvent({
           message: 'Leave Request was updated successfully',
           variant: 'success',
@@ -326,7 +330,10 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
         .then((result) => {
           console.log('Leave Request: ', result);
           this.isShowModalRejectAll = false;
-          this.checkBox = false;
+          const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+          checkboxElements.forEach(element => {
+            element.checked = false;
+          });
           const evt = new ShowToastEvent({
             message: 'Leave Request was rejected successfully',
             variant: 'success',
@@ -365,7 +372,10 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
       .then((result) => {
         console.log('Leave Request: ', result);
         this.isShowModalApprove = false;
-        this.checkBox = false;
+        const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+        checkboxElements.forEach(element => {
+          element.checked = false;
+        });
         const evt = new ShowToastEvent({
           message: 'Leave Request was updated successfully',
           variant: 'success',
@@ -404,7 +414,10 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
         .then((result) => {
           console.log('Leave Request: ', result);
           this.isShowModalReject = false;
-          this.checkBox = false;
+          const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+          checkboxElements.forEach(element => {
+            element.checked = false;
+          });
           const evt = new ShowToastEvent({
             message: 'Leave Request was rejected successfully',
             variant: 'success',
@@ -444,11 +457,11 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
           variant: 'success',
         });
         this.dispatchEvent(evt);
-          const messageContext = createMessageContext();
-                const payload = {
-                    refresh: true
-                };
-                publish(messageContext, MY_REFRESH_CHANNEL, payload);
+        const messageContext = createMessageContext();
+        const payload = {
+          refresh: true
+        };
+        publish(messageContext, MY_REFRESH_CHANNEL, payload);
         return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('### err : ', JSON.stringify(err));
