@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EMS_Employee_Type__c</fullName>
     <externalId>false</externalId>
-    <label>Employment Type</label>
+    <label>Employee Type</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
@@ -56,6 +56,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Full-time</label>
+            </value>
+            <value>
+                <fullName>Part Time</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Part Time</label>
             </value>
         </valueSetDefinition>
     </valueSet>

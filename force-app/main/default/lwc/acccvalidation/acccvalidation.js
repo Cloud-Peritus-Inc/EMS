@@ -734,7 +734,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         } else  if (fieldName.length === 13) {
             this.records[index][fieldName] = value;
             if (value === '' || value == null) {
-                this.records[index][fieldName] = '00';
+                this.records[index][fieldName] = '0.0';
             } else {
                 this.records[index][fieldName] = parseFloat(value);
             }
@@ -1016,9 +1016,10 @@ submitpopup(){
     }
     connectedCallback() {
         var comoff = null;
-        if(this.selectdUserId != null || this.selectdUserId !=''){
+        console.log('ConnectCollBAck'+this.selectdcompoffuserId);
+        if(this.selectdUserId != null && this.selectdUserId !='' && this.selectdUserId !='undefined' &&this.selectdUserId !=undefined ){
           this.selectdcompoffuserId = this.selectdUserId;
-          console.log('IfCompFF'+this.selectdcompoffuserId);
+          console.log('IfCompFF ConnectCollBAck'+this.selectdcompoffuserId);
         }else{
            this.selectdcompoffuserId = user_Id; 
            console.log('ELSECompFF'+this.selectdcompoffuserId);
@@ -1067,7 +1068,7 @@ submitpopup(){
     }
 
     handlesaveCompOffRecord(){
-        if(this.selectdUserId != null || this.selectdUserId !=''){
+        if(this.selectdUserId != null && this.selectdUserId !='' && this.selectdUserId !='undefined' &&this.selectdUserId !=undefined){
           this.selectdcompoffuserId = this.selectdUserId;
           console.log('IfCompFF'+this.selectdcompoffuserId);
         }else{
@@ -1075,7 +1076,7 @@ submitpopup(){
            console.log('ELSECompFF'+this.selectdcompoffuserId);
         }
            console.log('data'+this.thisWeek);
-            savecomppRec({userId:user_Id,compoffhours:this.weekendEnteredValue,compOffweek :this.thisWeek})
+            savecomppRec({userId:this.selectdcompoffuserId,compoffhours:this.weekendEnteredValue,compOffweek :this.thisWeek})
         .then(result => {
             window.console.log('compOffRecordresult ===> '+JSON.stringify(result));
            
@@ -1126,7 +1127,7 @@ submitpopup(){
         reviseTimesheet({timesheet: this.timeSheetRecord}).then( result => {
             console.log('result ',result);
             if (result === 'Success') {
-                this.handleSuccess('Timesheet successfully Revised');
+                //this.handleSuccess('Timesheet successfully Revised');
                 this.retrieveRecords();
                 this.disableSubmited = timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked' ? true : false;
             } else {

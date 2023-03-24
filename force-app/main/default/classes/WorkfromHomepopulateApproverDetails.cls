@@ -26,7 +26,7 @@ public without sharing class WorkfromHomepopulateApproverDetails implements Trig
 **/
     public void beforeUpdate(List<EMS_LM_Leave_History__c> newList , List<EMS_LM_Leave_History__c> oldList) {      
         System.debug(LoggingLevel.DEBUG, 'populateApproverDetails.beforeUpdate() : BEGIN');
-        WorkfromHomepopulateApporver(newList);
+        WorkfromHomepopulateApporver(newList,new Map<Id,EMS_LM_Leave_History__c>(oldList));
         System.debug(LoggingLevel.DEBUG, 'populateApproverDetails.beforeUpdate() : END');       
     }
     /**
@@ -39,7 +39,9 @@ public without sharing class WorkfromHomepopulateApproverDetails implements Trig
 *   ====================================================================================================
 **/
 	
-    public void WorkfromHomepopulateApporver(List<EMS_LM_Leave_History__c> newlist) {
+    public void WorkfromHomepopulateApporver(List<EMS_LM_Leave_History__c> newlist,Map<Id,EMS_LM_Leave_History__c> oldleaveMap) {
+      //  Map<Id,List<EMS_LM_Leave_History__c>> oldleaveMap = new Map<Id,List<EMS_LM_Leave_History__c>>();
+       //  Map<Id,EMS_LM_Leave_History__c> oldleaveMap = new Map<Id,EMS_LM_Leave_History__c>();
         set<Id> contactIdSet = new set<Id>();
         Map<Id,Contact> resourceMap = new Map<Id,Contact>();
         for(EMS_LM_Leave_History__c newRec : newlist){
@@ -71,7 +73,7 @@ public without sharing class WorkfromHomepopulateApproverDetails implements Trig
         for(EMS_LM_Leave_History__c newRec : newlist){
             System.debug('### newRec 1' +newRec);
             System.debug('### here 1');
-             if (resourceMap.containsKey(newRec.EMS_LM_Contact__c) && newRec.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.WORK_FROM_HOME) {
+             if (resourceMap.containsKey(newRec.EMS_LM_Contact__c) && newRec.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.WORK_FROM_HOME && newRec.EMS_LM_Leave_Duration__c != oldleaveMap.get(newRec.Id).EMS_LM_Leave_Duration__c) {
                 contact conRes = resourceMap.get(newRec.EMS_LM_Contact__c);
                 newRec.Level_of_Approval__c = conRes.Override_the_standard_level_of_approval__c ? conRes.Level_of_Approval__c : conRes.Resource_Role__r.Level_of_Approval__c;
                 System.debug('### newRec.Level_of_Approval__c ' + newRec.Level_of_Approval__c);

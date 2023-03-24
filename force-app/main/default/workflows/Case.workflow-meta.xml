@@ -1,51 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>New_Service_Request_Email_to_Employee</fullName>
-        <description>New Service Request : Email to Employee</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/New_Service_Request_Email_to_Employee</template>
-    </alerts>
-    <alerts>
         <fullName>New_Service_Request_Email_to_Grid_Support</fullName>
         <description>New Service Request : Email to Grid Support</description>
         <protected>false</protected>
         <recipients>
-            <recipient>HR_Team</recipient>
+            <recipient>Support_Team</recipient>
             <type>group</type>
         </recipients>
         <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/New_Service_Request_Email_to_Grid_Support</template>
-    </alerts>
-    <alerts>
-        <fullName>Service_Request_Waiting_for_Resource_Input_Emp</fullName>
-        <description>Service Request : Waiting for Resource Input - Emp</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Service_Request_Waiting_for_Resource_Input_Email_to_Employee</template>
-    </alerts>
-    <alerts>
-        <fullName>Service_Request_is_Closed_Email_to_Employee</fullName>
-        <description>Service Request is Closed - Email to Employee</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Service_Request_Closed_Email_to_Employee</template>
     </alerts>
 </Workflow>
