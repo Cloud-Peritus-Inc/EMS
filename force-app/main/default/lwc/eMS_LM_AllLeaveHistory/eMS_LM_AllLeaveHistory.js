@@ -75,12 +75,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             { label: 'Cancelled', value: 'Cancelled' }
         ],
 
-        overRideStatus: [
-            { label: 'Approver 1 Pending', value: 'Approver 1 Pending' }, { label: 'Approver 2 Pending', value: 'Approver 2 Pending' },
-            { label: 'Pending', value: 'Pending' },
-            { label: 'Rejected', value: 'Rejected' }, { label: 'Cancelled', value: 'Cancelled' },
-            { label: 'Approved', value: 'Approved' }
-        ]
     };
 
     connectedCallback() {
@@ -282,7 +276,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                 console.log('### result : ', result);
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Toast Success',
                         message: 'Leave Request was Cancelled Successfully',
                         variant: 'success',
                     })

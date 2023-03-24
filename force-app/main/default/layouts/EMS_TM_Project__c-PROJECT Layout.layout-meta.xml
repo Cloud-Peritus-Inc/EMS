@@ -146,6 +146,14 @@
         <relatedList>EMS_TM_Assignment__c.EMS_TM_ProjectName_Asgn__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>EMS_Timesheet__c</fields>
+        <fields>NAME</fields>
+        <fields>EMS_TM_ProjectTask__c</fields>
+        <fields>EMS_TM_Week__c</fields>
+        <fields>EMS_TM_Remarks__c</fields>
+        <relatedList>EMS_TM_Timesheet_Record__c.EMS_TM_Project__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>

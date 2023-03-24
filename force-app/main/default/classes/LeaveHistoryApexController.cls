@@ -123,8 +123,8 @@ public without Sharing class LeaveHistoryApexController {
 *   ====================================================================================================
 **/
     @AuraEnabled(Cacheable=true)
-    public static Integer getLoggedInUserResReportsSize () {
-        User usr = [SELECT Id, 
+    public static userAccessWrapper getLoggedInUserResReportsSize () {
+        User usr = [SELECT Id, Contact.timesheet_NoNeed__c,
 						   contactId__c
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
@@ -138,7 +138,18 @@ public without Sharing class LeaveHistoryApexController {
                                                              WHERE Resource_Reports_To_User__c != null 
                                                              AND  Resource_Reports_To__c =: usr.ContactId__c 
                                              				];
+            userAccessWrapper wrapperData = new userAccessWrapper();
+            wrapperData.relationAcess = rrrList.size();
+            if(usr.Contact.timesheet_NoNeed__c == true){
+                wrapperData.hraccess = true;
+            }
         Integer intList = rrrList.size();        
-		return intList;
+		return wrapperData;
         }
+        public class userAccessWrapper {
+        @AuraEnabled
+        Public  Integer relationAcess {get; set;}
+        @AuraEnabled
+        public  Boolean hraccess {get; set;}
+    }
 }
