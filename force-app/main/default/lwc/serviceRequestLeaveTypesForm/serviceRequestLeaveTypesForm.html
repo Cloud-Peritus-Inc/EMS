@@ -53,12 +53,12 @@
 								<div class="slds-var-m-around_medium">
 									<lightning-layout multiple-rows>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
-											<lightning-input type="Date" label="Start Date" name="startDate1"
-												value={startDate1} timezone={userTimeZone} onchange={datechange} required>
+											<lightning-input type="Date" label="Start Date" name="startDate"
+												value={startDate} timezone={userTimeZone} onchange={datechange} required>
 											</lightning-input>
 
-											<lightning-input type="Date" label="End Date" name="endDate1"
-												value={endDate1} onchange={datechange} required></lightning-input>
+											<lightning-input type="Date" label="End Date" name="endDate"
+												value={endDate} onchange={datechange} required></lightning-input>
 										</lightning-layout-item>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
 											<lightning-input type="number" label="Leave Duration" value={duration}
@@ -86,7 +86,7 @@
 									</lightning-button>
 								</center>
 							</template>
-							<template if:true={showFileUpload}>
+							<!--template if:true={showFileUpload}>
 								<center style="font-size:14px;color:green">
 									<i> Succesfully created the expense. Please upload the proof for maternity. </i>
 								</center>
@@ -94,7 +94,7 @@
 									<center>
 										<lightning-file-upload name="fileUploader" accept={acceptedFormats}
 											record-id={createdRecordId} onuploadfinished={handleUploadFinished}
-											multiple>
+											multiple required>
 										</lightning-file-upload>
 									</center>
 									<br />
@@ -104,7 +104,7 @@
 										onclick={handleSubmittedFinish}>
 									</lightning-button>
 								</div>
-							</template>
+							</template-->
 
 							<!------------------------------------   TO SHOW PATERNITY, MARRIAGE, BEREAVEMENT  DETAILS   --------------------------------------------->
 							<template if:true={renderReason}>
@@ -131,16 +131,16 @@
 									<strong>Enter Details</strong>
 									<lightning-layout multiple-rows>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
-											<lightning-input type="Date" label="Start Date" name="startDate1"
-												value={startDate1} timezone={userTimeZone} onchange={datechange}>
+											<lightning-input type="Date" label="Start Date" name="startDate"
+												value={startDate} timezone={userTimeZone} onchange={datechange} required>
 											</lightning-input>
 
-											<lightning-input type="Date" label="End Date" name="endDate1"
-												value={endDate1} onchange={datechange}></lightning-input>
+											<lightning-input type="Date" label="End Date" name="endDate"
+												value={endDate} onchange={datechange} required></lightning-input>
 										</lightning-layout-item>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
 											<lightning-combobox label='Select Day' options={dayValues}
-												onchange={dayChange} value={selectedDay} name="selectedDay">
+												onchange={dayChange} value={selectedDay} name="selectedDay" required>
 											</lightning-combobox>
 											<lightning-input type="number" label="Leave Duration" value={duration}
 												disabled>

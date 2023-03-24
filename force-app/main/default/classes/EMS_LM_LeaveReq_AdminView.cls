@@ -34,7 +34,7 @@ public without Sharing class EMS_LM_LeaveReq_AdminView {
 ) {
     List<EMS_LM_Leave_History__c> leaveHistories = new List<EMS_LM_Leave_History__c>();
     
-    String query = 'SELECT Id, EMS_LM_Leave_Type_Name__c, EMS_LM_Leave_Start_Date__c, EMS_LM_Final_Approver__c, ' + 
+    String query = 'SELECT Id, EMS_LM_Leave_Type__r.Name, EMS_LM_Leave_Start_Date__c, EMS_LM_Final_Approver__c, ' + 
         'EMS_LM_Leave_End_Date__c, EMS_LM_Leave_Duration__c, EMS_LM_Reason__c, EMS_LM_Status__c, EMS_LM_Approved_On__c, ' +
         'EMS_LM_Contact__R.Name, EMS_LM_Contact__R.Resource_Role__R.Level_of_Approval__c, EMS_LM_Contact__R.Resource_Role__R.Auto_Approve__c, EMS_LM_Current_Approver__c FROM EMS_LM_Leave_History__c WHERE CreatedDate != NULL ';
     
