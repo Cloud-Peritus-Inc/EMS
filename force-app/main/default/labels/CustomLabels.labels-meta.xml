@@ -5,7 +5,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Contact Record URL</shortDescription>
-        <value>https://cpprd--qa.sandbox.lightning.force.com/lightning/r/Contact/</value>
+        <value>https://cpprd--uat.sandbox.lightning.force.com/lightning/r/Contact/</value>
     </labels>
     <labels>
         <fullName>Days_Consider_for_Missed_Goal</fullName>
@@ -47,21 +47,21 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Grid Portal Link</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/Grid&gt;</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid&gt;</value>
     </labels>
     <labels>
         <fullName>Leave_Request_site_Link</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Leave Request site Link</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/leave-management</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/leave-management#</value>
     </labels>
     <labels>
         <fullName>Onboarding_Request_Record_URL</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Onboarding Request Record URL</shortDescription>
-        <value>https://cpprd--dev.sandbox.lightning.force.com/lightning/r/EMS_EM_Onboarding_Request__c</value>
+        <value>https://cpprd--uat.sandbox.lightning.force.com/lightning/r/EMS_EM_Onboarding_Request__c</value>
     </labels>
     <labels>
         <fullName>Past_Days_Consider_For_Notification</fullName>
@@ -75,14 +75,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pre Onboarding Form URL</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/onboarding/s/?</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/onboarding/s/?</value>
     </labels>
     <labels>
         <fullName>Project_label</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Project label</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/ems-tm-project/EMS_TM_Project__c/Default</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/ems-tm-project/EMS_TM_Project__c/Default</value>
     </labels>
     <labels>
         <fullName>Resource_Recordtype_Id</fullName>
