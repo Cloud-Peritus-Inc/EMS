@@ -73,12 +73,19 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         directorStatus: [
             { label: 'Auto Approved', value: 'Auto Approved' },
             { label: 'Cancelled', value: 'Cancelled' }
+        ],
+
+        overRideStatus: [
+            { label: 'Approver 1 Pending', value: 'Approver 1 Pending' }, { label: 'Approver 2 Pending', value: 'Approver 2 Pending' },
+            { label: 'Pending', value: 'Pending' },
+            { label: 'Rejected', value: 'Rejected' }, { label: 'Cancelled', value: 'Cancelled' },
+            { label: 'Approved', value: 'Approved' }
         ]
     };
 
     connectedCallback() {
         this.LevelOfApproval();
-         const messageContext = createMessageContext();
+        const messageContext = createMessageContext();
         this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
             this.handleRefreshMessage(message);
         });
@@ -144,30 +151,30 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     }
 
     //TO SHOW DEFAULT DATA
-  /*  @wire(defaultMyRequestData)
-    defaultMyRequestDataWiredData(wireResult) {
-        const { data, error } = wireResult;
-        this._wiredRefreshData = wireResult;
-        if (data) {
-            if (data.length > 0) {
-              
-                console.log('### defaultMyRequestData', data);
-                this.showdata = true;
-                this.nodata = false;
-                //this.datahistory = data;
-                this.datahistory = JSON.parse(JSON.stringify(data));
-                console.log('### datahistory', this.datahistory);
-                this.datahistory.forEach(req => {
-                    req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true && req.EMS_LM_Status__c !== 'Auto Approved';
-                });
-                console.log('### defaultMyRequestData datahistory: ', this.datahistory);
-            } else {
-                this.nodata = true
-            }
-        } else if (error) {
-            console.error('Error:', error);
-        }
-    }*/
+    /*  @wire(defaultMyRequestData)
+      defaultMyRequestDataWiredData(wireResult) {
+          const { data, error } = wireResult;
+          this._wiredRefreshData = wireResult;
+          if (data) {
+              if (data.length > 0) {
+                
+                  console.log('### defaultMyRequestData', data);
+                  this.showdata = true;
+                  this.nodata = false;
+                  //this.datahistory = data;
+                  this.datahistory = JSON.parse(JSON.stringify(data));
+                  console.log('### datahistory', this.datahistory);
+                  this.datahistory.forEach(req => {
+                      req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true && req.EMS_LM_Status__c !== 'Auto Approved';
+                  });
+                  console.log('### defaultMyRequestData datahistory: ', this.datahistory);
+              } else {
+                  this.nodata = true
+              }
+          } else if (error) {
+              console.error('Error:', error);
+          }
+      }*/
 
     //TO SHOW FILTER DATA
     @wire(getLMHistory, { startDateStr: '$startDate', endDateStr: '$endDate', statusValues: '$sValue', typeValues: '$value' })
@@ -281,10 +288,10 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                     })
                 );
                 const messageContext = createMessageContext();
-        const payload = {
-            refresh: true
-        };
-        publish(messageContext, MY_REFRESH_CHANNEL, payload);
+                const payload = {
+                    refresh: true
+                };
+                publish(messageContext, MY_REFRESH_CHANNEL, payload);
                 return refreshApex(this._wiredRefreshData);
             }).catch((err) => {
                 console.log('### err : ', JSON.stringify(err));
@@ -292,13 +299,13 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     }
 
     handleRefresh() {
-         const refreshEvent = new CustomEvent('refresh', {
-    bubbles: true
-});
-this.dispatchEvent(refreshEvent);
-    } 
+        const refreshEvent = new CustomEvent('refresh', {
+            bubbles: true
+        });
+        this.dispatchEvent(refreshEvent);
+    }
 
-      // for refresh using LMS
+    // for refresh using LMS
     subscription = null;
 
     disconnectedCallback() {

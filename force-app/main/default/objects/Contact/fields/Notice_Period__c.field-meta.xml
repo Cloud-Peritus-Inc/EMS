@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>Resource_Role__r.Notice_Consider_Days__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Notice Period</label>
+    <label>Notice Period (In Days)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

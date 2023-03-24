@@ -175,8 +175,6 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
     }
 
     handleError(event) {
-        console.log('====event.detail.detail======' + JSON.stringify(event));
-        console.log('====event.detail.detail======' + JSON.stringify(event.detail));
         console.log('====event.detail.detail======' + JSON.stringify(event.detail.detail));
         const evt = new ShowToastEvent({
             title: 'Error!',
