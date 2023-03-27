@@ -54,6 +54,8 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     isCheck = false;
     testdata
     _wiredRefreshData;
+    overriden;
+    overridenLevel;
 
     //CREATED THIS TO SHOW THE LEAVE STATUSES BASED ON THE LEVEL OF APPROVAL A LOGGED IN USER HAD.
     @track listStatus = {
@@ -75,12 +77,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             { label: 'Cancelled', value: 'Cancelled' }
         ],
 
-        overRideStatus: [
-            { label: 'Approver 1 Pending', value: 'Approver 1 Pending' }, { label: 'Approver 2 Pending', value: 'Approver 2 Pending' },
-            { label: 'Pending', value: 'Pending' },
-            { label: 'Rejected', value: 'Rejected' }, { label: 'Cancelled', value: 'Cancelled' },
-            { label: 'Approved', value: 'Approved' }
-        ]
     };
 
     connectedCallback() {
@@ -100,6 +96,10 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             console.log('### approvalLevel : ', this.approvalLevel);
             this.autoApproval = result.autoApproval;
             console.log('### autoApproval : ', this.autoApproval);
+            this.overriden = result.overRideCheck;
+            console.log('### overriden : ', this.overriden);
+            this.overridenLevel = result.overridelevelOfApproval;
+            console.log('overridenLevel : ', this.overridenLevel);
             this.approvalCheckMethod();
         }).catch((err) => {
             console.log('### err : ', err);
@@ -107,26 +107,40 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     }
 
     approvalCheckMethod() {
-        switch (this.approvalLevel) {
+        /*switch (this.approvalLevel) {
             case 2:
                 console.log('OUTPUT : ');
                 this.picklistValues = this.listStatus.empStatus;
-                /* this.sValue = this.picklistValues[0].value;
-                 console.log('this.sValue : ', this.sValue);*/
+                 console.log('this.sValue : ', this.sValue);
                 break;
             case 1:
                 this.picklistValues = this.listStatus.leadStatus;
-                /*this.sValue = this.picklistValues[0].value;
-                console.log('this.sValue : ', this.sValue);*/
+               
                 break;
             case 0:
                 this.picklistValues = this.listStatus.directorStatus;
-                /* this.sValue = this.picklistValues[0].value;
-                 console.log('this.sValue : ', this.sValue);*/
+               
                 break;
             default:
                 this.picklistValues = [];
                 break;
+        }*/
+
+        // EMP CHECK
+        if (this.approvalLevel === 2) {
+            this.picklistValues = this.listStatus.empStatus;
+        }
+
+        // LEAD CHECK
+        if (this.overriden === true && this.overridenLevel === 2) {
+            this.picklistValues = this.listStatus.empStatus;
+        } else if (this.approvalLevel === 1) {
+            this.picklistValues = this.listStatus.leadStatus;
+        }
+
+        //AUTO APPROVAL
+        if (this.approvalLevel === 0) {
+            this.picklistValues = this.listStatus.directorStatus;
         }
     }
 
@@ -282,7 +296,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                 console.log('### result : ', result);
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Toast Success',
                         message: 'Leave Request was Cancelled Successfully',
                         variant: 'success',
                     })

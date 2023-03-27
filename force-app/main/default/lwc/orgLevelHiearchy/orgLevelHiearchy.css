@@ -1,0 +1,91 @@
+.org-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.org-chart-container {
+    width: 100px; /* adjust to your preferred small size */
+    transition: width 0.5s ease-in-out; /* add a transition effect */
+  }
+
+  .org-chart-container:hover {
+    width: 200px; /* adjust to your preferred larger size */
+  }
+
+.org-chart {
+  max-height: 250px; /* set maximum height */
+  overflow: auto; /* enable vertical scrollbar */
+}
+
+.org-chart::-webkit-scrollbar {
+  width: 6px;
+}
+
+.org-chart::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.org-chart::-webkit-scrollbar-thumb {
+  /*background: #888;*/
+  background : rgb(223, 185, 235);
+  border-radius: 4px;
+}
+
+.org-chart::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.org-chart li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+}
+
+.org-chart li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 1px solid black;
+  height: 100%;
+}
+
+.org-chart li:first-child::before {
+  top: 50%;
+  height: calc(50% + 20px);
+}
+
+.org-chart li:last-child::before {
+  height: calc(50% + 20px);
+}
+
+.org-chart li:first-child::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-top: 1px solid black;
+  width: 50%;
+  height: 0;
+}
+
+.org-chart li:last-child::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-bottom: 1px solid black;
+  width: 50%;
+  height: 0;
+}
+.homeCard {
+    background-color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(226, 162, 237, 0.2), 0 6px 20px 0 rgba(216, 170, 238, 0.19);
+    margin-top: 20px; /* increased from 10px */
+    margin-bottom: 30px; /* increased from 20px */
+	/*font-family: 'sans-serif';*/
+  border-radius: 5px;
+}

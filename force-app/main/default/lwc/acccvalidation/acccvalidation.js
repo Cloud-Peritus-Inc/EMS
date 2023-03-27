@@ -734,7 +734,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         } else  if (fieldName.length === 13) {
             this.records[index][fieldName] = value;
             if (value === '' || value == null) {
-                this.records[index][fieldName] = '0.0';
+                this.records[index][fieldName] = '00';
             } else {
                 this.records[index][fieldName] = parseFloat(value);
             }
@@ -1016,10 +1016,9 @@ submitpopup(){
     }
     connectedCallback() {
         var comoff = null;
-        console.log('ConnectCollBAck'+this.selectdcompoffuserId);
-        if(this.selectdUserId != null && this.selectdUserId !='' && this.selectdUserId !='undefined' &&this.selectdUserId !=undefined ){
+        if(this.selectdUserId != null || this.selectdUserId !=''){
           this.selectdcompoffuserId = this.selectdUserId;
-          console.log('IfCompFF ConnectCollBAck'+this.selectdcompoffuserId);
+          console.log('IfCompFF'+this.selectdcompoffuserId);
         }else{
            this.selectdcompoffuserId = user_Id; 
            console.log('ELSECompFF'+this.selectdcompoffuserId);
@@ -1068,7 +1067,7 @@ submitpopup(){
     }
 
     handlesaveCompOffRecord(){
-        if(this.selectdUserId != null && this.selectdUserId !='' && this.selectdUserId !='undefined' &&this.selectdUserId !=undefined){
+        if(this.selectdUserId != null || this.selectdUserId !=''){
           this.selectdcompoffuserId = this.selectdUserId;
           console.log('IfCompFF'+this.selectdcompoffuserId);
         }else{
@@ -1076,7 +1075,7 @@ submitpopup(){
            console.log('ELSECompFF'+this.selectdcompoffuserId);
         }
            console.log('data'+this.thisWeek);
-            savecomppRec({userId:this.selectdcompoffuserId,compoffhours:this.weekendEnteredValue,compOffweek :this.thisWeek})
+            savecomppRec({userId:user_Id,compoffhours:this.weekendEnteredValue,compOffweek :this.thisWeek})
         .then(result => {
             window.console.log('compOffRecordresult ===> '+JSON.stringify(result));
            
