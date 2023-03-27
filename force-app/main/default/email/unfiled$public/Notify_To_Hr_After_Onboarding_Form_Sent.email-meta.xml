@@ -5,11 +5,11 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notify To Hr After Onboarding Form Sent</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus : Candidate portal link sent</subject>
-    <textOnly>Dear HR,
+    <subject>Onboarding: Candidate portal link sent</subject>
+    <textOnly>Dear HR Team,
 
 
-The Candidate portal link has been sent to the following candidate:
+The candidate portal link has been sent to the following candidate:
 
 Name: {!Contact.Name}
 
@@ -20,7 +20,7 @@ Link: Applicant Record
 
 Regards,
 
-Team Cloud Peritus</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

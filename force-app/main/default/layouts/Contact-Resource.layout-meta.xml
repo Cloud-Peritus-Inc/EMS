@@ -47,7 +47,7 @@
                 <field>EMS_Phone_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Personal_Email__c</field>
             </layoutItems>
         </layoutColumns>
@@ -149,15 +149,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_JD__c</field>
+                <field>Probationary_Period_End_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_EM_PP__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Notice_Period__c</field>
+                <field>EMS_EM_JD__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -393,11 +389,6 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>LoginToNetworkAsUser</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>4</sortOrder>
@@ -416,6 +407,11 @@
             <actionName>DisableCustomerPortal</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>3</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -557,6 +553,13 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Reward_And_Recognition__c.Resource__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.PRIORITY</fields>
+        <relatedList>Case.Case_Assignee__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

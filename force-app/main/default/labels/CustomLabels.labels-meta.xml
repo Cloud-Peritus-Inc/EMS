@@ -61,14 +61,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Contact Record URL</shortDescription>
-        <value>https://cpprd--qa.sandbox.lightning.force.com/lightning/r/Contact/</value>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/detail/</value>
     </labels>
     <labels>
         <fullName>Onboarding_Request_Record_URL</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Onboarding Request Record URL</shortDescription>
-        <value>https://cpprd--dev.sandbox.lightning.force.com/lightning/r/EMS_EM_Onboarding_Request__c</value>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-em-onboarding-request/</value>
     </labels>
     <labels>
         <fullName>Project_label</fullName>

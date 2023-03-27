@@ -14,7 +14,7 @@
                 <field>EMS_LM_Contact__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>EMS_LM_Leave_Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -30,7 +30,7 @@
                 <field>EMS_LM_Leave_Duration__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>EMS_LM_Day__c</field>
             </layoutItems>
             <layoutItems>
