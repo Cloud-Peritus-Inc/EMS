@@ -78,7 +78,7 @@ public without Sharing class LeaveHistoryApexController {
     }
     
                 /**
-*   {Purpose} - Method used to get the Level of approval and Auto-Approval data to show the leave status based on the level of approval.
+*   {Purpose} - Method used to get the Level of approval,Auto-Approval and Overriden Approval Level data to show the leave status based on the level of approval.
 *
 *   CHANGE HISTORY
 *   ====================================================================================================
@@ -93,14 +93,20 @@ public without Sharing class LeaveHistoryApexController {
                               Resource_Role__c, 
                               Resource_Role__r.Level_of_Approval__c, 
                               Resource_Role__r.Auto_Approve__c, 
+                              Override_the_standard_level_of_approval__c,
+                       		  Level_of_Approval__c,
                               EMS_TM_User__c 
                        FROM Contact 
                        WHERE EMS_TM_User__c =: LeaveRequestConstant.LOGGEDIN_USERID];
         System.debug('### con '  + con);
         System.debug('### con '  + con.Resource_Role__r.Level_of_Approval__c);
         System.debug('### con '  + con.Resource_Role__r.Auto_Approve__c);
+        System.debug('### Overriden check '  + con.Override_the_standard_level_of_approval__c);
+        System.debug('### Overriden Level '  + con.Level_of_Approval__c);
         returnValues.levelOfApproval = con.Resource_Role__r.Level_of_Approval__c;
         returnValues.autoApproval = con.Resource_Role__r.Auto_Approve__c;
+        returnValues.overridelevelOfApproval = con.Level_of_Approval__c;
+        returnValues.overRideCheck = con.Override_the_standard_level_of_approval__c;
         System.debug('### returnValues ' + returnValues);
         return returnValues;        
     }
@@ -110,6 +116,10 @@ public without Sharing class LeaveHistoryApexController {
         Public  Decimal levelOfApproval {get; set;}
         @AuraEnabled
         public  Boolean autoApproval {get; set;}
+        @AuraEnabled
+        Public  Decimal overridelevelOfApproval {get; set;}
+        @AuraEnabled
+        public  Boolean overRideCheck {get; set;}
     }
 
     
@@ -123,8 +133,8 @@ public without Sharing class LeaveHistoryApexController {
 *   ====================================================================================================
 **/
     @AuraEnabled(Cacheable=true)
-    public static Integer getLoggedInUserResReportsSize () {
-        User usr = [SELECT Id, 
+    public static userAccessWrapper getLoggedInUserResReportsSize () {
+        User usr = [SELECT Id, Contact.timesheet_NoNeed__c,
 						   contactId__c
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
@@ -138,7 +148,18 @@ public without Sharing class LeaveHistoryApexController {
                                                              WHERE Resource_Reports_To_User__c != null 
                                                              AND  Resource_Reports_To__c =: usr.ContactId__c 
                                              				];
+            userAccessWrapper wrapperData = new userAccessWrapper();
+            wrapperData.relationAcess = rrrList.size();
+            if(usr.Contact.timesheet_NoNeed__c == true){
+                wrapperData.hraccess = true;
+            }
         Integer intList = rrrList.size();        
-		return intList;
+		return wrapperData;
         }
+        public class userAccessWrapper {
+        @AuraEnabled
+        Public  Integer relationAcess {get; set;}
+        @AuraEnabled
+        public  Boolean hraccess {get; set;}
+    }
 }

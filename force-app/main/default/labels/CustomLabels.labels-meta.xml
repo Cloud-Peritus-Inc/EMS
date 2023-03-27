@@ -105,4 +105,25 @@
         <shortDescription>TimeSheet Label</shortDescription>
         <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/timepage</value>
     </labels>
+    <labels>
+        <fullName>Default_Conversion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Conversion</shortDescription>
+        <value>80</value>
+    </labels>
+    <labels>
+        <fullName>Default_Grid_Support_Request_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Grid Support Request Owner</shortDescription>
+        <value>rohit.bhupati@cloudperitus.com</value>
+    </labels>
+    <labels>
+        <fullName>Default_HR_Support_Request_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default HR Support Request Owner</shortDescription>
+        <value>raobhupati634@gmail.com</value>
+    </labels>
 </CustomLabels>

@@ -339,6 +339,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
             variant: 'success',
           });
           this.dispatchEvent(evt);
+          this.rejectAllComments = '';
           return refreshApex(this._wiredRefreshData)
         }).catch((err) => {
           console.log('ERROR : ', err);
@@ -423,6 +424,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
             variant: 'success',
           });
           this.dispatchEvent(evt);
+          this.rejectComments = ' ';
           return refreshApex(this._wiredRefreshData)
         }).catch((err) => {
           console.log('ERROR : ', err);
@@ -452,7 +454,6 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
       .then((result) => {
         console.log('### result : ', result);
         const evt = new ShowToastEvent({
-          title: 'Toast Success',
           message: 'Leave Request was Cancelled Successfully',
           variant: 'success',
         });
