@@ -8,12 +8,13 @@ public without sharing class newServiceRequestController {
             integer closedCases = 0;
             List<Case> caseList = new List<Case>();
           List<casewrapper> caswDt = new List<casewrapper>();
-        caseList = [SELECT Id,AccountId,ContactId,CreatedDate,Description,Status,Subject,CaseNumber FROM Case WHERE ContactId=:uRec.ContactId];
+        caseList = [SELECT Id,AccountId,ContactId,CreatedDate,Description,Status,Subject,CaseNumber,Type FROM Case WHERE ContactId=:uRec.ContactId Order By CreatedDate DESC];
         for(Case cnew : caseList){
             casewrapper cw = new casewrapper();
             cw.caseNumber = cnew.caseNumber;
             cw.caseid = cnew.Id;
             cw.Status = cnew.Status;
+            cw.caseType = cnew.Type;
             cw.CreatedDate = Date.valueOf(cnew.CreatedDate);
               caswDt.add(cw);           
             if(cnew.Status == 'New'){
@@ -47,12 +48,22 @@ public without sharing class newServiceRequestController {
     
      @AuraEnabled(cacheable=true)
     public static casewrapper getTheCaseDetails(Id caseid){
-        Case newCase = [SELECT Id,CreatedDate,Status,OwnerId,IsEscalated FROM Case WHERE Id=:caseid];
+        Case newCase = [SELECT Id,CreatedDate,Status,OwnerId,IsEscalated,Case_Assignee__c,Case_Assignee__r.EMS_TM_User__c,Contact.EMS_TM_User__c FROM Case WHERE Id=:caseid];
          casewrapper  cw = new casewrapper();
          cw.caseid = newCase.Id;
-         cw.enableEscalate = daysBetweenExcludingWeekends(newCase.CreatedDate,system.now()) > 5 ? false : true;
-         cw.enableClose = (newCase.Status == 'Closed' || newCase.Status == 'Resignation Approved' || newCase.Status == '	Resignation Rejected');  
-         cw.enableEscalate = cw.enableClose ? true :  cw.enableEscalate; 
+         cw.enableTransfer = true; //Disable the Transfer button
+         cw.enableClose = (newCase.Status == 'Closed' || newCase.Status == 'Resignation Approved' || newCase.Status == 'Resignation Rejected');  
+         if(newCase.Contact.EMS_TM_User__c == Userinfo.getUserId()){
+            cw.enableEscalate = daysBetweenExcludingWeekends(newCase.CreatedDate,system.now()) > 5 ? false : true;
+            cw.enableEscalate = cw.enableClose ? true :  cw.enableEscalate; 
+         }else{
+               cw.enableEscalate = true; 
+         }
+         
+         if(newCase.Case_Assignee__c != null && newCase.Case_Assignee__r.EMS_TM_User__c == Userinfo.getUserId()){
+              cw.enableTransfer = false;  
+         }
+        
          
          return cw;
     }
@@ -79,6 +90,21 @@ public without sharing class newServiceRequestController {
         
     }
     
+     @AuraEnabled
+    public static string processTheCaseTransfer(String caseid,String conId){
+        Case newcase = new Case();
+        newcase.id = caseid;
+        newcase.Case_Assignee__c = conId;
+        
+        try{
+            update newcase;
+            return 'Successfully transferred the service request.';
+        }catch(exception ex){
+            throw new AuraHandledException(ex.getMessage());
+        }
+        
+    }
+    
     public static Integer daysBetweenExcludingWeekends(Datetime startDate, Datetime endDate) {
         Integer days = startDate.date().daysBetween(endDate.date());
         days -= ((integer)Math.floor((days / 7)) * 2);
@@ -99,6 +125,8 @@ public without sharing class newServiceRequestController {
         public string contactid;
         @AuraEnabled
         public string accountid;
+        @AuraEnabled
+        public string caseType;
          @AuraEnabled
         public Contact conRec;
          @AuraEnabled
@@ -111,6 +139,8 @@ public without sharing class newServiceRequestController {
         public boolean enableEscalate;
          @AuraEnabled
         public boolean enableClose;
+        @AuraEnabled
+        public boolean enableTransfer;
         
     }
     

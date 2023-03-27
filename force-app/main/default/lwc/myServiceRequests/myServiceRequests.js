@@ -16,6 +16,7 @@ loaded = false
     @wire(getTheCurrentData) 
     wiredLabels({error, data}){
         if(data){
+            
         this.caseList = data.caseList;
         this.numberofCompleted = data.closedCases;
         this.numberofInprogress = data.inprogressCases;

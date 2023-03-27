@@ -108,6 +108,7 @@ global class BatchToCreatePostOnboardingTasks implements Database.Batchable<sObj
                 t.Status = 'Open';
                 t.Priority = 'High';
                 t.IsReminderSet = true;
+                t.IsVisibleInSelfService = True;
                 t.Onboarding_UniqueKey__c  = ptm.Unique_Identifier__c;
                 t.WhoId = con.Id;
                 if(ptm.Due_Date_Days__c != null){
