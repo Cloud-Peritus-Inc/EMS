@@ -1,4 +1,6 @@
 <template>
+<lightning-button variant="brand"  onclick={handleTransfer} label="Transfer Request" disabled = {disabletransfer}
+		title="Transfer Request" icon-name="utility:reassign" class="slds-m-left_x-small"></lightning-button>
  <lightning-button variant="destructive"  onclick={handleEscalte} label="Escalate" disabled = {disableescalte}
 		title="Escalate" icon-name="utility:case" class="slds-m-left_x-small"></lightning-button> 
     <lightning-button variant="Brand"  label="Close Request" onclick={handleClose} disabled = {disableclose}
@@ -31,6 +33,45 @@
 				<center>	<lightning-button variant="destructive"  onclick={processEscalte} label="Escalate"
 		            title="Escalate"  class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
 					<lightning-button label="Close" title="Close" icon-name="utility:close" onclick={handleEscCancel}></lightning-button>
+				</center>
+                </div>
+               
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+       </div>
+    </template>
+
+ <template if:true={showtransfer}>
+       <div data-modal="custom-modal" class="modalclass">
+            <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-3"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" 
+                                            class="slds-modal__close " 
+                                            alternative-text="Close" 
+                                            title="Close"
+                                            size="large"
+                                            variant="bare-inverse"
+                                            onclick={hanldeTransgerClose} >
+ 
+                    </lightning-button-icon>
+                <font size="5">Transfer Service Request</font>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium"
+                    id="modal-content-id-3">
+				<lightning-record-edit-form object-api-name="Case" id="createContactForm" >
+                    <lightning-input-field field-name="Case_Assignee__c" onchange={handleContactSelection} required> </lightning-input-field>
+                </lightning-record-edit-form>	   
+				<center><lightning-button variant="destructive"  onclick={processTransfer} label="Transfer"
+		            title="Transfer"  class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
+					<lightning-button label="Close" title="Close" icon-name="utility:close" onclick={hanldeTransgerClose}></lightning-button>
 				</center>
                 </div>
                

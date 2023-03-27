@@ -5,7 +5,7 @@
         <div class="childparent">
           <div class="childtext" style="padding-left:20px;">
                <div style="padding-left:5px;"> 
-          <lightning-icon icon-name="utility:cases" size="medium" alternative-text="In Progress" title="In Progress"></lightning-icon>
+          <lightning-icon icon-name="utility:cases" size="medium" alternative-text="In Progress" ></lightning-icon>
            <font size="4"  > &nbsp;&nbsp;<b>My Service Requests </b> </font> <br/>
             </div> 
           </div>
@@ -26,6 +26,7 @@
       <tr>
         <th>Service Number</th>
         <th>Open Date</th>
+        <th>Type</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -34,6 +35,7 @@
         <tr key={row.id}>
           <td><a href="#" data-id={row.caseid} onclick={handleCaseClick}>{row.caseNumber}</a></td>
           <td><lightning-formatted-date-time value={row.CreatedDate}> </lightning-formatted-date-time></td>
+          <td>{row.caseType}</td>
           <td>{row.Status}</td>
         </tr>
       </template>

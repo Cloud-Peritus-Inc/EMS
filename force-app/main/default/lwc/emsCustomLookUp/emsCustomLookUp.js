@@ -18,18 +18,27 @@ export default class EmsCustomLookUp extends LightningElement {
     @track isValueSelected;
     @track blurTimeout;
     searchTerm;
+    @track isLoading =true;
     //css
     @track boxClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-has-focus';
     @track inputClass = '';
+
+    connectedCallback() {
+        console.log('CONNECTED CALL BACK');
+    }
     @wire(lookUp, {searchTerm : '$searchTerm', myObject : '$objName', filter : '$filter', fullName : '$users'})
     wiredRecords({ error, data }) {
         if (data) {
             console.log('searchTerm'+this.searchTerm);
             console.log('filetr'+this.filter);
+            console.log('myObject'+this.objName);
+            console.log('filetr'+this.users);
             console.log("DATA" + JSON.stringify(data));
             this.error = undefined;
+            console.log('this.users...'+this.users);
+            this.records = []; // clear the records array
             if (this.users) {
-
+                       
                 for (let i = 0; i < data.length; i++) {
                     let item = {Id: data[i].Id,displayName: '', FirstName: data[i].FirstName, LastName: data[i].LastName}
                     this.records.push(item);
@@ -47,19 +56,25 @@ export default class EmsCustomLookUp extends LightningElement {
                     }
                 });
                 console.log('records '+JSON.stringify(this.records));
+
             } else {
-                // this.records = data;
+                //this.records = data;
                 for (let i = 0; i < data.length; i++) {
                     let item = {Id: data[i].Id,displayName: data[i].Name, FirstName: data[i].FirstName, LastName: data[i].LastName}
                     this.records.push(item);
-
-                    console.log('PRojectData'+JSON.stringify(this.records));
                 }
+                  
+
+                console.log('PRojectData'+JSON.stringify(this.records));                 
             }
+
         } else if (error) {
+           
+            console.log('ERROR'+JSON.stringify(error));
             this.error = error;
             this.records = undefined;
         }
+         
     }
 
     @api
@@ -95,7 +110,8 @@ export default class EmsCustomLookUp extends LightningElement {
     }
 
     onSelect(event) {
-        
+        console.log('PROJECTONSELECT');
+        //event.preventdefault();
         let selectedId = event.currentTarget.dataset.id;
         let selectedName = event.currentTarget.dataset.name;
         let returnValue = {};
@@ -103,10 +119,12 @@ export default class EmsCustomLookUp extends LightningElement {
         returnValue.name = this.name;
         returnValue.index = this.indexId;
         returnValue.recordName = selectedName;
+         console.log('selectedId'+selectedId);
+         console.log('selectedName'+selectedName+'name-------->>>>>>>'+this.name);
         this.dispatchEvent( new CustomEvent('lookupselected', {detail:  returnValue }) );
         this.isValueSelected = true;
         this.selectedName = selectedName;
-        if(this.blurTimeout) {
+       if(this.blurTimeout) {
             clearTimeout(this.blurTimeout);
         }
         this.boxClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-has-focus';
