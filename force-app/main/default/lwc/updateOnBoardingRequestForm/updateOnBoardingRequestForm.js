@@ -12,7 +12,7 @@ const maskAccountNumber = value => {
 
   let v = value.replace(/\D/g, '');
   let str = v.replace(/\d(?=\d{4})/g, "*");
-  console.log('sdfghn' + str)
+  //console.log('sdfghn' + str)
   return str;
 }
 
@@ -24,7 +24,7 @@ const maskPanNumber = value => {
 
   //let v = value.replace(/\W/g,'');
   let str = value.replace(/\d(?=\d{0})/g, "*");
-  console.log('sdfghn' + str)
+ // console.log('sdfghn' + str)
   return str;
 }
 
@@ -209,7 +209,7 @@ let guestObj = { 'sobjectType': 'EMS_EM_Onboarding_Request__c' };
 guestObj.Id = ts.onboardingformId;
 //console.log('Id => ' ,guestObj.Id);
 //console.log('onboardingformId => ' ,onboardingformId);
-console.log('onboardingformId 2 => ' ,ts.onboardingformId);
+//console.log('onboardingformId 2 => ' ,ts.onboardingformId);
 guestObj.EMS_EM_First_Name__c = ts.firstName;
 guestObj.EMS_EM_Last_Name__c = ts.lastName;
 guestObj.Trailblazer_ID_or_Public_URL__c=ts.Trailblazerval;
@@ -244,8 +244,14 @@ guestObj.Address_Details_Value_Filled__c = ts.isAddressDetailsCheckbox;
 guestObj.Company_Information_Viewed__c = ts.isCompanyInformationValueChecked;
 guestObj.Is_Confirm__c = ts.isConfirmSubmit;
 guestObj.Status__c = ts.statusUpdate;
+// guestObj.Status__c = ts.isIdentityStatusUpdate;
+// guestObj.Status__c = ts.isAdressStatusUpdate;
+// guestObj.Status__c = ts.isEducationStatusUpdate;
+// guestObj.Status__c = ts.isCertificationStatusUpdate;
+// guestObj.Status__c = ts.isWorkExperienceStatusUpdate;
+// guestObj.Status__c = ts.confirmStatusUpdate;
 
-  console.log('guestObj-->'+guestObj);
+ // console.log('guestObj-->'+guestObj);
   
   let guestObj1 = { 'sobjectType': 'ems_EM_Additional_Detail__c' };
         guestObj1.Id = ts.additionalDetailsRecordId;
@@ -326,11 +332,11 @@ guestObj.Status__c = ts.statusUpdate;
           ts.onboardingformId=result.onboarding.Id;
           ts.additionalDetailsRecordId = result.additionalDetails.Id;
           ts.filesUploaded = [];   
-          console.log('this.onboardingformID'+ts.onboardingformId); 
+          //console.log('this.onboardingformID'+ts.onboardingformId); 
           if(ts.isShowPersonalDetails){
             displayShowtoastMessage('Success','Onboarding Form Personal Details Saved Successfully','success',ts);
             ts.isShowPersonalDetailsValueFilled = true;
-            console.log('Details Filled',ts.isShowPersonalDetailsValueFilled);
+            //console.log('Details Filled',ts.isShowPersonalDetailsValueFilled);
        }
          if(ts.isIdentifyDetails){     
            displayShowtoastMessage('Success','Onboarding Form Identification Details Saved Successfully','success',ts); 
@@ -339,7 +345,7 @@ guestObj.Status__c = ts.statusUpdate;
         displayShowtoastMessage('Success','Onboarding Form Address Details Saved Successfully','success',ts); 
        }
        if(ts.isEducationDetails){
-          displayShowtoastMessage('Success','Onboarding Form Educational Details Saved Successfully','success',ts); 
+          //displayShowtoastMessage('Success','Onboarding Form Educational Details Saved Successfully','success',ts); 
        }
       //  if(ts.isOtherCertifications){
       //   displayShowtoastMessage('Success','Onboarding Form Other Certification Details Saved Successfully','success',ts);
@@ -350,7 +356,7 @@ guestObj.Status__c = ts.statusUpdate;
   //         sendEmail({  subject: "Onboard Form Submission",recordId:ts.onboardingformId,
   //         body: "Dear HR Team,"+"<Br/><Br/>"+"Employee  has submitted their onboarding form along with the required documents."+"<Br/><Br/>"+"Click here https://cpprd.lightning.force.com/"+this.onboardingformId+ "  to find and verify the details."})
   //  // https://cpprd--uat.sandbox.lightning.force.com/
-           console.log('this.onboardingformID'+this.additionalDetailsRecordId);    
+          // console.log('this.onboardingformID'+this.additionalDetailsRecordId);    
                       
       })
       .catch(error => {
@@ -367,15 +373,15 @@ function updateOnboardingInfoOnPageLoads(ts){
           const urlParams = new URLSearchParams(queryString);
           ts.personalemail = urlParams.get('emailid');
           var completedu = decodeURIComponent(urlParams);
-          console.log('=completedu===='+completedu);
+         // console.log('=completedu===='+completedu);
           const myArray = completedu.split("=");
          let word = myArray[1];
           ts.personalemail = word;
-          console.log('=completedu===='+ts.personalemail);
+          //console.log('=completedu===='+ts.personalemail);
           getonOnboardformInfo({onboardEmailid: ts.personalemail})
           .then(result => {
-            console.log('result-->',result);
-            console.log('result'+JSON.stringify(result));
+            //console.log('result-->',result);
+            //console.log('result'+JSON.stringify(result));
             const onboarding = result.onboarding;
             const additionalDetails = result.additionalDetails;
             ts.additionalDetailsRecordId = result.additionalDetails.Id;
@@ -384,31 +390,31 @@ function updateOnboardingInfoOnPageLoads(ts){
             ts.lastName=onboarding.EMS_EM_Last_Name__c;
             ts.ph=onboarding.Phone_Number__c;
             ts.contactId = onboarding.ContactId1__c;
-            console.log('contactId------>' +ts.contactId);
+           // console.log('contactId------>' +ts.contactId);
             ts.companyInformation = result.gridConfiguration;
-            console.log("result.gridConfiguration", JSON.stringify(result.gridConfiguration));
-            console.log('onboarding'+onboarding);
-            console.log('FILES ' , result.contentDocumentLink);
+           // console.log("result.gridConfiguration", JSON.stringify(result.gridConfiguration));
+           // console.log('onboarding'+onboarding);
+           // console.log('FILES ' , result.contentDocumentLink);
             result.contentDocumentLink.forEach((currentItem) => {
               if(currentItem.Title.includes('passport_')){
               ts.fileName2 = currentItem.Title;
-              console.log('passport photo',ts.fileName2);
+             // console.log('passport photo',ts.fileName2);
               }
              else if(currentItem.Title.includes('aadharCard_')){
                 ts.fileName = currentItem.Title;
-                console.log('aadhar photo',ts.fileName);
+               // console.log('aadhar photo',ts.fileName);
                 }
              else if(currentItem.Title.includes('panCard_')){
                   ts.fileName1 = currentItem.Title;
-                  console.log('pan photo',ts.fileName1);
+                 // console.log('pan photo',ts.fileName1);
              }
              else if(currentItem.Title.includes('certificate_')){
               ts.fileName3 = currentItem.Title;
-              console.log('certificate photo',ts.fileName3);
+             // console.log('certificate photo',ts.fileName3);
              }
              else if(currentItem.Title.includes('certificate1_')){
               ts.fileName4 = currentItem.Title;
-              console.log('certificate photo',ts.fileName4);
+             // console.log('certificate photo',ts.fileName4);
              }
              else if(currentItem.Title.includes('certificate2_')){
               ts.fileName5 = currentItem.Title;
@@ -733,6 +739,7 @@ function updateOnboardingInfoOnPageLoads(ts){
                   ts.readonlyfield=true;
                   ts.confirmStatusUpdate = 'Submitted for Review';
                   ts.buttonDisable = true;
+                  ts.disableFlag = true;
                   console.log('Is_Confirm__c',ts.confirmStatusUpdate);
                 }
                 

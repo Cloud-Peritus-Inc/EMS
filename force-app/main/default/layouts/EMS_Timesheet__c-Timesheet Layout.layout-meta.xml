@@ -66,10 +66,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_TM_Remarks__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>EMS_TM_Status__c</field>
             </layoutItems>
         </layoutColumns>

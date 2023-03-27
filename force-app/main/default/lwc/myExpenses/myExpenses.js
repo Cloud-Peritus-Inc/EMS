@@ -12,6 +12,8 @@ openModal = false;
 showtable = false;
 resourceId;
 showFileUpload = false;
+approvalManager;
+
 createdRecordId ;
 connectedCallback(){
 
@@ -23,6 +25,7 @@ loaded = false
         if(data){
         this.expList = data.expList;
         this.resourceId = data.resourceId;
+       // this.approvalManager = data.approvalManager;
         if(this.expList.length > 0){
            this.showtable = true;
         }
@@ -75,6 +78,7 @@ handleFormSubmit(event) {
     let fields = event.detail.fields;
     fields.Status__c = 'Draft';
     fields.Resource__c = this.resourceId;
+   // fields.Approval_Manager__c	= this.approvalManager;
 
     // Push the updated fields though for the actual submission itself
     this.template.querySelector('lightning-record-edit-form').submit(fields);
@@ -84,7 +88,7 @@ handleFormSubmit(event) {
     console.log('=====event.detail.id====='+event.detail.id);
     this.createdRecordId = event.detail.id;
      this.showFileUpload = true;
-    }
+ }
 
     handleError(event){
         const evt = new ShowToastEvent({

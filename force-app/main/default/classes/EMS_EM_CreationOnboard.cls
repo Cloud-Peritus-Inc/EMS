@@ -336,5 +336,68 @@ public without Sharing class EMS_EM_CreationOnboard {
         // return '';
     }
     
+    // For Education Details
+    @AuraEnabled( cacheable = true )
+    public static List<ems_EM_Additional_Detail__c> fetchEducation(String recordId) {
+        Id EduRecordTypeId = Schema.SObjectType.ems_EM_Additional_Detail__c.getRecordTypeInfosByName().get('Education Details').getRecordTypeId();
+        return [SELECT Id, 
+                Onboarding_Request__c, 
+                ContactId__c, 
+                RecordType.Name, 
+                EMS_EM_Education__c,
+                EMS_EM_Degree__c,
+                EMS_EM_Field_of_Study__c,
+                EMS_EM_IName__c,
+                EMS_EM_GDate__c,
+                EMS_EM_Job_Title__c,
+                EMS_EM_From_Date__c,
+                EMS_EM_To_Date__c,
+                EMS_EM_Previous_Company_Name__c,
+                EMS_EM_Previous_Company_HR_EmailId__c
+                FROM ems_EM_Additional_Detail__c WHERE Onboarding_Request__c =:recordId  AND RecordType.Name IN ('Education Details', 'Work Details')];
+    }
+    
+    @AuraEnabled
+    public static string dmlOnEducation(Object data, String removeEducationIds, Object[] files) {
+        List<ems_EM_Additional_Detail__c> updateEducations = (List<ems_EM_Additional_Detail__c>) JSON.deserialize(JSON.serialize(data), List<ems_EM_Additional_Detail__c>.class);
+        List<ems_EM_Additional_Detail__c> deleteEducations = new List<ems_EM_Additional_Detail__c>();
+        List<ContentVersion> relatedDocuments = new List<ContentVersion>();
+        
+        if(String.isNotBlank(removeEducationIds)){
+            List<Id> EducationsIds = removeEducationIds.split(',');
+            deleteEducations = [SELECT Id FROM ems_EM_Additional_Detail__c WHERE Id IN :EducationsIds];
+        }
+        
+        try {
+            if(updateEducations != null && !updateEducations.isEmpty()){
+                upsert updateEducations;
+            }
+            
+            if(deleteEducations != null && !deleteEducations.isEmpty()){    
+                delete deleteEducations;
+            }
+            
+            if(files != null && files.size() > 0) {
+                for (Object file : files) {
+                    String fileJson = JSON.serialize(file);
+                    relatedFile relatedDocument = (relatedFile) JSON.deserialize(fileJson, relatedFile.class);
+                    ContentVersion contentVersionFile = new ContentVersion();
+                    contentVersionFile.PathOnClient = relatedDocument.PathOnClient;
+                    contentVersionFile.Title = relatedDocument.Title;
+                    //contentVersionFile.FirstPublishLocationId= recordId;
+                    contentVersionFile.VersionData = relatedDocument.VersionData;
+                    relatedDocuments.add(contentVersionFile);
+                }
+                insert relatedDocuments;
+            }
+            return 'Success: Education(s) upsert/delete successfully';
+        }
+        catch (Exception e) {
+            String errorMsg = 'The following exception has occurred: ' + e.getMessage();
+            throw new AuraHandledException(ErrorMsg);
+        }
+    }
+    
+    
     
 }
