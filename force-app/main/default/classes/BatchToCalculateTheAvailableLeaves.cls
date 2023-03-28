@@ -73,11 +73,7 @@ global without sharing class BatchToCalculateTheAvailableLeaves implements Datab
             
                     when 'Annual Leave'{
                         contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;
-                         if(contactRec.EMS_LM_No_Of_Leaves_Credit__c >30){
-                            contactRec.EMS_LM_No_Of_Leaves_Credit__c = 30;
-                        }else{
-                          contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;  
-                        }
+                        
                     }
                     when 'Compensatory Off'{
                         contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c = contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c;

@@ -24,7 +24,7 @@ public without sharing class CP_ConvertButtonOnOnboarding {
         
         EMS_EM_Onboarding_Request__c onboard =new EMS_EM_Onboarding_Request__c();
         onboard.Id=recordId;
-        onboard.Status__c='Converted';
+        onboard.Status__c='Converted to Resource';
         update onboard;         
     }
 }

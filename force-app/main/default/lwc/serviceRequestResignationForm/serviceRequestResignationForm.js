@@ -19,13 +19,30 @@ export default class ServiceRequestResignationForm extends NavigationMixin(Light
     resignationREason;
     lastworkingDate;
     reasonRealiving;
+
     @api contactRecord;
     @api requestType;
     @api reqSubTypeValues;
 
     connectedCallback() {
             this.usercontactId = this.contactRecord.Id;
-            this.useraccountId = this.contactRecord.AccountId;    
+            this.useraccountId = this.contactRecord.AccountId;
+            this.noticedays = this.contactRecord.Notice_Period__c;  
+         
+            var date = new Date(); 
+            date.setDate(date.getDate() +this.noticedays); 
+            console.log('DATE'+date);
+          
+
+var someDate = new Date(new Date().getTime()+(30*24*60*60*1000)); 
+
+console.log('******************date*********'+someDate);
+//return someDate.toISOString();
+
+
+            this.lastworkingDate = date.toISOString();
+            console.log('this.lastworkingDate***********   '+this.lastworkingDate);
+
     }
   
     handleCancel(){

@@ -1,0 +1,12 @@
+.masked  .slds-input {
+    -webkit-text-security: disc;
+}
+.dummy{
+	color : black;
+}
+.stylingForAdd {
+        font-weight: bold;
+    margin-left: 21px;
+    margin-top: 3px;
+    font-size: 14px;
+}

@@ -5,7 +5,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Contact Record URL</shortDescription>
-        <value>https://cpprd--uat.sandbox.lightning.force.com/lightning/r/Contact/</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/detail/</value>
     </labels>
     <labels>
         <fullName>Days_Consider_for_Missed_Goal</fullName>
@@ -61,7 +61,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Onboarding Request Record URL</shortDescription>
-        <value>https://cpprd--uat.sandbox.lightning.force.com/lightning/r/EMS_EM_Onboarding_Request__c</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/ems-em-onboarding-request/</value>
     </labels>
     <labels>
         <fullName>Past_Days_Consider_For_Notification</fullName>
