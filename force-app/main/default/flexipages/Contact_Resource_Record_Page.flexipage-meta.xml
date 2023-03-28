@@ -353,18 +353,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.EMS_EM_PP__c</fieldItem>
-                <identifier>RecordEMS_EM_PP_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Notice_Period__c</fieldItem>
-                <identifier>RecordNotice_Period_cField</identifier>
+                <fieldItem>Record.Probationary_Period_End_Date__c</fieldItem>
+                <identifier>RecordProbationary_Period_End_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

@@ -6,10 +6,10 @@
     <name>Notify HR After PreOnboarding Completion</name>
     <style>freeForm</style>
     <subject>Onboarding: Pre-onboarding completed</subject>
-    <textOnly>Dear HR,
+    <textOnly>Dear HR Team,
 
 
-{!EMS_EM_Onboarding_Request__c.EMS_EM_First_Name__c} {!EMS_EM_Onboarding_Request__c.EMS_EM_Last_Name__c}, whose joining date is [date of joining], has completed the pre-onboarding process in the candidate portal. Please find the details provided by clicking on the following link: Applicant Record
+{!Contact.Name}, whose joining date is {!Contact.EMS_EM_JD__c}, has completed the pre-onboarding process in the candidate portal. Please find the details provided by clicking here.
 
 
 Regards,
