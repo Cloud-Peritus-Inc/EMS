@@ -23,6 +23,14 @@
                 <behavior>Edit</behavior>
                 <field>Auto_Approve__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Probation_Days__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Notice_Consider_Days__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -93,6 +101,10 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Grid_Configuration__c.Resource_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Resource_Request__c.Resource_Role1__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
