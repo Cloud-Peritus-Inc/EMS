@@ -106,9 +106,9 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                         this.pickListRecords.oooPicklist.push({value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c});
                     } else if (value.EMS_TM_Type__c === 'Bench') {
                         this.pickListRecords.benchPicklist.push({value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c});
-                    } //else if (value.EMS_TM_Type__c === 'Other') {
+                    } else if (value.EMS_TM_Type__c === 'Other') {
                     //     this.pickListRecords.otherPicklist.push({value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c});
-                    // }
+                    }
                 });
             }
             this.renderAssignmentRecords(data);
@@ -228,7 +228,8 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
                             } else if (project.EMS_TM_Project_Type__c === 'Bench') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
-                            // } else if (project.EMS_TM_Project_Type__c === 'Other') {
+                            } else if (project.EMS_TM_Project_Type__c === 'Other') {
+                               // this.records[index].projectTask = '';
                             //     element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
                             }
                             console.log('record.EMS_TM_OtherTask__c ',record.EMS_TM_OtherTask__c);
@@ -260,6 +261,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             }
         } else {
             this.recordId = '';
+            this.disableSubmited = false;
             this.initialValues();
             this.holidays();
             this.leaves();
@@ -592,7 +594,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         this.deletedRecordsList = [];
         this.userSelected = true;
         // this.hideSpinner = true;
-        this.connectedCallback();
+        // this.connectedCallback(); // related to compoff creation
     }
 
     handleUserRemove(event) {
@@ -632,7 +634,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                             } else if (project.EMS_TM_Project_Type__c === 'Bench') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
                             } else if (project.EMS_TM_Project_Type__c === 'Other') {
-                                element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
+                                //element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
                             }
                             element.projectValueAvailable = true;
                             for(let key in record) { element[key] = record[key]; }
@@ -742,14 +744,13 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         } else {
             this.records[index][fieldName] = value;
         }
+        //this.records[index].remarkRequired = false;
         if ((fieldName === 'EMS_TM_Sat__c' || fieldName === 'EMS_TM_Sun__c') && parseFloat(value) > 0) {
-            this.records[index].remarkRequired = true;
+            // this.records[index].remarkRequired = true;
             this.showRemarks = true;
             this.disableRemarks = true;
             this.disableWeekend = true;
             this.template.querySelector('[data-id="remarkToggle"]').checked = true;
-        } else {
-            this.records[index].remarkRequired = false;
         }
         console.log('this.records[index] ',this.records[index]);
         this.displayItemList = JSON.parse(JSON.stringify(this.records));
@@ -812,13 +813,12 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     handlePicklistValues(index, type) {
         let picklist = [];
         if (type === 'Client') {
+            this.records[index].projectAssignAvail = true;
             picklist = JSON.parse(JSON.stringify(this.pickListRecords.clientPicklist));
         } else if (type === 'OOO') {
             picklist = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
         } else if (type === 'Bench') {
             picklist = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
-        // } else if (type === 'Other') {
-        //     picklist = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
         }
         this.records[index].projectTaskOptions = picklist;
     }
@@ -901,6 +901,10 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                     let x = parseFloat(element[key]);
                     this.totalDayHours[key] = this.totalDayHours[key] + x;
                     totalWeekEntered = totalWeekEntered + x;
+                    element.remarkRequired = false;
+                    if((key === 'EMS_TM_Sat__c' || key === 'EMS_TM_Sun__c') && parseFloat(element[key]) > 0) {
+                        element.remarkRequired = true;
+                    }
                 }
             }
             element.Total_Hours__c = totalWeekEntered;
@@ -931,6 +935,9 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         if (this.weekendEnteredValue == 0) {
             this.disableRemarks = false;
             this.disableWeekend = false;
+        } else if (this.weekendEnteredValue > 0) {
+            this.disableRemarks = true;
+            this.disableWeekend = true;
         }
          if (this.totalHours.value > 168) {
             this.totalHours.error = true;

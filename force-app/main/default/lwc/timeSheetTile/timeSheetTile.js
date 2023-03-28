@@ -68,7 +68,15 @@ export default class TimeSheetTile extends NavigationMixin(LightningElement) {
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {
-                url: '/timepage'
+                url: '/recordlist/EMS_Timesheet__c/Default'
+            }
+        });
+}
+handleClickon() {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: '/timesheet'
             }
         });
 }

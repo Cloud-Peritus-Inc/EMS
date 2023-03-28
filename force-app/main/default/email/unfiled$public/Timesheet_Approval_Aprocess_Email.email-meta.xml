@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Timesheet Approval Aprocess Email</name>
+    <style>freeForm</style>
+    <subject>Timesheet: Approval Process</subject>
+    <textOnly>{!ApprovalRequest.Process_Assignee},
+
+
+Has requested your approval for the following item click here
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
