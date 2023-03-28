@@ -458,6 +458,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   @track Trailblazerval;
   @track pfn;
   @track gen;
+  @track doYouHaveExp;
   @track ph;
   @track dob;
   @track mstatus;
@@ -677,26 +678,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
   }
 
-  inputcheckboxexperience;
-  showExperienceyouhave = false;
-  experienceCheckboxChange(event) {
-    this.inputcheckboxexperience = event.target.checked;
 
-    if (this.inputcheckboxexperience == true) {
-      this.showExperienceyouhave = true;
-      this.inputcheckboxexperience = true;
-      if(this.workDetails.length < 1){
-        this.addRowWork();
-      }
-    }
-     else {
-      this.showExperienceyouhave = false;
-      if(this.workDetails.length > 0){
-        this.handleDeleteWorkAction();
-      }
-    }
-  }
-
+ 
 
   //Documents code here....
   AdditionalrecordId;
@@ -1298,6 +1281,10 @@ updateRecordView() {
 @track files = [];
 uploadedFiles10 = []; file10; fileNameCerti;
 
+DoyouName =[
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' },
+]
 
 
 addRowEdu() {
@@ -1433,10 +1420,9 @@ WiredWorkEdu(result){
     this.workDetails = result.data.filter(detail => detail.RecordType.Name === 'Work Details');
     //console.log('this.educationDetails------>',this.educationDetails);
     //console.log('this.workDetails-------->' ,this.workDetails);
-    if(this.workDetails.length > 0) {
-      this.inputcheckboxexperience = true;
-      this.showExperienceyouhave = true;
-    } 
+    // if(this.workDetails.length > 0) {
+    //   this.showExperienceyouhave = true;
+    // } 
     this.error = undefined;
     this.handleIsLoading(false);
   } else if (result.error) {
@@ -1452,6 +1438,23 @@ WiredWorkEdu(result){
 updateEduRecordView() {
 }
 
+doYouHaveExp;
+showExperienceyouhave = false;
+experienceChange(event){
+  this.doYouHaveExp = event.target.value;
+  if (this.doYouHaveExp === 'Yes') {
+    this.showExperienceyouhave = true;
+    if(this.workDetails.length < 1){
+      this.addRowWork();
+    }
+  }
+   else {
+    this.showExperienceyouhave = false;
+    handleDeleteAllWorkAction();
+    this.workDetails = [];
+    
+  }
+}
 
 addRowWork(){
   let randomId = Math.random() * 16;
@@ -1464,6 +1467,19 @@ handleDeleteWorkAction(event){
       this.deleteWorkIds = this.deleteWorkIds + ',' + event.target.dataset.id;
   }
   this.workDetails.splice(this.workDetails.findIndex(row => row.Id === event.target.dataset.id), 1);
+}
+
+handleDeleteAllWorkAction() {
+  // Loop through all rows and add their Id values to deleteWorkIds
+  this.deleteWorkIds = '';
+  for (let i = 0; i < this.workDetails.length; i++) {
+    if (!isNaN(this.workDetails[i].Id)) {
+      this.deleteWorkIds += ',' + this.workDetails[i].Id;
+    }
+  }
+  
+  // Remove all rows from the workDetails array
+  this.workDetails.splice(0, this.workDetails.length);
 }
 
 workUpdateValues(event){
@@ -1519,6 +1535,7 @@ if (isInputsCorrect) {
   .then( result => {
       this.handleIsLoading(false);
       refreshApex(this.wiredEdu);
+      updateOnBoardingRequest(this); 
       this.updateWorkRecordView(this.onboardingformId);
       //updateOnBoardingRequest(this);
       this.dispatchEvent(

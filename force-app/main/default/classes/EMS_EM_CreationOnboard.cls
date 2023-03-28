@@ -122,8 +122,8 @@ public without Sharing class EMS_EM_CreationOnboard {
     @AuraEnabled
     public static EMS_EM_Onboarding_Request__c getUserOnboardInfo(String recordId){
         
-        EMS_EM_Onboarding_Request__c onboardlist=[Select EMS_EM_First_Name__c,EMS_EM_Last_Name__c,EMS_EM_Father__c,Name,EMS_EM_Mother__c,EMS_EM_Gender__c,Phone_Number__c, Trailblazer_ID_or_Public_URL__c,ContactId1__c,
-                                                  EMS_EM_Phone_Number__c,EMS_EM_DOB__c,EMS_EM_Mstatus__c,EMS_EM_Spouse__c,EMS_EM_DOW__c,Status__c,EMS_EM_BG__c,EMS_EM_Personal_Email__c, 
+        EMS_EM_Onboarding_Request__c onboardlist=[Select EMS_EM_First_Name__c,EMS_EM_Last_Name__c,Do_you_have_work_experience__c,Name,EMS_EM_Gender__c,Phone_Number__c, Trailblazer_ID_or_Public_URL__c,ContactId1__c,
+                                                  EMS_EM_Phone_Number__c,EMS_EM_DOB__c,Status__c,EMS_EM_Personal_Email__c, 
                                                   EMS_EM_AadhaarNo__c,EMS_EM_PanNo__c,EMS_EM_PassportNo__c,EMS_EM_UAN_Number__c,EMS_EM_Nationality__c,Permanent_Address_Line_1__c,Permanent_Address_Line_2__c,
                                                   Current_Address_Line_1__c,Current_Address_Line_2__c,EMS_EM_CA_State__c,EMS_EM_PA_State__c,EMS_EM_CA_Zip__c,EMS_EM_PA_Zip__c,EMS_EM_CA_City__c,EMS_EM_PA_City__c,
                                                   EMS_EM_Education__c,EMS_EM_Education1__c,EMS_EM_Education2__c,EMS_EM_Education3__c,
