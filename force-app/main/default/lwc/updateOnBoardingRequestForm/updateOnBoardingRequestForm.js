@@ -244,6 +244,8 @@ guestObj.Address_Details_Value_Filled__c = ts.isAddressDetailsCheckbox;
 guestObj.Company_Information_Viewed__c = ts.isCompanyInformationValueChecked;
 guestObj.Is_Confirm__c = ts.isConfirmSubmit;
 guestObj.Status__c = ts.statusUpdate;
+guestObj.Do_you_have_work_experience__c = ts.doYouHaveExp;
+
 // guestObj.Status__c = ts.isIdentityStatusUpdate;
 // guestObj.Status__c = ts.isAdressStatusUpdate;
 // guestObj.Status__c = ts.isEducationStatusUpdate;
@@ -342,7 +344,7 @@ guestObj.Status__c = ts.statusUpdate;
            displayShowtoastMessage('Success','Onboarding Form Identification Details Saved Successfully','success',ts); 
        }  
        if(ts.isAddressDetails){
-        displayShowtoastMessage('Success','Onboarding Form Address Details Saved Successfully','success',ts); 
+        //displayShowtoastMessage('Success','Onboarding Form Address Details Saved Successfully','success',ts); 
        }
        if(ts.isEducationDetails){
           //displayShowtoastMessage('Success','Onboarding Form Educational Details Saved Successfully','success',ts); 
@@ -557,6 +559,7 @@ function updateOnboardingInfoOnPageLoads(ts){
               ts.gen=onboarding.EMS_EM_Gender__c;
               ts.ph=onboarding.Phone_Number__c;
               ts.dob=onboarding.EMS_EM_DOB__c;
+              ts.doYouHaveExp=onboarding.Do_you_have_work_experience__c;
               ts.aadhaarNo=maskAccountNumber(onboarding.EMS_EM_AadhaarNo__c);
               ts.panNo=maskPanNumber(onboarding.EMS_EM_PanNo__c);
               ts.nation=onboarding.EMS_EM_Nationality__c;

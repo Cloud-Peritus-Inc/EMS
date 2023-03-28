@@ -431,7 +431,7 @@
                                             <br>
                                              <div class="slds-p-around_medium lgc-bg">
                                                 <label class="slds-form-element__label" for="text-input-id-1">
-                                                    <abbr class="slds-required" title="required">*</abbr>
+                                                    <!-- <abbr class="slds-required" title="required">*</abbr> -->
                                                     Certificate
                                                 </label>
                                                 <lightning-helptext
@@ -594,13 +594,21 @@
                                         class="spinnerClass"></lightning-spinner>
                                 </template>
                                 <div class="slds-grid slds-wrap" style="padding-left: 25px;">
-                                    <div class="slds-col slds-size_1-of-13 slds-p-right_x-small">
-                                        Do you have work experience?
-                                    </div>
+                                    <div style="padding-top: 6px" class="slds-col slds-size_1-of-13 slds-p-right_x-small">
+                                        <h2><abbr class="slds-required" title="required">*</abbr>
+                                        Do you have work experience?</h2>
+                                    </div> &nbsp;
                                         <div class="slds-col slds-size_1-of-12">
-                                            <lightning-input type="Checkbox" checked={inputcheckboxexperience}
+                                            <lightning-combobox class="fields"
+                                                                    variant="label-hidden" value={doYouHaveExp}
+                                                                    options={DoyouName} onchange={experienceChange}
+                                                                    required placeholder="Select"
+                                                                    name="Do_you_have_work_experience__c"
+                                                                    disabled={readonlyfield}
+                                                                    label="Do you have work experience"></lightning-combobox>
+                                            <!-- <lightning-input type="Checkbox" checked={inputcheckboxexperience}
                                                 disabled={readonlyfield}
-                                                onchange={experienceCheckboxChange}></lightning-input>
+                                                onchange={experienceCheckboxChange}></lightning-input> -->
                                         </div>
                                 </div>
                                 <template if:true={showExperienceyouhave}>
@@ -634,7 +642,7 @@
                                                     <br>
                                                      <div class="slds-p-around_medium lgc-bg">
                                                         <label class="slds-form-element__label" for="text-input-id-1">
-                                                            <abbr class="slds-required" title="required">*</abbr>
+                                                            <!-- <abbr class="slds-required" title="required">*</abbr> -->
                                                             Appointment Letter
                                                         </label>
                                                         <lightning-helptext
@@ -691,7 +699,7 @@
                                                 <p>{fileName10}</p>
                                                 <br>
                                                 <label class="slds-form-element__label" for="text-input-id-1">
-                                                    <abbr class="slds-required" title="required">*</abbr>
+                                                    <!-- <abbr class="slds-required" title="required">*</abbr> -->
                                                     Last 6 months Payslips
                                                 </label>
                                                 <lightning-helptext

@@ -26,12 +26,12 @@
 											record-id={usercontactId}
 											object-api-name="Contact"
 									>
-									<lightning-layout>
+								<!--	<lightning-layout>
                                     <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
 										<lightning-output-field field-name="Name">
 										</lightning-output-field>
 									</lightning-layout-item>
-									</lightning-layout>
+									</lightning-layout> -->
 									<lightning-layout>
                                     <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
 										<lightning-output-field field-name="EMS_RM_Employee_Id__c">
@@ -60,7 +60,7 @@
 								
                              <lightning-layout>
 									<lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
-										<label for="fieldid">Reason For Resignation</label>
+										<label for="fieldid">Reason for Filing for Resignation</label>
 										<lightning-input-field  id="fieldid" variant="label-hidden" field-name="Description" required>
 										</lightning-input-field>
 									</lightning-layout-item>
@@ -69,7 +69,8 @@
 
 								<lightning-layout>
                                     <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
-										<lightning-input-field field-name="Last_Working_Date__c"  value ={lastworkingDate} >
+										    <label>Desired Last Working Date</label>
+										<lightning-input-field  variant="label-hidden" field-name="Last_Working_Date__c"  value ={lastworkingDate}  max={lastworkingDate}>
 										</lightning-input-field>
 									</lightning-layout-item>
 									</lightning-layout>
