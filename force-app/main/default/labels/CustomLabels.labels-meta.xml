@@ -126,4 +126,11 @@
         <shortDescription>Default HR Support Request Owner</shortDescription>
         <value>raobhupati634@gmail.com</value>
     </labels>
+    <labels>
+        <fullName>Timesheet_Approval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Timesheet Approval</shortDescription>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/detail/</value>
+    </labels>
 </CustomLabels>

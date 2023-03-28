@@ -166,6 +166,16 @@
                 <identifier>RecordReason_for_Early_Relieving_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Case_Assignee__c</fieldItem>
+                <identifier>RecordCase_Assignee_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ad453820-4bd2-4c23-a1ef-ab3dd1dfbd1d</name>
         <type>Facet</type>
     </flexiPageRegions>

@@ -64,12 +64,12 @@
     <formulas>
         <name>WeekEndDate</name>
         <dataType>Date</dataType>
-        <expression>{!$Flow.CurrentDate}  + 1</expression>
+        <expression>{!$Flow.CurrentDate}  + 2</expression>
     </formulas>
     <formulas>
         <name>WeekstartDate</name>
         <dataType>Date</dataType>
-        <expression>{!$Flow.CurrentDate}  - 5</expression>
+        <expression>{!$Flow.CurrentDate}  - 4</expression>
     </formulas>
     <interviewLabel>Timesheet Due mail send to Employee {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Timesheet Due mail send to Employee</label>
@@ -178,7 +178,7 @@
         </filters>
         <filters>
             <field>Email</field>
-            <operator>EqualTo</operator>
+            <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
             </value>
@@ -186,8 +186,8 @@
         <object>Contact</object>
         <schedule>
             <frequency>Weekly</frequency>
-            <startDate>2023-02-16</startDate>
-            <startTime>23:45:00.000Z</startTime>
+            <startDate>2023-02-28</startDate>
+            <startTime>02:30:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
