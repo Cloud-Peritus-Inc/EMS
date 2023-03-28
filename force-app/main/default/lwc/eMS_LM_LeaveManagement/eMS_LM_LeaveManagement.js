@@ -39,8 +39,8 @@ export default class EMS_LM_LeaveManagement extends LightningElement {
     getLoggedInUserResReportsSizeWiredData({ error, data }) {
         if (data) {
             console.log('### getLoggedInUserResReportsSize', data);
-            if (data > 0) {
-                this.hidePendingTab = data;
+            if (data.relationAcess> 0) {
+                this.hidePendingTab = data.relationAcess;
             }
             console.log('### hidePendingTab : ', this.hidePendingTab);
         } else if (error) {
