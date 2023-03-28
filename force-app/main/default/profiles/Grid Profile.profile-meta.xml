@@ -290,10 +290,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CP_ConvertButtonOnOnboarding</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CP_ConvertContactToOnboarding</apexClass>
         <enabled>false</enabled>
     </classAccesses>

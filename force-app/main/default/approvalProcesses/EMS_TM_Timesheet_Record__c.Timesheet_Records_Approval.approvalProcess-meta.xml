@@ -31,6 +31,7 @@
         <label>Status Approve</label>
         <name>Status_Approve</name>
     </approvalStep>
+    <emailTemplate>unfiled$public/Timesheet_Approval_Aprocess_Email</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>
@@ -45,7 +46,7 @@
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>
-    <finalApprovalRecordLock>true</finalApprovalRecordLock>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
             <name>Rejected</name>
