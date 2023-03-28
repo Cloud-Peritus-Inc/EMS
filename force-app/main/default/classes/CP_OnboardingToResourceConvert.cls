@@ -18,6 +18,11 @@ public class CP_OnboardingToResourceConvert {
     
     @AuraEnabled
     public static List<Contact> createContact(String onBoardRecordsIdsSet){
+        EMS_EM_Onboarding_Request__c onboard =new EMS_EM_Onboarding_Request__c();
+        onboard.Id=onBoardRecordsIdsSet;
+        onboard.Status__c='Converted to Resource';
+        update onboard;
+        
         Set<Id> onboardingContentDocumentRecordIdsSet = new Set<Id>();
         List<Contact> contactRecordsList = new List<Contact>();
        

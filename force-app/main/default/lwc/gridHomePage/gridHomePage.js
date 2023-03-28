@@ -3,13 +3,17 @@ import getLoggedInUserResReportsSize from '@salesforce/apex/LeaveHistoryApexCont
 export default class GridHomePage extends LightningElement {
 
     hidePendingTab;
+    hidetimeTab;
 
     @wire(getLoggedInUserResReportsSize)
     getLoggedInUserResReportsSizeWiredData({ error, data }) {
         if (data) {
             console.log('### getLoggedInUserResReportsSize', data);
-            if (data > 0) {
-                this.hidePendingTab = data;
+            if (data.relationAcess > 0) {
+                this.hidePendingTab = data.relationAcess;
+            }
+            if(data.hraccess == true){
+              this.hidetimeTab = true;
             }
             console.log('### hidePendingTab : ', this.hidePendingTab);
         } else if (error) {

@@ -5,12 +5,15 @@
 	<div class="slds-grid slds-gutters">
 		
 		<div class="slds-col slds-size_1-of-2">
+			<template if:false={hidetimeTab}>
 			<c-time-sheet-tile></c-time-sheet-tile>
+			</template>
 			<c-goal-metrics></c-goal-metrics>
 			<template if:true={hidePendingTab}>
 			<c-recent-request-tile></c-recent-request-tile>
 			</template>
 			<c-my-certifications-and-skills></c-my-certifications-and-skills>
+			<c-show-org-wide-files></c-show-org-wide-files>
 		</div>
 		<div class="slds-col slds-size_1-of-2">
 			<c-leave-management-_-tile> </c-leave-management-_-tile>

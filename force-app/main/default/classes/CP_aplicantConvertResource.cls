@@ -19,8 +19,18 @@ public class CP_aplicantConvertResource {
     @AuraEnabled
     public static List<Contact> recordTypeChangeByLWC(String contactId){
         Set<Id> onboardingContentDocumentRecordIdsSet = new Set<Id>();
-        List<Contact> contactRecordsList = new List<Contact>();
+        EMS_EM_Onboarding_Request__c onlist =[Select Id,
+                                              Name,
+                                              Status__c
+                                              from EMS_EM_Onboarding_Request__c
+                                              where ContactId1__c = :contactId ];
         
+        EMS_EM_Onboarding_Request__c onboard =new EMS_EM_Onboarding_Request__c();
+        onboard.Id=onlist.Id;
+        onboard.Status__c='Converted to Resource';
+        update onboard; 
+        
+        List<Contact> contactRecordsList = new List<Contact>();
         For(EMS_EM_Onboarding_Request__c eachOnboardingRequestRecord : [ Select Id,
                                                                         Name,
                                                                         EMS_EM_First_Name__c,
@@ -84,7 +94,6 @@ public class CP_aplicantConvertResource {
                                                                            }
                                                                        } 
         Update contactRecordsList;
-        //Insert CertificationsRecordsList;
         Set<Id> contactRecordsSet = new Set<Id>();
         For(Contact con : contactRecordsList){
             contactRecordsSet.add(con.Id);
@@ -117,16 +126,7 @@ public class CP_aplicantConvertResource {
     @AuraEnabled
     public static void ConvertButton(String contactId){
         List<Contact>conlist=new List<Contact>();
-        EMS_EM_Onboarding_Request__c onlist =[Select Id,
-                                              Name,
-                                              Status__c
-                                              from EMS_EM_Onboarding_Request__c
-                                              where ContactId1__c = :contactId ];
-        
-        EMS_EM_Onboarding_Request__c onboard =new EMS_EM_Onboarding_Request__c();
-        onboard.Id=onlist.Id;
-        onboard.Status__c='Converted';
-        update onboard;         
+                
     }
     
 }

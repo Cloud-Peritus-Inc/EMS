@@ -47,7 +47,7 @@ public class restrictOnlyOneDayOnProbation implements TriggerAction.BeforeInsert
                 resourcId.add(his.EMS_LM_Contact__c);
         }
         
-        for(Contact con : [SELECT Id,Resource_Role__c,Probationary_Period_End_Date__c,(SELECT Id,Leave_Type_Name__c,EMS_LM_Leave_Duration__c FROM Leaves_History__r 
+        for(Contact con : [SELECT Id,Resource_Role__c,Probationary_Period_End_Date__c,(SELECT Id,Leave_Type_Name__c,EMS_LM_Leave_Duration__c,EMS_LM_Leave_End_Date__c,EMS_LM_Leave_Start_Date__c FROM Leaves_History__r 
                                       WHERE EMS_LM_Leave_End_Date__c = THIS_YEAR AND EMS_LM_Status__c != 'Cancelled' AND EMS_LM_Status__c != 'Rejected' ) 
                            FROM Contact WHERE Id IN:resourcId AND Probationary_Period_End_Date__c != null AND Probationary_Period_End_Date__c > Today]){
           contactMap.put(con.Id,con);  

@@ -61,6 +61,10 @@ public without sharing class createPortalUserForResource implements TriggerActio
         }
         system.debug('====filteredList====='+filteredList);
         if(!filteredList.isEmpty()){
+            if(!System.isBatch() && !System.isFuture()){
+            BatchToCreatePostOnboardingTasks batchExecute = new BatchToCreatePostOnboardingTasks(); 
+            Database.executeBatch(batchExecute,5);
+            }
             for(User urec : [SELECT Id,ContactId,IsActive FROM User WHERE ContactId=:conIds]){
                userContactMap.put(urec.contactId,urec); 
             }
