@@ -19,6 +19,7 @@ export default class ServiceRequestResignationForm extends NavigationMixin(Light
     resignationREason;
     lastworkingDate;
     reasonRealiving;
+    lastworkingMaxvalue;
 
     @api contactRecord;
     @api requestType;
@@ -41,6 +42,7 @@ console.log('******************date*********'+someDate);
 
 
             this.lastworkingDate = date.toISOString();
+            this.lastworkingMaxvalue = date.toISOString();
             console.log('this.lastworkingDate***********   '+this.lastworkingDate);
 
     }
