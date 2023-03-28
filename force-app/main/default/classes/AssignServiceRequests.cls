@@ -54,6 +54,7 @@ public without sharing class AssignServiceRequests  implements TriggerAction.Bef
         for(User grp : [SELECT Id,Name,contactId,Email FROM User WHERE Email IN : defalutOwners and contactId != null]){
             queueMap.put(grp.Email,grp.contactId);
         }
+        System.debug('**queueMap'+queueMap);
         Map<Id, Contact> contactMap = new Map<Id, Contact>();
         
         for(contact con :[SELECT Id, ReportsToId,Resource_Manager__c,Resource_Manager__r.EMS_TM_User__c,ReportsTo.EMS_TM_User__c 
@@ -79,12 +80,13 @@ public without sharing class AssignServiceRequests  implements TriggerAction.Bef
                         cnew.Case_Assignee__c =  queueMap.get(Label.Default_Grid_Support_Request_Owner); 
                     } 
                 }else if(cnew.Type == 'Change Of Details'){
+                    SYstem.debug('QueueContact'+queueMap.get(Label.Default_HR_Support_Request_Owner));
                     if(queueMap.containsKey(Label.Default_HR_Support_Request_Owner)){
                         cnew.Case_Assignee__c =  queueMap.get(Label.Default_HR_Support_Request_Owner); 
                     } 
                 }else if(cnew.Type == 'Resignation'){
                     cnew.Case_Assignee__c = ResourceManager != null ? ResourceManager : ReportingManager;
-                }else if(cnew.Type == 'Request for Special Leaves'){
+                }else if(cnew.Type == 'Special Leaves'){
                     if(ReportingManager != null && (cnew.Request_Sub_Type__c == 'Paternity' || cnew.Request_Sub_Type__c == 'Marriage' || cnew.Request_Sub_Type__c == '	Bereavement Leave' || cnew.Request_Sub_Type__c == 'Comp off')){
                         cnew.Case_Assignee__c = ReportingManager;
                     }
