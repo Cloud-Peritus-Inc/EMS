@@ -43,15 +43,15 @@ global class BatchToUpdateUserAccess  implements Database.Batchable<sObject> {
         }
         date dt = system.today();
         if(!Test.isRunningTest()){
-        return Database.getQueryLocator([SELECT Id,Email,Name,
+        return Database.getQueryLocator([SELECT Id,Email,Name,profile.name,
                                          (SELECT permissionsetid,PermissionSet.Name FROM permissionsetassignments WHERE PermissionSet.Name IN:accesswithApi.keySet())
                                          FROM USER 
-                                         WHERE isActive = true ]);
+                                         WHERE isActive = true AND (profile.name ='Employee - HR(Community)'OR profile.name = 'Employee - Operations(Community)' OR profile.name = 'Employee - Resource(Community)' OR profile.name = 'System Administrator' OR  profile.name = 'Grid Operations(Internal)') ]);
         }else{
             return Database.getQueryLocator([SELECT Id,Email,Name,
                                          (SELECT permissionsetid,PermissionSet.Name FROM permissionsetassignments WHERE PermissionSet.Name IN:accesswithApi.keySet())
                                          FROM USER 
-                                         WHERE isActive = true LIMIT 1 ]); 
+                                         WHERE isActive = true AND (profile.name ='Employee - HR(Community)'OR profile.name = 'Employee - Operations(Community)' OR profile.name = 'Employee - Resource(Community)' OR profile.name = 'System Administrator' OR  profile.name = 'Grid Operations(Internal)') LIMIT 1 ]); 
         }
     }
 

@@ -41,18 +41,19 @@ public class EMS_TM_TimesheetClass {
                         Manager_Access__c,
                         IT_Admin_Access__c,
                         Hr_Access__c,
+                        Timesheet_Admin__c,
                                 (Select id, lastname,
                                 Location__c,Work_Location__c
                                 from Contacts__r)
                                 FROM User 
                                 WHERE Id = :userId];
-        if (user.IT_Admin_Access__c == true || user.Hr_Access__c ==true) {
-            if(user.IT_Admin_Access__c == true){
+        if (user.IT_Admin_Access__c == true || user.Hr_Access__c ==true || user.Timesheet_Admin__c ==true) {
+           // if(user.IT_Admin_Access__c == true || user.Timesheet_Admin__c ==true){
             ITadminacc = true;
-            }
-            if(user.Hr_Access__c == true){
+           // }
+           /* if(user.Hr_Access__c == true){
                 hrAccess =true;
-            }
+            }*/
             List<User> users = [SELECT Id, 
                                         FirstName, 
                                         LastName, 
@@ -61,42 +62,35 @@ public class EMS_TM_TimesheetClass {
                 idList.add(u.Id);
                 }
         }       
-        if(user.Manager_Access__c != false){
-            manageracc = true;
+        if(user.Manager_Access__c){
+            System.debug('MAnageracess Passed');
+             manageracc = true;
             contactId = user.ContactId;
-            List<Id> contactIdList = new List<Id>();
-            List<Resource_Resource_Relationship__c> resourceRelationList1 = [SELECT Id, 
-                                                                                    Resource__c, 
-                                                                                    Resource_Reports_To__c, 
-                                                                                    Resource_Role__c, 
-                                                                                    Reports_To_Role__c, 
-                                                                                    Resource_Reports_To_User__c 
-                                                                                    FROM Resource_Resource_Relationship__c 
-                                                                                    WHERE Resource_Reports_To__c=:contactId];
-            List<Id> resourceList1 = new List<Id>();
-            List<Id> resourceList2 = new List<Id>();
-            for (Resource_Resource_Relationship__c resource : resourceRelationList1) {
-                resourceList1.add(resource.Resource__c);
+               Set<Id> projectIdSet = new Set<Id>();
+            for(EMS_TM_Project__c projectRec :[SELECT Id, 
+                                                       EMS_TM_Project_Name__c, 
+                                                       Project_Manager__c, 
+                                                       EMS_TM_Status__c 
+                                                       FROM EMS_TM_Project__c
+                                                       WHERE Project_Manager__c =:contactId
+                                                       AND EMS_TM_Status__c ='Ongoing']){
+                projectIdSet.add(projectRec.Id);
             }
-            List<Resource_Resource_Relationship__c> resourceRelationList2 = [SELECT Id, 
-                                                                                    Resource__c, 
-                                                                                    Resource_Reports_To__c, 
-                                                                                    Resource_Role__c, 
-                                                                                    Reports_To_Role__c, 
-                                                                                    Resource_Reports_To_User__c 
-                                                                                    FROM Resource_Resource_Relationship__c 
-                                                                                    WHERE Resource_Reports_To__c IN :resourceList1];
-            for (Resource_Resource_Relationship__c resource : resourceRelationList2) {
-                resourceList2.add(resource.Resource__c);
-            }
-            contactIdList.addAll(resourceList1);
-            contactIdList.addAll(resourceList2);
-            List<User> users = [SELECT Id, 
-                                        ContactId 
-                                        FROM User 
-                                        WHERE ContactId IN :contactIdList];
-            for (User us : users) {
-                idList.add(us.Id);
+            System.debug('Manager Sets Passed'+projectIdSet);
+            if(!projectIdSet.isEmpty()){
+                Set<Id> userIdsSet = new Set<Id>();
+                for(EMS_TM_Assignment__c assignmentRec:[SELECT Id, 
+                                                               EMS_TM_AssignedAs__c, 
+                                                               EMS_TM_EmployeeName__r.EMS_TM_user__c,
+                                                               EMS_TM_ProjectName_Asgn__c 
+                                                               FROM EMS_TM_Assignment__c
+                                                               WHERE EMS_TM_ProjectName_Asgn__c IN:projectIdSet
+                                                               AND EMS_TM_Status_Asgn__c ='Active']){
+                                             userIdsSet.add(assignmentRec.EMS_TM_EmployeeName__r.EMS_TM_user__c);
+                    
+                }
+                System.debug('userIdsSet'+userIdsSet);
+                idList.addall(userIdsSet);
             }
         }
         
@@ -196,12 +190,14 @@ public class EMS_TM_TimesheetClass {
 
         wrapperTimesheetRecords timesheetWrapper = new wrapperTimesheetRecords();
         timesheetWrapper = getTimeSheetData( weekStart, userId );
+        System.debug('ITadminacc'+ITadminacc);
+        System.debug('manageracc'+manageracc);
 
         returnObj.project           = projectList;
         returnObj.holidays          = holidays;
         returnObj.assignment        = assignmentList;
         returnObj.picklist          = picklistValues;
-        returnObj.enableManagerView = user.IT_Admin_Access__c ==ITadminacc  || user.Manager_Access__c == manageracc || user.Hr_Access__c == hrAccess ? true : false;
+        returnObj.enableManagerView = user.IT_Admin_Access__c ==ITadminacc  || user.Manager_Access__c == manageracc? true : false;
         returnObj.User              = user;
         returnObj.projectIdList     = idList;
         returnObj.leaves            = leaves;

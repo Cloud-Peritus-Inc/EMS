@@ -3,10 +3,11 @@
     <fullName>Resource</fullName>
     <columns>EMS_RM_Employee_Id__c</columns>
     <columns>FULL_NAME</columns>
+    <columns>EMS_Phone_Number__c</columns>
     <columns>CONTACT.EMAIL</columns>
+    <columns>Resource_Role__c</columns>
     <columns>Work_Location__c</columns>
-    <columns>EMS_RM_Current_Job_Role__c</columns>
-    <filterScope>Mine</filterScope>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>CONTACT.RECORDTYPE</field>
         <operation>equals</operation>

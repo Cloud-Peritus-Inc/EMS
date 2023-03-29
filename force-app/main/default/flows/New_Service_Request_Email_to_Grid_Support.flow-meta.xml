@@ -60,14 +60,14 @@
             </value>
         </filters>
         <filters>
-            <field>OwnerId</field>
-            <operator>IsChanged</operator>
+            <field>Case_Assignee__c</field>
+            <operator>IsNull</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Case</object>
-        <recordTriggerType>Update</recordTriggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>

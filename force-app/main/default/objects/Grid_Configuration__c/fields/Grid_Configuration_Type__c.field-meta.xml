@@ -51,6 +51,16 @@
                 <default>false</default>
                 <label>Resource Role Level Goal</label>
             </value>
+            <value>
+                <fullName>Org Level Alert</fullName>
+                <default>false</default>
+                <label>Org Level Alert</label>
+            </value>
+            <value>
+                <fullName>Resource Role Alert</fullName>
+                <default>false</default>
+                <label>Resource Role Alert</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
