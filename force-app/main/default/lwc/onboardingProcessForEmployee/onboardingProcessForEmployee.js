@@ -237,8 +237,8 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
 
     getUserContactInfo({ userId: this.userId }).then(result => {
-      console.log('getUserContactInfo------------->' ,result.contactDetails);
-      console.log('getUserContactInfo------------->' ,result.fileDetailsList);
+      //console.log('getUserContactInfo------------->' ,result.contactDetails);
+      //console.log('getUserContactInfo------------->' ,result.fileDetailsList);
       this.contactID = result.contactDetails.Id;
 
       this.UserName = result.contactDetails.Name;
@@ -1169,7 +1169,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           //console.log("I am in if");
           this.dispatchEvent(
             new ShowToastEvent({
-              title: 'Error',
               message: 'Please Enter correct date of birth',
               variant: 'error',
             }),
@@ -1395,7 +1394,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Personal Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1426,7 +1424,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Identification Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1455,7 +1452,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Address Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1491,7 +1487,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Financial Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1534,7 +1529,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Vehicle Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1564,7 +1558,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'PF Forms Uploaded Successfully',
                 variant: 'success',
               }),
@@ -1593,7 +1586,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Documenthis Uploaded Successfully',
                 variant: 'success',
               }),
@@ -1627,7 +1619,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           //console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
           this.dispatchEvent(
             new ShowToastEvent({
-              title: 'Success',
               message: 'Onboarding Form Submitted Successfully',
               variant: 'success',
             }),
@@ -1715,7 +1706,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   handlefamilySuccess(event){
     this.dispatchEvent(
       new ShowToastEvent({
-        title: 'Success',
         message: 'Family Member Added successfully',
         variant: 'success',
       }),
@@ -1755,7 +1745,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     
     this.dispatchEvent(
       new ShowToastEvent({
-        title: 'error',
         message: event.detail.detail,
         variant: 'error',
       }),
@@ -1772,7 +1761,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       .then(() => {
         this.dispatchEvent(
           new ShowToastEvent({
-            title: 'Success',
             message: 'Family Member Deleted Suscessfully',
             variant: 'success'
           })
@@ -1788,7 +1776,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       .catch((error) => {
         this.dispatchEvent(
           new ShowToastEvent({
-            title: 'Error',
             message: 'Error Deleting record',
             variant: 'error'
           })

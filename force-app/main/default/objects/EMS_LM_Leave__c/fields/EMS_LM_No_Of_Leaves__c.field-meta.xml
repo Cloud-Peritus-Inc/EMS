@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Probation_Days__c</fullName>
+    <fullName>EMS_LM_No_Of_Leaves__c</fullName>
     <externalId>false</externalId>
-    <label>Probation Days</label>
-    <precision>3</precision>
+    <label>Allowed Leaves</label>
+    <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>

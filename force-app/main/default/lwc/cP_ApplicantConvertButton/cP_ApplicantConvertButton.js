@@ -25,7 +25,6 @@ export default class CP_ApplicantConvertButton extends NavigationMixin(Lightning
             
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'Success',
                     message: 'Applicant converted to Resource successfully!',
                     variant: 'success',
                 })

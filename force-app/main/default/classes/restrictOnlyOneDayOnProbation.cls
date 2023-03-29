@@ -56,7 +56,8 @@ public class restrictOnlyOneDayOnProbation implements TriggerAction.BeforeInsert
         for(EMS_LM_Leave_History__c his : newlist){
             if(contactMap.containsKey(his.EMS_LM_Contact__c)){
                 
-                Integer numberDaysDue = his.EMS_LM_Leave_Start_Date__c.daysBetween(his.EMS_LM_Leave_End_Date__c );
+                Integer numberDaysDue = his.EMS_LM_Leave_Start_Date__c.daysBetween(his.EMS_LM_Leave_End_Date__c )+1;
+                system.debug('numberDaysDue-->'+numberDaysDue);
                 if(numberDaysDue > 1){
                     his.addError('During Probation, only one day PTO is allowed per month. Please check the duration and try again.');
                 }else{
