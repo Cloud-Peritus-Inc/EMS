@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nominations</fullName>
+    <active>true</active>
+    <label>Nominations</label>
+    <picklistValues>
+        <picklist>Award_Type__c</picklist>
+        <values>
+            <fullName>Best Entrepreneur</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Most Professional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recognize</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rising Star</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rock Star</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Awards</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shout Out</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Final Evaluation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nominee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ShortListed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Winner</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Shout_Out__c</picklist>
+        <values>
+            <fullName>Incentives</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personalized Thank You</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recognition</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Types_of_Recognition__c</picklist>
+        <values>
+            <fullName>Monetary Rewards</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Peer Recognition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance-Based Recognition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prize Recognition</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

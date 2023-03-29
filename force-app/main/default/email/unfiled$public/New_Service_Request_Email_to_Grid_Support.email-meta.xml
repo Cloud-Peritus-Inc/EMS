@@ -14,7 +14,7 @@
 
 Request Type : {!Case.Type}
 
-Request Sub Type : {!Case.Request_Sub_Type__c}
+Request Sub Type :{!Case.Request_Sub_Type__c}
 
 Subject : {!Case.Subject}
 
@@ -24,7 +24,7 @@ Description : {!Case.Description}
 
 
 
-To review the details of the request, please click here.
+To review the details of the request, please click here
 
 Thank you for your cooperation and support.
 

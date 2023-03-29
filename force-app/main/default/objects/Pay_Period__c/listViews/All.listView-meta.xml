@@ -6,7 +6,6 @@
     <columns>Office_Location__c</columns>
     <columns>Pay_Period_Type__c</columns>
     <columns>Pay_Date__c</columns>
-    <columns>CREATEDBY_USER</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

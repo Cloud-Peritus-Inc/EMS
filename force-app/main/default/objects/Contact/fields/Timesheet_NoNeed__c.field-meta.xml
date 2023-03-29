@@ -3,7 +3,7 @@
     <fullName>Timesheet_NoNeed__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Skip Time Sheet</label>
+    <label>Skip Timesheet</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

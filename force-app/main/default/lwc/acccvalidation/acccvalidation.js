@@ -10,8 +10,8 @@ import getAssignmentProjectWire from '@salesforce/apex/EMS_TM_TimesheetClass.get
 import getTimeSheetData from '@salesforce/apex/EMS_TM_TimesheetClass.getTimeSheetData';
 import getPreWeekData from '@salesforce/apex/EMS_TM_TimesheetClass.getPreWeekData';
 import reviseTimesheet from '@salesforce/apex/EMS_TM_TimesheetClass.reviseTimesheet';
-import savecomppRec from '@salesforce/apex/createCompoffThroughTimesheet.createCompOff';
-import checkcomppRec from '@salesforce/apex/createCompoffThroughTimesheet.checkCompOff';
+//import savecomppRec from '@salesforce/apex/createCompoffThroughTimesheet.createCompOff';
+//import checkcomppRec from '@salesforce/apex/createCompoffThroughTimesheet.checkCompOff';
 import { getRecord } from 'lightning/uiRecordApi';
 import user_Id from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
@@ -736,7 +736,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         } else  if (fieldName.length === 13) {
             this.records[index][fieldName] = value;
             if (value === '' || value == null) {
-                this.records[index][fieldName] = '00';
+                this.records[index][fieldName] = '0.0';
             } else {
                 this.records[index][fieldName] = parseFloat(value);
             }
@@ -958,19 +958,19 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         } else {
             this.weekendEntered = false;
         }
-        if (this.weekendEntered && this.compoffAlredyexist == false) {
+        /*if (this.weekendEntered && this.compoffAlredyexist == false) {
             this.showCompOffPopUp = true;
             this.confirmModal.message = 'Are you sure you want to add data in weekend';
             this.confirmModal.confirmLabel = 'Yes';
             this.confirmModal.cancelLabel = 'No';
             this.confirmModal.title = 'Compoff Request';
-        } else {
+        } else {*/
             this.confirmModal.message = 'Please note that the timesheet once submitted cannot be edited';
             this.confirmModal.confirmLabel = 'OK';
             this.confirmModal.cancelLabel = 'Cancel';
             this.confirmModal.title = 'Confirm Submission';
             this.showModalPopUp = true;
-        }
+       // }
     }
 submitpopup(){
     console.log('IN submitpopup++++++');
@@ -1021,7 +1021,7 @@ submitpopup(){
         }
     
     }
-    connectedCallback() {
+   /* connectedCallback() {
         var comoff = null;
         if(this.selectdUserId != null || this.selectdUserId !=''){
           this.selectdcompoffuserId = this.selectdUserId;
@@ -1041,7 +1041,7 @@ submitpopup(){
                                         message:'you have alredy Compoff Record in this week',
                                         variant: 'success',
                                     }),
-                                );*/
+                                );
             }else{
                  this.compoffAlredyexist = false;
             } 
@@ -1049,9 +1049,9 @@ submitpopup(){
         .catch(error => {
             console.log('handlecheckCompOffRecError'+JSON.stringify(error));
         });
-    }
+    }*/
 
-    handlecheckCompOffRec(){      
+    /*handlecheckCompOffRec(){      
          console.log('handlecheckCompOffRecDate'+this.thisWeek +'userId'+user_Id);
             checkcomppRec({userId:user_Id,compOffweek :this.thisWeek})
         .then(result => {
@@ -1063,7 +1063,7 @@ submitpopup(){
                                         message:'you have alredy Compoff Record in this week',
                                         variant: 'success',
                                     }),
-                                );*/
+                                );
             }else{
                  this.compoffAlredyexist = false;
             }
@@ -1071,9 +1071,9 @@ submitpopup(){
         .catch(error => {
             console.log('handlecheckCompOffRecError'+JSON.stringify(error));
         });
-    }
+    }*/
 
-    handlesaveCompOffRecord(){
+    /*handlesaveCompOffRecord(){
         if(this.selectdUserId != null || this.selectdUserId !=''){
           this.selectdcompoffuserId = this.selectdUserId;
           console.log('IfCompFF'+this.selectdcompoffuserId);
@@ -1100,10 +1100,10 @@ submitpopup(){
                                         message:error.body.message,
                                         variant: 'error',
                                     }),
-                                );*/
+                                );
             this.error = error.message;
         });
-    }
+    }*/
 
     checkValidation() {
         for( let key in this.totalDayHours ) {
@@ -1199,9 +1199,9 @@ submitpopup(){
                                 this.recordId = result.slice(7);
                                 if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {
                                     console.log('SubmittedTimesheet');
-                                     if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
+                                    /* if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
                                         this.handlesaveCompOffRecord();
-                                    }
+                                    }*/
                                     this.handleSuccess('Timesheet successfully created and submitted');
                                 } else if (this.timeSheetRecord.EMS_TM_Status__c === 'Saved') {
                                     this.handleSuccess('Timesheet successfully created');
@@ -1247,9 +1247,9 @@ submitpopup(){
                     if (result.includes('Success')) {
                         this.recordId = result.slice(7);
                         if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {
-                             if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
+                            /* if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
                                         this.handlesaveCompOffRecord();
-                                    }
+                                    }*/
                             this.handleSuccess('Timesheet successfully updated and submitted');
                         } else if (this.timeSheetRecord.EMS_TM_Status__c === 'Saved') {
                             this.handleSuccess('Timesheet successfully updated');
