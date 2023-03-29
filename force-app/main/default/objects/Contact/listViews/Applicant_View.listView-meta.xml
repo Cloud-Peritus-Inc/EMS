@@ -3,8 +3,12 @@
     <fullName>Applicant_View</fullName>
     <columns>Name__c</columns>
     <columns>FULL_NAME</columns>
-    <columns>Personal_Email__c</columns>
     <columns>EMS_Phone_Number__c</columns>
+    <columns>Personal_Email__c</columns>
+    <columns>Tentative_Date_of_Joining__c</columns>
+    <columns>EMS_EM_JD__c</columns>
+    <columns>EMS_RM_ApplicantStatus_Update__c</columns>
+    <columns>Resource_Manager__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CONTACT.RECORDTYPE</field>

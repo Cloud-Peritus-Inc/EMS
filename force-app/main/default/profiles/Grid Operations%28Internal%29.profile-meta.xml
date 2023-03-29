@@ -1010,10 +1010,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>activeAssignCountonContact</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>activeAssignCountonContactTestclass</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1159,10 +1155,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>updateAdminUseronContact</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>updateContactEmail</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

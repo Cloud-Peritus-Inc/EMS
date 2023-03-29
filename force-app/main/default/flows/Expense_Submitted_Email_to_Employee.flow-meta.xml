@@ -44,7 +44,6 @@
         <connector>
             <targetReference>Email_to_Emp</targetReference>
         </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Expense_Amount__c</field>
@@ -61,7 +60,7 @@
             </value>
         </filters>
         <object>Expense__c</object>
-        <recordTriggerType>Update</recordTriggerType>
+        <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>

@@ -12,9 +12,9 @@
 
 The following candidate will join our company on {!Contact.EMS_EM_JD__c}:
 
-Name: {!Contact.FirstName}
+Name: {!Contact.Name}
 
-Designation: {!Contact.Designation__c}
+Designation: {!Contact.Resource_Role__c}
 
 Please make sure to keep the joining kit ready for the employee by the date of joining.
 
@@ -22,13 +22,9 @@ Please make sure to keep the joining kit ready for the employee by the date of j
 Contact the HR Department for more details.
 
 
+Regards,
 
-Best wishes,
-
-HR Team 
-
-
-Cloud Peritus.</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

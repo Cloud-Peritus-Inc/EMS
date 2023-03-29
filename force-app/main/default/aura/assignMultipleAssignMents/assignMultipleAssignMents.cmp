@@ -5,12 +5,14 @@
     
     <aura:html tag="style">
         .slds-modal__container{
-        max-width: 70rem !important;
-        width:70% !important;
+        max-width: 60rem !important;
+        width:60% !important;
+        max-Height: 90rem !important;
+        height:90% !important;
         }
     </aura:html>
     
-    <div class="slds-m-around--xx-large">
-   <c:assignMutipleResources aura:id="assignMutipleResources"></c:assignMutipleResources> 
+    <div class="slds-m-around--xx-large THIS">
+        <c:assignMutipleResources aura:id="assignMutipleResources"></c:assignMutipleResources>  
     </div>
 </aura:component>
