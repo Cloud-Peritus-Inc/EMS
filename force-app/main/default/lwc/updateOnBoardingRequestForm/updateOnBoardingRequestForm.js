@@ -336,15 +336,15 @@ guestObj.Do_you_have_work_experience__c = ts.doYouHaveExp;
           ts.filesUploaded = [];   
           //console.log('this.onboardingformID'+ts.onboardingformId); 
           if(ts.isShowPersonalDetails){
-            displayShowtoastMessage('Success','Onboarding Form Personal Details Saved Successfully','success',ts);
+            displayShowtoastMessage('Onboarding Form Personal Details Saved Successfully','success',ts);
             ts.isShowPersonalDetailsValueFilled = true;
             //console.log('Details Filled',ts.isShowPersonalDetailsValueFilled);
        }
          if(ts.isIdentifyDetails){     
-           displayShowtoastMessage('Success','Onboarding Form Identification Details Saved Successfully','success',ts); 
+           displayShowtoastMessage('Onboarding Form Identification Details Saved Successfully','success',ts); 
        }  
        if(ts.isAddressDetails){
-        //displayShowtoastMessage('Success','Onboarding Form Address Details Saved Successfully','success',ts); 
+        displayShowtoastMessage('Onboarding Form Address Details Saved Successfully','success',ts); 
        }
        if(ts.isEducationDetails){
           //displayShowtoastMessage('Success','Onboarding Form Educational Details Saved Successfully','success',ts); 
@@ -353,7 +353,7 @@ guestObj.Do_you_have_work_experience__c = ts.doYouHaveExp;
       //   displayShowtoastMessage('Success','Onboarding Form Other Certification Details Saved Successfully','success',ts);
       //  }
        if(ts.isWorkExperience){
-          displayShowtoastMessage('Success','Onboarding Form Work Experience Details Saved Successfully','success',ts); 
+          //displayShowtoastMessage('Success','Onboarding Form Work Experience Details Saved Successfully','success',ts); 
        }
   //         sendEmail({  subject: "Onboard Form Submission",recordId:ts.onboardingformId,
   //         body: "Dear HR Team,"+"<Br/><Br/>"+"Employee  has submitted their onboarding form along with the required documents."+"<Br/><Br/>"+"Click here https://cpprd.lightning.force.com/"+this.onboardingformId+ "  to find and verify the details."})
@@ -757,7 +757,6 @@ function updateOnboardingInfoOnPageLoads(ts){
 
 function displayShowtoastMessage(titleToDisplay, messageToDisplay, variantToDisplay,ts){
     const evt = new ShowToastEvent({
-            title: titleToDisplay,
             message: messageToDisplay,
             variant: variantToDisplay,
         });

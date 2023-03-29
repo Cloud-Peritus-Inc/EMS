@@ -778,13 +778,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record__Prior.EMS_LM_Status__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record.EMS_LM_Status__c</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.EMS_LM_Contact__r.Email</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
@@ -815,6 +808,7 @@
             <connector>
                 <targetReference>Applied_Leave_Request</targetReference>
             </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Pending</label>
         </rules>
         <rules>
@@ -1002,6 +996,7 @@
             <connector>
                 <targetReference>Applied_Leave_request1</targetReference>
             </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>IF Level of Approval is 1</label>
         </rules>
     </decisions>

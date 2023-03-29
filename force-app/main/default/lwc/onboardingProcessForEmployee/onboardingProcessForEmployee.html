@@ -282,7 +282,7 @@
                                                         message-when-pattern-mismatch="Invalid Contact number" required
                                                         disabled={readonlyfield} onchange={phonenumber}
                                                         name="EMS_Phone_Number__c" onkeydown={handleAadharNumberKeyDown}
-                                                        pattern="[0-9]{10}$" type="phone"
+                                                        pattern="[0-9]{10}$" type="phone" maxlength="10"
                                                         label="Contact Number"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={personalemail}
                                                         message-when-pattern-mismatch="Invalid Email" required

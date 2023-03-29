@@ -20,7 +20,6 @@ handleCancel(event){
             this.updateRecordView();
             this.dispatchEvent(
                  new ShowToastEvent({
-              title: 'Success',
               message: 'Comments sent to applicant successfully',
               variant: 'success',
           }),

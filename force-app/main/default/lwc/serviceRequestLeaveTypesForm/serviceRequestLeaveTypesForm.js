@@ -6,7 +6,7 @@ import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import u_Id from '@salesforce/user/Id';
 import getbilling from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getbilling';
-import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhDuration';
+import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getLeaveDuration';
 import uploadFile from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.uploadFile';
 import { createRecord } from 'lightning/uiRecordApi';
 
@@ -41,6 +41,8 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
     dayValues;
     selectedDay;
     errorMessage = '';
+    reason;
+    dayCheck1;
 
     // MATERINITY-CASE
     @api objectName = CASE_OBJECT;
@@ -117,7 +119,7 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
     }
 
     //TO GET DURATION
-    @wire(getLeaveDuration, { stDate: '$startDate', edDate: '$endDate', Location: '$Location' })
+    @wire(getLeaveDuration, { stDate: '$startDate', edDate: '$endDate', location: '$Location', dayCheck: '$dayCheck1' })
     wiredduration({ error, data }) {
         if (data) {
             this.duration = data;
@@ -166,9 +168,16 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
             console.log('#### selectedLeaveTypes : ', this.selectedLeaveTypes);
         }
 
-        if (name === 'selectedDay') {
+        if (name === 'compOffDay') {
             this.selectedDay = value;
             console.log('### selectedDay : ', this.selectedDay);
+            if (this.selectedDay === 'Full Day') {
+                this.dayCheck1 = false;
+                console.log('### Full : ',this.dayCheck);
+            } else if (this.selectedDay === 'Half Day') {
+                this.dayCheck1 = true;
+                console.log('### half : ',this.dayCheck);
+            }
         }
     }
 
@@ -421,7 +430,10 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
 
     // SUBMIT HANDLER FOR COMP-OFF
     handelCompSave(event) {
-        if (!this.startDate || !this.endDate) {
+        console.log('helooo : ');
+        console.log('reason : ', this.reason);
+        console.log('selectedDay : ', this.selectedDay);
+        if (!this.startDate || !this.endDate || !this.reason || !this.selectedDay) {
             const evt = new ShowToastEvent({
                 message: 'Please enter the details.',
                 variant: 'error',
@@ -435,12 +447,13 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
             'ContactId': this.contactRecord.Id,
             'AccountId': this.contactRecord.AccountId,
             'Day__c': this.selectedDay,
+            'Reason__c': this.reason,
             'Subject': this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedLeaveTypes
         };
+        console.log('### fields : ', fields);
         const recordData = { apiName: 'Case', fields };
         createRecord(recordData).then(result => {
             this.rId = result.id;
-            //console.log('this.rId------>', JSON.stringify(result));
             console.log('this.rId------>', this.rId);
             const even = new ShowToastEvent({
                 title: 'Success!',
@@ -469,5 +482,10 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
                 }),
             );
         });
+    }
+
+    handleReason(event) {
+        this.reason = event.target.value;
+        console.log('### reason : ', reason);
     }
 }

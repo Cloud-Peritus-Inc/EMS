@@ -33,7 +33,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
         List<Contact> Resourceleave = [SELECT Id FROM Contact where Id=:setId ];
         list<EMS_LM_Leave_History__c> l1 = [select	Id, 
                                             		Name,
-                                            		EMS_LM_Leave_Type_Name__c,
+                                            		EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c,
                                             		EMS_LM_Leave_Duration__c,
                                             		EMS_LM_Status__c 
                                             From EMS_LM_Leave_History__c 
@@ -57,14 +57,14 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
        Decimal utilizedLossOfPay = 0;
        Decimal utilizedWorkfromhome = 0;
         for(EMS_LM_Leave_History__c l2 : l1){
-                  if(l2.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.ANNUAL_LEAVE && l2.EMS_LM_Leave_Duration__c !=Null  && 
+                  if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.ANNUAL_LEAVE && l2.EMS_LM_Leave_Duration__c !=Null  && 
                      (l2.EMS_LM_Status__c== LeaveRequestConstant.PENDING || l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED  || 
                       l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING|| l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
                      l2.EMS_LM_Status__c== LeaveRequestConstant.AUTO_APPROVED))
                   {
                       Utilized_Leaves = Utilized_Leaves + l2.EMS_LM_Leave_Duration__c;
                   } 
-            	if(l2.EMS_LM_Leave_Type_Name__c == 'Compensatory Off' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+            	if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == 'Compensatory Off' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING||
                                                                        l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
@@ -72,7 +72,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                 {
                       utilizedcompoffLeave = utilizedcompoffLeave + l2.EMS_LM_Leave_Duration__c;
                   }
-            	if(l2.EMS_LM_Leave_Type_Name__c == 'Maternity Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+            	if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == 'Maternity Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING||
                                                                        l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
@@ -81,7 +81,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                       utilizedMaternityLeave = utilizedMaternityLeave + l2.EMS_LM_Leave_Duration__c;
                   }
             //Paternity Leave
-            if(l2.EMS_LM_Leave_Type_Name__c == 'Paternity Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+            if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == 'Paternity Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING||
                                                                        l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
@@ -90,7 +90,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                       utilizedPaternityLeave = utilizedPaternityLeave + l2.EMS_LM_Leave_Duration__c;
                   }
             
-            if(l2.EMS_LM_Leave_Type_Name__c == 'Bereavement Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+            if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == 'Bereavement Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING||
                                                                        l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
@@ -99,7 +99,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                       utilizedBereavementLeave = utilizedBereavementLeave + l2.EMS_LM_Leave_Duration__c;
                   }
             
-            if(l2.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.LOSS_OF_PAY && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+            if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.LOSS_OF_PAY && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING ||
                                                                        l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
@@ -108,7 +108,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                       utilizedLossOfPay = utilizedLossOfPay + l2.EMS_LM_Leave_Duration__c;
                   }
             
-            if(l2.EMS_LM_Leave_Type_Name__c == LeaveRequestConstant.WORK_FROM_HOME && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+            if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.WORK_FROM_HOME && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
                                                                         l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING||
                                                                        l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||

@@ -27,14 +27,6 @@ export default class EMS_LM_LeaveManagement extends LightningElement {
         }
     }
 
-      handleRefresh() {
-          const lwc1 = this.template.querySelector('c-e-m-s-_-l-m-_-leave-balance');
-          const lwc2 = this.template.querySelector('c-e-m-s-_-l-m-_-apply-new');
-  
-          lwc1.refresh();
-          lwc2.refresh();
-      }
-
     @wire(getLoggedInUserResReportsSize)
     getLoggedInUserResReportsSizeWiredData({ error, data }) {
         if (data) {
