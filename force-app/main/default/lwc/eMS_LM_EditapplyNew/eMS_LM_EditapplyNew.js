@@ -12,6 +12,9 @@ import LightningConfirm from "lightning/confirm";
 import getContentDistributionForFile from '@salesforce/apex/GetDataForLoginUser.getContentDistributionForFile';
 import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLoginUser.getRelatedFilesByRecordIdForPayForms';
 
+import { createMessageContext, publish } from 'lightning/messageService';
+import MY_REFRESH_CHANNEL from '@salesforce/messageChannel/refreshothercomponent__c';
+import { refreshApex } from '@salesforce/apex';
 import updateleaveRequest from '@salesforce/apex/EMS_LM_EditLeaveRequest.updateleaveRequest';
 export default class EMS_LM_EditapplyNew extends LightningElement {
   @track isLoading = false;
@@ -51,6 +54,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   hideInWorkfromHome = false;
   weekendwfh = false;
   currentAnnualleaves = 0;
+  editleaveData;
 
   connectedCallback() {
     let today = new Date();
@@ -59,7 +63,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     let y = today.getFullYear();
     let date = Date.parse(y + '-' + mm + '-' + dd);
     let date1 = new Date(date);
-    console.log('date-->',date);
+    console.log('date-->', date);
     let formattedDate = date1.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
     this.todaydate = formattedDate;
   }
@@ -133,149 +137,111 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     }
   }
 
-@wire(getLeaveRequestMethod, { getrecordId: '$selecteditrecordid' })
-wiredleaveRequest({ error, data }) {
-    if (data) {
-      console.log('resultsan-->', data);
-       console.log('resultsan-->', data.EMS_LM_Leave_Start_Date__c);
-      
-       
-        this.startDate1 = data.EMS_LM_Leave_Start_Date__c;
-        this.endDate1 = data.EMS_LM_Leave_End_Date__c;
-        this.duration = data.EMS_LM_Leave_Duration__c;
-        this.reason = data.EMS_LM_Reason__c;
-        this.value = data.EMS_LM_Leave_Type_Name__c;
-        this.fullday = data.EMS_LM_Day__c;
+  @wire(getLeaveRequestMethod, { getrecordId: '$selecteditrecordid' })
+  wiredleaveRequest(result) {
+    this.editleaveData = result;
+    if (result.data) {
+     // console.log('resultsan-->', result.data);
+     // console.log('resultsan-->', result.data.EMS_LM_Leave_Start_Date__c);
+      this.startDate1 = result.data.EMS_LM_Leave_Start_Date__c;
+      this.endDate1 = result.data.EMS_LM_Leave_End_Date__c;
+      this.duration = result.data.EMS_LM_Leave_Duration__c;
+      this.reason = result.data.EMS_LM_Reason__c;
+      this.value = result.data.EMS_LM_Leave_Type_Name__c;
+      this.fullday = result.data.EMS_LM_Day__c;
 
-        if(this.value!='Work From Home'){
-          this.hideInotherleave=true;
-        }else{
-          this.hideInWorkfromHome=true;
-        }
-        
-        if (data.EMS_LM_Day__c == 'Full Day') {
-          this.daycheck = false;
-          this.firstsecondDay = true;
-          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
-          console.log('this.daycheck',this.daycheck,'this.fullday',this.fullday);
-        }
-        else {
-          this.daycheck = true;
-          this.firstsecondDay = false; 
-          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];  
-          console.log('this.daycheck',this.daycheck,'this.fullday',this.fullday);
-        }
-    }else if (error) {
-      this.error = error;
-      console.log('this.error',this.error);
+      if (this.value != 'Work From Home') {
+        this.hideInotherleave = true;
+      } else {
+        this.hideInWorkfromHome = true;
+      }
+
+      if (result.data.EMS_LM_Day__c == 'Full Day') {
+        this.daycheck = false;
+        this.firstsecondDay = true;
+        this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        console.log('this.daycheck', this.daycheck, 'this.fullday', this.fullday);
+      }
+      else {
+        this.daycheck = true;
+        this.firstsecondDay = false;
+        this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        console.log('this.daycheck', this.daycheck, 'this.fullday', this.fullday);
+      }
+    } else if (result.error) {
+      this.error = result.error;
+     // console.log('this.error', this.error);
       this.submitcheck = true;
     }
-    }
+  }
 
 
-  
 
- @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$location', dayCheck: '$daycheck' })
+
+  @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$location', dayCheck: '$daycheck' })
   async wiredduration({ error, data }) {
     if (data) {
       if (this.value == 'Loss of Pay' || this.value == 'Annual Leave') {
         if (this.value == 'Loss of Pay') {
           if (this.startDate != undefined || this.startDate != null) {
-             this.submitcheck =false;
-             this.duration = data;      
+            this.submitcheck = false;
+            this.duration = data;
           }
         }
         if (this.value == 'Annual Leave') {
-         // if (this.annualduration >= data) {
-            this.submitcheck = false;
-            this.duration = data;
-            this.currentAnnualleaves=this.duration + this.annualduration;
-            this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
-            console.log('this.currentAnnualleaves-->',this.currentAnnualleaves,'this.availabledays',this.availabledays);
-            this.error = undefined;
-      //    }
-        //  else {
-           /* const result = await LightningConfirm.open({
-              message: "To apply this leave, you have to avail additional leaves from next quarter. You can take a leave loan upto 5 days.",
-              variant: "default", // headerless
-              theme: 'error', // more would be success, info, warning
-              label: "Avail Advance Annual Leaves"
-            });*/
-            if (result) {
-              this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c + 5;
-              if (this.availabledays >= data) {
-                this.submitcheck = false;
-                this.duration = data;
-                this.error = undefined;
-              }
-              else {
-              /*  this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
-                const evt = new ShowToastEvent({
-                message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
-                variant: 'error',
-                });
-                  this.dispatchEvent(evt);
-               // alert('You dont have enough balance to apply leave');
-                this.duration = undefined;
-                this.error = undefined;
-                this.submitcheck = true;
-                this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;*/
-              }
-            }
-            else {
-            //  this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
-           //   this.duration = undefined;
-           //   this.error = undefined;
-           //   this.submitcheck = true;
-           //   this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
-            }
-         // }
+          // if (this.annualduration >= data) {
+          this.submitcheck = false;
+          this.duration = data;
+          this.currentAnnualleaves = this.availabledays + this.duration + 5;
+          this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
+          console.log('this.currentAnnualleaves-->', this.currentAnnualleaves, 'this.availabledays', this.availabledays);
+          this.error = undefined;
         }
       }
       else {
         if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
           if (this.startDate != undefined || this.startDate != null) {
- 
-              if(this.availabledays >= data){
-                this.submitcheck = false;
-                this.duration = data;
-              } 
-              else{
-                
-                const evt = new ShowToastEvent({
+
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
                 message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
-                });
-                this.dispatchEvent(evt);
-                this.submitcheck = true;
-              }             
-             
+              });
+              this.dispatchEvent(evt);
+              this.submitcheck = true;
+            }
+
           }
-          else{
+          else {
             if (this.availabledays >= data) {
               this.submitcheck = false;
               this.duration = data;
               this.error = undefined;
             }
             else {
-              
-               const evt = new ShowToastEvent({
+
+              const evt = new ShowToastEvent({
                 message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
                 variant: 'error',
-                });
-                this.dispatchEvent(evt);
-            
+              });
+              this.dispatchEvent(evt);
+
               this.duration = data;
               this.duration = undefined;
               this.error = undefined;
               this.submitcheck = true;
             }
-          }  
+          }
         }
-        else{
+        else {
           this.hideInWorkfromHome = true;
           this.duration = data;
-          } 
+        }
       }
     } else if (error) {
       this.error = error;
@@ -305,7 +271,7 @@ wiredleaveRequest({ error, data }) {
         });
         this.dispatchEvent(evt);
         this.startDate = this.startDate1 = undefined;
-        this.submitcheck=true;
+        this.submitcheck = true;
       }
       if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
         const evt = new ShowToastEvent({
@@ -313,21 +279,21 @@ wiredleaveRequest({ error, data }) {
           variant: 'error',
         });
         this.dispatchEvent(evt);
-        this.startDate = this.startDate1 = this.endDate = this.endDate1 =this.duration= undefined;
-        this.submitcheck=true;
+        this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
+        this.submitcheck = true;
       }
-       let date = new Date(this.startDate1);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if ((new Date(todaydate1) < new Date(this.todaydate)) && this.value=='Work From Home' ) {
-            this.disabledSubmitted = true;
-           this.startDate1=null;
-            const evt = new ShowToastEvent({
-            message: 'You have selected past date, please select future date.',
-            variant: 'error',
+      let date = new Date(this.startDate1);
+      let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+      let todaydate1 = formattedDate;
+      if ((new Date(todaydate1) < new Date(this.todaydate)) && this.value == 'Work From Home') {
+        this.disabledSubmitted = true;
+        this.startDate1 = null;
+        const evt = new ShowToastEvent({
+          message: 'You have selected past date, please select future date.',
+          variant: 'error',
         });
         this.dispatchEvent(evt);
-          }
+      }
 
       if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
         if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
@@ -361,7 +327,7 @@ wiredleaveRequest({ error, data }) {
         });
         this.dispatchEvent(evt);
         this.endDate = this.endDate1 = undefined;
-        this.submitcheck=true;
+        this.submitcheck = true;
       }
       if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
         console.log(this.endDate <= this.startDate);
@@ -370,22 +336,22 @@ wiredleaveRequest({ error, data }) {
           variant: 'error',
         });
         this.dispatchEvent(evt);
-        this.startDate = this.startDate1 = this.endDate = this.endDate1 =this.duration= undefined;
-        this.submitcheck=true;
+        this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
+        this.submitcheck = true;
       }
 
-       let date = new Date(this.endDate1);
-          let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-          let todaydate1 = formattedDate;
-          if ((new Date(todaydate1) < new Date(this.todaydate)) && this.value=='Work From Home' ) {
-            this.disabledSubmitted = true;
-           this.endDate1=null;
-            const evt = new ShowToastEvent({
-            message: 'You have selected past date, please select future date.',
-            variant: 'error',
+      let date = new Date(this.endDate1);
+      let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+      let todaydate1 = formattedDate;
+      if ((new Date(todaydate1) < new Date(this.todaydate)) && this.value == 'Work From Home') {
+        this.disabledSubmitted = true;
+        this.endDate1 = null;
+        const evt = new ShowToastEvent({
+          message: 'You have selected past date, please select future date.',
+          variant: 'error',
         });
         this.dispatchEvent(evt);
-          }
+      }
       /* if(this.annualduration < this.duration){
          const evt = new ShowToastEvent({
              message: 'Sorry !! You dont have enough leave balance. Consider applying leave of some other type.',
@@ -491,25 +457,31 @@ wiredleaveRequest({ error, data }) {
 
               });
               this.dispatchEvent(event);
+              refreshApex(this.editleaveData);
               const myEvent = new CustomEvent('closeleave', {
                 detail: this.closeleavepopup
               });
               this.dispatchEvent(myEvent);
-              window.location.reload();
+              // window.location.reload();
+              const messageContext = createMessageContext();
+              const payload = {
+                refresh: true
+              };
+              publish(messageContext, MY_REFRESH_CHANNEL, payload);
             })
             .catch(error => {
               this.isLoading = false;
               this.error = error;
               console.log('error-->', error);
               console.log('this.error-->' + JSON.stringify(this.error));
-              console.log('error-->', error.body.pageErrors[0].message.substring(200, 250));
-              
+              console.log('error-->', error.body.pageErrors[0].message);
+
               this.dispatchEvent(
                 new ShowToastEvent({
-                    message: error.body.pageErrors[0].message.substring(197, 282),  
-                    variant: 'error',
+                  message: error.body.pageErrors[0].message.substring(197, 282),
+                  variant: 'error',
                 }),
-            );
+              );
             });
         }
       }
