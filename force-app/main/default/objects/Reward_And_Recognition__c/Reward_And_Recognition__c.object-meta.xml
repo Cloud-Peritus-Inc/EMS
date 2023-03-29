@@ -161,6 +161,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Rewards And Recognitions</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>

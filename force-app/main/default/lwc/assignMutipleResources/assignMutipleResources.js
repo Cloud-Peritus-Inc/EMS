@@ -150,13 +150,13 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
         if(assDataList.length > 0){
             saveAssignmentData({assignmentDataString: JSON.stringify(assDataList),projId:this.selectedProject}).then(result => {
                  const evt = new ShowToastEvent({
-                    title: 'Toast Success',
                     message: 'Assignment created successfully.',
                     variant: 'success',
                     mode: 'dismissable'
                 });
                 this.dispatchEvent(evt);
                 console.log('=======return response=='+JSON.stringify(result));
+                window.location.reload();
                /* let assDataList = this.assignDataWrp;
                 for(let i = 0; i < result.length; i++){
                     if(result[i] !== undefined){
@@ -192,6 +192,15 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
                     this.dispatchEvent(evt);
         }
     }
+    // handleCancel(){
+    //     this[NavigationMixin.Navigate]({
+    //         type: 'standard__objectPage',
+    //         attributes: {
+    //         objectApiName: 'EMS_TM_Project__c',
+    //         actionName: 'home'
+    //         },
+    //     });
+    // }
 
     setCheckBox(event){
         let blankrow = this.blankRow;

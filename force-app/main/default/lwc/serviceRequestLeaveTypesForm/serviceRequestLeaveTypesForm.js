@@ -69,12 +69,15 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
     }
 
     get renderMaternity() {
+        this.selectedPriority = ''
         return this.selectedLeaveTypes === 'Maternity' ? true : false
     }
     get renderReason() {
+        this.selectedPriority = ''
         return (this.selectedLeaveTypes === 'Paternity' || this.selectedLeaveTypes === 'Bereavement' || this.selectedLeaveTypes === 'Marriage') ? true : false
     }
     get renderCompOff() {
+        this.selectedPriority = ''
         return this.selectedLeaveTypes === 'Compensatory Off' ? true : false
     }
 
@@ -307,7 +310,6 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
                     variant: 'error',
                 });
                 this.dispatchEvent(evt);
-                //alert('Please select a Valid End date');
                 this.startDate = null;
                 this.endDate = null;
             }
@@ -341,64 +343,64 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
     //SUBMIT HANDLER FOR MATERNITY LEAVE
     submitcase(event) {
         console.log('### test : ');
-        if(this.fileData != null){
-alert('please upload file');
-        }else{
- if (!this.startDate || !this.endDate) {
-            const evt = new ShowToastEvent({
-                message: 'Please enter the details.',
-                variant: 'error',
-            });
-            this.dispatchEvent(evt);
-            return;
-        }
-        const fields = {
-            'Leave_Start_Date__c': this.startDate, 'Leave_End_Date__c': this.endDate, 'Leave_Duration__c': this.duration,
-            'Priority': this.selectedPriority, 'Type': this.requestType, 'Request_Sub_Type__c': this.selectedLeaveTypes,
-            'ContactId': this.contactRecord.Id,
-            'AccountId': this.contactRecord.AccountId,
-            'Subject': this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedLeaveTypes
-        };
-        console.log('##fields : ', fields);
-        const recordData = { apiName: 'Case', fields };
-        createRecord(recordData).then(result => {
-            this.rId = result.id;
-            console.log('this.rId------>', JSON.stringify(result));
-            if (this.fileData != null) {
-                uploadFile({ base64: this.fileData.base64, filename: this.fileData.filename, recordId: this.rId }).then(res => {
-                    console.log(res);
-                }).catch(error => { console.error(error.body.message); });
-            }
-
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success!',
-                    message: 'Successfully created the service request!',
-                    variant: 'success'
-                }),
-            );
-            this[NavigationMixin.Navigate]({
-                type: "standard__recordPage",
-                attributes: {
-                    objectApiName: "Account",
-                    actionName: "view",
-                    recordId: this.rId
-                }
-            });
-            this.openModal = false;
-
-        }).catch(error => {
-            console.log('error-->', error);
-            console.log('error msg-->', error.body.pageErrors);
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    message: error.body.message,
+        if (this.fileData != null) {
+            alert('please upload file');
+        } else {
+            if (!this.startDate || !this.endDate) {
+                const evt = new ShowToastEvent({
+                    message: 'Please enter the details.',
                     variant: 'error',
-                }),
-            );
-        });
+                });
+                this.dispatchEvent(evt);
+                return;
+            }
+            const fields = {
+                'Leave_Start_Date__c': this.startDate, 'Leave_End_Date__c': this.endDate, 'Leave_Duration__c': this.duration,
+                'Priority': this.selectedPriority, 'Type': this.requestType, 'Request_Sub_Type__c': this.selectedLeaveTypes,
+                'ContactId': this.contactRecord.Id,
+                'AccountId': this.contactRecord.AccountId,
+                'Subject': this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedLeaveTypes
+            };
+            console.log('##fields : ', fields);
+            const recordData = { apiName: 'Case', fields };
+            createRecord(recordData).then(result => {
+                this.rId = result.id;
+                console.log('this.rId------>', JSON.stringify(result));
+                if (this.fileData != null) {
+                    uploadFile({ base64: this.fileData.base64, filename: this.fileData.filename, recordId: this.rId }).then(res => {
+                        console.log(res);
+                    }).catch(error => { console.error(error.body.message); });
+                }
+
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success!',
+                        message: 'Successfully created the service request!',
+                        variant: 'success'
+                    }),
+                );
+                this[NavigationMixin.Navigate]({
+                    type: "standard__recordPage",
+                    attributes: {
+                        objectApiName: "Account",
+                        actionName: "view",
+                        recordId: this.rId
+                    }
+                });
+                this.openModal = false;
+
+            }).catch(error => {
+                console.log('error-->', error);
+                console.log('error msg-->', error.body.pageErrors);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        message: error.body.message,
+                        variant: 'error',
+                    }),
+                );
+            });
         }
-       
+
     }
 
     openfileUpload(event) {
