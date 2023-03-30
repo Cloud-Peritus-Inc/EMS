@@ -9,10 +9,9 @@ import userLevelOfApproval from '@salesforce/apex/LeaveHistoryApexController.use
 //import defaultMyRequestData from '@salesforce/apex/EMS_LM_MyRequestTabLeaveReq.defaultMyRequestData';
 import { refreshApex } from '@salesforce/apex';
 
-import { createMessageContext, publish } from 'lightning/messageService';
+import { createMessageContext, publish, subscribe, unsubscribe } from 'lightning/messageService';
 import MY_REFRESH_CHANNEL from '@salesforce/messageChannel/refreshothercomponent__c';
-
-import { subscribe, unsubscribe } from 'lightning/messageService';
+import MY_REFRESH_SEC_CHANNEL from '@salesforce/messageChannel/refreshlmscomponent__c';
 
 const columns = [
     { label: 'Leave Type', fieldName: 'EMS_LM_Leave_Type_Name__c' },
@@ -280,6 +279,11 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         const selectedRecordId = event.currentTarget.dataset.id;
         console.log('### handleEdit : ', selectedRecordId);
         this.showApplyLeaveEdit = true;
+        const messageContext = createMessageContext();
+        const payload = {
+            refresh: true
+        };
+        publish(messageContext, MY_REFRESH_SEC_CHANNEL, payload);
     }
 
     cancelHandler(event) {
@@ -294,6 +298,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         cancleLeaveRequest({ leaveReqCancelId: selectedRecordId })
             .then((result) => {
                 console.log('### result : ', result);
+                refreshApex(this._wiredRefreshData);
                 this.dispatchEvent(
                     new ShowToastEvent({
                         message: 'Leave Request was Cancelled Successfully',
@@ -305,18 +310,19 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                     refresh: true
                 };
                 publish(messageContext, MY_REFRESH_CHANNEL, payload);
-                return refreshApex(this._wiredRefreshData);
+                publish(messageContext, MY_REFRESH_SEC_CHANNEL, payload);
+
             }).catch((err) => {
                 console.log('### err : ', JSON.stringify(err));
             });
     }
 
-    handleRefresh() {
-        const refreshEvent = new CustomEvent('refresh', {
-            bubbles: true
-        });
-        this.dispatchEvent(refreshEvent);
-    }
+    /* handleRefresh() {
+         const refreshEvent = new CustomEvent('refresh', {
+             bubbles: true
+         });
+         this.dispatchEvent(refreshEvent);
+     }*/
 
     // for refresh using LMS
     subscription = null;

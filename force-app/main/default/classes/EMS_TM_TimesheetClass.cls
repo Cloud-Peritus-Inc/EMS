@@ -1,3 +1,14 @@
+/**
+* @author Suneel & RK
+* @date 3/17/2023
+* @description  Test class for EMS_TM_TimesheetClass.
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 public class EMS_TM_TimesheetClass {
 
     
@@ -48,12 +59,12 @@ public class EMS_TM_TimesheetClass {
                                 FROM User 
                                 WHERE Id = :userId];
         if (user.IT_Admin_Access__c == true || user.Hr_Access__c ==true || user.Timesheet_Admin__c ==true) {
-           // if(user.IT_Admin_Access__c == true || user.Timesheet_Admin__c ==true){
-            ITadminacc = true;
-           // }
-           /* if(user.Hr_Access__c == true){
+            if(user.IT_Admin_Access__c == true || user.Timesheet_Admin__c ==true){
+                ITadminacc = true;
+            }
+           if(user.Hr_Access__c == true){
                 hrAccess =true;
-            }*/
+            }
             List<User> users = [SELECT Id, 
                                         FirstName, 
                                         LastName, 
@@ -197,7 +208,8 @@ public class EMS_TM_TimesheetClass {
         returnObj.holidays          = holidays;
         returnObj.assignment        = assignmentList;
         returnObj.picklist          = picklistValues;
-        returnObj.enableManagerView = user.IT_Admin_Access__c ==ITadminacc  || user.Manager_Access__c == manageracc? true : false;
+        returnObj.enableHrManagerView = hrAccess;
+        returnObj.enableManagerView = user.IT_Admin_Access__c ==ITadminacc  || user.Hr_Access__c==hrAccess || user.Manager_Access__c == manageracc? true : false;
         returnObj.User              = user;
         returnObj.projectIdList     = idList;
         returnObj.leaves            = leaves;
@@ -293,7 +305,7 @@ public class EMS_TM_TimesheetClass {
         return returnStatement;
     }
 
-    public static EMS_Timesheet__c underWorkingHourDays(EMS_Timesheet__c timesheet){
+   /* public static EMS_Timesheet__c underWorkingHourDays(EMS_Timesheet__c timesheet){
         String  underWorkedDays = '';
         String  OverWorkedDays = '';
         String  comoff= '';
@@ -338,7 +350,7 @@ public class EMS_TM_TimesheetClass {
         timesheet.Over_Worked_Days__c = OverWorkedDays;
 
         return timesheet;
-    }
+    }*/
 
     @AuraEnabled
     public static String saveTimeSheetRecords( List<EMS_TM_Timesheet_Record__c> timeRecords, EMS_Timesheet__c timesheet ) {
@@ -408,7 +420,7 @@ public class EMS_TM_TimesheetClass {
         timeSheetRecord.EMS_TM_Remarks__c                   = timesheet.EMS_TM_Remarks__c;
         timeSheetRecord.EMS_TM_Status__c                    = timesheet.EMS_TM_Status__c;
         timeSheetRecord.User__c                             = timesheet.User__c;
-        timeSheetRecord = underWorkingHourDays(timeSheetRecord);
+        //timeSheetRecord = underWorkingHourDays(timeSheetRecord);
 
         return timeSheetRecord;
     }
@@ -514,7 +526,7 @@ public class EMS_TM_TimesheetClass {
         return returnStatement;
     }
 
-    @AuraEnabled
+   /* @AuraEnabled
     public static Integer getEmployeesCount() {
         Integer count = 0;
         Id recordTypeId = [SELECT Id FROM RecordType
@@ -525,7 +537,7 @@ public class EMS_TM_TimesheetClass {
             count++;
         }
         return count;
-    }
+    }*/
    
 
  @AuraEnabled
@@ -567,6 +579,8 @@ List<EMS_Timesheet__c> timesheetList = [SELECT EMS_TM_Total__c,
         public User User {get; set;}
         @AuraEnabled
         public Boolean enableManagerView {get; set;}
+        @AuraEnabled
+        public Boolean enableHrManagerView {get; set;}
         @AuraEnabled
         public EMS_Timesheet__c timeSheet {get; set;}
         @AuraEnabled
