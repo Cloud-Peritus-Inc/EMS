@@ -118,6 +118,33 @@ public without sharing class newServiceRequestController {
         return days;
     }
     
+      @AuraEnabled(cacheable=true)
+    public static caseviewWrapper getTheCaseViewDetails(Id caseid){
+        Case newCase = [SELECT Id,Type,CreatedDate,Status,OwnerId,IsEscalated,Case_Assignee__c,Case_Assignee__r.EMS_TM_User__c,Contact.EMS_TM_User__c
+                        FROM Case WHERE Id=:caseid];
+        
+        caseviewWrapper cw = new caseviewWrapper();
+        cw.isLoggedUserisAssignee = newCase.Case_Assignee__r.EMS_TM_User__c == Userinfo.getUserId();
+         cw.isOtherType = false;
+         cw.isChangeOfDetails = false;
+         cw.isSpecialLeaves = false;
+         cw.isResign = false;
+         cw.isTechProblemType = false;
+
+        if(newCase.Type == 'Others'){
+         cw.isOtherType = true;   
+        }else if(newCase.Type == 'Change of Details'){
+         cw.isChangeOfDetails = true;   
+        }else if(newCase.Type == 'Special Leaves'){
+         cw.isSpecialLeaves = true;   
+        }else if(newCase.Type == 'Resignation'){
+         cw.isResign = true;   
+        }else if(newCase.Type == 'Technical Issues'){
+         cw.isTechProblemType = true;   
+        }
+        return cw;
+    }
+    
     public class casewrapper{
         @AuraEnabled
         public string caseid;
@@ -154,6 +181,21 @@ public without sharing class newServiceRequestController {
         @AuraEnabled
         public list<casewrapper> caseList;
         
+    }
+    
+    public class caseviewWrapper {
+        @AuraEnabled
+        public boolean isOtherType;
+        @AuraEnabled
+        public boolean isTechProblemType;
+        @AuraEnabled
+        public boolean isResign;
+        @AuraEnabled
+        public boolean isChangeOfDetails;
+        @AuraEnabled
+        public boolean isSpecialLeaves;
+        @AuraEnabled
+        public boolean isLoggedUserisAssignee;
     }
 
 }

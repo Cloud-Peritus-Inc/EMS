@@ -3,7 +3,7 @@
     <fullName>Probation_Days__c</fullName>
     <externalId>false</externalId>
     <label>Probation Days</label>
-    <precision>2</precision>
+    <precision>3</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>

@@ -9,7 +9,9 @@
     <textOnly>Dear {!Expense__c.Resource__c},
 
 
-Your Expense {!Expense__c.Name} for {!Expense__c.Expense_Type__c} for the amount of {!Expense__c.Amount__c} for the date {!Expense__c.Expense_Date__c} has been submitted for reimbursement.
+Your Expense {!Expense__c.Name} for {!Expense__c.Expense_Type__c} for the amount of {!Expense__c.Expense_Amount__c} for the date
+
+{!Expense__c.Expense_Date__c} has been submitted for reimbursement.
 
 
 
