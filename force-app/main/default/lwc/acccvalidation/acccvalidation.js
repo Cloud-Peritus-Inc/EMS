@@ -29,6 +29,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     disableField = {};
     managerView = false;
     enableManagerView = false;
+    enableHrManagerView = false;
     disableRevise = false;
     userSelected = false;
     keyIndex = 0;
@@ -86,6 +87,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             // this.timeSheetRecord.User__c = data.User.Id;
             this.timeSheetRecord.Resource__c = data.User.Contacts__r[0].Id;
             this.enableManagerView = data.enableManagerView;
+            this.enableHrManagerView = data.enableHrManagerView;
             if (this.enableManagerView) {
                 // let profileIds = [];
                 // data.projectIdList.forEach( project => {
@@ -112,6 +114,13 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 });
             }
             this.renderAssignmentRecords(data);
+            if (this.enableHrManagerView) {
+                let event = {
+                    target: {}
+                }
+                event.target.checked = true;
+                this.handleManagerViewToggle(event);
+            }
             this.hideSpinner = true;
             console.log('this.managerLookUpFilter'+this.managerLookUpFilter);
         } else if (error) {

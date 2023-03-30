@@ -1,18 +1,14 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >  
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >  
  <!-- <div class="slds-box">
      <lightning:button variant="brand" label="Call LWC Function" onclick="{! c.handleClick }" />  
-   </div>  -->
-    
-    <aura:html tag="style">
-        .slds-modal__container{
-        max-width: 60rem !important;
-        width:60% !important;
-        max-Height: 90rem !important;
-        height:90% !important;
-        }
+   </div> slds-modal__container-->
+    <aura:html tag="style">             
+        .slds-modal__container{        
+        width: 100% !important;
+        max-width: 70rem !important;
+        }        
     </aura:html>
-    
-    <div class="slds-m-around--xx-large THIS">
+    <div id="modeTest">
         <c:assignMutipleResources aura:id="assignMutipleResources"></c:assignMutipleResources>  
     </div>
 </aura:component>

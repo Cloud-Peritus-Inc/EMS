@@ -6,11 +6,11 @@
     <name>Expense Rejected - Email to Resource</name>
     <style>freeForm</style>
     <subject>Expense is Rejected</subject>
-    <textOnly>Dear {!Contact.Name},
+    <textOnly>Dear {!Expense__c.Resource__c},
 
 
 
-We are sorry to inform that your Expense for {!Expense__c.Expense_Type__c} for the amount of {!Expense__c.Amount__c} is not eligible for reimbursement.
+We are sorry to inform that your Expense for {!Expense__c.Expense_Type__c} for the amount of {!Expense__c.Expense_Amount__c} is not eligible for reimbursement.
 
 
 

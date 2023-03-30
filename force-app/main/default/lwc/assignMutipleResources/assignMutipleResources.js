@@ -211,4 +211,16 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
         }
         this.blankRow = blankrow;
     }
+
+    handleCancel(){
+        this[NavigationMixin.Navigate]({
+             type: 'standard__recordPage',
+             attributes: {
+             recordId:this.recordId,
+             objectApiName: 'EMS_TM_Project__c',
+            actionName: 'view'
+             },
+        });
+
+    }
 }

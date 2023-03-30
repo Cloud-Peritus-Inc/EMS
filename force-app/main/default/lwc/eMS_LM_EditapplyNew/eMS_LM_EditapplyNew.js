@@ -14,6 +14,8 @@ import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLog
 
 import { createMessageContext, publish } from 'lightning/messageService';
 import MY_REFRESH_CHANNEL from '@salesforce/messageChannel/refreshothercomponent__c';
+import {subscribe, unsubscribe } from 'lightning/messageService';
+import MY_REFRESH_SEC_CHANNEL from '@salesforce/messageChannel/refreshlmscomponent__c';
 import { refreshApex } from '@salesforce/apex';
 import updateleaveRequest from '@salesforce/apex/EMS_LM_EditLeaveRequest.updateleaveRequest';
 export default class EMS_LM_EditapplyNew extends LightningElement {
@@ -55,6 +57,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   weekendwfh = false;
   currentAnnualleaves = 0;
   editleaveData;
+  refbalanceleave;
 
   connectedCallback() {
     let today = new Date();
@@ -66,6 +69,11 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     console.log('date-->', date);
     let formattedDate = date1.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
     this.todaydate = formattedDate;
+
+    const messageContext = createMessageContext();
+    this.subscription = subscribe(messageContext, MY_REFRESH_SEC_CHANNEL, (message) => {
+      this.handleRefreshMessage(message);
+    });
   }
 
   @wire(getLeaveType, { userid: '$uId' })
@@ -119,21 +127,22 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   }
 
   @wire(getLeaveBalance, { userid: '$uId' })
-  wirelbalance({ error, data }) {
-    if (data) {
-      console.log('data duration' + data);
-      this.allavailabledays = data;
-      this.annualcompduration = data.EMS_LM_No_Of_Availble_Leaves__c + data.EMS_LM_No_Of_Available_Compensatory_Off__c;
+  wirelbalance(result) {
+    this.refbalanceleave = result;
+    if (result.data) {
+      console.log('data duration' + result.data);
+      this.allavailabledays = result.data;
+      this.annualcompduration = result.data.EMS_LM_No_Of_Availble_Leaves__c + result.data.EMS_LM_No_Of_Available_Compensatory_Off__c;
       console.log(this.annualcompduration);
-      this.annualduration = data.EMS_LM_No_Of_Availble_Leaves__c;
+      this.annualduration = result.data.EMS_LM_No_Of_Availble_Leaves__c;
       console.log('annual duration' + this.annualduration);
-      this.cId = data.Id;
+      this.cId = result.data.Id;
       if (this.value == 'Annual Leave') {
         this.availabledays = this.annualduration;
       }
-    } else if (error) {
-      console.log(error);
-      this.error = error;
+    } else if (result.error) {
+      console.log(result.error);
+      this.error = result.error;
     }
   }
 
@@ -509,6 +518,20 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     }
     if (error) {
       console.log(error)
+    }
+  }
+
+  // // for refresh using LMS
+  subscription = null;
+
+  disconnectedCallback() {
+    unsubscribe(this.subscription);
+    this.subscription = null;
+  }
+
+  handleRefreshMessage(message) {
+    if (message.refresh) {
+      refreshApex(this.refbalanceleave);
     }
   }
 

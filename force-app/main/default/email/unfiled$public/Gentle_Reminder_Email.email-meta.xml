@@ -9,21 +9,75 @@
     <textOnly>Dear {!Contact.Name},
 
 
-
-This is a gentle reminder to complete your onboarding formalities by the end of day.
-
-
-If you are unable to provide any of the documents or details please contact the HR executive.
+Hope you are doing well. Are you excited to finally start working with all us cool folks? I bet you are as much as we are to welcome you at Cloud Peritus. Here are a few instructions and tips for you to ride the first day like a champion.
 
 
-Thanks for your cooperation!
 
 
-Best wishes,
+We can&apos;t wait to have you join us at Cloud Peritus. We will be expecting your virtual/physical (whichever was decided) presence tomorrow i.e {!Contact.EMS_EM_JD__c} at 11.00 AM. An HR executive will reach out and guide you on Day 1 for the onboarding process. The onboarding program has been designed to give you the necessary information about our culture, company goals, and give you a sense of how we operate. It will help you acclimate to this new chapter with ease. You will all be meeting your buddy and manager to help you get settled on your first day.
+
+
+You&apos;d need to carry soft copies of all identity/education/work related documents and a passport-size photo. We&apos;d suggest that you store all the documents you need on your personal Google Drive; you will get your work laptop on the day you join and you&apos;ll be able to access it from there.
+
+
+Point of contacts at Cloud Peritus in case you need assistance:
+
+Team
+
+POC
+
+Email
+
+System or IT
+
+Anirudh Kadegay
+
++91-8686112151
+
+
+Srikanth Sada
+
++91-7093018204
+
+it@cloudperitus.com
+
+HR Onboarding
+
+Bhuvaneswari Kundla
+
++91-7075388237
+
+bhuvana.kundla@cloudperitus.com
+
+Payroll
+
+
+payroll@cloudperitus.com
 
 HR Team
 
-Cloud Peritus.</textOnly>
+For general questions
+
+hr.hyderabad@cloudperitus.com
+
+
+Here is what it’s like to work with Cloud Peritus
+
+
+
+Other points to note:
+
+We don&apos;t enforce a dress code at Cloud Peritus. We&apos;ll let you decide what you wear. We mostly wear smart Business casuals.
+
+Reporting Location: 4th Floor, Plot No. 703/A, Rd Number 36, Aditya Enclave, Venkatagiri, Jubilee Hills, Hyderabad, Telangana 500033
+
+If you&apos;re coming by your own vehicle, you will have to park it at the visitor&apos;s parking on day 1. Please note that the visitor&apos;s parking is a first-come-first-serve paid service. Looking forward to an amazing day 1 at Cloud Peritus and hope this will be your dream job.
+
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

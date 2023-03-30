@@ -11,7 +11,7 @@
 
 The following candidate will join our company on {!Contact.EMS_EM_JD__c}:
 
-Name: {!Contact.EMS_EM_ED_Name__c}
+Name: {!Contact.Name}
 
 Designation: {!Contact.Resource_Role__c}
 
@@ -23,11 +23,9 @@ Please make sure to keep the assets ready for the employee and dispatch the asse
 Contact the HR Department for more details.
 
 
-Best wishes,
+Regards,
 
-HR Team
-
-Cloud Peritus.</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
