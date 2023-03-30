@@ -140,4 +140,11 @@
         <shortDescription>Service Request URL</shortDescription>
         <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/case/</value>
     </labels>
+    <labels>
+        <fullName>Enable_Nominations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Enable Nominations</shortDescription>
+        <value>true</value>
+    </labels>
 </CustomLabels>

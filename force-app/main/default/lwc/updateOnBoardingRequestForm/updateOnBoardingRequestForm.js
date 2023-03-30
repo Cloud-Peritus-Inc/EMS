@@ -755,7 +755,7 @@ function updateOnboardingInfoOnPageLoads(ts){
     
 }
 
-function displayShowtoastMessage(titleToDisplay, messageToDisplay, variantToDisplay,ts){
+function displayShowtoastMessage( messageToDisplay, variantToDisplay,ts){
     const evt = new ShowToastEvent({
             message: messageToDisplay,
             variant: variantToDisplay,
