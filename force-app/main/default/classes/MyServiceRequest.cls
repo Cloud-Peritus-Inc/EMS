@@ -31,9 +31,11 @@ public  without sharing class MyServiceRequest {
                               Designation__c,
                               OwnerId
                               FROM Case
-                              WHERE Type ='Resignation' 
-                              AND Status ='New'
+                              WHERE  Status ='New'
+                              AND Type ='Resignation'
                               AND Case_Assignee__c =: userData.contactId ORDER BY CaseNumber];
+                              //  
+                              
         return caseList;
         
     }

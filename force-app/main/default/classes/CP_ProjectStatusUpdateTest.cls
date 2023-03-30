@@ -19,36 +19,41 @@ public class CP_ProjectStatusUpdateTest {
         User adminUser = [Select Id, UserRoleId,IsActive From User Where Profile.Name='System Administrator' AND IsActive = true Limit 1];
         try{
             System.runAs(adminUser){
-              //  recordType rec =[SELECT Id, Name, IsActive FROM RecordType where name ='Client Projects'];
-                Contact con = new contact();
-                con.Email ='suneel@gmail.com';
-                con.FirstName ='Suneel';
-                con.LastName ='Kumar';
-                con.EMS_Phone_Number__c ='9999999999';
-                con.EMS_RM_Phone_Number__c ='9999999999';
-                con.Location__c ='India';
-                con.RecordTypeId = [SELECT Id FROM RecordType where name = 'Resource'].Id;
-                con.EMS_EM_JD__c = system.today();
-                insert con;
-                EMS_TM_Project__c Emp = new EMS_TM_Project__c();
-                emp.Type_Of_Project__c ='Client Projects';
-                emp.Name ='qwq';
-                emp.EMS_TM_Status__c = 'ongoing';
-                emp.EMS_TM_StartDate__c = System.today();
-                insert emp;
-                EMS_TM_Assignment__C assign = new EMS_TM_Assignment__C();
-                assign.EMS_TM_EmployeeName__c = con.id;
-                assign.EMS_TM_StartDate_Asgn__c = System.today();
-                assign.EMS_TM_ProjectName_Asgn__c = emp.id;
-                insert assign;
+                 Resource_Role__c role = TestDataFactory.createResourceRole(true);
+                 EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
+                EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
+                EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
+                EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
+                EMS_LM_Leave__c workfromhome = TestDataFactory.createLeaveType('Work From Home',true);
+                 Account acc = TestDataFactory.createAccount(true);
+                 Contact con=  TestDataFactory.createResourceContact(acc.id, false);
+                 con.EMS_RM_Employee_Id__c = 'CP10235';
+                 con.Resource_Role__c = role.Id;
+                 INSERT con;
+                
+                EMS_TM_Project__c projectRec = new EMS_TM_Project__c();
+                projectRec.EMS_TM_StartDate__c = System.today();
+                projectRec.EMS_TM_EndDate__c = System.today()+10;
+                projectRec.EMS_TM_Status__c = 'ongoing';
+                projectRec.Name = 'project1';
+                projectRec.Project_Manager__c = con.Id;
+                projectRec.Type_Of_Project__c ='Client Projects';
+                INSERT projectRec; 
+                EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
+                assignmentRec.EMS_TM_EmployeeName__c = con.Id;
+                assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
+                assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
+                assignmentRec.EMS_TM_Billable__c = true;
+                INSERT assignmentRec; 
             }
-            EMS_TM_Project__c proj = [Select id,EMS_TM_Status__c,name from EMS_TM_Project__c where name ='qwq'];
+            EMS_TM_Project__c proj = [Select id,EMS_TM_Status__c,name from EMS_TM_Project__c where name ='project1'];
             proj.EMS_TM_Status__c ='Completed';
-            update proj;
+            UPDATE proj;
         }catch (DmlException exc) {
             LogException.logHandledException(exc, 'CP_ProjectStatusUpdateTest', 'assignmetUpdateTest');
-            //System.assertEquals('expected text', ex.getMessage());
         }
+        EMS_TM_Assignment__c assignRec =[Select Id,EMS_TM_EmployeeName__c,EMS_TM_Status_Asgn__c from EMS_TM_Assignment__c LIMIT 1];
+        System.assertEquals('Closed', assignRec.EMS_TM_Status_Asgn__c);
         
     }
 }
