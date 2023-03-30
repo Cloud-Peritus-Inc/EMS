@@ -50,31 +50,6 @@
             <field>EMS_LM_Leave_Type__c</field>
             <table>EMS_LM_Leave__c</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>EMS_LM_No_Of_Leaves__c</field>
-            <table>EMS_LM_Leave__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Consider_Negative__c</field>
-            <table>EMS_LM_Leave__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Is_Proof_Submission_Required__c</field>
-            <table>EMS_LM_Leave__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Max_Leaves_Allowed_Neg__c</field>
-            <table>EMS_LM_Leave__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Prior_days_to_apply__c</field>
-            <table>EMS_LM_Leave__c</table>
-        </columns>
         <masterLabel>Leave Types</masterLabel>
     </sections>
     <sections>

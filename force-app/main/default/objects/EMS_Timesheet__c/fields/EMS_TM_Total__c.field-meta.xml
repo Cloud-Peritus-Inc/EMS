@@ -3,12 +3,12 @@
     <fullName>EMS_TM_Total__c</fullName>
     <description>Display the total working hours of employee</description>
     <externalId>false</externalId>
-    <formula>EMS_TM_Sun__c  +  EMS_TM_Mon__c  +  EMS_TM_Tue__c  +  EMS_TM_Wed__c + EMS_TM_Thu__c+ EMS_TM_Fri__c+ EMS_TM_Sat__c</formula>
+    <formula>EMS_TM_Sun__c+EMS_TM_Mon__c+EMS_TM_Tue__c+EMS_TM_Wed__c +EMS_TM_Thu__c+EMS_TM_Fri__c+EMS_TM_Sat__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Total Hours</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>2</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Number</type>

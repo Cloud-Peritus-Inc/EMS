@@ -1,0 +1,114 @@
+<template>
+ <lightning-card>
+<div class="container">
+    <img src={imageUrl} alt="Snow">
+    <div class="btn">
+     <lightning-button variant="brand" label="Shout Out" title="Shout Out" onclick={handleOpenShoutClick} disabled={disableNominations} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <lightning-button variant="brand" label="Recognise" title="Recognise" disabled={disableNominations} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <lightning-button variant="brand" label="Award Nominations" title="Award Nominations" disabled={disableNominations} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>        
+</div>
+
+<br/>
+
+<div class="childparent" >
+    <div class="childimage">
+      <div style="padding-left:5px;"> 
+     <lightning-layout horizontal-align="space">
+     <template for:each={currentdata} for:item="rrcurrent">
+         <lightning-layout-item key={rrcurrent.Id} padding="around-small">
+           <lightning-card key={rrcurrent.Id}>
+         <center> 
+             <div class="image">
+        <img src={rrcurrent.resourcePhotoURL} />
+      </div> 
+           <div style="padding-top:5px;">  <font size="4" color="blue">  {rrcurrent.awardType}  <lightning-helptext content={rrcurrent.awardComments}></lightning-helptext> </font><br/>
+               <br/>  <font size="3" color="purple"> <b> {rrcurrent.resourceName} </b> </font> <br/> </div> 
+             </center>
+           </lightning-card>
+         </lightning-layout-item>
+     </template>
+     </lightning-layout>
+           </div></div>
+            <div class="childtext">
+              <lightning-combobox
+                name=""
+                label=""
+                value={selectedfy}
+                placeholder="Fiscal Year"
+                options={fymapdata}
+                onchange={handleChange} >
+            </lightning-combobox>
+            </div></div>
+             
+
+<br/>
+
+<lightning-tabset>
+    <lightning-tab label="My Recognitions">
+      <center> No data to display.</center>
+    </lightning-tab>
+    <lightning-tab label="My Awards">
+        <center> No data to display.</center>
+    </lightning-tab>
+    <lightning-tab label="Shout Outs Given">
+        <center> No data to display.</center>
+    </lightning-tab>
+    <lightning-tab label="Shout Outs Received">
+        <center> No data to display.</center>
+    </lightning-tab>
+    <lightning-tab label="Nominations">
+        <center> No data to display.</center>
+    </lightning-tab>
+    <lightning-tab label="Scoring">
+        <center> No data to display.</center>
+    </lightning-tab>
+</lightning-tabset>
+
+ </lightning-card>
+
+ <template if:true={openshoutout}>
+       <div data-modal="custom-modal" class="modalclass">
+            <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" 
+                                            class="slds-modal__close " 
+                                            alternative-text="Close" 
+                                            title="Close"
+                                            size="large"
+                                            variant="bare-inverse"
+                                            onclick={handleCancel} >
+ 
+                    </lightning-button-icon>
+                <font size="5">New Expense</font>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium"
+                    id="modal-content-id-1">
+                
+                    
+                              SHOUT OUT  
+                               
+                                
+                                  <center> 
+                                  <br />
+                                  <lightning-button variant="brand" name="Close" label="Close" onclick={handleCancel}></lightning-button>
+                                    &nbsp; &nbsp; &nbsp;<lightning-button variant="brand" name="Submit" label="Submit" ></lightning-button>
+                                  </center>
+                                  
+                    
+                </div>
+               
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+       </div>
+    </template>
+
+</template>

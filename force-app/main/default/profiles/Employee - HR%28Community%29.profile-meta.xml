@@ -1038,10 +1038,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>deleteCompOffRecord</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>deleteCompOffRecordTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -3806,34 +3802,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>EMS_LM_Leave__c.Consider_Negative__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>EMS_LM_Leave__c.EMS_LM_Leave_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EMS_LM_Leave__c.EMS_LM_No_Of_Leaves__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EMS_LM_Leave__c.Is_Proof_Submission_Required__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EMS_LM_Leave__c.Max_Leaves_Allowed_Neg__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EMS_LM_Leave__c.Prior_days_to_apply__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

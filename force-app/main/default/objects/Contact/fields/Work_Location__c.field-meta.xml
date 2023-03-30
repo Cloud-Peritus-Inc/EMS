@@ -7,7 +7,7 @@
     <referenceTo>Office_Location__c</referenceTo>
     <relationshipLabel>Contacts</relationshipLabel>
     <relationshipName>Contacts</relationshipName>
-    <required>true</required>
+    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Lookup</type>
 </CustomField>
