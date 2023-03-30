@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Probation_day_cannot_more_than_180</fullName>
+    <active>true</active>
+    <errorConditionFormula>Probation_Days__c &gt;180</errorConditionFormula>
+    <errorMessage>Probation Days must be less than 180</errorMessage>
+</ValidationRule>

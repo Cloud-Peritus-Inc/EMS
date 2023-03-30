@@ -120,13 +120,13 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
             this.error = undefined;
           }
           else {
-            const result = await LightningConfirm.open({
+            const results = await LightningConfirm.open({
               message: "To apply this leave, you have to avail additional leaves from next quarter. You can take a leave loan upto 5 days.",
               variant: "default", // headerless
               theme: 'error', // more would be success, info, warning
               label: "Avail Advance Annual Leaves"
             });
-            if (result) {
+            if (results) {
               this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c + 5;
               if (this.availabledays >= result.data) {
                 this.submitcheck = false;

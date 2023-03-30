@@ -147,4 +147,11 @@
         <shortDescription>Enable Nominations</shortDescription>
         <value>true</value>
     </labels>
+    <labels>
+        <fullName>Service_Request_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Request Label</shortDescription>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/case/</value>
+    </labels>
 </CustomLabels>
