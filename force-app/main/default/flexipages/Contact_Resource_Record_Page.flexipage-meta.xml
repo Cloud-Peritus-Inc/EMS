@@ -91,6 +91,16 @@
                 <identifier>RecordPersonal_Email_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_EM_Mstatus__c</fieldItem>
+                <identifier>RecordEMS_EM_Mstatus_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-f9e8d231-3c86-4795-83fd-d9eb8c7cbcaf</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -355,16 +365,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Probationary_Period_End_Date__c</fieldItem>
                 <identifier>RecordProbationary_Period_End_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Current_Active_Assignments__c</fieldItem>
-                <identifier>RecordCurrent_Active_Assignments_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
