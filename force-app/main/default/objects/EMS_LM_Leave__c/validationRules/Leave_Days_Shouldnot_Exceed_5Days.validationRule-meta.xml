@@ -7,6 +7,5 @@
  ISPICKVAL( EMS_LM_Leave_Type__c , &apos;Paternity Leave&apos;),
  EMS_LM_No_Of_Leaves__c &gt; 5
 )</errorConditionFormula>
-    <errorDisplayField>EMS_LM_No_Of_Leaves__c</errorDisplayField>
     <errorMessage>Employees are permitted to use up to 5 days of PTO for paternity leaves.</errorMessage>
 </ValidationRule>
