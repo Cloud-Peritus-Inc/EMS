@@ -1,10 +1,13 @@
 @isTest
-public class BatchToCreateTimesheets_Test {
+public class EMS_TM_EmployeeescalationBatch_Test {
     
-    public static testmethod void createTimesheet(){
-         Id p = [select id from profile where name='Employee - Resource(Community)'].id;
-        user loginedUser =[SELECT id from User  where profileId =:p AND IsActive = true LIMIT 1];
-         //EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
+     public static testmethod void sendEscalation(){
+          Date todayval = system.today(); 
+        Date considerDate = todayval.toStartofWeek().addDays(-2);
+        Date weekStart = considerDate.toStartofWeek().addDays(1);
+        Date weekEnd = considerDate.toStartofWeek().addDays(7);
+        Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
+        user userId =[SELECT id FROM User  WHERE profileId =:p AND IsActive = true LIMIT 1];          
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
@@ -21,12 +24,8 @@ public class BatchToCreateTimesheets_Test {
         con.EMS_EM_CA_State__c ='AP';
         con.Timesheet_NoNeed__c =false;
         con.Resource_Role__c = role.Id;
-        con.EMS_TM_User__c =loginedUser.Id;
-        INSERT con;
-       /* System.runAs(loginedUser){
-        user userRec = TestDataFactory.createCommunityUserWithAccAndContact(acc.Id,con.Id,true);
-        }*/
-        System.debug('conData'+con);
+        con.EMS_TM_User__c =userId.Id;
+        INSERT con;        
         EMS_TM_Project__c projectRec = new EMS_TM_Project__c();
         projectRec.EMS_TM_StartDate__c = System.today();
         projectRec.EMS_TM_EndDate__c = System.today()+10;
@@ -42,26 +41,27 @@ public class BatchToCreateTimesheets_Test {
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
         assignmentRec.EMS_TM_Billable__c = true;
         INSERT assignmentRec;  
+        EMS_Timesheet__c timesheetRec = new EMS_Timesheet__c();
+        timesheetRec.Week_Start_Date__c = System.today();
+        timesheetRec.Week_End_Date__c = System.today()+6;
+        timesheetRec.Resource__c = con.Id;
+        timesheetRec.User__c = userId.Id;
+        timesheetRec.EMS_TM_Sat__c = 0;
+        timesheetRec.EMS_TM_Sun__c =0;
+        timesheetRec.OwnerId =userId.Id;
+        timesheetRec.EMS_TM_Status__c='Saved';
+        timesheetRec.Week_Start_Date__c = weekStart;
+        timesheetRec.Week_End_Date__c = weekEnd;
+        timesheetRec.EMS_TM_Week__c = System.today();
+        INSERT timesheetRec;
+        
         test.startTest();
-        BatchToCreateTimesheets batchExecute = new BatchToCreateTimesheets(); 
+        EMS_TM_EmployeeescalationBatch batchExecute = new EMS_TM_EmployeeescalationBatch(); 
         Database.executeBatch(batchExecute);
         test.stopTest();
-                  Contact conRec=[SELECT Id,Email,Name,EMS_TM_user__c,(SELECT Id,Week_Start_Date__c,Week_End_Date__c,EMS_TM_Week__c FROM Timesheets__r) 
-                        from contact WHERE EMS_RM_Employee_Id__c = 'CP10235'];
-      //  System.debug('timesheetRec'+timesheetRec);
-        System.assertEquals(1, conRec.Timesheets__r.size());
-        System.debug('contactId'+con.Id);
-        List<EMS_Timesheet__c> timesheetRec =[SELECT Id from EMS_Timesheet__c WHERE Resource__c =:con.Id];
-      
-        
+         System.Debug('getEmailInvocations'+Limits.getEmailInvocations());
+        System.assertEquals(2,Limits.getEmailInvocations(), 'An email should be sent');
+                
     }
-    
-      public static testMethod void testscheduleclass() {
-		Test.StartTest();
-		BatchToCreateTimesheets_sch testsche = new BatchToCreateTimesheets_sch();
-		String sch = '0 0 23 * * ?';
-		system.schedule('Test BatchToCalculateTheAvaiLeaves Check', sch, testsche );
-		Test.stopTest();
-	}
-    
+
 }
