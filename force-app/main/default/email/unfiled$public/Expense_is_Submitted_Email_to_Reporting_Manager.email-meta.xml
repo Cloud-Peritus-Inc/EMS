@@ -10,7 +10,7 @@
 
 
 
-{!Expense__c.Resource__c} working for {!Expense__c.Project__c} has submitted an Expense Reimbursement for the amount of {!Expense__c.Amount__c} for {!Expense__c.Expense_Type__c} on {!Expense__c.Expense_Date__c}.
+{!Expense__c.Resource__c} working for {!Expense__c.Project__c} has submitted an Expense Reimbursement for the amount of {!Expense__c.Expense_Amount__c} for {!Expense__c.Expense_Type__c} on {!Expense__c.Expense_Date__c}.
 
 
 

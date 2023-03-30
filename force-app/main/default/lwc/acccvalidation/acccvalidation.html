@@ -54,8 +54,9 @@
                 <label class="slds-p-left_medium timeSheet">Timesheet</label>
             </div>  
             <div if:true={enableManagerView}>
-                <lightning-input data-id="toggle"
+                <lightning-input data-id="managerToggle"
                     type="toggle"
+                    checked={enableHrManagerView}
                     onchange={handleManagerViewToggle}
                     label="Manager view"
                     message-toggle-active=""

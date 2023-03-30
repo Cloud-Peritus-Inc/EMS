@@ -8,28 +8,5 @@
         <plural>true</plural>
         <value>Service Requests</value>
     </caseValues>
-    <layouts>
-        <layout>Case Layout</layout>
-        <sections>
-            <label></label>
-            <section>Bank Information</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Educational Information</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Family Information</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Special Leave Request</section>
-        </sections>
-    </layouts>
-    <quickActions>
-        <label></label>
-        <name>NewChildCase</name>
-    </quickActions>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>
