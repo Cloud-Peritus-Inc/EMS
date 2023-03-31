@@ -25,13 +25,16 @@ export default class EMS_LM_LeaveManagement extends LightningElement {
         if (params.has('pendingTab')) {
             this.activeTabValue = 'two';
         }
+        if (params.has('adminTab')) {
+            this.activeTabValue = 'three';
+        }
     }
 
     @wire(getLoggedInUserResReportsSize)
     getLoggedInUserResReportsSizeWiredData({ error, data }) {
         if (data) {
             console.log('### getLoggedInUserResReportsSize', data);
-            if (data.relationAcess> 0) {
+            if (data.relationAcess > 0) {
                 this.hidePendingTab = data.relationAcess;
             }
             console.log('### hidePendingTab : ', this.hidePendingTab);

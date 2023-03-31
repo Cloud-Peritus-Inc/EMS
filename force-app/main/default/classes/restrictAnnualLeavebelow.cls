@@ -31,15 +31,16 @@ public class restrictAnnualLeavebelow implements TriggerAction.BeforeInsert,Trig
             parentIds.add(child.EMS_LM_Contact__c);
         }
         
-        Map<Id, Contact> parents = new Map<Id, Contact>([SELECT Id,EMS_LM_No_Of_Availble_Leaves__c FROM Contact WHERE Id IN :parentIds]);
-        
+        Map<Id, Contact> parents = new Map<Id, Contact>([SELECT Id,EMS_LM_No_Of_Availble_Leaves__c,EMS_LM_No_Of_Leaves_Credit__c,EMS_LM_No_Of_Utilized_Leaves__c FROM Contact WHERE Id IN :parentIds]);
+        Id AnnualleaveId = [Select Id,Name,(select id,EMS_LM_Contact__c from Leaves_History__r where EMS_LM_Contact__c IN :parentIds) FROM EMS_LM_Leave__c where Name ='Annual Leave' limit 1].Id;
         for(EMS_LM_Leave_History__c his : newlist){
             Contact parent = parents.get(his.EMS_LM_Contact__c);
             system.debug('parent'+parent);
             Decimal balance =parent.EMS_LM_No_Of_Availble_Leaves__c - his.EMS_LM_Leave_Duration__c;
+           // Decimal balance =parent.EMS_LM_No_Of_Leaves_Credit__c- parent.EMS_LM_No_Of_Utilized_Leaves__c;
             system.debug('balance'+balance);
-            if (parent != null && balance < -5) {
-                his.addError('Sorry!! You do not have enough leave balance. Consider applying for leave of some other type.');
+            if (parent != null && balance < -5 && his.Leave_Type_Name__c=='Annual Leave') {
+            //    his.addError('Sorry!! You do not have enough leave balance. Consider applying for leave of some other type.');
             }
         }
     }

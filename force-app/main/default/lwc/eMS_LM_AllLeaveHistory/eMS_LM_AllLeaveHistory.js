@@ -260,15 +260,24 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     }
 
     //To view the leave record
+    connectedCallback() {
+        this.a_Record_URL = window.location.origin;
+        console.log('Base Url' + this.a_Record_URL);
+    }
     handleView(event) {
         const selectedRecordId = event.currentTarget.dataset.id;
         console.log('### handleView : ', selectedRecordId);
+        var url = new URL(this.a_Record_URL + '/Grid/s/ems-lm-leave-history/' + selectedRecordId);
+        var params = new URLSearchParams();
+        params.append("myRequest", "value");
+        url.search += "&" + params.toString();
+
+        console.log('### url : ', JSON.stringify(url));
         this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
+            type: 'standard__webPage',
             attributes: {
-                recordId: selectedRecordId,
-                objectApiName: 'EMS_LM_Leave_History__c',
-                actionName: 'view',
+                url: url.href
+
             },
         });
     }
