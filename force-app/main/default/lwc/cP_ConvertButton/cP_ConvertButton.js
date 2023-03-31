@@ -33,7 +33,7 @@ export default class cP_ConvertButton extends NavigationMixin(LightningElement) 
                         recordId: this.conid,
                         actionName: 'view'
                     }
-                });
+                },true /*refresh*/);
                 //  console.log('this.conid1-->', this.conid);
                 //  console.log('this.conid3-->', res);
             })

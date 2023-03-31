@@ -568,6 +568,10 @@
                                 </h3>
                                 <div style="padding-left: 25px; padding-right: 20px;"  >
                                     <h6>Note: We are collecting family information primarily for emergency and medical insurance purposes. Please ensure that you enter the details of your father, mother, spouse and children (if applicable). Also, indicate your emergency contact.</h6>
+                                    <h6><strong>Instructions:</strong> 
+                                        1. Details of parents are mandatory.
+                                        2. If you have a spouse and children, indicate that they are dependents for medical insurance purposes.
+                                        3. Indicate your emergency contact.</h6>
                                 </div>
                                <br>
                                     <lightning-record-edit-form object-api-name="Family_Information__c" onsuccess={handlefamilySuccess} onsubmit={handlesubmitfamily} onerror={handlefamilyerror}>
@@ -700,6 +704,10 @@
                                                         onkeydown={handleFirstLastNameKeyDown}
                                                         pattern="[A-Z a-z._-]{2,20}$" type="text"
                                                         label="Employee Name in Bank Account"></lightning-input>
+                                                    <lightning-combobox class="slds-p-top_small" required field-level-help="Suggested to opt by the employees whose CTC is more than 7 Lakhs"
+                                                        disabled={readonlyfield} name="Sodexo_Card_Option__c" label="Sodexo Card Option"
+                                                        value={SodexoCardoption} placeholder="Select" options={sodexooptions}
+                                                        onchange={sodexoCardonchange}></lightning-combobox>
                                                 </span>
                                             </div>
                                         </div>
@@ -1253,8 +1261,16 @@
                                 </lightning-accordion>
                                 <br><br>
                                 <div style="text-align:center;margin-bottom:10px">
-                                    <lightning-button style="margin:5px;" label="Submit" type="brand" disabled={buttonDisable}
+                                    <template lwc:if={expression1}>
+                                        <lightning-icon icon-name='utility:success' alternative-text='success' 
+                                            variant='success' size='large' title='success'></lightning-icon> 
+                                            <h1> <div class="slds-align_absolute-center">Thank You</div></h1>
+                                            <div class="slds-align_absolute-center">The form has been submitted successfully.</div>
+                                    </template>
+                                    <template lwc:else>
+                                        <lightning-button style="margin:5px;" label="Submit" type="brand" disabled={buttonDisable}
                                         onclick={confirmSubmit} variant="brand"></lightning-button>
+                                    </template>
                                 </div>
                             </div>
                             <br><br>

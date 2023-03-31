@@ -118,7 +118,7 @@ export default class ServiceRequestResignationForm extends NavigationMixin(Light
        this.template.querySelector('lightning-record-edit-form').submit(fields);
     }else{
          const evt = new ShowToastEvent({
-            message:'Please select the below lastworking Dates',
+            message:'Select a date before your last working day as per your notice period',
             variant: 'error',
         });
         this.dispatchEvent(evt);
