@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Annual Leave Credits</value>
+        <value xsi:type="xsd:string">Monthly Annual Leave Credits</value>
     </values>
 </CustomMetadata>

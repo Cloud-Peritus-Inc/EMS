@@ -244,7 +244,11 @@ guestObj.Address_Details_Value_Filled__c = ts.isAddressDetailsCheckbox;
 guestObj.Company_Information_Viewed__c = ts.isCompanyInformationValueChecked;
 guestObj.Is_Confirm__c = ts.isConfirmSubmit;
 guestObj.Status__c = ts.statusUpdate;
-guestObj.Do_you_have_work_experience__c = ts.doYouHaveExp;
+if(ts.isWorkExperience){
+  guestObj.Do_you_have_work_experience__c = ts.doYouHaveExp;
+
+  //displayShowtoastMessage('Success','Onboarding Form Work Experience Details Saved Successfully','success',ts); 
+}
 
 // guestObj.Status__c = ts.isIdentityStatusUpdate;
 // guestObj.Status__c = ts.isAdressStatusUpdate;
@@ -734,6 +738,7 @@ function updateOnboardingInfoOnPageLoads(ts){
                   ts.isWorkExperienceStatusUpdate = 'In Progress';
                 }
                 if(result.onboarding.Company_Information_Viewed__c === true){
+                  console.log('this.vgdhsdhhjhdjsdjkcjkdscsdhcsdhc----->' ,this.isCompanyInformationValueChecked);
                   ts.isCompanyInformationValueChecked = true;
                   ts.statusUpdate = 'In Progress';
                 }

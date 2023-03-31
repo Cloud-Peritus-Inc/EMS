@@ -14,12 +14,13 @@ export default class ServiceRequestResignationForm extends NavigationMixin(Light
     noticePeriod;
     usercontactId;
     designationId;
+    todayDate;
 
     departmentId;
     resignationREason;
     lastworkingDate;
     reasonRealiving;
-    lastworkingMaxvalue;
+    inputLastWorkingDate;
 
     @api contactRecord;
     @api requestType;
@@ -33,16 +34,9 @@ export default class ServiceRequestResignationForm extends NavigationMixin(Light
             var date = new Date(); 
             date.setDate(date.getDate() +this.noticedays); 
             console.log('DATE'+date);
-          
-
-var someDate = new Date(new Date().getTime()+(30*24*60*60*1000)); 
-
-console.log('******************date*********'+someDate);
-//return someDate.toISOString();
-
-
             this.lastworkingDate = date.toISOString();
-            this.lastworkingMaxvalue = date.toISOString();
+            var date = new Date();
+            this.todayDate = date.toISOString();
             console.log('this.lastworkingDate***********   '+this.lastworkingDate);
 
     }
@@ -105,14 +99,38 @@ console.log('******************date*********'+someDate);
     fields.Designation__c = this.contactRecord.Resource_Role__c;
     fields.ContactId = this.contactRecord.Id;
     fields.AccountId = this.contactRecord.AccountId;
-    fields.Notice_Period__c =this.contactRecord.EMS_RM_Notice_Period__c;
+    fields.Notice_Period__c =this.contactRecord.Notice_Period__c;
     fields.Subject = this.contactRecord.EMS_RM_Employee_Id__c+'-'+this.contactRecord.Name+'- Resignation Request';
-   
-   /*    fields.Subject = this.EMS_RM_Employee_Id__c+'-'+this.contactRecord.FirstName+' '+this.contactRecord.LastName+'- Resignation Request';
- */
+    if(this.inputLastWorkingDate =='undefined' || this.inputLastWorkingDate == undefined){
+         this.inputLastWorkingDate = fields.Last_Working_Date__c;
+         console.log('IFinputLastWorkingDate'+this.inputLastWorkingDate);
+    }
 
-    // Push the updated fields though for the actual submission itself
-    this.template.querySelector('lightning-record-edit-form').submit(fields);
+    console.log('fields.Notice_Period__c'+fields.Notice_Period__c);
+            var date = new Date(); 
+            date.setDate(date.getDate() +fields.Notice_Period__c); 
+            console.log('DATE'+date);
+            var existingDate = date.toISOString();
+      console.log('inputlastWorkingDate  '+this.inputLastWorkingDate);
+      console.log('existingDate       '+existingDate);
+
+    if(this.inputLastWorkingDate <= existingDate){
+       this.template.querySelector('lightning-record-edit-form').submit(fields);
+    }else{
+         const evt = new ShowToastEvent({
+            message:'Please select the below lastworking Dates',
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+
+    }
+    
+}
+
+handleLastWorkdate(event){
+    this.inputLastWorkingDate = event.target.value;
+    console.log('this.inputLastWorkingDate'+this.inputLastWorkingDate);
+
 }
 
 

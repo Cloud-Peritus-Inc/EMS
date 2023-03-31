@@ -602,13 +602,10 @@
                                             <lightning-combobox class="fields"
                                                                     variant="label-hidden" value={doYouHaveExp}
                                                                     options={DoyouName} onchange={experienceChange}
-                                                                    required placeholder="Select"
+                                                                    required placeholder="Select" onclick={handleDeleteAllWorkAction}
                                                                     name="Do_you_have_work_experience__c"
                                                                     disabled={readonlyfield}
                                                                     label="Do you have work experience"></lightning-combobox>
-                                            <!-- <lightning-input type="Checkbox" checked={inputcheckboxexperience}
-                                                disabled={readonlyfield}
-                                                onchange={experienceCheckboxChange}></lightning-input> -->
                                         </div>
                                 </div>
                                 <template if:true={showExperienceyouhave}>
