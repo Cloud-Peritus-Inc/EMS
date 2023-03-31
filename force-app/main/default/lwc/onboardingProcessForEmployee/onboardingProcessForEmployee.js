@@ -181,6 +181,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   isCompanyInformationValueChecked = false;
   isConfirmSubmit = false;
   buttonDisable = false;
+  expression1 = false;
   PostOnboardingConfirm = false;
 
 
@@ -237,8 +238,8 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
 
     getUserContactInfo({ userId: this.userId }).then(result => {
-      console.log('getUserContactInfo------------->' ,result.contactDetails);
-      console.log('getUserContactInfo------------->' ,result.fileDetailsList);
+      //console.log('getUserContactInfo------------->' ,result.contactDetails);
+      //console.log('getUserContactInfo------------->' ,result.fileDetailsList);
       this.contactID = result.contactDetails.Id;
 
       this.UserName = result.contactDetails.Name;
@@ -294,6 +295,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         if (this.PostOnboardingConfirm == true) {
           this.buttonDisable = true;
           this.readonlyfield = true;
+          this.expression1 = true;
         }
         if(this.padrressline1 === this.cadrressline1){
           this.paFlag = true;
@@ -348,6 +350,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
               this.branchname = employye.Branch__c;
               this.accountNumber = employye.Beneficiary_Account_Number__c;
               this.iFSCRoutingNumber = employye.IFSC_Routing_Number__c;
+              this.SodexoCardoption = employye.Sodexo_Card_Option__c;
             }
           }).catch(err => {
             //console.log('err----->',err);
@@ -446,6 +449,11 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     { label: 'Four-wheeler', value: 'Four-wheeler' },
     { label: 'Two-wheeler', value: 'Two-wheeler' }
 
+  ];
+
+  sodexooptions =[
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' }
   ];
 
 
@@ -667,6 +675,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @track branchname;
   @track accountNumber;
   @track iFSCRoutingNumber;
+  @track SodexoCardoption;
   @track Vehicletypeval;
   @track doyouhaveavehicleval;
   @track VehicleNumber;
@@ -689,6 +698,9 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   }
   ifscCodeChange(event) {
     this.iFSCRoutingNumber = event.target.value;
+  }
+  sodexoCardonchange(event) {
+    this.SodexoCardoption = event.target.value;
   }
 
   Vehicletypechange(event) {
@@ -1169,7 +1181,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           //console.log("I am in if");
           this.dispatchEvent(
             new ShowToastEvent({
-              title: 'Error',
               message: 'Please Enter correct date of birth',
               variant: 'error',
             }),
@@ -1244,7 +1255,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     if (this.readonlyfield != true) {
       if (this.Branchname != null && this.Branchname != '' && this.BeneficiaryName != null && this.BeneficiaryName != ''
         && this.IFSCRoutingNumber != null && this.IFSCRoutingNumber != '' && this.AccountNumber.length <= 20 &&
-        this.BankNameval != null) {
+        this.BankNameval != null && this.SodexoCardoption != null) {
         return true;
       } else {
         const even = new ShowToastEvent({
@@ -1386,6 +1397,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     payrollobj.Branch__c = this.branchname;
     payrollobj.Beneficiary_Account_Number__c = this.accountNumber;
     payrollobj.IFSC_Routing_Number__c = this.iFSCRoutingNumber;
+    payrollobj.Sodexo_Card_Option__c = this.SodexoCardoption;
 
 
     if (this.isShowPersonalDetails == true) {
@@ -1395,7 +1407,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Personal Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1426,7 +1437,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Identification Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1455,7 +1465,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Address Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1480,7 +1489,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
     if (this.isShowFinacialFrom) {
 
-      const isInputsCorrect = [...this.template.querySelectorAll('lightning-input')]
+      const isInputsCorrect = [...this.template.querySelectorAll('lightning-input, lightning-combobox')]
         .reduce((validSoFar, inputField) => {
           inputField.reportValidity();
           return validSoFar && inputField.checkValidity();
@@ -1491,7 +1500,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Financial Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1534,7 +1542,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Vehicle Details Saved Successfully',
                 variant: 'success',
               }),
@@ -1564,7 +1571,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'PF Forms Uploaded Successfully',
                 variant: 'success',
               }),
@@ -1593,7 +1599,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                title: 'Success',
                 message: 'Documenthis Uploaded Successfully',
                 variant: 'success',
               }),
@@ -1627,11 +1632,13 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           //console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
           this.dispatchEvent(
             new ShowToastEvent({
-              title: 'Success',
               message: 'Onboarding Form Submitted Successfully',
               variant: 'success',
             }),
-          ); this.buttonDisable = true;
+          ); 
+          this.buttonDisable = true;
+          this.expression1 = true
+            
     }
     else {
       const even = new ShowToastEvent({
@@ -1715,7 +1722,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   handlefamilySuccess(event){
     this.dispatchEvent(
       new ShowToastEvent({
-        title: 'Success',
         message: 'Family Member Added successfully',
         variant: 'success',
       }),
@@ -1755,7 +1761,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     
     this.dispatchEvent(
       new ShowToastEvent({
-        title: 'error',
         message: event.detail.detail,
         variant: 'error',
       }),
@@ -1772,7 +1777,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       .then(() => {
         this.dispatchEvent(
           new ShowToastEvent({
-            title: 'Success',
             message: 'Family Member Deleted Suscessfully',
             variant: 'success'
           })
@@ -1788,7 +1792,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       .catch((error) => {
         this.dispatchEvent(
           new ShowToastEvent({
-            title: 'Error',
             message: 'Error Deleting record',
             variant: 'error'
           })

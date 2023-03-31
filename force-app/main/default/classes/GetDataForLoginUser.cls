@@ -129,6 +129,7 @@ public without Sharing class GetDataForLoginUser {
                 Branch__c,
                 Beneficiary_Account_Number__c,
                 IFSC_Routing_Number__c,
+                Sodexo_Card_Option__c,
                 Contact__c
                 From PayRoll__c where Contact__c =: conId];
         
@@ -267,15 +268,6 @@ public without Sharing class GetDataForLoginUser {
         
         return statusUpdate;
         
-    }
-    
-    @AuraEnabled
-    public static PayRoll__c updatepayroll( String ConRecordid,  PayRoll__c newPayroll, String PayrollId) {
-        
-        newPayroll.Id = PayrollId;
-        newPayroll.Contact__c = ConRecordid;
-        update newPayroll;
-        return newPayroll;    
     }
     
     @AuraEnabled(cacheable=true)

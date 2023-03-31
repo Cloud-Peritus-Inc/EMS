@@ -433,15 +433,24 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
   }
 
   //TO VIEW THE LEAVE RECORD
+  connectedCallback() {
+    this.a_Record_URL = window.location.origin;
+    console.log('Base Url' + this.a_Record_URL);
+  }
   handleView(event) {
     const selectedRecordId = event.currentTarget.dataset.id;
     console.log('### handleView : ', selectedRecordId);
+    var url = new URL(this.a_Record_URL + '/Grid/s/ems-lm-leave-history/' + selectedRecordId);
+    var params = new URLSearchParams();
+    params.append("adminTab", "value");
+    url.search += "&" + params.toString();
+
+    console.log('### url : ', JSON.stringify(url));
     this[NavigationMixin.Navigate]({
-      type: 'standard__recordPage',
+      type: 'standard__webPage',
       attributes: {
-        recordId: selectedRecordId,
-        objectApiName: 'EMS_LM_Leave_History__c',
-        actionName: 'view',
+        url: url.href
+
       },
     });
   }
@@ -458,11 +467,11 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
           variant: 'success',
         });
         this.dispatchEvent(evt);
-        const messageContext = createMessageContext();
+        /*const messageContext = createMessageContext();
         const payload = {
           refresh: true
         };
-        publish(messageContext, MY_REFRESH_CHANNEL, payload);
+        publish(messageContext, MY_REFRESH_CHANNEL, payload);*/
         return refreshApex(this._wiredRefreshData)
       }).catch((err) => {
         console.log('### err : ', JSON.stringify(err));

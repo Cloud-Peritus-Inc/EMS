@@ -747,6 +747,7 @@ function updateOnboardingInfoOnPageLoads(ts){
                   ts.readonlyfield=true;
                   ts.confirmStatusUpdate = 'Submitted for Review';
                   ts.buttonDisable = true;
+                  ts.expression1 = true;
                   ts.disableFlag = true;
                   console.log('Is_Confirm__c',ts.confirmStatusUpdate);
                 }

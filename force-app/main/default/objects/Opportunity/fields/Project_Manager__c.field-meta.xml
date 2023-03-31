@@ -4,6 +4,26 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Project Manager</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <filterItems>
+            <field>Contact.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Resource</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.Resource_Role__r.Name</field>
+            <operation>equals</operation>
+            <value>Sr Project Manager</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.Resource_Role__r.Name</field>
+            <operation>equals</operation>
+            <value>Project Manager</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Opportunities</relationshipLabel>
     <relationshipName>Opportunities</relationshipName>

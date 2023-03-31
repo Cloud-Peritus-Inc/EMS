@@ -466,14 +466,6 @@
         <relatedList>Resource_Resource_Relationship__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Type_Of_Project__c</fields>
-        <fields>EMS_TM_StartDate__c</fields>
-        <fields>EMS_TM_Status__c</fields>
-        <relatedList>EMS_TM_Project__c.Project_Manager__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>EMS_TM_ProjectName_Asgn__c</fields>
         <fields>EMS_TM_Status_Asgn__c</fields>
@@ -541,6 +533,7 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
         <fields>Beneficiary_Account_Number__c</fields>
         <fields>Bank_Name__c</fields>
         <fields>Branch__c</fields>
