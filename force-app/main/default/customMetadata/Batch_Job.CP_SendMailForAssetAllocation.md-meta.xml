@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Send email to IT Team</value>
+        <value xsi:type="xsd:string">Notification to IT team for asset allocation for new resource</value>
     </values>
 </CustomMetadata>

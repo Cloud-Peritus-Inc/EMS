@@ -140,7 +140,7 @@
 										</lightning-layout-item>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
 											<lightning-combobox label='Select Day' options={dayValues}
-												onchange={dayChange} value={selectedDay} name="selectedDay" required>
+												onchange={handleChange} value={selectedDay} name="compOffDay" required>
 											</lightning-combobox>
 											<lightning-input type="number" label="Leave Duration" value={duration}
 												disabled>
@@ -148,7 +148,7 @@
 										</lightning-layout-item>
 									</lightning-layout>
 									<lightning-textarea type="text" maxlength="250" required label="Reason"
-										value={reason} onchange={reasonChange}>
+										value={reason} onchange={handleReason}>
 									</lightning-textarea>
 									<center>
 										<lightning-button label="Close" title="Close" icon-name="utility:close"

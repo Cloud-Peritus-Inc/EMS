@@ -341,7 +341,7 @@
                                                         label="City"></lightning-input>
 
                                                     <lightning-input class="slds-p-top_small addressClass" value={cazip}
-                                                        disabled={readonlyfield} onkeydown={handleAadharNumberKeyDown}
+                                                        disabled={readonlyfield} onkeydown={handleAadharNumberKeyDown} maxlength="6"
                                                         required onchange={handleChange} name="EMS_EM_CA_Zip__c" type="text"
                                                         label="Zip"></lightning-input>
                                                     <br>
@@ -381,7 +381,7 @@
                                                         onchange={handleChange} name="EMS_EM_PA_City__c" type="text"
                                                         label="City"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={pazip}
-                                                        onkeydown={handleAadharNumberKeyDown} disabled={readonlyfield}
+                                                        onkeydown={handleAadharNumberKeyDown} disabled={readonlyfield} maxlength="6"
                                                         onchange={handleChange} required name="EMS_EM_PA_Zip__c" type="text"
                                                         label="Zip"></lightning-input>
                                                 </span>
@@ -460,7 +460,7 @@
                                             </span>
                                         </div>
                                         <div class="slds-col slds-size_2-of-12" style="padding-top: 55px;">
-                                        <lightning-button-icon icon-name="action:delete" disabled={readonlyfield}  alternative-text="Delete" title="Delete" data-id={obj.Id} onclick={handleDeleteEduAction}></lightning-button-icon>
+                                        <lightning-button-icon class="slds-icon-text-error" icon-name="action:delete" disabled={readonlyfield}  alternative-text="Delete" title="Delete" data-id={obj.Id} onclick={handleDeleteEduAction}></lightning-button-icon>
                                     </div>
                                     
                                     </div>
@@ -559,7 +559,7 @@
                                                             </td>
 
                                                             <td >
-                                                                <lightning-button-icon icon-name="action:delete"
+                                                                <lightning-button-icon icon-name="action:delete" class="slds-icon-text-error"
                                                                     disabled={readonlyfield} alternative-text="Delete"
                                                                     title="Delete" data-id={obj.Id} variant="destructive"
                                                                     onclick={handleDeleteAction}></lightning-button-icon>
@@ -602,13 +602,10 @@
                                             <lightning-combobox class="fields"
                                                                     variant="label-hidden" value={doYouHaveExp}
                                                                     options={DoyouName} onchange={experienceChange}
-                                                                    required placeholder="Select"
+                                                                    required placeholder="Select" onclick={handleDeleteAllWorkAction}
                                                                     name="Do_you_have_work_experience__c"
                                                                     disabled={readonlyfield}
                                                                     label="Do you have work experience"></lightning-combobox>
-                                            <!-- <lightning-input type="Checkbox" checked={inputcheckboxexperience}
-                                                disabled={readonlyfield}
-                                                onchange={experienceCheckboxChange}></lightning-input> -->
                                         </div>
                                 </div>
                                 <template if:true={showExperienceyouhave}>
@@ -713,7 +710,7 @@
                                             <br>
                                                 </div>
                                                 <div class="slds-col slds-size_2-of-12" style="padding-top: 55px;">
-                                                <lightning-button-icon icon-name="action:delete" disabled={readonlyfield}  alternative-text="Delete" title="Delete" data-id={obj.Id} onclick={handleDeleteWorkAction}></lightning-button-icon>
+                                                <lightning-button-icon icon-name="action:delete" disabled={readonlyfield} class="slds-icon-text-error" alternative-text="Delete" title="Delete" data-id={obj.Id} onclick={handleDeleteWorkAction}></lightning-button-icon>
                                             </div> 
                                             
                                             </div>
