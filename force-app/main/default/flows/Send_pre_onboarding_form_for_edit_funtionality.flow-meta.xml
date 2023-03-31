@@ -32,6 +32,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Applicant</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Send_pre_onboarding_form_mail</targetReference>
             </connector>

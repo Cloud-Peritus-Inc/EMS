@@ -3,5 +3,5 @@
     <fullName>Last_Working_Date_Validation</fullName>
     <active>true</active>
     <errorConditionFormula>Last_Working_Date__c &lt; TODAY()</errorConditionFormula>
-    <errorMessage>Last working date should be In Before Existing Last working date</errorMessage>
+    <errorMessage>Please select a date that falls within your notice period.</errorMessage>
 </ValidationRule>

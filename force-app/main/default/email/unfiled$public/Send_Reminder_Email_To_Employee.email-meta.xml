@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Send Reminder Email To Employee</name>
     <style>freeForm</style>
-    <subject>Onboarding: Gentle Reminder to complete onboarding process</subject>
+    <subject>Onboarding: Gentle reminder to complete onboarding process</subject>
     <textOnly>Dear {!Contact.Name},
 
 
