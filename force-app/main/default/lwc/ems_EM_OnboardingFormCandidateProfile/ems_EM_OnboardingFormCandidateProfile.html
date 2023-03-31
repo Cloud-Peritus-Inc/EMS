@@ -862,9 +862,18 @@
                                 <br>
                                 <br>
                                 <div style="text-align:center;margin-bottom:10px">
-                                    <lightning-button style="margin:5px;" label="Submit" type="brand"
+                                    <template lwc:if={expression1}>
+                                        <lightning-icon icon-name='utility:success' alternative-text='success' 
+                                            variant='success' size='large' title='success'></lightning-icon> 
+                                            <h1> <div class="slds-align_absolute-center">Thank You</div></h1>
+                                            <div class="slds-align_absolute-center">The form has been submitted successfully.</div>
+                                    </template>
+                                    <template lwc:else>
+                                        <lightning-button style="margin:5px;" label="Submit" type="brand"
                                         onclick={confirmSubmit} disabled={buttonDisable}
                                         variant="brand"></lightning-button>
+                                    </template>
+                                    
                                 </div>
                             </div>
                             <br>

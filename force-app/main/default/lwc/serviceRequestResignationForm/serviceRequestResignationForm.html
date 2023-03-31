@@ -44,23 +44,23 @@
 										</lightning-output-field>
 									</lightning-layout-item>
 									</lightning-layout>
-									<lightning-layout>
+									<!--<lightning-layout>
                                     <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
 										<lightning-output-field field-name="EMS_RM_Notice_Period__c">
 										</lightning-output-field>
 									</lightning-layout-item>
-									</lightning-layout>
+									</lightning-layout> -->
 									</lightning-record-view-form>
 						
 								</div>
-								<div class="column">
+								<div class="column1">
 							<lightning-record-edit-form object-api-name="Case" onsuccess={handleSuccess}
 								onerror={handleError} onsubmit={onSubmitHandler}>
 								<lightning-messages> </lightning-messages>
 								
                              <lightning-layout>
 									<lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
-										<label for="fieldid">Reason for Filing for Resignation</label>
+										<label for="fieldid"><span style="color:red">* </span> Reason for Filing for Resignation</label>
 										<lightning-input-field  id="fieldid" variant="label-hidden" field-name="Description" required>
 										</lightning-input-field>
 									</lightning-layout-item>
@@ -69,7 +69,7 @@
 
 								<lightning-layout>
                                     <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
-										    <label>Desired Last Working Date</label>
+										    <label><span style="color:red">* </span>Desired Last Working Date</label>
 										<lightning-input-field  variant="label-hidden" field-name="Last_Working_Date__c"  value ={lastworkingDate} onchange={handleLastWorkdate}>
 										</lightning-input-field>
 									</lightning-layout-item>

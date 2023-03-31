@@ -92,6 +92,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   isCertificationStatusUpdate;
   isWorkExperienceStatusUpdate;
   buttonDisable = false;
+  expression1 = false;
 
   @track imageUrl = BannerPreOn;
 
@@ -844,6 +845,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     updateOnBoardingRequest(this);
     displayShowtoastMessage('Onboarding Form Submitted Successfully','success',this);
     this.buttonDisable = true;
+    this.expression1 = true
     this.disableFlag = true;
   }
   else{

@@ -6,8 +6,18 @@
 /* Create two equal columns that floats next to each other */
 .column {
   float: left;
-  width: 50%;
-  padding: 5px;
+  width: 40%;
+  padding: 7px;
+ height: 300px; /* Should be removed. Only for demonstration */
+  border-right: 2px; /*solid #ccc; /* Add a border on the right side of the column */
+ /* margin-right: 01px;
+  margin-left: 01px;*/
+
+}
+.column1{
+  float: left;
+  width: 60%;
+  padding: 7px;
  height: 300px; /* Should be removed. Only for demonstration */
   border-right: 2px; /*solid #ccc; /* Add a border on the right side of the column */
  /* margin-right: 01px;

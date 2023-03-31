@@ -28,7 +28,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
         List<Messaging.SingleEmailMessage> lstMails = new List<Messaging.SingleEmailMessage>();
         List<Messaging.SingleEmailMessage> reminderMailsList = new List<Messaging.SingleEmailMessage>();
         List<Messaging.SingleEmailMessage> monthiversaryMailsList = new List<Messaging.SingleEmailMessage>();
-        List<Messaging.SingleEmailMessage> dojMailsList = new List<Messaging.SingleEmailMessage>();
+        //List<Messaging.SingleEmailMessage> dojMailsList = new List<Messaging.SingleEmailMessage>();
         for(Contact contactRec : contactList){
             Integer monthNumber = contactRec.EMS_EM_JD__c.month();
             Integer days = Date.today().daysBetween(contactRec.EMS_EM_JD__c);
@@ -47,20 +47,17 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
                 Messaging.SingleEmailMessage message = sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 monthiversaryMailsList.add(message);
             }
-            if(contactRec.EMS_EM_JD__c == System.today() && contactRec.Email != NULL && contactRec.RecordType.Name == 'Resource'){
+            /*if(contactRec.EMS_EM_JD__c == System.today() && contactRec.Email != NULL && contactRec.RecordType.Name == 'Resource'){
                 //sendEmailOnDOJ(contactRec.Email, contactRec.Id);
                 Messaging.SingleEmailMessage message = sendEmailOnDOJ(contactRec.Email, contactRec.Id);
                 dojMailsList.add(message);
-            }
+            }*/
             if(contactRec.EMS_EM_JD__c.addDays(-1) == System.today() && contactRec.RecordType.Name == 'Applicant'){
                 System.debug('Inside condition');
                 Messaging.SingleEmailMessage message = sendReminderEmail(contactRec.Personal_Email__c, contactRec.Id);
                 reminderMailsList.add(message);
             }
-            if(contactRec.Post_Onboarding_Confirm__c == False  && contactRec.Email != NULL && contactRec.RecordType.Name == 'Resource'){
-                system.debug('Inside condition ==>');
-                system.debug('Email => '+ contactRec.Email);
-                system.debug('Email => '+ contactRec.Personal_Email__c);
+            if(contactRec.Post_Onboarding_Confirm__c == False  && contactRec.Email != NULL && contactRec.RecordType.Name == 'Resource' && contactRec.EMS_EM_JD__c != System.today()){
                // sendReminderEmailToEmployee(contactRec.Email, contactRec.Id);
                 Messaging.SingleEmailMessage message = sendReminderEmailToEmployee(contactRec.Email, contactRec.Id);
                 lstMails.add(message);
@@ -70,7 +67,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
         Messaging.sendEmail(lstMails);
         Messaging.sendEmail(reminderMailsList);
         Messaging.sendEmail(monthiversaryMailsList);
-        Messaging.sendEmail(dojMailsList);
+        //Messaging.sendEmail(dojMailsList);
     }
     
     public static Messaging.SingleEmailMessage sendMonthiversaryEmail(String email, String recordId){
@@ -91,7 +88,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
         return message;
     }
     
-    public static Messaging.SingleEmailMessage sendEmailOnDOJ(String email, String recordId){
+   /* public static Messaging.SingleEmailMessage sendEmailOnDOJ(String email, String recordId){
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Welcome Email' LIMIT 1];
         String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
@@ -108,7 +105,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
         message.setOrgWideEmailAddressId(fromEmail);
         //Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
         return message;
-    }
+    }*/
     
     public static Messaging.SingleEmailMessage sendReminderEmail(String email, String recordId){
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
