@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Batch create for timesheet</value>
+        <value xsi:type="xsd:string">Weekly Timesheet Creations</value>
     </values>
 </CustomMetadata>

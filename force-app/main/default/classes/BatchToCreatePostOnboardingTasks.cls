@@ -27,7 +27,7 @@ global class BatchToCreatePostOnboardingTasks implements Database.Batchable<sObj
 * ====================================================================================================
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        Date dt = system.today();
+        Date dt = Test.isRunningTest() ? System.today() : system.today().adddays(integer.valueOf(Label.Post_Onboarding_Task_Creation));
         return Database.getQueryLocator([SELECT Id,EMS_EM_JD__c,EMS_TM_User__c,EMS_TM_User__r.Id
                                          FROM CONTACT 
                                          WHERE EMS_EM_JD__c=:dt

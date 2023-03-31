@@ -70,20 +70,23 @@
 								<lightning-layout>
                                     <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
 										    <label>Desired Last Working Date</label>
-										<lightning-input-field  variant="label-hidden" field-name="Last_Working_Date__c"  value ={lastworkingDate}  max={lastworkingDate}>
+										<lightning-input-field  variant="label-hidden" field-name="Last_Working_Date__c"  value ={lastworkingDate} onchange={handleLastWorkdate}>
 										</lightning-input-field>
 									</lightning-layout-item>
 									</lightning-layout>
 
 							
 
-								<center>
+								<!--<center> -->
+									<br/>
+									<div class="slds-float_right slds-p-right_small">
 									<lightning-button label="Close" title="Close" icon-name="utility:close"
 										onclick={handleCancel}></lightning-button>
 									&nbsp;&nbsp; &nbsp;&nbsp; <lightning-button class="slds-m-top_small" variant="brand"
 										type="submit" name="update" label="Save">
 									</lightning-button>
-								</center>
+									</div>
+								<!--</center> -->
 							</lightning-record-edit-form>
 					
 

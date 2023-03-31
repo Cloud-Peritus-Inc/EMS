@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Employee escalation batch</value>
+        <value xsi:type="xsd:string">Notification for none submitted timesheets to project manager</value>
     </values>
 </CustomMetadata>

@@ -170,7 +170,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Work Experience") {
       this.isWorkExperience = true;
-      this.isWorkExperienceCheckbox = true;
+      //this.isWorkExperienceCheckbox = true;
       this.isOtherCertifications = false;
       this.isEducationDetails = false;
       this.isShowPersonalDetails = false;
@@ -196,7 +196,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Company Information") {
       this.isCompanyInformation = true;
-      this.isCompanyInformationValueChecked = true;
+        this.isCompanyInformationValueChecked = true;
       updateOnBoardingRequest(this);
       if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -205,6 +205,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
         else{
           this.buttonDisable = false;
         } 
+      
       //console.log('Company Info', this.isCompanyInformation);
       this.isAddressDetails = false;
       this.isShowPersonalDetails = false;
@@ -331,7 +332,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   //------------End
 
   connectedCallback() {
-    updateOnboardingInfoOnPageLoads(this);
+    updateOnboardingInfoOnPageLoads(this);  
     
   }
 
@@ -351,7 +352,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
               //console.log("I am in if");
               this.dispatchEvent(
                   new ShowToastEvent({
-                      title: 'Error',
                       message: 'Please Enter correct date of birth',
                       variant: 'error',
                   }),
@@ -360,7 +360,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           }else if (this.ph === this.altphone) {
       this.dispatchEvent(
         new ShowToastEvent({
-          title: 'Error',
           message: 'Contact Number and Alternate Contact Number should not be the same',
           variant: 'error'
         })
@@ -699,7 +698,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     if(this.dob >= today ){
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Error',
                 message: 'Please Enter correct date of birth',
                 variant: 'error',
             }),
@@ -844,7 +842,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     this.readonlyfield = true;
     this.statusUpdate = 'Submitted for Review';
     updateOnBoardingRequest(this);
-    displayShowtoastMessage('Success','Onboarding Form Submitted Successfully','success',this);
+    displayShowtoastMessage('Onboarding Form Submitted Successfully','success',this);
     this.buttonDisable = true;
     this.disableFlag = true;
   }
@@ -1169,7 +1167,7 @@ updateValues(event){
           today = yyyy + '-' + mm + '-' + dd;
           if (foundelement.Completion_Date__c >= today) {
             foundelement.Completion_Date__c = undefined;
-            displayShowtoastMessage('Error', 'Please Enter Correct Completion Date', 'error', this);
+            displayShowtoastMessage( 'Please Enter Correct Completion Date', 'error', this);
           }
     }else if(event.target.name === 'Other__c'){
       foundelement.Other__c = event.target.value;
@@ -1208,7 +1206,6 @@ if (isInputsCorrect) {
         updateOnBoardingRequest(this);
         this.dispatchEvent(
           new ShowToastEvent({
-            title: 'Success',
             message: 'Onboarding Form Other Certification Details Saved Successfully',
             variant: 'success',
           }),
@@ -1216,7 +1213,7 @@ if (isInputsCorrect) {
         //this.showToast('Success', result, 'Success', 'dismissable');
     }).catch( error => {
         this.handleIsLoading(false);
-        console.log(error);
+        //console.log(error);
         this.showToast('Error updating or refreshing records', error.body.message, 'Error', 'dismissable');
     });
 
@@ -1256,9 +1253,8 @@ wiredContact(result) {
     }
 } 
 
-showToast(title, message, variant, mode) {
+showToast(message, variant, mode) {
     const event = new ShowToastEvent({
-        title: title,
         message: message,
         variant: variant,
         mode: mode
@@ -1331,7 +1327,6 @@ if (isInputsCorrect) {
         }
       this.dispatchEvent(
         new ShowToastEvent({
-          title: 'Success',
           message: 'Onboarding Form Education Details Saved Successfully',
           variant: 'success',
         }),
@@ -1380,7 +1375,7 @@ eduupdateValues(event){
       today = yyyy + '-' + mm + '-' + dd;
     if (foundelement.EMS_EM_GDate__c >= today) {
       foundelement.EMS_EM_GDate__c = undefined;
-      displayShowtoastMessage('Error', 'Please Enter Correct Graduation Date', 'error', this);
+      displayShowtoastMessage('Please Enter Correct Graduation Date', 'error', this);
     }
   }
 }
@@ -1420,9 +1415,9 @@ WiredWorkEdu(result){
     this.workDetails = result.data.filter(detail => detail.RecordType.Name === 'Work Details');
     //console.log('this.educationDetails------>',this.educationDetails);
     //console.log('this.workDetails-------->' ,this.workDetails);
-    // if(this.workDetails.length > 0) {
-    //   this.showExperienceyouhave = true;
-    // } 
+     if(this.workDetails.length > 0 && this.doYouHaveExp === 'Yes') {
+        this.showExperienceyouhave = true;
+     }
     this.error = undefined;
     this.handleIsLoading(false);
   } else if (result.error) {
@@ -1450,7 +1445,7 @@ experienceChange(event){
   }
    else {
     this.showExperienceyouhave = false;
-    handleDeleteAllWorkAction();
+    //handleDeleteAllWorkAction();
     this.workDetails = [];
     
   }
@@ -1467,10 +1462,15 @@ handleDeleteWorkAction(event){
       this.deleteWorkIds = this.deleteWorkIds + ',' + event.target.dataset.id;
   }
   this.workDetails.splice(this.workDetails.findIndex(row => row.Id === event.target.dataset.id), 1);
+  if(this.workDetails.length <1){
+    this.doYouHaveExp = undefined;
+  }
 }
 
 handleDeleteAllWorkAction() {
   // Loop through all rows and add their Id values to deleteWorkIds
+  this.doYouHaveExp = event.target.value;
+  if (this.doYouHaveExp === 'Yes') {
   this.deleteWorkIds = '';
   for (let i = 0; i < this.workDetails.length; i++) {
     if (!isNaN(this.workDetails[i].Id)) {
@@ -1480,6 +1480,7 @@ handleDeleteAllWorkAction() {
   
   // Remove all rows from the workDetails array
   this.workDetails.splice(0, this.workDetails.length);
+}
 }
 
 workUpdateValues(event){
@@ -1495,13 +1496,13 @@ workUpdateValues(event){
       today = yyyy + '-' + mm + '-' + dd;
     if (foundelement.EMS_EM_From_Date__c >= today) {
       foundelement.EMS_EM_From_Date__c = null;
-      displayShowtoastMessage('Error', 'Please Enter Correct From Date', 'error', this);
+      displayShowtoastMessage( 'Please Enter Correct From Date', 'error', this);
     }
   }else if(event.target.name === 'EMS_EM_To_Date__c'){
       foundelement.EMS_EM_To_Date__c = event.target.value;
       if ( foundelement.EMS_EM_To_Date__c <= foundelement.EMS_EM_From_Date__c) {
         foundelement.EMS_EM_To_Date__c = null;
-        displayShowtoastMessage('Error', 'Please Enter Correct To Date', 'error', this);
+        displayShowtoastMessage('Please Enter Correct To Date', 'error', this);
       }
 
   }else if(event.target.name === 'EMS_EM_Previous_Company_Name__c'){
@@ -1530,17 +1531,23 @@ handleSaveWorkAction(){
       return validSoFar && inputField.checkValidity();
   }, true);
 if (isInputsCorrect) {
-   
   dmlOnEducation({data: this.workDetails, removeEducationIds : this.deleteWorkIds})
   .then( result => {
       this.handleIsLoading(false);
       refreshApex(this.wiredEdu);
-      updateOnBoardingRequest(this); 
       this.updateWorkRecordView(this.onboardingformId);
-      //updateOnBoardingRequest(this);
+      this.isWorkExperienceCheckbox = true;
+     this.statusUpdate = 'In Progress';
+    updateOnBoardingRequest(this);
+    if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
+        {
+          this.buttonDisable = true;
+        }
+        else{
+          this.buttonDisable = false;
+        }
       this.dispatchEvent(
         new ShowToastEvent({
-          title: 'Success',
           message: 'Onboarding Form Work Details Saved Successfully',
           variant: 'success',
         }),
@@ -1549,7 +1556,7 @@ if (isInputsCorrect) {
   }).catch( error => {
       this.handleIsLoading(false);
       console.log(error);
-      this.showToast('Error updating or refreshing records', error.body.message, 'Error', 'dismissable');
+      this.showToast('Please refresh the page and retry.', error.body.message, 'Error', 'dismissable');
   });
 }else{
   this.handleIsLoading(false);

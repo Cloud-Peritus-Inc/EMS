@@ -93,11 +93,11 @@ public class TestDataFactory {
     
      public static User createCommunityUserWithAccAndContact(Id accId,Id conId,Boolean doInsert){
       Id p = [select id from profile where name='Employee - Resource(Community)'].id;
-      UserRole userrole = [Select Id, DeveloperName From UserRole Where DeveloperName = 'EmployeeCommunity' Limit 1];
+     // UserRole userrole = [Select Id, DeveloperName From UserRole Where DeveloperName = 'EmployeeCommunity' Limit 1];
       User user = new User(alias = 'test123', email= 'testemail@testclass.com.they',
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
-                ContactId = conId, UserRoleId = userRole.Id,
+                ContactId = conId,
                 timezonesidkey='America/Los_Angeles', username='testemail'/*+string.valueOf(system.now())*/+'@gmail.com');
         if(doInsert){
         insert user;
@@ -182,7 +182,7 @@ public class TestDataFactory {
         leaveReq.EMS_LM_Leave_Type__c = leaveTypeId;
         leaveReq.EMS_LM_Leave_Duration__c = startDate.daysBetween(endDate);
         leaveReq.EMS_LM_Reason__c = 'Test Reason';
-        leaveReq.EMS_LM_Status__c = leaveStatus;
+        leaveReq.EMS_LM_Status__c = leaveStatus != null ? leaveStatus : 'Pending';
        
         if(doInsert){
              insert leaveReq;
@@ -221,6 +221,34 @@ public class TestDataFactory {
          }
                                                        
       return caseREc;
+    }
+    
+    public static user createAdminUser(boolean iscreate){
+        Profile pf= [Select Id from profile where Name='System Administrator']; 
+        UserRole obj=new UserRole(Name= 'ABC'); 
+        insert obj;
+        String orgId = UserInfo.getOrganizationId(); 
+        String dateString =String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-',''); 
+        
+        Integer RandomId = Integer.valueOf((Math.random())*1000000); 
+        String uniqueName = orgId+dateString+RandomId; 
+        
+        User uu = new User(firstname = 'Alan', 
+        lastName = 'McCarthy', 
+        email = uniqueName + '@test' + orgId + '.org', 
+        Username = uniqueName + '@test' + orgId + '.org', 
+        EmailEncodingKey = 'ISO-8859-1', 
+        Alias = uniqueName.substring(18, 23), 
+        TimeZoneSidKey = 'America/Los_Angeles', 
+        LocaleSidKey = 'en_US', 
+        LanguageLocaleKey = 'en_US', 
+        ProfileId = pf.Id,UserRoleId = obj.Id
+        );
+        
+        if(iscreate){
+           insert uu;
+        }
+      return uu;  
     }
     
     

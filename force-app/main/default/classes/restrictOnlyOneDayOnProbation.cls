@@ -60,8 +60,11 @@ public class restrictOnlyOneDayOnProbation implements TriggerAction.BeforeInsert
           contactMap.put(con.Id,con);  
         }
         
+        Id workfromhomeTypeId = [Select Id FROM EMS_LM_Leave__c  Where Name = 'Work From Home'].Id;
+        
         for(EMS_LM_Leave_History__c his : newlist){
-            if(contactMap.containsKey(his.EMS_LM_Contact__c)){
+            system.debug('his.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c-->'+his.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c);
+            if(contactMap.containsKey(his.EMS_LM_Contact__c) && his.EMS_LM_Leave_Type__c !=workfromhomeTypeId){
                 
                 Integer numberDaysDue = his.EMS_LM_Leave_Start_Date__c.daysBetween(his.EMS_LM_Leave_End_Date__c )+1;
                 system.debug('numberDaysDue-->'+numberDaysDue);
