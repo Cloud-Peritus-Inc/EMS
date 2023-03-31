@@ -472,19 +472,28 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     }
   }
 
+  connectedCallback() {
+    this.a_Record_URL = window.location.origin;
+    console.log('Base Url' + this.a_Record_URL);
+  }
+
   //TO VIEW THE LEAVE RECORD
   handleView(event) {
     const selectedRecordId = event.currentTarget.dataset.id;
     console.log('### handleView : ', selectedRecordId);
+    var url = new URL(this.a_Record_URL + '/Grid/s/ems-lm-leave-history/' + selectedRecordId);
+    var params = new URLSearchParams();
+    params.append("pendingTab", "value");
+    url.search += "&" + params.toString();
+
+    console.log('### url : ', JSON.stringify(url));
     this[NavigationMixin.Navigate]({
-      type: 'standard__recordPage',
+      type: 'standard__webPage',
       attributes: {
-        recordId: selectedRecordId,
-        objectApiName: 'EMS_LM_Leave_History__c',
-        actionName: 'view',
+        url: url.href
+
       },
     });
-    // this.isModalOpen = true;
   }
 
   //TO VIEW THE CONTACT RECORD

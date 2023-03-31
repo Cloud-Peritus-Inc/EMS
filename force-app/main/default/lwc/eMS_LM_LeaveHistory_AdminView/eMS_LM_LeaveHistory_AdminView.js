@@ -491,5 +491,4 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
       },
     });
   }
-
 }
