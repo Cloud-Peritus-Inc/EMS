@@ -30,7 +30,7 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
         List<Messaging.SingleEmailMessage> monthiversaryMailsList = new List<Messaging.SingleEmailMessage>();
         //List<Messaging.SingleEmailMessage> dojMailsList = new List<Messaging.SingleEmailMessage>();
         for(Contact contactRec : contactList){
-            Integer monthNumber = contactRec.EMS_EM_JD__c.month();
+           /* Integer monthNumber = contactRec.EMS_EM_JD__c.month();
             Integer days = Date.today().daysBetween(contactRec.EMS_EM_JD__c);
             System.debug('Month => '+monthNumber);
             System.debug('Days => '+days);
@@ -46,7 +46,13 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
                 //sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 Messaging.SingleEmailMessage message = sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
                 monthiversaryMailsList.add(message);
+            }*/
+            
+            if(contactRec.EMS_EM_JD__c.addDays(30) == System.today() && contactRec.RecordType.Name == 'Resource'){
+                Messaging.SingleEmailMessage message = sendMonthiversaryEmail(contactRec.Email, contactRec.Id);
+                monthiversaryMailsList.add(message);
             }
+                        
             /*if(contactRec.EMS_EM_JD__c == System.today() && contactRec.Email != NULL && contactRec.RecordType.Name == 'Resource'){
                 //sendEmailOnDOJ(contactRec.Email, contactRec.Id);
                 Messaging.SingleEmailMessage message = sendEmailOnDOJ(contactRec.Email, contactRec.Id);
@@ -64,9 +70,9 @@ public class CP_MonthiversaryEmail implements Database.Batchable<sObject>, sched
             }
             
         }
-        Messaging.sendEmail(lstMails);
-        Messaging.sendEmail(reminderMailsList);
         Messaging.sendEmail(monthiversaryMailsList);
+        Messaging.sendEmail(reminderMailsList);
+        Messaging.sendEmail(lstMails);
         //Messaging.sendEmail(dojMailsList);
     }
     
