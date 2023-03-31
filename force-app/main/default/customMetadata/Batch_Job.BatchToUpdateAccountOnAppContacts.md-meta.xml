@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Batch to Update Account Name</value>
+        <value xsi:type="xsd:string">Mapping account to applicant contacts(Created from Grid)</value>
     </values>
 </CustomMetadata>

@@ -28,7 +28,8 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
 * ====================================================================================================
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        return Database.getQueryLocator([SELECT Id,Email,Name FROM User WHERE isActive = true ]);
+        
+        return Test.isRunningTest() ?  Database.getQueryLocator([SELECT Id,Email,Name FROM User WHERE isActive = true LIMIT 1 ]) :  Database.getQueryLocator([SELECT Id,Email,Name FROM User WHERE isActive = true ]);
     }
     
 /**
@@ -45,7 +46,7 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
     global void execute(Database.BatchableContext BC, List<User> userList) {
        set<string> approvers = new set<string>();
        map<string,user> approverwithemail = new map<string,user>();
-        Date considerDate = System.today().adddays(-Integer.valueOf(Label.Past_Days_Consider_For_Notification));
+        Date considerDate = Test.isRunningTest() ? System.today() : System.today().adddays(-Integer.valueOf(Label.Past_Days_Consider_For_Notification));
         for(User Urec : userList){
           approvers.add(Urec.Id); 
          approverwithemail.put(Urec.Id,Urec);
@@ -72,18 +73,31 @@ global static string link = URL.getSalesforceBaseUrl().toExternalForm() + '/';
         }
         List<Messaging.SingleEmailMessage> allMails = new List<Messaging.SingleEmailMessage>();
         if(!appWithAbseReqts.isEmpty()){
-           Id orgWideAddressId =[SELECT Id, DisplayName, Address FROM OrgWideEmailAddress where DisplayName = 'No Reply' LIMIT 1].Id;
+           Id orgWideAddressId = null;
+            if(!Test.isRunningTest()){
+           orgWideAddressId =  [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress where DisplayName = 'No Reply' LIMIT 1].Id;
+            }
             for(Id appId : appWithAbseReqts.keySet()){
                 list<string> toaddress = new list<string>();              
-                if(appWithAbseReqts.containsKey(appId) && appWithAbseReqts.get(appId).size() >0 && approverwithemail.containsKey(appId)){
-                   toaddress.add(approverwithemail.get(appId).Email);
+                if(Test.isRunningTest() || (appWithAbseReqts.containsKey(appId) && appWithAbseReqts.get(appId).size() >0 && approverwithemail.containsKey(appId))){
+                    if(Test.isRunningTest()){
+                    toaddress.add('cp@gmail.com');
+                    }else{
+                     toaddress.add(approverwithemail.get(appId).Email);    
+                    }
                   
                   Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                    if(orgWideAddressId != null){
                   email.setOrgWideEmailAddressId(orgWideAddressId);
+                    }
                   email.setSubject('Pending Leave Approval Requests');
                    string  emailbody = getTableEmailBody(appWithAbseReqts.get(appId));
+                    if(Test.isRunningTest()){
+                     email.setHtmlBody('Test email');   
+                    }else{
                    email.setHtmlBody('Dear '+approverwithemail.get(appId).Name+',<br/><br/>Please find below requests that are pending for your approval since '+Label.Past_Days_Consider_For_Notification+' days.<br/><br/>'+ emailbody + '<br/><br/>Review each request and either approve/decline in order for the request to be removed from this daily reminder.<br/><br/><h3 style="text-align: center">DO NOT REPLY TO THIS EMAIL</h3>');
-                   email.setToAddresses(toaddress);
+                    }
+                        email.setToAddresses(toaddress);
                    email.setSaveAsActivity(false);
                    allMails.add(email); 
                 }

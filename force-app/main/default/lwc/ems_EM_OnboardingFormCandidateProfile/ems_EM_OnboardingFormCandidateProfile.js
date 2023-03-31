@@ -196,7 +196,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Company Information") {
       this.isCompanyInformation = true;
-      this.isCompanyInformationValueChecked = true;
+        this.isCompanyInformationValueChecked = true;
       updateOnBoardingRequest(this);
       if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
@@ -205,6 +205,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
         else{
           this.buttonDisable = false;
         } 
+      
       //console.log('Company Info', this.isCompanyInformation);
       this.isAddressDetails = false;
       this.isShowPersonalDetails = false;
@@ -331,7 +332,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   //------------End
 
   connectedCallback() {
-    updateOnboardingInfoOnPageLoads(this);
+    updateOnboardingInfoOnPageLoads(this);  
     
   }
 
@@ -841,7 +842,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     this.readonlyfield = true;
     this.statusUpdate = 'Submitted for Review';
     updateOnBoardingRequest(this);
-    displayShowtoastMessage('Success','Onboarding Form Submitted Successfully','success',this);
+    displayShowtoastMessage('Onboarding Form Submitted Successfully','success',this);
     this.buttonDisable = true;
     this.disableFlag = true;
   }
@@ -1416,7 +1417,7 @@ WiredWorkEdu(result){
     //console.log('this.workDetails-------->' ,this.workDetails);
      if(this.workDetails.length > 0 && this.doYouHaveExp === 'Yes') {
         this.showExperienceyouhave = true;
-     } 
+     }
     this.error = undefined;
     this.handleIsLoading(false);
   } else if (result.error) {
@@ -1444,7 +1445,7 @@ experienceChange(event){
   }
    else {
     this.showExperienceyouhave = false;
-    handleDeleteAllWorkAction();
+    //handleDeleteAllWorkAction();
     this.workDetails = [];
     
   }
@@ -1461,10 +1462,15 @@ handleDeleteWorkAction(event){
       this.deleteWorkIds = this.deleteWorkIds + ',' + event.target.dataset.id;
   }
   this.workDetails.splice(this.workDetails.findIndex(row => row.Id === event.target.dataset.id), 1);
+  if(this.workDetails.length <1){
+    this.doYouHaveExp = undefined;
+  }
 }
 
 handleDeleteAllWorkAction() {
   // Loop through all rows and add their Id values to deleteWorkIds
+  this.doYouHaveExp = event.target.value;
+  if (this.doYouHaveExp === 'Yes') {
   this.deleteWorkIds = '';
   for (let i = 0; i < this.workDetails.length; i++) {
     if (!isNaN(this.workDetails[i].Id)) {
@@ -1474,6 +1480,7 @@ handleDeleteAllWorkAction() {
   
   // Remove all rows from the workDetails array
   this.workDetails.splice(0, this.workDetails.length);
+}
 }
 
 workUpdateValues(event){
@@ -1549,7 +1556,7 @@ if (isInputsCorrect) {
   }).catch( error => {
       this.handleIsLoading(false);
       console.log(error);
-      this.showToast('Error updating or refreshing records', error.body.message, 'Error', 'dismissable');
+      this.showToast('Please refresh the page and retry.', error.body.message, 'Error', 'dismissable');
   });
 }else{
   this.handleIsLoading(false);
