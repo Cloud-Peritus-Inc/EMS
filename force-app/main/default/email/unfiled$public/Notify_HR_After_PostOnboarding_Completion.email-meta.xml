@@ -5,16 +5,16 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notify HR After PostOnboarding Completion</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus: Onboarding Completed</subject>
-    <textOnly>Dear HR,
+    <subject>Cloud Peritus: Onboarding completed</subject>
+    <textOnly>Dear HR Team,
 
 
-{!Contact.Name}, whose joining date was [date of joining], has completed the onboarding process in the employee portal. Please find the details provided by clicking on the following link: Employee Record
+{!Contact.Name}, whose joining date was {!Contact.EMS_EM_JD__c}, has completed the onboarding process in the employee portal. Please find the details provided by clicking here.
 
 
 Regards,
 
-Team Cloud Peritus</textOnly>
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

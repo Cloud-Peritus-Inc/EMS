@@ -70,7 +70,8 @@ public without sharing class createPortalUserForResource implements TriggerActio
             }
             system.debug('====userContactMap====='+userContactMap);
             Profile communityProfile = [SELECT Id FROM Profile WHERE Name = 'Employee - Resource(Community)' LIMIT 1];
-            
+            List<Messaging.SingleEmailMessage> dojMailsList = new List<Messaging.SingleEmailMessage>();
+
             for(Contact con : filteredList){
                 if(!userContactMap.containsKey(con.id)){         
               User newUser = new User(
@@ -95,7 +96,11 @@ public without sharing class createPortalUserForResource implements TriggerActio
                        usrUpdateList.add(new User(id=urec.id,isActive=true)); 
                     }
                 }
+                Messaging.SingleEmailMessage message = sendEmailOnDOJ(con.Email, con.Id);
+                dojMailsList.add(message);
+                Messaging.sendEmail(dojMailsList);
             }
+            
         }
          system.debug('====usrList====='+usrList);
         try{
@@ -107,7 +112,26 @@ public without sharing class createPortalUserForResource implements TriggerActio
            system.debug('==ex=='+ex);
              LogException.logHandledException(ex, 'createPortalUserForResource', 'createPortalUser');  
         }
-             
+      
+    }
+    
+    public static Messaging.SingleEmailMessage sendEmailOnDOJ(String email, String recordId){
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Welcome Email' LIMIT 1];
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
+      
+        List<String> emailList = new List<String>();
+        emailList.add(email);
+        system.debug('Enaillist 2 => '+emailList);
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.toAddresses = emailList;
+        message.setTemplateID(emailTemplate.Id);
+        message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
+        message.setSaveAsActivity(false);
+        message.setOrgWideEmailAddressId(fromEmail);
+        //Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
+        return message;
     }
     
     @future
