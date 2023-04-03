@@ -75,7 +75,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pre Onboarding Form URL</shortDescription>
-        <value>https://cpprd--uat.sandbox.my.site.com/onboarding/s/?</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/preonboarding/s/?</value>
     </labels>
     <labels>
         <fullName>Project_label</fullName>
@@ -117,14 +117,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Default Grid Support Request Owner</shortDescription>
-        <value>rohit.bhupati@cloudperitus.com</value>
+        <value>hrdirectortesting01@gmail.com</value>
     </labels>
     <labels>
         <fullName>Default_HR_Support_Request_Owner</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Default HR Support Request Owner</shortDescription>
-        <value>raobhupati634@gmail.com</value>
+        <value>hrmanagertestinguser@gmail.com</value>
     </labels>
     <labels>
         <fullName>Timesheet_Approval</fullName>

@@ -78,6 +78,7 @@
         <connector>
             <targetReference>Check_DOJ_less_than_10_days</targetReference>
         </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Personal_Email__c</field>
@@ -88,9 +89,9 @@
         </filters>
         <filters>
             <field>EMS_EM_JD__c</field>
-            <operator>IsChanged</operator>
+            <operator>IsNull</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Contact</object>

@@ -88,7 +88,7 @@ public without sharing class AssignServiceRequests  implements TriggerAction.Bef
                 }else if(cnew.Type == 'Resignation'){
                     cnew.Case_Assignee__c = ResourceManager != null ? ResourceManager : ReportingManager;
                 }else if(cnew.Type == 'Special Leaves'){
-                    if(ReportingManager != null && (cnew.Request_Sub_Type__c == 'Paternity' || cnew.Request_Sub_Type__c == 'Marriage' || cnew.Request_Sub_Type__c == 'Bereavement Leave' || cnew.Request_Sub_Type__c == 'Comp off')){
+                    if(ReportingManager != null && (cnew.Request_Sub_Type__c == 'Paternity' || cnew.Request_Sub_Type__c == 'Marriage' || cnew.Request_Sub_Type__c == 'Bereavement' || cnew.Request_Sub_Type__c == 'Compensatory Off')){
                         cnew.Case_Assignee__c = ReportingManager;
                     }
                     else if(cnew.Request_Sub_Type__c == 'Maternity'){
