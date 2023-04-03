@@ -141,36 +141,7 @@
         <fields>EMS_TM_EmployeeName__c</fields>
         <fields>EMS_TM_StartDate_Asgn__c</fields>
         <fields>EMS_TM_EndDate_Asgn__c</fields>
-        <fields>EMS_TM_Status_Asgn__c</fields>
-        <fields>EMS_TM_AssignedAs__c</fields>
         <relatedList>EMS_TM_Assignment__c.EMS_TM_ProjectName_Asgn__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>EMS_Timesheet__c</fields>
-        <fields>NAME</fields>
-        <fields>EMS_TM_ProjectTask__c</fields>
-        <fields>EMS_TM_Week__c</fields>
-        <fields>EMS_TM_Remarks__c</fields>
-        <relatedList>EMS_TM_Timesheet_Record__c.EMS_TM_Project__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>TASK.STATUS</fields>
-        <fields>TASK.PRIORITY</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <relatedList>RelatedActivityList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>TASK.LAST_UPDATE</fields>
-        <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
@@ -179,14 +150,14 @@
         <fields>Expected_Start_Date__c</fields>
         <fields>Requested_By__c</fields>
         <fields>Skills__c</fields>
-        <fields>Notes__c</fields>
-        <fields>Request_Priority__c</fields>
-        <fields>Status__c</fields>
         <relatedList>Resource_Request__c.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Est_vs_Actuals__c.Project__c</relatedList>
+        <fields>EMS_Timesheet__c</fields>
+        <fields>Assignment__c</fields>
+        <fields>Status__c</fields>
+        <fields>EMS_TM_Remarks__c</fields>
+        <relatedList>EMS_TM_Timesheet_Record__c.EMS_TM_Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -17,6 +17,10 @@ public  without sharing class EMS_LM_Leave_Duration_Handler {
     // this method is used to calculate the leave duraton whenever employee applying for Leave from community portal ---- it will consider the loggedin employee Location Holidays and Weekends(Saturday/Sunday)
     @AuraEnabled(Cacheable=true)
     public static Decimal getLeaveDuration(String stDate, String edDate, String location, Boolean dayCheck){
+        if (stDate == null || edDate == null || location == null || dayCheck == null ||
+            stDate == '' || edDate == '' ) {
+            return null;
+        }
         // string s = stDate+' 00:00:00';
         // string e = edDate+' 00:00:00';
         Date startDate = Date.valueOf(stDate);
@@ -49,9 +53,14 @@ public  without sharing class EMS_LM_Leave_Duration_Handler {
     // this method is used to calculate the wfh duraton whenever employee applying for Leave from community portal ---- it will consider the loggedin employee Location Holidays and Weekends(Saturday/Sunday)
     @AuraEnabled(Cacheable=true)
     public static Integer getwfhDuration(String stDate, String edDate, String Location){
+        if (stDate == null || edDate == null || Location == null
+        || stDate == '' || edDate == '' ) {
+            return null;
+        }
         // string s = stDate+' 00:00:00';
         // string e = edDate+' 00:00:00';
         Date startDate = Date.valueOf(stDate);
+        System.debug('##startDate '+ startDate);
         Date endDate = Date.valueOf(edDate);
         Set<Date> holidaysSet = new Set<Date>();
         Id CountryOfficeLocationId = [SELECT Country__c, Id FROM Office_Location__c  Where Country__c =: Location].Id;

@@ -14,7 +14,7 @@ import getRelatedFilesByRecordIdForPayForms from '@salesforce/apex/GetDataForLog
 
 import { createMessageContext, publish } from 'lightning/messageService';
 import MY_REFRESH_CHANNEL from '@salesforce/messageChannel/refreshothercomponent__c';
-import {subscribe, unsubscribe } from 'lightning/messageService';
+import { subscribe, unsubscribe } from 'lightning/messageService';
 import MY_REFRESH_SEC_CHANNEL from '@salesforce/messageChannel/refreshlmscomponent__c';
 import { refreshApex } from '@salesforce/apex';
 import updateleaveRequest from '@salesforce/apex/EMS_LM_EditLeaveRequest.updateleaveRequest';
@@ -132,8 +132,9 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     if (result.data) {
       console.log('data duration' + result.data);
       this.allavailabledays = result.data;
+      console.log('this.allavailabledays' + JSON.stringify(this.allavailabledays));
       this.annualcompduration = result.data.EMS_LM_No_Of_Availble_Leaves__c + result.data.EMS_LM_No_Of_Available_Compensatory_Off__c;
-      console.log(this.annualcompduration);
+      //  console.log(this.annualcompduration);
       this.annualduration = result.data.EMS_LM_No_Of_Availble_Leaves__c;
       console.log('annual duration' + this.annualduration);
       this.cId = result.data.Id;
@@ -144,14 +145,15 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Paternity_Leave__c;
       }
       if (this.value == 'Bereavement Leave') {
-      this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Bereavement_Leave__c;
-    }
-    if (this.value == 'Maternity Leave') {
-      this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Maternity_Leave__c;
-    }
-    if (this.value == 'Compensatory Off') {
-      this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Compensatory_Off__c;
-    }
+        this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Bereavement_Leave__c;
+      }
+      if (this.value == 'Maternity Leave') {
+        this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Maternity_Leave__c;
+      }
+      if (this.value == 'Compensatory Off') {
+        this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Compensatory_Off__c;
+      //  console.log('this.allavailabledays' + availabledays);
+      }
     } else if (result.error) {
       console.log(result.error);
       this.error = result.error;
@@ -163,7 +165,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     this.editleaveData = result;
     if (result.data) {
       console.log('resultsan-->', result.data);
-     // console.log('resultsan-->', result.data.EMS_LM_Leave_Start_Date__c);
+      // console.log('resultsan-->', result.data.EMS_LM_Leave_Start_Date__c);
       this.startDate1 = result.data.EMS_LM_Leave_Start_Date__c;
       this.endDate1 = result.data.EMS_LM_Leave_End_Date__c;
       this.duration = result.data.EMS_LM_Leave_Duration__c;
@@ -173,10 +175,10 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
 
       if (result.data.Leave_Type_Name__c != 'Work From Home') {
 
-        console.log('###leave',result.data.Leave_Type_Name__c);
+        console.log('###leave', result.data.Leave_Type_Name__c);
         this.hideInotherleave = true;
         this.hideInWorkfromHome = false;
-      } else if(result.data.Leave_Type_Name__c == 'Work From Home'){
+      } else if (result.data.Leave_Type_Name__c == 'Work From Home') {
         console.log('###WorkFROMHOMEleave');
         this.hideInWorkfromHome = true;
         this.hideInotherleave = false;
@@ -196,7 +198,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
       }
     } else if (result.error) {
       this.error = result.error;
-     // console.log('this.error', this.error);
+      // console.log('this.error', this.error);
       this.submitcheck = true;
     }
   }
@@ -215,6 +217,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
           }
         }
         if (this.value == 'Annual Leave') {
+          console.log('total -5 leaves###'+this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c+data);
           // if (this.annualduration >= data) {
           this.submitcheck = false;
           this.duration = data;
@@ -225,9 +228,10 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         }
       }
       else {
-        if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
+        if (this.value == 'Paternity Leave') {
+          this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Paternity_Leave__c;
           if (this.startDate != undefined || this.startDate != null) {
-console.log('this.availabledays##',this.availabledays);
+            console.log('this.availabledays##', this.availabledays);
             if (this.availabledays >= data) {
               this.submitcheck = false;
               this.duration = data;
@@ -264,8 +268,169 @@ console.log('this.availabledays##',this.availabledays);
             }
           }
         }
+        if (this.value == 'Bereavement Leave') {
+          this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Bereavement_Leave__c;
+          if (this.startDate != undefined || this.startDate != null) {
+            console.log('this.availabledays##', this.availabledays);
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+              this.submitcheck = true;
+            }
+
+          }
+          else {
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+              this.error = undefined;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+
+              this.duration = data;
+              this.duration = undefined;
+              this.error = undefined;
+              this.submitcheck = true;
+            }
+          }
+        }
+        if (this.value == 'Maternity Leave') {
+          this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Maternity_Leave__c;
+          if (this.startDate != undefined || this.startDate != null) {
+            console.log('this.availabledays##', this.availabledays);
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+              this.submitcheck = true;
+            }
+
+          }
+          else {
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+              this.error = undefined;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+
+              this.duration = data;
+              this.duration = undefined;
+              this.error = undefined;
+              this.submitcheck = true;
+            }
+          }
+        }
+        if (this.value == 'Compensatory Off') {
+          this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Compensatory_Off__c;
+          if (this.startDate != undefined || this.startDate != null) {
+            console.log('this.availabledays##', this.availabledays);
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+              this.submitcheck = true;
+            }
+
+          }
+          else {
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+              this.error = undefined;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+
+              this.duration = data;
+              this.duration = undefined;
+              this.error = undefined;
+              this.submitcheck = true;
+            }
+          }
+         // console.log('this.allavailabledays' + this.availabledays);
+        }
+
+     /*   if (this.value == 'Compensatory Off' || this.value == 'Paternity Leave') {// to check PL and Comp Off 2days prior
+          if (this.startDate != undefined || this.startDate != null) {
+            console.log('this.availabledays##', this.availabledays);
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+              this.submitcheck = true;
+            }
+
+          }
+          else {
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+              this.error = undefined;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+
+              this.duration = data;
+              this.duration = undefined;
+              this.error = undefined;
+              this.submitcheck = true;
+            }
+          }
+        }*/
         else {
-         // this.hideInWorkfromHome = true;
+          // this.hideInWorkfromHome = true;
           this.duration = data;
         }
       }
@@ -501,7 +666,7 @@ console.log('this.availabledays##',this.availabledays);
               console.log('error-->', error);
               console.log('this.error-->' + JSON.stringify(this.error));
               console.log('error-->', error.body.pageErrors[0].message);
-               this.dispatchEvent(
+              this.dispatchEvent(
                 new ShowToastEvent({
                   message: error.body.pageErrors[0].message,
                   variant: 'error',

@@ -19,7 +19,7 @@ public without sharing class EMS_LM_EditLeaveRequest {
     public static EMS_LM_Leave_History__c getLeaveRequestMethod( String getrecordId ) {
         if(getrecordId != Null){
             EMS_LM_Leave_History__c leaverecord = [Select id , EMS_LM_Leave_Start_Date__c , EMS_LM_Leave_End_Date__c , EMS_LM_Leave_Duration__c,
-                                                   EMS_LM_Leave_Type_Name__c , EMS_LM_Reason__c , EMS_LM_Status__c , Name ,EMS_LM_Day__c
+                                                   EMS_LM_Leave_Type_Name__c ,Leave_Type_Name__c, EMS_LM_Reason__c , EMS_LM_Status__c , Name ,EMS_LM_Day__c
                                                    from EMS_LM_Leave_History__c 
                                                    where Id =: getrecordId];
             return leaverecord;
