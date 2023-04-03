@@ -32,6 +32,13 @@
                     <elementReference>Getrecords</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_of_Joining__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Reminder_Email_To_Candidate</targetReference>
             </connector>
@@ -49,8 +56,8 @@
         <dataType>Boolean</dataType>
         <expression>AND(
   NOT(ISBLANK({!$Record.Date_of_Joining__c})),
-  {!$Flow.CurrentDate} + 3 &gt;= {!$Record.Date_of_Joining__c},
-  {!$Flow.CurrentDate} + 1 &gt;= DATEVALUE({!$Record.ContactId1__r.CreatedDate}))</expression>
+  OR({!$Flow.CurrentDate} + 3 &gt;= {!$Record.Date_of_Joining__c},{!$Flow.CurrentDate} + 1 &gt;= 
+  DATEVALUE({!$Record.ContactId1__r.CreatedDate})))</expression>
     </formulas>
     <interviewLabel>PreOnboarding Gentle Reminder {!$Flow.CurrentDateTime}</interviewLabel>
     <label>PreOnboarding Gentle Reminder</label>

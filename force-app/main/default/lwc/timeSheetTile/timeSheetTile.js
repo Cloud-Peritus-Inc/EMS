@@ -12,7 +12,7 @@ export default class TimeSheetTile extends NavigationMixin(LightningElement) {
   connectedCallback() {
      
         getTimeSheetData().then( result => {
-            this.numberofhoursfilledthisweek = result.timeSheetrecord;
+            this.numberofhoursfilledthisweek = Math.floor(result.timeSheetrecord);
             this.filledpastdata =result.timeSheetRecordsList;
             this.frameTheCircle();
         }).catch(err => {

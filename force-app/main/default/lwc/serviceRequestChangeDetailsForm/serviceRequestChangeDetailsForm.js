@@ -181,6 +181,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
         }
         if (name === 'SubTypeReq') {
             this.selectedReqSubType = value;
+            this.selectedPriority = ''
         }
         if (name === 'Relationship') {
             this.selectedRelationship = value;
@@ -188,13 +189,10 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
     }
 
     handleSuccess(event) {
-
         const fields = event.detail.fields;
-        console.log('fields : ',fields.Request_Sub_Type__c.value);
-        console.log('### save fields : ', fields.Is_It_Emergency_Contact__c.value);
-        console.log('### save fields : ', JSON.stringify(fields.Is_It_Emergency_Contact__c.value, ));
-        console.log('### prop : ',fields.hasOwnProperty('Is_It_Emergency_Contact__c'));
-        // Check if both fields are false, and return from the function if they are
+        //console.log('fields : ', fields.Request_Sub_Type__c.value);
+        //console.log('### save fields : ', fields.Is_It_Emergency_Contact__c.value);
+        //console.log('### save fields : ', JSON.stringify(fields.Is_It_Emergency_Contact__c.value));
         if (fields.Request_Sub_Type__c.value === 'Family/Dependent Information' && fields.Is_It_Emergency_Contact__c.value === false && fields.Is_it_Dependant_Contact__c.value === false) {
             const even = new ShowToastEvent({
                 message: 'Please select at least one option before submitting the form.',
@@ -231,7 +229,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
         this.dispatchEvent(evt);
     }
 
-    // BANK SUBMIT HANDLER
+    //***************  BANK SUBMIT HANDLER ****************************
     onSubmitHandler(event) {
         console.log('OUTPUT : clicked');
         event.stopPropagation();
@@ -248,21 +246,10 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
         fields.AccountId = this.contactRecord.AccountId;
         fields.Subject = this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedReqSubType;
         console.log('### fields : ', fields);
-        /*if (fields.Is_It_Emergency_Contact__c === false && fields.Is_it_Dependant_Contact__c === false) {
-            const even = new ShowToastEvent({
-                message: 'Helloo',
-                variant: 'error'
-            });
-            this.dispatchEvent(even);
-        }*/
         // Push the updated fields though for the actual submission itself
         this.template.querySelector('lightning-record-edit-form').submit(fields);
     }
 
-    // FAMILY SUBMIT HANDLER
-    onSubmitFamilyHandler(event) {
-
-    }
 
     // ADDING ROWS AND TO REMOVE THE EDUCATION DETAILS
     @track itemList = [
@@ -297,7 +284,16 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
             Subject: this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedReqSubType
         };
         console.log('### fields : ', fields);
-
+        console.log('OUTPUT : ');
+        if (fields.Request_Sub_Type__c.value === 'Educational Details' && fields.Degree__c.value === null && fields.Level_of_Education__c.value === null && fields.Field_of_Study__c.value === null && fields.Institution_Name__c.value === null && fields.Graduation_Date__c.value === null) {
+            console.log('OUTPUT : 44');
+            const even = new ShowToastEvent({
+                message: 'Please enter the details.',
+                variant: 'error'
+            });
+            this.dispatchEvent(even);
+            return;
+        }
         const inputFields = this.template.querySelectorAll('lightning-input-field');
         inputFields.forEach(field => {
             fields[field.fieldName] = field.value;
@@ -312,12 +308,6 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
                 element.submit(fields);
             });
         }
-        const even = new ShowToastEvent({
-            title: 'Success!',
-            message: 'Successfully created the service request!',
-            variant: 'success'
-        });
-        this.dispatchEvent(even);
         this[NavigationMixin.Navigate]({
             type: "standard__recordPage",
             attributes: {
