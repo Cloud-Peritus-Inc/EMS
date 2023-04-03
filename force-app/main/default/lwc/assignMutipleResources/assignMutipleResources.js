@@ -144,6 +144,7 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
                 assData.EMS_TM_ProjectName_Asgn__c = this.recordId;
                 assData.EMS_TM_EmployeeName__c = blankRow[i].EMS_TM_EmployeeName__c;
                 assData.EMS_TM_StartDate_Asgn__c = blankRow[i].EMS_TM_StartDate_Asgn__c;
+                assData.EMS_TM_EndDate_Asgn__c = blankRow[i].EMS_TM_EndDate_Asgn__c;
                 assDataList.push(assData);
             }
         }
@@ -157,7 +158,7 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
                 this.dispatchEvent(evt);
                 console.log('=======return response=='+JSON.stringify(result));
                 window.location.reload();
-               /* let assDataList = this.assignDataWrp;
+               /* let assDataList = this.assignDataWrp;  EMS_TM_EndDate_Asgn__c
                 for(let i = 0; i < result.length; i++){
                     if(result[i] !== undefined){
                         let assRecord = {'sobjectType' : 'EMS_TM_Assignment__c'};
@@ -175,7 +176,7 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
                 this.index = result.length;
             }).catch(error => {
                 const evt = new ShowToastEvent({
-                        title: 'Toast Error',
+                        
                         message: error.body.message,
                         variant: 'error',
                         mode: 'dismissable'
@@ -184,7 +185,7 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
             })
         }else{
             const evt = new ShowToastEvent({
-                        title: 'Toast Error',
+                        
                         message: 'Select atleast one row',
                         variant: 'error',
                         mode: 'dismissable'
