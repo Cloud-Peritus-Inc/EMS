@@ -75,20 +75,24 @@ public without sharing class AssignServiceRequests  implements TriggerAction.Bef
             }
             
             if(cnew.Type != null){
-                if(cnew.Type == 'Problem' || cnew.Type == 'Others'){
+                if(cnew.Type == 'Technical Issues' || cnew.Type == 'Others'){
                     if(queueMap.containsKey(Label.Default_Grid_Support_Request_Owner)){
                         cnew.Case_Assignee__c =  queueMap.get(Label.Default_Grid_Support_Request_Owner); 
                     } 
                 }else if(cnew.Type == 'Change Of Details'){
-                    SYstem.debug('QueueContact'+queueMap.get(Label.Default_HR_Support_Request_Owner));
+                    SYstem.debug('QueueContact outside if'+queueMap.get(Label.Default_HR_Support_Request_Owner));
                     if(queueMap.containsKey(Label.Default_HR_Support_Request_Owner)){
+                        SYstem.debug('QueueContact inside if'+queueMap.get(Label.Default_HR_Support_Request_Owner));
                         cnew.Case_Assignee__c =  queueMap.get(Label.Default_HR_Support_Request_Owner); 
                     } 
                 }else if(cnew.Type == 'Resignation'){
                     cnew.Case_Assignee__c = ResourceManager != null ? ResourceManager : ReportingManager;
                 }else if(cnew.Type == 'Special Leaves'){
-                    if(ReportingManager != null && (cnew.Request_Sub_Type__c == 'Paternity' || cnew.Request_Sub_Type__c == 'Marriage' || cnew.Request_Sub_Type__c == '	Bereavement Leave' || cnew.Request_Sub_Type__c == 'Comp off')){
+                    if(ReportingManager != null && (cnew.Request_Sub_Type__c == 'Paternity' || cnew.Request_Sub_Type__c == 'Marriage' || cnew.Request_Sub_Type__c == 'Bereavement Leave' || cnew.Request_Sub_Type__c == 'Comp off')){
                         cnew.Case_Assignee__c = ReportingManager;
+                    }
+                    else if(cnew.Request_Sub_Type__c == 'Maternity'){
+                        cnew.Case_Assignee__c =  queueMap.get(Label.Default_HR_Support_Request_Owner);
                     }
                 } 
             }

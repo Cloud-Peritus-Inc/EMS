@@ -40,7 +40,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TimeSheet Label</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/timesheet</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/timesheet</value>
     </labels>
     <labels>
         <fullName>Pre_Onboarding_Form_URL</fullName>
@@ -75,7 +75,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Project label</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/detail/</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/detail/</value>
     </labels>
     <labels>
         <fullName>Grid_Portal_Link</fullName>
@@ -131,7 +131,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Timesheet Approval</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/detail/</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/detail/</value>
     </labels>
     <labels>
         <fullName>Service_Request_URL</fullName>

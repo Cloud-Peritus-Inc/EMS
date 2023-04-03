@@ -9,7 +9,7 @@
     <textOnly>Dear {!EMS_TM_Project__c.Project_Manager__c},
 
 
-The project {!EMS_TM_Project__c.Name} is nearing completion with the end date on {!EMS_TM_Project__c.EMS_TM_EndDate__c}.Please change the end date of the project to extend it, if required. In case there is no extension, then make sure to change the status of the project to &apos;Completed&apos; on the end date so that the associated assignments are closed. Please change the end date of the project to extend it, if required. You can find the project record here.
+The project {!EMS_TM_Project__c.Name} is nearing completion with the end date on {!EMS_TM_Project__c.EMS_TM_EndDate__c}. Please change the end date of the project to extend it, if required. In case there is no extension, then make sure to change the status of the project to &apos;Completed&apos; on the end date so that the associated assignments are closed. You can find the project record here.
 
 
 Regards,
