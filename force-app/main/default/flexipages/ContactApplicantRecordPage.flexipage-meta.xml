@@ -232,16 +232,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Pre_Joining_Date__c</fieldItem>
-                <identifier>RecordPre_Joining_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Tentative_Date_of_Joining__c</fieldItem>
                 <identifier>RecordTentative_Date_of_Joining_cField</identifier>
             </fieldInstance>

@@ -3,7 +3,6 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>EMS_LM_Leave_Type__c</columns>
-    <columns>OWNER.FIRST_NAME</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

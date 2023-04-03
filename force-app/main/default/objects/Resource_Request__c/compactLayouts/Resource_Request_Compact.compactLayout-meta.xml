@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resource_Request_Compact</fullName>
+    <fields>Name</fields>
+    <fields>Resource_Role1__c</fields>
+    <fields>Request_Priority__c</fields>
+    <fields>Status__c</fields>
+    <fields>Requested_By__c</fields>
+    <label>Resource Request Compact</label>
+</CompactLayout>

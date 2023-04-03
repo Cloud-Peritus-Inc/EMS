@@ -2,8 +2,8 @@ import { LightningElement, wire } from 'lwc';
 import getLoggedInUserResReportsSize from '@salesforce/apex/LeaveHistoryApexController.getLoggedInUserResReportsSize';
 export default class GridHomePage extends LightningElement {
 
-    hidePendingTab;
-    hidetimeTab;
+    hidePendingTab = false;
+    hidetimeTab = false;
 
     @wire(getLoggedInUserResReportsSize)
     getLoggedInUserResReportsSizeWiredData({ error, data }) {

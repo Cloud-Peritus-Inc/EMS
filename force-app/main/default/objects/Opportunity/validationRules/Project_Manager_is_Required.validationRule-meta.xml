@@ -4,5 +4,5 @@
     <active>true</active>
     <errorConditionFormula>TEXT(StageName) == &quot;Closed Won&quot; &amp;&amp; ISBLANK(Project_Manager__c)</errorConditionFormula>
     <errorDisplayField>Project_Manager__c</errorDisplayField>
-    <errorMessage>Project Manager is Required When Opportunity is Closed Won</errorMessage>
+    <errorMessage>The following fields are required when the Opportunity is Closed Won: Contract Start Date, Contract End Date, Project Manager</errorMessage>
 </ValidationRule>
