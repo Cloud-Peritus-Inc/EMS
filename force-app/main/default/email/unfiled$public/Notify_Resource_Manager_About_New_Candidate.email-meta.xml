@@ -5,11 +5,11 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notify Resource Manager About New Candidate</name>
     <style>freeForm</style>
-    <subject>Cloud Peritus :  Upcoming Employee Onboarding</subject>
+    <subject>Onboarding: Upcoming employee onboarding</subject>
     <textOnly>Dear {!Contact.Resource_Manager__c},
 
 
-The following candidate will join our company on {!Contact.EMS_EM_JD__c}:
+The following candidate will join our company on {!Contact.EMS_EM_JD__c}.
 
 Name: {!Contact.Name}
 
@@ -22,7 +22,7 @@ Please be prepared to give an orientation session on their first day. Also, ensu
 
 Regards,
 
-Team Cloud Peritus</textOnly>
+The Team Cloud Peritus</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
