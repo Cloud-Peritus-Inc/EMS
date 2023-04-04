@@ -261,7 +261,12 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
 
   //Approve All
   handleApproveAllComments(event) {
-    this.approveAllComments = event.target.value;
+    if (event.target.value) {
+      this.errorMessage = '';
+      this.approveAllComments = event.target.value
+    } else {
+      this.errorMessage = 'Please enter the comments';
+    }
   }
 
   handleApproveAll() {
@@ -280,24 +285,27 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
   handleApproveAllSave() {
     console.log('OUTPUT : ');
     console.log('OUTPUT multipleApprovals: ', JSON.stringify(this.multipleApprovals));
-    bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
-      .then((result) => {
-        console.log('Leave Request: ', result);
-        this.isShowModalApproveAll = false;
-        const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
-        checkboxElements.forEach(element => {
-          element.checked = false;
+    if (this.template.querySelector('lightning-textarea').reportValidity()) {
+      bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
+        .then((result) => {
+          console.log('Leave Request: ', result);
+          this.isShowModalApproveAll = false;
+          this.approveAllComments = '';
+          const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+          checkboxElements.forEach(element => {
+            element.checked = false;
+          });
+          console.log('### checkBox : ', this.checkBox);
+          const evt = new ShowToastEvent({
+            message: 'Leave Request was updated successfully',
+            variant: 'success',
+          });
+          this.dispatchEvent(evt);
+          return refreshApex(this._wiredRefreshData)
+        }).catch((err) => {
+          console.log('ERROR : ', err);
         });
-        console.log('### checkBox : ', this.checkBox);
-        const evt = new ShowToastEvent({
-          message: 'Leave Request was updated successfully',
-          variant: 'success',
-        });
-        this.dispatchEvent(evt);
-        return refreshApex(this._wiredRefreshData)
-      }).catch((err) => {
-        console.log('ERROR : ', err);
-      });
+    }
   }
 
   //Reject All
@@ -357,7 +365,12 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
 
   //Approve Modal
   handleApproveComments(event) {
-    this.approveComments = event.target.value;
+    if (event.target.value) {
+      this.errorMessage = '';
+      this.approveComments = event.target.value;
+    } else {
+      this.errorMessage = 'Please enter the comments';
+    }
   }
 
   showModalApprovalBox(event) {
@@ -369,23 +382,26 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
   }
 
   handleApproveSave(event) {
-    updateLeaveStatus({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
-      .then((result) => {
-        console.log('Leave Request: ', result);
-        this.isShowModalApprove = false;
-        const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
-        checkboxElements.forEach(element => {
-          element.checked = false;
+    if (this.template.querySelector('lightning-textarea').reportValidity()) {
+      updateLeaveStatus({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
+        .then((result) => {
+          console.log('Leave Request: ', result);
+          this.isShowModalApprove = false;
+          this.approveComments = ''
+          const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
+          checkboxElements.forEach(element => {
+            element.checked = false;
+          });
+          const evt = new ShowToastEvent({
+            message: 'Leave Request was updated successfully',
+            variant: 'success',
+          });
+          this.dispatchEvent(evt);
+          return refreshApex(this._wiredRefreshData)
+        }).catch((err) => {
+          console.log('ERROR : ', err);
         });
-        const evt = new ShowToastEvent({
-          message: 'Leave Request was updated successfully',
-          variant: 'success',
-        });
-        this.dispatchEvent(evt);
-        return refreshApex(this._wiredRefreshData)
-      }).catch((err) => {
-        console.log('ERROR : ', err);
-      });
+    }
   }
 
   //Reject Modal

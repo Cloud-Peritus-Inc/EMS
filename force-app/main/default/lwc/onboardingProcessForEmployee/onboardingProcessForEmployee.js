@@ -8,6 +8,7 @@ import CompanyGridData from '@salesforce/apex/GetDataForLoginUser.CompanyGridDat
 import pfFormsid from '@salesforce/apex/GetDataForLoginUser.pfFormsid';
 import Documentsdata from '@salesforce/apex/GetDataForLoginUser.Documentsdata';
 import CompanyPoliciesdata from '@salesforce/apex/GetDataForLoginUser.CompanyPoliciesdata';
+import uploadFiles from '@salesforce/apex/GetDataForLoginUser.saveFiles';
 import getRelatedFilesByRecordId from '@salesforce/apex/GetDataForLoginUser.getRelatedFilesByRecordId';
 import Id from '@salesforce/user/Id';
 import getLoginURL from '@salesforce/apex/GetDataForLoginUser.getLoginURL';
@@ -23,20 +24,6 @@ import { deleteRecord } from 'lightning/uiRecordApi';
 
 import updateContact from '@salesforce/apex/GetDataForLoginUser.updateContact';
 
-const columns = [
-  {
-    label: 'Title', fieldName: 'Title', wrapText: true,
-    cellAttributes: {
-      iconName: { fieldName: 'icon' }, iconPosition: 'left'
-    }
-  },
-  {
-    label: 'Preview', type: 'button', typeAttributes: {
-      label: 'Preview', name: 'Preview', variant: 'brand-outline',
-      iconName: 'utility:preview', iconPosition: 'right'
-    }
-  },
-];
 
 function uploadFilesFromThis(event, ts) {
   if (event.target.files.length > 0 && event.target.files[0].size < 2000000 && event.target.files[0].type == "application/pdf") {
@@ -54,31 +41,6 @@ function uploadFilesFromThis(event, ts) {
       ts.fileName1 = uploadedFileName;
       concatFileName = 'DrivingLicense_' + fileNameToAdd;
     }
-    else if (nameOfInput === "Form11") {
-      ts.fileName2 = uploadedFileName;
-      concatFileName = 'Form11_' + fileNameToAdd;
-    }
-    else if (nameOfInput === "Form2") {
-      ts.fileName3 = uploadedFileName;
-      concatFileName = 'Form2_' + fileNameToAdd;
-    }
-    else if (nameOfInput === "Documents1") {
-      ts.fileName4 = uploadedFileName;
-      concatFileName = 'Documents1_' + fileNameToAdd;
-    }
-    else if (nameOfInput === "Documents2") {
-      ts.fileName5 = uploadedFileName;
-      concatFileName = 'Documents2_' + fileNameToAdd;
-    }
-    else if (nameOfInput === "Documents3") {
-      ts.fileName6 = uploadedFileName;
-      concatFileName = 'Documents3_' + fileNameToAdd;
-    }
-    else if (nameOfInput === "Documents4") {
-      ts.fileName7 = uploadedFileName;
-      concatFileName = 'Documents4_' + fileNameToAdd;
-    }
-
     let reader = new FileReader();
     reader.onloadend = e => {
       let base64 = 'base64,';
@@ -98,29 +60,29 @@ function uploadFilesFromThis(event, ts) {
 }
 
 function updateStatusFields(ts) {
-   let statusfield = { 'sobjectType': 'Contact' };
-   statusfield.Post_Onboarding_Confirm__c = ts.PostOnboardingConfirm;
-   statusfield.ProfileConfirm__c = ts.isPersonalUpdateCheckbox;
-   statusfield.IdentityInformationCheck__c = ts.isIdentifyDetailsCheckbox;
-   statusfield.EmploymentDetailsCheck__c = ts.isEmploymentDetailsCheckbox;
-   statusfield.Address_Details_Check__c = ts.isAddressDetailsCheckbox;
-   statusfield.Family_Information_Check__c = ts.isFamilyInformationCheckbox;
-   statusfield.Financial_Information_Check__c = ts.isFinancialInformationCheckbox;
-   statusfield.Vehicle_Details_Check__c = ts.isVehicleDetailsCheckbox;
-   statusfield.PF_Forms_Check__c = ts.isPFFormsCheckbox;
-   statusfield.Documents_Check__c = ts.isDocumentsValueChecked;
-   statusfield.Company_Policies_Check__c = ts.isCompanyPoliciesValueChecked;
-   statusfield.Company_Information_Check__c = ts.isCompanyInformationValueChecked;
-   updateStatus({ statusUpdate: statusfield, ConRecordid: ts.contactID })
-   .then(result => {
-    
-    console.log('result' , result);
+  let statusfield = { 'sobjectType': 'Contact' };
+  statusfield.Post_Onboarding_Confirm__c = ts.PostOnboardingConfirm;
+  statusfield.ProfileConfirm__c = ts.isPersonalUpdateCheckbox;
+  statusfield.IdentityInformationCheck__c = ts.isIdentifyDetailsCheckbox;
+  statusfield.EmploymentDetailsCheck__c = ts.isEmploymentDetailsCheckbox;
+  statusfield.Address_Details_Check__c = ts.isAddressDetailsCheckbox;
+  statusfield.Family_Information_Check__c = ts.isFamilyInformationCheckbox;
+  statusfield.Financial_Information_Check__c = ts.isFinancialInformationCheckbox;
+  statusfield.Vehicle_Details_Check__c = ts.isVehicleDetailsCheckbox;
+  statusfield.PF_Forms_Check__c = ts.isPFFormsCheckbox;
+  statusfield.Documents_Check__c = ts.isDocumentsValueChecked;
+  statusfield.Company_Policies_Check__c = ts.isCompanyPoliciesValueChecked;
+  statusfield.Company_Information_Check__c = ts.isCompanyInformationValueChecked;
+  updateStatus({ statusUpdate: statusfield, ConRecordid: ts.contactID })
+    .then(result => {
 
-  })
-  .catch(error => {
-    this.error = error;
-    console.log('this.error-->' + JSON.stringify(this.error));
-  });
+      console.log('result', result);
+
+    })
+    .catch(error => {
+      this.error = error;
+      console.log('this.error-->' + JSON.stringify(this.error));
+    });
 }
 
 const isAllowedKeyCode = keyCode => {
@@ -137,6 +99,7 @@ const isAllowedKeyCode = keyCode => {
   }
   return false;
 }
+const MAX_FILE_SIZE = 2097152;
 
 export default class OnboardingProcessForEmployee extends NavigationMixin(LightningElement) {
 
@@ -148,7 +111,9 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   isWelcomeaboardValueChecked = true;
 
   filesList = []
-
+  wiredResultcon;
+  @track dataPFList;
+  @track dataDocList;
   userId = Id;
   contactID;
   UserName;
@@ -183,6 +148,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   buttonDisable = false;
   expression1 = false;
   PostOnboardingConfirm = false;
+  showSpinner = false;
 
 
 
@@ -205,6 +171,8 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @track pNum;
 
   @track cd;
+  @track filesData = [];
+  @track filesDocData = [];
 
   handleAadharNumberKeyDown(event) {
     if (isAllowedKeyCode(event.keyCode)) {
@@ -226,27 +194,21 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
   }
 
+  @track dataList;
+
   connectedCallback() {
-    
-
-
     var dateVar = new Date();
     //Current Time 
     this.currenttime = new Date().toLocaleTimeString();
-
-     
-
 
     getUserContactInfo({ userId: this.userId }).then(result => {
       //console.log('getUserContactInfo------------->' ,result.contactDetails);
       //console.log('getUserContactInfo------------->' ,result.fileDetailsList);
       this.contactID = result.contactDetails.Id;
-
       this.UserName = result.contactDetails.Name;
       const employye = result.contactDetails;
       if (employye != null) {
         //this.readonlyfield=true;
-
         this.firstName = employye.FirstName;
         this.lastName = employye.LastName;
         this.dob = employye.EMS_EM_DOB__c;
@@ -296,50 +258,35 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           this.buttonDisable = true;
           this.readonlyfield = true;
           this.expression1 = true;
-        }
-        if(this.padrressline1 === this.cadrressline1){
+          this.disableFlag = true;
           this.paFlag = true;
-          this.disableFlag = false;
         }
+        if(this.cadrressline1 !=null && this.padrressline1 != null){
+          if (this.padrressline1 === this.cadrressline1) {
+            this.paFlag = true;
+          }
+            else{
+              this.disableFlag = false;
+            }
+         }
+        
+        this.dataList = result.fileDetailsList;
+        let filteredFiles = this.dataList.filter((file) => file.title.includes('PF Form'));
+        let filteredDocFiles = this.dataList.filter((file) => file.title.includes('Document'));
+        this.dataPFList = filteredFiles;
+        this.dataDocList = filteredDocFiles;
+        //console.log('filteredFiles', filteredFiles);
+        //console.table(filteredFiles.map(item => ({title: item.title, type: item.type})));
 
         result.fileDetailsList.forEach((currentItem) => {
-          console.log("currentItem.Title==============>>", currentItem.title);
-          if(currentItem.title.includes('Passport_')){
-          this.fileName = currentItem.title;
-          console.log('passport',this.fileName);
+          if (currentItem.title.includes('Passport_')) {
+            this.fileName = currentItem.title;
           }
-         else if(currentItem.title.includes('DrivingLicense_')){
-          this.fileName1 = currentItem.title;
-            console.log('DrivingLicense_',this.fileName1);
-            }
-         else if(currentItem.title.includes('Form11_')){
-          this.fileName2 = currentItem.title;
-              console.log('Form11_',this.fileName2);
-         }
-         else if(currentItem.title.includes('Form2_')){
-          this.fileName3 = currentItem.title;
-          console.log('Form2_ photo',this.fileName3);
-         }
-         else if(currentItem.title.includes('Documents1_')){
-          this.fileName4 = currentItem.title;
-          console.log('Documents1 photo',this.fileName4);
-         }
-         else if(currentItem.title.includes('Documents2_')){
-          this.fileName5 = currentItem.title;
-          console.log('certificate photo',this.fileName5);
-         }
-         else if(currentItem.title.includes('Documents3_')){
-          this.fileName6 = currentItem.title;
-          this.ShowDocumentUpload = true;
-          this.hideDocumentUpload = false;
-          console.log('certificate photo',this.fileName6);
-         }
-         else if(currentItem.title.includes('Documents4_')){
-          this.fileName7 = currentItem.title;
-          console.log('certificate photo',this.fileName7);
-         }
+          else if (currentItem.title.includes('DrivingLicense_')) {
+            this.fileName1 = currentItem.title;
+          }
         })
-    
+
         getPayrollInfo({ conId: this.contactID })
           .then(result => {
             const employye = result[0];
@@ -451,7 +398,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
   ];
 
-  sodexooptions =[
+  sodexooptions = [
     { label: 'Yes', value: 'Yes' },
     { label: 'No', value: 'No' }
   ];
@@ -471,16 +418,13 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @track pazip;
   message;
   error;
- 
+
   inputcheckboxValue;
 
   AddressCheckboxChange(event) {
-
     this.inputcheckboxValue = event.target.checked ? 'Checked' : 'Unchecked';
     //console.log('this.inputcheckboxValue-->', this.inputcheckboxValue);
-    
-
-    if (this.inputcheckboxValue == 'Checked') { 
+    if (this.inputcheckboxValue == 'Checked') {
       //console.log('address checked')
       this.padrressline1 = this.cadrressline1;
       this.padrressline2 = this.cadrressline2;
@@ -495,149 +439,142 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.pacity = '';
       this.pazip = '';
     }
-
-    
   }
   @track paFlag;
   @track addressFlag;
   @track disableFlag = true;
 
-    handleChange(event) {
+  handleChange(event) {
 
-      this.addressFlag = true;
-          let addressList = this.template.querySelectorAll('.addressClass');
-          if (this.addressFlag) {
-            addressList.forEach((ele) => {
-              if (!ele.value) {
-                this.addressFlag = false;
-              }
-            });
-          }
-      this.disableFlag = this.addressFlag ? false : true;
-      if (!this.addressFlag) {
-        //console.log('1473');
-        this.paFlag = false;
+    this.addressFlag = true;
+    let addressList = this.template.querySelectorAll('.addressClass');
+    if (this.addressFlag) {
+      addressList.forEach((ele) => {
+        if (!ele.value) {
+          this.addressFlag = false;
+        }
+      });
+    }
+    this.disableFlag = this.addressFlag ? false : true;
+    if (!this.addressFlag) {
+      //console.log('1473');
+      this.paFlag = false;
 
-      }
-      const field = event.target.name;
-      if (field === 'EMS_EM_CAddress_Line_1__c') {
-          this.cadrressline1 = event.target.value;
-          //console.log('234',event.target.value);
-          if(event.target.value == ''){
-            //console.log('empty string');
-            this.cadrressline1 = null;
-
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.padrressline1 = this.cadrressline1;
-
-          }
-
+    }
+    const field = event.target.name;
+    if (field === 'EMS_EM_CAddress_Line_1__c') {
+      this.cadrressline1 = event.target.value;
+      //console.log('234',event.target.value);
+      if (event.target.value == '') {
+        //console.log('empty string');
+        this.cadrressline1 = null;
 
       }
-       if (field === 'EMS_EM_CAddress_Line_2__c') {
-          this.cadrressline2 = event.target.value;
-          //console.log(event.target.value);
-          if(event.target.value == ''){
-            this.cadrressline2 = null;
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.padrressline2 = this.cadrressline2;
-          }
-
-
-      }
-        if (field === 'EMS_EM_CA_State__c') {
-          this.castate = event.target.value;
-          //console.log(event.target.value);
-          if(event.target.value == ''){
-            this.castate = null;
-
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.pastate = this.castate;
-          }
-
-      }
-        if (field === 'EMS_EM_CA_City__c') {
-          this.cacity = event.target.value;
-          //console.log(event.target.value);
-          if(event.target.value == ''){
-            this.cacity = null;
-
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.pacity = this.cacity;
-          }
-
-      }
-       if (field === 'EMS_EM_CA_Zip__c') {
-          this.cazip = event.target.value;
-          //console.log(event.target.value);
-
-          if(event.target.value == ''){
-            this.cazip = null;
-
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.pazip = this.cazip;
-          }
-
-      }
-      //permanent address
-      if (field === 'EMS_EM_PAddress_Line_1__c') {
-          this.padrressline1 = event.target.value;
-          //console.log(event.target.value);
-          if(event.target.value == ''){
-            this.padrressline1 = null;
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.cadrressline1 = this.padrressline1;
-
-          }
-
-      }
-       if (field === 'EMS_EM_PAddress_Line_2__c') {
-          this.padrressline2 = event.target.value;
-          //console.log(event.target.value);
-          if(event.target.value == ''){
-            this.padrressline2 = null;
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.cadrressline2 = this.padrressline2;
-          }
-      }
-        if (field === 'EMS_EM_PA_State__c') {
-          this.pastate = event.target.value;
-          //console.log(event.target.value);
-          if(event.target.value == ''){
-            this.pastate = null;
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.castate = this.pastate;
-          }
-      }
-        if (field === 'EMS_EM_PA_City__c') {
-          this.pacity = event.target.value;
-          //console.log(event.target.value);
-          if(event.target.value == ''){
-            this.pacity = null;
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.cacity = this.pacity;
-          }
-      }
-        if (field === 'EMS_EM_PA_Zip__c') {
-          this.pazip = event.target.value;
-          //console.log(event.target.value);
-          if(event.target.value == ''){
-            this.pazip = null;
-          }
-          if (this.inputcheckboxValue == 'Checked'){
-            this.cazip = this.pazip;
-          }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.padrressline1 = this.cadrressline1;
       }
     }
+    if (field === 'EMS_EM_CAddress_Line_2__c') {
+      this.cadrressline2 = event.target.value;
+      //console.log(event.target.value);
+      if (event.target.value == '') {
+        this.cadrressline2 = null;
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.padrressline2 = this.cadrressline2;
+      }
+    }
+    if (field === 'EMS_EM_CA_State__c') {
+      this.castate = event.target.value;
+      //console.log(event.target.value);
+      if (event.target.value == '') {
+        this.castate = null;
+
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.pastate = this.castate;
+      }
+
+    }
+    if (field === 'EMS_EM_CA_City__c') {
+      this.cacity = event.target.value;
+      //console.log(event.target.value);
+      if (event.target.value == '') {
+        this.cacity = null;
+
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.pacity = this.cacity;
+      }
+
+    }
+    if (field === 'EMS_EM_CA_Zip__c') {
+      this.cazip = event.target.value;
+      //console.log(event.target.value);
+
+      if (event.target.value == '') {
+        this.cazip = null;
+
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.pazip = this.cazip;
+      }
+
+    }
+    //permanent address
+    if (field === 'EMS_EM_PAddress_Line_1__c') {
+      this.padrressline1 = event.target.value;
+      //console.log(event.target.value);
+      if (event.target.value == '') {
+        this.padrressline1 = null;
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.cadrressline1 = this.padrressline1;
+
+      }
+
+    }
+    if (field === 'EMS_EM_PAddress_Line_2__c') {
+      this.padrressline2 = event.target.value;
+      //console.log(event.target.value);
+      if (event.target.value == '') {
+        this.padrressline2 = null;
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.cadrressline2 = this.padrressline2;
+      }
+    }
+    if (field === 'EMS_EM_PA_State__c') {
+      this.pastate = event.target.value;
+      //console.log(event.target.value);
+      if (event.target.value == '') {
+        this.pastate = null;
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.castate = this.pastate;
+      }
+    }
+    if (field === 'EMS_EM_PA_City__c') {
+      this.pacity = event.target.value;
+      //console.log(event.target.value);
+      if (event.target.value == '') {
+        this.pacity = null;
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.cacity = this.pacity;
+      }
+    }
+    if (field === 'EMS_EM_PA_Zip__c') {
+      this.pazip = event.target.value;
+      //console.log(event.target.value);
+      if (event.target.value == '') {
+        this.pazip = null;
+      }
+      if (this.inputcheckboxValue == 'Checked') {
+        this.cazip = this.pazip;
+      }
+    }
+  }
 
   // Identity Information"....
 
@@ -710,8 +647,8 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     this.VehicleNumber = event.target.value;
   }
   doyouhaveavehicle(event) {
-      this.checkboxValue = event.target.checked;
-      //console.log('this.checkboxValue--------->'  +  this.checkboxValue)
+    this.checkboxValue = event.target.checked;
+    //console.log('this.checkboxValue--------->'  +  this.checkboxValue)
     if (this.checkboxValue == true) {
       this.showvehicle = true;
       this.checkboxValue = true
@@ -1090,33 +1027,11 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$pfId' })
   wiredResult({ data, error }) {
     if (data) {
-      //console.log('Pf Forms Files-->' + JSON.stringify(data));
-      /* this.filesList = Object.keys(data).map(item => ({
-         "label": data[item],
-         "value": item,
-         "url": `/sfsites/c/sfc/servlet.shepherd/document/download/${item}`
-       })) */
       this.documents = data;
-
-      //console.log('' + JSON.stringify(this.documents));
     }
     if (error) {
       console.log(error)
     }
-  }
-  previewHandler0(event) {
-    const fileId = event.target.dataset.id;
-    //console.log(event.target.dataset.id)
-    this[NavigationMixin.Navigate]({
-      type: 'standard__namedPage',
-      attributes: {
-          pageName: 'filePreview'
-      },
-      state: {
-          recordIds: fileId,
-          selectedRecordId: fileId
-      }
-  });
   }
   // For Documents Files
   filesList0 = []
@@ -1124,19 +1039,12 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$docId' })
   wiredResult0({ data, error }) {
     if (data) {
-      //console.log('Documents Files-->' + JSON.stringify(data));
-      /* this.filesList0 = Object.keys(data).map(item => ({
-         "label": data[item],
-         "value": item,
-         "url": `/sfc/servlet.shepherd/document/download/${item}`
-       }))*/
       //console.log(this.filesList0)
       this.docs = data;
-
       //console.log('' + JSON.stringify(this.documents));
     }
     if (error) {
-     // console.log(error)
+      // console.log(error)
     }
   }
 
@@ -1147,12 +1055,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @wire(getRelatedFilesByRecordIdForPayForms, { recordId: '$policiesId' })
   wiredResult1({ data, error }) {
     if (data) {
-      //console.log('Company Policies Files-->' + JSON.stringify(data));
-      /* this.filesList1 = Object.keys(data).map(item => ({
-         "label": data[item],
-         "value": item,
-         "url": `/sfc/servlet.shepherd/document/download/${item}`
-       }))*/
       this.cpPolicies = data;
       //console.log(this.cpPolicies)
     }
@@ -1172,11 +1074,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
-        //console.log("this.dob", this.dob);
-        //console.log("this.dow", this.dow);
-        //console.log("this.graduationDate", this.graduationDate);
-
-        //console.log("today", today);
         if (this.dob >= today) {
           //console.log("I am in if");
           this.dispatchEvent(
@@ -1268,37 +1165,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
   }
 
-  selectStep5() {
-    if (this.readonlyfield != true) {
-      if (this.fileName2 != null && this.fileName3 != null) {
-        return true;
-      } else {
-        const even = new ShowToastEvent({
-          message: 'Please Upload required Froms & avoid invalid data!',
-          variant: 'error'
-        });
-        this.dispatchEvent(even);
-        return false;
-      }
-    }
-  }
-
-  selectStep6() {
-    if (this.readonlyfield != true) {
-      if (this.fileName4 != null && this.fileName5 != null) {
-        return true;
-      } else {
-        const even = new ShowToastEvent({
-          message: 'Please Upload required Documents & avoid invalid data!',
-          variant: 'error'
-        });
-        this.dispatchEvent(even);
-        return false;
-      }
-    }
-  }
-
-
   //uploading all files
   @track filesUploaded = [];
   uploadedFiles = []; file; fileName;
@@ -1322,34 +1188,57 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     uploadFilesFromThis(event, this);
   }
 
-  onFileUpload2(event) {
-    uploadFilesFromThis(event, this);
+  handleFileUploaded(event) {
+    if (event.target.files.length > 0) {
+      for (var i = 0; i < event.target.files.length; i++) {
+        if (event.target.files[i].size > MAX_FILE_SIZE) {
+          this.showToast('error', 'File size exceeded the upload size limit.');
+          return;
+        }
+        let file = event.target.files[i];
+        let fileExtension = file.name.substring(file.name.lastIndexOf('.'));
+        let newFileName = 'PF Form_' + file.name;
+        let renamedFile = new File([file], newFileName, { type: file.type });
+        let reader = new FileReader();
+        reader.onload = e => {
+          var fileContents = reader.result.split(',')[1]
+          this.filesData.push({ 'fileName': renamedFile.name, 'fileContent': fileContents });
+        };
+        reader.readAsDataURL(renamedFile);
+      }
+    }
   }
 
-  onFileUpload3(event) {
-    uploadFilesFromThis(event, this);
+  handleDocFileUploaded(event) {
+    if (event.target.files.length > 0) {
+      for (var i = 0; i < event.target.files.length; i++) {
+        if (event.target.files[i].size > MAX_FILE_SIZE) {
+          this.showToast('error', 'File size exceeded the upload size limit.');
+          return;
+        }
+        let file = event.target.files[i];
+        let fileExtension = file.name.substring(file.name.lastIndexOf('.'));
+        let newFileName = 'Document_' + file.name;
+        let renamedFile = new File([file], newFileName, { type: file.type });
+        let reader = new FileReader();
+        reader.onload = e => {
+          var fileContents = reader.result.split(',')[1]
+          this.filesDocData.push({ 'fileName': renamedFile.name, 'fileContent': fileContents });
+        };
+        reader.readAsDataURL(renamedFile);
+      }
+    }
   }
 
-  onFileUpload4(event) {
-    uploadFilesFromThis(event, this);
-
+  removeReceiptImage(event) {
+    var index = event.currentTarget.dataset.id;
+    this.filesData.splice(index, 1);
   }
 
-  onFileUpload5(event) {
-    uploadFilesFromThis(event, this);
+  removedocReceiptImage(event) {
+    var index = event.currentTarget.dataset.id;
+    this.filesDocData.splice(index, 1);
   }
-  onFileUpload6(event) {
-    uploadFilesFromThis(event, this);
-
-  }
-
-  onFileUpload7(event) {
-    uploadFilesFromThis(event, this);
-  }
-
-
-
-
 
   readonlyfield = false;
 
@@ -1402,18 +1291,17 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
     if (this.isShowPersonalDetails == true) {
       if (this.selectStep1()) {
-
+        this.showSpinner = true;
         updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj })
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                message: 'Personal Details Saved Successfully',
+                message: 'Details saved successfully',
                 variant: 'success',
               }),
             ); this.isPersonalUpdateCheckbox = true;
             updateStatusFields(this)
-            
-
+            this.showSpinner = false;
           })
           .catch(error => {
             this.error = error;
@@ -1432,18 +1320,19 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     if (this.isIdentityDetails == true) {
       if (this.selectStep2) {
         //console.log('selectStep2');
+        this.showSpinner = true;
         updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj, files: this.filesUploaded })
 
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                message: 'Identification Details Saved Successfully',
+                message: 'Details saved successfully',
                 variant: 'success',
               }),
             ); this.isIdentifyDetailsCheckbox = true;
             updateStatusFields(this)
+            this.showSpinner = false;
             //console.log('isIdentityDetails');
-
           })
           .catch(error => {
             this.error = error;
@@ -1460,17 +1349,17 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
     if (this.isAddressDetails == true) {
       if (this.selectStep3()) {
-
+        this.showSpinner = true;
         updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj })
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                message: 'Address Details Saved Successfully',
+                message: 'Details saved successfully',
                 variant: 'success',
               }),
             ); this.isAddressDetailsCheckbox = true;
             updateStatusFields(this)
-
+            this.showSpinner = false;
           })
           .catch(error => {
             this.error = error;
@@ -1495,16 +1384,18 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           return validSoFar && inputField.checkValidity();
         }, true);
       if (isInputsCorrect) {
+        this.showSpinner = true;
         updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj })
 
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                message: 'Financial Details Saved Successfully',
+                message: 'Details saved successfully',
                 variant: 'success',
               }),
             ); this.isFinancialInformationCheckbox = true;
             updateStatusFields(this)
+            this.showSpinner = false;
             //console.log('isIdentityDetails');
 
           })
@@ -1538,16 +1429,17 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           return validSoFar && inputField.checkValidity();
         }, true);
       if (isInputsCorrect) {
+        this.showSpinner = true;
         updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj })
           .then(result => {
             this.dispatchEvent(
               new ShowToastEvent({
-                message: 'Vehicle Details Saved Successfully',
+                message: 'Details saved successfully',
                 variant: 'success',
               }),
             ); this.isVehicleDetailsCheckbox = true;
             updateStatusFields(this)
-
+            this.showSpinner = false;
           })
           .catch(error => {
             this.error = error;
@@ -1564,26 +1456,71 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
 
     if (this.isPFForms == true) {
-      if (this.selectStep5()) {
-        //console.log('selectStep4');
-        updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj, files: this.filesUploaded })
 
-          .then(result => {
+      //console.log('recordId ', this.contactID);
+      //console.log('filesData length:', this.filesData.length);
+      if (this.filesData == [] || this.filesData.length == 0) {
+        this.dispatchEvent(
+          new ShowToastEvent({
+            message: 'Please select files first',
+            variant: 'error',
+          }),
+        ); return;
+      }
+      this.showSpinner = true;
+      uploadFiles({
+        recordId: this.contactID,
+        filedata: JSON.stringify(this.filesData)
+      })
+        .then(result => {
+          //console.log(result);
+          if (result && result == 'success') {
+            //console.log('Upload successful---->', result);
+            this.filesData = [];
             this.dispatchEvent(
               new ShowToastEvent({
-                message: 'PF Forms Uploaded Successfully',
+                message: 'PF Forms Uploaded successfully.',
                 variant: 'success',
               }),
             ); this.isPFFormsCheckbox = true;
             updateStatusFields(this)
-            //console.log('isIdentityDetails');
-
-          })
-          .catch(error => {
-            this.error = error;
-            //console.log('this.error-->' + JSON.stringify(this.error));
-          });
-      }
+            // Refresh the data
+            getUserContactInfo({ userId: this.userId })
+              .then((result) => {
+                this.contactID = result.contactDetails.Id;
+                this.dataList = result.fileDetailsList;
+                let filteredFiles = this.dataList.filter((file) =>
+                  file.title.includes('PF Form')
+                );
+                let filteredDocFiles = this.dataList.filter((file) =>
+                  file.title.includes('Document')
+                );
+                this.dataPFList = filteredFiles;
+                this.dataDocList = filteredDocFiles;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            //console.log('Upload failed:', result);
+            this.dispatchEvent(
+              new ShowToastEvent({
+                message: result,
+                variant: 'error',
+              }),
+            );
+            //this.showToast('error', result);
+          }
+        }).catch(error => {
+          if (error && error.body && error.body.message) {
+            this.dispatchEvent(
+              new ShowToastEvent({
+                message: error.body.message,
+                variant: 'error',
+              }),
+            );
+          }
+        }).finally(() => this.showSpinner = false);
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
         || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
         this.buttonDisable = true;
@@ -1593,24 +1530,70 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       }
     }
     if (this.isDocuments == true) {
-      if (this.selectStep6()) {
-        updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj, files: this.filesUploaded })
-
-          .then(result => {
+      console.log('recordId ', this.contactID);
+      console.log('filesDocData length:', this.filesDocData.length);
+      if (this.filesDocData == [] || this.filesDocData.length == 0) {
+        this.dispatchEvent(
+          new ShowToastEvent({
+            message: 'Please select files first',
+            variant: 'error',
+          }),
+        ); return;
+      }
+      this.showSpinner = true;
+      uploadFiles({
+        recordId: this.contactID,
+        filedata: JSON.stringify(this.filesDocData)
+      })
+        .then(result => {
+          console.log(result);
+          if (result && result == 'success') {
+            console.log('Upload successful---->', result);
+            this.filesDocData = [];
             this.dispatchEvent(
               new ShowToastEvent({
-                message: 'Documenthis Uploaded Successfully',
+                message: 'Documents Uploaded successfully.',
                 variant: 'success',
               }),
             ); this.isDocumentsValueChecked = true;
             updateStatusFields(this)
-
-          })
-          .catch(error => {
-            this.error = error;
-            //console.log('this.error-->' + JSON.stringify(this.error));
-          });
-      }
+            // Refresh the data
+            getUserContactInfo({ userId: this.userId })
+              .then((result) => {
+                this.contactID = result.contactDetails.Id;
+                this.dataList = result.fileDetailsList;
+                let filteredFiles = this.dataList.filter((file) =>
+                  file.title.includes('PF Form')
+                );
+                let filteredDocFiles = this.dataList.filter((file) =>
+                  file.title.includes('Document')
+                );
+                this.dataPFList = filteredFiles;
+                this.dataDocList = filteredDocFiles;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            console.log('Upload failed:', result);
+            this.dispatchEvent(
+              new ShowToastEvent({
+                message: result,
+                variant: 'error',
+              }),
+            );
+            //this.showToast('error', result);
+          }
+        }).catch(error => {
+          if (error && error.body && error.body.message) {
+            this.dispatchEvent(
+              new ShowToastEvent({
+                message: error.body.message,
+                variant: 'error',
+              }),
+            );
+          }
+        }).finally(() => this.showSpinner = false);
       if (this.isWelcomeaboardValueChecked === false || this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isEmploymentDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isFamilyInformationCheckbox === false || this.isFinancialInformationCheckbox === false
         || this.isVehicleDetailsCheckbox === false || this.isPFFormsCheckbox === false || this.isDocumentsValueChecked === false || this.isCompanyPoliciesValueChecked === false || this.isCompanyInformationValueChecked === false) {
         this.buttonDisable = true;
@@ -1621,7 +1604,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
 
   }
-  
+
 
   confirmSubmit(event) {
     if (this.isWelcomeaboardValueChecked && this.isPersonalUpdateCheckbox && this.isIdentifyDetailsCheckbox && this.isEmploymentDetailsCheckbox && this.isAddressDetailsCheckbox && this.isFamilyInformationCheckbox && this.isFinancialInformationCheckbox
@@ -1629,16 +1612,18 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.PostOnboardingConfirm = true;
       this.readonlyfield = true;
       updateStatusFields(this)
-          //console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
-          this.dispatchEvent(
-            new ShowToastEvent({
-              message: 'Onboarding Form Submitted Successfully',
-              variant: 'success',
-            }),
-          ); 
-          this.buttonDisable = true;
-          this.expression1 = true
-            
+      //console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
+      this.dispatchEvent(
+        new ShowToastEvent({
+          message: 'Onboarding Form Submitted Successfully',
+          variant: 'success',
+        }),
+      );
+      this.buttonDisable = true;
+      this.expression1 = true
+      this.disableFlag = true;
+      this.paFlag = true;
+
     }
     else {
       const even = new ShowToastEvent({
@@ -1651,27 +1636,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
   }
 
-  ShowDocumentUpload = false;
-  hideDocumentUpload = true;
-
-  handleraddDocumentUpload(event) {
-    if (this.ShowDocumentUpload == false) {
-      this.ShowDocumentUpload = true;
-      this.hideDocumentUpload = false;
-    } else {
-      this.ShowDocumentUpload = true;
-    }
-  }
-
-  removeDocumentUpload(event) {
-    if (this.ShowDocumentUpload == true) {
-      this.ShowDocumentUpload = false;
-      this.hideDocumentUpload = true;
-    } else {
-      this.ShowDocumentUpload = true;
-    }
-  }
-
   // Family Information
 
   @track totalFamilyRecords;
@@ -1679,19 +1643,19 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
   @wire(getFamilyInfo, { contactId: "$contactID" })
   getfamilyinformationrecords(totalRecords) {
-     this.totalFamilyRecords = totalRecords;
-     refreshApex(this.totalFamilyRecords);
-     //console.log('this.totalFamilyRecords---> ' + JSON.stringify(this.totalFamilyRecords));
-     if (totalRecords.data) {
-       if (totalRecords.data.listfamilyrecords && (totalRecords.data.listfamilyrecords.length > 0)) {
-         this.dependenciesRecordsArray = totalRecords.data.listfamilyrecords;
-         //console.log('this.dependenciesRecordsArray---> ' + JSON.stringify(this.dependenciesRecordsArray));
-       }
-     }
-     if (totalRecords.error) {
-       //console.log("Error OCcured With", totalRecords.error);
-     }
-   }
+    this.totalFamilyRecords = totalRecords;
+    refreshApex(this.totalFamilyRecords);
+    //console.log('this.totalFamilyRecords---> ' + JSON.stringify(this.totalFamilyRecords));
+    if (totalRecords.data) {
+      if (totalRecords.data.listfamilyrecords && (totalRecords.data.listfamilyrecords.length > 0)) {
+        this.dependenciesRecordsArray = totalRecords.data.listfamilyrecords;
+        //console.log('this.dependenciesRecordsArray---> ' + JSON.stringify(this.dependenciesRecordsArray));
+      }
+    }
+    if (totalRecords.error) {
+      //console.log("Error OCcured With", totalRecords.error);
+    }
+  }
   isLoaded = false;
   Emergencycheckboxval;
   inputcheckboxdependent;
@@ -1701,39 +1665,39 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   Emergencycheckbox(event) {
     this.Emergencycheckboxval = event.target.value;
     //console.log('this.Emergencycheckboxval-->', this.Emergencycheckboxval);
-     if (this.Emergencycheckboxval == true) {
-       this.contactPhone = true;
-     } else {
-       this.contactPhone = false;
-     }
+    if (this.Emergencycheckboxval == true) {
+      this.contactPhone = true;
+    } else {
+      this.contactPhone = false;
+    }
   }
 
   Dependentcheckbox(event) {
     this.inputcheckboxdependent = event.target.value;
     //console.log('this.Dependentcheckbox-->', this.inputcheckboxdependent);
-     if (this.inputcheckboxdependent == true) {
-    this.memberDateOfBirth = true;
-     } else {
-       this.memberDateOfBirth = false;
-     }
+    if (this.inputcheckboxdependent == true) {
+      this.memberDateOfBirth = true;
+    } else {
+      this.memberDateOfBirth = false;
+    }
 
   }
-  
-  handlefamilySuccess(event){
+
+  handlefamilySuccess(event) {
     this.dispatchEvent(
       new ShowToastEvent({
         message: 'Family Member Added successfully',
         variant: 'success',
       }),
     );
-    
+
     refreshApex(this.totalFamilyRecords);
     const inputFields = this.template.querySelectorAll('lightning-input-field');
     if (inputFields) {
       inputFields.forEach(field => {
-          field.reset();
+        field.reset();
       });
-  } this.isLoaded = false;
+    } this.isLoaded = false;
     this.isFamilyInformationCheckbox = true;
     updateStatusFields(this)
     this.memberDateOfBirth = false;
@@ -1747,9 +1711,9 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.buttonDisable = false;
     }
   }
-  
-  handlesubmitfamily(event){
-    
+
+  handlesubmitfamily(event) {
+
     event.preventDefault();
     const fields = event.detail.fields;
     fields.Resource__c = this.contactID;
@@ -1757,8 +1721,8 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     this.isLoaded = true;
   }
 
-  handlefamilyerror(event){
-    
+  handlefamilyerror(event) {
+
     this.dispatchEvent(
       new ShowToastEvent({
         message: event.detail.detail,
@@ -1798,6 +1762,5 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         );
       });
   }
-
 
 }
