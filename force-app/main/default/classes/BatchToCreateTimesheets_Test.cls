@@ -2,10 +2,9 @@
 public class BatchToCreateTimesheets_Test {
     
     public static testmethod void createTimesheet(){
-         Id p = [select id from profile where name='Employee - Resource(Community)'].id;
-        user loginedUser =[SELECT id from User  where profileId =:p AND IsActive = true LIMIT 1];
-         //EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
+        user loginedUser =[SELECT id from User  where IsActive = true LIMIT 1];
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
+         Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hhyderabad',true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
@@ -22,6 +21,7 @@ public class BatchToCreateTimesheets_Test {
         con.Timesheet_NoNeed__c =false;
         con.Resource_Role__c = role.Id;
         con.EMS_TM_User__c =loginedUser.Id;
+        con.Work_Location__c =officlocRec.Id;
         INSERT con;
        /* System.runAs(loginedUser){
         user userRec = TestDataFactory.createCommunityUserWithAccAndContact(acc.Id,con.Id,true);
@@ -36,12 +36,44 @@ public class BatchToCreateTimesheets_Test {
         projectRec.Type_Of_Project__c ='Client Projects';
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);
+        EMS_TM_Project__c projectRec1 = new EMS_TM_Project__c();
+        projectRec1.EMS_TM_StartDate__c = System.today();
+        projectRec1.EMS_TM_EndDate__c = System.today()+10;
+        projectRec1.EMS_TM_Status__c = 'ongoing';
+        projectRec1.Name = 'OOO';
+        projectRec1.Project_Manager__c = con.Id;
+        projectRec1.Type_Of_Project__c ='Global Projects';
+        INSERT projectRec1;        
+        System.debug('ProjectREC'+projectRec);
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
         assignmentRec.EMS_TM_EmployeeName__c = con.Id;
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
         assignmentRec.EMS_TM_Billable__c = true;
-        INSERT assignmentRec;  
+        INSERT assignmentRec;
+        List<EMS_TM_Calendar__c> holidayList = new List<EMS_TM_Calendar__c>();
+        EMS_TM_Calendar__c holiday = new EMS_TM_Calendar__c();
+        holiday.EMS_TM_Calendar_Date__c = System.today();
+        holiday.Office_Location__c =officlocRec.Id;
+        holiday.Location__c ='Usa';
+        holiday.Name ='fff';
+        holiday.EMS_TM_Type_Of_Holiday__c ='National';
+        holidayList.add(holiday);
+        EMS_TM_Calendar__c holiday1 = new EMS_TM_Calendar__c();
+        holiday1.EMS_TM_Calendar_Date__c = System.today()+1;
+        holiday1.Office_Location__c =officlocRec.Id;
+        holiday1.Location__c ='Usa';
+        holiday1.Name ='fff';
+        holiday1.EMS_TM_Type_Of_Holiday__c ='National';
+        holidayList.add(holiday1);
+        EMS_TM_Calendar__c holiday2 = new EMS_TM_Calendar__c();
+        holiday2.EMS_TM_Calendar_Date__c = System.today()+2;
+        holiday2.Office_Location__c =officlocRec.Id;
+        holiday2.Location__c ='Usa';
+        holiday2.Name ='fff';
+        holiday2.EMS_TM_Type_Of_Holiday__c ='National';
+        holidayList.add(holiday2);
+        INSERT holidayList;
         test.startTest();
         BatchToCreateTimesheets batchExecute = new BatchToCreateTimesheets(); 
         Database.executeBatch(batchExecute);

@@ -22,7 +22,7 @@ export default class cP_ConvertButton extends NavigationMixin(LightningElement) 
                 this.conid = res[0].Id;
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        message: 'Record has been Converted!',
+                        message: 'Record has been converted successfully',
                         variant: 'success',
                     }),
                 );

@@ -4,9 +4,9 @@
 * @description  BatchToCreateGoalsForRes Batch to create goals  
 *              
 *               Schedule class 
-*               - BatchToCreateTimesheets_sch
+*               - BatchToCreateGoalsForRes
 *               Test code coverage provided by the following test class:
-*               - BatchToCreateTimesheets_Test
+*               - BatchToCreateGoalsForRes_Test
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -28,7 +28,8 @@ global class BatchToCreateGoalsForRes implements Database.Batchable<sObject> {
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
         
-        date dt = system.today();
+        date dt = Test.isRunningTest() ? system.today().adddays(1) : system.today() ;
+        
         return Database.getQueryLocator([SELECT Id,Description__c,Name,Goal_End_Date__c,Goal_Start_Date__c,Grid_Configuration_Type__c,
                                          Navigation_address__c,is_Navigation_Required__c,Resource_Role__c 
                                          FROM Grid_Configuration__c 
@@ -52,13 +53,13 @@ global class BatchToCreateGoalsForRes implements Database.Batchable<sObject> {
         Grid_Configuration__c configRec = configList[0];
         List<Contact> conList = new List<Contact>();
         if(configRec.Grid_Configuration_Type__c == 'Org Level Goal'){
-            conList = [SELECT Id,EMS_TM_User__c FROM Contact WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false ];
+            conList = [SELECT Id,EMS_TM_User__c FROM Contact WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false AND EMS_TM_User__c != null ];
         }else if(configRec.Grid_Configuration_Type__c == 'Resource Role Level Goal'){
             conList = [SELECT Id,EMS_TM_User__c FROM Contact
                        WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID 
                        AND EMS_RM_ApplicantStatus_Update__c = 'Active'
                        AND Timesheet_NoNeed__c = false
-                       AND Resource_Role__c =:configRec.Resource_Role__c];  
+                       AND Resource_Role__c =:configRec.Resource_Role__c AND EMS_TM_User__c != null];  
         }
         
          for(Contact con : conList){

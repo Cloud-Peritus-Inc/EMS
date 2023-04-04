@@ -47,7 +47,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Grid Portal Link</shortDescription>
-        <value>https://cpprd--uat.sandbox.my.site.com/Grid&gt;</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid</value>
     </labels>
     <labels>
         <fullName>Leave_Request_site_Link</fullName>

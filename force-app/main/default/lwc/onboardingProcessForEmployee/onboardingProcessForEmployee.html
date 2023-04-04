@@ -1,15 +1,16 @@
 <template>
-     <!-- loader -->
-     <div if:true={isLoading}>
-        <lightning-spinner
-            alternative-text="Loading..." variant="brand" class="slds-is-fixed">
+    <!-- loader -->
+    <div if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading..." variant="brand" class="slds-is-fixed">
         </lightning-spinner>
     </div>
     <!-- /loader -->
-    
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </template>
+
     <div class="slds-card slds-box slds-p-around_small">
-        <div 
-            class="slds-p-around_xx-small">
+        <div class="slds-p-around_xx-small">
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
                     <!--Accordino Section Start-->
@@ -173,7 +174,8 @@
                         </lightning-accordion-section>
                     </lightning-accordion>
                 </div>
-                <div style="border-left: solid 1px #b9b9b9" class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                <div style="border-left: solid 1px #b9b9b9"
+                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
                     <!-- Welcome aboard Page Start -->
                     <template if:true={isShowWelcomeaboard}>
                         <div class="slds-modal__content slds-p-around_medium">
@@ -241,7 +243,7 @@
                     <!--Personal Details Page Start-->
                     <template if:true={isShowPersonalDetails}>
                         <div class="slds-modal__content slds-p-around_medium">
-                            <div>                                
+                            <div>
                                 <div class="slds-section slds-is-open">
                                     <h3 class="slds-section__title slds-theme_shade">
                                         <span class="slds-truncate slds-p-horizontal_small"
@@ -253,15 +255,14 @@
                                                 <span>
                                                     <lightning-input class="slds-p-top_small" value={firstName}
                                                         message-when-pattern-mismatch="Invalid First name" required
-                                                        disabled={readonlyfield} onchange={FirstName}
-                                                        name="FirstName"
+                                                        disabled={readonlyfield} onchange={FirstName} name="FirstName"
                                                         onkeydown={handleFirstLastNameKeyDown}
                                                         pattern="[A-Z a-z._-]{2,20}$" type="text"
                                                         label="First Name"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={lastName}
                                                         message-when-pattern-mismatch="Invalid Last Name" required
-                                                        disabled={readonlyfield} onchange={LastName}
-                                                        name="lastName" onkeydown={handleFirstLastNameKeyDown}
+                                                        disabled={readonlyfield} onchange={LastName} name="lastName"
+                                                        onkeydown={handleFirstLastNameKeyDown}
                                                         pattern="[A-Z a-z._-]{1,20}$" type="text"
                                                         label="Last Name"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={dob} required
@@ -295,7 +296,7 @@
                                                         onchange={Nationality} onkeydown={handleFirstLastNameKeyDown}
                                                         name="EMS_EM_Nationality__c" type="text"
                                                         label="Nationality "></lightning-input>
-                                                    <lightning-combobox class="slds-p-top_small" value={bg}
+                                                    <lightning-combobox class="slds-p-top_small" value={bg} dropdown-alignment="bottom-left"
                                                         disabled={readonlyfield} required onchange={BloodGroup}
                                                         options={BloodG} placeholder="Select" name="EMS_EM_BG__c"
                                                         label="Blood Group "></lightning-combobox>
@@ -309,7 +310,8 @@
 
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} disabled={readonlyfield} variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
 
@@ -361,7 +363,8 @@
                                                         label="PAN"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={UANNo}
                                                         disabled={readonlyfield} onchange={UanChange} maxlength="12"
-                                                        name="EMS_EM_PFno__c" type="text" onkeydown={handleAadharNumberKeyDown}
+                                                        name="EMS_EM_PFno__c" type="text"
+                                                        onkeydown={handleAadharNumberKeyDown}
                                                         message-when-pattern-mismatch="Invalid UAN Number"
                                                         pattern="[0-9]{12}$" label="UAN"></lightning-input>
                                                 </span>
@@ -412,7 +415,8 @@
                                 <br /><br />
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} disabled={readonlyfield} variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
                                 </div>
                             </div>
                         </div>
@@ -439,10 +443,10 @@
                                                             field-name="Email"></lightning-output-field>
                                                         <lightning-output-field
                                                             field-name="Resource_Manager__c"></lightning-output-field>
-                                                        
+
                                                         <lightning-output-field
                                                             field-name="EMS_EM_HR_Assigned__c"></lightning-output-field>
-                                                       
+
                                                     </div>
                                                 </lightning-record-view-form>
                                             </div>
@@ -471,29 +475,29 @@
                                                     <h3 class="slds-section__title slds-theme_shade">
                                                         <p>Current Address</p>
                                                     </h3>
-                                                    <lightning-input class="slds-p-top_small addressClass" value={cadrressline1}
-                                                        disabled={readonlyfield} required onchange={handleChange}
-                                                        name="EMS_EM_CAddress_Line_1__c" type="text"
-                                                        label="Address Line 1"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small addressClass"
+                                                        value={cadrressline1} disabled={readonlyfield} required
+                                                        onchange={handleChange} name="EMS_EM_CAddress_Line_1__c"
+                                                        type="text" label="Address Line 1"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={cadrressline2}
                                                         disabled={readonlyfield} onchange={handleChange}
                                                         name="EMS_EM_CAddress_Line_2__c" type="text"
                                                         label="Address Line 2"></lightning-input>
-                                                    <lightning-input class="slds-p-top_small addressClass" value={castate}
-                                                        onkeydown={handleFirstLastNameKeyDown}
+                                                    <lightning-input class="slds-p-top_small addressClass"
+                                                        value={castate} onkeydown={handleFirstLastNameKeyDown}
                                                         message-when-pattern-mismatch="Invalid State"
                                                         pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
                                                         onchange={handleChange} name="EMS_EM_CA_State__c" type="text"
                                                         label="State"></lightning-input>
-                                                    <lightning-input class="slds-p-top_small addressClass" value={cacity}
-                                                        onkeydown={handleFirstLastNameKeyDown}
+                                                    <lightning-input class="slds-p-top_small addressClass"
+                                                        value={cacity} onkeydown={handleFirstLastNameKeyDown}
                                                         message-when-pattern-mismatch="Invalid City"
                                                         pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
                                                         onchange={handleChange} name="EMS_EM_CA_City__c" type="text"
                                                         label="City"></lightning-input>
                                                     <lightning-input class="slds-p-top_small addressClass" value={cazip}
                                                         pattern="[0-9]{6}$" onkeydown={handleAadharNumberKeyDown}
-                                                        message-when-pattern-mismatch="Invalid Zip"
+                                                        message-when-pattern-mismatch="Invalid Zip" maxlength="6"
                                                         disabled={readonlyfield} required onchange={handleChange}
                                                         name="EMS_EM_CA_Zip__c" type="text"
                                                         label="Zip"></lightning-input>
@@ -504,8 +508,7 @@
                                                         </div>
                                                         <div class="slds-col slds-size_1-of-12">
                                                             <lightning-input type="Checkbox" disabled={disableFlag}
-                                                            checked={paFlag}
-                                                                
+                                                                checked={paFlag}
                                                                 onchange={AddressCheckboxChange}></lightning-input>
                                                         </div>
                                                     </div>
@@ -517,8 +520,7 @@
                                                         <p>Permanent Address</p>
                                                     </h3>
                                                     <lightning-input class="slds-p-top_small" value={padrressline1}
-                                                        disabled={readonlyfield} required
-                                                        onchange={handleChange}
+                                                        disabled={readonlyfield} required onchange={handleChange}
                                                         name="EMS_EM_PAddress_Line_1__c" type="text"
                                                         label="Address Line 1"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={padrressline2}
@@ -528,18 +530,18 @@
                                                     <lightning-input class="slds-p-top_small" value={pastate}
                                                         onkeydown={handleFirstLastNameKeyDown}
                                                         pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
-                                                        message-when-pattern-mismatch="Invalid State" onchange={handleChange}
-                                                        name="EMS_EM_PA_State__c;" type="text"
+                                                        message-when-pattern-mismatch="Invalid State"
+                                                        onchange={handleChange} name="EMS_EM_PA_State__c;" type="text"
                                                         label="State"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={pacity}
                                                         onkeydown={handleFirstLastNameKeyDown}
                                                         pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
-                                                        message-when-pattern-mismatch="Invalid City" onchange={handleChange}
-                                                        name="EMS_EM_PA_City__c" type="text"
+                                                        message-when-pattern-mismatch="Invalid City"
+                                                        onchange={handleChange} name="EMS_EM_PA_City__c" type="text"
                                                         label="City"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={pazip}
                                                         pattern="[0-9]{6}$" onkeydown={handleAadharNumberKeyDown}
-                                                        disabled={readonlyfield} onchange={handleChange}
+                                                        disabled={readonlyfield} onchange={handleChange} maxlength="6"
                                                         message-when-pattern-mismatch="Invalid Zip" required
                                                         name="EMS_EM_PA_Zip__c" type="text"
                                                         label="Zip"></lightning-input>
@@ -561,58 +563,67 @@
                     <!-- Family Information Start -->
                     <template if:true={isFamilyInformation}>
 
-                        <div class="slds-modal__content slds-p-around_medium" >
+                        <div class="slds-modal__content slds-p-around_medium">
                             <div class="slds-p-around_xx-small">
                                 <h3 class="slds-section__title slds-theme_shade">
                                     <span class="slds-truncate slds-p-horizontal_small">Family Information</span>
                                 </h3>
-                                <div style="padding-left: 25px; padding-right: 20px;"  >
-                                    <h6>Note: We are collecting family information primarily for emergency and medical insurance purposes. Please ensure that you enter the details of your father, mother, spouse and children (if applicable). Also, indicate your emergency contact.</h6>
-                                    <h6><strong>Instructions:</strong> 
-                                        1. Details of parents are mandatory.
-                                        2. If you have a spouse and children, indicate that they are dependents for medical insurance purposes.
-                                        3. Indicate your emergency contact.</h6>
+                                <div style="padding-left: 25px; padding-right: 20px;">
+                                    <h6>
+                                        <p><strong>Instructions:</strong></p>
+                                        <p> 1. Details of parents are mandatory.</p>
+                                        <p> 2. If you have a spouse and children, indicate that they are dependents for
+                                            medical insurance purposes.</p>
+                                        <p> 3. Indicate your emergency contact.</p>
+                                    </h6>
                                 </div>
-                               <br>
-                                    <lightning-record-edit-form object-api-name="Family_Information__c" onsuccess={handlefamilySuccess} onsubmit={handlesubmitfamily} onerror={handlefamilyerror}>
-                                        <div class="slds-grid slds-wrap">
-                                            <div class="slds-col slds-size_5-of-12" style="padding-left: 25px;">
-                                                <lightning-input-field field-name="Family_Member_Name__c" required disabled={readonlyfield} onkeydown={handleFirstLastNameKeyDown}
-                                                    variant="label-stacked">
-                                                </lightning-input-field>
-                                                <lightning-input-field field-name="Is_It_Emergency_Contact__c"
-                                                    variant="label-stacked" disabled={readonlyfield} onchange={Emergencycheckbox}
-                                                    class="inputValField" style="margin-top:10px;">
-                                                </lightning-input-field>
-                                                <lightning-input-field field-name="Is_It_Dependent_Contact__c" 
-                                                    variant="label-stacked" disabled={readonlyfield} onchange={Dependentcheckbox}
-                                                    class="inputValField" style="margin-top:28px;">
-                                                </lightning-input-field>
-                                            </div>
-                                            <div class="slds-col slds-size_5-of-12">
-                                                <lightning-input-field field-name="Relationships__c" required
-                                                    variant="label-stacked" disabled={readonlyfield} class="inputValField">
-                                                </lightning-input-field>
-                                                <lightning-input-field onkeydown={handleAadharNumberKeyDown} field-name="Contact_Phone_Number__c"
-                                                    variant="label-stacked" disabled={readonlyfield} pattern="[0-9]{10}$" message-when-pattern-mismatch="Invalid Contact Number" required={contactPhone}
-                                                    class="inputValField">
-                                                </lightning-input-field>
-                                                <lightning-input-field field-name="Date_of_Birth__c" required={memberDateOfBirth}
-                                                    variant="label-stacked" disabled={readonlyfield}
-                                                    class="inputValField">
-                                                </lightning-input-field>
-                                                
-                                            </div>
-                                        </div> &nbsp;&nbsp; &nbsp;&nbsp;
-                                        <div class="slds-align_absolute-center">
-                                            <lightning-button label="Save" type="submit" disabled={readonlyfield} title="Save"
-                                                variant="brand"></lightning-button>
+                                <br>
+                                <lightning-record-edit-form object-api-name="Family_Information__c"
+                                    onsuccess={handlefamilySuccess} onsubmit={handlesubmitfamily}
+                                    onerror={handlefamilyerror}>
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_5-of-12" style="padding-left: 25px;">
+                                            <lightning-input-field field-name="Family_Member_Name__c" required
+                                                disabled={readonlyfield} onkeydown={handleFirstLastNameKeyDown}
+                                                variant="label-stacked">
+                                            </lightning-input-field>
+                                            <lightning-input-field field-name="Is_It_Emergency_Contact__c"
+                                                variant="label-stacked" disabled={readonlyfield}
+                                                onchange={Emergencycheckbox} class="inputValField"
+                                                style="margin-top:10px;">
+                                            </lightning-input-field>
+                                            <lightning-input-field field-name="Is_It_Dependent_Contact__c"
+                                                variant="label-stacked" disabled={readonlyfield}
+                                                onchange={Dependentcheckbox} class="inputValField"
+                                                style="margin-top:28px;">
+                                            </lightning-input-field>
                                         </div>
-                                    </lightning-record-edit-form>
-                                    <br><br>
-                                    <div if:true={isLoaded} class="cstm-spinner">
-                                        <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+                                        <div class="slds-col slds-size_5-of-12">
+                                            <lightning-input-field field-name="Relationships__c" required
+                                                variant="label-stacked" disabled={readonlyfield} class="inputValField">
+                                            </lightning-input-field>
+                                            <lightning-input-field onkeydown={handleAadharNumberKeyDown}
+                                                field-name="Contact_Phone_Number__c" variant="label-stacked"
+                                                disabled={readonlyfield} pattern="[0-9]{10}$"
+                                                message-when-pattern-mismatch="Invalid Contact Number"
+                                                required={contactPhone} class="inputValField">
+                                            </lightning-input-field>
+                                            <lightning-input-field field-name="Date_of_Birth__c"
+                                                required={memberDateOfBirth} variant="label-stacked"
+                                                disabled={readonlyfield} class="inputValField">
+                                            </lightning-input-field>
+
+                                        </div>
+                                    </div> &nbsp;&nbsp; &nbsp;&nbsp;
+                                    <div class="slds-align_absolute-center">
+                                        <lightning-button label="Save" type="submit" disabled={readonlyfield}
+                                            variant="brand"></lightning-button>
                                     </div>
+                                </lightning-record-edit-form>
+                                <br><br>
+                                <div if:true={isLoaded} class="cstm-spinner">
+                                    <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+                                </div>
 
 
                                 <div class="slds-p-around_xx-small">
@@ -626,20 +637,19 @@
                                             density="comfy" class="updateExsisiingRecords">
                                             <div class="slds-grid slds-gutters" style="padding-left: 25px;">
                                                 <div class="slds-col slds-size_3-of-12">
-                                                    <lightning-input-field field-name="Family_Member_Name__c" 
-                                                        disabled class="inputValField">
+                                                    <lightning-input-field field-name="Family_Member_Name__c" disabled
+                                                        class="inputValField">
                                                     </lightning-input-field>
                                                 </div>
                                                 <div class="slds-col slds-size_3-of-12">
-                                                    <lightning-input-field field-name="Relationships__c"
-                                                        disabled class="inputValField">
+                                                    <lightning-input-field field-name="Relationships__c" disabled
+                                                        class="inputValField">
                                                     </lightning-input-field>
                                                 </div>
 
                                                 <div class="slds-col slds-size_3-of-12">
                                                     <lightning-input-field field-name="Contact_Phone_Number__c"
-                                                        variant="label-stacked" disabled
-                                                        class="inputValField">
+                                                        variant="label-stacked" disabled class="inputValField">
                                                     </lightning-input-field>
                                                 </div>
                                                 <div class="slds-col slds-size_2-of-12">
@@ -649,8 +659,9 @@
                                                 </div>
                                                 <div class="slds-col slds-size_1-of-12" style="margin-top:23px;">
                                                     <lightning-button-icon data-recordid={eachDepencies.Id}
-                                                        icon-name="action:delete" disabled={readonlyfield} onclick={deleteDependencyRecord}
-                                                        size="small" class="slds-icon-text-error">
+                                                        icon-name="action:delete" disabled={readonlyfield}
+                                                        onclick={deleteDependencyRecord} size="small"
+                                                        class="slds-icon-text-error">
                                                     </lightning-button-icon>
                                                 </div>
                                             </div>
@@ -686,7 +697,8 @@
                                                         onkeydown={handleFirstLastNameKeyDown}
                                                         pattern="[A-Z a-z._-]{2,20}$" type="text"
                                                         label="Branch"></lightning-input>
-                                                    <lightning-input class="slds-p-top_small" onkeydown={handleAadharNumberKeyDown} value={accountNumber}
+                                                    <lightning-input class="slds-p-top_small"
+                                                        onkeydown={handleAadharNumberKeyDown} value={accountNumber}
                                                         type="text" name="Beneficiary_Account_Number__c"
                                                         pattern="[0-9]{5,20}$" required disabled={readonlyfield}
                                                         message-when-pattern-mismatch="Invalid Account Number"
@@ -704,9 +716,11 @@
                                                         onkeydown={handleFirstLastNameKeyDown}
                                                         pattern="[A-Z a-z._-]{2,20}$" type="text"
                                                         label="Employee Name in Bank Account"></lightning-input>
-                                                    <lightning-combobox class="slds-p-top_small" required field-level-help="Suggested to opt by the employees whose CTC is more than 7 Lakhs"
-                                                        disabled={readonlyfield} name="Sodexo_Card_Option__c" label="Sodexo Card Option"
-                                                        value={SodexoCardoption} placeholder="Select" options={sodexooptions}
+                                                    <lightning-combobox class="slds-p-top_small" required
+                                                        field-level-help="Suggested to opt by the employees whose CTC is more than 7 Lakhs"
+                                                        disabled={readonlyfield} name="Sodexo_Card_Option__c"
+                                                        label="Sodexo Card Option" value={SodexoCardoption}
+                                                        placeholder="Select" options={sodexooptions}
                                                         onchange={sodexoCardonchange}></lightning-combobox>
                                                 </span>
                                             </div>
@@ -716,7 +730,8 @@
                                 <br><br>
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} title="Save" disabled={readonlyfield} variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
 
@@ -734,13 +749,15 @@
                                             title="Vehicle Details From">Vehicle Details</span>
                                     </h3>
                                     <div aria-hidden="false" class="slds-section__content">
-                                        <div class="slds-grid slds-gutters " style="padding-left: 25px; padding-right: 140px;">
+                                        <div class="slds-grid slds-gutters "
+                                            style="padding-left: 25px; padding-right: 140px;">
                                             <div class="slds-col" style="padding-left: 25px;">
                                                 <span>
-                                                    <lightning-input type="checkbox" name="Do_you_have_a_vehicle__c" disabled={readonlyfield}
-                                                        label="Do you have a vehicle?" checked={checkboxValue}
+                                                    <lightning-input type="checkbox" name="Do_you_have_a_vehicle__c"
+                                                        disabled={readonlyfield} label="Do you have a vehicle?"
+                                                        checked={checkboxValue}
                                                         onchange={doyouhaveavehicle}></lightning-input>
-                                                        <br><br>
+                                                    <br><br>
 
                                                     <template if:true={showvehicle}>
                                                         <lightning-combobox name="Vehicle_Type__c" label="Vehicle Type"
@@ -750,8 +767,8 @@
                                                         <lightning-input type="text" name="Vehicle_Number__c"
                                                             message-when-pattern-mismatch="Invalid Vehicle Number"
                                                             pattern="[a-z A-Z 0-9]{0,10}$" label="Vehicle Number"
-                                                            onchange={VehicleNumberChange} disabled={readonlyfield} required
-                                                            value={VehicleNumber}></lightning-input>
+                                                            onchange={VehicleNumberChange} disabled={readonlyfield}
+                                                            required value={VehicleNumber}></lightning-input>
                                                     </template>
                                                 </span>
                                             </div>
@@ -761,7 +778,8 @@
                                 <br /><br />
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} disabled={readonlyfield} variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
 
@@ -783,93 +801,71 @@
                                     <lightning-formatted-rich-text
                                         value={PFDescription}></lightning-formatted-rich-text>
                                     <lightning-card>
-                                    <!--    <template for:each={filesList} for:item="file">
-                                            <div key={file.value} class="slds-box">
-                                                <div class="slds-grid slds-wrap">
-                                                    <div
-                                                        class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                        <p><strong>FileName - </strong>{file.name}</p>
-                                                    </div>
-                                                    <div
-                                                        class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                      <a href="javascript:void(0);" data-id={file.id}>{file.id}</a>  - {file.name} - {file.fileExtension}
-                                                    </div>
-                                                    <div
-                                                        class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                        <lightning-button label="Preview" variant="brand"
-                                                            data-id={file.value} onclick={previewHandler0}>
-                                                        </lightning-button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template> -->
                                         <template if:true={documents}>
                                             <template for:each={documents} for:item="document">
                                                 <div class="slds-box slds-m-vertical_x-small" key={document.Id}>
-                                                        <template for:each={document.files} for:item="file">
-                                                            <div class="slds-grid slds-wrap" key={file.id}>
-                                                                <div
-                                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                                    <p><strong>File Name - {file.name} - {file.fileExtension}</strong></p>
-                                                                </div>
-                                                                <div>
-                                                                    <a href="javascript:void(0);" data-id={file.id} onclick={handleDownloadFile}>Download</a> 
-                                                                </div>
-
+                                                    <template for:each={document.files} for:item="file">
+                                                        <div class="slds-grid slds-wrap" key={file.id}>
+                                                            <div
+                                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                <p><strong>File Name - {file.name} -
+                                                                        {file.fileExtension}</strong></p>
                                                             </div>
-                                                                          
-                                                        </template>
+                                                            <div>
+                                                                <a href="javascript:void(0);" data-id={file.id}
+                                                                    onclick={handleDownloadFile}>Download</a>
+                                                            </div>
+                                                        </div>
+                                                    </template>
                                                 </div>
                                             </template>
                                         </template>
                                     </lightning-card>
                                 </div>
-                                <div class="slds-section slds-is-open" style="padding-left: 25px;">
+                                <div class="slds-section slds-is-open" style="padding-left: 13px;">
                                     <h3 class="slds-section__title slds-theme_shade">
-                                        <span class="slds-truncate slds-p-horizontal_small" title="Upload Forms">Upload
-                                            Forms</span>
+                                        <span class="slds-truncate slds-p-horizontal_small">Upload Forms</span>
                                     </h3>
-                                    <div class="slds-grid slds-gutters ">
-                                        <div class="slds-col" style="padding-left: 25px;">
-                                            <span>
-                                                <label class="slds-form-element__label" for="text-input-id-1">
-                                                    <abbr class="slds-required" title="required">*</abbr>
-                                                    Form 11
-                                                </label>
-                                                <lightning-helptext
-                                                    content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                <lightning-input type="file" name="Form11" onchange={onFileUpload2} 
-                                                    accept={accept} title="Form 11"
-                                                    disabled={readonlyfield}></lightning-input>
-                                                <p>{fileName2}</p>
-                                                <br><br><br>
-                                            </span>
-                                        </div>
-                                        <div class="slds-col">
-                                            <span>
-                                                <label class="slds-form-element__label" for="text-input-id-1">
-                                                    <abbr class="slds-required" title="required">*</abbr>
-                                                    Form 2
-                                                </label>
-                                                <lightning-helptext
-                                                    content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                <lightning-input type="file" onchange={onFileUpload3} name="Form2"
-                                                    title="Form 2" disabled={readonlyfield}
-                                                    accept={accept}></lightning-input>
-                                                <p>{fileName3}</p>
-                                                <br><br><br>
-                                            </span>
-                                        </div>
+                                    <div style="padding-left: 13px;">
+                                        <lightning-input type="file" name="PF" label="Attachment"
+                                            disabled={readonlyfield} onchange={handleFileUploaded} multiple>
+                                        </lightning-input>
+                                        <template if:true={filesData}>
+                                            <template for:each={filesData} for:item="imgName" for:index="index">
+                                                {imgName.fileName}
+                                                <span key={imgName.fileName} data-id={index}
+                                                    onclick={removeReceiptImage} class="removeImage">x</span> &nbsp;
+                                            </template>
+                                        </template>
                                     </div>
                                 </div>
+                                <br />
+                                <div style="padding-left: 25px; padding-right: 25px;">
+                                    <h1>Uploaded Forms:</h1>
+                                    <lightning-card>
+                                        <template if:true={dataPFList}>
+                                            <div class="slds-box slds-m-vertical_x-small">
+                                                <template for:each={dataPFList} for:item="file">
+                                                    <div key={file.Id}>
+                                                        <div class="slds-grid slds-wrap">
+                                                            <p><strong>File Name </strong>- {file.title}</p>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </lightning-card>
+                                </div>
+
                                 <br /><br />
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} title="save" disabled={readonlyfield} variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
                             </div>
-                            </div>
+                        </div>
                     </template>
                     <!--PF Forms Page Ends-->
                     <!--Documents Page Starts-->
@@ -885,120 +881,69 @@
                                     <lightning-formatted-rich-text
                                         value={docDescription}></lightning-formatted-rich-text>
                                     <lightning-card>
-                                    <!--    <template for:each={filesList0} for:item="file">
-                                            <div key={file.value} class="slds-box">
-                                                <div class="slds-grid slds-wrap">
-                                                    <div
-                                                        class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                        <p><strong>FileName - </strong>{file.label}</p>
-                                                    </div>
-                                                    <div
-                                                        class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                        <a href={file.url} download>Download</a>
-                                                    </div>
-                                                    <div
-                                                        class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                        <lightning-button label="Preview" variant="brand"
-                                                            data-id={file.value} onclick={previewHandler0}>
-                                                        </lightning-button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template> -->
-                                            <template if:true={docs}>
+                                        <template if:true={docs}>
                                             <template for:each={docs} for:item="docs">
                                                 <div class="slds-box slds-m-vertical_x-small" key={docs.Id}>
-                                                        <template for:each={docs.files} for:item="file">
-                                                            <div class="slds-grid slds-wrap" key={file.id}>
-                                                                <div
-                                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                                    <p><strong>File Name </strong>- {file.name} - {file.fileExtension}</p>
-                                                                </div>
-                                                                <div>
-                                                                    <a href="javascript:void(0);" data-id={file.id} onclick={handleDownloadFile}>Download</a> 
-                                                                </div>
-                                                                    
+                                                    <template for:each={docs.files} for:item="file">
+                                                        <div class="slds-grid slds-wrap" key={file.id}>
+                                                            <div
+                                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                <p><strong>File Name </strong>- {file.name} -
+                                                                    {file.fileExtension}</p>
                                                             </div>
-                                                                          
-                                                        </template>
+                                                            <div>
+                                                                <a href="javascript:void(0);" data-id={file.id}
+                                                                    onclick={handleDownloadFile}>Download</a>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </template>
                                                 </div>
                                             </template>
                                         </template>
                                     </lightning-card>
                                 </div>
-                                <div class="slds-section slds-is-open" style="padding-left: 25px;">
+                                <div class="slds-section slds-is-open" style="padding-left: 13px;">
                                     <h3 class="slds-section__title slds-theme_shade">
-                                        <span class="slds-truncate slds-p-horizontal_small" title="Upload Forms">Upload Documents</span>
+                                        <span class="slds-truncate slds-p-horizontal_small">Upload Documents</span>
                                     </h3>
-                                    <div class="slds-grid slds-gutters ">
-                                        <div class="slds-col" style="padding-left: 25px;">
-                                            <span>
-                                                <label class="slds-form-element__label" for="text-input-id-1">
-                                                    <abbr class="slds-required" title="required">*</abbr>
-                                                    Documents
-                                                </label>
-                                                <lightning-helptext
-                                                    content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                <lightning-input type="file" name="Documents1" onchange={onFileUpload4}
-                                                    accept={accept} title="Doc1"
-                                                    disabled={readonlyfield}></lightning-input>
-                                                <p>{fileName4}</p>
-                                                <br>
-                                            </span>
-                                        </div>
-                                        <div class="slds-col">
-                                            <span>
-                                                <label class="slds-form-element__label" for="text-input-id-1">
-                                                    <abbr class="slds-required" title="required">*</abbr>
-                                                    Documents
-                                                </label>
-                                                <lightning-helptext
-                                                    content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
-                                                <lightning-input type="file" onchange={onFileUpload5} name="Documents2"
-                                                    title="Doc2" disabled={readonlyfield}
-                                                    accept={accept}></lightning-input>
-                                                <p>{fileName5}</p>
-                                                <br>
-                                            </span>
-                                        </div>
+                                    <div style="padding-left: 13px;">
+                                        <lightning-input type="file" name="Doc" label="Attachment"
+                                            disabled={readonlyfield} onchange={handleDocFileUploaded} multiple>
+                                        </lightning-input>
+                                        <template if:true={filesDocData}>
+                                            <template for:each={filesDocData} for:item="imgName" for:index="index">
+                                                {imgName.fileName}
+                                                <span key={imgName.fileName} data-id={index}
+                                                    onclick={removedocReceiptImage} class="removeImage">x</span> &nbsp;
+                                            </template>
+                                        </template>
                                     </div>
-                                    <template if:true={hideDocumentUpload}>
-                                        <lightning-button-icon icon-name="action:new" alternative-text="Add"
-                                            class="slds-m-left_xx-small slds-p-top_small" title="add"
-                                            onclick={handleraddDocumentUpload}></lightning-button-icon>
-                                    </template>
-                                    <!-- Add New button-->
-                                    <template if:true={ShowDocumentUpload}>
-                                        <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"
-                                            class="slds-m-left_xx-small" title="Delete"
-                                            onclick={removeDocumentUpload}></lightning-button-icon>
-                                        <div class="slds-grid slds-gutters ">
-                                            <div class="slds-col" style="padding-left: 25px;">
-                                                <span>
-                                                    <lightning-input type="file" name="Documents3"
-                                                        onchange={onFileUpload6} accept={accept} title="Doc1"
-                                                        disabled={readonlyfield}></lightning-input>
-                                                    <p>{fileName6}</p>
-                                                    <br><br><br>
-                                                </span>
-                                            </div>
-                                            <div class="slds-col">
-                                                <span>
-                                                    <lightning-input type="file" onchange={onFileUpload7}
-                                                        name="Documents4" title="Doc2" disabled={readonlyfield}
-                                                        accept={accept}></lightning-input>
-                                                    <p>{fileName7}</p>
-                                                    <br><br><br>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                    </template>
+                                    <br />
                                 </div>
+                                <div style="padding-left: 25px; padding-right: 25px;">
+                                    <h1>Uploaded Documents:</h1>
+                                    <lightning-card>
+                                        <template if:true={dataDocList}>
+                                            <div class="slds-box slds-m-vertical_x-small">
+                                                <template for:each={dataDocList} for:item="file">
+                                                    <div key={file.Id}>
+                                                        <div class="slds-grid slds-wrap">
+                                                            <p><strong>File Name </strong>- {file.title}</p>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </lightning-card>
+                                </div>
+
                                 <br /><br />
                                 <div style="text-align:center">
                                     <lightning-button style="margin:5px;" label="Save" type="brand"
-                                        onclick={SaveSubmitcontact} disabled={readonlyfield} title="save" variant="brand"></lightning-button>
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
                                 </div>
                                 <br><br>
                             </div>
@@ -1008,38 +953,40 @@
                     <!--Company Policies Page Starts-->
                     <template if:true={isCompanyPolicies}>
                         <div class="slds-modal__content slds-p-around_medium">
-                           
+
                             <div class="slds-p-around_xx-small">
-                            <div style="padding-left: 25px; padding-right: 25px;">
-                                <br>
-                                <strong>
-                                    <h1>{policiesName}</h1>
-                                </strong>
-                                <br>
-                                <lightning-formatted-rich-text
-                                    value={policiesDescription}></lightning-formatted-rich-text>
-                                <lightning-card>
-                                    <template if:true={cpPolicies}>
+                                <div style="padding-left: 25px; padding-right: 25px;">
+                                    <br>
+                                    <strong>
+                                        <h1>{policiesName}</h1>
+                                    </strong>
+                                    <br>
+                                    <lightning-formatted-rich-text
+                                        value={policiesDescription}></lightning-formatted-rich-text>
+                                    <lightning-card>
+                                        <template if:true={cpPolicies}>
                                             <template for:each={cpPolicies} for:item="cpPolicies">
                                                 <div class="slds-box slds-m-vertical_x-small" key={cpPolicies.Id}>
-                                                        <template for:each={cpPolicies.files} for:item="file">
-                                                            <div class="slds-grid slds-wrap" key={file.id}>
-                                                                <div
-                                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
-                                                                    <p><strong>File Name - {file.name} - {file.fileExtension}</strong></p>
-                                                                </div>
-                                                                <div>
-                                                                    <a href="javascript:void(0);" data-id={file.id} onclick={handleDownloadFile}>Download</a> 
-                                                                </div>
-
+                                                    <template for:each={cpPolicies.files} for:item="file">
+                                                        <div class="slds-grid slds-wrap" key={file.id}>
+                                                            <div
+                                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                <p><strong>File Name - {file.name} -
+                                                                        {file.fileExtension}</strong></p>
                                                             </div>
-                                                                          
-                                                        </template>
+                                                            <div>
+                                                                <a href="javascript:void(0);" data-id={file.id}
+                                                                    onclick={handleDownloadFile}>Download</a>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </template>
                                                 </div>
                                             </template>
                                         </template>
-                                </lightning-card>
-                            </div>
+                                    </lightning-card>
+                                </div>
                             </div>
                         </div>
                     </template>
@@ -1262,14 +1209,18 @@
                                 <br><br>
                                 <div style="text-align:center;margin-bottom:10px">
                                     <template lwc:if={expression1}>
-                                        <lightning-icon icon-name='utility:success' alternative-text='success' 
-                                            variant='success' size='large' title='success'></lightning-icon> 
-                                            <h1> <div class="slds-align_absolute-center">Thank You</div></h1>
-                                            <div class="slds-align_absolute-center">The form has been submitted successfully.</div>
+                                        <lightning-icon icon-name='utility:success' alternative-text='success'
+                                            variant='success' size='large' title='success'></lightning-icon>
+                                        <h1>
+                                            <div class="slds-align_absolute-center">Thank You</div>
+                                        </h1>
+                                        <div class="slds-align_absolute-center">The form has been submitted
+                                            successfully.</div>
                                     </template>
                                     <template lwc:else>
-                                        <lightning-button style="margin:5px;" label="Submit" type="brand" disabled={buttonDisable}
-                                        onclick={confirmSubmit} variant="brand"></lightning-button>
+                                        <lightning-button style="margin:5px;" label="Submit" type="brand"
+                                            disabled={buttonDisable} onclick={confirmSubmit}
+                                            variant="brand"></lightning-button>
                                     </template>
                                 </div>
                             </div>
