@@ -161,4 +161,11 @@
         <shortDescription>Post Onboarding Task Creation</shortDescription>
         <value>0</value>
     </labels>
+    <labels>
+        <fullName>HR_Finance_Loss_of_pay_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR Finance Loss of pay Email</shortDescription>
+        <value>sangharsh.kamble@cloudperitus.com , sangharshkamble12@gmail.com</value>
+    </labels>
 </CustomLabels>
