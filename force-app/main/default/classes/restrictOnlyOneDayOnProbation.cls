@@ -59,8 +59,8 @@ public class restrictOnlyOneDayOnProbation implements TriggerAction.BeforeInsert
                            FROM Contact WHERE Id IN:resourcId AND Probationary_Period_End_Date__c != null AND Probationary_Period_End_Date__c > Today]){
           contactMap.put(con.Id,con);  
         }
-        
-        Id workfromhomeTypeId = [Select Id FROM EMS_LM_Leave__c  Where Name = 'Work From Home'].Id;
+        List<EMS_LM_Leave__c> leaevTypeWFH = [Select Id FROM EMS_LM_Leave__c  Where Name = 'Work From Home'];
+        Id workfromhomeTypeId = leaevTypeWFH.size() > 0 ? leaevTypeWFH[0].Id : null;
         
         for(EMS_LM_Leave_History__c his : newlist){
             system.debug('his.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c-->'+his.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c);

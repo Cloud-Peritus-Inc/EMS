@@ -54,7 +54,7 @@ public without sharing class newServiceRequestController {
          cw.enableTransfer = true; //Disable the Transfer button
          cw.enableClose = (newCase.Status == 'Closed' || newCase.Status == 'Resignation Approved' || newCase.Status == 'Resignation Rejected');  
          if(newCase.Contact.EMS_TM_User__c == Userinfo.getUserId()){
-            cw.enableEscalate = daysBetweenExcludingWeekends(newCase.CreatedDate,system.now()) > 5 ? false : true;
+            cw.enableEscalate = daysBetweenExcludingWeekends(newCase.CreatedDate,system.now()) > 3 ? false : true;
             cw.enableEscalate = cw.enableClose ? true :  cw.enableEscalate; 
          }else{
                cw.enableEscalate = true; 
