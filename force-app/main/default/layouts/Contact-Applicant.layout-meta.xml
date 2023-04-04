@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>SendSurveyInvitation</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -199,10 +197,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>EMS_EM_Onboarding_Request__c.ContactId1__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>ems_EM_Additional_Detail__c.ContactId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>

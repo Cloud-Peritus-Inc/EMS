@@ -92,16 +92,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Employee_Name__c</fieldItem>
-                <identifier>RecordEmployee_Name_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.EMS_TM_StartDate_Asgn__c</fieldItem>
                 <identifier>RecordEMS_TM_StartDate_Asgn_cField</identifier>
             </fieldInstance>

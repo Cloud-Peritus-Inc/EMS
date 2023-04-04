@@ -3,6 +3,5 @@
     <fullName>Closed_Date_Validation</fullName>
     <active>true</active>
     <errorConditionFormula>Contract_Start_Date__c &lt; TODAY()</errorConditionFormula>
-    <errorDisplayField>Contract_Start_Date__c</errorDisplayField>
     <errorMessage>Contract Start Date Must be Feature Dates Only</errorMessage>
 </ValidationRule>

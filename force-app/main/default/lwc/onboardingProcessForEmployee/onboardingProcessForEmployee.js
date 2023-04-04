@@ -257,16 +257,16 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         if (this.PostOnboardingConfirm == true) {
           this.buttonDisable = true;
           this.readonlyfield = true;
+          this.readonlyfield1 = true;
           this.expression1 = true;
           this.disableFlag = true;
-          this.paFlag = true;
         }
         if(this.cadrressline1 !=null && this.padrressline1 != null){
           if (this.padrressline1 === this.cadrressline1) {
             this.paFlag = true;
           }
             else{
-              this.disableFlag = false;
+              this.paFlag = false;
             }
          }
         
@@ -418,7 +418,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @track pazip;
   message;
   error;
-
+  readonlyfield1 = false;
   inputcheckboxValue;
 
   AddressCheckboxChange(event) {
@@ -431,6 +431,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.pastate = this.castate;
       this.pacity = this.cacity;
       this.pazip = this.cazip;
+      this.readonlyfield1 = true;
     } else {
       //console.log('address unchecked')
       this.padrressline1 = '';
@@ -438,6 +439,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.pastate = '';
       this.pacity = '';
       this.pazip = '';
+      this.readonlyfield1 = false;
     }
   }
   @track paFlag;
@@ -1078,7 +1080,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           //console.log("I am in if");
           this.dispatchEvent(
             new ShowToastEvent({
-              message: 'Please Enter correct date of birth',
+              message: 'Please enter a valid date of birth.',
               variant: 'error',
             }),
           );
@@ -1089,7 +1091,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         }
       } else {
         const even = new ShowToastEvent({
-          message: 'Please complete required field & avoid invalid data!',
+          message: 'Please complete the required field and avoid invalid data.',
           variant: 'error'
         });
         this.dispatchEvent(even);
@@ -1108,7 +1110,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         return true;
       } else {
         const even = new ShowToastEvent({
-          message: 'Please complete required field & avoid invalid data!',
+          message: 'Please complete the required field and avoid invalid data.',
           variant: 'error'
         });
         this.dispatchEvent(even);
@@ -1137,7 +1139,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
       } else {
         const even = new ShowToastEvent({
-          message: 'Please complete required field & avoid invalid data!!',
+          message: 'Please complete the required field and avoid invalid data.',
           variant: 'error'
         });
         this.dispatchEvent(even);
@@ -1156,7 +1158,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         return true;
       } else {
         const even = new ShowToastEvent({
-          message: 'Please complete required field & avoid invalid data!',
+          message: 'Please complete the required field and avoid invalid data.',
           variant: 'error'
         });
         this.dispatchEvent(even);
@@ -1169,12 +1171,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   @track filesUploaded = [];
   uploadedFiles = []; file; fileName;
   uploadedFiles1 = []; file1; fileName1;
-  uploadedFiles2 = []; file2; fileName2;
-  uploadedFiles3 = []; file3; fileName3;
-  uploadedFiles4 = []; file4; fileName4;
-  uploadedFiles5 = []; file5; fileName5;
-  uploadedFiles6 = []; file6; fileName6;
-  uploadedFiles7 = []; file7; fileName7;
 
   fileContents; fileReader; content;
   error;
@@ -1193,6 +1189,10 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       for (var i = 0; i < event.target.files.length; i++) {
         if (event.target.files[i].size > MAX_FILE_SIZE) {
           this.showToast('error', 'File size exceeded the upload size limit.');
+          return;
+        }
+        if(event.target.files[i].type != "application/pdf" && event.target.files[i].name.split('.').pop().toLowerCase() !== 'zip'){
+          this.showToast('error', 'Only PDF and Zip file formats are allowed.');
           return;
         }
         let file = event.target.files[i];
@@ -1216,6 +1216,10 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           this.showToast('error', 'File size exceeded the upload size limit.');
           return;
         }
+        if(event.target.files[i].type != "application/pdf" && event.target.files[i].name.split('.').pop().toLowerCase() !== 'zip'){
+          this.showToast('error', 'Only PDF and Zip file formats are allowed.');
+          return;
+        }
         let file = event.target.files[i];
         let fileExtension = file.name.substring(file.name.lastIndexOf('.'));
         let newFileName = 'Document_' + file.name;
@@ -1230,6 +1234,14 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
   }
 
+  showToast(variant, message) {
+    this.dispatchEvent(
+        new ShowToastEvent({
+            variant: variant,
+            message: message,
+        })
+    );
+}
   removeReceiptImage(event) {
     var index = event.currentTarget.dataset.id;
     this.filesData.splice(index, 1);
@@ -1611,6 +1623,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       && this.isVehicleDetailsCheckbox && this.isPFFormsCheckbox && this.isDocumentsValueChecked && this.isCompanyPoliciesValueChecked && this.isCompanyInformationValueChecked) {
       this.PostOnboardingConfirm = true;
       this.readonlyfield = true;
+      this.readonlyfield1 = true;
       updateStatusFields(this)
       //console.log('confirm', confirm, 'this.PostOnboardingConfirm', this.PostOnboardingConfirm);
       this.dispatchEvent(
@@ -1686,7 +1699,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
   handlefamilySuccess(event) {
     this.dispatchEvent(
       new ShowToastEvent({
-        message: 'Family Member Added successfully',
+        message: 'Family member added successfully.',
         variant: 'success',
       }),
     );
@@ -1741,7 +1754,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       .then(() => {
         this.dispatchEvent(
           new ShowToastEvent({
-            message: 'Family Member Deleted Suscessfully',
+            message: 'Family member deleted Successfully.',
             variant: 'success'
           })
         );

@@ -25,6 +25,10 @@
                 <behavior>Edit</behavior>
                 <field>EMS_LM_Marital_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_LM_No_of_Marriage_Leave_Credit__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -440,6 +444,7 @@
         <relatedList>Resource_Resource_Relationship__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>EMS_TM_ProjectName_Asgn__c</fields>
         <fields>EMS_TM_Status_Asgn__c</fields>
@@ -448,6 +453,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Resource_Name__c</fields>
+        <fields>Week_Start_Date__c</fields>
+        <fields>EMS_TM_Total__c</fields>
         <relatedList>EMS_Timesheet__c.Resource__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -479,7 +487,7 @@
         <relatedList>Certifications__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>OBJECT_ID</fields>
+        <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <relatedList>ems_EM_Additional_Detail__c.ContactId__c</relatedList>
     </relatedLists>

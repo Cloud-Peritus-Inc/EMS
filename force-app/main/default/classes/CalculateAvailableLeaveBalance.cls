@@ -47,6 +47,7 @@ public class CalculateAvailableLeaveBalance implements TriggerAction.AfterInsert
         Decimal availablePaternityLeave = 0;
         Decimal availableMaternityLeave = 0;
         Decimal availableBereavementLeave = 0; 
+        Decimal availableMarriageLeave = 0; 
         for(EMS_LM_Leave_Credit__c leaveCredit : leaveCreditList){
                 employeeSet.add(leaveCredit.EMS_LM_Employee__c); 
         }
@@ -56,6 +57,7 @@ public class CalculateAvailableLeaveBalance implements TriggerAction.AfterInsert
                                                  EMS_LM_No_of_Bereavement_Leaves_Credit__c,
                                                  EMS_LM_No_Of_Compensatory_Off_Credit__c,
                                                  EMS_LM_No_Of_Leaves_Credit__c,
+                                             	EMS_LM_No_of_Marriage_Leave_Credit__c,
                                                  EMS_LM_No_Of_Maternity_Leaves_Credit__c,
                                                  EMS_LM_No_Of_Paternity_Leaves_Credit__c
                                              FROM Contact
@@ -83,6 +85,9 @@ public class CalculateAvailableLeaveBalance implements TriggerAction.AfterInsert
                     }
                     when 'Paternity Leave'{
                         contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c != null ? contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
+                    }
+                     when 'Marriage Leave'{
+                        contactRec.EMS_LM_No_of_Marriage_Leave_Credit__c = contactRec.EMS_LM_No_of_Marriage_Leave_Credit__c != null ? contactRec.EMS_LM_No_of_Marriage_Leave_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
                     }
                 }
                finalContactList.add(contactRec); 

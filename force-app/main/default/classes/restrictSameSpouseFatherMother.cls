@@ -62,7 +62,7 @@ public without sharing class restrictSameSpouseFatherMother implements TriggerAc
         for (Family_Information__c fi : newlist) {
             if (fi.Relationships__c != null && (fi.Relationships__c == 'Spouse' || fi.Relationships__c == 'Father' || fi.Relationships__c == 'Mother')) {
                 if (existingRelationships.containsKey(fi.Resource__c) && existingRelationships.get(fi.Resource__c).contains(fi.Relationships__c)) {
-                    fi.addError('Family Member is already exists with the same Relationship value.!');
+                    fi.addError('Family member already exists with the same relationship.');
                 } 
             }
         }

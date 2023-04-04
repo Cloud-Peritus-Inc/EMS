@@ -31,27 +31,38 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         List<Contact> finalContactList = new List<Contact>();
         List<Messaging.SingleEmailMessage> lstMails = new List<Messaging.SingleEmailMessage>();
         List<Messaging.SingleEmailMessage> adminTeamListForTasks = new List<Messaging.SingleEmailMessage>();
+        List<Messaging.SingleEmailMessage> itMailList = new List<Messaging.SingleEmailMessage>();
+        List<Messaging.SingleEmailMessage> itMailListForDOJ = new List<Messaging.SingleEmailMessage>();
+        List<Messaging.SingleEmailMessage> hrMailList = new List<Messaging.SingleEmailMessage>();
         
         for(Contact contactRec : contactList){
-            if((contactRec.EMS_EM_JD__c.addDays(-10) == System.today() || contactRec.EMS_EM_JD__c.addDays(-11) == System.today()) && contactRec.Is_PreOnboarding_Mail_Sent__c == False){
+            if(contactRec.EMS_EM_JD__c.addDays(-10) == System.today() && contactRec.Is_PreOnboarding_Mail_Sent__c == False){
                 applicantsToSendMail.add(contactRec);
-                System.debug('Today ==> '+system.today());
-                System.debug('DOJ ==> '+contactRec.EMS_EM_JD__c);
-                System.debug('DOJ minus 10days ==> '+contactRec.EMS_EM_JD__c.addDays(-10));
                 String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id);
                 if(status == 'success'){
                     sendEmailToHR(contactRec.Id);
                     Messaging.SingleEmailMessage message = sendEmailToAdminTeam(contactRec.Id);
                     adminTeamListForTasks.add(message);
+                    Messaging.SingleEmailMessage message2 = sendEmailToITTeamForNewJoin(contactRec.Id);
+                	itMailList.add(message2);
+                    Messaging.SingleEmailMessage message3 = sendEmailToHR(contactRec.Id);
+                	hrMailList.add(message3);
                 }  
             }
+            
             if(contactRec.EMS_EM_JD__c == System.today()){
                 Messaging.SingleEmailMessage message = adminTeamDOJTasks(contactRec.Id);
                 lstMails.add(message);
+                Messaging.SingleEmailMessage message2 = sendEmailToITTeamOnDOJ(contactRec.Id);
+                itMailListForDOJ.add(message2);
             }
         }
-        Messaging.sendEmail(lstMails);
+        
         Messaging.sendEmail(adminTeamListForTasks);
+        Messaging.sendEmail(itMailList);
+        Messaging.sendEmail(hrMailList);
+        Messaging.sendEmail(lstMails);
+        Messaging.sendEmail(itMailListForDOJ);
         
         if(applicantsToSendMail.size() > 0){
             for(Contact con : applicantsToSendMail){
@@ -85,11 +96,10 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         }
     }
     
-    public static void sendEmailToHR(string recordId){
-        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+    public static Messaging.SingleEmailMessage sendEmailToHR(string recordId){
+        
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Notify To Hr After Onboarding Form Sent' LIMIT 1];
-
         String hrTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'HR_Team'].Email__c;
         String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         List<String> hrEmailList = new List<String>();
@@ -102,23 +112,18 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setTreatTargetObjectAsRecipient(false);
         message.setOrgWideEmailAddressId(fromEmail);
         message.setSaveAsActivity(false);
-        mails.add(message);
-        
-        Messaging.sendEmail(mails);
-        //Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
+        return message;
     }
     
      public static Messaging.SingleEmailMessage sendEmailToAdminTeam(string recordId){
+         
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='After Applicant Record Inserted Admin' LIMIT 1];
-         
         String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'Admin_Team'].Email__c;
         String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         List<String> adminEmailList = new List<String>();
         adminEmailList.add(taTeamEmail);
-         
-        //List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
-		
+        		
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
         message.toAddresses = adminEmailList;
         message.setTemplateID(emailTemplate.Id);
@@ -127,19 +132,36 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         message.setSaveAsActivity(false);
         message.setOrgWideEmailAddressId(fromEmail);
         return message;
+    }
+    
+    public static Messaging.SingleEmailMessage sendEmailToITTeamForNewJoin(string recordId){
+        
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Email To IT Team For Assets' LIMIT 1];
+        String itEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'IT_Team' LIMIT 1].Email__c;
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
+        List<String> itEmailList = new List<String>();
+        itEmailList.add(itEmail);
+        
+            Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
+            mail.toAddresses = itEmailList;
+            mail.setTemplateID(emailTemplate.Id);
+            mail.setTargetObjectId(recordId);
+            mail.setOrgWideEmailAddressId(fromEmail);
+            mail.setTreatTargetObjectAsRecipient(false);
+            mail.setSaveAsActivity(false);   
+            return mail;
     }
     
     public static Messaging.SingleEmailMessage adminTeamDOJTasks(string recordId){
+        
         EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Admin Team DOJ Tasks' LIMIT 1];
-         
         String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'Admin_Team'].Email__c;
         String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
         List<String> adminEmailList = new List<String>();
         adminEmailList.add(taTeamEmail);
-         
-        //List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
-		
+         		
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
         message.toAddresses = adminEmailList;
         message.setTemplateID(emailTemplate.Id);
@@ -150,7 +172,26 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         return message;
     }
     
-    public void finish(Database.BatchableContext bc){
+    public static Messaging.SingleEmailMessage sendEmailToITTeamOnDOJ(string recordId){
         
+        List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Mail for Create Official Mail'];
+        String itEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'IT_Team' LIMIT 1].Email__c;
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
+        List<String> itEmailList = new List<String>();
+        itEmailList.add(itEmail);
+        
+            Messaging.SingleEmailMessage mail =  new Messaging.SingleEmailMessage();   
+            mail.toAddresses = itEmailList;
+            mail.setTemplateID(emailTemplate.Id);
+            mail.setTargetObjectId(recordId);
+            mail.setOrgWideEmailAddressId(fromEmail);
+            mail.setTreatTargetObjectAsRecipient(false);
+            mail.setSaveAsActivity(false);  
+        	return mail;
+    }
+    
+    public void finish(Database.BatchableContext bc){    
     }
 }

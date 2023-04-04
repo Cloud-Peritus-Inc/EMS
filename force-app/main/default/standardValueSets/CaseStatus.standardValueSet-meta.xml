@@ -41,12 +41,12 @@
         <fullName>Resignation Approved</fullName>
         <default>false</default>
         <label>Resignation Approved</label>
-        <closed>true</closed>
+        <closed>false</closed>
     </standardValue>
     <standardValue>
         <fullName>Resignation Rejected</fullName>
         <default>false</default>
         <label>Resignation Rejected</label>
-        <closed>true</closed>
+        <closed>false</closed>
     </standardValue>
 </StandardValueSet>

@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>Branch__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Aadhaar_Number__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -40,6 +44,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IFSC_Routing_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PAN__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -71,6 +79,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Pay_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sodexo_Card_Option__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

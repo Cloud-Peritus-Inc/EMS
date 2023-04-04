@@ -91,7 +91,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
     }
   }
 
-  @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$Location', dayCheck: '$daycheck' })
+  @wire(getLeaveDuration, { stDate: '$startDate1', edDate: '$endDate1', location: '$Location', dayCheck: '$daycheck', value: '$value' })
   async wiredduration(result) {
     this.refleaveduration = result;
     if (result.data) {
@@ -331,6 +331,12 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Maternity_Leave__c;
       this.fileuploadRequired = true;
 
+    }
+    if (this.value == 'Marriage Leave') {
+      this.visiableotherdetail = true;
+
+      this.availabledays = this.allavailabledays.EMS_LM_No_of_Available_Marriage_Leave__c;
+      this.fileuploadRequired = true;
     }
     if (this.value == 'Compensatory Off') {
       this.visiableotherdetail = true;
