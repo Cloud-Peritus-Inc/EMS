@@ -83,6 +83,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     @wire(getAssignmentProjectWire, { week: new Date(), wireMethod: true, userId: '$userId' } )
     assignmentProject({ error, data }) {
         if (data) {
+            console.log('assignmentProject');
             console.log('result ',data);
             // this.timeSheetRecord.User__c = data.User.Id;
             this.timeSheetRecord.Resource__c = data.User.Contacts__r[0].Id;
@@ -369,6 +370,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         this.hideSpinner = false;
         let week = new Date(this.timeSheetRecord.EMS_TM_Week__c);
         getAssignmentProject({ week: week, wireMethod: false, userId: this.timeSheetRecord.User__c }).then( result => {
+            console.log('RetriveAssignmentRecords');
             console.log('result',result);
             this.renderAssignmentRecords(result);
             this.renderTimesheetRecords(result.timeSheet,result.timeSheetRecords);
@@ -1118,7 +1120,7 @@ submitpopup(){
         for( let key in this.totalDayHours ) {
             if (key.length === 13 && (key != 'EMS_TM_Sat__c' && key != 'EMS_TM_Sun__c')) {
                 let error = 'error'+key;
-                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 8 ) {
+                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 0 ) {
                     this.isValid = false;
                     this.totalDayHours[error] = true;
                 } else {

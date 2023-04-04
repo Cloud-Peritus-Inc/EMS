@@ -1247,11 +1247,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Pre_Joining_Date__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Level_of_Approval__c</field>
             <table>Contact</table>
         </columns>

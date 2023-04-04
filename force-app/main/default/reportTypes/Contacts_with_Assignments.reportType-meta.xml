@@ -1067,11 +1067,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Pre_Joining_Date__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>EMS_EM_Previous_Company_HR_EmailId__c</field>
             <table>Contact</table>
         </columns>

@@ -6,7 +6,7 @@ import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import u_Id from '@salesforce/user/Id';
 import getbilling from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getbilling';
-import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getLeaveDuration';
+import getMaternityLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getMaternityLeaveDuration';
 import getwfhDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getwfhDuration';
 import uploadFile from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.uploadFile';
 import { createRecord } from 'lightning/uiRecordApi';
@@ -226,7 +226,7 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
     }
 
     //TO GET DURATION FOR COMP-OFF
-    @wire(getLeaveDuration, { stDate: '$startDate', edDate: '$endDate', location: '$Location', dayCheck: '$dayCheck1' })
+    @wire(getMaternityLeaveDuration, { stDate: '$startDate', edDate: '$endDate', location: '$Location', dayCheck: '$dayCheck1' })
     wiredduration({ error, data }) {
         if (data) {
             this.duration = data;

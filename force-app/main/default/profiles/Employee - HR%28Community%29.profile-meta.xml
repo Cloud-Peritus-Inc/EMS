@@ -2773,11 +2773,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Pre_Joining_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.Probationary_Period_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>

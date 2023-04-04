@@ -16,11 +16,11 @@
 				</template>
 			</div>
 			<div slot="actions">
-				<lightning-button variant="success" label="Approve All"  onclick={handleApproveAll}
+				<lightning-button variant="success" label="Approve All" onclick={handleApproveAll}
 					disabled={disableButton}>
 				</lightning-button>
 				&nbsp;&nbsp;
-				<lightning-button variant="destructive" label="Reject All"  onclick={handleRejectAll}
+				<lightning-button variant="destructive" label="Reject All" onclick={handleRejectAll}
 					disabled={disableButton}>
 				</lightning-button>
 			</div>
@@ -171,8 +171,6 @@
 					</div>
 				</lightning-card>
 			</template>
-			<!---->
-			<!---->
 			<!-- APPROVE ALL POP-UP-->
 			<template if:true={isShowModalApproveAll}>
 				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
@@ -187,10 +185,15 @@
 						<!-- modal body start -->
 						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 							<p style="font-size:20px;">Please enter the approval comments</p><br>
-							<lightning-textarea name="input" placeholder="Type comments here..." label="Comments"
-								maxlength="140" message-when-too-long="A maximum of 140 characters are allowed."
-								message-when-value-missing="Please add comments." onchange={handleApproveAllComments}>
+							<lightning-textarea name="input" required value={approveAllComments}
+								placeholder="Type comments here..." label="Comments" maxlength="140"
+								message-when-too-long="A maximum of 140 characters are allowed."
+								message-when-value-missing="Please add comments." onchange={handleApproveAllComments}
+								class="isRequired" data-id="validateValue">
 							</lightning-textarea>
+							<template if:true={errorMessage}>
+								<div class="slds-text-color_error">{errorMessage}</div>
+							</template>
 						</div>
 
 						<!-- modal footer start-->
@@ -258,11 +261,14 @@
 						<!-- modal body start -->
 						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
 							<p style="font-size:20px;">Please enter the approval comments</p><br>
-							<lightning-textarea name="input" value="" placeholder="Type comments here..."
-								label="Comments" maxlength="140"
+							<lightning-textarea name="input" required value={approveComments}
+								placeholder="Type comments here..." label="Comments" maxlength="140"
 								message-when-too-long="A maximum of 140 characters are allowed."
 								message-when-value-missing="Please add comments." onchange={handleApproveComments}>
 							</lightning-textarea>
+							<template if:true={errorMessage}>
+								<div class="slds-text-color_error">{errorMessage}</div>
+							</template>
 						</div>
 
 						<!-- modal footer start-->
@@ -316,7 +322,7 @@
 			</template>
 		</lightning-card>
 		<template if:true={nodata}>
-		<center> No requests found </center>
+			<center> No requests found </center>
 		</template>
 	</div>
 </template>
