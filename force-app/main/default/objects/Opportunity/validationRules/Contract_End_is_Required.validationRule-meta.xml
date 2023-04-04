@@ -3,6 +3,5 @@
     <fullName>Contract_End_is_Required</fullName>
     <active>true</active>
     <errorConditionFormula>TEXT(StageName) == &quot;Closed Won&quot; &amp;&amp; ISBLANK(Contract_End_Date__c)</errorConditionFormula>
-    <errorDisplayField>Contract_End_Date__c</errorDisplayField>
     <errorMessage>The following fields are required when the Opportunity is Closed Won: Contract Start Date, Contract End Date, Project Manager</errorMessage>
 </ValidationRule>

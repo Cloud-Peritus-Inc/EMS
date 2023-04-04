@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EMS_EM_Membership_No__c</fullName>
     <externalId>false</externalId>
-    <label>Membership No.</label>
+    <label>Membership ID</label>
     <length>100</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

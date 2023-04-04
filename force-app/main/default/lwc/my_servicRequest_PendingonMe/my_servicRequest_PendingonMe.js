@@ -88,8 +88,13 @@ export default class My_servicRequest_PendingonMe extends NavigationMixin(Lightn
      console.log('approveLastWorkDate'+this.approveLastWorkDate);
   }
 
-  handleApproveSave(event) {
-      if(this.approveLastWorkDate <= this.lastWorkingDate  && this.approveLastWorkDate >= this.todayDate){
+  handleApproveSave() {
+       console.log('approveLastWorkDate'+this.approveLastWorkDate);
+       if(this.approveLastWorkDate == undefined || this.approveLastWorkDate == 'undefined'){
+         this.approveLastWorkDate = this.lastWorkingDate;
+       }
+       console.log('approveLastWorkDate   '+this.approveLastWorkDate);
+      if((this.approveLastWorkDate <= this.lastWorkingDate || this.approveLastWorkDate == this.lastWorkingDate)  && (this.approveLastWorkDate >= this.todayDate || this.approveLastWorkDate == this.todayDate)){
 
       
     updateApproveStatusAndComments({ serviceRequestId: this.selectedRecordApproveId, approveComments: this.approveComments, lasworkingDate:this.approveLastWorkDate})

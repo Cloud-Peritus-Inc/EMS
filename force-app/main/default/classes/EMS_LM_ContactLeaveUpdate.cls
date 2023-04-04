@@ -119,12 +119,12 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
                 user u =[Select id, ContactId, Email from user where id =: userid];
                 if(u.ContactId !=null){
                     cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c, Email , EMS_LM_No_Of_Available_Compensatory_Off__c,
-                           EMS_LM_No_Of_Available_Maternity_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
+                           EMS_LM_No_Of_Available_Maternity_Leave__c,EMS_LM_No_of_Available_Marriage_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
                            EMS_LM_No_Of_Availble_Leaves__c from Contact where Id = :u.ContactId Limit 1];         
                 }
                 else{
                     cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c,Email, EMS_LM_No_Of_Available_Compensatory_Off__c,
-                           EMS_LM_No_Of_Available_Maternity_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
+                           EMS_LM_No_Of_Available_Maternity_Leave__c,EMS_LM_No_of_Available_Marriage_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
                            EMS_LM_No_Of_Availble_Leaves__c from Contact where Email=:u.Email AND EMS_TM_User__c = :userid Limit 1];
                 }
             }

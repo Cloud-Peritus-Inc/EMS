@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Acceptdateinbetweencurrentweek</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ EMS_TM_Week__c- TODAY() &gt; 4,
+CASE(MOD(  EMS_TM_Week__c  - DATE(1900, 1, 7), 7),
+0, 0,
+6, 0,
+1) = 0)</errorConditionFormula>
+    <errorMessage>Please enter the current WeekDate</errorMessage>
+</ValidationRule>

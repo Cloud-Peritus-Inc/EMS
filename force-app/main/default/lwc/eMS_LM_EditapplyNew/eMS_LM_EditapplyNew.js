@@ -154,6 +154,9 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Compensatory_Off__c;
       //  console.log('this.allavailabledays' + availabledays);
       }
+      if (this.value == 'Marriage Leave') {
+          this.availabledays = this.allavailabledays.EMS_LM_No_of_Available_Marriage_Leave__c;
+      }
     } else if (result.error) {
       console.log(result.error);
       this.error = result.error;
@@ -310,6 +313,46 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         }
         if (this.value == 'Maternity Leave') {
           this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Maternity_Leave__c;
+          if (this.startDate != undefined || this.startDate != null) {
+            console.log('this.availabledays##', this.availabledays);
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+              this.submitcheck = true;
+            }
+
+          }
+          else {
+            if (this.availabledays >= data) {
+              this.submitcheck = false;
+              this.duration = data;
+              this.error = undefined;
+            }
+            else {
+
+              const evt = new ShowToastEvent({
+                message: 'Sorry! You dont have enough leave balance. Consider applying leave of some other type.',
+                variant: 'error',
+              });
+              this.dispatchEvent(evt);
+
+              this.duration = data;
+              this.duration = undefined;
+              this.error = undefined;
+              this.submitcheck = true;
+            }
+          }
+        }
+        if (this.value == 'Marriage Leave') {
+          this.availabledays = this.allavailabledays.EMS_LM_No_of_Available_Marriage_Leave__c;
           if (this.startDate != undefined || this.startDate != null) {
             console.log('this.availabledays##', this.availabledays);
             if (this.availabledays >= data) {

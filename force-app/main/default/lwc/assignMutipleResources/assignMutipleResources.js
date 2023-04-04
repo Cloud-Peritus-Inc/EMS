@@ -186,7 +186,7 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
         }else{
             const evt = new ShowToastEvent({
                         
-                        message: 'Select atleast one row',
+                        message: 'Please select atleast one row',
                         variant: 'error',
                         mode: 'dismissable'
                     });
