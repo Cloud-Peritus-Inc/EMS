@@ -3,8 +3,9 @@
     <fullName>EMS_Timesheet__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>EMS_Timesheet</label>
+    <label>Timesheet Id</label>
     <referenceTo>EMS_Timesheet__c</referenceTo>
+    <relationshipLabel>Timesheet Records</relationshipLabel>
     <relationshipName>Employee_Projects</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

@@ -261,12 +261,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
 
   //Approve All
   handleApproveAllComments(event) {
-    if (event.target.value) {
-      this.errorMessage = '';
-      this.approveAllComments = event.target.value
-    } else {
-      this.errorMessage = 'Please enter the comments';
-    }
+    this.approveAllComments = event.target.value
   }
 
   handleApproveAll() {
@@ -310,12 +305,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
 
   //Reject All
   handleRejectAllComments(event) {
-    if (event.target.value) {
-      this.errorMessage = '';
-      this.rejectAllComments = event.target.value
-    } else {
-      this.errorMessage = 'Please enter the comments';
-    }
+    this.rejectAllComments = event.target.value
   }
 
   handleRejectAll() {
@@ -357,6 +347,10 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
 
   //Modal Pop-up Close
   handleCloseAll() {
+    this.approveComments = '';
+    this.approveAllComments = '';
+    this.rejectComments = '';
+    this.rejectAllComments = '';
     this.isShowModalApprove = false;
     this.isShowModalReject = false;
     this.isShowModalApproveAll = false;
@@ -365,12 +359,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
 
   //Approve Modal
   handleApproveComments(event) {
-    if (event.target.value) {
-      this.errorMessage = '';
-      this.approveComments = event.target.value;
-    } else {
-      this.errorMessage = 'Please enter the comments';
-    }
+    this.approveComments = event.target.value;
   }
 
   showModalApprovalBox(event) {
@@ -406,16 +395,10 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
 
   //Reject Modal
   handleRejectComments(event) {
-    if (event.target.value) {
-      this.errorMessage = '';
-      this.rejectComments = event.target.value
-    } else {
-      this.errorMessage = 'Please enter the comments';
-    }
+    this.rejectComments = event.target.value
   }
 
   showModalRejectBox(event) {
-    console.log('BUTTON CLICKED Reject: ');
     this.isShowModalReject = true;
     console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
     this.selectedRecordRejectId = event.currentTarget.dataset.id;
@@ -497,7 +480,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
   //TO VIEW THE CONTACT RECORD
   handlConClick(event) {
     let selectCon = event.currentTarget.dataset.id;
-    console.log('### selectCon : ', selectCon);
+    //console.log('### selectCon : ', selectCon);
     this[NavigationMixin.Navigate]({
       type: 'standard__recordPage',
       attributes: {

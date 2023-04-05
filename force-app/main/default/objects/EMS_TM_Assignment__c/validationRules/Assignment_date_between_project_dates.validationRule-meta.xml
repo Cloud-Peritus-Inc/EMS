@@ -3,6 +3,5 @@
     <fullName>Assignment_date_between_project_dates</fullName>
     <active>true</active>
     <errorConditionFormula>EMS_TM_StartDate_Asgn__c  &lt;  EMS_TM_ProjectName_Asgn__r.EMS_TM_StartDate__c  || EMS_TM_StartDate_Asgn__c &gt;  EMS_TM_ProjectName_Asgn__r.EMS_TM_EndDate__c</errorConditionFormula>
-    <errorDisplayField>EMS_TM_StartDate_Asgn__c</errorDisplayField>
     <errorMessage>Start Date of your Assignment should be in between the project Start Date and End Date</errorMessage>
 </ValidationRule>

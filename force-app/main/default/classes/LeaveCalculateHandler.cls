@@ -57,6 +57,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
         Decimal utilizedBereavementLeave = 0;
         Decimal utilizedLossOfPay = 0;
         Decimal utilizedWorkfromhome = 0;
+        Decimal utilizedMarriageLeave = 0;
         for(EMS_LM_Leave_History__c l2 : l1){
             
             if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.ANNUAL_LEAVE && l2.EMS_LM_Leave_Duration__c !=Null  && 
@@ -118,9 +119,18 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
             {
                 utilizedWorkfromhome = utilizedWorkfromhome + l2.EMS_LM_Leave_Duration__c;
                 
-            }       
+            } 
+            if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == 'Marriage Leave' && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+                                                                                                                                             l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
+                                                                                                                                             l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING||
+                                                                                                                                             l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
+                                                                                                                                             l2.EMS_LM_Status__c== LeaveRequestConstant.AUTO_APPROVED))
+            {
+                utilizedMarriageLeave = utilizedMarriageLeave + l2.EMS_LM_Leave_Duration__c;
+                
+            }
         } 
-        decimal leaveapplied=Utilized_Leaves;
+       
         for(Contact con:Resourceleave){
            
                 con.EMS_LM_No_Of_Utilized_Leaves__c=Utilized_Leaves;
@@ -131,6 +141,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                 con.EMS_LM_No_Of_Utilized_Bereavement_Leaves__c =  utilizedBereavementLeave;                  
                 con.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c = utilizedLossOfPay ;
                 con.No_OF_Utilized_Work_from_Home__c = utilizedWorkfromhome;
+            	con.EMS_LM_No_of_Utilized_Marriage_Leave__c = utilizedMarriageLeave;
                         conlist.add(con); 
         }
         try{
@@ -139,11 +150,8 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
         }
         }catch(exception ex){
             system.debug('LeaveCalculateHandler exception'+ex);
-            newList[0].adderror('Please check you available leave balance');
+            newList[0].adderror('Please check your available leave balance');
             
-        }
-        
-       
-        
+        }     
     }
 }
