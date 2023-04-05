@@ -191,9 +191,7 @@
 								message-when-value-missing="Please add comments." onchange={handleApproveAllComments}
 								class="isRequired" data-id="validateValue">
 							</lightning-textarea>
-							<template if:true={errorMessage}>
-								<div class="slds-text-color_error">{errorMessage}</div>
-							</template>
+
 						</div>
 
 						<!-- modal footer start-->
@@ -229,9 +227,7 @@
 								message-when-value-missing="Please add comments." onchange={handleRejectAllComments}
 								class="isRequired" data-id="validateValue">
 							</lightning-textarea>
-							<template if:true={errorMessage}>
-								<div class="slds-text-color_error">{errorMessage}</div>
-							</template>
+
 						</div>
 
 						<!-- modal footer start-->
@@ -264,11 +260,10 @@
 							<lightning-textarea name="input" required value={approveComments}
 								placeholder="Type comments here..." label="Comments" maxlength="140"
 								message-when-too-long="A maximum of 140 characters are allowed."
-								message-when-value-missing="Please add comments." onchange={handleApproveComments}>
+								message-when-value-missing="Please add comments." onchange={handleApproveComments}
+								class="isRequired" data-id="validateValue">
 							</lightning-textarea>
-							<template if:true={errorMessage}>
-								<div class="slds-text-color_error">{errorMessage}</div>
-							</template>
+
 						</div>
 
 						<!-- modal footer start-->
@@ -303,9 +298,7 @@
 								message-when-value-missing="Please add comments." onchange={handleRejectComments}
 								class="isRequired" data-id="validateValue">
 							</lightning-textarea>
-							<template if:true={errorMessage}>
-								<div class="slds-text-color_error">{errorMessage}</div>
-							</template>
+
 						</div>
 
 						<!-- modal footer start-->

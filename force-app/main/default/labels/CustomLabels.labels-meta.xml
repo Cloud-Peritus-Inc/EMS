@@ -36,13 +36,6 @@
         <value>No Assignments are allowed for completed Projects</value>
     </labels>
     <labels>
-        <fullName>Finance_team_Email</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Finance team Email</shortDescription>
-        <value>sangharshkamble12@gmail.com</value>
-    </labels>
-    <labels>
         <fullName>Grid_Portal_Link</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -117,14 +110,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Default Grid Support Request Owner</shortDescription>
-        <value>hrdirectortesting01@gmail.com</value>
+        <value>test.mail16@cloudperitus.com</value>
     </labels>
     <labels>
         <fullName>Default_HR_Support_Request_Owner</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Default HR Support Request Owner</shortDescription>
-        <value>hrmanagertestinguser@gmail.com</value>
+        <value>test.mail31@cloudperitus.com</value>
     </labels>
     <labels>
         <fullName>Timesheet_Approval</fullName>
@@ -138,7 +131,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Service Request URL</shortDescription>
-        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/case/</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/case/</value>
     </labels>
     <labels>
         <fullName>Enable_Nominations</fullName>
@@ -152,7 +145,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Service Request Label</shortDescription>
-        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/case/</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/case/</value>
     </labels>
     <labels>
         <fullName>Post_Onboarding_Task_Creation</fullName>

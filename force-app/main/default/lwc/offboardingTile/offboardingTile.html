@@ -1,0 +1,71 @@
+<template>
+ <template if:true={showonboardingUi}>      
+<div class="parent" style="background-color:#F4F6F9">
+        <div class="child1">
+            <div class="container">
+            <img src={imageUrl} height="100%" width="100%"/>
+             <div class="top-center">
+                 <div> <font size="8" ><b>Offboarding</b></font> </div> </br>
+             </div>
+              <div class="top-center-down">
+             <font size="3" ><b>Missing you to see at Cloud Peritus</b></font>
+            </div>
+             <div class="centered">
+                 <font size="3" ><b>{numberofcompletedTasks}/{numberOfTasks} tasks completed</b></font><br/><br/>
+                 <lightning-progress-bar value={complaitionPercent} size="medium" variant="circular"></lightning-progress-bar>
+                 </div>
+            </div>
+        </div>
+        <div class="child2">
+           <div class="homeCard slds-m-around_xxx-small iconContainer">
+               <div class="table-container">
+            <template for:each={datawrap} for:item="task">  
+           <lightning-card key={task.subject}  >
+               <template if:true={loaded}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+              <!-- <div slot="actions">
+                    <lightning-button-icon
+                        icon-name="action:check"
+                        size="small"
+                        onclick={handleClick}
+                        alternative-text="Close window"
+                    >
+                    </lightning-button-icon>
+                </div>-->
+           <div class="childparent" key={task.subject}>
+              <div class="childimage"> 
+                  <template if:true={task.isCompleted}>
+                    <lightning-icon icon-name="standard:task2"  alternative-text="completed" title="completed"></lightning-icon>
+                  </template>
+                  <template if:false={task.isCompleted}>
+                    <lightning-icon icon-name="standard:work_step_template" size="medium" alternative-text="In Progress" title="In Progress"></lightning-icon>
+                  </template>
+                  </div>
+               <div class="childtext"> 
+                    <template if:false={task.isCompleted}>
+                   <a href="#"  data-id={task.taskid} onclick={handleClick}> {task.subject} </a>
+                    </template>
+                     <template if:true={task.isCompleted}>
+                      {task.subject} 
+                    </template>
+
+                   
+                   <br/><font size="1">
+                        <template if:false={task.reqNav}>
+                        {task.substring} 
+                        </template>
+                         <template if:true={task.reqNav}>
+                        {task.substring} &nbsp;&nbsp;&nbsp; <a style="color:red" href={task.navLink}  data-id={task.taskid}  ><i>Click here for details</i> </a>
+                        </template>
+                         </font></div> 
+               
+           </div>
+           </lightning-card> <br key={task.subject}/>
+         </template>
+               </div>
+            </div>
+        </div>
+    </div> 
+ </template>
+</template>

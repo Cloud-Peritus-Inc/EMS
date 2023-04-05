@@ -12,7 +12,7 @@
     <div class="slds-card slds-box slds-p-around_small">
         <div class="slds-p-around_xx-small">
             <div class="slds-grid slds-wrap">
-                <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                <div style="padding-right: 15px" class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
                     <!--Accordino Section Start-->
                     <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
                         active-section-name={activeSections}>
@@ -504,7 +504,7 @@
                                                     <br>
                                                     <div class="slds-grid slds-wrap">
                                                         <div class="slds-col slds-size_1-of-13 slds-p-right_x-small">
-                                                            Permanent Address Same as Current Address?
+                                                            Permanent Address same as Current Address?
                                                         </div>
                                                         <div class="slds-col slds-size_1-of-12">
                                                             <lightning-input type="Checkbox" disabled={disableFlag}
@@ -520,28 +520,28 @@
                                                         <p>Permanent Address</p>
                                                     </h3>
                                                     <lightning-input class="slds-p-top_small" value={padrressline1}
-                                                        disabled={readonlyfield} required onchange={handleChange}
+                                                        disabled={readonlyfield1} required onchange={handleChange}
                                                         name="EMS_EM_PAddress_Line_1__c" type="text"
                                                         label="Address Line 1"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={padrressline2}
-                                                        disabled={readonlyfield} onchange={handleChange}
+                                                        disabled={readonlyfield1} onchange={handleChange}
                                                         name="EMS_EM_PAddress_Line_2__c" type="text"
                                                         label="Address Line 2"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={pastate}
                                                         onkeydown={handleFirstLastNameKeyDown}
-                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
+                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield1} required
                                                         message-when-pattern-mismatch="Invalid State"
                                                         onchange={handleChange} name="EMS_EM_PA_State__c;" type="text"
                                                         label="State"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={pacity}
                                                         onkeydown={handleFirstLastNameKeyDown}
-                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
+                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield1} required
                                                         message-when-pattern-mismatch="Invalid City"
                                                         onchange={handleChange} name="EMS_EM_PA_City__c" type="text"
                                                         label="City"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={pazip}
                                                         pattern="[0-9]{6}$" onkeydown={handleAadharNumberKeyDown}
-                                                        disabled={readonlyfield} onchange={handleChange} maxlength="6"
+                                                        disabled={readonlyfield1} onchange={handleChange} maxlength="6"
                                                         message-when-pattern-mismatch="Invalid Zip" required
                                                         name="EMS_EM_PA_Zip__c" type="text"
                                                         label="Zip"></lightning-input>
@@ -827,7 +827,7 @@
                                         <span class="slds-truncate slds-p-horizontal_small">Upload Forms</span>
                                     </h3>
                                     <div style="padding-left: 13px;">
-                                        <lightning-input type="file" name="PF" label="Attachment"
+                                        <lightning-input type="file" name="PF" label="Attachment: You can upload multiple files in PDF or Zip file format up to a total of 20 MB." required accept=".pdf, .zip"
                                             disabled={readonlyfield} onchange={handleFileUploaded} multiple>
                                         </lightning-input>
                                         <template if:true={filesData}>
@@ -909,7 +909,7 @@
                                         <span class="slds-truncate slds-p-horizontal_small">Upload Documents</span>
                                     </h3>
                                     <div style="padding-left: 13px;">
-                                        <lightning-input type="file" name="Doc" label="Attachment"
+                                        <lightning-input type="file" name="Doc" label="Attachment: You can upload multiple files in PDF or Zip file format up to a total of 20 MB." required accept=".pdf, .zip"
                                             disabled={readonlyfield} onchange={handleDocFileUploaded} multiple>
                                         </lightning-input>
                                         <template if:true={filesDocData}>

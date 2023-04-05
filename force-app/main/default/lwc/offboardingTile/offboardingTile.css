@@ -1,0 +1,102 @@
+.parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.child1 {
+    width: 60%;
+}
+
+.child2 {
+    width: 40%;
+	padding: 5px;
+}
+
+.table-container {
+  max-height: 390px; /* set maximum height */
+  overflow: auto; /* enable vertical scrollbar */
+}
+
+.table-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  /*background: #888;*/
+  background : rgb(223, 185, 235);
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color: black;
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+.top-center {
+  position: absolute;
+  top: 20px;
+  right: 65%;
+  left: 20%;
+}
+
+.top-center-down {
+  position: absolute;
+  top: 85px;
+  transform: translate(-50%, -0%);
+   left: 50%;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+.centered {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.childparent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+	padding: 5px;
+  height: 50px;
+}
+
+.childimage {
+    width: 30%;
+	padding:10px;
+	border-right: 1px black;
+}
+
+.childtext {
+    width: 70%;
+	padding-bottom: 10px;
+}

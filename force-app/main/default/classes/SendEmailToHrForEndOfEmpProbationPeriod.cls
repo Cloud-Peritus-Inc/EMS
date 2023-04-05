@@ -20,16 +20,14 @@ public class SendEmailToHrForEndOfEmpProbationPeriod implements Database.Batchab
     
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id, EMS_EM_PP__c, EMS_EM_JD__c FROM Contact WHERE EMS_EM_PP__c != NULL AND RecordType.Name = \'Resource\'' 
+        	'SELECT id, EMS_EM_PP__c, Probationary_Period_End_Date__c, EMS_EM_JD__c FROM Contact WHERE Probationary_Period_End_Date__c != NULL AND RecordType.Name = \'Resource\'' 
         );
     }
     
     public void execute(Database.BatchableContext bc, List<Contact> contactList){
         List<Contact> updatedContactList = new List<Contact>();
         for(Contact contactRec : contactList){
-            Integer probationDays = (Integer)contactRec.EMS_EM_PP__c;
-            Date prodationEndDate = contactRec.EMS_EM_JD__c.addDays(probationDays);
-            if(prodationEndDate == System.today().addDays(2)){
+            if(contactRec.Probationary_Period_End_Date__c.addDays(-2) == System.today()){
                 updatedContactList.add(contactRec);
             }
         }

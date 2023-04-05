@@ -31,8 +31,7 @@ global class BatchToAssignTasksForOffboarding implements Database.Batchable<sObj
         return Database.getQueryLocator([SELECT Id,Exit_Interview_Date__c,Feedback_From_Resource__c,Last_Day_Of_Work__c,
                                          Resource__c,Status__c,Resource__r.EMS_TM_User__c,Resource__r.ReportsTo.EMS_TM_User__c
                                          ,Resource__r.Resource_Manager__r.EMS_TM_User__c FROM Off_boarding_Request__c 
-                                         WHERE CreatedDate=:dt 
-                                         AND Status__c = 'Approved' ]);
+                                         WHERE Status__c = 'Approved' ]);
     }
   
 /**
@@ -62,7 +61,7 @@ global class BatchToAssignTasksForOffboarding implements Database.Batchable<sObj
         for(Group grp : [SELECT Id,NAME FROM Group WHERE Type='Queue' And NAME IN:queueNames]){
           QueueWithId.put(grp.Name,grp.Id);  
         }
-        
+        system.debug('===offboardingList=='+offboardingList);
         for(Off_boarding_Request__c con : offboardingList){
             for(offboarding_Tasks__mdt ptm : metaList){
               Task t = new Task();
@@ -82,7 +81,7 @@ global class BatchToAssignTasksForOffboarding implements Database.Batchable<sObj
                 t.Priority = 'High';
                 t.IsReminderSet = true;
                 t.IsVisibleInSelfService = True;
-                t.Onboarding_UniqueKey__c  = ptm.Unique_Identifier__c;
+                t.Offboarding_UniqueKey__c  = ptm.Unique_Identifier__c;
                 t.WhoId = con.Resource__c;
                 t.whatId = con.Id;
                 Date duedate = ptm.Due_Date_Days__c != null ? system.today().adddays(integer.valueOf(ptm.Due_Date_Days__c)) : system.today();

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>loss_of_pay_email_action</name>
-        <label>loss of pay email action</label>
-        <locationX>584</locationX>
-        <locationY>383</locationY>
+        <name>one_level_of_approver_email_action</name>
+        <label>one level of approver email action</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -17,13 +17,70 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <stringValue>{!Financeteamemail},{!AsignHR}</stringValue>
+                <elementReference>Financeteamemail</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>sendRichBody</name>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>second_level_of_approver_email_action</name>
+        <label>second level of approver email action</label>
+        <locationX>314</locationX>
+        <locationY>455</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>SecondBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Financeteamemail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -34,6 +91,43 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>Level_of_approver_decision</name>
+        <label>Level of approver decision</label>
+        <locationX>314</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>one_level_of_approver</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Level_of_Approval__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>one_level_of_approver_email_action</targetReference>
+            </connector>
+            <label>one level of approver</label>
+        </rules>
+        <rules>
+            <name>two_level_of_approver</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Level_of_Approval__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>second_level_of_approver_email_action</targetReference>
+            </connector>
+            <label>two level of approver</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Approved Loss of pay Request {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Approved Loss of pay Request EMAIL</label>
@@ -46,7 +140,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -57,13 +151,34 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>loss_of_pay_email_action</targetReference>
+            <targetReference>Level_of_approver_decision</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterFormula>AND( {!$Record.EMS_LM_Contact__r.EMS_EM_HR_Assigned__c}&lt;&gt;NULL , ISPICKVAL( {!$Record.EMS_LM_Status__c}  , &apos;Approved&apos;)  , ISPICKVAL( {!$Record.EMS_LM_Leave_Type_Name__c} , &apos;Loss of Pay&apos; ))</filterFormula>
+        <filterLogic>(1 OR 2) AND 3</filterLogic>
+        <filters>
+            <field>EMS_LM_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EMS_LM_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Auto Approved</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Leave_Type_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Loss of Pay</stringValue>
+            </value>
+        </filters>
         <object>EMS_LM_Leave_History__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
@@ -72,12 +187,17 @@
     <textTemplates>
         <name>BODY</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Dear  {!$Record.EMS_LM_Contact__r.EMS_EM_HR_Assigned__r.FirstName}, &lt;/p&gt;&lt;p&gt;The Loss of Pay request of the {!$Record.EMS_LM_Contact__r.FirstName} {!$Record.EMS_LM_Contact__r.LastName} ( {!$Record.EMS_LM_Contact__r.EMS_RM_Employee_Id__c}) for the following date(s) has been approved by {!$Record.EMS_LM_Final_Approver__c}&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Start Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave End Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Day&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt; {!$Record.EMS_LM_Leave_Start_Date__c}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;{!$Record.EMS_LM_Leave_End_Date__c} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt; {!$Record.EMS_LM_Status__c}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;{!$Record.EMS_LM_Day__c}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Approve/Reject Name : {!$Record.EMS_LM_Final_Approver__c} &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Regards,&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Cloud Peritus India Pvt. Ltd.&lt;/p&gt;</text>
+        <text>&lt;p&gt;Dear HR Team / Finance Team,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;The Loss of Pay request of the&lt;strong&gt; {!$Record.EMS_LM_Contact__r.FirstName} {!$Record.EMS_LM_Contact__r.LastName}&lt;/strong&gt; &lt;strong&gt;({!$Record.EMS_LM_Contact__r.EMS_RM_Employee_Id__c})&lt;/strong&gt; for the following date(s) has been &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Record.EMS_LM_Status__c}&lt;/span&gt;&lt;strong&gt;﻿&lt;/strong&gt;&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Start Date&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave End Date&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Duration&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Start_Date__c}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_End_Date__c} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Duration__c}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Status__c}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;strong&gt;Remark:&lt;/strong&gt; {!$Record.Approver_1_Approved_Comments__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Regards,&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;The Cloud Peritus Team&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>SecondBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Dear HR Team / Finance Team,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;The Loss of Pay request of the &lt;strong&gt;{!$Record.EMS_LM_Contact__r.FirstName} {!$Record.EMS_LM_Contact__r.LastName} ({!$Record.EMS_LM_Contact__r.EMS_RM_Employee_Id__c})&lt;/strong&gt; for the following date(s) has been &lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Record.EMS_LM_Status__c}&lt;/strong&gt;&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Start Date&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave End Date&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Duration&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Start_Date__c}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_End_Date__c} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Duration__c}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Status__c}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;strong&gt;Remark:&lt;/strong&gt; {!$Record.Approver_2_Approved_Comments__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Regards,&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;The Cloud Peritus Team&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Subject</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>Loss of Pay Request Approved by {!$Record.EMS_LM_Final_Approver__c}</text>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Leave: {!$Record.Leave_Type_Name__c} request is {!$Record.EMS_LM_Status__c}</text>
     </textTemplates>
     <variables>
         <name>AsignHR</name>
@@ -96,7 +216,7 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
-            <elementReference>$Label.Finance_team_Email</elementReference>
+            <elementReference>$Label.HR_Finance_Loss_of_pay_Email</elementReference>
         </value>
     </variables>
 </Flow>

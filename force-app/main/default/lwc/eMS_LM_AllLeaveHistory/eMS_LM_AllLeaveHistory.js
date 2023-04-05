@@ -79,6 +79,10 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     };
 
     connectedCallback() {
+
+        this.a_Record_URL = window.location.origin;
+        console.log('Base Url' + this.a_Record_URL);
+
         this.LevelOfApproval();
         const messageContext = createMessageContext();
         this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
@@ -259,11 +263,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         console.log('## this.value', this.value);
     }
 
-    //To view the leave record
-    connectedCallback() {
-        this.a_Record_URL = window.location.origin;
-        console.log('Base Url' + this.a_Record_URL);
-    }
+    
     handleView(event) {
         const selectedRecordId = event.currentTarget.dataset.id;
         console.log('### handleView : ', selectedRecordId);
@@ -343,6 +343,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
 
     handleRefreshMessage(message) {
         if (message.refresh) {
+            console.log('TEST####REFRESH');
             refreshApex(this._wiredRefreshData)
         }
     }
