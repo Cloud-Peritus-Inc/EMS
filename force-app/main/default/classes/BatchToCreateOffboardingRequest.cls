@@ -38,7 +38,7 @@ global class BatchToCreateOffboardingRequest implements Database.Batchable<sObje
                                          FROM CASE 
                                          WHERE Last_Working_Date__c=:dt
                                          AND Type = 'Resignation'
-                                         AND Status = '	Resignation Approved'
+                                         AND Status = 'Resignation Approved'
                                           ]);
     }
   
