@@ -507,15 +507,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         this.startDate = this.startDate1 = undefined;
         this.submitcheck = true;
       }
-      if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
-        const evt = new ShowToastEvent({
-          message: 'Please select a proper start date',
-          variant: 'error',
-        });
-        this.dispatchEvent(evt);
-        this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
-        this.submitcheck = true;
-      }
+      
       let date = new Date(this.startDate1);
       let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
       let todaydate1 = formattedDate;
@@ -539,20 +531,20 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
           this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
         }
       }
-
+if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 != null) {
+        const evt = new ShowToastEvent({
+          message: 'Please select a proper start date',
+          variant: 'error',
+        });
+        this.dispatchEvent(evt);
+        this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
+        this.submitcheck = true;
+      }
     }
     if (namecheck == 'endDate1') {
       this.endDate1 = event.detail.value + ' 00:00:00';
       this.endDate = event.detail.value;
 
-      if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
-        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
-          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
-        }
-        else {
-          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
-        }
-      }
       if (day == 6 || day == 0) {
         // alert('please select working days');
         const evt = new ShowToastEvent({
@@ -595,6 +587,15 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
          this.startDate = this.startDate1 = this.endDate = this.endDate1 = undefined;
          this.submitcheck = true;      
        } */
+
+        if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
+        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        }
+        else {
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        }
+      }
     }
     if (this.startDate1 != null && this.endDate1 != null) {
       this.submitcheck = false;

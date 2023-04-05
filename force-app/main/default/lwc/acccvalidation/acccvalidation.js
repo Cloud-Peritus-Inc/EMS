@@ -624,48 +624,58 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         Description : Retrieves time sheet values from previous week
         Parameters  : null 
     */
-    copyPreviousWeek() {
-        this.hideSpinner = false;
-        getPreWeekData({ timesheet: this.timeSheetRecord }).then( result => {
-            console.log('result copy pre',result);
-            let timeSheetRecords = result.timeSheetRecords;
-            if (timeSheetRecords) {
-                // this.records = [];
-                timeSheetRecords.forEach( record => {
-                    let element = {};
-                    element.projectTaskOptions = [];
-                    element.projectAssignAvail = false;
-                    if (this.projectRecords) {
+        copyPreviousWeek() {
+            this.hideSpinner = false;
+            getPreWeekData({ timesheet: this.timeSheetRecord })
+              .then(result => {
+                console.log('result copy pre', result);
+                let timeSheetRecords = result.timeSheetRecords;
+                if (timeSheetRecords) {
+                  let existingProjectIds = this.records.map(record => record.EMS_TM_Project__c);
+                  timeSheetRecords.forEach(record => {
+                    if (existingProjectIds.includes(record.EMS_TM_Project__c)) {
+                      let existingRecord = this.records.find(item => item.EMS_TM_Project__c === record.EMS_TM_Project__c);
+                      for (let key in record) {
+                        existingRecord[key] = record[key];
+                      }
+                    } else {
+                      let element = {};
+                      element.projectTaskOptions = [];
+                      element.projectAssignAvail = false;
+                      if (this.projectRecords) {
                         element.projectAssignAvail = record.EMS_TM_ProjectTask__c ? true : false;
-                        let project = this.projectRecords.find( item => item.Id === record.EMS_TM_Project__c);
+                        let project = this.projectRecords.find(item => item.Id === record.EMS_TM_Project__c);
                         if (project && project.EMS_TM_Project_Type__c !== 'OOO') {
-                            element.EMS_TM_Project__c = record.EMS_TM_Project__c;
-                            if (project.EMS_TM_Project_Type__c === 'OOO') {
-                                element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
-                            } else if (project.EMS_TM_Project_Type__c === 'Bench') {
-                                element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
-                            } else if (project.EMS_TM_Project_Type__c === 'Other') {
-                                //element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
-                            }
-                            element.projectValueAvailable = true;
-                            for(let key in record) { element[key] = record[key]; }
-                            delete element.Id;
-                            delete element.EMS_Timesheet__c;
-                            if (this.records[0].EMS_TM_Project__c) {
-                                this.records.push(element);
-                            } else {
-                                this.records[0] = element;
-                            }
+                          element.EMS_TM_Project__c = record.EMS_TM_Project__c;
+                          if (project.EMS_TM_Project_Type__c === 'OOO') {
+                            element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
+                          } else if (project.EMS_TM_Project_Type__c === 'Bench') {
+                            element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
+                          } else if (project.EMS_TM_Project_Type__c === 'Other') {
+                            //element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
+                          }
+                          element.projectValueAvailable = true;
+                          for (let key in record) {
+                            element[key] = record[key];
+                          }
+                          delete element.Id;
+                          delete element.EMS_Timesheet__c;
+                          this.records.push(element);
                         }
+                      }
                     }
-                })
-            }
-            // this.deletedRecordsList = [];
-            this.calculateTotalHours();
-            this.displayItemList = JSON.parse(JSON.stringify(this.records));
-            this.hideSpinner = true;
-        }).catch( error => {console.log('error',error)});
-    }
+                  })
+                }
+                this.calculateTotalHours();
+                this.displayItemList = JSON.parse(JSON.stringify(this.records));
+                this.hideSpinner = true;
+              })
+              .catch(error => {
+                console.log('error', error)
+              });
+          }
+          
+          
 
     /*
         function    : addRow

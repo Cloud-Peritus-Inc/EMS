@@ -40,11 +40,10 @@ public  without sharing class EMS_LM_Leave_Duration_Handler {
             String todayDay = currDate.format('EEEE');  
             if(todayDay != 'Saturday' && todayDay !='Sunday' && (!holidaysSet.contains(dt)) && value!=LeaveRequestConstant.LOSS_OF_PAY){  
                 Duration += 1;  
-            }else if(todayDay != 'Saturday' && todayDay !='Sunday' && (!holidaysSet.contains(dt)) && value == LeaveRequestConstant.LOSS_OF_PAY && i>=14){
-                Duration += 1; 
-            }else if(value == LeaveRequestConstant.LOSS_OF_PAY && i<=14){
-               Duration += 1;  
-            }                   
+            }
+            if(value==LeaveRequestConstant.LOSS_OF_PAY){
+               Duration += 1;
+            }
         }
         System.debug('--Working days'+Duration);  
         if(dayCheck){

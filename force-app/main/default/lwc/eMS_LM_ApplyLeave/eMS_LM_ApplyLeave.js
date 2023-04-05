@@ -53,7 +53,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
 
 
 
-  @wire(getLeaveType, { userid: '$uId' }) wiredltype(result) {
+  @wire(getLeaveType, { userid: '$uId',annualavailable: '$annualduration' }) wiredltype(result) {
     this.refleaveType = result;
     if (result.data) {
       console.log('leave type data-->', result.data);

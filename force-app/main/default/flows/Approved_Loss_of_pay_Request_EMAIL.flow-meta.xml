@@ -27,6 +27,18 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>emailSubject</name>
             <value>
                 <elementReference>Subject</elementReference>
@@ -57,6 +69,18 @@
             <name>sendRichBody</name>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -163,12 +187,12 @@
     <textTemplates>
         <name>BODY</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Dear HR Team / Finance Team,&lt;/p&gt;&lt;p&gt;The Loss of Pay request of the {!$Record.EMS_LM_Contact__r.FirstName} {!$Record.EMS_LM_Contact__r.LastName} ({!$Record.EMS_LM_Contact__r.EMS_RM_Employee_Id__c}) for the following date(s) has been &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!$Record.EMS_LM_Status__c}&lt;/span&gt;&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Start Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave End Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Duration&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Start_Date__c}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_End_Date__c} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Duration__c}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Status__c}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Remark :- {!$Record.Approver_1_Approved_Comments__c} &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Regards,&lt;/p&gt;&lt;p&gt;Cloud Peritus India Pvt. Ltd.&lt;/p&gt;</text>
+        <text>&lt;p&gt;Dear HR Team / Finance Team,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;The Loss of Pay request of the&lt;strong&gt; {!$Record.EMS_LM_Contact__r.FirstName} {!$Record.EMS_LM_Contact__r.LastName}&lt;/strong&gt; &lt;strong&gt;({!$Record.EMS_LM_Contact__r.EMS_RM_Employee_Id__c})&lt;/strong&gt; for the following date(s) has been &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Record.EMS_LM_Status__c}&lt;/span&gt;&lt;strong&gt;﻿&lt;/strong&gt;&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Start Date&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave End Date&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Duration&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Start_Date__c}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_End_Date__c} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Duration__c}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Status__c}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;strong&gt;Remark:&lt;/strong&gt; {!$Record.Approver_1_Approved_Comments__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Regards,&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;The Cloud Peritus Team&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>SecondBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Dear HR Team / Finance Team,&lt;/p&gt;&lt;p&gt;The Loss of Pay request of the {!$Record.EMS_LM_Contact__r.FirstName} {!$Record.EMS_LM_Contact__r.LastName} ({!$Record.EMS_LM_Contact__r.EMS_RM_Employee_Id__c}) for the following date(s) has been &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Record.EMS_LM_Status__c}&lt;/span&gt;&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Start Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave End Date(s)&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Duration&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Start_Date__c}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_End_Date__c} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Duration__c}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Status__c}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Remark :- {!$Record.Approver_2_Approved_Comments__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Regards,&lt;/p&gt;&lt;p&gt;Cloud Peritus India Pvt. Ltd&lt;/p&gt;</text>
+        <text>&lt;p&gt;Dear HR Team / Finance Team,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;The Loss of Pay request of the &lt;strong&gt;{!$Record.EMS_LM_Contact__r.FirstName} {!$Record.EMS_LM_Contact__r.LastName} ({!$Record.EMS_LM_Contact__r.EMS_RM_Employee_Id__c})&lt;/strong&gt; for the following date(s) has been &lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Record.EMS_LM_Status__c}&lt;/strong&gt;&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; border=&quot;1&quot; style=&quot;border-collapse: collapse; width: 80.4918%; height: 107px;&quot;&gt;&lt;tbody&gt;&lt;tr style=&quot;height: 56px;&quot;&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave Start Date&lt;/td&gt;&lt;td style=&quot;width: 26.68085%; height: 56px;&quot;&gt;&amp;nbsp;Leave End Date&lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 56px;&quot;&gt;&amp;nbsp;Duration&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 56px;&quot;&gt;&amp;nbsp;Status&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;height: 51px;&quot;&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Start_Date__c}&lt;/td&gt;&lt;td style=&quot;width: 28.8085%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_End_Date__c} &lt;/td&gt;&lt;td style=&quot;width: 26.6812%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Leave_Duration__c}&lt;/td&gt;&lt;td style=&quot;width: 28.4206%; height: 51px;&quot;&gt;&amp;nbsp;{!$Record.EMS_LM_Status__c}&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;strong&gt;Remark:&lt;/strong&gt; {!$Record.Approver_2_Approved_Comments__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Regards,&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;The Cloud Peritus Team&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Subject</name>

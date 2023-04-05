@@ -15,19 +15,29 @@
 Public without sharing class EMS_LM_ContactLeaveUpdate {
     // This method is used to get the Leave types of Leve Credit records of of particular loggedin Employee
     @AuraEnabled(Cacheable=true)
-    public static List<String> getLeaveType(Id userid) {
+    public static List<String> getLeaveType(Id userid, decimal annualavailable) {
         List<String> s = new List<String>();
         if(userid !=null){
             user u =[Select id, ContactId, Email from user where id =: userid];
             try{         
                 if(u.ContactId !=null){ // if contact Id is not null we will retrieve the data using User contact Id
-                    set<String> i = new set<String>();
+                     set<String> i = new set<String>();
                     List<EMS_LM_Leave_Credit__c> i1 = new List<EMS_LM_Leave_Credit__c>();
-                    i1 = [SELECT Leave_Type_Name__c
+                    if(annualavailable>=-4){
+                        i1 = [SELECT Leave_Type_Name__c
                           FROM EMS_LM_Leave_Credit__c
                           WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND Leave_Available__c!=0 
                           		AND EMS_LM_Leave_Credited_Date__c = THIS_YEAR AND EMS_LM_Employee__c = :u.ContactId 
                           ORDER BY Leave_Type_Name__c ASC];
+                    }else{
+                        i1 = [SELECT Leave_Type_Name__c
+                          FROM EMS_LM_Leave_Credit__c
+                          WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND Leave_Available__c!=0 
+                          		AND EMS_LM_Leave_Credited_Date__c = THIS_YEAR AND EMS_LM_Employee__c = :u.ContactId 
+                          ORDER BY Leave_Type_Name__c ASC];
+                    }
+                   
+                    
                     for(EMS_LM_Leave_Credit__c i2:i1){
                         i.add(i2.Leave_Type_Name__c);
                     }
