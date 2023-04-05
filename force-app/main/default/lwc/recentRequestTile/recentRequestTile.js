@@ -58,30 +58,26 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
     }
 
     handleApproveSave(event) {
-        updateApproveStatusAndComments({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
-            .then((result) => {
-                console.log('Leave Request: ', result);
-                this.isShowModalApprove = false;
-                const evt = new ShowToastEvent({
-                    message: 'Leave Request was updated successfully',
-                    variant: 'success',
+        if (this.template.querySelector('lightning-textarea').reportValidity()) {
+            updateApproveStatusAndComments({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
+                .then((result) => {
+                    console.log('Leave Request: ', result);
+                    this.isShowModalApprove = false;
+                    const evt = new ShowToastEvent({
+                        message: 'Leave Request was updated successfully',
+                        variant: 'success',
+                    });
+                    this.dispatchEvent(evt);
+                    return refreshApex(this._wiredRefreshData)
+                }).catch((err) => {
+                    console.log('ERROR : ', err);
                 });
-                this.dispatchEvent(evt);
-                return refreshApex(this._wiredRefreshData)
-            }).catch((err) => {
-                console.log('ERROR : ', err);
-            });
+        }
     }
 
     //Reject Modal
     handleRejectComments(event) {
-        if (event.target.value) {
-            this.errorMessage = '';
-            this.rejectComments = event.target.value;
-
-        } else {
-            this.errorMessage = 'This field is required.';
-        }
+        this.rejectComments = event.target.value;
     }
 
     showModalRejectBox(event) {
@@ -113,42 +109,10 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
         }
     }
 
-    /* handleRejectSave(event) {
-         let getelement = this.template.querySelectorAll(".isRequired");
-         console.log("getelement", JSON.stringify(getelement));
-         console.log('### getelement : ',getelement);
-         let letReject = true;
-         getelement.forEach(currentItem => {
-             if (!currentItem.value || !currentItem.checkValidity()) {
-                 currentItem.reportValidity();
-                 console.log("Validation failed for element:", currentItem);
-                 currentItem.setCustomValidity("Please enter the comments");
-                 letReject = false;
-             } else {
-                 console.log("Validation passed for element:", currentItem);
-                 currentItem.setCustomValidity(""); // clear the error message
-             }
-         });
- 
-         if (!letReject) {
-             console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
-             updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
-                 .then((result) => {
-                     console.log('Leave Request: ', result);
-                     this.isShowModalReject = false;
-                     this.rejectComments = '';
-                     return refreshApex(this._wiredRefreshData)
-                 }).catch((err) => {
-                     console.log('ERROR : ', err);
-                 });
-         }
-     }*/
-
-
-
-
 
     handleCloseAll() {
+        this.approveComments = '';
+        this.rejectComments = '';
         this.isShowModalApprove = false;
         this.isShowModalReject = false;
     }

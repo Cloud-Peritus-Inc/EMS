@@ -12,8 +12,8 @@
 			<div class="childparent">
 				<div class="childtext" style="padding-left:20px;">
 					<div style="padding-left:3px;">
-						<lightning-icon icon-name="action:manage_perm_sets" size="small" alternative-text="Internal"
-							> </lightning-icon>
+						<lightning-icon icon-name="action:manage_perm_sets" size="small" alternative-text="Internal">
+						</lightning-icon>
 						<font size="3"><b> Pending Leave Requests On Me </b> </font>
 					</div>
 				</div>
@@ -40,8 +40,9 @@
 									<td key={leave.Id}>
 										<lightning-formatted-date-time value={leave.EMS_LM_Leave_Start_Date__c}
 											month="numeric" day="numeric" year="numeric">
-										</lightning-formatted-date-time> - <lightning-formatted-date-time value={leave.EMS_LM_Leave_End_Date__c}
-											month="numeric" day="numeric" year="numeric">
+										</lightning-formatted-date-time> - <lightning-formatted-date-time
+											value={leave.EMS_LM_Leave_End_Date__c} month="numeric" day="numeric"
+											year="numeric">
 										</lightning-formatted-date-time>
 									</td>
 									<td>{leave.EMS_LM_Leave_Duration__c}</td>
@@ -58,15 +59,6 @@
 											data-value={leave.EMS_LM_Status__c} key-field={leave.Id}
 											data-record-id={leave.Id} data-id={leave.Id}>
 										</lightning-button-icon>
-										<!--lightning-button-icon icon-name='action:approval' variant="brand"
-											alternative-text='Approve' size='x-small' title='Approve' data-id={leave.Id}
-											key-field={leave.Id} data-record-id={leave.Id}
-											onclick={showModalApprovalBox}></lightning-button-icon>
-										&nbsp;
-										<lightning-button-icon icon-name='action:close' alternative-text='close'
-											variant="brand" size='x-small' title='Reject' data-id={leave.Id}
-											key-field={leave.Id} data-record-id={leave.Id} onclick={showModalRejectBox}>
-											</lightning-button-icon-->
 									</td>
 								</tr>
 							</template>
@@ -80,9 +72,6 @@
 				</br>
 			</template>
 			<footer class="slds-modal__footer">
-				<!--center> <a href="#">
-						<font class="uiOutputText" onclick={handleLMNavigation}>View All Request</font>
-					</a> </center-->
 				<center> <a href="#" onclick={handleLMNavigation}> View All Requests</a> </center>
 
 			</footer>
@@ -100,12 +89,12 @@
 
 						<!-- modal body start -->
 						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
-							<p style="font-size:20px;">Please enter the approval comments</p>
 							<br>
-							<lightning-textarea name="input" value="" placeholder="Type comments here..."
-								label="Comments" maxlength="140"
+							<lightning-textarea name="input" required value={approveComments}
+								placeholder="Type comments here..." label="Comments" maxlength="140"
 								message-when-too-long="A maximum of 140 characters are allowed."
-								message-when-value-missing="Please add comments." onchange={handleApproveComments}>
+								message-when-value-missing="Please add comments " class="isRequired"
+								onchange={handleApproveComments} data-id="validateValue">
 							</lightning-textarea>
 						</div>
 
@@ -134,7 +123,6 @@
 
 						<!-- modal body start -->
 						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
-							<p style="font-size:20px;">Please enter the rejection comments</p>
 							<br>
 							<lightning-textarea name="input" required value={rejectComments}
 								placeholder="Type comments here..." label="Comments" maxlength="140"

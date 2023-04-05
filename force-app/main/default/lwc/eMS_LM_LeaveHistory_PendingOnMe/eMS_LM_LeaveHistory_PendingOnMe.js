@@ -301,12 +301,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   //Approve All
   handleApproveAllComments(event) {
-    if (event.target.value) {
-      this.errorMessage = '';
-      this.approveAllComments = event.target.value
-    } else {
-      this.errorMessage = 'Please enter the comments';
-    }
+    this.approveAllComments = event.target.value
   }
 
   handleApproveAll() {
@@ -350,12 +345,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   //Reject All
   handleRejectAllComments(event) {
-    if (event.target.value) {
-      this.errorMessage = '';
-      this.rejectAllComments = event.target.value
-    } else {
-      this.errorMessage = 'Please enter the comments';
-    }
+    this.rejectAllComments = event.target.value
   }
 
   handleRejectAll() {
@@ -396,6 +386,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   //Modal Pop-up Close
   handleCloseAll() {
+    this.approveComments = '';
+    this.approveAllComments = '';
+    this.rejectComments = '';
+    this.rejectAllComments = '';
     this.isShowModalApproveAll = false;
     this.isShowModalRejectAll = false;
     this.isShowModalApprove = false;
@@ -404,12 +398,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   //Approve Modal
   handleApproveComments(event) {
-    if (event.target.value) {
-      this.errorMessage = '';
-      this.approveComments = event.target.value;
-    } else {
-      this.errorMessage = 'Please enter the comments';
-    }
+    this.approveComments = event.target.value;
   }
 
   showModalApprovalBox(event) {
@@ -445,17 +434,10 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   //Reject Modal
   handleRejectComments(event) {
-    if (event.target.value) {
-      this.errorMessage = '';
-      this.rejectComments = event.target.value;
-    } else {
-      this.errorMessage = 'Please enter the comments';
-    }
-
+    this.rejectComments = event.target.value;
   }
 
   showModalRejectBox(event) {
-    console.log('BUTTON CLICKED Reject: ');
     console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
     console.log('### event id: ', JSON.stringify(event.currentTarget.dataset.id));
     this.selectedRecordRejectId = event.currentTarget.dataset.id;

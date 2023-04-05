@@ -40,29 +40,55 @@ public class restrictDuplicateOffboardingRequests implements TriggerAction.Befor
 *   N/A         N/A                     N/A
 *   ====================================================================================================
 **/
+    
     public void restrictTheResign(List<Case> newlist) {
-         Set<Id> contactIds = new Set<Id>();
-         Map<Id,Case> caseWithExistingOffMap = new Map<Id,Case>(); 
-         for (Case cnew : newlist) {
-            contactIds.add(cnew.contactId);
-         }
-        
-        for(Case exiCase :[SELECT Id,Type,ContactId 
-                          FROM Case 
-                          WHERE ContactId IN :contactIds 
-                          AND Type = 'Resignation'
-                          AND Status NOT IN ('Resignation Rejected','Closed')
-                          ]){
-            caseWithExistingOffMap.put(exiCase.contactId,exiCase);
-        }
+        Set<Id> contactIds = new Set<Id>();
+        List<string> caseReqSubTypeName = new List<string>();
+        Map<Id, Case> caseWithExistingOffMap = new Map<Id, Case>();
+        Map<String, String> requestSubTypeMap = new Map<String, String>{'Paternity' => 'Paternity Leave',
+            'Maternity' => 'Maternity Leave',
+            'Marriage' => 'Marriage Leave',
+            'Bereavement' => 'Bereavement Leave'};
+                
+                for (Case cnew : newlist) {
+                    contactIds.add(cnew.contactId);
+                    caseReqSubTypeName.add(cnew.Request_Sub_Type__c);
+                }
+        List<String> excludedTypes = new List<String>{'Educational Details', 'Other', 'Problem','Compensatory Off'};
+        for (Case exiCase : [SELECT Id, 
+                             		Type, 
+                             		ContactId, 
+                             		Request_Sub_Type__c
+                             FROM Case
+                             WHERE ContactId IN :contactIds
+                             AND Request_Sub_Type__c = :caseReqSubTypeName
+                             AND Request_Sub_Type__c NOT IN :excludedTypes 
+                             AND Status NOT IN ('Resignation Rejected', 'Closed')
+                            ]) {
+                                caseWithExistingOffMap.put(exiCase.ContactId, exiCase);
+                            }
         
         for (Case cnew : newlist) {
-            if(caseWithExistingOffMap.containsKey(cnew.ContactId)){
-              cnew.addError('Only one request allowed at a time. Seems there is an already existing resignation request is In-Progress or Approved.');  
+            if (excludedTypes.contains(cnew.Request_Sub_Type__c)) {
+            continue;
+        	}	
+            if (caseWithExistingOffMap.containsKey(cnew.ContactId) && !requestSubTypeMap.containsKey(cnew.Request_Sub_Type__c)) {
+                cnew.addError('Only one request allowed at a time. Seems there is an already existing ' + cnew.Request_Sub_Type__c  + ' request is In-Progress or Approved.');
+            } else if (requestSubTypeMap.containsKey(cnew.Request_Sub_Type__c)) {
+                Date currentDate = Date.today();
+                String requestSubTypeName = requestSubTypeMap.get(cnew.Request_Sub_Type__c);
+                List<EMS_LM_Leave_History__c> existingRequests = [SELECT Id, 
+                                                                  		 EMS_LM_Leave_Start_Date__c, 
+                                                                  		 EMS_LM_Contact__c
+                                                           FROM EMS_LM_Leave_History__c
+                                                           WHERE EMS_LM_Contact__c = :cnew.ContactId
+                                                           AND EMS_LM_Leave_Type__r.Name = :requestSubTypeName
+                                                           AND EMS_LM_Leave_Start_Date__c >= :System.now().addYears(-1).date()];
+                if (!existingRequests.isEmpty()) {
+                    cnew.addError('Only one ' + cnew.Request_Sub_Type__c + ' request is allowed within a year from the previous request.');
+                }
             }
         }
-        
-        
     }
-
+    
 }

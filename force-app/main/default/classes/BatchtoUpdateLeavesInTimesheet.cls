@@ -24,7 +24,7 @@ global date weekEnd ;
                                                 AND (EMS_LM_Leave_Start_Date__c <=:dt OR  EMS_LM_Leave_End_Date__c>=:dt))
                                          FROM Contact 
                                          WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID 
-                                          AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false AND id='0035200000n04s2AAA' ]);
+                                          AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false]);
     }
     
     global void execute(Database.BatchableContext BC, List<Contact> conList) {
@@ -77,6 +77,7 @@ global date weekEnd ;
                        Date d = startDate;
                       Datetime dt = (DateTime)d;
                        fillTheTimeForDay = dt.format('EEEE'); 
+                        System.debug('******fillTheTimeForDay'+fillTheTimeForDay);
                        break;  
                     }
                     processDate.adddays(i);

@@ -20,7 +20,7 @@
                 <field>EMS_TM_AssignedAs__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>EMS_TM_Status_Asgn__c</field>
             </layoutItems>
         </layoutColumns>
@@ -91,10 +91,6 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
     </platformActionList>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Expense__c.Assignment__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
