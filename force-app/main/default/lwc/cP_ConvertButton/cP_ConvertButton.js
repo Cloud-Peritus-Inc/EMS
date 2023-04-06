@@ -34,6 +34,7 @@ export default class cP_ConvertButton extends NavigationMixin(LightningElement) 
                         actionName: 'view'
                     }
                 },true /*refresh*/);
+                this.updateRecordView();
                 //  console.log('this.conid1-->', this.conid);
                 //  console.log('this.conid3-->', res);
             })
@@ -42,6 +43,12 @@ export default class cP_ConvertButton extends NavigationMixin(LightningElement) 
                 console.log('this.errorsss-->' + JSON.stringify(this.error));
             });
 
+    }
+
+    updateRecordView() {
+       setTimeout(() => {
+            eval("$A.get('e.force:refreshView').fire();");
+       }, 1000); 
     }
 
     handleCancel() {
