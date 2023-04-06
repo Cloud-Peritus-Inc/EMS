@@ -590,7 +590,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
 
   handleRefreshMessage(message) {
     if (message.refresh) {
-      // refreshApex(this.wiredActivities,this.refleaveduration,this.refleaveType);
+       refreshApex(this.refleaveType);
     }
   }
 

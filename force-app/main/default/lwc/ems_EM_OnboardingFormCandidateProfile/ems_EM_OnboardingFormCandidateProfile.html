@@ -2,6 +2,10 @@
     <div style="margin-bottom:15px">
             <img src={imageUrl}  width="100%"/>
     </div>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"
+            class="spinnerClass"></lightning-spinner>
+    </template>
     <div class="slds-card slds-box slds-p-around_small">
         <div class="slds-p-around_xx-small">
             <div class="slds-grid slds-wrap">
@@ -153,7 +157,7 @@
                                             <div class="slds-col ">
                                                 <span>
                                                     <lightning-input class="slds-p-top_small" value={ph}
-                                                        message-when-pattern-mismatch="Invalid Contact number" required
+                                                        message-when-pattern-mismatch="Please enter a valid 10 digit phone number" required
                                                         disabled={readonlyfield} onchange={phonenumber} maxlength="10"
                                                         name="Phone_Number__c" onkeydown={handleAadharNumberKeyDown}
                                                         pattern="[0-9]{10}$" type="phone"
@@ -347,7 +351,7 @@
                                                     <br>
                                                     <div class="slds-grid slds-wrap">
                                                         <div class="slds-col slds-size_1-of-13 slds-p-right_x-small">
-                                                            Permanent Address Same as Current Address?
+                                                            Permanent Address same as Current Address?
                                                         </div>
                                                         <div class="slds-col slds-size_1-of-12">
                                                             <lightning-input type="Checkbox" disabled={disableFlag}
@@ -363,25 +367,25 @@
                                                         <p>Permanent Address</p>
                                                     </h3>
                                                     <lightning-input class="slds-p-top_small" value={padrressline1}
-                                                        disabled={readonlyfield} required
+                                                        disabled={readonlyfield1} required
                                                         onchange={handleChange}
                                                         name="Permanent_Address_Line_1__c" type="text"
                                                         label="Address Line 1"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={padrressline2}
-                                                        disabled={readonlyfield} onchange={handleChange}
+                                                        disabled={readonlyfield1} onchange={handleChange}
                                                         name="Permanent_Address_Line_2__c" type="text"
                                                         label="Address Line 2"></lightning-input>
 
                                                     <lightning-input class="slds-p-top_small" value={pastate}
-                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
+                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield1} required
                                                         onchange={handleChange} name="EMS_EM_PA_State__c" type="text"
                                                         label="State"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={pacity}
-                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
+                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield1} required
                                                         onchange={handleChange} name="EMS_EM_PA_City__c" type="text"
                                                         label="City"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={pazip}
-                                                        onkeydown={handleAadharNumberKeyDown} disabled={readonlyfield} maxlength="6"
+                                                        onkeydown={handleAadharNumberKeyDown} disabled={readonlyfield1} maxlength="6"
                                                         onchange={handleChange} required name="EMS_EM_PA_Zip__c" type="text"
                                                         label="Zip"></lightning-input>
                                                 </span>
@@ -410,11 +414,11 @@
                                         
                                     
                                 <!-- Use a template to iterate over the records array and display each row -->
-                                <template for:each={educationDetails} for:item="obj">
+                                <template for:each={educationDetails} for:item="obj" for:index="index">
                                     <div key={obj.Id}  class="slds-grid slds-gutters">
                                         <div class="slds-col " style="padding-left: 25px;">
                                             <h3 class="slds-section-title--divider">
-                                                <span class="slds-truncate" title="Education Details ({obj.row})">Education Details ({obj.id})</span>
+                                                <span class="slds-truncate" title="Education Details ({obj.row})">Education Details ({index})</span>
                                             </h3>
                                             <span>
                                                 <lightning-combobox class="fields" value={obj.EMS_EM_Education__c} data-id={obj.Id} required onchange={eduupdateValues} 
@@ -490,10 +494,6 @@
                                 </h3>
                                 <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none modalBodyy"
                                     style="padding-left: 15px; ">
-                                    <template if:true={isLoading}>
-                                        <lightning-spinner alternative-text="Loading" size="medium"
-                                            class="spinnerClass"></lightning-spinner>
-                                    </template>
                                     <div class="slds-grid slds-gutters ">
                                         <div class="slds-col slds-size_1-of-2" style="padding-left: 25px;">
                                             <lightning-input type="url" class="slds-p-top_small" value={Trailblazerval}
