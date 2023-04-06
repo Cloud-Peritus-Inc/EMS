@@ -5,7 +5,6 @@
     <externalId>false</externalId>
     <label>Onboarding Request</label>
     <referenceTo>EMS_EM_Onboarding_Request__c</referenceTo>
-    <relationshipLabel>Additional Details</relationshipLabel>
     <relationshipName>Additional_Details</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
