@@ -195,7 +195,7 @@ function uploadFilesFromThis(event,ts){
         reader.readAsDataURL(file);
     }else{
      const even = new ShowToastEvent({
-     message: 'File Size must be less than 2Mb & file type should be PDF only',
+     message: 'The maximum file size is 2MB and the supported file type is PDF',
      variant: 'error'
     });
    ts.dispatchEvent(even);
@@ -340,15 +340,15 @@ if(ts.isWorkExperience){
           ts.filesUploaded = [];   
           //console.log('this.onboardingformID'+ts.onboardingformId); 
           if(ts.isShowPersonalDetails){
-            displayShowtoastMessage('Onboarding Form Personal Details Saved Successfully','success',ts);
+            displayShowtoastMessage('Details saved successfully','success',ts);
             ts.isShowPersonalDetailsValueFilled = true;
             //console.log('Details Filled',ts.isShowPersonalDetailsValueFilled);
        }
          if(ts.isIdentifyDetails){     
-           displayShowtoastMessage('Onboarding Form Identification Details Saved Successfully','success',ts); 
+           displayShowtoastMessage('Details saved successfully','success',ts); 
        }  
        if(ts.isAddressDetails){
-        displayShowtoastMessage('Onboarding Form Address Details Saved Successfully','success',ts); 
+        displayShowtoastMessage('Details saved successfully','success',ts); 
        }
        if(ts.isEducationDetails){
           //displayShowtoastMessage('Success','Onboarding Form Educational Details Saved Successfully','success',ts); 
@@ -363,11 +363,12 @@ if(ts.isWorkExperience){
   //         body: "Dear HR Team,"+"<Br/><Br/>"+"Employee  has submitted their onboarding form along with the required documents."+"<Br/><Br/>"+"Click here https://cpprd.lightning.force.com/"+this.onboardingformId+ "  to find and verify the details."})
   //  // https://cpprd--uat.sandbox.lightning.force.com/
           // console.log('this.onboardingformID'+this.additionalDetailsRecordId);    
-                      
+          ts.handleIsLoading(false);               
       })
       .catch(error => {
           ts.error = error;
           console.log('this.error-->'+JSON.stringify(ts.error));
+          this.handleIsLoading(false);
       });
     
 
@@ -583,10 +584,12 @@ function updateOnboardingInfoOnPageLoads(ts){
               if(ts.cadrressline1 !=null && ts.padrressline1 != null){
                 if(ts.cadrressline1 === ts.padrressline1){
                   ts.paFlag = true;
+                  ts.readonlyfield1 = true;
                   ts.disableFlag = false;
                   }
                   else{
                     ts.disableFlag = false;
+                    ts.readonlyfield1 = false;
                   }
                }
                        
@@ -745,6 +748,7 @@ function updateOnboardingInfoOnPageLoads(ts){
                 if(result.onboarding.Is_Confirm__c === true){
                   ts.isConfirmSubmit = true;
                   ts.readonlyfield=true;
+                  ts.readonlyfield1 = true;
                   ts.confirmStatusUpdate = 'Submitted for Review';
                   ts.buttonDisable = true;
                   ts.expression1 = true;
@@ -757,6 +761,7 @@ function updateOnboardingInfoOnPageLoads(ts){
         .catch(error => {
             ts.error = error;
             console.log('this.error-->'+JSON.stringify(ts.error));
+            this.handleIsLoading(false);
         });
     
 }

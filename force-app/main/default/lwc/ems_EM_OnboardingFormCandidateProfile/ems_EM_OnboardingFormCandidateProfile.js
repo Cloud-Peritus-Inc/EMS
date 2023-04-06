@@ -353,27 +353,27 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
               //console.log("I am in if");
               this.dispatchEvent(
                   new ShowToastEvent({
-                      message: 'Please Enter correct date of birth',
+                      message: 'Please enter a valid date of birth',
                       variant: 'error',
                   }),
-              );
+              );this.handleIsLoading(false);
               return false;
           }else if (this.ph === this.altphone) {
       this.dispatchEvent(
         new ShowToastEvent({
-          message: 'Contact Number and Alternate Contact Number should not be the same',
+          message: 'Contact Number and Alternate Contact Number should not be the same.',
           variant: 'error'
         })
-      );
+      );this.handleIsLoading(false);
       return false;
     } else {
       return true;
     }
   } else {
     const even = new ShowToastEvent({
-      message: 'Please complete required field & avoid invalid data!',
+      message: 'Please complete the required field and avoid invalid data.',
       variant: 'error'
-    });
+    });this.handleIsLoading(false);
     this.dispatchEvent(even);
     return false;
   }
@@ -397,15 +397,15 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
         const even = new ShowToastEvent({
           message: "Please enter a valid PAN card number",
           variant: "error"
-        });
+        });this.handleIsLoading(false);
         this.dispatchEvent(even);
         return false;
       }
     } else {
       const even = new ShowToastEvent({
-        message: "Please complete required fields and avoid invalid data!",
+        message: "Please complete the required field and avoid invalid data.",
         variant: "error"
-      });
+      });this.handleIsLoading(false);
       this.dispatchEvent(even);
       return false;
     }
@@ -426,20 +426,20 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           const even = new ShowToastEvent({
             message: 'Invalid zip!',
             variant: 'error'
-          });
+          });this.handleIsLoading(false);
           this.dispatchEvent(even);
           return false;
         }
 
       } else {
         const even = new ShowToastEvent({
-          message: 'Please complete required field & avoid invalid data!!',
+          message: 'Please complete the required field and avoid invalid data.',
           variant: 'error'
-        });
+        });this.handleIsLoading(false);
         this.dispatchEvent(even);
         return false;
       }
-    }
+    }this.handleIsLoading(true);
   }
   
   @track inputName
@@ -461,10 +461,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   @track doYouHaveExp;
   @track ph;
   @track dob;
-  @track mstatus;
-  @track spouse;
-  @track dow;
-  @track bg;
   @track aadhaarNo;
   @track panNo;
   @track pNum;
@@ -553,6 +549,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       this.pacity = this.cacity;
       this.pazip = this.cazip;
       this.paFlag = true;
+      this.readonlyfield1 = true;
       
     } else {
       //console.log('address unchecked')
@@ -561,6 +558,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       this.pastate = '';
       this.pacity = '';
       this.pazip = '';
+      this.readonlyfield1 = false;
   this.paFlag = false;
     }
   }
@@ -699,10 +697,10 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     if(this.dob >= today ){
         this.dispatchEvent(
             new ShowToastEvent({
-                message: 'Please Enter correct date of birth',
+                message: 'Please enter a valid date of birth.',
                 variant: 'error',
             }),
-        );
+        );this.handleIsLoading(false);
     }
   }
 
@@ -735,7 +733,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       }
   else {
       const even = new ShowToastEvent({
-        message: 'Please complete required field & avoid invalid data!!',
+        message: 'Please complete the required field and avoid invalid data.',
         variant: 'error'
       });
       this.dispatchEvent(even);
@@ -747,8 +745,10 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   onboardingformId;
   additionalId;
   readonlyfield = false;
+  readonlyfield1 = false;
 
   SaveSubmitOnboarding(event) {
+    this.handleIsLoading(true);
     if(this.isShowPersonalDetails){
       if(this.selectStep1()){
         //console.log('step1 => ',this.selectStep1);
@@ -768,10 +768,13 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       }
     }
     if(this.isIdentifyDetails){
+      this.handleIsLoading(false);
       if(this.selectStep2()){
         this.isIdentifyDetailsCheckbox = true;
         this.statusUpdate = 'In Progress';
+        this.handleIsLoading(true);
         updateOnBoardingRequest(this); 
+        
         if(this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false)
         {
           this.buttonDisable = true;
@@ -836,6 +839,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   }
 }
   }
+  
   confirmSubmit(event){
   if(this.isPersonalUpdateCheckbox && this.isIdentifyDetailsCheckbox && this.isAddressDetailsCheckbox && this.isEducationDetailsCheckbox && this.isOtherCertificationsCheckbox && this.isWorkExperienceCheckbox && this.isCompanyInformationValueChecked) 
   {
@@ -847,6 +851,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     this.buttonDisable = true;
     this.expression1 = true
     this.disableFlag = true;
+    this.readonlyfield1 = true;
   }
   else{
     const even = new ShowToastEvent({
@@ -927,7 +932,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           reader.readAsDataURL(file);
   }else{
     const even = new ShowToastEvent({
-      message: 'File Size must be less than 2Mb & file type should be image/jpeg/png/jpeg only',
+      message: 'The maximum file size is 2MB and the supported file type is image/jpeg/png/jpeg only',
       variant: 'error'
   });
   this.dispatchEvent(even);
@@ -978,106 +983,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   //   uploadFilesFromThis(event, this);
   // }
 
-  // onFileUpload13(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
 
-  // onFileUpload14(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload15(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload16(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload17(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload1(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload2(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload3(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload4(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload5(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload6(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload7(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload8(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload9(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload10(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload11(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload12(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload13(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload14(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload15(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload16(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload17(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload18(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload19(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onCertificationUpload20(event) {
-  //   // uploadFiles(event,this);
-  //   uploadFilesFromThis(event, this);
-  // }
 
   // other certifications 
 
@@ -1208,7 +1114,7 @@ if (isInputsCorrect) {
         updateOnBoardingRequest(this);
         this.dispatchEvent(
           new ShowToastEvent({
-            message: 'Onboarding Form Other Certification Details Saved Successfully',
+            message: 'Details saved successfully',
             variant: 'success',
           }),
         );
@@ -1216,13 +1122,13 @@ if (isInputsCorrect) {
     }).catch( error => {
         this.handleIsLoading(false);
         //console.log(error);
-        this.showToast('Error updating or refreshing records', error.body.message, 'Error', 'dismissable');
+        this.showToast('Please refresh the page and retry.', error.body.message, 'Error', 'dismissable');
     });
 
 }else{
   this.handleIsLoading(false);
 const even = new ShowToastEvent({
-  message: 'Please complete required field & avoid invalid data!!',
+  message: 'Please complete the required field and avoid invalid data.',
   variant: 'error'
 });
 this.dispatchEvent(even);  
@@ -1264,10 +1170,7 @@ showToast(message, variant, mode) {
     this.dispatchEvent(event);
 }
 
-updateRecordView() {
-  //  setTimeout(() => {
-  //       eval("$A.get('e.force:refreshView').fire();");
-  //  }, 3000); 
+updateRecordView() { 
 }
 
 // Work Experience Details
@@ -1288,7 +1191,7 @@ DoyouName =[
 addRowEdu() {
   let randomId = Math.random() * 16;
   let myNewElement = {  RecordType: { Name: 'Education Details' },  EMS_EM_Education__c: "", Id: randomId, EMS_EM_Degree__c: "", EMS_EM_Field_of_Study__c: "", EMS_EM_IName__c: "", EMS_EM_GDate__c: "",  Onboarding_Request__c: this.onboardingformId, ContactId__c: this.contactId};
-
+  
   this.educationDetails = [...this.educationDetails, myNewElement];
 }
 
@@ -1311,7 +1214,7 @@ handleSaveEduAction(){
       return validSoFar && inputField.checkValidity();
   }, true);
 if (isInputsCorrect) {
-  dmlOnEducation({data: this.educationDetails, removeEducationIds : this.deleteEduWorkIds, files: this.files})
+  dmlOnEducation({data: this.educationDetails, removeEducationIds : this.deleteEduWorkIds})
   .then( result => {
       this.handleIsLoading(false);
       refreshApex(this.wiredEdu);
@@ -1329,7 +1232,7 @@ if (isInputsCorrect) {
         }
       this.dispatchEvent(
         new ShowToastEvent({
-          message: 'Onboarding Form Education Details Saved Successfully',
+          message: 'Details saved successfully',
           variant: 'success',
         }),
       );
@@ -1337,12 +1240,12 @@ if (isInputsCorrect) {
   }).catch( error => {
       this.handleIsLoading(false);
       console.log(error);
-      this.showToast('Error updating or refreshing records', error.body.message, 'Error', 'dismissable');
+      this.showToast('Please refresh the page and retry.', error.body.message, 'Error', 'dismissable');
   });
 
 }else{
 const even = new ShowToastEvent({
-  message: 'Please complete required field & avoid invalid data!!',
+  message: 'Please complete the required field and avoid invalid data.',
   variant: 'error'
 });
 this.dispatchEvent(even);
@@ -1377,7 +1280,7 @@ eduupdateValues(event){
       today = yyyy + '-' + mm + '-' + dd;
     if (foundelement.EMS_EM_GDate__c >= today) {
       foundelement.EMS_EM_GDate__c = undefined;
-      displayShowtoastMessage('Please Enter Correct Graduation Date', 'error', this);
+      displayShowtoastMessage('Please enter a valid graduation date.', 'error', this);
     }
   }
 }
@@ -1498,13 +1401,13 @@ workUpdateValues(event){
       today = yyyy + '-' + mm + '-' + dd;
     if (foundelement.EMS_EM_From_Date__c >= today) {
       foundelement.EMS_EM_From_Date__c = null;
-      displayShowtoastMessage( 'Please Enter Correct From Date', 'error', this);
+      displayShowtoastMessage( 'Please enter a valid from date', 'error', this);
     }
   }else if(event.target.name === 'EMS_EM_To_Date__c'){
       foundelement.EMS_EM_To_Date__c = event.target.value;
       if ( foundelement.EMS_EM_To_Date__c <= foundelement.EMS_EM_From_Date__c) {
         foundelement.EMS_EM_To_Date__c = null;
-        displayShowtoastMessage('Please Enter Correct To Date', 'error', this);
+        displayShowtoastMessage('Please enter a valid to date', 'error', this);
       }
 
   }else if(event.target.name === 'EMS_EM_Previous_Company_Name__c'){
@@ -1550,7 +1453,7 @@ if (isInputsCorrect) {
         }
       this.dispatchEvent(
         new ShowToastEvent({
-          message: 'Onboarding Form Work Details Saved Successfully',
+          message: 'Details saved successfully',
           variant: 'success',
         }),
       );
@@ -1563,7 +1466,7 @@ if (isInputsCorrect) {
 }else{
   this.handleIsLoading(false);
 const even = new ShowToastEvent({
-  message: 'Please complete required field & avoid invalid data!!',
+  message: 'Please complete the required field and avoid invalid data.',
   variant: 'error'
 });
 this.dispatchEvent(even);  

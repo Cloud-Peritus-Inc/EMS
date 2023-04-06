@@ -26,7 +26,7 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
                     if(annualavailable>=-4){
                         i1 = [SELECT Leave_Type_Name__c
                           FROM EMS_LM_Leave_Credit__c
-                          WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND Leave_Available__c!=0 
+                          WHERE Leave_Type_Name__c !=: LeaveRequestConstant.WORK_FROM_HOME AND Leave_Type_Name__c !=: LeaveRequestConstant.LOSS_OF_PAY AND Leave_Available__c!=0 
                           		AND EMS_LM_Leave_Credited_Date__c = THIS_YEAR AND EMS_LM_Employee__c = :u.ContactId 
                           ORDER BY Leave_Type_Name__c ASC];
                     }else{
