@@ -87,7 +87,7 @@ global class BatchToCreatePostOnboardingTasks implements Database.Batchable<sObj
                         goheadtoCreate = false;
                     }
                 }
-                if(goheadtoCreate){
+                if(goheadtoCreate && con.EMS_TM_User__c != NULL){
               Task t = new Task();
                 if(ptm.Type__c == 'Queue' && QueueWithId.containsKey(ptm.Assigned_To__c)){
                 t.OwnerId = QueueWithId.get(ptm.Assigned_To__c);
