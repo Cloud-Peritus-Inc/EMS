@@ -839,6 +839,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   }
 }
   }
+  
   confirmSubmit(event){
   if(this.isPersonalUpdateCheckbox && this.isIdentifyDetailsCheckbox && this.isAddressDetailsCheckbox && this.isEducationDetailsCheckbox && this.isOtherCertificationsCheckbox && this.isWorkExperienceCheckbox && this.isCompanyInformationValueChecked) 
   {
@@ -1190,7 +1191,7 @@ DoyouName =[
 addRowEdu() {
   let randomId = Math.random() * 16;
   let myNewElement = {  RecordType: { Name: 'Education Details' },  EMS_EM_Education__c: "", Id: randomId, EMS_EM_Degree__c: "", EMS_EM_Field_of_Study__c: "", EMS_EM_IName__c: "", EMS_EM_GDate__c: "",  Onboarding_Request__c: this.onboardingformId, ContactId__c: this.contactId};
-
+  
   this.educationDetails = [...this.educationDetails, myNewElement];
 }
 

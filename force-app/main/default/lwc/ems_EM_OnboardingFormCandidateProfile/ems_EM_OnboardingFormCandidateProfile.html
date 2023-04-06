@@ -417,8 +417,8 @@
                                 <template for:each={educationDetails} for:item="obj" for:index="index">
                                     <div key={obj.Id}  class="slds-grid slds-gutters">
                                         <div class="slds-col " style="padding-left: 25px;">
-                                            <h3 class="slds-section-title--divider">
-                                                <span class="slds-truncate" title="Education Details ({obj.row})">Education Details ({index})</span>
+                                            <h3 class="slds-section-title--divider" style="padding-left: 0px;">
+                                                <span class="slds-truncate" title="Education Details ({obj.row})" >Education Details ({(index)})</span>
                                             </h3>
                                             <span>
                                                 <lightning-combobox class="fields" value={obj.EMS_EM_Education__c} data-id={obj.Id} required onchange={eduupdateValues} 
