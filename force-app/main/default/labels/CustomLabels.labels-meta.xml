@@ -61,14 +61,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Contact Record URL</shortDescription>
-        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/detail/</value>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/detail/</value>
     </labels>
     <labels>
         <fullName>Onboarding_Request_Record_URL</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Onboarding Request Record URL</shortDescription>
-        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-em-onboarding-request/</value>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/ems-em-onboarding-request/</value>
     </labels>
     <labels>
         <fullName>Project_label</fullName>
@@ -138,7 +138,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Service Request URL</shortDescription>
-        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/case/</value>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/case/</value>
     </labels>
     <labels>
         <fullName>Enable_Nominations</fullName>
