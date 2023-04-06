@@ -264,6 +264,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         if(this.cadrressline1 !=null && this.padrressline1 != null){
           if (this.padrressline1 === this.cadrressline1) {
             this.paFlag = true;
+            this.readonlyfield1 = true;
           }
             else{
               this.paFlag = false;
