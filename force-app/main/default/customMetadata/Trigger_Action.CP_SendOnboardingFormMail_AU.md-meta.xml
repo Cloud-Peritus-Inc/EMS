@@ -52,7 +52,8 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Send email to HR after send pre onboarding form</value>
+        <value xsi:type="xsd:string">This class is for if DOJ less than 10days then on which date DOJ is updated on that day itself create onboarding record as well as send 
+				email with onboarding form.</value>
     </values>
     <values>
         <field>Flow_Name__c</field>
@@ -60,7 +61,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">4.0</value>
+        <value xsi:type="xsd:double">7.0</value>
     </values>
     <values>
         <field>Required_Permission__c</field>

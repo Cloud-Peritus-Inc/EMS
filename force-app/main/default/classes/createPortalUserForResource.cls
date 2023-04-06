@@ -61,10 +61,10 @@ public without sharing class createPortalUserForResource implements TriggerActio
         }
         system.debug('====filteredList====='+filteredList);
         if(!filteredList.isEmpty()){
-            if(!System.isBatch() && !System.isFuture()){
+            /*if(!System.isBatch() && !System.isFuture()){
             BatchToCreatePostOnboardingTasks batchExecute = new BatchToCreatePostOnboardingTasks(); 
             Database.executeBatch(batchExecute,5);
-            }
+            }*/
             for(User urec : [SELECT Id,ContactId,IsActive FROM User WHERE ContactId=:conIds]){
                userContactMap.put(urec.contactId,urec); 
             }
@@ -107,7 +107,8 @@ public without sharing class createPortalUserForResource implements TriggerActio
             if(!usrList.isEmpty() || !usrUpdateList.isEmpty() || !userContactMap.isEmpty()){
         processTheDML(JSON.serialize(usrList),JSON.serialize(usrUpdateList),JSON.serialize(userContactMap));
             }
-        
+        	BatchToCreatePostOnboardingTasks batchExecute = new BatchToCreatePostOnboardingTasks(); 
+            Database.executeBatch(batchExecute,5);
         }catch(exception ex){
            system.debug('==ex=='+ex);
              LogException.logHandledException(ex, 'createPortalUserForResource', 'createPortalUser');  
@@ -154,8 +155,14 @@ public without sharing class createPortalUserForResource implements TriggerActio
          system.debug('==w==contactUpdate====='+contactUpdate);
         if(!contactUpdate.isEmpty()){
              createPortalQueueable q = new createPortalQueueable(JSON.serialize(contactUpdate));
-        System.enqueueJob(q);
+            system.debug('job -->');
+        	 System.enqueueJob(q);
+
+                
+            }
+            
         }
+            
         
-    }
+    
 }

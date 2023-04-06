@@ -152,21 +152,21 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>Additional Detail</label>
+    <externalSharingModel>Private</externalSharingModel>
+    <label>Professional Proficiency</label>
     <nameField>
-        <displayFormat>AD-{00000}</displayFormat>
-        <label>Additional Detail Number</label>
+        <displayFormat>PP-{00000}</displayFormat>
+        <label>Professional Proficiency Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Additional Details</pluralLabel>
+    <pluralLabel>Professional Proficiency</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts>
         <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Onboarding_Request__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

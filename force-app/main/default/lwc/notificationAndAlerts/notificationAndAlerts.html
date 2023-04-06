@@ -1,4 +1,5 @@
 <template>
+     <template if:true={showdata}>
  <div class="bodycontent">
       <template for:each={datawrap} for:item="prj">  
  <div class="notification" key={prj.id}>
@@ -19,4 +20,5 @@
 	</div>
       </template>
  </div>
+     </template>
 </template>

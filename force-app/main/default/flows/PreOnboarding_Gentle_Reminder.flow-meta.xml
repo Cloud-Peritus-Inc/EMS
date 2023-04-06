@@ -39,6 +39,13 @@
                     <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_of_Joining__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Reminder_Email_To_Candidate</targetReference>
             </connector>
