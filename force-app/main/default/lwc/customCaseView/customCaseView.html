@@ -1,136 +1,140 @@
 <template>
- <lightning-record-edit-form
-    record-id={recordId}
-    object-api-name="Case">
-<lightning-card title="Detail Information" icon-name="standard:case">
-        <lightning-accordion active-section-name="Y">
-            <lightning-accordion-section name="Y" label="Information">
-        <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="OwnerId">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="ContactId">
-                        </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="CaseNumber">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="AccountId">
-                </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Type">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Request_Sub_Type__c">
-                </lightning-output-field>
-            </div>
-        </div>
-        <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Case_Assignee__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Priority">
-                </lightning-output-field>
-            </div>
-        </div>  
-            
-            </lightning-accordion-section>
-            <!-----------------SPECIAL LEAVE FIELDS-----START----------->
-            <template if:true={specialleaves}>
-            <lightning-accordion-section name="X" label="Special Leave Information">
-               <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Leave_Start_Date__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Leave_Duration__c">
-                        </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Leave_End_Date__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Day__c">
-                </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Reason__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-           
-            </div>
-        </div>
-            </lightning-accordion-section>
-            </template>
-            <!-----------------SPECIAL LEAVE FIELDS----END------------>
-            <!-----------------Sothers FIELDS-----START----------->
-            <template if:true={others}>
-            <lightning-accordion-section name="X" label="Other">
-          <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Description">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Reason">
-                </lightning-output-field>
-            </div>
-        </div>       
-         
-        </div>
-            </lightning-accordion-section>
-            </template>
-            <!-----------------Others FIELDS----END------------>
-            <!-----------------techs FIELDS-----START----------->
-            <template if:true={techs}>
-            <lightning-accordion-section name="X" label="Technical Problem">
-               <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Description">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Reason">
-                </lightning-output-field>
-            </div>
-        </div>  
-         
-            </lightning-accordion-section>
-            </template>
-            <!-----------------Tech FIELDS----END------------>
-            <!-----------------Resignation FIELDS-----START----------->
-            <template if:true={resign}>
-            <lightning-accordion-section name="X" label="Resignation Information">
-               <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Description">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Last_Working_Date__c">
-                        </lightning-output-field>
-            </div>
-        </div>
-        <!-- <div class="slds-grid">
+	<lightning-record-edit-form record-id={recordId} object-api-name="Case">
+		<lightning-card title="Detail Information" icon-name="standard:case">
+			<lightning-accordion active-section-name="Y">
+				<lightning-accordion-section name="Y" label="Information">
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="OwnerId">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="ContactId">
+							</lightning-output-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="CaseNumber">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="AccountId">
+							</lightning-output-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="Type">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="Request_Sub_Type__c">
+							</lightning-output-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="Case_Assignee__c">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="Priority">
+							</lightning-output-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="Status">
+							</lightning-output-field>
+						</div>
+					</div>
+
+				</lightning-accordion-section>
+				<!-----------------SPECIAL LEAVE FIELDS-----START----------->
+				<template if:true={specialleaves}>
+					<lightning-accordion-section name="X" label="Special Leave Information">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Leave_Start_Date__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Leave_Duration__c">
+								</lightning-output-field>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Leave_End_Date__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Day__c">
+								</lightning-output-field>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Reason__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+
+							</div>
+						</div>
+					</lightning-accordion-section>
+				</template>
+				<!-----------------SPECIAL LEAVE FIELDS----END------------>
+				<!-----------------Sothers FIELDS-----START----------->
+				<template if:true={others}>
+					<lightning-accordion-section name="X" label="Other">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Description">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Reason">
+								</lightning-output-field>
+							</div>
+						</div>
+
+						</div>
+					</lightning-accordion-section>
+				</template>
+				<!-----------------Others FIELDS----END------------>
+				<!-----------------techs FIELDS-----START----------->
+				<template if:true={techs}>
+					<lightning-accordion-section name="X" label="Technical Problem">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Description">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Reason">
+								</lightning-output-field>
+							</div>
+						</div>
+
+					</lightning-accordion-section>
+				</template>
+				<!-----------------Tech FIELDS----END------------>
+				<!-----------------Resignation FIELDS-----START----------->
+				<template if:true={resign}>
+					<lightning-accordion-section name="X" label="Resignation Information">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Description">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Last_Working_Date__c">
+								</lightning-output-field>
+							</div>
+						</div>
+						<!-- <div class="slds-grid">
             <div class="slds-col slds-size_1-of-2">
                  <lightning-output-field field-name="Reason_for_Early_Relieving_Date__c">
                         </lightning-output-field>
@@ -139,134 +143,134 @@
             
             </div>
         </div> -->
-            </lightning-accordion-section>
-            </template>
-            <!-----------------Resignation FIELDS----END------------>
-            <!-----------------changeOfDetails FIELDS-----START----------->
-            <template if:true={changeOfDetails}>
-            <lightning-accordion-section name="X" label="Family Information">
-               <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Family_Member_Name__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Relationships__c">
-                        </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Is_it_Dependant_Contact__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Is_It_Emergency_Contact__c">
-                </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Date_of_Birth__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-           
-            </div>
-        </div>
-            </lightning-accordion-section>
-            <lightning-accordion-section name="X" label="Education Information">
-               <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Level_of_Education__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Institution_Name__c">
-                        </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Field_of_Study__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Graduation_Date__c">
-                </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Degree__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-           
-            </div>
-        </div>
-            </lightning-accordion-section>
-            <lightning-accordion-section name="X" label="Bank Information">
-               <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Bank_Account_Holder_Name__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="Bank_Account_Number__c">
-                        </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Bank_Name__c">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="IFSC_Code__c">
-                </lightning-output-field>
-            </div>
-        </div>
-            </lightning-accordion-section>
-            </template>
-            <!-----------------Resignation FIELDS----END------------>
+					</lightning-accordion-section>
+				</template>
+				<!-----------------Resignation FIELDS----END------------>
+				<!-----------------changeOfDetails FIELDS-----START----------->
+				<template if:true={changeOfDetails}>
+					<lightning-accordion-section name="X" label="Family Information">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Family_Member_Name__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Relationships__c">
+								</lightning-output-field>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Is_it_Dependant_Contact__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Is_It_Emergency_Contact__c">
+								</lightning-output-field>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Date_of_Birth__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
 
-              <!-----------------SYSTEM INFORMATION-----START----------->
-            <lightning-accordion-section name="Z" label="System Information">
-                  <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="CreatedById">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="LastModifiedById">
-                        </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="CreatedDate">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-             <lightning-output-field field-name="ClosedDate">
-                </lightning-output-field>
-            </div>
-        </div>
-         <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-2">
-                 <lightning-output-field field-name="Origin">
-                        </lightning-output-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-            <lightning-output-field field-name="Priority">
-                        </lightning-output-field>
-            </div>
-        </div>
-            </lightning-accordion-section>
-              <!------------------SYSTEM INFORMATION-----END----------->
-        </lightning-accordion>
- </lightning-card>
-</lightning-record-edit-form>
+							</div>
+						</div>
+					</lightning-accordion-section>
+					<lightning-accordion-section name="X" label="Education Information">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Level_of_Education__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Institution_Name__c">
+								</lightning-output-field>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Field_of_Study__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Graduation_Date__c">
+								</lightning-output-field>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Degree__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+
+							</div>
+						</div>
+					</lightning-accordion-section>
+					<lightning-accordion-section name="X" label="Bank Information">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Bank_Account_Holder_Name__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Bank_Account_Number__c">
+								</lightning-output-field>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="Bank_Name__c">
+								</lightning-output-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-output-field field-name="IFSC_Code__c">
+								</lightning-output-field>
+							</div>
+						</div>
+					</lightning-accordion-section>
+				</template>
+				<!-----------------Resignation FIELDS----END------------>
+
+				<!-----------------SYSTEM INFORMATION-----START----------->
+				<lightning-accordion-section name="Z" label="System Information">
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="CreatedById">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="LastModifiedById">
+							</lightning-output-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="CreatedDate">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="ClosedDate">
+							</lightning-output-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="Origin">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-output-field field-name="Priority">
+							</lightning-output-field>
+						</div>
+					</div>
+				</lightning-accordion-section>
+				<!------------------SYSTEM INFORMATION-----END----------->
+			</lightning-accordion>
+		</lightning-card>
+	</lightning-record-edit-form>
 
 </template>
