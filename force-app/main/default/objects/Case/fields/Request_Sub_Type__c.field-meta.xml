@@ -69,10 +69,6 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Technical Issues</controllingFieldValue>
-            <valueName>Problem</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Change of Details</controllingFieldValue>
             <valueName>Educational Details</valueName>
         </valueSettings>
@@ -83,6 +79,10 @@
         <valueSettings>
             <controllingFieldValue>Change of Details</controllingFieldValue>
             <valueName>Family/Dependent Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Special Leaves</controllingFieldValue>
@@ -109,8 +109,8 @@
             <valueName>Offboarding</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Others</controllingFieldValue>
-            <valueName>Other</valueName>
+            <controllingFieldValue>Technical Issues</controllingFieldValue>
+            <valueName>Problem</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

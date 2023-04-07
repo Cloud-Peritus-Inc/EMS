@@ -51,6 +51,12 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>Cousin</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cousin</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
