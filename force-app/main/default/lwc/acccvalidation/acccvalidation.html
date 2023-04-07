@@ -124,13 +124,13 @@
                     <div class="slds-truncate" title="Project"> Project</div>
                 </th>
                 <th scope="col">
-                    <div class="slds-truncate" title="ProjectTask">Assignment</div>
+                    <div class="slds-truncate" title="Project Task">Assignment</div>
                 </th>
                 <th if:true={showOtherTask} scope="col">
                     <div class="slds-truncate" title="ProjectTaskPicklist">Other Task</div>
                 </th>
                 <th scope="col">
-                    <div class="slds-truncate" title="monday">
+                    <div class="slds-truncate" title="Monday">
                         <lightning-formatted-date-time value={weekDates.EMS_TM_Mon__c}
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
@@ -173,7 +173,7 @@
                 </th>
                 <!-- weekday="short" month="numeric" day="numeric" time-zone="UTC"> -->
                 <th if:true={showWeekend} scope="col">
-                    <div class="slds-truncate" title="sunday">
+                    <div class="slds-truncate" title="Sunday">
                         <lightning-formatted-date-time value={weekDates.EMS_TM_Sun__c}
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
