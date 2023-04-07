@@ -46,6 +46,11 @@
                 <default>false</default>
                 <label>Compensatory Off</label>
             </value>
+            <value>
+                <fullName>Marriage Leave</fullName>
+                <default>false</default>
+                <label>Marriage Leave</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

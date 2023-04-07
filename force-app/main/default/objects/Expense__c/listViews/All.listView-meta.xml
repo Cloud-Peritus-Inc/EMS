@@ -2,7 +2,6 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-    <columns>Amount__c</columns>
     <columns>Approval_Manager__c</columns>
     <columns>Bill_Date__c</columns>
     <columns>Expense_Type__c</columns>

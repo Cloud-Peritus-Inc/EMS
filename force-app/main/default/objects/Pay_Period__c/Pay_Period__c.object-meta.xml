@@ -160,7 +160,12 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Pay Periods</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Fiscal_Year__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Office_Location__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Pay_Period_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Pay_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
