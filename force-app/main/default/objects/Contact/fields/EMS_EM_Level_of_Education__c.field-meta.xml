@@ -30,6 +30,18 @@
                 <default>false</default>
                 <label>Post-Graduation</label>
             </value>
+            <value>
+                <fullName>Graduate</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Graduate</label>
+            </value>
+            <value>
+                <fullName>Post Graduate</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Post Graduate</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

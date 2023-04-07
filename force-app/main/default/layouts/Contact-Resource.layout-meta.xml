@@ -180,37 +180,6 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Identity Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_EM_AadhaarNo__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_EM_PanNo__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_EM_PassportNo__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_EM_PFno__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMS_Driving_License_No__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
         <label>Current Address Details</label>
         <layoutColumns>
             <layoutItems>
@@ -533,23 +502,6 @@
         <fields>Is_It_Emergency_Contact__c</fields>
         <fields>Is_It_Dependent_Contact__c</fields>
         <relatedList>Family_Information__c.Resource__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Type__c</fields>
-        <fields>Amount__c</fields>
-        <fields>EMS_EM_Valid_From__c</fields>
-        <relatedList>EMS_EM_Benefits__c.EMS_EM_Nominee__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Beneficiary_Account_Number__c</fields>
-        <fields>Bank_Name__c</fields>
-        <fields>Branch__c</fields>
-        <fields>IFSC_Routing_Number__c</fields>
-        <relatedList>PayRoll__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>

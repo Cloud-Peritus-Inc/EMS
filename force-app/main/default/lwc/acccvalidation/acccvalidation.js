@@ -40,6 +40,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     disablePreButtons = false;
     disableNextButtons = false;
     disableSubmited = false;
+    disabledsubmittedApproved = true;
     falseVariable = false;
     assignmentRecords;
     holidayRecords;
@@ -1196,7 +1197,9 @@ submitpopup(){
     
             this.timeSheetRecord.EMS_TM_Status__c = type;
             this.records.forEach(ele => {
+                if(ele.ApprovedandSubmitted__c != true){
                 ele.Status__c = type;
+                }
             });
             if (this.recordId === '') {
                 duplicatetimesheetLWC({ timesheet : this.timeSheetRecord }).then(result => {

@@ -163,8 +163,8 @@
     <pluralLabel>Holiday Calendars</pluralLabel>
     <searchLayouts>
         <searchResultsAdditionalFields>EMS_TM_Calendar_Date__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Location__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EMS_TM_Type_Of_Holiday__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Office_Location__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>

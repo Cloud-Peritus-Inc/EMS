@@ -11,6 +11,10 @@
     <columns>EMS_TM_Fri__c</columns>
     <columns>OWNER.FIRST_NAME</columns>
     <columns>NAME</columns>
+    <columns>OWNER.LAST_NAME</columns>
+    <columns>EMS_TM_ProjectTask__c</columns>
+    <columns>EMS_TM_Remarks__c</columns>
+    <columns>EMS_TM_OtherTask__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

@@ -269,7 +269,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override updated by Lightning App Builder during activation.</comment>
-        <content>ContactApplicantRecordPage</content>
+        <content>Contact_Client_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -277,7 +277,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override updated by Lightning App Builder during activation.</comment>
-        <content>ContactApplicantRecordPage</content>
+        <content>Contact_Client_Record_Page</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -348,10 +348,10 @@
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE5</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE6</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Official_Mail__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EMS_Phone_Number__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>EMS_EM_JD__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Personal_Email__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CONTACT.EMAIL</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_EM_JD__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.RECORDTYPE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>

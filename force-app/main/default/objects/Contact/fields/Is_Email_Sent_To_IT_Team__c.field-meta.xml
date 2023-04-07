@@ -3,7 +3,7 @@
     <fullName>Is_Email_Sent_To_IT_Team__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Is Email Sent To IT Team</label>
+    <label>Is Email sent to IT Team</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

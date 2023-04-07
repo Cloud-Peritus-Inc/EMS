@@ -5,7 +5,7 @@
     <label>Leave Duration</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>1</scale>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
