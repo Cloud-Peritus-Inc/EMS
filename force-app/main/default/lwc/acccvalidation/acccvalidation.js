@@ -40,6 +40,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     disablePreButtons = false;
     disableNextButtons = false;
     disableSubmited = false;
+    disabledsubmittedApproved = true;
     falseVariable = false;
     assignmentRecords;
     holidayRecords;
@@ -399,7 +400,6 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             // this.timeSheetRecord.EMS_TM_Week__c = this.thisWeek;
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'User Selection',
                     message: 'Please select a user to view the entries',
                     variant: 'error',
                 }),
@@ -471,7 +471,6 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             this.timeSheetRecord.EMS_TM_Week__c = this.thisWeek;
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'User Selection',
                     message: 'Please select a user to view the entries',
                     variant: 'error',
                 }),
@@ -814,12 +813,14 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         if (assignment.length === 1) {
             this.records[index].projectAssignAvail = true;
             this.records[index].EMS_TM_ProjectTask__c = assignment[0].EMS_TM_AssignedAs__c;
+            this.records[index].Assignment__c = assignment[0].Id;
         } else if(assignment.length > 1) {
             let picklist = [];
             assignment.forEach(assign => {
                 picklist.push({value: assign.EMS_TM_AssignedAs__c, label: assign.EMS_TM_AssignedAs__c});
             });
             this.records[index].projectTaskOptions = picklist;
+            this.records[index].Assignment__c = assignment[0].Id;
         } else {
             this.handlePicklistValues(index, type);
         }
@@ -1196,7 +1197,9 @@ submitpopup(){
     
             this.timeSheetRecord.EMS_TM_Status__c = type;
             this.records.forEach(ele => {
+                if(ele.ApprovedandSubmitted__c != true){
                 ele.Status__c = type;
+                }
             });
             if (this.recordId === '') {
                 duplicatetimesheetLWC({ timesheet : this.timeSheetRecord }).then(result => {
@@ -1205,8 +1208,7 @@ submitpopup(){
                         this.hideSpinner = true;
                         this.dispatchEvent(
                             new ShowToastEvent({
-                                title: 'Error while creating record',
-                                message: 'Oops!... Timesheet has already been Saved for the above date',
+                                message: 'Timesheet has already been Saved for the above date',
                                 variant: 'error',
                             }),
                         );
@@ -1233,7 +1235,6 @@ submitpopup(){
                                 this.recordId = '';
                                 this.dispatchEvent(
                                     new ShowToastEvent({
-                                        title: 'Error while creating record',
                                         message: 'You didnot have the access or not enterd the proper data',
                                         variant: 'error',
                                     }),
@@ -1288,7 +1289,6 @@ submitpopup(){
                     this.error = error;
                     this.dispatchEvent(
                         new ShowToastEvent({
-                            title: 'Error while creating record',
                             message: error.body.pageErrors[0].message,
                             variant: 'error',
                         }),
@@ -1300,8 +1300,7 @@ submitpopup(){
         } else {
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'Error while creating record',
-                    message: 'Oops!... Please enter all the required fields with appropriate data',
+                    message: 'Please enter all the required fields with appropriate data',
                     variant: 'error',
                 }),
             );
@@ -1335,7 +1334,6 @@ submitpopup(){
     handleSuccess(msg) {
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Success',
                 message: msg,
                 variant: 'success',
             }),

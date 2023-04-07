@@ -60,7 +60,7 @@
                     onchange={handleManagerViewToggle}
                     label="Manager view"
                     message-toggle-active=""
-                    message-toggle-inactive=""></lightning-input>
+                    message-toggle-inactive="" disabled ={enableHrManagerView}></lightning-input>
             </div>
         </div>
     </lightning-card><br>
@@ -124,13 +124,13 @@
                     <div class="slds-truncate" title="Project"> Project</div>
                 </th>
                 <th scope="col">
-                    <div class="slds-truncate" title="ProjectTask">Assignment</div>
+                    <div class="slds-truncate" title="Project Task">Assignment</div>
                 </th>
                 <th if:true={showOtherTask} scope="col">
                     <div class="slds-truncate" title="ProjectTaskPicklist">Other Task</div>
                 </th>
                 <th scope="col">
-                    <div class="slds-truncate" title="monday">
+                    <div class="slds-truncate" title="Monday">
                         <lightning-formatted-date-time value={weekDates.EMS_TM_Mon__c}
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
@@ -173,7 +173,7 @@
                 </th>
                 <!-- weekday="short" month="numeric" day="numeric" time-zone="UTC"> -->
                 <th if:true={showWeekend} scope="col">
-                    <div class="slds-truncate" title="sunday">
+                    <div class="slds-truncate" title="Sunday">
                         <lightning-formatted-date-time value={weekDates.EMS_TM_Sun__c}
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
@@ -200,7 +200,7 @@
                     </td>
                     <td style="width: 180px;">
                         <template if:true={it.value.projectValueAvailable}>
-                        
+                         <template if:false={it.value.ApprovedandSubmitted__c}>
                             <lightning-record-edit-form object-api-name="EMS_Timesheet__c">
                                 <lightning-input-field field-name="EMS_TM_Project__c"
                                     value={it.value.EMS_TM_Project__c}
@@ -208,6 +208,16 @@
                                     disabled={disableSubmited}>
                                 </lightning-input-field>
                             </lightning-record-edit-form>
+                         </template>
+                            <template if:true={it.value.ApprovedandSubmitted__c}>
+                                <lightning-record-edit-form object-api-name="EMS_Timesheet__c">
+                                <lightning-input-field field-name="EMS_TM_Project__c"
+                                    value={it.value.EMS_TM_Project__c}
+                                    data-id={it.index} onchange={removeRetrievedProject} variant="label-hidden"
+                                    disabled={disabledsubmittedApproved}>
+                                </lightning-input-field>
+                            </lightning-record-edit-form>
+                            </template>
                         </template>
                         <template if:false={it.value.projectValueAvailable}>
                             <c-ems-custom-look-up obj-name="EMS_TM_Project__c" users={falseVariable}
@@ -254,61 +264,132 @@
                         </div>
                         <div if:false={it.value.otherTask}></div>
                     </td>
-                    <td>
+                    <td> <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Mon__c' type="number" step=".5" maxlength="4"
                             value={it.value.EMS_TM_Mon__c}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden" required
                             disabled={disableSubmited}>
                         </lightning-input>
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                            <lightning-input name='EMS_TM_Mon__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Mon__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disabledsubmittedApproved}>
+                        </lightning-input>
+                        </template>
                     </td>
                     <td>
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Tue__c' type="number" step=".5" maxlength="4"
                             value={it.value.EMS_TM_Tue__c}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden" required
                             disabled={disableSubmited}>
                         </lightning-input>
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <lightning-input name='EMS_TM_Tue__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Tue__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disabledsubmittedApproved}>
+                        </lightning-input>
+                        </template>
                     </td>
                     <td>
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Wed__c' type="number" step=".5" maxlength="4"
                             value={it.value.EMS_TM_Wed__c}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden" required
                             disabled={disableSubmited}>
                         </lightning-input>
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <lightning-input name='EMS_TM_Wed__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Wed__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disabledsubmittedApproved}>
+                        </lightning-input>
+                        </template>
+
                     </td>
                     <td>
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Thu__c' type="number" step=".5" maxlength="4"
                             value={it.value.EMS_TM_Thu__c}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden" required
                             disabled={disableSubmited}>
                         </lightning-input>
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <lightning-input name='EMS_TM_Thu__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Thu__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disabledsubmittedApproved}>
+                        </lightning-input>
+                        </template>
                     </td>
                     <td>
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Fri__c' type="number" step=".5" maxlength="4"
                             value={it.value.EMS_TM_Fri__c}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden" required
                             disabled={disableSubmited}>
                         </lightning-input>
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <lightning-input name='EMS_TM_Fri__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Fri__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden" required
+                            disabled={disabledsubmittedApproved}>
+                        </lightning-input>
+                        </template>
                     </td>
                     <td if:true={showWeekend}>
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Sat__c' type="number" step=".5" maxlength="4"
                             value={it.value.EMS_TM_Sat__c}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden"
                             disabled={disableSubmited}>
                         </lightning-input>
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <lightning-input name='EMS_TM_Sat__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Sat__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden"
+                            disabled={disabledsubmittedApproved}>
+                        </lightning-input>
+                        </template>
                     </td>
                     <td if:true={showWeekend}>
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Sun__c' type="number" step=".5" maxlength="4"
                             value={it.value.EMS_TM_Sun__c}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden"
                             disabled={disableSubmited}>
                         </lightning-input>
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <lightning-input name='EMS_TM_Sun__c' type="number" step=".5" maxlength="4"
+                            value={it.value.EMS_TM_Sun__c}
+                            data-id={it.index} onchange={handleUserInput}
+                            variant="label-hidden"
+                            disabled={disabledsubmittedApproved}>
+                        </lightning-input>
+                        </template>
+
                     </td>
                     <td>
                         <lightning-input name='Total_Hours__c' variant="label-hidden"
@@ -316,10 +397,18 @@
                         </lightning-input>
                     </td>
                     <td if:true={showRemarks}>
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Remarks__c'
                             value={it.value.EMS_TM_Remarks__c} data-id={it.index} required={it.value.remarkRequired}
                             onchange={handleUserInput} variant="label-hidden" disabled={disableSubmited}>
                         </lightning-input>
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <lightning-input name='EMS_TM_Remarks__c'
+                            value={it.value.EMS_TM_Remarks__c} data-id={it.index} required={it.value.remarkRequired}
+                            onchange={handleUserInput} variant="label-hidden" disabled={disabledsubmittedApproved}>
+                        </lightning-input>
+                        </template>
                     </td>
                 </tr>
             
