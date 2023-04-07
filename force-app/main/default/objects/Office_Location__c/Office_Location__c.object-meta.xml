@@ -159,7 +159,11 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Office Locations</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Address__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Country__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Timezone__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

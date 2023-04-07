@@ -5,7 +5,7 @@
 *              
 *               Schedule class 
 *               - BatchToSendWorkAnniversaryEmail_sch
-*               Test code coverage provided by the following test class:
+*               Test code coverage provided by the following test class
 *               - BatchToSendWorkAnniversaryEmailTest
 *
 * CHANGE HISTORY
@@ -24,7 +24,7 @@
         
         return Database.getQueryLocator([SELECT Id,Name,Email,EMS_EM_JD__c 
                                          FROM CONTACT WHERE RecordTypeId =:ContactConstant.RESOURCE_RECORDTYPEID
-                                         AND Email != NULL AND DAY_IN_MONTH(EMS_EM_JD__c) =:dt.day() AND CALENDAR_MONTH(EMS_EM_JD__c) =:dt.month()
+                                         AND Email != NULL AND EMS_EM_JD__c!= NULL AND DAY_IN_MONTH(EMS_EM_JD__c) =:dt.day() AND CALENDAR_MONTH(EMS_EM_JD__c) =:dt.month()
                                         ]);
     }
     
@@ -33,12 +33,13 @@
         List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
         List<EmailTemplate> templateId = new List<EmailTemplate>();
         templateId = [SELECT id FROM EmailTemplate WHERE developername LIKE 'Work_Anniversary_Emails_%'];
-        Integer randomNumber = (system.today().day()/5)-1;
+        Integer randomNumber = templateId.size();
+        Integer randomId = 0;
         String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
 
         for(Contact contactRec : conList){
                 
-                Integer randomId = Integer.valueOf(Math.random()*randomNumber);
+                randomId = Integer.valueOf(Math.random()*randomNumber);
             
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employee_type__c</fullName>
+    <externalId>false</externalId>
+    <label>Employee type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Part-time</fullName>
+                <default>false</default>
+                <label>Part-time</label>
+            </value>
+            <value>
+                <fullName>Full-time</fullName>
+                <default>false</default>
+                <label>Full-time</label>
+            </value>
+            <value>
+                <fullName>Contractor</fullName>
+                <default>false</default>
+                <label>Contractor</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -7,9 +7,9 @@
     <columns>Office_Location__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>Office_Location__c</field>
+        <field>Location__c</field>
         <operation>equals</operation>
-        <value>California - USA</value>
+        <value>USA</value>
     </filters>
     <label>US Calendar</label>
 </ListView>

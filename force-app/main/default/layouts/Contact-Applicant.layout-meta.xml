@@ -203,6 +203,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Award_Type__c</fields>
+        <fields>Comments__c</fields>
+        <fields>Fiscal_Year__c</fields>
         <relatedList>Reward_And_Recognition__c.Resource__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
