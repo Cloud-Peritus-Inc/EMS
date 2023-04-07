@@ -4,6 +4,16 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Project</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Select only the ongoing projects</errorMessage>
+        <filterItems>
+            <field>EMS_TM_Project__c.EMS_TM_Status__c</field>
+            <operation>equals</operation>
+            <value>Ongoing</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>EMS_TM_Project__c</referenceTo>
     <relationshipLabel>Expenses</relationshipLabel>
     <relationshipName>Expenses</relationshipName>

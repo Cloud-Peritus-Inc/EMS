@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Official_Mail__c</fullName>
     <externalId>false</externalId>
-    <label>Official Email ID</label>
+    <label>Official Email ID(old)</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Email</type>

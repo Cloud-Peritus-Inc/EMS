@@ -240,10 +240,6 @@
             <fullName>Post Graduate</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Under Graduate%28%2B2%29</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EMS_EM_Level_of_Education2__c</picklist>
@@ -255,10 +251,6 @@
             <fullName>Post Graduate</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Under Graduate%28%2B2%29</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EMS_EM_Level_of_Education3__c</picklist>
@@ -268,10 +260,6 @@
         </values>
         <values>
             <fullName>Post Graduate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Under Graduate%28%2B2%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -300,21 +288,9 @@
             <fullName>Post Graduate</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Under Graduate%28%2B2%29</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EMS_EM_Level_of_Education__c</picklist>
-        <values>
-            <fullName>Graduation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Post-Graduation</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Std X%2FSSC</fullName>
             <default>false</default>
@@ -332,6 +308,13 @@
         </values>
         <values>
             <fullName>Single</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_OLocation__c</picklist>
+        <values>
+            <fullName>US</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -358,6 +341,13 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_Employee_Type__c</picklist>
+        <values>
+            <fullName>Part-time</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -391,10 +381,6 @@
         </values>
         <values>
             <fullName>Hired</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inactive</fullName>
             <default>false</default>
         </values>
         <values>

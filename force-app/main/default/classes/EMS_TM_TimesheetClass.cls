@@ -1,7 +1,7 @@
 /**
 * @author Suneel & RK
 * @date 3/17/2023
-* @description  Test class for EMS_TM_TimesheetClass.
+* @description  Test class for TestClass_EMS_TM_TimesheetClass.
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -68,7 +68,7 @@ public class EMS_TM_TimesheetClass {
             List<User> users = [SELECT Id, 
                                         FirstName, 
                                         LastName, 
-                                        Name FROM User];
+                                        Name FROM User Where Contact.Timesheet_NoNeed__c = false];
             for (User u : users) {
                 idList.add(u.Id);
                 }
@@ -244,7 +244,7 @@ public class EMS_TM_TimesheetClass {
                                     EMS_TM_Wed__c, EMS_TM_Thu__c, EMS_TM_Fri__c, EMS_TM_Sat__c,
                                     EMS_TM_ProjectTask__c, EMS_TM_Project__c,
                                     EMS_TM_Week__c, User__c, EMS_Timesheet__c, EMS_TM_Remarks__c,
-                                    EMS_TM_OtherTask__c
+                                    EMS_TM_OtherTask__c,ApprovedandSubmitted__c
                                     FROM EMS_TM_Timesheet_Record__c
                                     WHERE EMS_Timesheet__c = :timeSheetValues[0].Id];
             wrapper.timeSheet = timeSheetValues[0];

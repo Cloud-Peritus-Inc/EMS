@@ -128,11 +128,14 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Resource_Role_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -160,7 +163,13 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Resource Roles</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Active__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Level_of_Approval__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Auto_Approve__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Probation_Days__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Notice_Consider_Days__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

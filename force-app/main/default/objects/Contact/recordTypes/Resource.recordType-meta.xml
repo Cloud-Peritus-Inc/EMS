@@ -241,10 +241,6 @@
             <fullName>Post Graduate</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Under Graduate%28%2B2%29</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EMS_EM_Level_of_Education2__c</picklist>
@@ -256,10 +252,6 @@
             <fullName>Post Graduate</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Under Graduate%28%2B2%29</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EMS_EM_Level_of_Education3__c</picklist>
@@ -269,10 +261,6 @@
         </values>
         <values>
             <fullName>Post Graduate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Under Graduate%28%2B2%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -301,21 +289,9 @@
             <fullName>Post Graduate</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Under Graduate%28%2B2%29</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EMS_EM_Level_of_Education__c</picklist>
-        <values>
-            <fullName>Graduation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Post-Graduation</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Std X%2FSSC</fullName>
             <default>false</default>
@@ -333,6 +309,25 @@
         </values>
         <values>
             <fullName>Single</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_OLocation__c</picklist>
+        <values>
+            <fullName>Hyderabad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Ramon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sunnyvale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vijayawada</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -418,7 +413,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Inactive</fullName>
+            <fullName>Active - Probation</fullName>
             <default>false</default>
         </values>
     </picklistValues>

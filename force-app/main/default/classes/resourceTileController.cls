@@ -17,7 +17,7 @@ public without sharing class resourceTileController {
     public static datawrapper getUserInfo(Id userId) {
       
         User urecord = [SELECT FullPhotoUrl,Id,Name,Employee_Id__c,Contact.EMS_RM_Employee_Id__c,ContactId,
-                        Contact.ReportsTo.Name,Contact.Resource_Role__r.Name FROM User WHERE Id = :Userinfo.getUserId() and ContactId != null];
+                        Contact.ReportsTo.Name,Contact.Resource_Role__r.Name,Contact.EMS_TM_User__c FROM User WHERE Id = :Userinfo.getUserId() and ContactId != null];
        
         Contact conRec = [SELECT Id,Work_Location__c,Work_Location__r.Country__c,(SELECT Id FROM PayRolls__r),(Select Id,Amount__c FROM Benefits__r WHERE Type__c = 'Medical Insurence') FROM Contact WHERE Id=:urecord.contactId];
         datawrapper dwrap = new datawrapper();
@@ -28,10 +28,20 @@ public without sharing class resourceTileController {
         dwrap.nextpaydate = lastdayoftheMonth(conRec);
         dwrap.resourceReportTo = urecord.Contact.ReportsTo.Name;
         dwrap.resourceUserId = urecord.Id;
+        dwrap.loggedinresource = urecord.Contact.EMS_TM_User__c == Userinfo.getUserId();
         dwrap.resourceContactId = urecord.ContactId;
         dwrap.resourceInsurence = getMyInsurenceBenf(conRec);
         dwrap.rescodecurrency = conRec.Work_Location__r.Country__c == 'United States of America' ? 'USD' : 'INR';
         return dwrap;
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static datawrapper getContactInfo(Id conid) {
+      Contact con = [SELECT Id,EMS_TM_User__c FROM Contact WHERE Id=:conId];
+      datawrapper dwrap = new datawrapper();
+      dwrap.loggedinresource = con.EMS_TM_User__c == Userinfo.getUserId();
+        
+      return dwrap;
     }
     
     public static decimal getMyInsurenceBenf(Contact conRec){
@@ -56,31 +66,66 @@ public without sharing class resourceTileController {
     }
     @AuraEnabled(cacheable=true)
     public static List<datawrapper> getTheCurrentAlerts(){
-        
+        string BASE_URL='/sfc/servlet.shepherd/document/download/';
+        Map<String,String> fileExtensionToTypeMap = new Map<String,String>{
+        'MP4' => 'Video',
+        'MP3' => 'Audio',
+        'WAV' => 'Audio'
+       }; 
         Date dt = Test.isRunningTest() ? system.today().adddays(1) : system.today();
-       
+        Set<Id> recordIdSet = new Set<Id>();
         List<datawrapper> dwrap = new List<datawrapper>();
+        List<Grid_Configuration__c> fileredFiles = new List<Grid_Configuration__c>();
         User urecord = [SELECT FullPhotoUrl,Id,Name,Employee_Id__c,Contact.EMS_RM_Employee_Id__c,ContactId,
                         Contact.ReportsTo.Name,Contact.Resource_Role__r.Name,Contact.Resource_Role__c FROM User WHERE Id = :Userinfo.getUserId()];
         for(Grid_Configuration__c gridc : [SELECT Id,Description__c,Notification_Type__c,Name,Goal_End_Date__c,Goal_Start_Date__c,Grid_Configuration_Type__c,
                                          Navigation_address__c,is_Navigation_Required__c,Resource_Role__c 
                                          FROM Grid_Configuration__c 
-                                         WHERE (Goal_Start_Date__c <=:dt AND Goal_End_Date__c>=:dt) AND (Grid_Configuration_Type__c = 'Org Level Alert' OR Grid_Configuration_Type__c = 'Resource Role Alert')]){
+                                         WHERE (Goal_Start_Date__c <=:dt AND Goal_End_Date__c>=:dt) 
+                                           AND (Grid_Configuration_Type__c = 'Org Level Alert' OR Grid_Configuration_Type__c = 'Resource Role Alert'
+                                                OR Grid_Configuration_Type__c = 'Audio Podcast' OR Grid_Configuration_Type__c = 'Videocast')]){
           if(gridc.Grid_Configuration_Type__c == 'Org Level Alert'){
           datawrapper dw = new datawrapper();
           dw.isAlert = gridc.Notification_Type__c == 'Alert' ? true:false;
           dw.alertTitle = gridc.Name;
           dw.alertDesc = gridc.Description__c;
+          dw.isAudioVideo = false;
           dwrap.add(dw);
           }else if(gridc.Grid_Configuration_Type__c == 'Resource Role Alert' && urecord.Contact.Resource_Role__c == gridc.Resource_Role__c){
-             datawrapper dw = new datawrapper();
+           datawrapper dw = new datawrapper();
           dw.isAlert = gridc.Notification_Type__c == 'Alert' ? true:false;
           dw.alertTitle = gridc.Name;
           dw.alertDesc = gridc.Description__c;
+          dw.isAudioVideo = false;
           dwrap.add(dw);  
+          }else if(gridc.Grid_Configuration_Type__c == 'Audio Podcast' || gridc.Grid_Configuration_Type__c == 'Videocast'){
+            recordIdSet.add(gridc.Id); 
+            fileredFiles.add(gridc);
           }  
        
        }
+        
+        if(!fileredFiles.isEmpty()){
+          Set<id> ContentDocumentIds = new Set<id>();
+        for(ContentDocumentLink cdl :  [SELECT Id, ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId IN:recordIdSet]){
+            ContentDocumentIds.add(cdl.contentdocumentId);
+        }    
+        ContentDocument[] contentDocList = [
+            SELECT Id,Title,FileType,FileExtension 
+            FROM ContentDocument 
+            WHERE Id IN :ContentDocumentIds
+              AND FileType IN :fileExtensionToTypeMap.keySet()
+        ];
+        
+        for(ContentDocument cd : contentDocList){
+            datawrapper dw = new datawrapper();
+            dw.name=cd.Title;
+            dw.url=BASE_URL+cd.Id;
+            dw.filetype = fileExtensionToTypeMap.get(cd.FileType);
+            dw.isAudioVideo = true;
+            dwrap.add(dw);
+        } 
+        }
         
         return dwrap; 
      }
@@ -205,6 +250,8 @@ public without sharing class resourceTileController {
         @AuraEnabled
         public string resourceUserId;
         @AuraEnabled
+        public boolean loggedinresource;
+        @AuraEnabled
         public string resourceName;
         @AuraEnabled
         public string resourcePhotoURL;
@@ -225,6 +272,8 @@ public without sharing class resourceTileController {
          @AuraEnabled
         public Boolean isAlert;
          @AuraEnabled
+        public Boolean isAudioVideo;
+         @AuraEnabled
         public string alertTitle;
          @AuraEnabled
         public string alertDesc; 
@@ -232,5 +281,8 @@ public without sharing class resourceTileController {
         public List<datawrapper> directReportesUnderme;
         @AuraEnabled
         public List<datawrapper> meReportsToList;
+        @AuraEnabled public string name;
+        @AuraEnabled public string url;
+        @AuraEnabled public string filetype;
     }   
 }

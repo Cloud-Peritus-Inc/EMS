@@ -1,0 +1,13 @@
+<template>
+    <template if:true={showthedata}>
+<lightning-accordion class="example-accordion"
+                         onsectiontoggle={handleToggleSection}
+                         active-section-name="A">
+        <lightning-accordion-section name="A" label="Identity Information">
+<lightning-record-form record-id={recordId} object-api-name="Contact"
+        fields={fields} columns="2" mode="view" onsubmit={handleSubmit}>
+    </lightning-record-form>
+        </lightning-accordion-section>
+ </lightning-accordion>
+    </template>
+</template>

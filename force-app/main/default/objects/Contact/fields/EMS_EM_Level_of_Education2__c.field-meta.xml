@@ -25,6 +25,18 @@
                 <default>false</default>
                 <label>Under Graduate(+2)</label>
             </value>
+            <value>
+                <fullName>Std X/SSC</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Std X/SSC</label>
+            </value>
+            <value>
+                <fullName>Std XII/HSC</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Std XII/HSC</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
