@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Convert The Applicant to Resource</value>
+        <value xsi:type="xsd:string">To send PreOnboarding form for greater than 10 days</value>
     </values>
 </CustomMetadata>

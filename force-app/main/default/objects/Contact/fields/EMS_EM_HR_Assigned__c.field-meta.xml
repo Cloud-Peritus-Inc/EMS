@@ -6,10 +6,26 @@
     <label>HR Assigned</label>
     <lookupFilter>
         <active>true</active>
+        <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
         <filterItems>
             <field>Contact.RecordTypeId</field>
             <operation>equals</operation>
             <value>Resource</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.Resource_Role__r.Name</field>
+            <operation>equals</operation>
+            <value>HR Associate</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.Resource_Role__r.Name</field>
+            <operation>equals</operation>
+            <value>HR Director</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.Resource_Role__r.Name</field>
+            <operation>equals</operation>
+            <value>HR Manager</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>
