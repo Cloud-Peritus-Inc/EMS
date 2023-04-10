@@ -96,7 +96,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Days to Consider For Offboarding Creation</shortDescription>
-        <value>-10</value>
+        <value>10</value>
     </labels>
     <labels>
         <fullName>Default_Conversion</fullName>
