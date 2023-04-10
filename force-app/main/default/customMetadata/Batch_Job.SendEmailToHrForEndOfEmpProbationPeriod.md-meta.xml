@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Email to HR For End of Probation Period</value>
+        <value xsi:type="xsd:string">Email to HR regarding employee probation period ending</value>
     </values>
 </CustomMetadata>

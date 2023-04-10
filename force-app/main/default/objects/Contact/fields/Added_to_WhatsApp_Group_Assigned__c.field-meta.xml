@@ -3,7 +3,7 @@
     <fullName>Added_to_WhatsApp_Group_Assigned__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Added to WhatsApp Group: For HR Team</label>
+    <label>Add to WhatsApp Group: For HR Team</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

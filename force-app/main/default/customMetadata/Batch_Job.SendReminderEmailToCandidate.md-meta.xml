@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Reminder Email to Applicate(3 Days to Join)</value>
+        <value xsi:type="xsd:string">Reminder email to applicate(3 days to join)</value>
     </values>
 </CustomMetadata>
