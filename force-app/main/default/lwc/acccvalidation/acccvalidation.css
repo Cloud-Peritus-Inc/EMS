@@ -46,3 +46,6 @@
 .changeIconColor{
     --lwc-colorTextIconDefault: #e20606;
 }
+.borderStyle {
+border-style: none;
+}

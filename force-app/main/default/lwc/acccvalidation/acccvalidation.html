@@ -1,4 +1,7 @@
 <template>
+
+    <img style="max-height: 900px" alt="Image on T.O." src={torontoImage}/>
+
     <template if:false={hideSpinner}>
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
         <div class="slds-backdrop slds-backdrop_open"></div>
@@ -46,13 +49,13 @@
         </c-ems-confirm-pop-up>
     </template>
     <lightning-card>
-        <div class="slds-grid slds-grid_align-spread slds-p-horizontal_large">
+        <div class="slds-grid slds-grid_align-spread slds-p-horizontal_large slds-wrap borderStyle">
             <div>
-                <lightning-icon icon-name="standard:business_hours"
+               <!-- <lightning-icon icon-name="standard:business_hours"
                     alternative-text="Event"
                     title="Event"></lightning-icon>
-                <label class="slds-p-left_medium timeSheet">Timesheet</label>
-            </div>  
+                <label class="slds-p-left_medium timeSheet">Timesheet</label> -->
+            </div> 
             <div if:true={enableManagerView}>
                 <lightning-input data-id="managerToggle"
                     type="toggle"
@@ -237,6 +240,7 @@
                             options={it.value.projectTaskOptions}
                             disabled={disableSubmited}>
                         </lightning-combobox> -->
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <template if:true={it.value.projectAssignAvail}>
                             <lightning-input name="EMS_TM_ProjectTask__c"
                                 variant="label-hidden" data-id={it.index}
@@ -252,7 +256,26 @@
                                 disabled={disableSubmited}>
                             </lightning-combobox>
                             <p if:true={it.value.projectTaskDuplicate} class="slds-has-error">Duplicate task value</p>
-                        </template>   
+                        </template>  
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <template if:true={it.value.projectAssignAvail}>
+                            <lightning-input name="EMS_TM_ProjectTask__c"
+                                variant="label-hidden" data-id={it.index}
+                                value={it.value.EMS_TM_ProjectTask__c}
+                                disabled></lightning-input>
+                        </template>
+                        <template if:false={it.value.projectAssignAvail}>
+                            <lightning-combobox name="EMS_TM_ProjectTask__c"
+                                variant="label-hidden" placeholder="Choose"
+                                data-id={it.index} value={it.value.EMS_TM_ProjectTask__c}
+                                onchange={handleUserInput}
+                                options={it.value.projectTaskOptions}
+                                disabled={disabledsubmittedApproved}>
+                            </lightning-combobox>
+                            <p if:true={it.value.projectTaskDuplicate} class="slds-has-error">Duplicate task value</p>
+                        </template>  
+                        </template> 
                     </td>
                     <td if:true={showOtherTask}>
                         <div if:true={it.value.otherTask}>

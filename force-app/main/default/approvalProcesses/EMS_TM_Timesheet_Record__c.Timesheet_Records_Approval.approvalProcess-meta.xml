@@ -52,6 +52,10 @@
             <name>Rejected</name>
             <type>FieldUpdate</type>
         </action>
+        <action>
+            <name>Timesheet_record_is_rejected_send_mail_to_employee</name>
+            <type>Alert</type>
+        </action>
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <initialSubmissionActions>

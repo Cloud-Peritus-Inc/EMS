@@ -52,7 +52,7 @@ public class restrictAssignmentCreation implements TriggerAction.BeforeInsert{
              if(projMap.containsKey(assignL.EMS_TM_ProjectName_Asgn__c)){
                  if(projMap.get(assignL.EMS_TM_ProjectName_Asgn__c).EMS_TM_Status__c == 'Completed'){
                     assignL.addError(Label.Error_Message_For_Assignment_Restriction); 
-                 }else if(projMap.get(assignL.EMS_TM_ProjectName_Asgn__c).Project_Manager__r.EMS_TM_User__c != loggedInUser.id || loggedInUser.Profile.Name != 'System Administrator' || !loggedInUser.TA_Admin__c ){
+                 }else if(projMap.get(assignL.EMS_TM_ProjectName_Asgn__c).Project_Manager__r.EMS_TM_User__c != loggedInUser.id && loggedInUser.Profile.Name != 'System Administrator' && !loggedInUser.TA_Admin__c ){
                     assignL.addError('Only Admin or Project Manager are allowed to assign the resource to project');
                  }
              }
