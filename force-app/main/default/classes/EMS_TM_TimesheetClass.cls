@@ -452,9 +452,11 @@ public class EMS_TM_TimesheetClass {
     public static String reviseTimesheet( EMS_Timesheet__c timesheet ) {
         String returnStatement;
         Set<Id> timesheetLineItemId = new Set<Id>();
-         for(EMS_TM_Timesheet_Record__c lineItem: [Select Id,EMS_Timesheet__c from EMS_TM_Timesheet_Record__c 
-                                                            WHERE EMS_Timesheet__c =:timesheet.Id]){
+        List<EMS_TM_Timesheet_Record__c> lineItemList = new List<EMS_TM_Timesheet_Record__c>();
+         for(EMS_TM_Timesheet_Record__c lineItem: [Select Id,EMS_Timesheet__c,Status__c from EMS_TM_Timesheet_Record__c 
+                                                            WHERE EMS_Timesheet__c =:timesheet.Id AND Status__c ='Submitted']){
                                                    timesheetLineItemId.add(lineItem.Id);
+                                                   lineItemList.add(lineItem);
                                                             } 
 
         List<Approval.ProcessWorkitemRequest> processRequestList = new List<Approval.ProcessWorkitemRequest>();
@@ -471,6 +473,14 @@ public class EMS_TM_TimesheetClass {
         List<Approval.ProcessResult> processResults = Approval.process(processRequestList);
         }
         try {
+            List<EMS_TM_Timesheet_Record__c> updatedList = new List<EMS_TM_Timesheet_Record__c>();
+            for(EMS_TM_Timesheet_Record__c timeLineItem: lineItemList){
+                timeLineItem.Status__c ='Saved';
+                updatedList.add(timeLineItem);
+            }
+            If(!updatedList.isEmpty()){
+               UPDATE updatedList;
+            }
             List<EMS_Timesheet__c> timeSheetValues = [SELECT Id, User__c, User__r.Name,
                                                     EMS_TM_Week__c, EMS_TM_Status__c
                                                     FROM EMS_Timesheet__c where User__c = :timesheet.User__c

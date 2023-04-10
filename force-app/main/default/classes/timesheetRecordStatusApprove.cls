@@ -96,14 +96,10 @@ public class timesheetRecordStatusApprove implements TriggerAction.beforeInsert,
                         
         }
          for(EMS_TM_Timesheet_Record__c newtimeSheetRec :newTimeSheetList){ 
-             if(projectNewIds.contains(newtimeSheetRec.EMS_TM_Project__c)){
+             if(projectNewIds.contains(newtimeSheetRec.EMS_TM_Project__c) && newtimeSheetRec.Status__c =='Submitted'){
                  newtimeSheetRec.Status__c='Approved';
              }else{
-                 /*if (timesheetMap.get(newtimeSheetRec.EMS_Timesheet__c).EMS_TM_Status__c =='Saved'){
-                     newtimeSheetRec.Status__c ='Saved';
-                 }elseif(timesheetMap.get(newtimeSheetRec.EMS_Timesheet__c).EMS_TM_Status__c =='Submitted'){
-                      newtimeSheetRec.Status__c ='Submitted';
-                 }*/
+
              }
         }
         

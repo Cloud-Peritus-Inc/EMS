@@ -10,6 +10,7 @@ import getAssignmentProjectWire from '@salesforce/apex/EMS_TM_TimesheetClass.get
 import getTimeSheetData from '@salesforce/apex/EMS_TM_TimesheetClass.getTimeSheetData';
 import getPreWeekData from '@salesforce/apex/EMS_TM_TimesheetClass.getPreWeekData';
 import reviseTimesheet from '@salesforce/apex/EMS_TM_TimesheetClass.reviseTimesheet';
+import IMAGES from '@salesforce/resourceUrl/Time_Managment';
 //import savecomppRec from '@salesforce/apex/createCompoffThroughTimesheet.createCompOff';
 //import checkcomppRec from '@salesforce/apex/createCompoffThroughTimesheet.checkCompOff';
 import { getRecord } from 'lightning/uiRecordApi';
@@ -23,7 +24,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     @track weekDates = {};
     @track totalHours = {value:0,error:false};
     @track pickListRecords = { clientPicklist: [], oooPicklist: [], benchPicklist: [], otherPicklist: [] };
-
+    torontoImage = IMAGES;
     records;
     recordId = '';
     disableField = {};
@@ -84,8 +85,8 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     @wire(getAssignmentProjectWire, { week: new Date(), wireMethod: true, userId: '$userId' } )
     assignmentProject({ error, data }) {
         if (data) {
-            console.log('assignmentProject');
-            console.log('result ',data);
+           /* console.log('assignmentProject');
+            console.log('result ',data);*/
             // this.timeSheetRecord.User__c = data.User.Id;
             this.timeSheetRecord.Resource__c = data.User.Contacts__r[0].Id;
             this.enableManagerView = data.enableManagerView;
@@ -124,7 +125,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 this.handleManagerViewToggle(event);
             }
             this.hideSpinner = true;
-            console.log('this.managerLookUpFilter'+this.managerLookUpFilter);
+          //  console.log('this.managerLookUpFilter'+this.managerLookUpFilter);
         } else if (error) {
             console.log('error ', error);
             this.hideSpinner = true;
@@ -135,37 +136,37 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         if (!this.hasRendered) {
             this.weekDates = {EMS_TM_Sun__c: '',EMS_TM_Mon__c: '',EMS_TM_Tue__c: '',EMS_TM_Wed__c: '',EMS_TM_Thu__c: '',EMS_TM_Fri__c: '',EMS_TM_Sat__c: ''};
             let today = new Date();
-            console.log('TODAYCallBacak'+today);
+           // console.log('TODAYCallBacak'+today);
             const timeZone = TIME_ZONE;
-            console.log('timeZone'+timeZone);
+            //console.log('timeZone'+timeZone);
            let dayDiff = today.getDay() === 0 ? 6 : today.getDay() - 1;
-             console.log('dayDiff'+dayDiff);
+           //  console.log('dayDiff'+dayDiff);
      
             let firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff));
-             console.log('firstDayallBacak'+firstDay);
+             //console.log('firstDayallBacak'+firstDay);
             let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 6));
             const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Fri","Saturday"];
             let day = weekday[firstDay.getDay()];
-            console.log('day'+day);
+           // console.log('day'+day);
             if(day == 'Sunday'){
              firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff +1));
                  let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 7));
-                 console.log('SunIF-firstDayallBacak'+firstDay);
-                  console.log('SunIF-lastDayallBacak'+lastDay);
+                // console.log('SunIF-firstDayallBacak'+firstDay);
+                 // console.log('SunIF-lastDayallBacak'+lastDay);
             }
             else if(day != 'Monday'){
                 firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff-1));
                  let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 5));
-                 console.log('IF-firstDayallBacak'+firstDay);
-                  console.log('IF-lastDayallBacak'+lastDay);
+                // console.log('IF-firstDayallBacak'+firstDay);
+                 // console.log('IF-lastDayallBacak'+lastDay);
             }
             
-              console.log('lastDayallBacak'+lastDay);
-              console.log('firstDayallBacak'+firstDay);
+             // console.log('lastDayallBacak'+lastDay);
+             // console.log('firstDayallBacak'+firstDay);
         
             this.insertSheetRecord(firstDay, lastDay);
             this.thisWeek = this.timeSheetRecord.EMS_TM_Week__c;
-            console.log('getingWEEKCallBacak'+this.thisWeek);
+          //  console.log('getingWEEKCallBacak'+this.thisWeek);
             this.initialValues();
 
             this.displayItemList = JSON.parse(JSON.stringify(this.records));
@@ -243,7 +244,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                                // this.records[index].projectTask = '';
                             //     element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
                             }
-                            console.log('record.EMS_TM_OtherTask__c ',record.EMS_TM_OtherTask__c);
+                            //console.log('record.EMS_TM_OtherTask__c ',record.EMS_TM_OtherTask__c);
                             element.projectValueAvailable = true;
                             for(let key in record) {element[key] = record[key];}
                             if (record.EMS_TM_ProjectTask__c === 'Other' && record.EMS_TM_OtherTask__c) {
@@ -294,7 +295,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 let record = {key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist , EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: 'Holiday', projectValueAvailable: true, projectAssignAvail: false, projectTaskDuplicate: false};
                 this.holidayRecords.forEach(holiday => {
                     let date = new Date(holiday.EMS_TM_Calendar_Date__c).getDay();
-                    console.log('holidays ',date);
+                   // console.log('holidays ',date);
                     switch (date) {
                         case 1: record.EMS_TM_Mon__c = 8; addRow = true; break;
                         case 2: record.EMS_TM_Tue__c = 8; addRow = true; break;
@@ -304,7 +305,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                         default: break;
                     }
                 });
-                console.log('record ',record);
+               // console.log('record ',record);
                 if (addRow) {
                     this.records[0] = record;
                 }
@@ -323,7 +324,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                     let record = {key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist , EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: 'Paid time-off', projectValueAvailable: true, projectAssignAvail: false, projectTaskDuplicate: false};
                     this.leaveRecords.forEach(leave => {
                         let date = new Date(leave).getDay();
-                        console.log('leaves ',date);
+                        //console.log('leaves ',date);
                         switch (date) {
                             case 1: record.EMS_TM_Mon__c = 8; break;
                             case 2: record.EMS_TM_Tue__c = 8; break;
@@ -333,7 +334,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                             default: break;
                         }
                     });
-                    console.log('record ',record);
+                   // console.log('record ',record);
                     this.records.push(record);
                     
                 }
@@ -349,7 +350,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         this.hideSpinner = false;
         let week = new Date(this.timeSheetRecord.EMS_TM_Week__c);
         getTimeSheetData({ week: week, userId: this.timeSheetRecord.User__c }).then( result => {
-            console.log('result',result);
+           // console.log('result',result);
             this.renderTimesheetRecords(result.timeSheet,result.timeSheetRecords);
             this.hideSpinner = true;
         }).catch(err => {
@@ -371,8 +372,8 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         this.hideSpinner = false;
         let week = new Date(this.timeSheetRecord.EMS_TM_Week__c);
         getAssignmentProject({ week: week, wireMethod: false, userId: this.timeSheetRecord.User__c }).then( result => {
-            console.log('RetriveAssignmentRecords');
-            console.log('result',result);
+          //  console.log('RetriveAssignmentRecords');
+          //  console.log('result',result);
             this.renderAssignmentRecords(result);
             this.renderTimesheetRecords(result.timeSheet,result.timeSheetRecords);
             this.hideSpinner = true;
@@ -407,28 +408,28 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         } else {
             if (event.target.value) {
                 let enteredDate = new Date(event.target.value);
-                console.log('ENTERED DATE'+enteredDate);
+                //console.log('ENTERED DATE'+enteredDate);
                 if (enteredDate <= new Date()) {
                     let dayDiff = enteredDate.getDay() === 0 ? 6 : enteredDate.getDay() - 1;
-                     console.log('dayDiff>>>>>>>'+dayDiff);
+                   //  console.log('dayDiff>>>>>>>'+dayDiff);
                     firstDay = new Date(enteredDate.getUTCFullYear(),enteredDate.getUTCMonth(),(enteredDate.getUTCDate() - dayDiff));
-                    console.log('firstDay'+firstDay);
+                   // console.log('firstDay'+firstDay);
                     lastDay = new Date(enteredDate.getUTCFullYear(),enteredDate.getUTCMonth(),(enteredDate.getUTCDate() - dayDiff + 6));
-                     console.log('lastDay'+lastDay);
+                     //console.log('lastDay'+lastDay);
                      const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Fri","Saturday"];
             let day = weekday[firstDay.getDay()];
-            console.log('day'+day);
+            //console.log('day'+day);
             if(day == 'Sunday'){
              firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff +1));
                  let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 7));
-                 console.log('SunIF-firstDayallBacak'+firstDay);
-                  console.log('SunIF-lastDayallBacak'+lastDay);
+                // console.log('SunIF-firstDayallBacak'+firstDay);
+                //  console.log('SunIF-lastDayallBacak'+lastDay);
             }
              else if(day != 'Monday'){
                 firstDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff-1));
                  let lastDay = new Date(today.getUTCFullYear(),today.getUTCMonth(),(today.getUTCDate() - dayDiff + 5));
-                 console.log('IF-firstDayallBacak'+firstDay);
-                  console.log('IF-lastDayallBacak'+lastDay);
+                 //console.log('IF-firstDayallBacak'+firstDay);
+                 // console.log('IF-lastDayallBacak'+lastDay);
             }
                     selectedWeek = 'selected';
                 } else {
@@ -464,7 +465,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     handleNextPreWeek(event) {
         let value = event.target.dataset.id;
         let presentWeek = new Date(this.timeSheetRecord.EMS_TM_Week__c);
-        console.log('presentWeek'+presentWeek);
+       // console.log('presentWeek'+presentWeek);
         let lastDay;
         let week;
         if (this.managerView && !this.userSelected) {
@@ -488,7 +489,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             this.retrieveAssignmentRecords();
             this.deletedRecordsList = [];
         }
-        console.log('week'+this.week);
+       // console.log('week'+this.week);
     }
 
     /*
@@ -516,15 +517,15 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     showDates() {
         let week = new Date(this.timeSheetRecord.EMS_TM_Week__c);
         
-        console.log('**WEEK'+week);
-        console.log('WEEKValue'+week.valueOf());
+        //console.log('**WEEK'+week);
+        //console.log('WEEKValue'+week.valueOf());
         let dates = [];
         dates[0] = week.valueOf();
         for (let i = 1; i < 7; i++) {
             dates[i] = week.setDate(week.getDate() + 1);
         }
         dates = [...dates];
-        console.log('***dates'+dates);
+        //console.log('***dates'+dates);
         this.weekDates.EMS_TM_Mon__c = dates[0];
         this.weekDates.EMS_TM_Tue__c = dates[1];
         this.weekDates.EMS_TM_Wed__c = dates[2];
@@ -594,8 +595,8 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
 
     handleUserselection(event) {
         this.hideSpinner = false;
-        console.log('handleUserselection event ', event);
-        console.log('handleUserselection  userID', event.detail.value);
+        //console.log('handleUserselection event ', event);
+        //console.log('handleUserselection  userID', event.detail.value);
         this.selectdUserId = event.detail.value;
         this.timeSheetRecord.User__c = event.detail.value;
         this.timeSheetRecord.EMS_TM_Week__c = this.thisWeek;
@@ -609,7 +610,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
 
     handleUserRemove(event) {
         this.userSelected = false;
-        console.log('handleUserRemove event ', event);
+        //console.log('handleUserRemove event ', event);
         this.disableSubmited = true;
         this.timeSheetRecord.EMS_TM_Week__c = this.thisWeek;
         this.initialValues();
@@ -627,7 +628,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             this.hideSpinner = false;
             getPreWeekData({ timesheet: this.timeSheetRecord })
               .then(result => {
-                console.log('result copy pre', result);
+                //console.log('result copy pre', result);
                 let timeSheetRecords = result.timeSheetRecords;
                 if (timeSheetRecords) {
                   let existingProjectIds = this.records.map(record => record.EMS_TM_Project__c);
@@ -730,14 +731,14 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
                 }
             }
             this.calculateTotalHours();
-            console.log('records=> ',this.records.length);
+           // console.log('records=> ',this.records.length);
             if (this.records.length === 0) {
                 this.records = [{key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: [], projectAssignAvail: false, projectTaskDuplicate: false, EMS_TM_ProjectTask__c: ''}];
             }
 
-            console.log('this.deletedRecordsList => ', this.deletedRecordsList);
+            //console.log('this.deletedRecordsList => ', this.deletedRecordsList);
             this.displayItemList = JSON.parse(JSON.stringify(this.records));
-            console.log('this.displayItemList ',this.displayItemList);
+           // console.log('this.displayItemList ',this.displayItemList);
             this.hideSpinner = true;
         }
     }
@@ -772,7 +773,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
             this.disableWeekend = true;
             this.template.querySelector('[data-id="remarkToggle"]').checked = true;
         }
-        console.log('this.records[index] ',this.records[index]);
+       // console.log('this.records[index] ',this.records[index]);
         this.displayItemList = JSON.parse(JSON.stringify(this.records));
     }
 
@@ -800,8 +801,8 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         let value = val.value;
         let assignment = this.assignmentRecords.filter( item => item.EMS_TM_ProjectName_Asgn__c === value);
         let type;
-        console.log('handleProjectselection this.assignmentRecords ',this.assignmentRecords);
-        console.log('handleProjectselection assignment ',assignment);
+        //console.log('handleProjectselection this.assignmentRecords ',this.assignmentRecords);
+        //console.log('handleProjectselection assignment ',assignment);
         this.records[index][fieldName] = value;
         this.records[index].projectValueAvailable = true;
         this.records[index].projectName = val.recordName;
@@ -974,7 +975,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
         Parameters  : null 
     */
     confirmPopUp() {
-         console.log('+++++ IN confirmPopUp++++++');
+         //console.log('+++++ IN confirmPopUp++++++');
         if (this.weekendEnteredValue > 0) {
             this.weekendEntered = true;
         } else {
@@ -995,7 +996,7 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
        // }
     }
 submitpopup(){
-    console.log('IN submitpopup++++++');
+    //console.log('IN submitpopup++++++');
    // this.showModalPopUp = false;
     this.showCompOffPopUp=false;
     this.weekendEntered = false
@@ -1035,10 +1036,10 @@ submitpopup(){
               // this.confirmPopUp();
               this.compoffCheck = false;
                this.submitpopup();
-            console.log('handleCompoffResponce No');
+            //console.log('handleCompoffResponce No');
         } else if (event.detail.status === 'confirm') {
             this.compoffCheck = true;
-            console.log('handleCompoffResponce Yes');
+            //console.log('handleCompoffResponce Yes');
             this.submitpopup();
         }
     
@@ -1150,10 +1151,10 @@ submitpopup(){
     }
 
     handleRevise(event) {
-        console.log('handleRevert event ',event);
+        //console.log('handleRevert event ',event);
         this.hideSpinner = false;
         reviseTimesheet({timesheet: this.timeSheetRecord}).then( result => {
-            console.log('result ',result);
+           // console.log('result ',result);
             if (result === 'Success') {
                 //this.handleSuccess('Timesheet successfully Revised');
                 this.retrieveRecords();
@@ -1216,12 +1217,12 @@ submitpopup(){
                          //this.records.Status__c ='Saved';
                         saveTimeSheetRecords({timeRecords: this.records, timesheet : this.timeSheetRecord})
                         .then(result => {
-                            console.log('saveTimeSheetRecordsresult ',result);
+                           // console.log('saveTimeSheetRecordsresult ',result);
                           //  console.log('saveTimeSheetRecordsresult1 ',JSON.stringify(result));
                             if (result.includes('Success')) {
                                 this.recordId = result.slice(7);
                                 if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {
-                                    console.log('SubmittedTimesheet');
+                                   // console.log('SubmittedTimesheet');
                                     /* if (this.weekendEnteredValue > 0 && this.compoffCheck == true) {
                                         this.handlesaveCompOffRecord();
                                     }*/
@@ -1265,7 +1266,7 @@ submitpopup(){
                     }
                 })
                 updateTimeSheetRecords( {updateRecords: updateRecords, newRecords: newRecords, deleteRecords: this.deletedRecordsList, timesheet : this.timeSheetRecord} ).then(result => {
-                    console.log('updateTimeSheetRecordsresult ',result);
+                   // console.log('updateTimeSheetRecordsresult ',result);
                     if (result.includes('Success')) {
                         this.recordId = result.slice(7);
                         if (this.timeSheetRecord.EMS_TM_Status__c === 'Submitted') {

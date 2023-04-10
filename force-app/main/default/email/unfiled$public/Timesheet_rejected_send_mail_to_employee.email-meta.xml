@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Timesheet rejected send mail to employee</name>
+    <style>freeForm</style>
+    <subject>Timesheet Rejected</subject>
+    <textOnly>Dear {!EMS_TM_Timesheet_Record__c.OwnerFullName},
+
+
+
+Your timesheet for the week starting on {!EMS_TM_Timesheet_Record__c.Timesheet_Weekdate__c} has been rejected by {!EMS_TM_Timesheet_Record__c.Project_Manager_Name__c}. The following are the comments provided:
+
+{!ApprovalRequest.Comments}.
+
+
+
+Please do the necessary changes and resubmit.
+
+
+
+Regards,
+
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
