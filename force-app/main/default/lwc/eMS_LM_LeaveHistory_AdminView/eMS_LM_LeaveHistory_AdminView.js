@@ -173,7 +173,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
     this.startDate = event.detail.value
     window.console.log('startDate ##' + this.startDate);
     if (this.startDate != null) {
-      this.startDate = event.detail.value + ' 00:00:00';
+      this.startDate = event.detail.value;
     }
     if (this.startDate > this.endDate) {
       if (this.endDate != null) {
@@ -185,7 +185,7 @@ export default class EMS_LM_LeaveHistory_AdminView extends NavigationMixin(Light
     this.endDate = event.detail.value;
     window.console.log('endDate ##' + this.endDate);
     if (this.endDate != null) {
-      this.endDate = event.detail.value + ' 00:00:00';
+      this.endDate = event.detail.value;
     }
   }
 

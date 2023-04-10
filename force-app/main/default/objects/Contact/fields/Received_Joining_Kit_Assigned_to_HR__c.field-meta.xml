@@ -3,7 +3,7 @@
     <fullName>Received_Joining_Kit_Assigned_to_HR__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Received Joining Kit: For HR Team</label>
+    <label>Give Joining Kit: For HR Team</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

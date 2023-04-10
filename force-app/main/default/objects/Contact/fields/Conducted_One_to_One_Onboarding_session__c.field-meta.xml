@@ -3,7 +3,7 @@
     <fullName>Conducted_One_to_One_Onboarding_session__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Conducted One to One Onboarding session</label>
+    <label>Conduct 1-1 Onboarding Session: For RM</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

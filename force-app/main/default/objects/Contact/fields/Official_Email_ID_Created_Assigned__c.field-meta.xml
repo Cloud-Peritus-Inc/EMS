@@ -3,7 +3,7 @@
     <fullName>Official_Email_ID_Created_Assigned__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Official Email ID Created: For IT Team</label>
+    <label>Create Official Email ID: For IT Team</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

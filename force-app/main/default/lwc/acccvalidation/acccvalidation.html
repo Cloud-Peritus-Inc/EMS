@@ -48,8 +48,8 @@
             </div>
         </c-ems-confirm-pop-up>
     </template>
-    <lightning-card>
-        <div class="slds-grid slds-grid_align-spread slds-p-horizontal_large slds-wrap borderStyle">
+    <lightning-card class ="slds-card">
+        <div class="slds-grid slds-grid_align-spread slds-p-horizontal_large slds-wrap slds-has-flexi-truncate borderStyle">
             <div>
                <!-- <lightning-icon icon-name="standard:business_hours"
                     alternative-text="Event"
@@ -195,11 +195,20 @@
                 
                 <tr key={it.value} >
                     <td style="border:1px rgba(244, 235, 235, 0.927) solid">
+                        <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-button-icon icon-name="utility:delete" data-id={it.index}
                             alternative-text="Delete Row" variant="destructive"  class="slds-m-left_xx-small changeIconColor"
                             title="Delete Row" onclick={removeRow} disabled={disableSubmited}
                             data-project={it.value.projectValueAvailable}>
                         </lightning-button-icon> 
+                        </template>
+                        <template if:true={it.value.ApprovedandSubmitted__c}>
+                        <lightning-button-icon icon-name="utility:delete" data-id={it.index}
+                            alternative-text="Delete Row" variant="destructive"  class="slds-m-left_xx-small changeIconColor"
+                            title="Delete Row" onclick={removeRow} disabled={disabledsubmittedApproved}
+                            data-project={it.value.projectValueAvailable}>
+                        </lightning-button-icon> 
+                        </template>
                     </td>
                     <td style="width: 180px;">
                         <template if:true={it.value.projectValueAvailable}>
