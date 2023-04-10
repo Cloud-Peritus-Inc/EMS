@@ -46,6 +46,11 @@
 .changeIconColor{
     --lwc-colorTextIconDefault: #e20606;
 }
-.borderStyle {
-border-style: none;
+.slds-card {
+
+/*border-style: none;*/
+border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: none;
 }

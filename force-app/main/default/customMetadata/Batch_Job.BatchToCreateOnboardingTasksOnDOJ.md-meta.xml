@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Label__c</field>
-        <value xsi:type="xsd:string">Pre Onboarding Tasks for Applicant</value>
+        <value xsi:type="xsd:string">Pre onboarding tasks for applicant</value>
     </values>
 </CustomMetadata>

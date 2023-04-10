@@ -49,7 +49,6 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   fileData;
   wfhtodaydate;
   leavetypeId;
-  firstsecondDay = false;
   dayhalfChange;
   firstseconday;
   hideInotherleave = false;
@@ -74,7 +73,33 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     this.subscription = subscribe(messageContext, MY_REFRESH_SEC_CHANNEL, (message) => {
       this.handleRefreshMessage(message);
     });
+
+    //leave balance
+    refreshApex(this.calculateDuration());
+    this.calculateDuration();
   }
+
+  calculateDuration() {
+    getLeaveBalance({ userid: this.uId }).then((result) => {
+      console.log('### result : ', result);
+
+      if (result) {
+        console.log('### result : ', result);
+        this.allavailabledays = result;
+        this.annualcompduration = result.EMS_LM_No_Of_Availble_Leaves__c + result.EMS_LM_No_Of_Available_Compensatory_Off__c + 5;
+        console.log('this.annualcompduration' + this.annualcompduration);
+        this.availabledays = result.EMS_LM_No_Of_Availble_Leaves__c;
+
+        console.log('this.annualduration 1122' + this.annualduration);
+        this.cId = result.Id;
+        this.email = result.Email;
+      } else if (result.error) {
+        console.log(result.error);
+        this.error = result.error;
+      }
+    }).catch((err) => {
+
+    });}
 
   @wire(getLeaveType, { userid: '$uId' })
   wiredltype({ error, data }) {
@@ -140,23 +165,72 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
       this.cId = result.data.Id;
       if (this.value == 'Annual Leave') {
         this.availabledays = this.annualduration;
+        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        }
+        else {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        }
       }
       if (this.value == 'Paternity Leave') {
         this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Paternity_Leave__c;
+        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        }
+        else {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        }
       }
       if (this.value == 'Bereavement Leave') {
         this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Bereavement_Leave__c;
+        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        }
+        else {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        }
       }
       if (this.value == 'Maternity Leave') {
         this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Maternity_Leave__c;
+        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        }
+        else {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        }
       }
       if (this.value == 'Compensatory Off') {
         this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Compensatory_Off__c;
+        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        }
+        else {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        }
       //  console.log('this.allavailabledays' + availabledays);
       }
       if (this.value == 'Marriage Leave') {
           this.availabledays = this.allavailabledays.EMS_LM_No_of_Available_Marriage_Leave__c;
+          if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        }
+        else {
+
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        }
       }
+      
     } else if (result.error) {
       console.log(result.error);
       this.error = result.error;
@@ -181,24 +255,23 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         console.log('###leave', result.data.Leave_Type_Name__c);
         this.hideInotherleave = true;
         this.hideInWorkfromHome = false;
+
+        if (this.startDate1 != this.endDate1 || this.startDate1 == undefined || this.endDate1 == undefined) {
+           this.daycheck = false;
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
+        }
+        else {
+          this.daycheck = true; 
+          this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
+        }
+
       } else if (result.data.Leave_Type_Name__c == 'Work From Home') {
         console.log('###WorkFROMHOMEleave');
         this.hideInWorkfromHome = true;
         this.hideInotherleave = false;
       }
 
-      if (result.data.EMS_LM_Day__c == 'Full Day') {
-        this.daycheck = false;
-        this.firstsecondDay = true;
-        this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
-        console.log('this.daycheck', this.daycheck, 'this.fullday', this.fullday);
-      }
-      else {
-        this.daycheck = true;
-        this.firstsecondDay = false;
-        this.dOptions = [{ label: 'Full Day', value: 'Full Day' }, { label: 'First Half', value: 'First Half' }, { label: 'Second Half', value: 'Second Half' }];
-        console.log('this.daycheck', this.daycheck, 'this.fullday', this.fullday);
-      }
+      
     } else if (result.error) {
       this.error = result.error;
       // console.log('this.error', this.error);
@@ -692,7 +765,7 @@ if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 
 
               });
               this.dispatchEvent(event);
-              refreshApex(this.editleaveData);
+              refreshApex(this.editleaveData,this.refbalanceleave);
               const myEvent = new CustomEvent('closeleave', {
                 detail: this.closeleavepopup
               });
@@ -752,6 +825,7 @@ if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 
   disconnectedCallback() {
     unsubscribe(this.subscription);
     this.subscription = null;
+    refreshApex(this.refbalanceleave);
   }
 
   handleRefreshMessage(message) {

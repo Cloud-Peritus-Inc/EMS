@@ -3,7 +3,7 @@
     <fullName>Asset_Received_Assigned_to_IT_Team__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Asset Received: For IT Team</label>
+    <label>Handover Asset: For IT Team</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>
