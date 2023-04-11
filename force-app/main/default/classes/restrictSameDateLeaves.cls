@@ -45,7 +45,7 @@ public without sharing class restrictSameDateLeaves implements TriggerAction.Bef
         list<Date> startDate = new list<Date>();
         list<Date> endDate = new list<Date>();
         for(EMS_LM_Leave_History__c his : newlist){
-              System.debug('======his========'+his);
+            
             
                 resourcId.add(his.EMS_LM_Contact__c);
            		startDate.add(his.EMS_LM_Leave_Start_Date__c);
@@ -68,7 +68,7 @@ public without sharing class restrictSameDateLeaves implements TriggerAction.Bef
         
         for(EMS_LM_Leave_History__c his : newlist){
             if(resourceWithLeaves.containsKey(his.EMS_LM_Contact__c)){
-               his.addError('You have already applied for leave on selected leave dates. Consider applying for leave on some other dates.'); 
+               his.addError('You already have a submitted leave request on the selected date(s). Consider applying for leave on some other dates.'); 
             }
         }
     }

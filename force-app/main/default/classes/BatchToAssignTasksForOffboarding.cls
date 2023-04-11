@@ -53,6 +53,7 @@ global class BatchToAssignTasksForOffboarding implements Database.Batchable<sObj
                     FROM offboarding_Tasks__mdt];
          Map<String,Id> QueueWithId = new Map<String,Id>();
          Set<String> queueNames = new Set<String>();
+         Map<String,Id> queueMap = new Map<String,Id>();
         for(offboarding_Tasks__mdt ptm : metaList){
             if(ptm.Owner_Type__c == 'Queue'){
             queueNames.add(ptm.Assigned_To__c);
@@ -62,11 +63,16 @@ global class BatchToAssignTasksForOffboarding implements Database.Batchable<sObj
           QueueWithId.put(grp.Name,grp.Id);  
         }
         system.debug('===offboardingList=='+offboardingList);
+         Set<String> defalutOwners = new Set<String>();
+         defalutOwners.add(Label.Default_HR_Support_Request_Owner);
+         for(User grp : [SELECT Id,Name,contactId,Email FROM User WHERE Email IN : defalutOwners and contactId != null]){
+            queueMap.put(grp.Email,grp.contactId);
+        }
         for(Off_boarding_Request__c con : offboardingList){
             for(offboarding_Tasks__mdt ptm : metaList){
               Task t = new Task();
-                if(ptm.Owner_Type__c == 'Queue' && QueueWithId.containsKey(ptm.Assigned_To__c)){
-                t.OwnerId = QueueWithId.get(ptm.Assigned_To__c);
+                if(ptm.Owner_Type__c == 'Queue' && queueMap.containsKey(Label.Default_HR_Support_Request_Owner)){
+                 t.OwnerId =  queueMap.get(Label.Default_HR_Support_Request_Owner); 
                 }else if(ptm.Owner_Type__c == 'Contact' && con.Resource__r.EMS_TM_User__c != null ){
                 t.OwnerId = con.Resource__r.EMS_TM_User__c;    
                 }else if(ptm.Owner_Type__c == 'Reporting Manager' && con.Resource__r.ReportsTo.EMS_TM_User__c != null ){

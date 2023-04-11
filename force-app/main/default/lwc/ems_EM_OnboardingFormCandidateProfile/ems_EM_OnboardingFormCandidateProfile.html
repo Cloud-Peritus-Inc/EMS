@@ -21,8 +21,8 @@
                                             <fieldset class="slds-nav-vertical slds-nav-vertical_compact">
                                                 <span class="slds-nav-vertical__item">
                                                     <input type="radio" id="Personal-Details" name="details"
-                                                        checked={isPersonaldetails} value="Personal Details"
-                                                        onchange={selectedDetails} />
+                                                        value="Personal Details"
+                                                        onchange={selectedDetails} /> <!-- checked={isPersonaldetails} -->
                                                     <label class="slds-nav-vertical__action" for="Personal-Details">
                                                         <span class="slds-nav-vertical_radio-faux">Personal
                                                             Details</span>
@@ -414,11 +414,11 @@
                                         
                                     
                                 <!-- Use a template to iterate over the records array and display each row -->
-                                <template for:each={educationDetails} for:item="obj" for:index="index">
+                                <template for:each={educationDetails} for:item="obj" >
                                     <div key={obj.Id}  class="slds-grid slds-gutters">
                                         <div class="slds-col " style="padding-left: 25px;">
                                             <h3 class="slds-section-title--divider" style="padding-left: 0px;">
-                                                <span class="slds-truncate" title="Education Details ({obj.row})" >Education Details ({(index)})</span>
+                                                <span class="slds-truncate" title="Education Details ({obj.index})" >Education Details ({obj.index})</span>
                                             </h3>
                                             <span>
                                                 <lightning-combobox class="fields" value={obj.EMS_EM_Education__c} data-id={obj.Id} required onchange={eduupdateValues} 
@@ -432,22 +432,6 @@
                                                                                name="EMS_EM_GDate__c" type="date"
                                                                                label="Graduation Date" required disabled={readonlyfield}></lightning-input>
                                             </span>
-                                            <br>
-                                             <div class="slds-p-around_medium lgc-bg">
-                                                <label class="slds-form-element__label" for="text-input-id-1">
-                                                    <!-- <abbr class="slds-required" title="required">*</abbr> -->
-                                                    Certificate
-                                                </label>
-                                                <lightning-helptext
-                                                    content="The maximum file size is 2 MB & The acceptable file type is Pdf"></lightning-helptext>
-    
-                                                <lightning-input type="file" onchange={openfileUpload} name="Certificate"
-                                                    title="Certificate" disabled={readonlyfield} data-id={obj.Id}
-                                                    multiple="true"></lightning-input>
-                                                <p>{fileNameCerti}</p>
-                                                <br>
-                                            </div> 
-                                            <br>
                                         </div>
                                         <div class="slds-col " style="padding-top: 15px;">
                                             <h3 class="slds-section-title--divider">
@@ -464,7 +448,9 @@
                                             </span>
                                         </div>
                                         <div class="slds-col slds-size_2-of-12" style="padding-top: 55px;">
-                                        <lightning-button-icon class="slds-icon-text-error" icon-name="action:delete" disabled={readonlyfield}  alternative-text="Delete" title="Delete" data-id={obj.Id} onclick={handleDeleteEduAction}></lightning-button-icon>
+                                            <template if:true={obj.isDelete}>
+                                                <lightning-button-icon class="slds-icon-text-error" icon-name="action:delete" disabled={readonlyfield}  alternative-text="Delete" title="Delete" data-id={obj.Id} onclick={handleDeleteEduAction}></lightning-button-icon>
+                                            </template>
                                     </div>
                                     
                                     </div>
@@ -586,8 +572,7 @@
                         <div class="slds-modal__content slds-p-around_medium" style="padding-left: 25px;">
                             <div class="slds-p-around_xx-small">
                                 <h3 class="slds-section__title slds-theme_shade">
-                                    <span class="slds-truncate slds-p-horizontal_small" title="Work Experience">Work
-                                        Experience</span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Work Experience">Work Experience</span>
                                 </h3>
                                 <template if:true={isLoading}>
                                     <lightning-spinner alternative-text="Loading" size="medium"
@@ -614,8 +599,8 @@
                                         <template for:each={workDetails} for:item="obj">
                                             <div key={obj.Id}  class="slds-grid slds-gutters">
                                                 <div class="slds-col " style="padding-left: 25px;">
-                                                    <h3 class="slds-section-title--divider">
-                                                        <span class="slds-truncate" title="Work Experience   ({obj.row})">Work Experience ({obj.row})</span>
+                                                    <h3 class="slds-section-title--divider" style="padding-left: 0px;">
+                                                        <span class="slds-truncate" title="Work Experience ({obj.index1})">Work Experience ({obj.index1})</span>
                                                     </h3>
                                                     <span>
                                                         <lightning-input 
@@ -710,7 +695,9 @@
                                             <br>
                                                 </div>
                                                 <div class="slds-col slds-size_2-of-12" style="padding-top: 55px;">
+                                                    <template if:true={obj.isDelete1}>
                                                 <lightning-button-icon icon-name="action:delete" disabled={readonlyfield} class="slds-icon-text-error" alternative-text="Delete" title="Delete" data-id={obj.Id} onclick={handleDeleteWorkAction}></lightning-button-icon>
+                                            </template>
                                             </div> 
                                             
                                             </div>
