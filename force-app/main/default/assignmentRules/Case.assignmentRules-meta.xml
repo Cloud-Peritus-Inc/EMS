@@ -4,8 +4,6 @@
         <fullName>ServiceResuest-CP</fullName>
         <active>true</active>
         <ruleEntry>
-            <assignedTo>HR_Executive_Queue</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.Type</field>
                 <operation>equals</operation>

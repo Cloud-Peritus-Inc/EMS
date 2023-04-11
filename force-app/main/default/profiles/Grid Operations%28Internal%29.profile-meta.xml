@@ -210,10 +210,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>BatchToCreateTimesheets</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>BatchToCreateTimesheets_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NetworkBranding xmlns="http://soap.sforce.com/2006/04/metadata">
-    <loginFooterText>All Rights Reserved For Cloud Peritus Inc</loginFooterText>
-    <loginLogo>Experiences_Shared_Document_Folder/CommLogo_png26.png</loginLogo>
-    <loginLogoName>CommLogo.png</loginLogoName>
-    <loginPrimaryColor>#1797C0</loginPrimaryColor>
-    <loginQuaternaryColor>#B1BAC1</loginQuaternaryColor>
-    <network>Grid</network>
+    <network>Pre-onboarding</network>
     <primaryColor>#1797C0</primaryColor>
     <primaryComplementColor>#FFFFFF</primaryComplementColor>
     <quaternaryColor>#B1BAC1</quaternaryColor>
