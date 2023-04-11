@@ -166,8 +166,10 @@
     <pluralLabel>Onboarding Requests</pluralLabel>
     <searchLayouts>
         <listViewButtons>Send_Onboarding_Email</listViewButtons>
-        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_EM_First_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_EM_Last_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_EM_Personal_Email__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Phone_Number__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
