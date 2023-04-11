@@ -18,17 +18,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>LastModifiedById</field>
+                <field>CreatedById</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CreatedById</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -71,39 +71,10 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>TASK.STATUS</fields>
-        <fields>TASK.PRIORITY</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <relatedList>RelatedActivityList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>TASK.LAST_UPDATE</fields>
-        <relatedList>RelatedHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>FULL_NAME</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.PHONE1</fields>
+        <fields>CONTACT.EMAIL</fields>
+        <fields>Resource_Role__c</fields>
         <relatedList>Contact.Department__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.PRIORITY</fields>
-        <relatedList>Case.Department__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

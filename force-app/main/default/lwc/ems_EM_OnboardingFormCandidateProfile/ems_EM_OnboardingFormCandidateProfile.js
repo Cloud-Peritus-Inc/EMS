@@ -146,10 +146,13 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Education Details") {
       this.isEducationDetails = true;
-      if(this.educationDetails.length <1)
+      console.log('i am here ',this.educationDetails);
+      if(this.educationDetails.length ==0)
     {
+      console.log('i am here inner');
       this.addRowEdu();
-    }
+    }console.log('i am here ',seletedDetails);
+    
       this.isShowPersonalDetails = false;
       this.isIdentifyDetails = false;
       this.isAddressDetails = false;
@@ -847,7 +850,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     this.readonlyfield = true;
     this.statusUpdate = 'Submitted for Review';
     updateOnBoardingRequest(this);
-    displayShowtoastMessage('Onboarding Form Submitted Successfully','success',this);
+    displayShowtoastMessage('Onboarding form submitted successfully','success',this);
     this.buttonDisable = true;
     this.expression1 = true
     this.disableFlag = true;
@@ -869,41 +872,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   uploadedFiles = []; file; fileName;
   uploadedFiles1 = []; file1; fileName1;
   uploadedFiles2 = []; file2; fileName2;
-  // uploadedFiles3 = []; file3; fileName3;
-  // uploadedFiles4 = []; file4; fileName4;
-  // uploadedFiles5 = []; file5; fileName5;
-  // uploadedFiles6 = []; file6; fileName6;
-  // uploadedFiles7 = []; file7; fileName7;
-  // uploadedFiles8 = []; file8; fileName8;
-  // uploadedFiles9 = []; file9; fileName9;
-  // uploadedFiles11 = []; file11; fileName11;
-  // uploadedFiles12 = []; file12; fileName12;
-  // uploadedFiles13 = []; file13; fileName13;
-  // uploadedFiles14 = []; file14; fileName14;
-  // uploadedFiles15 = []; file15; fileName15;
-  // uploadedFiles16 = []; file16; fileName16;
-  // uploadedFiles17 = []; file17; fileName17;
   fileContents; fileReader; content;
-  // CertificationfileName1
-  // CertificationfileName2
-  // CertificationfileName3
-  // CertificationfileName4
-  // CertificationfileName5
-  // CertificationfileName6
-  // CertificationfileName7
-  // CertificationfileName8
-  // CertificationfileName9
-  // CertificationfileName10
-  // CertificationfileName11
-  // CertificationfileName12
-  // CertificationfileName13
-  // CertificationfileName14
-  // CertificationfileName15
-  // CertificationfileName16
-  // CertificationfileName17
-  // CertificationfileName18
-  // CertificationfileName19
-  // CertificationfileName20
 
   //uploading all files
   @api accept = '.pdf';
@@ -946,45 +915,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   onFileUpload3(event) {
     uploadFilesFromThis(event, this);
   }
-
-  // onFileUpload4(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload5(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload6(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload7(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload8(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload9(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload10(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload11(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-  // onFileUpload12(event) {
-  //   uploadFilesFromThis(event, this);
-  // }
-
-
-
   // other certifications 
 
 @track isLoading = true;
@@ -1186,13 +1116,28 @@ DoyouName =[
     { label: 'Yes', value: 'Yes' },
     { label: 'No', value: 'No' },
 ]
+  @track count =0;
+  @track isdel = false;
+
+  @track counting =0;
+  @track isdeleting = false;
 
 
 addRowEdu() {
+  this.count= this.educationDetails.length+1;
+  if(this.count ==1){
+    this.isdel=false;
+  }else{
+    this.isdel=true;
+  }
+ 
+  console.log('i am here delete',this.count);
   let randomId = Math.random() * 16;
-  let myNewElement = {  RecordType: { Name: 'Education Details' },  EMS_EM_Education__c: "", Id: randomId, EMS_EM_Degree__c: "", EMS_EM_Field_of_Study__c: "", EMS_EM_IName__c: "", EMS_EM_GDate__c: "",  Onboarding_Request__c: this.onboardingformId, ContactId__c: this.contactId};
-  
+  let myNewElement = {  RecordType: { Name: 'Education Details' },index : this.count, isDelete :this.isdel,  EMS_EM_Education__c: "", Id: randomId, EMS_EM_Degree__c: "", EMS_EM_Field_of_Study__c: "", EMS_EM_IName__c: "", EMS_EM_GDate__c: "",  Onboarding_Request__c: this.onboardingformId, ContactId__c: this.contactId};
   this.educationDetails = [...this.educationDetails, myNewElement];
+  this.count++;
+  
+  console.log('this.educationDetails >>> ',this.educationDetails);
 }
 
 //handle save and process dml 
@@ -1247,7 +1192,7 @@ if (isInputsCorrect) {
 const even = new ShowToastEvent({
   message: 'Please complete the required field and avoid invalid data.',
   variant: 'error'
-});
+});this.handleIsLoading(false);
 this.dispatchEvent(even);
   
 }
@@ -1255,6 +1200,8 @@ this.dispatchEvent(even);
 
 
 handleDeleteEduAction(event){
+  this.count--;
+
   if(isNaN(event.target.dataset.id)){
       this.deleteEduWorkIds = this.deleteEduWorkIds + ',' + event.target.dataset.id;
   }
@@ -1286,6 +1233,7 @@ eduupdateValues(event){
 }
 
 openfileUpload(event) {
+  console.log(event);
   if(event.target.files.length > 0 && event.target.files[0].size < 2000000 && event.target.files[0].type =="application/pdf") {
     let files = [];
         let file = event.target.files[0];
@@ -1317,12 +1265,53 @@ WiredWorkEdu(result){
     // Handle both Education and Work Details data separately
     const details = JSON.parse(JSON.stringify(result.data));
     this.educationDetails = details.filter(detail => detail.RecordType.Name === 'Education Details');
+    if(this.educationDetails != null){
+      for (let i = 0; i < this.educationDetails.length; i++) {
+        this.educationDetails[i].index = i+1;
+        if(i==0){
+          this.educationDetails[i].isDelete = false;
+        }else{
+          this.educationDetails[i].isDelete = true;
+        }
+      }
+    }
+    
+    if(this.educationDetails != null){
+      this.count++;
+      console.log('i am here in wire ');
+    }
     this.workDetails = result.data.filter(detail => detail.RecordType.Name === 'Work Details');
+    if (this.workDetails != null) {
+      this.showExperienceyouhave = true;
+      console.log('i am here baby ');
+      for (let i = 0; i < this.workDetails.length; i++) {
+        if (Object.isExtensible(this.workDetails[i])) {
+          Object.defineProperty(this.workDetails[i], 'index1', {
+            value: i + 1,
+            writable: true,
+            configurable: true
+          });
+          if (i == 0) {
+            this.workDetails[i].isDelete1 = false;
+          } else {
+            this.workDetails[i].isDelete1 = true;
+          }
+        }
+      }
+    }
+    else{
+      this.showExperienceyouhave = false;
+    }
+    
+    if(this.workDetails != null){
+      this.counting++;
+      console.log('i am here in wire for workDetails ');
+    }
     //console.log('this.educationDetails------>',this.educationDetails);
     //console.log('this.workDetails-------->' ,this.workDetails);
-     if(this.workDetails.length > 0 && this.doYouHaveExp === 'Yes') {
+    /*  if(this.workDetails.length > 0 && this.doYouHaveExp === 'Yes') {
         this.showExperienceyouhave = true;
-     }
+     } */
     this.error = undefined;
     this.handleIsLoading(false);
   } else if (result.error) {
@@ -1357,12 +1346,23 @@ experienceChange(event){
 }
 
 addRowWork(){
+  this.counting= this.workDetails.length+1;
+  if(this.counting ==1){
+    this.isdeleting=false;
+  }else{
+    this.isdeleting=true;
+  }
   let randomId = Math.random() * 16;
-  let myNewElement = { RecordType: { Name: 'Work Details' },  EMS_EM_Job_Title__c: "", Id: randomId, EMS_EM_From_Date__c: "", EMA_EM_To_Date__c: "", EMS_EM_Previous_Company_Name__c: "", EMS_EM_Previous_Company_HR_EmailId__c: "",  Onboarding_Request__c: this.onboardingformId, ContactId__c: this.contactId};
+  let myNewElement = { RecordType: { Name: 'Work Details' },  EMS_EM_Job_Title__c: "", Id: randomId, EMS_EM_From_Date__c: "", 
+                        EMA_EM_To_Date__c: "", EMS_EM_Previous_Company_Name__c: "", EMS_EM_Previous_Company_HR_EmailId__c: "", 
+                        index1 : this.counting, isDelete1 :this.isdeleting,  Onboarding_Request__c: this.onboardingformId, 
+                        ContactId__c: this.contactId};
   this.workDetails = [...this.workDetails, myNewElement];
+  this.counting++;
 } 
 
 handleDeleteWorkAction(event){
+  this.counting--;
   if(isNaN(event.target.dataset.id)){
       this.deleteWorkIds = this.deleteWorkIds + ',' + event.target.dataset.id;
   }
@@ -1370,22 +1370,6 @@ handleDeleteWorkAction(event){
   if(this.workDetails.length <1){
     this.doYouHaveExp = undefined;
   }
-}
-
-handleDeleteAllWorkAction() {
-  // Loop through all rows and add their Id values to deleteWorkIds
-  this.doYouHaveExp = event.target.value;
-  if (this.doYouHaveExp === 'Yes') {
-  this.deleteWorkIds = '';
-  for (let i = 0; i < this.workDetails.length; i++) {
-    if (!isNaN(this.workDetails[i].Id)) {
-      this.deleteWorkIds += ',' + this.workDetails[i].Id;
-    }
-  }
-  
-  // Remove all rows from the workDetails array
-  this.workDetails.splice(0, this.workDetails.length);
-}
 }
 
 workUpdateValues(event){

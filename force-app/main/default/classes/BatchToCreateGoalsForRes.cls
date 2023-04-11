@@ -28,7 +28,8 @@ global class BatchToCreateGoalsForRes implements Database.Batchable<sObject> {
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
         
-        date dt = Test.isRunningTest() ? system.today().adddays(1) : system.today() ;
+        //date dt = Test.isRunningTest() ? system.today().adddays(1) : system.today() ;
+        date dt =  system.today().adddays(1);
         
         return Database.getQueryLocator([SELECT Id,Description__c,Name,Goal_End_Date__c,Goal_Start_Date__c,Grid_Configuration_Type__c,
                                          Navigation_address__c,is_Navigation_Required__c,Resource_Role__c 
@@ -53,13 +54,13 @@ global class BatchToCreateGoalsForRes implements Database.Batchable<sObject> {
         Grid_Configuration__c configRec = configList[0];
         List<Contact> conList = new List<Contact>();
         if(configRec.Grid_Configuration_Type__c == 'Org Level Goal'){
-            conList = [SELECT Id,EMS_TM_User__c FROM Contact WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false AND EMS_TM_User__c != null ];
+            conList = [SELECT Id,EMS_TM_User__c FROM Contact WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false AND EMS_TM_User__c != null AND EMS_TM_User__r.isactive = true];
         }else if(configRec.Grid_Configuration_Type__c == 'Resource Role Level Goal'){
             conList = [SELECT Id,EMS_TM_User__c FROM Contact
                        WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID 
                        AND EMS_RM_ApplicantStatus_Update__c = 'Active'
                        AND Timesheet_NoNeed__c = false
-                       AND Resource_Role__c =:configRec.Resource_Role__c AND EMS_TM_User__c != null];  
+                       AND Resource_Role__c =:configRec.Resource_Role__c AND EMS_TM_User__c != null AND EMS_TM_User__r.isactive = true];  
         }
         
          for(Contact con : conList){
