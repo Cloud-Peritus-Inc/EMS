@@ -18,15 +18,8 @@
         <type>InternalLink</type>
     </navigationMenuItem>
     <navigationMenuItem>
-        <label>Offboarding pending on me</label>
-        <position>3</position>
-        <publiclyAvailable>false</publiclyAvailable>
-        <target>/offboarding-pending-on-me</target>
-        <type>InternalLink</type>
-    </navigationMenuItem>
-    <navigationMenuItem>
         <label>Service Request</label>
-        <position>4</position>
+        <position>3</position>
         <publiclyAvailable>true</publiclyAvailable>
         <target>Case</target>
         <type>SalesforceObject</type>
