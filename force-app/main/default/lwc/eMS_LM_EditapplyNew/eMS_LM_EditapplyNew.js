@@ -271,6 +271,12 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         this.hideInotherleave = false;
       }
 
+      if(result.data.EMS_LM_Day__c != 'Full Day'){
+        this.daycheck = true; 
+      }else{
+        this.daycheck = false;
+      }
+
       
     } else if (result.error) {
       this.error = result.error;

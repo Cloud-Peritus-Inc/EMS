@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EMS_LM_LeaveReq_Edit_ValidationRule</fullName>
-    <active>false</active>
+    <active>true</active>
     <description>This rule will fire when the record owner tries to update the record when the leave status is not pending or Approver 1 is pending.</description>
     <errorConditionFormula>AND(
 NOT(ISNEW()),

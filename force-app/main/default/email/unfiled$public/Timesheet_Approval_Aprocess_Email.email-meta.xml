@@ -6,7 +6,7 @@
     <name>Timesheet Approval Aprocess Email</name>
     <style>freeForm</style>
     <subject>Timesheet: Approval Process</subject>
-    <textOnly>Dear Manager,
+    <textOnly>Dear {!EMS_TM_Timesheet_Record__c.Project_Manager_Name__c},
 
 
 {!ApprovalRequest.Process_Assignee} has requested for timesheet record your approval for the following item click here.
