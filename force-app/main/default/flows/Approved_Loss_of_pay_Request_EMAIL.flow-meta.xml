@@ -17,7 +17,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>Financeteamemail</elementReference>
+                <stringValue>{!HRteamemail} , {!Financeteamemail}</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -62,7 +62,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>Financeteamemail</elementReference>
+                <stringValue>{!HRteamemail} , {!Financeteamemail}</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -200,23 +200,23 @@
         <text>Leave: {!$Record.Leave_Type_Name__c} request is {!$Record.EMS_LM_Status__c}</text>
     </textTemplates>
     <variables>
-        <name>AsignHR</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>{!$Record__Prior.EMS_LM_Contact__r.EMS_EM_HR_Assigned__r.Official_Mail__c} </stringValue>
-        </value>
-    </variables>
-    <variables>
         <name>Financeteamemail</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
-            <elementReference>$Label.HR_Finance_Loss_of_pay_Email</elementReference>
+            <elementReference>$Label.Finance_team_Email</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>HRteamemail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Label.HR_team_Email</elementReference>
         </value>
     </variables>
 </Flow>

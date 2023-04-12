@@ -1,11 +1,12 @@
 @isTest
-public class editTimeshhetwhenRejectedTest {
-    public static testmethod void editTimesheet(){
+public class timesheetRecordStatusApproveTest {
+    
+    public static testmethod void timesheetLineItemApprove(){
       Date todayval = system.today(); 
         Date considerDate = todayval.toStartofWeek().addDays(-2);
         Date weekStart = considerDate.toStartofWeek().addDays(1);
         Date weekEnd = considerDate.toStartofWeek().addDays(7);
-        //Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
+       // Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
         user userId =[SELECT id FROM User  WHERE IsActive = true LIMIT 1];          
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
@@ -32,7 +33,7 @@ public class editTimeshhetwhenRejectedTest {
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
-        projectRec.Approval_Needed__c ='Yes';
+        projectRec.Approval_Needed__c ='NO';
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
@@ -64,16 +65,25 @@ public class editTimeshhetwhenRejectedTest {
         lineitem.EMS_TM_Tue__c = 0;
         lineitem.EMS_TM_Thu__c = 0;
         lineitem.EMS_TM_Fri__c = 0;
+        lineitem.EMS_TM_Sat__c =0;
+        lineitem.EMS_TM_Sun__c =0;
         lineitem.Status__c = 'Submitted';
         INSERT lineitem;
         
         test.startTest();
-        EMS_TM_Timesheet_Record__c timeLineItem =[SELECT Id,Status__c FROM EMS_TM_Timesheet_Record__c LIMIT 1];
-        timeLineItem.Status__c ='Rejected';
+          EMS_TM_Timesheet_Record__c timeLineItem =[SELECT Id,EMS_TM_Mon__c,EMS_TM_Wed__c,EMS_TM_Fri__c FROM EMS_TM_Timesheet_Record__c LIMIT 1];
+        timeLineItem.EMS_TM_Fri__c =4;
         UPDATE timeLineItem;
+         EMS_TM_Timesheet_Record__c timeLineItem2 =[SELECT Id,EMS_TM_Mon__c,EMS_TM_Wed__c,EMS_TM_Fri__c FROM EMS_TM_Timesheet_Record__c LIMIT 1];
+        timeLineItem2.EMS_TM_Mon__c =2;
+        UPDATE timeLineItem2;
+         EMS_TM_Timesheet_Record__c timeLineItem3 =[SELECT Id,EMS_TM_Mon__c,EMS_TM_Wed__c,EMS_TM_Fri__c FROM EMS_TM_Timesheet_Record__c LIMIT 1];
+        timeLineItem3.EMS_TM_Wed__c =2;
+        UPDATE timeLineItem3;
         test.stopTest();
-         EMS_Timesheet__c updatedTimesheetRec =[SELECT Id,EMS_TM_Status__c from EMS_Timesheet__c LIMIT 1];  
-        System.assertEquals('Saved', updatedTimesheetRec.EMS_TM_Status__c);
+        EMS_TM_Timesheet_Record__c timeLineItem1 =[SELECT Id,Status__c FROM EMS_TM_Timesheet_Record__c LIMIT 1];
+        System.assertEquals('Approved', timeLineItem1.Status__c);
+
     }
 
 }

@@ -15,7 +15,7 @@
 
 public class ems_EM_AddComments {
     @AuraEnabled
-    public static String sendOnboardingFormReopenEmail(String recordId, String comments){
+    public static void sendOnboardingFormReopenEmail(String recordId, String comments){
         List<Messaging.Email> emailsToSendList = new List<Messaging.Email>();
         Id templateId = getEmailTemplate('Resubmit_onboarding_detail');
         EMS_EM_Onboarding_Request__c onBoardingRequest = EMS_EM_CreationOnboard.returnOnboardingDetailsBasedOnRecordId(recordId);
@@ -23,7 +23,7 @@ public class ems_EM_AddComments {
         onBoardingRequest.Is_Confirm__c = false;
         onBoardingRequest.Status__c = 'Reopened';
         Update onBoardingRequest;
-        Messaging.singleEmailMessage emailMessage = new Messaging.singleEmailMessage();
+       /* Messaging.singleEmailMessage emailMessage = new Messaging.singleEmailMessage();
         emailMessage.setToAddresses(new List<String>{onBoardingRequest.EMS_EM_Personal_Email__c});
         emailMessage.setTargetObjectId(onBoardingRequest.ContactId1__c);
         emailMessage.setWhatId(onBoardingRequest.id);
@@ -36,7 +36,7 @@ public class ems_EM_AddComments {
             return 'Email Sent successfully';
         }catch(Exception ex){
             return ex.getMessage();
-        }
+        }*/
         
     }
     
