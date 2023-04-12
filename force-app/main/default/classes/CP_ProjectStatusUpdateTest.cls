@@ -14,12 +14,22 @@
 **/
 @isTest
 public class CP_ProjectStatusUpdateTest {
-    @isTest
-    public static void assignmetUpdateTest(){
-        User adminUser = [Select Id, UserRoleId,IsActive From User Where Profile.Name='System Administrator' AND IsActive = true Limit 1];
-        try{
-            System.runAs(adminUser){
-                 Resource_Role__c role = TestDataFactory.createResourceRole(true);
+    
+       @testSetup
+    public static void getAdminUser(){
+              user adminuser = TestDataFactory.createAdminUser(true);
+             adminuser.TA_Admin__c = true;
+             adminuser.Timesheet_Admin__c =true;
+            // adminuser.IT_Admin_Access__c = true;
+             UPDATE adminuser;
+        
+    }
+    public static testmethod void assignmetUpdateTest(){
+        User adminUser = [Select Id From User Where firstname ='Alan' AND IsActive = true Limit 1];
+           
+                 Resource_Role__c role = TestDataFactory.createResourceRole(false);
+                 role.Name ='Sr Project Manager';
+                 INSERT role;
                  EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
                 EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
                 EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
@@ -29,6 +39,7 @@ public class CP_ProjectStatusUpdateTest {
                  Contact con=  TestDataFactory.createResourceContact(acc.id, false);
                  con.EMS_RM_Employee_Id__c = 'CP10235';
                  con.Resource_Role__c = role.Id;
+                 con.EMS_TM_User__c = adminUser.Id;
                  INSERT con;
                 
                 EMS_TM_Project__c projectRec = new EMS_TM_Project__c();
@@ -39,19 +50,24 @@ public class CP_ProjectStatusUpdateTest {
                 projectRec.Project_Manager__c = con.Id;
                 projectRec.Type_Of_Project__c ='Client Projects';
                 INSERT projectRec; 
+                 System.runAs(adminUser){
                 EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
                 assignmentRec.EMS_TM_EmployeeName__c = con.Id;
                 assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
                 assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
                 assignmentRec.EMS_TM_Billable__c = true;
                 INSERT assignmentRec; 
+                System.debug('assignmentRec'+assignmentRec);
             }
+        test.startTest();
+                try{
             EMS_TM_Project__c proj = [Select id,EMS_TM_Status__c,name from EMS_TM_Project__c where name ='project1'];
             proj.EMS_TM_Status__c ='Completed';
             UPDATE proj;
         }catch (DmlException exc) {
             LogException.logHandledException(exc, 'CP_ProjectStatusUpdateTest', 'assignmetUpdateTest');
         }
+        test.stoptest();
         EMS_TM_Assignment__c assignRec =[Select Id,EMS_TM_EmployeeName__c,EMS_TM_Status_Asgn__c from EMS_TM_Assignment__c LIMIT 1];
         System.assertEquals('Closed', assignRec.EMS_TM_Status_Asgn__c);
         
