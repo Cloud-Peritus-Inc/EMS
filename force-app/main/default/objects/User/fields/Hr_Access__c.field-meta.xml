@@ -3,7 +3,7 @@
     <fullName>Hr_Access__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Hr Access</label>
+    <label>HR Access</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

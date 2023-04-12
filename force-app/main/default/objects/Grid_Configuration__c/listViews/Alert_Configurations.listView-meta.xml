@@ -6,6 +6,11 @@
     <columns>Goal_Start_Date__c</columns>
     <columns>Goal_End_Date__c</columns>
     <columns>Resource_Role__c</columns>
-    <filterScope>Mine</filterScope>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Notification_Type__c</field>
+        <operation>equals</operation>
+        <value>Alert</value>
+    </filters>
     <label>Alert Configurations</label>
 </ListView>

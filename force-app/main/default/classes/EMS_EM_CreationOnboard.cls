@@ -354,7 +354,7 @@ public without Sharing class EMS_EM_CreationOnboard {
                 EMS_EM_To_Date__c,
                 EMS_EM_Previous_Company_Name__c,
                 EMS_EM_Previous_Company_HR_EmailId__c
-                FROM ems_EM_Additional_Detail__c WHERE Onboarding_Request__c =:recordId  AND RecordType.Name IN ('Education Details', 'Work Details')];
+                FROM ems_EM_Additional_Detail__c WHERE Onboarding_Request__c =:recordId  AND RecordType.Name IN ('Education Details', 'Work Details') ORDER BY createddate ASC];
     }
     
     @AuraEnabled

@@ -51,6 +51,7 @@ global class BatchToAssignTasksForOffboarding implements Database.Batchable<sObj
         metaList = [SELECT Id,Assigned_To__c,Due_Date_Days__c,Notification_Required_HR__c,
                     Task_Subject__c,Owner_Type__c,Unique_Identifier__c 
                     FROM offboarding_Tasks__mdt];
+        System.debug('**metaList'+metaList);
          Map<String,Id> QueueWithId = new Map<String,Id>();
          Set<String> queueNames = new Set<String>();
          Map<String,Id> queueMap = new Map<String,Id>();
@@ -59,15 +60,18 @@ global class BatchToAssignTasksForOffboarding implements Database.Batchable<sObj
             queueNames.add(ptm.Assigned_To__c);
             }
         }
+        System.debug('*queueNames'+queueNames);
         for(Group grp : [SELECT Id,NAME FROM Group WHERE Type='Queue' And NAME IN:queueNames]){
           QueueWithId.put(grp.Name,grp.Id);  
         }
+        System.debug('*QueueWithId'+QueueWithId);
         system.debug('===offboardingList=='+offboardingList);
          Set<String> defalutOwners = new Set<String>();
          defalutOwners.add(Label.Default_HR_Support_Request_Owner);
          for(User grp : [SELECT Id,Name,contactId,Email FROM User WHERE Email IN : defalutOwners and contactId != null]){
-            queueMap.put(grp.Email,grp.contactId);
+            queueMap.put(grp.Email,grp.id);
         }
+        System.debug('**queueMap'+queueMap);
         for(Off_boarding_Request__c con : offboardingList){
             for(offboarding_Tasks__mdt ptm : metaList){
               Task t = new Task();
@@ -107,6 +111,7 @@ global class BatchToAssignTasksForOffboarding implements Database.Batchable<sObj
             }
         }
         Catch(Exception excp){
+            System.debug('MESSAGE'+excp.getMessage());
 			LogException.logHandledException(excp, 'BatchToCreateOnboardingTasksOnDOJ', 'execute');        
         } 
     }

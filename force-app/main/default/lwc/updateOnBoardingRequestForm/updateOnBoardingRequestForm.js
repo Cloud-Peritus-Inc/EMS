@@ -403,6 +403,22 @@ function updateOnboardingInfoOnPageLoads(ts){
            // console.log("result.gridConfiguration", JSON.stringify(result.gridConfiguration));
            // console.log('onboarding'+onboarding);
            // console.log('FILES ' , result.contentDocumentLink);
+              //ts.dataList = result.contentDocumentLink;
+              let filteredFiles = result.contentDocumentLink.filter((file) => file.Title.includes('Work Document_'));
+              if (filteredFiles.length > 0) {
+                ts.isUploadReq = false;
+                ts.dataDocList = filteredFiles;
+              } else {
+                ts.isUploadReq = true;
+              }
+              let filteredEduFiles = result.contentDocumentLink.filter((file) => file.Title.includes('Certificate_'));
+              if (filteredEduFiles.length > 0) {
+                ts.isUploadEduReq = false
+                ts.dataPFList = filteredEduFiles;
+              } else {
+                ts.isUploadEduReq = true;
+              }
+
             result.contentDocumentLink.forEach((currentItem) => {
               if(currentItem.Title.includes('passport_')){
               ts.fileName2 = currentItem.Title;
@@ -416,9 +432,9 @@ function updateOnboardingInfoOnPageLoads(ts){
                   ts.fileName1 = currentItem.Title;
                  // console.log('pan photo',ts.fileName1);
              }
-             else if(currentItem.Title.includes('certificate_')){
+             else if(currentItem.Title.includes('Work Document_')){
               ts.fileName3 = currentItem.Title;
-             // console.log('certificate photo',ts.fileName3);
+             console.log('certificate ----------------->',ts.fileName3);
              }
              else if(currentItem.Title.includes('certificate1_')){
               ts.fileName4 = currentItem.Title;

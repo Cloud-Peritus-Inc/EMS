@@ -220,6 +220,7 @@ public class TestDataFactory {
         leaveReq.EMS_LM_Status__c = leaveStatus != null ? leaveStatus : 'Pending';
     	EMS_LM_Leave__c leaveType = [SELECT Name FROM EMS_LM_Leave__c WHERE Id = :leaveTypeId];
     	leaveReq.EMS_LM_Leave_Type_Name__c = leaveType.Name;
+        leaveReq.EMS_LM_Leave_Type__c = leaveType.Id;
         if(doInsert){
             insert leaveReq;
         }
@@ -287,6 +288,32 @@ public class TestDataFactory {
         return uu;  
     }
     
+    public static PayRoll__c createPayroll(Id conId, Boolean doInsert){
+        PayRoll__c payRollRec = new PayRoll__c();
+        payRollRec.Contact__c = conId;
+        payRollRec.Bank_Name__c = 'State Bank of India';
+        payRollRec.IFSC_Routing_Number__c = 'SBIN001';
+        payRollRec.Beneficiary_Account_Number__c = '1236478999';
+        if(doInsert){
+            insert payRollRec;
+        }
+        return payRollRec;
+    }
+
+    public static Family_Information__c createFamilyInfo(Id conId, Boolean doInsert, Boolean emergencyCon, Boolean dependentCon){
+        Family_Information__c famInfoRec = new Family_Information__c();
+        famInfoRec.Resource__c = conId;
+        famInfoRec.Family_Member_Name__c = 'test member';
+        famInfoRec.Is_It_Emergency_Contact__c = emergencyCon;
+        famInfoRec.Is_It_Dependent_Contact__c = dependentCon;
+        famInfoRec.Date_of_Birth__c = system.today().adddays(-100);
+        famInfoRec.Contact_Phone_Number__c = '8521796330';
+        famInfoRec.Relationships__c = 'Father';
+        if(doInsert){
+            insert famInfoRec;
+        }
+        return famInfoRec;
+    }
     
     
 }

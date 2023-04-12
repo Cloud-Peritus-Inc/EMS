@@ -13,22 +13,35 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>EMS_LM_Employee__c</field>
+                <field>EMS_TM_ProjectName_Asgn__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>EMS_LM_Leave_Type__c</field>
+                <field>EMS_TM_AssignedAs__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EMS_LM_Leaves_Credited__c</field>
+                <field>EMS_TM_Status_Asgn__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>EMS_TM_EmployeeName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>EMS_LM_Leave_Credited_Date__c</field>
+                <field>EMS_TM_StartDate_Asgn__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_TM_EndDate_Asgn__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_TM_Billable__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
@@ -60,13 +73,31 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <platformActionList>
+        <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+    </platformActionList>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5e00000Clg1q</masterLabel>
+        <masterLabel>00h5e00000DvPpC</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

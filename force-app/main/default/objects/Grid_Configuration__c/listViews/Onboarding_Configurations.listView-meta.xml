@@ -3,6 +3,6 @@
     <fullName>Onboarding_Configurations</fullName>
     <columns>NAME</columns>
     <columns>Grid_Configuration_Type__c</columns>
-    <filterScope>Mine</filterScope>
+    <filterScope>Everything</filterScope>
     <label>Onboarding Configurations</label>
 </ListView>

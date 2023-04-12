@@ -14,8 +14,10 @@
 **/
 public without sharing  class EMS_LM_LoptoResource implements TriggerAction.Afterupdate{
     
-    public void afterupdate(List<Contact> ResourceList ,List<Contact> mapResourceList) {      
-        LoptoResourcemethod(ResourceList);     
+    public void afterupdate(List<Contact> ResourceList ,List<Contact> mapResourceList) {  
+        System.debug(LoggingLevel.DEBUG, 'EMS_LM_LoptoResource.Afterupdate() : BEGIN');
+        LoptoResourcemethod(ResourceList);
+        System.debug(LoggingLevel.DEBUG, 'EMS_LM_LoptoResource.Afterupdate() : END');         
     }
     
     
