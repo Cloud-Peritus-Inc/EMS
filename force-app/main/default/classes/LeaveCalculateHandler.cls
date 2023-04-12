@@ -150,7 +150,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
         }
         }catch(exception ex){
             system.debug('LeaveCalculateHandler exception'+ex);
-            newList[0].adderror('Please check your available leave balance');
+            newList[0].adderror(ex.getMessage());
             
         }     
     }

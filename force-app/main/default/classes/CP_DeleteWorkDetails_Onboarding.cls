@@ -42,6 +42,7 @@ public without sharing class CP_DeleteWorkDetails_Onboarding implements TriggerA
 **/
     public void deleteWorkDetailsWhenWorkIsNo(List<EMS_EM_Onboarding_Request__c> newlist) {
         List<EMS_EM_Additional_Detail__c> detailsToDelete = new List<EMS_EM_Additional_Detail__c>();
+        List<ContentDocumentLink> documentsToDelete = new List<ContentDocumentLink>();
         
         for (EMS_EM_Onboarding_Request__c request : newlist) {
             // check if Do_you_have_work_experience__c has been updated to 'No'
@@ -52,10 +53,18 @@ public without sharing class CP_DeleteWorkDetails_Onboarding implements TriggerA
                                                                     FROM EMS_EM_Additional_Detail__c 
                                                                     WHERE Onboarding_Request__c = :request.Id AND RecordType.Name = 'Work Details'];
                 detailsToDelete.addAll(relatedDetails);
+                
+                // query for ContentDocumentLink records that are related to the current EMS_EM_Onboarding_Request__c record and the filename contains "Work Document_"
+                List<ContentDocumentLink> relatedDocuments = [SELECT Id 
+                                                              FROM ContentDocumentLink 
+                                                              WHERE LinkedEntityId = :request.Id AND ContentDocument.Title LIKE 'Work Document_%'];
+                documentsToDelete.addAll(relatedDocuments);
             }
         }
         // delete the related EMS_EM_Additional_Detail__c records with RecordType Name = 'Work Details'
         delete detailsToDelete;
-        
+        // delete the related ContentDocumentLink records where the filename contains "Work Document_"
+        delete documentsToDelete;
     }
+    
 }

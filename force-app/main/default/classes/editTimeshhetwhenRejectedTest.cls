@@ -5,8 +5,8 @@ public class editTimeshhetwhenRejectedTest {
         Date considerDate = todayval.toStartofWeek().addDays(-2);
         Date weekStart = considerDate.toStartofWeek().addDays(1);
         Date weekEnd = considerDate.toStartofWeek().addDays(7);
-        Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
-        user userId =[SELECT id FROM User  WHERE profileId =:p AND IsActive = true LIMIT 1];          
+        //Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
+        user userId =[SELECT id FROM User  WHERE IsActive = true LIMIT 1];          
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);

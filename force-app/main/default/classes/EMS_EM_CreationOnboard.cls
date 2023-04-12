@@ -138,7 +138,7 @@ public without Sharing class EMS_EM_CreationOnboard {
                                                   EMS_EM_Previous_Company_HR_EmailId__c,EMS_EM_Certification_Name__c,EMS_EM_Certification_Name2__c,EMS_EM_Certification_Name3__c,EMS_EM_Certification_Name4__c,EMS_EM_Certification_Name5__c,EMS_EM_Certification_Name6__c,
                                                   EMS_EM_Certification_Name7__c,EMS_EM_Certification_Name8__c,EMS_EM_Certification_Name9__c,EMS_EM_Certification_Name10__c,EMS_EM_Certification_Name11__c,EMS_EM_Certification_Name12__c,
                                                   EMS_EM_Certification_Name13__c,EMS_EM_Certification_Name14__c,EMS_EM_Certification_Name15__c,EMS_EM_Certification_Name16__c,EMS_EM_Certification_Name17__c,EMS_EM_Certification_Name18__c,
-                                                  EMS_EM_Certification_Name19__c,Personal_Details_Value_Filled__c,Identify_Details_Value_Filled__c,Address_Details_Value_Filled__c,Other_Certifications_Value_Filled__c
+                                                  EMS_EM_Certification_Name19__c,Personal_Details_Value_Filled__c,Identify_Details_Value_Filled__c,Address_Details_Value_Filled__c,Other_Certifications_Value_Filled__c, Education_Details_Filled__c, Work_Details_Filled__c
                                                   from EMS_EM_Onboarding_Request__c where Id=:recordId];
         
         return onboardlist;
@@ -354,14 +354,13 @@ public without Sharing class EMS_EM_CreationOnboard {
                 EMS_EM_To_Date__c,
                 EMS_EM_Previous_Company_Name__c,
                 EMS_EM_Previous_Company_HR_EmailId__c
-                FROM ems_EM_Additional_Detail__c WHERE Onboarding_Request__c =:recordId  AND RecordType.Name IN ('Education Details', 'Work Details')];
+                FROM ems_EM_Additional_Detail__c WHERE Onboarding_Request__c =:recordId  AND RecordType.Name IN ('Education Details', 'Work Details') ORDER BY createddate ASC];
     }
     
     @AuraEnabled
-    public static string dmlOnEducation(Object data, String removeEducationIds, Object[] files) {
+    public static string dmlOnEducation(Object data, String removeEducationIds) {
         List<ems_EM_Additional_Detail__c> updateEducations = (List<ems_EM_Additional_Detail__c>) JSON.deserialize(JSON.serialize(data), List<ems_EM_Additional_Detail__c>.class);
         List<ems_EM_Additional_Detail__c> deleteEducations = new List<ems_EM_Additional_Detail__c>();
-        List<ContentVersion> relatedDocuments = new List<ContentVersion>();
         
         if(String.isNotBlank(removeEducationIds)){
             List<Id> EducationsIds = removeEducationIds.split(',');
@@ -376,26 +375,55 @@ public without Sharing class EMS_EM_CreationOnboard {
             if(deleteEducations != null && !deleteEducations.isEmpty()){    
                 delete deleteEducations;
             }
-            
-            if(files != null && files.size() > 0) {
-                for (Object file : files) {
-                    String fileJson = JSON.serialize(file);
-                    relatedFile relatedDocument = (relatedFile) JSON.deserialize(fileJson, relatedFile.class);
-                    ContentVersion contentVersionFile = new ContentVersion();
-                    contentVersionFile.PathOnClient = relatedDocument.PathOnClient;
-                    contentVersionFile.Title = relatedDocument.Title;
-                    //contentVersionFile.FirstPublishLocationId= recordId;
-                    contentVersionFile.VersionData = relatedDocument.VersionData;
-                    relatedDocuments.add(contentVersionFile);
-                }
-                insert relatedDocuments;
-            }
             return 'Success: Education(s) upsert/delete successfully';
         }
         catch (Exception e) {
             String errorMsg = 'The following exception has occurred: ' + e.getMessage();
             throw new AuraHandledException(ErrorMsg);
         }
+    }
+    
+     @AuraEnabled
+    public static String saveFiles(String recordId, String filedata) {
+        try {
+            if(String.isNotBlank(FileData)) {
+                List<FileDataWP> files = (List<FileDataWP>) JSON.deserialize(filedata, List<FileDataWP>.class);
+                System.debug(files);
+ 
+                List<ContentVersion> cvList = new List<ContentVersion>();
+                for(FileDataWP file : files) {
+                    ContentVersion conVer = new ContentVersion();
+                    conVer.ContentLocation = 'S'; // S = Salesforce, E = External Files
+                    conVer.VersionData = EncodingUtil.base64Decode(file.fileContent);
+                    conVer.Title = file.fileName;
+                    conVer.PathOnClient = file.fileName;
+                    cvList.add(conVer);
+                }
+                Insert cvList;
+ 
+                List<ContentDocumentLink> cdList = new List<ContentDocumentLink>();
+                for(ContentVersion cv : [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: cvList]) {
+                    ContentDocumentLink conDocLink = New ContentDocumentLink();
+                    conDocLink.LinkedEntityId = recordId;
+                    conDocLink.ContentDocumentId = cv.ContentDocumentId;
+                    conDocLink.Visibility = 'AllUsers';
+                    conDocLink.shareType = 'V'; // V = Viewer, C = Collaborator, I = Inferred
+                    cdList.add(conDocLink);
+                }
+                Insert cdList;        
+            } else {
+                return 'record Id is Blank';
+            }
+            return 'success';
+        } catch (Exception ex) {
+            System.debug(ex.getMessage() + ' -> ' + ex.getStackTraceString());
+            throw new AuraHandledException(ex.getMessage());
+        }
+    }
+ 
+    public class FileDataWP {
+        public String fileName;
+        public String fileContent;
     }
     
     

@@ -15,10 +15,18 @@
 **/
 @isTest
 public class restrictAssignmentCreationTest {
+       @testSetup
+    public static void getAdminUser(){
+              user adminuser = TestDataFactory.createAdminUser(true);
+             adminuser.Manager_Access__c = true;
+             adminuser.IT_Admin_Access__c = true;
+             UPDATE adminuser;
+        
+    }
 
     public static testmethod void createTimesheet(){
-        Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
-        user userId =[SELECT id FROM User  WHERE profileId =:p AND IsActive = true LIMIT 1];          
+       // Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
+        user userId =[SELECT id FROM User  WHERE IsActive = true LIMIT 1];          
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);

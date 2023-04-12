@@ -39,6 +39,25 @@ public class TestDataFactory {
         }
         return c;
     }
+
+    public static Resource_Resource_Relationship__c createRRR(Id ContactId, Boolean doInsert, Id ConId){
+        Resource_Resource_Relationship__c rrr = new Resource_Resource_Relationship__c(Resource__c = ContactId, Resource_Reports_To__c = conId);
+        if (doInsert) {
+            insert rrr;
+        }
+        return rrr;
+    }
+
+    public static Contact createResourceContactForRRR(Id accountId, Boolean doInsert) {
+        Contact c = new Contact(firstName = 'Testing',EMS_Phone_Number__c= '9090909090',
+                                Email='testingEmail+test@cloudperitus.com', lastName = 'Rrr',
+                                accountId = accountId, Work_Location__c = createOfficeLocation(true).Id, 
+                                recordtypeId = ContactConstant.RESOURCE_RECORDTYPEID);
+        if(doInsert) {
+            insert c;
+        }
+        return c;
+    }    
     
     public static Contact createApplicantContact(Boolean doInsert) {
         Account acc = createAccount(true);
@@ -93,12 +112,11 @@ public class TestDataFactory {
     
     public static User createCommunityUserWithAccAndContact(Id accId,Id conId,Boolean doInsert){
         Id p = [select id from profile where name='Employee - Resource(Community)'].id;
-      //  UserRole obj=new UserRole(Name= 'ABC'); 
-      //  insert obj;
+
         User user = new User(alias = 'test123', email= 'testemail@testclass.com.they',
-                             emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
+                             emailencodingkey='UTF-8', lastname='Testing', Firstname = 'User', languagelocalekey='en_US',
                              localesidkey='en_US', profileid = p, country='United States',IsActive =true,
-                             ContactId = conId /*UserRoleId = obj.Id*/,
+                             ContactId = conId,
                              timezonesidkey='America/Los_Angeles', username='testemail'/*+string.valueOf(system.now())*/+'@gmail.com');
         if(doInsert){
             insert user;
@@ -106,6 +124,21 @@ public class TestDataFactory {
         
         return user;
     }
+    
+    public static User createCommunityUser2WithAccAndContact(Id accId,Id conId,Boolean doInsert){
+        Id p = [select id from profile where name='Employee - Resource(Community)'].id;
+
+        User user = new User(alias = 'test1234', email= 'testemail4@testclass.com.they',
+                             emailencodingkey='UTF-8', lastname='Testing4', Firstname = 'User4', languagelocalekey='en_US',
+                             localesidkey='en_US', profileid = p, country='United States',IsActive =true,
+                             ContactId = conId,
+                             timezonesidkey='America/Los_Angeles', username='testemail4'/*+string.valueOf(system.now())*/+'@gmail.com');
+        if(doInsert){
+            insert user;
+        }
+        
+        return user;
+    }    
     
     public static Grid_Configuration__c createGridConfig(String name, String description,String typeval,String resourcRole,Boolean isCreate){
         Grid_Configuration__c gc = new Grid_Configuration__c();
@@ -136,6 +169,7 @@ public class TestDataFactory {
         rr.Name = name;
         rr.Active__c = true;
         rr.Level_of_Approval__c = 1;
+        rr.Auto_Approve__c = false;
         if(doInsert){
             insert rr;
         }
@@ -184,7 +218,9 @@ public class TestDataFactory {
         leaveReq.EMS_LM_Leave_Duration__c = startDate.daysBetween(endDate);
         leaveReq.EMS_LM_Reason__c = 'Test Reason';
         leaveReq.EMS_LM_Status__c = leaveStatus != null ? leaveStatus : 'Pending';
-        
+    	EMS_LM_Leave__c leaveType = [SELECT Name FROM EMS_LM_Leave__c WHERE Id = :leaveTypeId];
+    	leaveReq.EMS_LM_Leave_Type_Name__c = leaveType.Name;
+        leaveReq.EMS_LM_Leave_Type__c = leaveType.Id;
         if(doInsert){
             insert leaveReq;
         }
@@ -252,6 +288,32 @@ public class TestDataFactory {
         return uu;  
     }
     
+    public static PayRoll__c createPayroll(Id conId, Boolean doInsert){
+        PayRoll__c payRollRec = new PayRoll__c();
+        payRollRec.Contact__c = conId;
+        payRollRec.Bank_Name__c = 'State Bank of India';
+        payRollRec.IFSC_Routing_Number__c = 'SBIN001';
+        payRollRec.Beneficiary_Account_Number__c = '1236478999';
+        if(doInsert){
+            insert payRollRec;
+        }
+        return payRollRec;
+    }
+
+    public static Family_Information__c createFamilyInfo(Id conId, Boolean doInsert, Boolean emergencyCon, Boolean dependentCon){
+        Family_Information__c famInfoRec = new Family_Information__c();
+        famInfoRec.Resource__c = conId;
+        famInfoRec.Family_Member_Name__c = 'test member';
+        famInfoRec.Is_It_Emergency_Contact__c = emergencyCon;
+        famInfoRec.Is_It_Dependent_Contact__c = dependentCon;
+        famInfoRec.Date_of_Birth__c = system.today().adddays(-100);
+        famInfoRec.Contact_Phone_Number__c = '8521796330';
+        famInfoRec.Relationships__c = 'Father';
+        if(doInsert){
+            insert famInfoRec;
+        }
+        return famInfoRec;
+    }
     
     
 }
