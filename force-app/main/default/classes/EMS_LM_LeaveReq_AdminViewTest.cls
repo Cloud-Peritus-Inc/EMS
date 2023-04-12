@@ -1,7 +1,7 @@
 @isTest
-public class LeaveRequestApexControllerTest {
-    
-    static testMethod void testGetLeaveReqData(){
+public class EMS_LM_LeaveReq_AdminViewTest {
+	
+    static testMethod void adminViewTab() {
         user adminuser = TestDataFactory.createAdminUser(true);
         Resource_Role__c role;
         Resource_Role__c role1;
@@ -52,7 +52,22 @@ public class LeaveRequestApexControllerTest {
             for(EMS_LM_Leave_History__c leaveIds : requests) {
                 leaveReqTabIdsList.add(leaveIds.Id);
             }
-            LeaveRequestApexController.LeaveRequestStatus result = LeaveRequestApexController.getLeaveReqData();
+            
+            List<String> statusValues = new List<String>{'Pending','Approver 1 Pending','Approver 2 Pending'};
+                List<String> typeValues = new List<String>{'Annual Leave'};
+                    String startDate = String.valueOf(Date.today().addDays(-7));           
+            String endDate = String.valueOf(Date.today().addDays(7));
+            List<EMS_LM_Leave_History__c> result = EMS_LM_LeaveReq_AdminView.getAdminLeaveHistory(' ', startDate, endDate, statusValues, typeValues);
+            for (EMS_LM_Leave_History__c asserTest : result) {
+               String status = asserTest.EMS_LM_Status__c;
+               String requestStartDate = String.valueOf(asserTest.EMS_LM_Leave_Start_Date__c);
+    		   String requestEndDate = String.valueOf(asserTest.EMS_LM_Leave_End_Date__c);
+    	      System.assertEquals(true, (requestStartDate >= startDate && requestStartDate <= endDate));
+   		 	  System.assertEquals(true, (requestEndDate >= startDate && requestEndDate <= endDate));
+              System.assertEquals('Annual Leave', asserTest.EMS_LM_Leave_Type__r.Name);
+              System.assertEquals(true, statusValues.contains(status));
+            }
         }
+        Test.stopTest();
     }
 }

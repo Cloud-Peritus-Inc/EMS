@@ -1,7 +1,8 @@
 @isTest
-public class LeaveRequestApexControllerTest {
+public class restrictOnlyOneDayOnProbationTest {
     
-    static testMethod void testGetLeaveReqData(){
+    @isTest
+    static void restrictprobation() {
         user adminuser = TestDataFactory.createAdminUser(true);
         Resource_Role__c role;
         Resource_Role__c role1;
@@ -26,6 +27,7 @@ public class LeaveRequestApexControllerTest {
             con.Resource_Role__c = role.Id;
             con.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
             con.EMS_LM_No_Of_Leaves_Credit__c = 10;
+            con.Probationary_Period_End_Date__c = system.today().adddays(20);
             insert con;
             conRRR=TestDataFactory.createResourceContactForRRR(acc.id, false);
             conRRR.EMS_RM_Employee_Id__c = 'CP10235';
@@ -42,17 +44,18 @@ public class LeaveRequestApexControllerTest {
             u1 = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
             u2 = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true);
         }
-        system.runAs(u2){
+        
+        System.runAs(u1) {
             List<Id> leaveReqTabIdsList = new list<Id>();
             List<EMS_LM_Leave_History__c> requests = new List<EMS_LM_Leave_History__c>();
-            requests.add(TestDataFactory.createLeaveRequest(con.id, system.today(), system.today().adddays(1), annualtype.id, false, 'Pending'));
-            requests.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(6), system.today().adddays(7), annualtype.id, false, 'Approver 1 Pending'));
-            requests.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(8), system.today().adddays(9), annualtype.id, false, 'Approver 2 Pending'));
-            insert requests;
+            EMS_LM_Leave_History__c request = TestDataFactory.createLeaveRequest(con.id, system.today(), system.today(), annualtype.id, true ,'Pending');
+            request.EMS_LM_Status__c='Approver 1 Pending';
+            update request;
+            
             for(EMS_LM_Leave_History__c leaveIds : requests) {
                 leaveReqTabIdsList.add(leaveIds.Id);
             }
-            LeaveRequestApexController.LeaveRequestStatus result = LeaveRequestApexController.getLeaveReqData();
         }
+        Test.stopTest();
     }
 }

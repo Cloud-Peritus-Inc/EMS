@@ -319,7 +319,10 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
                     refresh: true
                 };
                 publish(messageContext, MY_REFRESH_CHANNEL, payload);
-                publish(messageContext, MY_REFRESH_SEC_CHANNEL, payload);
+                const payload1 = {
+                    refresh: true
+                };
+                publish(messageContext, MY_REFRESH_SEC_CHANNEL, payload1);
 
             }).catch((err) => {
                 console.log('### err : ', JSON.stringify(err));
