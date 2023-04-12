@@ -161,4 +161,11 @@
         <shortDescription>HR Finance Loss of pay Email</shortDescription>
         <value>sangharsh.kamble@cloudperitus.com , sangharshkamble12@gmail.com</value>
     </labels>
+    <labels>
+        <fullName>HR_team_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR_team_Email</shortDescription>
+        <value>sangharsh.kamble@cloudperitus.com</value>
+    </labels>
 </CustomLabels>

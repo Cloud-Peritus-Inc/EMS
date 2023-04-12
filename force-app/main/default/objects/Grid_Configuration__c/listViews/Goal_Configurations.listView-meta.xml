@@ -6,6 +6,6 @@
     <columns>Goal_Start_Date__c</columns>
     <columns>Goal_End_Date__c</columns>
     <columns>Resource_Role__c</columns>
-    <filterScope>Mine</filterScope>
+    <filterScope>Everything</filterScope>
     <label>Goal Configurations</label>
 </ListView>
