@@ -1,5 +1,6 @@
 <template>
-    <lightning-card  variant="Narrow"  title="Employee onboarding checklist" >
+     <template if:true={showChecklist}> 
+    <lightning-card  variant="Narrow"  title="Employee Onboarding Checklist" >
         <lightning-record-view-form record-id={recordId} object-api-name="Contact">
             <div class="slds-box slds-theme_default">
                 <lightning-output-field field-name="Asset_Received_Assigned_to_IT_Team__c"></lightning-output-field>
@@ -12,4 +13,5 @@
             </div>
     </lightning-record-view-form>
     </lightning-card>
+     </template> 
 </template>

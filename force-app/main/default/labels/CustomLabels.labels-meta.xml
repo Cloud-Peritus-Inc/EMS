@@ -154,4 +154,11 @@
         <shortDescription>Post Onboarding Task Creation</shortDescription>
         <value>0</value>
     </labels>
+    <labels>
+        <fullName>HR_team_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR_team_Email</shortDescription>
+        <value>sangharsh.kamble@cloudperitus.com</value>
+    </labels>
 </CustomLabels>

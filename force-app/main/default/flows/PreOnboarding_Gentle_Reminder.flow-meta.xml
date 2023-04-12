@@ -39,6 +39,20 @@
                     <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactId1__r.EMS_RM_ApplicantStatus_Update__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Offer rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactId1__r.EMS_RM_ApplicantStatus_Update__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Did not join</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Reminder_Email_To_Candidate</targetReference>
             </connector>
@@ -112,7 +126,7 @@
         <schedule>
             <frequency>Daily</frequency>
             <startDate>2023-02-16</startDate>
-            <startTime>09:00:00.000Z</startTime>
+            <startTime>19:30:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>

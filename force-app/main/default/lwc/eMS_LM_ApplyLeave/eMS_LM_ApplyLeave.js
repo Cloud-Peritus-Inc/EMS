@@ -5,7 +5,6 @@ import getLeaveType from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveTyp
 import getbilling from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getbilling';
 import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getLeaveDuration';
 import getLeaveBalance from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveBalance';
-import createLeaveHistoryRecord from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.createLHRecord';
 import uploadFile from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.uploadFile';
 import getLeaveTypeId from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveTypeid';
 import LightningConfirm from "lightning/confirm";
@@ -273,14 +272,11 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   }*/
 
   handleChange(event) {
-
     this.daycheck = false;
     this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
 
     this.submitcheck = true;
     this.value = event.detail.value;
-    refreshApex(this.wiredActivities, this.refleaveduration, this.refleaveType);
-
     if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
       //this.calculateDuration();
       this.visiableotherdetail = true;
@@ -297,6 +293,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
     }
     if (this.value == 'Annual Leave') {
+     // refreshApex(this.allavailabledays);
       this.visiableotherdetail = true;
 
       this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
@@ -369,6 +366,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       }
 
     }
+   
   }
 
 
@@ -590,7 +588,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
 
   handleRefreshMessage(message) {
     if (message.refresh) {
-       refreshApex(this.refleaveType);
+       refreshApex(this.wiredActivities, this.refleaveduration, this.refleaveType);
     }
   }
 
