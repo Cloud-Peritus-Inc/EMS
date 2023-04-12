@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Global_Projects</fullName>
     <active>false</active>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Project_Compact_Layout</compactLayoutAssignment>
     <label>Global Projects</label>
     <picklistValues>
         <picklist>Approval_Needed__c</picklist>

@@ -68,7 +68,7 @@ public class EMS_TM_TimesheetClass {
             List<User> users = [SELECT Id, 
                                         FirstName, 
                                         LastName, 
-                                        Name FROM User Where Contact.Timesheet_NoNeed__c = false];
+                                        Name,ContactId FROM User Where Contact.Timesheet_NoNeed__c = false AND IsActive = true];
             for (User u : users) {
                 idList.add(u.Id);
                 }

@@ -4,7 +4,7 @@
 * @description  ServiceRequestApexHandler Class to 
 *
 *               Test code coverage provided by the following test class:
-*               - ServiceRequestApexHandler
+*               - ServiceRequestApexHandlerTest
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -70,9 +70,7 @@ public without sharing class ServiceRequestApexHandler {
                                                              Contact_Phone_Number__c
                                              FROM Family_Information__c
                                              WHERE Resource__c =: usr.contactId__c];
-        
-        return familyDataList;
-        
+           return familyDataList; 
     }
 
     /**

@@ -56,7 +56,7 @@ global class BatchToAdd5LeavesEveryQuarter implements Database.Batchable<sObject
          Map<String,Decimal> leaveMap = new Map<String,Decimal>();
          Id AnnualLeaveTypeId = [Select Id FROM EMS_LM_Leave__c  Where Name = 'Annual Leave'].Id;
          Date dt = system.today();
-         Boolean isJan = dt.month() == 1 ? true : false;
+         Boolean isJan = dt.month() == 3 ? true : false;
          String uniqueMonthYear = String.valueOf(dt.month())+String.valueOf(dt.year());
           for(Leave_Accrued_Mapping__mdt lmpRec : [SELECT Is_Lessthan_15_Days__c,Joining_Month__c,Leaves_Credits__c FROM Leave_Accrued_Mapping__mdt ]){
             leaveMap.put(String.valueOf(integer.valueof(lmpRec.Joining_Month__c)+String.valueOf(lmpRec.Is_Lessthan_15_Days__c)),lmpRec.Leaves_Credits__c);

@@ -28,7 +28,7 @@ public class CP_CreateTaskForOffcialEmailCreation implements Database.Batchable<
     
     public void execute(Database.BatchableContext bc, List<Contact> contactList){
         
-        Group itGroup = [select Id from Group where  Type = 'Queue' AND NAME = 'IT Department'];
+        Group itGroup = [select Id,Name from Group where  Type = 'Queue' AND NAME = 'IT Department'];
         List<Task> tskList = new List<Task>();
         
         for(Contact contactRec : contactList){

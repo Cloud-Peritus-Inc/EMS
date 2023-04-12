@@ -3,9 +3,8 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>ClassName__c</columns>
-    <columns>MethodName__c</columns>
+    <columns>CREATED_DATE</columns>
     <columns>ExceptionDetails__c</columns>
-    <columns>Status__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

@@ -4,7 +4,7 @@
 * @description  WorkfromHomepopulateApproverDetails Class to populat the approver details and change status when duration of work from home change
 *
 *               Test code coverage provided by the following test class:
-*               - 
+*               - WorkfromHomepopulateApproverDetailsTest
 *
 * CHANGE HISTORY
 * ====================================================================================================

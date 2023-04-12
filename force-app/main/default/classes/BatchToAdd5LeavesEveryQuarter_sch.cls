@@ -21,7 +21,7 @@ global class BatchToAdd5LeavesEveryQuarter_sch implements Schedulable{
         // Create an instance of the batch class
         BatchToAdd5LeavesEveryQuarter Add5Leaves = new BatchToAdd5LeavesEveryQuarter();
         // Execute the batch class
-        Database.executeBatch(Add5Leaves,20);
+        Database.executeBatch(Add5Leaves);
     }
     
 }

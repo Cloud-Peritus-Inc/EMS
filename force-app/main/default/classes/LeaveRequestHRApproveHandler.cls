@@ -25,8 +25,8 @@ public without sharing class LeaveRequestHRApproveHandler {
 **/
     @AuraEnabled
   public static void updateLeaveStatus( String leaveRequestId, String comments){
-       System.debug( '### LeaveRequestId' + leaveRequestId);
-      System.debug( '### Comments ' + comments);
+       //System.debug( '### LeaveRequestId' + leaveRequestId);
+      //System.debug( '### Comments ' + comments);
       
         User usr = [SELECT Id, 
                            Hr_Access__c,
@@ -34,7 +34,7 @@ public without sharing class LeaveRequestHRApproveHandler {
                            FirstName
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID]; 
-      System.debug('#### usr ' + usr);
+      //System.debug('#### usr ' + usr);
       if (usr.Hr_Access__c = true) {
         List<EMS_LM_Leave_History__c> leaveReqList = new  List<EMS_LM_Leave_History__c>();
         for(EMS_LM_Leave_History__c  leaveReqStatus: [SELECT Id,
@@ -51,7 +51,7 @@ public without sharing class LeaveRequestHRApproveHandler {
                   leaveReqStatus.EMS_LM_Remarks__c = comments;
                   leaveReqList.add(leaveReqStatus); 
               }
-        System.debug('updatedLeaveReq Before Update' + leaveReqList);
+        //System.debug('updatedLeaveReq Before Update' + leaveReqList);
         try{
            update leaveReqList;
            System.debug('updatedLeaveReq' + leaveReqList);
@@ -59,7 +59,7 @@ public without sharing class LeaveRequestHRApproveHandler {
             catch(Exception ex){
                 //LogException.logHandledException(ex);
                 LogException.logHandledException(ex, 'LeaveRequestHRApproveHandler', 'updateLeaveStatus');
-                System.debug('### Exception ' + ex.getMessage());
+                //System.debug('### Exception ' + ex.getMessage());
         	}
    		}
 	}
@@ -74,8 +74,8 @@ public without sharing class LeaveRequestHRApproveHandler {
 **/
      @AuraEnabled
     public static void bulkLeaveReqApproval(List<Id> bulkleaveReqId, String comments) {
-        System.debug('### bulkleaveReqId ' + bulkleaveReqId);
-        System.debug('### Comments ' + comments);
+        //System.debug('### bulkleaveReqId ' + bulkleaveReqId);
+        //System.debug('### Comments ' + comments);
         
                 User usr = [SELECT Id, 
                            		   Hr_Access__c,
@@ -100,15 +100,15 @@ public without sharing class LeaveRequestHRApproveHandler {
                   bulkleaveReqApproval.EMS_LM_Remarks__c = comments;
                   bulkLeaveReqList.add(bulkleaveReqApproval); 
                }
-        	System.debug('bulkupdatedLeaveReq Before Update' + bulkLeaveReqList);
+        	//System.debug('bulkupdatedLeaveReq Before Update' + bulkLeaveReqList);
         try{
            update bulkLeaveReqList;
-           System.debug('bulkupdatedLeaveReq' + bulkLeaveReqList);
+           //System.debug('bulkupdatedLeaveReq' + bulkLeaveReqList);
         }
             catch(Exception ex){
                 //LogException.logHandledException(ex);
                 LogException.logHandledException(ex, 'LeaveRequestHRApproveHandler', 'bulkLeaveReqApproval');
-                System.debug('### Exception ' + ex.getMessage());
+                //System.debug('### Exception ' + ex.getMessage());
         	}
     
     	}

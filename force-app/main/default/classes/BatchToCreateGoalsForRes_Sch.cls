@@ -5,7 +5,7 @@
 *              
 *       
 *               Test code coverage provided by the following test class:
-*               - BatchToNotifyTCForPM_Test
+*               - BatchToCreateGoalsForRes_Test
 *
 * CHANGE HISTORY
 * ====================================================================================================

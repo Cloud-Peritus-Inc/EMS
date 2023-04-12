@@ -33,7 +33,8 @@ global class BatchToUpdateCaseOwnerShip implements Database.Batchable<sObject> {
         }else{
            dt = system.now().addminutes(-5); 
         }
-        return Database.getQueryLocator([SELECT Id,ContactId,Contact.Resource_Manager__r.EMS_TM_User__c,
+        return Database.getQueryLocator([SELECT Id,ContactId,Contact.Resource_Manager__r.EMS_TM_User__c,Contact.Resource_Manager__c,
+                                         Contact.ReportsToId,
                                          Contact.ReportsTo.EMS_TM_User__c,Request_Sub_Type__c,type
                                          FROM CASE 
                                          WHERE CreatedDate >= :dt]);
@@ -56,8 +57,8 @@ global class BatchToUpdateCaseOwnerShip implements Database.Batchable<sObject> {
             queueMap.put(grp.Name,grp.id);
         }
         for (Case cnew : caseList) {
-             Id ResourceManager = cnew.Contact.Resource_Manager__r.EMS_TM_User__c;
-             Id ReportingManager = cnew.Contact.ReportsTo.EMS_TM_User__c;
+             Id ResourceManager = cnew.Contact.Resource_Manager__c;
+             Id ReportingManager = cnew.Contact.ReportsToId;
             if(cnew.Type != null){
                 if(cnew.Type == 'Problem' || cnew.Type == 'Others'){
                     if(queueMap.containsKey('Grid Support')){
@@ -69,10 +70,10 @@ global class BatchToUpdateCaseOwnerShip implements Database.Batchable<sObject> {
                     } 
                 }else if(cnew.Type == 'Resignation'){
                     system.debug('ResourceManager'+ResourceManager);
-                    cnew.OwnerId = ResourceManager != null ? ResourceManager : ReportingManager;
+                    cnew.Case_Assignee__c = ResourceManager != null ? ResourceManager : ReportingManager;
                 }else if(cnew.Type == 'Request for Special Leaves'){
                     if(ReportingManager != null && (cnew.Request_Sub_Type__c == 'Paternity' || cnew.Request_Sub_Type__c == 'Marriage' || cnew.Request_Sub_Type__c == '	Bereavement Leave' || cnew.Request_Sub_Type__c == 'Comp off')){
-                        cnew.OwnerId = ReportingManager;
+                        cnew.Case_Assignee__c = ReportingManager;
                     }
                 } 
             }

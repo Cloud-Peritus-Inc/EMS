@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_EM_Validation_PA_City</fullName>
+    <active>true</active>
+    <description>Enforce Letters for Permanent Address City</description>
+    <errorConditionFormula>NOT(REGEX( EMS_EM_PA_City__c ,&quot;^[a-z A-Z]*$&quot;))</errorConditionFormula>
+    <errorDisplayField>EMS_EM_PA_City__c</errorDisplayField>
+    <errorMessage>Invalid City</errorMessage>
+</ValidationRule>

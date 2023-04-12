@@ -47,7 +47,7 @@ public without sharing class CP_TasksChecklistUpdate implements TriggerAction.Af
         
         if(!taskWithUniqueKeyMap.isEmpty()){
             Map<String,Preonboarding_Task_Mapping__mdt> metadataMap = new Map<String,Preonboarding_Task_Mapping__mdt>();
-            for(Preonboarding_Task_Mapping__mdt  preOn : [SELECT Id, Unique_Identifier__c ,Task_Subject__c ,Contact_API__c  FROM Preonboarding_Task_Mapping__mdt ]){
+            for(Preonboarding_Task_Mapping__mdt  preOn : [SELECT Id, Unique_Identifier__c ,Task_Subject__c ,Contact_API__c  FROM Preonboarding_Task_Mapping__mdt WHERE Onboarding_Task__c = 'Pre' ]){
                 metadataMap.put(preOn.Unique_Identifier__c,preOn);
             }
             

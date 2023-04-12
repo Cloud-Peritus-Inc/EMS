@@ -42,6 +42,10 @@
                 <behavior>Edit</behavior>
                 <field>Notification_Required_HR__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Offboarding_UniqueKey__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

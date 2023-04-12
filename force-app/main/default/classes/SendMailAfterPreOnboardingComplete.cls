@@ -43,12 +43,13 @@ public class SendMailAfterPreOnboardingComplete implements TriggerAction.AfterUp
     public void sendEmailToHr(List<EMS_EM_Onboarding_Request__c> newlist,Map<Id,EMS_EM_Onboarding_Request__c> oldMap){
         
         List<Messaging.SingleEmailMessage> lstMails = new List<Messaging.SingleEmailMessage>();
-        
+        Boolean checkPoint = True;
         for(EMS_EM_Onboarding_Request__c onboardingRequestRec : newlist){
-            if(oldMap.get(onboardingRequestRec.Id).Is_Confirm__c == False && onboardingRequestRec.Is_Confirm__c == True){
-                
+            //if(oldMap.get(onboardingRequestRec.Id).Is_Confirm__c == False && onboardingRequestRec.Is_Confirm__c == True){
+            if(onboardingRequestRec.Is_Confirm__c != oldMap.get(onboardingRequestRec.Id).Is_Confirm__c && checkPoint == True){
                 Messaging.SingleEmailMessage message = sendMailToHr(onboardingRequestRec.ContactId1__c);
                 lstMails.add(message);
+                checkPoint = False;
             }
         }
         Messaging.sendEmail(lstMails);

@@ -63,7 +63,7 @@ public class CP_ProjectStatusUpdate implements TriggerAction.AfterUpdate{
                                                 }
             System.debug('assignList'+assignList);
             try{
-                if (assignList.size() > 0){
+                if (!assignList.isEmpty()){
                     update assignList;
                 }
             }

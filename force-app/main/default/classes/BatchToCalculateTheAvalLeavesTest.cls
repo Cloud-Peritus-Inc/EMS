@@ -3,6 +3,7 @@ public class BatchToCalculateTheAvalLeavesTest {
     
     public static testMethod void testBatchclass() {
          user adminuser = TestDataFactory.createAdminUser(true);
+        
          user adminuser2 = TestDataFactory.createAdminUser(true);
         Resource_Role__c role;
        EMS_LM_Leave__c annualtype;

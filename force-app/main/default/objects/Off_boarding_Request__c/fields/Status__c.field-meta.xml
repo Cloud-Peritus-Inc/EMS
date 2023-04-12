@@ -36,36 +36,6 @@
                 <default>false</default>
                 <label>Offboarding Tasks Completed</label>
             </value>
-            <value>
-                <fullName>Canceled</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Canceled</label>
-            </value>
-            <value>
-                <fullName>Feedback Request Initiated</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Feedback Request Initiated</label>
-            </value>
-            <value>
-                <fullName>Offboarding Due</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Offboarding Due</label>
-            </value>
-            <value>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Rejected</label>
-            </value>
-            <value>
-                <fullName>Request Initiated</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Request Initiated</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

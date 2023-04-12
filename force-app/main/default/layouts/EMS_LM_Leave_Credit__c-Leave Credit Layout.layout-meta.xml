@@ -20,7 +20,7 @@
                 <field>EMS_LM_Leave_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>EMS_LM_Leaves_Credited__c</field>
             </layoutItems>
             <layoutItems>

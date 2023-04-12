@@ -47,12 +47,6 @@
                 <label>Auto Approved</label>
             </value>
             <value>
-                <fullName>Waiting For Approver 2</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Waiting For Approver 2</label>
-            </value>
-            <value>
                 <fullName>Waiting For Approver 3</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

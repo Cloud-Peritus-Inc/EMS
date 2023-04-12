@@ -123,6 +123,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
                                                             FROM Contact
                                                             WHERE Id  IN :leaveIdsList]);
             for(EMS_LM_Leave_History__c leaveHistoryRecord : leaveHistory) {
+                if(annualCompLeaves.containsKey(leaveHistoryRecord.EMS_LM_Contact__c)){
                 for(EMS_LM_Leave_History__c leave : annualCompLeaves.get(leaveHistoryRecord.EMS_LM_Contact__c)) {
                     if(leave.Leave_Type_Name__c  == CP_leaveHistoryConstants.ANNUAL_LEAVE) {
                         utilizedAnnualLeave = utilizedAnnualLeave + leave.EMS_LM_Leave_Duration__c ;
@@ -131,7 +132,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
                         utilizedcompoffLeave = utilizedcompoffLeave + leave.EMS_LM_Leave_Duration__c ;
                     }
                 }
-
+                }
                 for(EMS_LM_Leave_History__c leave : otherLeaves.get(leaveHistoryRecord.EMS_LM_Contact__c)) {
                     if(leave.Leave_Type_Name__c  == 'Maternity Leave') {
                         utilizedMaternityLeave = utilizedMaternityLeave + leave.EMS_LM_Leave_Duration__c ;                        

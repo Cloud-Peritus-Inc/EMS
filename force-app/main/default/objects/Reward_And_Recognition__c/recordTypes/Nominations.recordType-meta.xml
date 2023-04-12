@@ -35,25 +35,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Type__c</picklist>
-        <values>
-            <fullName>Final Evaluation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Nominee</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ShortListed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Winner</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Type_of_Shout_Out__c</picklist>
         <values>
             <fullName>Incentives</fullName>

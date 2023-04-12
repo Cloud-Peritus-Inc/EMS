@@ -14,14 +14,16 @@ global date weekEnd ;
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
         date dt = system.today().adddays(1);
+        System.debug('***dt===='+dt);
         Id annualLeaveType = [SELECT Id FROM EMS_LM_Leave__c WHERE Name = 'Annual Leave'].Id;
+        System.debug('**anullevaetype'+annualLeaveType);
         return Database.getQueryLocator([SELECT Id,Email,Name,EMS_TM_user__c,Work_Location__c,
                                          (SELECT Id,Week_Start_Date__c,Week_End_Date__c,EMS_TM_Week__c,User__c FROM Timesheets__r 
                                           WHERE Week_Start_Date__c =:weekStart AND Week_End_Date__c =:weekEnd LIMIT 1 ),
                                          (SELECT Id, EMS_LM_Leave_Start_Date__c,EMS_LM_Leave_End_Date__c
                                                 FROM Leaves_History__r
                                                 WHERE  EMS_LM_Status__c = 'Approved' AND EMS_LM_Leave_Type__c =:annualLeaveType
-                                                AND (EMS_LM_Leave_Start_Date__c <=:dt OR  EMS_LM_Leave_End_Date__c>=:dt))
+                                                AND (EMS_LM_Leave_Start_Date__c <=:dt OR  EMS_LM_Leave_End_Date__c >=:dt))
                                          FROM Contact 
                                          WHERE RecordTypeId=:ContactConstant.RESOURCE_RECORDTYPEID 
                                           AND EMS_RM_ApplicantStatus_Update__c = 'Active' AND Timesheet_NoNeed__c = false]);
@@ -29,6 +31,7 @@ global date weekEnd ;
     
     global void execute(Database.BatchableContext BC, List<Contact> conList) {
         System.debug('=====conList======='+conList);
+        System.debug('=====conListHolidays======='+conList[0].Leaves_History__r);
         date tmrDate = system.today().adddays(1);
         EMS_TM_Project__c projRec =[SELECT Id, Name FROM EMS_TM_Project__c where Name ='OOO' limit 1];
         Map<Id,EMS_TM_Timesheet_Record__c> timesheetLineWithTs = new Map<Id,EMS_TM_Timesheet_Record__c>();
@@ -63,6 +66,9 @@ global date weekEnd ;
                }
          System.debug('=====holidayMap======='+holidayMap);
         for(Contact con : conList){
+            System.debug('**con.Timesheets__r'+con.Timesheets__r);
+            System.debug('**con.Leaves_History__r'+con.Leaves_History__r);
+            System.debug('**con.holidaymapget'+holidayMap.containsKey(con.Work_Location__c));
             if(!con.Timesheets__r.isEmpty() && !con.Leaves_History__r.isEmpty() && !holidayMap.containsKey(con.Work_Location__c)){
                String fillTheTimeForDay=null;
                 EMS_Timesheet__c currentWeekTimeSheet = con.Timesheets__r[0];
@@ -142,7 +148,7 @@ global date weekEnd ;
                                           SUM(EMS_TM_Thu__c) thrus,
                                           SUM(EMS_TM_FRI__c) fri
                                           FROM EMS_TM_Timesheet_Record__c WHERE Id IN:timesheetIdSet GROUP BY EMS_Timesheet__c]){
-            
+            //if(!Test.isRunningTest()){
         EMS_Timesheet__c timesheet = new EMS_Timesheet__c();
         timesheet.Id = (Id)finalhours.get('timeva');
         timesheet.EMS_TM_Mon__c = (Decimal)finalhours.get('mon');
@@ -151,6 +157,7 @@ global date weekEnd ;
         timesheet.EMS_TM_Thu__c = (Decimal)finalhours.get('thrus');
         timesheet.EMS_TM_FRI__c = (Decimal)finalhours.get('fri');
          finaltimesheetrollup.add(timesheet);
+                                          //}
                                           }
         
         database.update(finaltimesheetrollup,false);

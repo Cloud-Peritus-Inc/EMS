@@ -61,7 +61,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert, Tri
     * ====================================================================================================
     **/
     
-    private void sendOnboardingFormMail(List<Contact> contactList){
+    public static void sendOnboardingFormMail(List<Contact> contactList){
         
         List<EMS_EM_Onboarding_Request__c> applicantsList = new List<EMS_EM_Onboarding_Request__c>();
         List<Contact> applicantsToSendMail = new List<Contact>();

@@ -1,7 +1,9 @@
 @isTest
 public class createProjectAfterOppWonTest {
     public static testmethod void oppclosedcreateProj(){
-         Resource_Role__c role = TestDataFactory.createResourceRole(true);
+         Resource_Role__c role = TestDataFactory.createResourceRole(false);
+         role.Name ='Sr Project Manager';
+        insert role;
          EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);

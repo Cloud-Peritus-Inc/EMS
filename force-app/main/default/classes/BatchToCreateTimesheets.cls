@@ -74,7 +74,7 @@ global date weekEnd ;
        List<Contact> filteredList = new List<Contact>();
        
         for(Contact conRec : conList){
-          
+         
             if(conRec.Timesheets__r.isEmpty() && !conRec.Assignments__r.isEmpty()){
                 contactWorkLocIds.put(conRec.Work_Location__c,conRec.Id);
                 filteredList.add(conRec);
@@ -219,41 +219,6 @@ Holidays  calander START
             LogException.logHandledException(ex, 'BatchToCreateTimesheets1', 'execute');
         }
         
- /* Leavs
-        for(Contact con : filteredList){
-            if(timesheetMap.containsKey(con.id)){
-            for(EMS_LM_Leave_History__c leaveRec : con.Leaves_History__r){
-                    Date dt = leavREc.starDate;
-                    Date d1 = endadte;
-                    Date d2 = Dt-d1; 2
-d2 null  {
-
-}
-for(1=1; I<= d2; i++){
-
-
-
-}
-                EMS_TM_Timesheet_Record__c lineitem = new EMS_TM_Timesheet_Record__c();
-                lineitem.EMS_Timesheet__c = timesheetMap.get(con.id).Id;
-                lineitem.OwnerId = timesheetMap.get(con.id).User__c;
-                lineitem.EMS_TM_ProjectTask__c = 'Paid time-off';
-                lineitem.EMS_TM_Project__c = projRec.Id;
-                lineitem.EMS_TM_Mon__c = 0;
-                lineitem.EMS_TM_Wed__c = 0;
-                lineitem.EMS_TM_Tue__c = 0;
-                lineitem.EMS_TM_Thu__c = 0;
-                lineitem.EMS_TM_Fri__c = 0;
-                lineitem.Status__c = 'Saved';
-                timesheetlineItemsList.add(lineitem);
-                
-            }
-            }
-        }
-              
-        
-       /* LEaves ENd *///
- 
         List<EMS_Timesheet__c> finaltimesheetrollup = new List<EMS_Timesheet__c>();
         for(AggregateResult finalhours : [SELECT EMS_Timesheet__c timeva,
                                           SUM(EMS_TM_Mon__c) mon,

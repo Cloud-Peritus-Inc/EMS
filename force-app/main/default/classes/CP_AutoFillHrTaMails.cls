@@ -8,7 +8,7 @@ public class CP_AutoFillHrTaMails implements TriggerAction.BeforeInsert{
     
     private void updateEmails(List<Contact> contactList){
         String hrTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'HR_Team'].Email__c;
-        String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'TA_Team'].Email__c;
+        String taTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'TA_Team'].Email__c;        
         for(Contact contactRec : contactList){
             if(hrTeamEmail != NULL){
                 contactRec.HR_Email__c = hrTeamEmail;

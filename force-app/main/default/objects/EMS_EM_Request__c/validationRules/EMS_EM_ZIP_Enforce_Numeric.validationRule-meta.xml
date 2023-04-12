@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_EM_ZIP_Enforce_Numeric</fullName>
+    <active>false</active>
+    <errorConditionFormula>NOT(REGEX(EMS_EM_CA_Zip__c,&quot;^[0-9]*$&quot;))
+||
+NOT(REGEX(EMS_EM_PA_Zip__c,&quot;^[0-9]*$&quot;))</errorConditionFormula>
+    <errorMessage>Invalid Zip Code</errorMessage>
+</ValidationRule>

@@ -44,7 +44,7 @@ public without sharing class populateUtlizedValueOfLeaveCredit implements Trigge
 **/
     public void afterUpdate(List<EMS_LM_Leave_History__c> newList,List<EMS_LM_Leave_History__c> oldList) {      
         System.debug(LoggingLevel.DEBUG, 'populateUtlizedValueOfLeaveCredit.afterUpdate() : BEGIN');
-      //  populateValuesOnLeaveCredit(newList,new Map<Id,EMS_LM_Leave_History__c>(oldList));
+       // populateValuesOnLeaveCredit(newList,new Map<Id,EMS_LM_Leave_History__c>(oldList));
         System.debug(LoggingLevel.DEBUG, 'populateUtlizedValueOfLeaveCredit.afterUpdate() : END');       
     }
     
