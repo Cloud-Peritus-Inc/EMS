@@ -19,6 +19,7 @@ public class enableAndDisableBillableOnContactTest {
           /* EMS_LM_Leave__c ee =TestDataFactory.createLeaveType(false);
          ee.EMS_LM_Leave_Type__c ='Loss of Pay';
          Insert ee;*/
+         user userId =[SELECT id FROM User  WHERE IsActive = true LIMIT 1];
          EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
@@ -26,10 +27,18 @@ public class enableAndDisableBillableOnContactTest {
         EMS_LM_Leave__c workfromhome = TestDataFactory.createLeaveType('Work From Home',true);
          Account acc = TestDataFactory.createAccount(true);
 		 Contact con=  TestDataFactory.createResourceContact(acc.id, false);
-         con.EMS_RM_Employee_Id__c = 'CP10235';
-         con.Resource_Role__c = role.Id;
-         insert con;
-         User u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,false);
+        con.EMS_RM_Employee_Id__c = 'CP10235';
+        con.EMS_RM_ApplicantStatus_Update__c ='Active';
+        con.EMS_Phone_Number__c ='0123456789';
+        con.EMS_EM_CAddress_Line_1__c ='Hyd';
+        con.EMS_EM_CA_City__c ='Hyd';
+        con.EMS_EM_CA_State__c ='AP';
+        con.Email ='rk@rk.com';
+        con.Timesheet_NoNeed__c =false;
+        con.Resource_Role__c = role.Id;
+        con.EMS_TM_User__c =userId.Id;
+        con.EMS_LM_No_Of_Leaves_Credit__c = 10;
+        INSERT con;
         
         EMS_TM_Project__c projectRec = new EMS_TM_Project__c();
         projectRec.EMS_TM_StartDate__c = System.today();

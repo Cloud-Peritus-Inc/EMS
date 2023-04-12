@@ -1,9 +1,12 @@
 @isTest
 public class BatchToCreateTimesheets_Test {
     
+    
     public static testmethod void createTimesheet(){
         user loginedUser =[SELECT id from User  where IsActive = true LIMIT 1];
-        Resource_Role__c role = TestDataFactory.createResourceRole(true);
+        Resource_Role__c role = TestDataFactory.createResourceRole(false);
+        role.Name ='Sr Project Manager';
+        insert role;
          Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hhyderabad',true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
@@ -73,6 +76,27 @@ public class BatchToCreateTimesheets_Test {
         holiday2.Name ='fff';
         holiday2.EMS_TM_Type_Of_Holiday__c ='National';
         holidayList.add(holiday2);
+        EMS_TM_Calendar__c holiday3 = new EMS_TM_Calendar__c();
+        holiday3.EMS_TM_Calendar_Date__c = System.today()+3;
+        holiday3.Office_Location__c =officlocRec.Id;
+        holiday3.Location__c ='Usa';
+        holiday3.Name ='fff';
+        holiday3.EMS_TM_Type_Of_Holiday__c ='National';
+        holidayList.add(holiday3);
+        EMS_TM_Calendar__c holiday4 = new EMS_TM_Calendar__c();
+        holiday4.EMS_TM_Calendar_Date__c = System.today()+4;
+        holiday4.Office_Location__c =officlocRec.Id;
+        holiday4.Location__c ='Usa';
+        holiday4.Name ='fff';
+        holiday4.EMS_TM_Type_Of_Holiday__c ='National';
+        holidayList.add(holiday4);
+         EMS_TM_Calendar__c holiday5 = new EMS_TM_Calendar__c();
+        holiday5.EMS_TM_Calendar_Date__c = System.today()+5;
+        holiday5.Office_Location__c =officlocRec.Id;
+        holiday5.Location__c ='Usa';
+        holiday5.Name ='fff';
+        holiday5.EMS_TM_Type_Of_Holiday__c ='National';
+        holidayList.add(holiday5);
         INSERT holidayList;
         test.startTest();
         BatchToCreateTimesheets batchExecute = new BatchToCreateTimesheets(); 

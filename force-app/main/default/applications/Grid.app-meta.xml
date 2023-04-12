@@ -3,25 +3,16 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Project_Record_Page2</content>
+        <content>Contact_Resource_Record_Page</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Project_Record_Page2</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Contact_Record_Page</content>
+        <comment>Action override updated by Lightning App Builder during activation.</comment>
+        <content>Contact_Client_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -30,11 +21,38 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Contact_Record_Page</content>
+        <content>Service_Request_Record_Page</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Service_Request_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
     </actionOverrides>
     <brand>
         <headerColor>#B87FE1</headerColor>
@@ -49,6 +67,370 @@
     <navType>Standard</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Assignment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Expense_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Expense__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Client_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Client</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Resource_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Resource</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Resource_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Resource</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Onboarding_Request_Record_Page3</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_EM_Onboarding_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Onboarding_Request_Record_Page3</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_EM_Onboarding_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Onboarding_Request_Record_Page3</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_EM_Onboarding_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Onboarding_Request_Record_Page3</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_EM_Onboarding_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Onboarding_Request_Record_Page3</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_EM_Onboarding_Request__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>ContactApplicantRecordPage</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Contact</pageOrSobjectType>
@@ -89,6 +471,94 @@
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Contact</pageOrSobjectType>
         <recordType>Contact.Applicant</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_Type_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_History_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave_History__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_History_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave_History__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_History_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave_History__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_History_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave_History__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_History_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave_History__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_History_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave_History__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_History_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave_History__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Leave_History_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_LM_Leave_History__c</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
@@ -135,24 +605,6 @@
         <pageOrSobjectType>Contact</pageOrSobjectType>
         <recordType>Contact.Resource</recordType>
         <type>Flexipage</type>
-        <profile>Employee - Resource(Community)</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Contact_Resource_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Contact</pageOrSobjectType>
-        <recordType>Contact.Resource</recordType>
-        <type>Flexipage</type>
-        <profile>Employee - Resource(Community)</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Contact_Resource_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Contact</pageOrSobjectType>
-        <recordType>Contact.Resource</recordType>
-        <type>Flexipage</type>
         <profile>Grid Operations(Internal)</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -170,15 +622,565 @@
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Contact</pageOrSobjectType>
         <recordType>Contact.Resource</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Contact_Resource_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <recordType>Contact.Resource</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Designation_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Contact_Resource_Record_Page</content>
+        <content>Designation_Record_Page</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>Contact</pageOrSobjectType>
-        <recordType>Contact.Resource</recordType>
+        <pageOrSobjectType>Designation__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Grid_Configuration_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Grid_Configuration__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Grid_Configuration_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Grid_Configuration__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Grid_Configuration_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Grid_Configuration__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Grid_Configuration_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Grid_Configuration__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Grid_Configuration_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Grid_Configuration__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Timesheet_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_Timesheet__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Internal_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Global_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <recordType>EMS_TM_Project__c.Client_Projects</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - HR(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Operations(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Employee - Resource(Community)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Grid Operations(Internal)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>EMS_TM_Project__c</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
@@ -203,6 +1205,14 @@
     <tabs>EMS_Job_Opening__c</tabs>
     <tabs>EMS_Job_Description__c</tabs>
     <tabs>Schedule_And_Feedback__c</tabs>
+    <tabs>Office_Location__c</tabs>
+    <tabs>Certifications__c</tabs>
+    <tabs>Pay_Period__c</tabs>
+    <tabs>EmpTimeSheet</tabs>
+    <tabs>EMS_Timesheet__c</tabs>
+    <tabs>Reward_And_Recognition__c</tabs>
+    <tabs>EMS_TM_Calendar__c</tabs>
+    <tabs>EMS_EM_Onboarding_Request__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Grid_UtilityBar</utilityBar>
 </CustomApplication>

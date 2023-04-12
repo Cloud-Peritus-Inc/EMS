@@ -1,23 +1,19 @@
 @istest
 public class TestClass_EMS_TM_Lock_Previous_Week {
+        @testSetup
+    public static void getAdminUser(){
+              user adminuser = TestDataFactory.createAdminUser(false);
+             adminuser.TA_Admin__c = true;
+             adminuser.Timesheet_Admin__c =true;
+             Insert adminuser;
+        
+    }
       public static testMethod void testschedule() {
+            User adminUser = [Select Id From User Where firstname ='Alan' AND IsActive = true Limit 1];
 		Test.StartTest();
-        profile adminProfile=[SELECT Id, Name FROM Profile WHERE Name =:'System Administrator'];
-        user us =new user();
-        us.FirstName='Ram';
-        us.LastName='kumar';
-        us.Email='ramkumar@gmail.com';
-        us.Username='ramkumar123@gmail.com.hxgdfvikhfdc';
-        us.Alias='Rkumar'; 
-        us.TimeZoneSidKey='America/Los_Angeles';
-        us.LocaleSidKey='en_US'; 
-        us.EmailEncodingKey='UTF-8'; 
-        us.ProfileId=adminProfile.Id; 
-        us.LanguageLocaleKey='en_US';
-        insert us;
         EMS_Timesheet__c emsts = new EMS_Timesheet__c();
         emsts.EMS_TM_Status__c='New';
-        emsts.User__c=us.id; 
+        emsts.User__c=adminuser.id; 
         emsts.EMS_TM_Mon__c=8;
         emsts.EMS_TM_Tue__c=8;
         emsts.EMS_TM_Wed__c=8;
