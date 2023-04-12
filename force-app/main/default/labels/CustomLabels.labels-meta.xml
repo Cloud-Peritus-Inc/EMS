@@ -161,4 +161,11 @@
         <shortDescription>HR_team_Email</shortDescription>
         <value>sangharsh.kamble@cloudperitus.com</value>
     </labels>
+    <labels>
+        <fullName>Finance_team_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Finance team Email</shortDescription>
+        <value>sangharshkamble12@gmail.com</value>
+    </labels>
 </CustomLabels>
