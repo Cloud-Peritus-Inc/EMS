@@ -1,0 +1,4 @@
+@istest
+public class BatchToForwordLeaveBalanceToNextYearTest {
+
+}
