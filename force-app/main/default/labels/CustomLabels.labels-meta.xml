@@ -168,4 +168,11 @@
         <shortDescription>Finance team Email</shortDescription>
         <value>sangharshkamble12@gmail.com</value>
     </labels>
+    <labels>
+        <fullName>Expense_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Expense URL</shortDescription>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/expense/Expense__c</value>
+    </labels>
 </CustomLabels>

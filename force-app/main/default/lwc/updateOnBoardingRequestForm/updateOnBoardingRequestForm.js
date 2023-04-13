@@ -404,7 +404,7 @@ function updateOnboardingInfoOnPageLoads(ts){
            // console.log('onboarding'+onboarding);
            // console.log('FILES ' , result.contentDocumentLink);
               //ts.dataList = result.contentDocumentLink;
-              let filteredFiles = result.contentDocumentLink.filter((file) => file.Title.includes('Work Document_'));
+              let filteredFiles = result.contentDocumentLink.filter((file) => file.Title.includes('Work_Details_'));
               if (filteredFiles.length > 0) {
                 ts.isUploadReq = false;
                 ts.dataDocList = filteredFiles;
@@ -420,7 +420,7 @@ function updateOnboardingInfoOnPageLoads(ts){
               }
 
             result.contentDocumentLink.forEach((currentItem) => {
-              if(currentItem.Title.includes('passport_')){
+              if(currentItem.Title.includes('Picture_')){
               ts.fileName2 = currentItem.Title;
              // console.log('passport photo',ts.fileName2);
               }

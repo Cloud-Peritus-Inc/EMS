@@ -1,6 +1,7 @@
 <template>
   <li>
     <ul>
+      <template if:true={hasReportsTo}>
       <template for:each={employee.meReportsToList} for:item="report">
         <li key={report.resourceUserId}>
           <c-org-chart employee={report}></c-org-chart>
@@ -8,6 +9,7 @@
             <line class="line" x1="50%" y1="80%" x2="50%" y2="100%"></line>
           </svg>-->
         </li>
+      </template>
       </template>
     </ul>
 
@@ -23,7 +25,7 @@
 
     <template if:true={hasHierarchy}>
         <br/>
-       <b> My Reporties </b>
+       <b> My Reportees </b>
     <!--  <svg>
         <line class="line" x1="50%" y1="0" x2="50%" y2="100%"></line>
       </svg> -->

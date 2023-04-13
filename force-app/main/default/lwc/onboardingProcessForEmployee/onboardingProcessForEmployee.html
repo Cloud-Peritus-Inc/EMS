@@ -387,7 +387,7 @@
                                                         Passport
                                                     </label>
                                                     <lightning-helptext
-                                                        content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
+                                                        content="The maximum file size is 2MB and the supported file type is PDF"></lightning-helptext>
                                                     <lightning-input type="file" name="Passport" onchange={onFileUpload}
                                                         accept={accept} title="Passport"
                                                         disabled={readonlyfield}></lightning-input>
@@ -401,7 +401,7 @@
                                                         Driving License
                                                     </label>
                                                     <lightning-helptext
-                                                        content="The maximum file size is 2 MB & The acceptable file type is PDF"></lightning-helptext>
+                                                        content="The maximum file size is 2MB and the supported file type is PDF"></lightning-helptext>
                                                     <lightning-input type="file" onchange={onFileUpload1}
                                                         name="DrivingLicense" title="Driving License"
                                                         disabled={readonlyfield} accept={accept}></lightning-input>
@@ -437,16 +437,15 @@
                                                 <lightning-record-view-form record-id={contactID}
                                                     object-api-name="Contact">
                                                     <div class="slds-box slds-theme_default">
-                                                        <lightning-output-field
-                                                            field-name="EMS_RM_Employee_Id__c"></lightning-output-field>
-                                                        <lightning-output-field
+                                                        <lightning-output-field 
+                                                            field-name="EMS_RM_Employee_Id__c"  ></lightning-output-field>
+                                                        <lightning-output-field style="pointer-events: none;"
                                                             field-name="Email"></lightning-output-field>
                                                         <lightning-output-field
-                                                            field-name="Resource_Manager__c"></lightning-output-field>
+                                                            field-name="Resource_Manager__c" style="pointer-events: none; text-decoration: none;"></lightning-output-field>
 
-                                                        <lightning-output-field
+                                                        <lightning-output-field style="pointer-events: none;" 
                                                             field-name="EMS_EM_HR_Assigned__c"></lightning-output-field>
-
                                                     </div>
                                                 </lightning-record-view-form>
                                             </div>
@@ -717,7 +716,7 @@
                                                         pattern="[A-Z a-z._-]{2,20}$" type="text"
                                                         label="Employee Name in Bank Account"></lightning-input>
                                                     <lightning-combobox class="slds-p-top_small" required
-                                                        field-level-help="Suggested to opt by the employees whose CTC is more than 7 Lakhs"
+                                                        field-level-help="Suggested to Opt-In for the employees whose CTC is above 7 LPA"
                                                         disabled={readonlyfield} name="Sodexo_Card_Option__c"
                                                         label="Sodexo Card Option" value={SodexoCardoption}
                                                         placeholder="Select" options={sodexooptions}
