@@ -90,6 +90,7 @@ public class TestClass_EMS_TM_TimesheetClass {
         assignmentRec.EMS_TM_EmployeeName__c = con.Id;
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
+        assignmentRec.EMS_TM_EndDate_Asgn__c = system.today()+3;
         assignmentRec.EMS_TM_Status_Asgn__c ='Active';
         assignmentRec.EMS_TM_Billable__c = true;
         INSERT assignmentRec;
@@ -112,9 +113,6 @@ public class TestClass_EMS_TM_TimesheetClass {
         lineitem.OwnerId = userId.id;
         lineitem.Assignment__c = assignmentRec.Id;
         lineitem.EMS_TM_Project__c = assignmentRec.EMS_TM_ProjectName_Asgn__c;
-        lineitem.EMS_TM_Mon__c = 0;
-        lineitem.EMS_TM_Wed__c = 0;
-        lineitem.EMS_TM_Tue__c = 0;
         lineitem.EMS_TM_Thu__c = 0;
         lineitem.EMS_TM_Fri__c = 0;
         lineitem.Status__c = 'Submitted';
@@ -125,9 +123,6 @@ public class TestClass_EMS_TM_TimesheetClass {
         lineitem1.OwnerId = timesheetRec.User__c;
         lineitem1.Assignment__c = assignmentRec.Id;
         lineitem1.EMS_TM_Project__c = assignmentRec.EMS_TM_ProjectName_Asgn__c;
-        lineitem1.EMS_TM_Mon__c = 0;
-        lineitem1.EMS_TM_Wed__c = 0;
-        lineitem1.EMS_TM_Tue__c = 0;
         lineitem1.EMS_TM_Thu__c = 0;
         lineitem1.EMS_TM_Fri__c = 0;
         lineitem1.Status__c = 'Saved';

@@ -45,6 +45,8 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
     isEmergencyReq = false;
     isDependent = true;
     isDependentReq = false;
+    isEmergencyCon;
+    isDependentCon;
 
 
     // BANK-CASE
@@ -72,7 +74,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
     }
 
     handleEmergencyChange(event) {
-        console.log('### event : ', event.target.value);
+        //console.log('### event : ', event.target.value);
         if (event.target.value === true) {
             this.isEmergency = false;
             this.isEmergencyReq = true;
@@ -85,7 +87,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
     }
 
     handleDependentChange(event) {
-        console.log('### event : ', event.target.value);
+        //console.log('### event : ', event.target.value);
         if (event.target.value === true) {
             this.isDependent = false;
             this.isDependentReq = true;
@@ -99,7 +101,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
 
     connectedCallback() {
         this.usercontactId = this.contactRecord.Id;
-        console.log('usercontactId : ', this.usercontactId);
+        //console.log('usercontactId : ', this.usercontactId);
         this.useraccountId = this.contactRecord.AccountId;
     }
 
@@ -107,11 +109,11 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
     @wire(getObjectInfos, { objectApiNames: '$objectApiNames' })
     wiredData({ error, data }) {
         if (data) {
-            console.log('###objectApiNames: ', data.results)
+            //console.log('###objectApiNames: ', data.results)
             const [caseObjInfo, familyObjInfo] = data.results;
             this.caseObjectInfo = caseObjInfo.result
             this.familyObjectInfo = familyObjInfo.result
-            console.log('### familyObjectInfo : ', this.familyObjectInfo);
+            //console.log('### familyObjectInfo : ', this.familyObjectInfo);
         } else if (error) {
             console.error('Error:', error);
         }
@@ -126,7 +128,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
             const subTypessRemoved = ["Offboarding", "Other", "Problem", "Paternity", "Maternity", "Marriage", "Bereavement", "Compensatory Off"];
             const filteredReqSubTypes = this.reqSubTypeValues.filter(status => !subTypessRemoved.includes(status.label));
             this.reqSubTypeValues = filteredReqSubTypes
-            console.log('### reqSubTypeValues : ', this.reqSubTypeValues);
+            //console.log('### reqSubTypeValues : ', this.reqSubTypeValues);
         } else if (error) {
             console.error('Error:', error);
         }
@@ -147,7 +149,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
     @wire(getPayrollInfo)
     getPayrollInfoWiredData({ error, data }) {
         if (data) {
-            console.log('### getPayrollInfo', data);
+            //console.log('### getPayrollInfo', data);
             this.bankName = data.Bank_Name__c;
             this.accountNumber = data.Beneficiary_Account_Number__c;
             this.ifscCode = data.IFSC_Routing_Number__c;
@@ -161,7 +163,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
     @wire(getLoggedInUserFamilyData)
     getLoggedInUserFamilyDataWiredData({ error, data }) {
         if (data) {
-            console.log('### getLoggedInUserFamilyData', data);
+            //console.log('### getLoggedInUserFamilyData', data);
             this.tableData = data;
         } else if (error) {
             console.error('Error:', error);
@@ -175,7 +177,7 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
 
     handleChange(event) {
         const { name, value } = event.target;
-        console.log('### event.target : ', JSON.stringify(event.target.name));
+        //console.log('### event.target : ', JSON.stringify(event.target.name));
         if (name === 'Priority') {
             this.selectedPriority = value;
         }
@@ -188,12 +190,9 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
         }
     }
 
-    handleSuccess(event) {
+    handleFamSuccess(event) {
         const fields = event.detail.fields;
-        //console.log('fields : ', fields.Request_Sub_Type__c.value);
-        //console.log('### save fields : ', fields.Is_It_Emergency_Contact__c.value);
-        //console.log('### save fields : ', JSON.stringify(fields.Is_It_Emergency_Contact__c.value));
-        if (fields.Request_Sub_Type__c.value === 'Family/Dependent Information' && fields.Is_It_Emergency_Contact__c.value === false && fields.Is_it_Dependant_Contact__c.value === false) {
+        if (fields.Request_Sub_Type__c.value === 'Family/Dependent Information' && this.isDependentCon == false && this.isEmergencyCon == false) {
             const even = new ShowToastEvent({
                 message: 'Please select at least one option before submitting the form.',
                 variant: 'error'
@@ -202,7 +201,23 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
             return;
         }
         const even = new ShowToastEvent({
-            title: 'Success!',
+            message: 'Successfully created the service request!',
+            variant: 'success'
+        });
+        this.dispatchEvent(even);
+        this[NavigationMixin.Navigate]({
+            type: "standard__recordPage",
+            attributes: {
+                objectApiName: "Account",
+                actionName: "view",
+                recordId: event.detail.id
+            }
+        });
+        this.openModal = false;
+    }
+
+    handleSuccess(event) {
+        const even = new ShowToastEvent({
             message: 'Successfully created the service request!',
             variant: 'success'
         });
@@ -245,7 +260,11 @@ export default class ServiceRequestChangeDetailsForm extends NavigationMixin(Lig
         fields.ContactId = this.contactRecord.Id;
         fields.AccountId = this.contactRecord.AccountId;
         fields.Subject = this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedReqSubType;
-        console.log('### fields : ', fields);
+        if (typeof fields !== 'undefined') {
+            this.isEmergencyCon = fields.Is_It_Emergency_Contact__c;
+            this.isDependentCon = fields.Is_it_Dependant_Contact__c
+        }
+
         // Push the updated fields though for the actual submission itself
         this.template.querySelector('lightning-record-edit-form').submit(fields);
     }

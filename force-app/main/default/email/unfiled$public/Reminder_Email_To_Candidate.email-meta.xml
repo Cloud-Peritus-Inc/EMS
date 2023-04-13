@@ -6,12 +6,12 @@
     <name>Reminder Email To Candidate</name>
     <style>freeForm</style>
     <subject>Cloud Peritus: Gentle reminder to complete your pre-onboarding</subject>
-    <textOnly>Dear {!Contact.Name},
+    <textOnly>Dear {!EMS_EM_Onboarding_Request__c.EMS_EM_First_Name__c} {!EMS_EM_Onboarding_Request__c.EMS_EM_Last_Name__c},
 
 
 Hope you&apos;re doing well!
 
-This is a gentle reminder to complete your pre-onboarding formalities as soon as possible. This will give us the necessary time to verify your details and ensure a smooth onboarding.
+This is a gentle reminder to complete your pre-onboarding formalities as soon as possible. This will give us the necessary time to verify your details and ensure a smooth onboarding. Please click here to access the pre-onboarding portal.
 
 
 If you are unable to provide any of the documents or details please send an email to hr.hyderabad@cloudperitus.com with the reason.

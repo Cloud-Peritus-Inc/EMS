@@ -36,7 +36,7 @@
     </values>
     <values>
         <field>Task_Subject__c</field>
-        <value xsi:type="xsd:string">Attend HR Orientation</value>
+        <value xsi:type="xsd:string">Attend HR orientation</value>
     </values>
     <values>
         <field>Type__c</field>

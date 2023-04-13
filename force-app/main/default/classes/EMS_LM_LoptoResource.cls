@@ -51,6 +51,7 @@ public without sharing  class EMS_LM_LoptoResource implements TriggerAction.Afte
             EMS_LM_Leave_Credit__c child = new EMS_LM_Leave_Credit__c();
             child.EMS_LM_Employee__c = parent.Id;
             child.EMS_LM_Leave_Type__c = leaveTypeId;
+            child.EMS_LM_Leaves_Credited__c=0;
             child.Leave_Utilized__c=-5;
             child.EMS_LM_Leave_Credited_Date__c = System.today();
             childrenToInsert.add(child);
