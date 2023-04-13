@@ -18,7 +18,7 @@
 }
 
 .table-container {
-  max-height: 380px; /* set maximum height */
+  max-height: 250px; /* set maximum height */
   overflow: auto; /* enable vertical scrollbar */
 }
 

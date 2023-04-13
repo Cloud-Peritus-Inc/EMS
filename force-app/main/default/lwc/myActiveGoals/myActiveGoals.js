@@ -35,7 +35,7 @@ connectedCallback() {
         }else if(error){
             console.log('===error==='+JSON.stringify(error));
             this.datawrap1 = [];
-            this.datawrap2 = [];
+             this.datawrap2 = [];
             
         }
    }

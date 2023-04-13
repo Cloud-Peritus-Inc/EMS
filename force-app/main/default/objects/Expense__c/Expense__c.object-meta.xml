@@ -162,14 +162,14 @@
     </nameField>
     <pluralLabel>Expenses</pluralLabel>
     <searchLayouts>
-        <searchResultsAdditionalFields>Approval_Manager__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Resource__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Bill_Date__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Expense_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Expense_Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>is_Reimbursed__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Reimbursed_Date__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Resource__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Approval_Manager__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

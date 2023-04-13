@@ -7,5 +7,5 @@ NOT(ISBLANK(Contact_Phone_Number__c)),
 NOT(REGEX(Contact_Phone_Number__c, &quot;\\D*?(\\d\\D*?){10}&quot;)) 
 )</errorConditionFormula>
     <errorDisplayField>Contact_Phone_Number__c</errorDisplayField>
-    <errorMessage>Enter a valid Contact phone number</errorMessage>
+    <errorMessage>Please enter a valid 10 digit phone number</errorMessage>
 </ValidationRule>

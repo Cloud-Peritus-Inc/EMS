@@ -54,6 +54,5 @@ public class LeaveManagementApexControllerTest {
             LeaveManagementApexController.getLeaveRequestHr();
             System.assertEquals(5, requests.size());
         }
-        Test.stopTest();
     }
 }

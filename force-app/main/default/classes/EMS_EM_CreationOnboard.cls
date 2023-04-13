@@ -358,12 +358,14 @@ public without Sharing class EMS_EM_CreationOnboard {
     }
     
     @AuraEnabled
-    public static string dmlOnEducation(Object data, String removeEducationIds) {
+    public static List<ems_EM_Additional_Detail__c> dmlOnEducation(Object data, String removeEducationIds) {
         List<ems_EM_Additional_Detail__c> updateEducations = (List<ems_EM_Additional_Detail__c>) JSON.deserialize(JSON.serialize(data), List<ems_EM_Additional_Detail__c>.class);
         List<ems_EM_Additional_Detail__c> deleteEducations = new List<ems_EM_Additional_Detail__c>();
         
         if(String.isNotBlank(removeEducationIds)){
+            
             List<Id> EducationsIds = removeEducationIds.split(',');
+           
             deleteEducations = [SELECT Id FROM ems_EM_Additional_Detail__c WHERE Id IN :EducationsIds];
         }
         
@@ -375,7 +377,7 @@ public without Sharing class EMS_EM_CreationOnboard {
             if(deleteEducations != null && !deleteEducations.isEmpty()){    
                 delete deleteEducations;
             }
-            return 'Success: Education(s) upsert/delete successfully';
+            return updateEducations;
         }
         catch (Exception e) {
             String errorMsg = 'The following exception has occurred: ' + e.getMessage();

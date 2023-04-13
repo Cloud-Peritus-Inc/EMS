@@ -7,7 +7,7 @@
                 
           </div>
            <div class="child2" style="width:95%">
-              <font size="4"><b>Goals and Metrics</b></font> <br/>
+              <font size="4"><b>Goals</b></font> <br/>
                <font color="grey"> Manage your Goals and keep a check of your metrics. </font>
            </div>
     </div>
@@ -16,21 +16,22 @@
      
       <div class="parent">
           <div class="child1" style="padding:10px;">
+            <div class="table-container">
          <template for:each={datawrap1} for:item="task">
            <lightning-card key={task.subject}>
              <div style="padding:0px 20px 10px 20px; min-height: 75px;align: center;">
                <a href="#" data-id={task.taskid} onclick={handleClick}> <font size="3"> <b> {task.subject}  </b></font> </a> <br/>
                    
-                     <!--   <lightning-formatted-rich-text value={task.description}>
-                           </lightning-formatted-rich-text> -->
-                    
+                                        
                       <b>Complete By: </b> <lightning-formatted-date-time value={task.mygoal.End_Date__c}></lightning-formatted-date-time>
                   </div>   
                   
            </lightning-card>  <br key={task.subject}/>
           </template>
+           </div>
           </div>
            <div class="child2" style="padding:10px;">
+              <div class="table-container">
             <template for:each={datawrap2} for:item="task">
            <lightning-card key={task.subject}>
              <div style="padding:0px 20px 10px 20px;min-height: 75px;align: center;">
@@ -39,7 +40,7 @@
                   </div>   
                   
            </lightning-card>  <br key={task.subject}/>
-          </template>
+          </template> </div>
            </div>
       </div>
            
