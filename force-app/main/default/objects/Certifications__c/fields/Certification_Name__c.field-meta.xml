@@ -216,18 +216,6 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
-            <value>
-                <fullName>Salesforce Certified Application Architect**</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Salesforce Certified Application Architect**</label>
-            </value>
-            <value>
-                <fullName>Salesforce Certified System Architect*</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Salesforce Certified System Architect*</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

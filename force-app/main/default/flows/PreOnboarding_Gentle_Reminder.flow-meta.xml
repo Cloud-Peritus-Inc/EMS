@@ -40,10 +40,31 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Date_of_Joining__c</leftValueReference>
-                <operator>LessThan</operator>
+                <leftValueReference>$Record.ContactId1__r.EMS_RM_ApplicantStatus_Update__c</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
+                    <stringValue>Offer rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactId1__r.EMS_RM_ApplicantStatus_Update__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Did not join</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
                 </rightValue>
             </conditions>
             <connector>

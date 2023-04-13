@@ -242,6 +242,8 @@ guestObj.Identify_Details_Value_Filled__c = ts.isIdentifyDetailsCheckbox;
 guestObj.Other_Certifications_Value_Filled__c=ts.isOtherCertificationsCheckbox;
 guestObj.Address_Details_Value_Filled__c = ts.isAddressDetailsCheckbox;
 guestObj.Company_Information_Viewed__c = ts.isCompanyInformationValueChecked;
+guestObj.Education_Details_Filled__c=ts.isEducationDetailsCheckbox;
+guestObj.Work_Details_Filled__c=ts.isWorkExperienceCheckbox;
 guestObj.Is_Confirm__c = ts.isConfirmSubmit;
 guestObj.Status__c = ts.statusUpdate;
 if(ts.isWorkExperience){
@@ -328,8 +330,7 @@ if(ts.isWorkExperience){
         guestObj1.EMS_EM_From_Date5__c=ts.fromdate5;
         guestObj1.EMS_EM_To_Date5__c=ts.todate5;
         guestObj1.EMS_EM_Previous_Company_Name5__c=ts.previouscompanyname5;
-        guestObj1.Education_Details_Filled__c=ts.isEducationDetailsCheckbox;
-        guestObj1.Work_Details_Filled__c=ts.isWorkExperienceCheckbox;
+       
 
       //  ts.hideModalBox();
         //ts.readonlyfield=true;
@@ -402,8 +403,24 @@ function updateOnboardingInfoOnPageLoads(ts){
            // console.log("result.gridConfiguration", JSON.stringify(result.gridConfiguration));
            // console.log('onboarding'+onboarding);
            // console.log('FILES ' , result.contentDocumentLink);
+              //ts.dataList = result.contentDocumentLink;
+              let filteredFiles = result.contentDocumentLink.filter((file) => file.Title.includes('Work_Details_'));
+              if (filteredFiles.length > 0) {
+                ts.isUploadReq = false;
+                ts.dataDocList = filteredFiles;
+              } else {
+                ts.isUploadReq = true;
+              }
+              let filteredEduFiles = result.contentDocumentLink.filter((file) => file.Title.includes('Certificate_'));
+              if (filteredEduFiles.length > 0) {
+                ts.isUploadEduReq = false
+                ts.dataPFList = filteredEduFiles;
+              } else {
+                ts.isUploadEduReq = true;
+              }
+
             result.contentDocumentLink.forEach((currentItem) => {
-              if(currentItem.Title.includes('passport_')){
+              if(currentItem.Title.includes('Picture_')){
               ts.fileName2 = currentItem.Title;
              // console.log('passport photo',ts.fileName2);
               }
@@ -415,9 +432,9 @@ function updateOnboardingInfoOnPageLoads(ts){
                   ts.fileName1 = currentItem.Title;
                  // console.log('pan photo',ts.fileName1);
              }
-             else if(currentItem.Title.includes('certificate_')){
+             else if(currentItem.Title.includes('Work Document_')){
               ts.fileName3 = currentItem.Title;
-             // console.log('certificate photo',ts.fileName3);
+             console.log('certificate ----------------->',ts.fileName3);
              }
              else if(currentItem.Title.includes('certificate1_')){
               ts.fileName4 = currentItem.Title;
@@ -658,8 +675,8 @@ function updateOnboardingInfoOnPageLoads(ts){
               ts.isIdentifyDetailsCheckbox = onboarding.Identify_Details_Value_Filled__c;
               ts.isAddressDetailsCheckbox = onboarding.Address_Details_Value_Filled__c;
               ts.isOtherCertificationsCheckbox = onboarding.Other_Certifications_Value_Filled__c;
-              ts.isEducationDetailsCheckbox = additionalDetails.Education_Details_Filled__c;
-              ts.isWorkExperienceCheckbox = additionalDetails.Work_Details_Filled__c;
+              ts.isEducationDetailsCheckbox = onboarding.Education_Details_Filled__c;
+              ts.isWorkExperienceCheckbox = onboarding.Work_Details_Filled__c;
               ts.isCompanyInformationValueChecked = onboarding.Company_Information_Viewed__c;
               ts.isConfirmSubmit = onboarding.Is_Confirm__c;
               ts.statusUpdate = onboarding.Status__c;
@@ -732,11 +749,11 @@ function updateOnboardingInfoOnPageLoads(ts){
                   ts.isOtherCertificationsCheckbox = true;
                   ts.isCertificationStatusUpdate = 'In Progress';
                 }
-                if(result.additionalDetails.Education_Details_Filled__c === true){
+                if(result.onboarding.Education_Details_Filled__c === true){
                   ts.isEducationDetailsCheckbox = true;
                   ts.isEducationStatusUpdate = 'In Progress';
                 }
-                if(result.additionalDetails.Work_Details_Filled__c === true){
+                if(result.onboarding.Work_Details_Filled__c === true){
                   ts.isWorkExperienceCheckbox = true;
                   ts.isWorkExperienceStatusUpdate = 'In Progress';
                 }
@@ -761,7 +778,7 @@ function updateOnboardingInfoOnPageLoads(ts){
         .catch(error => {
             ts.error = error;
             console.log('this.error-->'+JSON.stringify(ts.error));
-            this.handleIsLoading(false);
+            //this.handleIsLoading(false);
         });
     
 }
