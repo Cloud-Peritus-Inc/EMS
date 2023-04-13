@@ -887,7 +887,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
         let base64 = 'base64,';
         let content = reader.result.indexOf(base64) + base64.length;
         let fileContents = reader.result.substring(content);
-        this.filesUploaded.push({ PathOnClient: file.name, Title: 'passport_' + file.name, VersionData: fileContents });
+        this.filesUploaded.push({ PathOnClient: file.name, Title: 'Picture_' + file.name, VersionData: fileContents });
       };
       reader.readAsDataURL(file);
     } else {
@@ -1278,7 +1278,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
         }
         let file = event.target.files[i];
         let fileExtension = file.name.substring(file.name.lastIndexOf('.'));
-        let newFileName = 'Work Document_' + file.name;
+        let newFileName = 'Work_Details_' + file.name;
         let renamedFile = new File([file], newFileName, { type: file.type });
         let reader = new FileReader();
         reader.onload = e => {

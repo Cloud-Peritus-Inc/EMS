@@ -155,8 +155,8 @@
     <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Skills &amp; Certification</label>
     <nameField>
-        <displayFormat>CT.NO-{0000000}</displayFormat>
-        <label>Certifications</label>
+        <displayFormat>C-{000000}</displayFormat>
+        <label>Credentials ID</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
