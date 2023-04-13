@@ -961,9 +961,12 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   //to add row
   addRow() {
+    this.countcerti = this.records.length + 1;
     let randomId = Math.random() * 16;
-    let myNewElement = { Type__c: 'Certification', Certification_Name__c: "", Other__c: "", Id: randomId, Completion_Date__c: "", Contact__c: this.contactId, Onboarding_Request__c: this.onboardingformId };
+    let myNewElement = { Type__c: 'Certification', Certification_Name__c: "", Other__c: "", Id: randomId, Completion_Date__c: "", Contact__c: this.contactId, 
+    Index2 :this.countcerti, otherfield: this.hideotherfield, Onboarding_Request__c: this.onboardingformId };
     this.records = [...this.records, myNewElement];
+    this.countcerti++;
   }
 
   get isDisable() {
@@ -975,17 +978,20 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   handleIsLoading(isLoading) {
     this.isLoading = isLoading;
   }
-  otherfield = false;
+
+  @track countcerti = 0;
+  @track hideotherfield = false;
+
   //update table row values in list
   updateValues(event) {
     var foundelement = this.records.find(ele => ele.Id == event.target.dataset.id);
     if (event.target.name === 'Certification_Name__c') {
       foundelement.Certification_Name__c = event.target.value;
       if (foundelement.Certification_Name__c === 'Other') {
-        this.otherfield = true;
+        this.hideotherfield = true;
       }
       else {
-        this.otherfield = false;
+        this.hideotherfield = false;
       }
     } else if (event.target.name === 'Completion_Date__c') {
       foundelement.Completion_Date__c = event.target.value;
@@ -996,7 +1002,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       today = yyyy + '-' + mm + '-' + dd;
       if (foundelement.Completion_Date__c >= today) {
         foundelement.Completion_Date__c = undefined;
-        displayShowtoastMessage('Please Enter Correct Completion Date', 'error', this);
+        displayShowtoastMessage('Please enter a valid certification completion date', 'error', this);
       }
     } else if (event.target.name === 'Other__c') {
       foundelement.Other__c = event.target.value;
@@ -1125,7 +1131,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     this.educationDetails = [...this.educationDetails, myNewElement];
     this.count++;
 
-    console.log('this.educationDetails >>> ', this.educationDetails);
+    //console.log('this.educationDetails >>> ', this.educationDetails);
   }
 
   //handle save and process dml 
@@ -1392,8 +1398,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     let myNewElement = {
       RecordType: { Name: 'Work Details' }, EMS_EM_Job_Title__c: "", Id: randomId, EMS_EM_From_Date__c: "",
       EMA_EM_To_Date__c: "", EMS_EM_Previous_Company_Name__c: "", EMS_EM_Previous_Company_HR_EmailId__c: "",
-      index1: this.counting, isHide: this.hidePreviousCompanyHR,  isDelete1: this.isdeleting, Onboarding_Request__c: this.onboardingformId,
-      ContactId__c: this.contactId
+      index1: this.counting, isHide: this.hidePreviousCompanyHR,  isDelete1: this.isdeleting, Onboarding_Request__c: this.onboardingformId
     };
     this.workDetails = [...this.workDetails, myNewElement];
     this.counting++;
@@ -1497,7 +1502,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
               message: 'Details saved successfully',
               variant: 'success',
             }),
-          );
+          );updateOnboardingInfoOnPageLoads(this);
           //this.showToast('Success', result, 'Success', 'dismissable');
         }).catch(error => {
           this.handleIsLoading(false);

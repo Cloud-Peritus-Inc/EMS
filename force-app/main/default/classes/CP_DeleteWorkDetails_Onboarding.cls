@@ -54,16 +54,16 @@ public without sharing class CP_DeleteWorkDetails_Onboarding implements TriggerA
                                                                     WHERE Onboarding_Request__c = :request.Id AND RecordType.Name = 'Work Details'];
                 detailsToDelete.addAll(relatedDetails);
                 
-                // query for ContentDocumentLink records that are related to the current EMS_EM_Onboarding_Request__c record and the filename contains "Work Document_"
+                // query for ContentDocumentLink records that are related to the current EMS_EM_Onboarding_Request__c record and the filename contains "Work_Details_"
                 List<ContentDocumentLink> relatedDocuments = [SELECT Id 
                                                               FROM ContentDocumentLink 
-                                                              WHERE LinkedEntityId = :request.Id AND ContentDocument.Title LIKE 'Work Document_%'];
+                                                              WHERE LinkedEntityId = :request.Id AND ContentDocument.Title LIKE 'Work_Details_%'];
                 documentsToDelete.addAll(relatedDocuments);
             }
         }
         // delete the related EMS_EM_Additional_Detail__c records with RecordType Name = 'Work Details'
         delete detailsToDelete;
-        // delete the related ContentDocumentLink records where the filename contains "Work Document_"
+        // delete the related ContentDocumentLink records where the filename contains "Work_Details_"
         delete documentsToDelete;
     }
     

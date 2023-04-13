@@ -67,7 +67,7 @@
             <field>EMS_TM_Status_Asgn__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Inactive</stringValue>
+                <stringValue>Scheduled</stringValue>
             </value>
         </filters>
         <object>EMS_TM_Assignment__c</object>
