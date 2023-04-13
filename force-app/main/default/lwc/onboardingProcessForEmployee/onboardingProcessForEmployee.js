@@ -236,7 +236,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         this.passport = employye.EMS_EM_PassportNo__c;
         this.DrivingLicense = employye.EMS_Driving_License_No__c;
 
-        this.cd = employye.EMS_EM_Current_Address__c;
+        //this.cd = employye.EMS_EM_Current_Address__c;
         this.castate = employye.EMS_EM_CA_State__c;
         this.pastate = employye.EMS_EM_PA_State__c;
         this.cacity = employye.EMS_EM_CA_City__c;
@@ -254,20 +254,26 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
           this.showvehicle = true;
           this.checkboxValue = true;
         }
-        if (this.PostOnboardingConfirm == true) {
+        if (this.PostOnboardingConfirm === true) {
           this.buttonDisable = true;
           this.readonlyfield = true;
           this.readonlyfield1 = true;
-          this.expression1 = true;
           this.disableFlag = true;
+          this.expression1 = true;
+        }else{
+          this.disableFlag = false;
         }
+       
         if(this.cadrressline1 !=null && this.padrressline1 != null){
           if (this.padrressline1 === this.cadrressline1) {
             this.paFlag = true;
             this.readonlyfield1 = true;
+            //this.disableFlag = false;
           }
             else{
-              this.paFlag = false;
+              this.disableFlag = false;
+              this.readonlyfield1 = false;
+              //this.paFlag = false;
             }
          }
         
@@ -346,8 +352,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     { label: 'O RhD negative (O-)', value: 'O RhD negative (O-)' },
     { label: 'AB RhD positive (AB+)', value: 'AB RhD positive (AB+)' },
     { label: 'AB RhD negative (AB-)', value: 'AB RhD negative (AB-)' },
-
-
   ];
 
   BankNamevalue = [
@@ -404,9 +408,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     { label: 'No', value: 'No' }
   ];
 
-
   // Address details here....
-
   @track cadrressline1;
   @track cadrressline2;
   @track padrressline1;
@@ -424,7 +426,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
   AddressCheckboxChange(event) {
     this.inputcheckboxValue = event.target.checked ? 'Checked' : 'Unchecked';
-    //console.log('this.inputcheckboxValue-->', this.inputcheckboxValue);
     if (this.inputcheckboxValue == 'Checked') {
       //console.log('address checked')
       this.padrressline1 = this.cadrressline1;
@@ -432,6 +433,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.pastate = this.castate;
       this.pacity = this.cacity;
       this.pazip = this.cazip;
+      this.paFlag = true;
       this.readonlyfield1 = true;
     } else {
       //console.log('address unchecked')
@@ -440,6 +442,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       this.pastate = '';
       this.pacity = '';
       this.pazip = '';
+      this.paFlag = false;
       this.readonlyfield1 = false;
     }
   }
@@ -460,18 +463,13 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
     this.disableFlag = this.addressFlag ? false : true;
     if (!this.addressFlag) {
-      //console.log('1473');
       this.paFlag = false;
-
     }
     const field = event.target.name;
     if (field === 'EMS_EM_CAddress_Line_1__c') {
       this.cadrressline1 = event.target.value;
-      //console.log('234',event.target.value);
       if (event.target.value == '') {
-        //console.log('empty string');
         this.cadrressline1 = null;
-
       }
       if (this.inputcheckboxValue == 'Checked') {
         this.padrressline1 = this.cadrressline1;
@@ -479,7 +477,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
     if (field === 'EMS_EM_CAddress_Line_2__c') {
       this.cadrressline2 = event.target.value;
-      //console.log(event.target.value);
       if (event.target.value == '') {
         this.cadrressline2 = null;
       }
@@ -489,35 +486,26 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
     if (field === 'EMS_EM_CA_State__c') {
       this.castate = event.target.value;
-      //console.log(event.target.value);
       if (event.target.value == '') {
         this.castate = null;
-
       }
       if (this.inputcheckboxValue == 'Checked') {
         this.pastate = this.castate;
       }
-
     }
     if (field === 'EMS_EM_CA_City__c') {
       this.cacity = event.target.value;
-      //console.log(event.target.value);
       if (event.target.value == '') {
         this.cacity = null;
-
       }
       if (this.inputcheckboxValue == 'Checked') {
         this.pacity = this.cacity;
       }
-
     }
     if (field === 'EMS_EM_CA_Zip__c') {
       this.cazip = event.target.value;
-      //console.log(event.target.value);
-
       if (event.target.value == '') {
         this.cazip = null;
-
       }
       if (this.inputcheckboxValue == 'Checked') {
         this.pazip = this.cazip;
@@ -533,9 +521,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       }
       if (this.inputcheckboxValue == 'Checked') {
         this.cadrressline1 = this.padrressline1;
-
       }
-
     }
     if (field === 'EMS_EM_PAddress_Line_2__c') {
       this.padrressline2 = event.target.value;
@@ -1151,7 +1137,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
 
   }
 
-  selectStep4() {
+ /*  selectStep4() {
     if (this.readonlyfield != true) {
       if (this.Branchname != null && this.Branchname != '' && this.BeneficiaryName != null && this.BeneficiaryName != ''
         && this.IFSCRoutingNumber != null && this.IFSCRoutingNumber != '' && this.AccountNumber.length <= 20 &&
@@ -1167,7 +1153,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       }
     }
   }
-
+ */
   //uploading all files
   @track filesUploaded = [];
   uploadedFiles = []; file; fileName;
@@ -1332,7 +1318,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
     if (this.isIdentityDetails == true) {
       if (this.selectStep2) {
-        //console.log('selectStep2');
         this.showSpinner = true;
         updateContact({ newRecord: contactObj, ConRecordid: this.contactID, newPayroll: payrollobj, files: this.filesUploaded })
 
@@ -1435,7 +1420,6 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
     }
 
     if (this.isShowVehicleFrom == true) {
-      // if(this.selectStep3){
       const isInputsCorrect = [...this.template.querySelectorAll('lightning-input')]
         .reduce((validSoFar, inputField) => {
           inputField.reportValidity();
@@ -1475,7 +1459,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       if (this.filesData == [] || this.filesData.length == 0) {
         this.dispatchEvent(
           new ShowToastEvent({
-            message: 'Please select files first',
+            message: 'Please Upload files first',
             variant: 'error',
           }),
         ); return;
@@ -1506,13 +1490,13 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                   file.title.includes('PF Form')
                 );
                 let filteredDocFiles = this.dataList.filter((file) =>
-                  file.title.includes('Document')
+                  file.title.includes('Document_')
                 );
                 this.dataPFList = filteredFiles;
                 this.dataDocList = filteredDocFiles;
               })
               .catch((err) => {
-                console.log(err);
+                //console.log(err);
               });
           } else {
             //console.log('Upload failed:', result);
@@ -1543,12 +1527,12 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
       }
     }
     if (this.isDocuments == true) {
-      console.log('recordId ', this.contactID);
-      console.log('filesDocData length:', this.filesDocData.length);
+      //console.log('recordId ', this.contactID);
+      //console.log('filesDocData length:', this.filesDocData.length);
       if (this.filesDocData == [] || this.filesDocData.length == 0) {
         this.dispatchEvent(
           new ShowToastEvent({
-            message: 'Please select files first',
+            message: 'Please Upload files first',
             variant: 'error',
           }),
         ); return;
@@ -1561,7 +1545,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
         .then(result => {
           console.log(result);
           if (result && result == 'success') {
-            console.log('Upload successful---->', result);
+            //console.log('Upload successful---->', result);
             this.filesDocData = [];
             this.dispatchEvent(
               new ShowToastEvent({
@@ -1579,7 +1563,7 @@ export default class OnboardingProcessForEmployee extends NavigationMixin(Lightn
                   file.title.includes('PF Form')
                 );
                 let filteredDocFiles = this.dataList.filter((file) =>
-                  file.title.includes('Document')
+                  file.title.includes('Document_')
                 );
                 this.dataPFList = filteredFiles;
                 this.dataDocList = filteredDocFiles;
