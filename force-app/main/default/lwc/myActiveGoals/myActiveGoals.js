@@ -12,7 +12,7 @@ showonUi = false;
 @track loaded = false;
 selectedgoalId;
 datawrap1 = [];
-datawrap2 = [];
+
 numberOfTasks = 0;
 numberofcompletedTasks = 0;
 complaitionPercent = 0;
@@ -28,14 +28,14 @@ connectedCallback() {
         if(data){
           
             this.datawrap1 = data.taskList;
-            this.datawrap2 = data.taskList2;
+           
             this.numberofcompletedTasks = data.numberofcompletedTasks;
             this.numberOfTasks = data.numberofTasks;
             this.showonUi = data.showUI;
         }else if(error){
             console.log('===error==='+JSON.stringify(error));
             this.datawrap1 = [];
-             this.datawrap2 = [];
+            this.datawrap2 = [];
             
         }
    }
