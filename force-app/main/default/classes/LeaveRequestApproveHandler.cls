@@ -81,11 +81,7 @@ public without sharing class LeaveRequestApproveHandler {
         try{
            update updatedLeaveReqList;
            System.debug('updatedLeaveReq' +updatedLeaveReqList);
-            if (test.isRunningTest()){
-                Integer i = 1/0;
-            }
         }
-
             catch(Exception ex){
                 LogException.logHandledException(ex, 'LeaveRequestApproveHandler', 'updateApproveStatusAndComments');
                 System.debug('### Exception ' + ex.getMessage());
@@ -157,11 +153,7 @@ public without sharing class LeaveRequestApproveHandler {
         try{
            update bulkupdatedLeaveReqList;
            System.debug('### bulkupdatedLeaveReqList' +bulkupdatedLeaveReqList);
-            
-            if (test.isRunningTest()){
-                Integer i = 1/0;
-            }               
-        }    
+        }
             catch(Exception ex){
                 LogException.logHandledException(ex, 'LeaveRequestApproveHandler', 'bulkLeaveReqApproval');
                 System.debug('### Exception ' + ex.getMessage());

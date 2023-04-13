@@ -12,5 +12,10 @@
         <operation>equals</operation>
         <value>EMS_TM_Project__c.Client_Projects</value>
     </filters>
-    <label>Client Project</label>
+    <filters>
+        <field>EMS_TM_Status__c</field>
+        <operation>equals</operation>
+        <value>Ongoing</value>
+    </filters>
+    <label>Active Client Projects</label>
 </ListView>

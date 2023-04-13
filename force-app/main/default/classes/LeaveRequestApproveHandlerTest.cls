@@ -53,6 +53,7 @@ public class LeaveRequestApproveHandlerTest {
             contactuser = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,contactList[0].Id,true); //tech
             leaduser = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,contactList[2].Id,true); //pm
             empUser = Testdatafactory.createCommunityUser3WithAccAndContact(acc.id,contactList[1].Id,true); //emp
+            System.debug('### leaduser'+ leaduser.Id);
         }
     }
      
@@ -102,7 +103,7 @@ public class LeaveRequestApproveHandlerTest {
             System.assertEquals(System.today(), leaveVal1.EMS_LM_Approved_On__c);
             System.assertEquals('Approved by PM', leaveVal1.Approver_1_Approved_Comments__c);
         }
-        system.runAs(resourceUser){
+        system.runAs(LeadUser){
             insert leaveReq1;
           LeaveRequestApproveHandler.updateApproveStatusAndComments(leaveReq1.Id, 'Approved'); 
              leaveVal2 = [SELECT Id,
