@@ -1,159 +1,201 @@
 @isTest
 public class LeaveRequestRejectHandlerTest {
     
-     @isTest
-    public static void leaverequestmethod(){
+    @testSetup static void setup()  {
+        user adminuser = TestDataFactory.createAdminUser(true);
+        Resource_Role__c techLead;
+        Resource_Role__c emp;
+        Resource_Role__c projectManager;
+        Account acc;
+        Contact con;
+        Contact leadcontact;
+        EMS_LM_Leave__c annualtype;
+        Resource_Resource_Relationship__c rrr;
+        List<Resource_Role__c> resourceRoleList = new List<Resource_Role__c>();
+        List<Contact> contactList = new List<Contact>();
+        system.runAs(adminuser){
+            
+            resourceRoleList.add(techLead = TestDataFactory.createResourceRole('Software Engineer',false));
+            resourceRoleList.add(emp = TestDataFactory.createResourceRole('tech Engineer',false));
+            emp.Level_of_Approval__c = 2;
+			resourceRoleList.add(projectManager = TestDataFactory.createResourceRole('tech Engineer',false));
+			projectManager.Level_of_Approval__c = 0;
+            projectManager.Auto_Approve__c = true;
+            insert resourceRoleList;
+            
+            annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
+            EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
+            EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
+            EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
+            EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);
+
+            acc = TestDataFactory.createAccount(true);
+            
+            for(Integer i=0; i<3; i++){
+                con=TestDataFactory.createResourceContact(acc.id, false);
+                con.EMS_RM_Employee_Id__c = 'CP1023'+i;
+                con.Resource_Role__c = resourceRoleList[i].id;
+                con.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
+                con.EMS_LM_No_Of_Leaves_Credit__c = 10;
+				contactList.add(con);                
+            }
+            insert contactList;
+            System.debug('con'+ contactList);
+            
+            rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[2].Id); // Tech lead
+            rrr = TestDataFactory.createRRR(contactList[1].Id, true, contactList[0].Id); //EMP
+        }
+        User contactuser;
+        User leaduser;
+        User empUser;
+         //System.debug('### outside  in adminuser *(****' + adminuser.Id);
+        system.runAs(adminuser){
+            contactuser = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,contactList[0].Id,true); //tech
+            leaduser = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,contactList[2].Id,true); //pm
+            empUser = Testdatafactory.createCommunityUser3WithAccAndContact(acc.id,contactList[1].Id,true); //emp
+            System.debug('### leaduser'+ leaduser.Id);
+        }
+    }
+     
+    testmethod static void  checkTheapproval(){
+       EMS_LM_Leave_History__c leaveVal1;
+       EMS_LM_Leave_History__c leaveVal2;
+       User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they'];
+         User LeadUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail4@testclass.com.they'];
+        User empUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail5@testclass.com.they'];
+        EMS_LM_Leave_History__c leaveReq = new EMS_LM_Leave_History__c(); 
+        leaveReq.EMS_LM_Contact__c = resourceUser.ContactId;
+        leaveReq.EMS_LM_Day__c = 'Full Day';
+        leaveReq.EMS_LM_Leave_Start_Date__c = system.today();
+        leaveReq.EMS_LM_Leave_End_Date__c = system.today().adddays(1);
+        leaveReq.EMS_LM_Leave_Type__c = [SELECT Id FROM EMS_LM_Leave__c WHERE Name = 'Annual Leave'].Id;
+        leaveReq.EMS_LM_Leave_Duration__c = 1;
+        leaveReq.EMS_LM_Reason__c = 'Test Reason';
+        leaveReq.EMS_LM_Status__c =  'Pending';
+    	leaveReq.EMS_LM_Leave_Type_Name__c = 'Annual Leave';
         
-         UserRole r =[Select Id from UserRole where Name = 'leadership'];
-        Id sysAdminId = [select Id From Profile where Name ='System Administrator'].Id;
-        Id communityId = [select Id From Profile where Name ='TM Customer Community'].Id;
-        User u = [select Id, contactId, Email From User WHERE IsActive =True and ProfileId = :sysAdminId limit 1];
-        system.debug(u);        
-        System.runAs(u){
-        contact c2 = new Contact();
-        c2.FirstName = 'abcd';
-        c2.LastName = 'efgh';
-        c2.Official_Mail__c = u.Email;
-        c2.EMS_Phone_Number__c = '8615748575';
-        c2.Location__c ='India';
-        c2.RecordTypeId = [SELECT Id FROM RecordType where name = 'Resource'].Id;
-        c2.EMS_LM_User_1__c = u.Id;
-        c2.EMS_LM_User2__c = u.Id;
-        c2.EMS_TM_User__c = u.Id;
-        c2.EMS_LM_Gender__c = 'Female';
-        c2.EMS_LM_Marital_Status__c = 'Married';
-        c2.EMS_EM_JD__c = system.today();
-        c2.EMS_LM_No_of_Bereavement_Leaves_Credit__c = c2.EMS_LM_No_Of_Compensatory_Off_Credit__c = c2.EMS_LM_No_Of_Leaves_Credit__c = c2.EMS_LM_No_Of_Maternity_Leaves_Credit__c=c2.EMS_LM_No_Of_Paternity_Leaves_Credit__c = c2.EMS_LM_No_Of_Utilized_Bereavement_Leaves__c = c2.EMS_LM_No_OF_Utilized_Compensatory_Off__c = c2.EMS_LM_No_Of_Utilized_Leaves__c = c2.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c = c2.EMS_LM_No_Of_Utilized_Maternity_Leaves__c = c2.No_Of_Utilized_Paternity_Leaves__c = 0;
-        insert c2;  
-        String cId = c2.Id;
-        user us =new user();
-        us.FirstName='bvhg';
-        us.LastName='nbv';
-        us.Email='bvhgnbv@gmail.com';
-        us.Username='bvhgnbv@gmail.com.check';
-        us.Alias='bvhgn'; 
-        us.TimeZoneSidKey='America/Los_Angeles';
-        us.LocaleSidKey='en_US'; 
-        us.EmailEncodingKey='UTF-8'; 
-        us.ProfileId= sysAdminId; 
-        us.LanguageLocaleKey='en_US';
-        us.UserRoleId = r.Id;
-        insert us;
-        Account acc = new Account(Name ='sriytbngvuoi',Phone='9457898547',ownerid = us.id);
-        insert acc;
-        /*acc = [select Id from Account where Name ='CP Test'];
-        acc.Name ='sri12323434';
-        acc.Phone='9652901511';
-        acc.ownerid = us.id;
-        insert acc;*/
-        Contact c1 = new Contact();
-        c1.FirstName = 'bvhg';
-        c1.LastName = 'nbv';
-        c1.Official_Mail__c = 'bvhgnbv@gmail.com';
-        c1.EMS_Phone_Number__c = '8552748575';
-        c1.Location__c ='India';
-        c1.RecordTypeId = [SELECT Id FROM RecordType where name = 'Resource'].Id;
-        c1.EMS_LM_User_1__c = us.Id;
-        c1.EMS_LM_User2__c = us.Id;
-        c1.EMS_TM_User__c = us.Id;
-        c1.EMS_LM_Gender__c = 'Female';
-        c1.EMS_LM_Marital_Status__c = 'Married';
-        c1.EMS_EM_JD__c = system.today();
-        c1.EMS_LM_Maternity_Leave__c = true;
-        c1.EMS_LM_No_of_Bereavement_Leaves_Credit__c = c1.EMS_LM_No_Of_Compensatory_Off_Credit__c = c1.EMS_LM_No_Of_Leaves_Credit__c = c1.EMS_LM_No_Of_Maternity_Leaves_Credit__c=c1.EMS_LM_No_Of_Paternity_Leaves_Credit__c = c1.EMS_LM_No_Of_Utilized_Bereavement_Leaves__c = c1.EMS_LM_No_OF_Utilized_Compensatory_Off__c = c1.EMS_LM_No_Of_Utilized_Leaves__c = c1.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c = c1.EMS_LM_No_Of_Utilized_Maternity_Leaves__c = c1.No_Of_Utilized_Paternity_Leaves__c = 0;
-        insert c1;        
-        Contact c = new Contact();
-        c.FirstName = 'nbk';
-        c.AccountId = acc.id;
-        c.LastName = 'jj';
-        c.Official_Mail__c = 'nbkjj121@gmail.com';
-        c.EMS_Phone_Number__c = '8484158575';
-        c.Location__c ='India';
-        c.RecordTypeId = [SELECT Id FROM RecordType where name = 'Resource'].Id;
-        c.EMS_LM_User_1__c = us.Id;
-        c.EMS_LM_User2__c = us.Id;
-        c.EMS_LM_Gender__c = 'Male';
-        c.EMS_LM_Marital_Status__c = 'Married';
-        c.EMS_EM_JD__c = system.today();
-        c.EMS_LM_No_of_Bereavement_Leaves_Credit__c = c.EMS_LM_No_Of_Compensatory_Off_Credit__c = c.EMS_LM_No_Of_Leaves_Credit__c = c.EMS_LM_No_Of_Maternity_Leaves_Credit__c=c.EMS_LM_No_Of_Paternity_Leaves_Credit__c = c.EMS_LM_No_Of_Utilized_Bereavement_Leaves__c = c.EMS_LM_No_OF_Utilized_Compensatory_Off__c = c.EMS_LM_No_Of_Utilized_Leaves__c = c.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c = c.EMS_LM_No_Of_Utilized_Maternity_Leaves__c = c.No_Of_Utilized_Paternity_Leaves__c = 0;
-        insert c;
-        user us1 =new user();
-        us1.FirstName='nbk';
-        us1.LastName='jj';
-        us1.Email='nbkjj121@gmail.com';
-        us1.Username='nbkjj121@gmail.com.check123';
-        us1.Alias='nbkjj1'; 
-        us1.TimeZoneSidKey='America/Los_Angeles';
-        us1.LocaleSidKey='en_US'; 
-        us1.EmailEncodingKey='UTF-8'; 
-        us1.ProfileId= communityId; 
-        us1.LanguageLocaleKey='en_US';
-        us1.ContactId = c.Id;
-        insert us1;
-        c.EMS_TM_User__c = us1.Id;
-        update c;
-            
-             Date startdate = system.today() + 5 ;
-        String startd = string.valueOf(startdate);
-        Date enddate = startdate + 4;
-        String endd = string.valueOf(enddate);
-        list<EMS_LM_Leave_History__c> leaveList =New list<EMS_LM_Leave_History__c>();
-        list<Id> LeaveId =New List<Id>();
-        EMS_LM_Leave_History__c lh2 = new EMS_LM_Leave_History__c();
-        lh2.EMS_LM_Approver__c = us1.Id;
-      //  lh2.EMS_LM_2nd_Approver__c = us1.Id;
-      //  lh2.Approver_3__c = us1.Id;
-        lh2.EMS_LM_Contact__c = c2.Id;
-        lh2.EMS_LM_Leave_Duration__c = 2;
-        lh2.EMS_LM_Leave_End_Date__c = enddate;
-        lh2.EMS_LM_Leave_Start_Date__c = startdate;
-        lh2.EMS_LM_Leave_Type_Name__c = 'Annual Leave';
-        lh2.EMS_LM_Status__c='Pending';
-        leaveList.add(lh2);
-        LeaveId.add(lh2.Id);
-        string LeaveRequestId2=lh2.Id;
-        insert lh2;
-            
-        EMS_LM_Leave_History__c lh3 = new EMS_LM_Leave_History__c();
-       // lh3.EMS_LM_Approver__c = us1.Id;
-        lh3.EMS_LM_2nd_Approver__c = us1.Id;
-       // lh3.Approver_3__c = us1.Id;
-        lh3.EMS_LM_Contact__c = c2.Id;
-        lh3.EMS_LM_Leave_Duration__c = 2;
-        lh3.EMS_LM_Leave_End_Date__c = enddate;
-        lh3.EMS_LM_Leave_Start_Date__c = startdate;
-        lh3.EMS_LM_Leave_Type_Name__c = 'Annual Leave';
-        lh3.EMS_LM_Status__c='Waiting For Approver 2';
-        insert lh3;
-        LeaveId.add(lh3.Id);
-        string LeaveRequestId3=lh3.Id;
-            
-            EMS_LM_Leave_History__c lh4 = new EMS_LM_Leave_History__c();
-    //    lh4.EMS_LM_Approver__c = us1.Id;
-     //   lh4.EMS_LM_2nd_Approver__c =us1.Id;
-        lh4.Approver_3__c = us1.Id;
-        lh4.EMS_LM_Contact__c = c2.Id;
-        lh4.EMS_LM_Leave_Duration__c = 2;
-        lh4.EMS_LM_Leave_End_Date__c = enddate;
-        lh4.EMS_LM_Leave_Start_Date__c = startdate;
-        lh4.EMS_LM_Leave_Type_Name__c = 'Annual Leave';
-        lh4.EMS_LM_Status__c='Waiting For Approver 3';
-        insert lh4;
-        string LeaveRequestId4=lh4.Id;
-        test.startTest();
-             
-        LeaveRequestRejectHandler.updateRejecteStatusAndComments(leaveRequestId2, 'comments');
-        LeaveRequestRejectHandler.updateRejecteStatusAndComments(LeaveRequestId3, 'comments');
-        LeaveRequestRejectHandler.updateRejecteStatusAndComments(LeaveRequestId4, 'comments');
-            
-            LeaveRequestRejectHandler.bulkLeaveReqReject(LeaveId, 'comments');
-            
-            
-            LeaveRequestApproveHandler.updateApproveStatusAndComments(leaveRequestId2, 'comments');
-            LeaveRequestApproveHandler.updateApproveStatusAndComments(LeaveRequestId3, 'comments');
-        LeaveRequestApproveHandler.updateApproveStatusAndComments(LeaveRequestId4, 'comments');
-        LeaveRequestApproveHandler.bulkLeaveReqApproval(LeaveId, 'comments');
-        test.stopTest();
-    	} 
-	}
+        EMS_LM_Leave_History__c leaveReq1 = new EMS_LM_Leave_History__c(); 
+        leaveReq1.EMS_LM_Contact__c = empUser.ContactId;
+        leaveReq1.EMS_LM_Day__c = 'Full Day';
+        leaveReq1.EMS_LM_Leave_Start_Date__c = system.today();
+        leaveReq1.EMS_LM_Leave_End_Date__c = system.today().adddays(1);
+        leaveReq1.EMS_LM_Leave_Type__c = [SELECT Id FROM EMS_LM_Leave__c WHERE Name = 'Annual Leave'].Id;
+        leaveReq1.EMS_LM_Leave_Duration__c = 1;
+        leaveReq1.EMS_LM_Reason__c = 'Test Reason';
+        leaveReq1.EMS_LM_Status__c =  'Approver 1 Pending';
+    	leaveReq1.EMS_LM_Leave_Type_Name__c = 'Annual Leave';        
+       
+        Test.startTest();
+        system.runAs(LeadUser){
+            insert leaveReq;
+          LeaveRequestRejectHandler.updateRejecteStatusAndComments(leaveReq.Id, 'Rejected by PM'); 
+             leaveVal1 = [SELECT Id,
+                         		EMS_LM_Status__c, 
+                         		EMS_LM_Approved_On__c, 
+                         		EMS_LM_Current_Approver__c, 
+                         		Approver_1_Approved_Comments__c,
+                         		EMS_LM_Approver__c,
+                         		EMS_LM_Approver__r.FirstName,
+                         		EMS_LM_Approver__r.LastName
+                         FROM EMS_LM_Leave_History__c WHERE Id = :leaveReq.Id];
+
+            System.assertEquals(LeaveRequestConstant.REJECTED, leaveVal1.EMS_LM_Status__c);
+            System.assertEquals(System.today(), leaveVal1.EMS_LM_Approved_On__c);
+            System.assertEquals('Rejected by PM', leaveVal1.Approver_1_Approved_Comments__c);
+        }
+        system.runAs(resourceUser){
+            insert leaveReq1;
+          LeaveRequestRejectHandler.updateRejecteStatusAndComments(leaveReq1.Id, 'Rejected by PM'); 
+             leaveVal2 = [SELECT Id,
+                         		EMS_LM_Status__c, 
+                         		EMS_LM_Approved_On__c, 
+                         		EMS_LM_Current_Approver__c, 
+                         		Approver_1_Approved_Comments__c,
+                         		EMS_LM_Approver__c,
+                         		EMS_LM_Approver__r.FirstName,
+                         		EMS_LM_Approver__r.LastName
+                         FROM EMS_LM_Leave_History__c WHERE Id = :leaveReq1.Id];
+
+            System.assertEquals(LeaveRequestConstant.REJECTED, leaveVal2.EMS_LM_Status__c);
+            System.assertEquals(System.today(), leaveVal2.EMS_LM_Approved_On__c);
+        }
+        Test.stopTest();
+    }
+    
+    testMethod static void bulkRejectionTest(){
+       List<EMS_LM_Leave_History__c> requests = new List<EMS_LM_Leave_History__c>();
+       List<EMS_LM_Leave_History__c> requests1 = new List<EMS_LM_Leave_History__c>();
+       List<EMS_LM_Leave_History__c> leaveVal1;
+       List<EMS_LM_Leave_History__c> leaveVal2;
+       User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they'];
+       User LeadUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail4@testclass.com.they'];
+       User empUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail5@testclass.com.they'];
+        for(Integer i=0; i<3; i++){
+            EMS_LM_Leave_History__c leaveReq = new EMS_LM_Leave_History__c(); 
+            leaveReq.EMS_LM_Contact__c = resourceUser.ContactId;
+            leaveReq.EMS_LM_Day__c = 'Full Day';
+            leaveReq.EMS_LM_Leave_Start_Date__c = system.today().adddays(i);
+            leaveReq.EMS_LM_Leave_End_Date__c = system.today().adddays(i+1);
+            leaveReq.EMS_LM_Leave_Type__c = [SELECT Id FROM EMS_LM_Leave__c WHERE Name = 'Annual Leave'].Id;
+            leaveReq.EMS_LM_Leave_Duration__c = 1;
+            leaveReq.EMS_LM_Reason__c = 'Test Reason';
+            leaveReq.EMS_LM_Status__c =  'Pending';
+            leaveReq.EMS_LM_Leave_Type_Name__c = 'Annual Leave';
+            requests.add(leaveReq);
+        }
+        
+        for (integer i=0; i<3; i++){
+            EMS_LM_Leave_History__c leaveReq1 = new EMS_LM_Leave_History__c(); 
+            leaveReq1.EMS_LM_Contact__c = empUser.ContactId;
+            leaveReq1.EMS_LM_Day__c = 'Full Day';
+            leaveReq1.EMS_LM_Leave_Start_Date__c = system.today();
+            leaveReq1.EMS_LM_Leave_End_Date__c = system.today().adddays(1);
+            leaveReq1.EMS_LM_Leave_Type__c = [SELECT Id FROM EMS_LM_Leave__c WHERE Name = 'Annual Leave'].Id;
+            leaveReq1.EMS_LM_Leave_Duration__c = 1;
+            leaveReq1.EMS_LM_Reason__c = 'Test Reason';
+            leaveReq1.EMS_LM_Status__c =  'Approver 1 Pending';
+            leaveReq1.EMS_LM_Leave_Type_Name__c = 'Annual Leave';
+            requests1.add(leaveReq1);
+        }
+        
+        Test.startTest();
+        system.runAs(LeadUser){
+            insert requests;
+          List<Id> leaveReqTabIdsList = new list<Id>();
+            for(EMS_LM_Leave_History__c leaveIds : requests) {
+                leaveReqTabIdsList.add(leaveIds.Id);
+            }
+          LeaveRequestRejectHandler.bulkLeaveReqReject(leaveReqTabIdsList, 'Approver 1 Rejected'); 
+             leaveVal1 = [SELECT Id,
+                         		EMS_LM_Status__c, 
+                         		EMS_LM_Approved_On__c, 
+                         		EMS_LM_Current_Approver__c, 
+                         		Approver_1_Approved_Comments__c,
+                         		EMS_LM_Approver__c,
+                         		EMS_LM_Approver__r.FirstName,
+                         		EMS_LM_Approver__r.LastName
+                         FROM EMS_LM_Leave_History__c WHERE Id IN:leaveReqTabIdsList];
+        }
+        system.runAs(resourceUser){
+            insert requests1;
+          List<Id> leaveReqTabIdsList1 = new list<Id>();
+            for(EMS_LM_Leave_History__c leaveIds : requests) {
+                leaveReqTabIdsList1.add(leaveIds.Id);
+            }
+          LeaveRequestRejectHandler.bulkLeaveReqReject(leaveReqTabIdsList1, 'Rejected by PM'); 
+             leaveVal2 = [SELECT Id,
+                         		EMS_LM_Status__c, 
+                         		EMS_LM_Approved_On__c, 
+                         		EMS_LM_Current_Approver__c, 
+                         		Approver_1_Approved_Comments__c,
+                         		EMS_LM_Approver__c,
+                         		EMS_LM_Approver__r.FirstName,
+                         		EMS_LM_Approver__r.LastName
+                         FROM EMS_LM_Leave_History__c WHERE Id IN : leaveReqTabIdsList1];
+
+           /* System.assertEquals(LeaveRequestConstant.REJECTED, leaveVal2.EMS_LM_Status__c);
+            System.assertEquals(System.today(), leaveVal2.EMS_LM_Approved_On__c);*/
+        }
+        Test.stopTest();
+    }
 }
