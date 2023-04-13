@@ -5,7 +5,7 @@
 *            
 *
 *               Test code coverage provided by the following test class:
-*               -
+*               -LeaveRequestRejectHandlerTest
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -34,6 +34,8 @@ public without sharing class LeaveRequestRejectHandler {
                                                     		 Approver_2_Approved_Comments__c,
                                                     		 Approver_3_Approved_Comments__c,
                                                              EMS_LM_Approver__c,
+                                                             EMS_LM_Contact__c,
+                                                             EMS_LM_Contact__r.ReportsToId,
                                                        	 	 EMS_LM_Approver__r.LastName,
                                                        	     EMS_LM_Approver__r.FirstName,
                                                              EMS_LM_2nd_Approver__c,
@@ -46,25 +48,28 @@ public without sharing class LeaveRequestRejectHandler {
                                                              EMS_LM_Approved_On__c
                                                     FROM EMS_LM_Leave_History__c
                                                     WHERE Id =:leaveRequestId]) {
+                                                        System.debug(LeaveRequestConstant.LOGGEDIN_USERID+'### leaveReqStatus Query' + leaveReqStatus);
            if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_Approver__c) {
+               System.debug('### Logged In 1');
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_1_Approved_Comments__c = comments;
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.EMS_LM_Approver__r.FirstName + ' ' + leaveReqStatus.EMS_LM_Approver__r.LastName ;
                 leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 updatedLeaveReqList.add(leaveReqStatus); 
             }else if(LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.EMS_LM_2nd_Approver__c) {
+                System.debug('### Logged In 2');
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_2_Approved_Comments__c = comments;
                 leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName + ' ' + leaveReqStatus.EMS_LM_2nd_Approver__r.LastName ;
                 updatedLeaveReqList.add(leaveReqStatus); 
-            }else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.Approver_3__c){
+            }/*else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.Approver_3__c){
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_3_Approved_Comments__c = comments;
                 leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.Approver_3__r.FirstName + ' ' + leaveReqStatus.Approver_3__r.LastName ;
                 updatedLeaveReqList.add(leaveReqStatus); 
-            }
+            }*/ // FOR CURRENT SCOPE WE DONT HAVE 3 LEVEL OF APPROVAL
         }
         System.debug('### updatedLeaveReq Before Update' +updatedLeaveReqList);
         try{
@@ -122,13 +127,13 @@ public without sharing class LeaveRequestRejectHandler {
                 leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.EMS_LM_2nd_Approver__r.FirstName + ' ' + leaveReqStatus.EMS_LM_2nd_Approver__r.LastName ;
                 bulkupdatedLeaveReqList.add(leaveReqStatus); 
-            }else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.Approver_3__c){
+            }/*else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.Approver_3__c){
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.REJECTED;
                 leaveReqStatus.Approver_3_Approved_Comments__c = comments;
                 leaveReqStatus.EMS_LM_Approved_On__c = System.today();
                 leaveReqStatus.EMS_LM_Current_Approver__c = leaveReqStatus.Approver_3__r.FirstName + ' ' + leaveReqStatus.Approver_3__r.LastName ;
                 bulkupdatedLeaveReqList.add(leaveReqStatus); 
-            }
+            }*/ // FOR CURRENT SCOPE WE DONT HAVE 3 LEVEL OF APPROVAL
         }
         System.debug('### updatedLeaveReq Before Update' +bulkupdatedLeaveReqList);
         try{

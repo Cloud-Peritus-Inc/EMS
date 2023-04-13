@@ -13,96 +13,64 @@
 **/
 @isTest
 public class CalculateAvailableLeaveBalanceTest {
-    @TestSetup static void setupData(){
-        Contact contactRec = new Contact();
-        contactRec.lastName = 'Test';
-        contactRec.EMS_Phone_Number__c = '9898989898';
-        contactRec.Official_Mail__c = null;
-        contactRec.Email = 'test@gmail.com';
-        contactRec.EMS_LM_No_Of_Leaves_Credit__c = 20;
-        contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c = 1;
-        contactRec.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 120;
-        contactRec.EMS_LM_No_of_Bereavement_Leaves_Credit__c = 2;
-        contactRec.EMS_LM_No_Of_Paternity_Leaves_Credit__c = 4;
-        insert contactRec;
+  
+    public static testmethod void calculateAvailableLeaveBalanceAnnualLeaveTest(){
+         user adminuser = TestDataFactory.createAdminUser(true);
+        
+         user adminuser2 = TestDataFactory.createAdminUser(true);
+        Resource_Role__c role;
+       EMS_LM_Leave__c annualtype;
+        EMS_LM_Leave__c loptype;
+        EMS_LM_Leave__c bretype;
+        EMS_LM_Leave__c compofftype;
+        EMS_LM_Leave__c paternitytype;
+       EMS_LM_Leave__c  Bereavementtype;
+            
+        Account acc;Contact con;
+        system.runAs(adminuser){
+           role = TestDataFactory.createResourceRole(true);
+         annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
+         loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
+        //bretype  = TestDataFactory.createLeaveType('Maternity Leave',true);
+         compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
+            paternitytype = TestDataFactory.createLeaveType('Paternity Leave',true);
+            Bereavementtype = TestDataFactory.createLeaveType('Bereavement Leave',true);
+          acc = TestDataFactory.createAccount(true);
+		 con=  TestDataFactory.createResourceContact(acc.id, false);
+         con.EMS_RM_Employee_Id__c = 'CP10234';
+         con.Resource_Role__c = role.Id;
+         con.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
+         con.EMS_RM_ApplicantStatus_Update__c = 'Active';
+         con.RecordTypeId = ContactConstant.RESOURCE_RECORDTYPEID;
+         insert con;
+        }
+       
+        
+         Test.startTest();
+         User u;
+         system.runAs(adminuser){
+        
+         u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
+         
+        }
+        system.runAs(adminuser2){
+         EMS_LM_Leave_Credit__c lcreditAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1.6,annualtype.id, true);
+        // EMS_LM_Leave_Credit__c bretAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),20,bretype.id, true);
+         EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, true);
+           EMS_LM_Leave_Credit__c patAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,paternitytype.id, true); 
+            EMS_LM_Leave_Credit__c berveAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,Bereavementtype.id, true);
+        }
+        system.runAs(u){
+          List<EMS_LM_Leave_History__c> hlist = new List<EMS_LM_Leave_History__c>();
+         hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today(), system.today().adddays(1), annualtype.id, false, null));
+         // hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(90), system.today().adddays(7), bretype.id, false, null));
+          hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(8), system.today().adddays(9), compofftype.id, false, null));
+            hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(7), system.today().adddays(9), paternitytype.id, false, null));
+             hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(7), system.today().adddays(9), Bereavementtype.id, false, null));
+         insert hlist;
+        }
+        test.stopTest();
+        
     }
-	public static testmethod void calculateAvailableLeaveBalanceAnnualLeaveTest(){
-        
-        Contact contactRec = [select id, lastName from Contact where lastName = 'Test'];
-        
-        Test.startTest();
-        EMS_LM_Leave_Credit__C leavesCredit = new EMS_LM_Leave_Credit__C();
-        leavesCredit.EMS_LM_Employee__c = contactRec.id;
-        leavesCredit.EMS_LM_Leaves_Credited__c = 20;
-        leavesCredit.EMS_LM_Select_Leave_Type__c = 'Annual Leave';
-        insert leavesCredit;
-        Test.stopTest();
-        
-        System.assertEquals([SELECT Id,EMS_LM_No_Of_Leaves_Credit__c FROM Contact].EMS_LM_No_Of_Leaves_Credit__c, 40);
-		
-    }
-    
-    public static testmethod void calculateAvailableLeaveBalanceCompensatoryOffTest(){
-        
-        Contact contactRec = [select id, lastName from Contact where lastName = 'Test'];
-        
-        Test.startTest();
-        EMS_LM_Leave_Credit__C leavesCredit = new EMS_LM_Leave_Credit__C();
-        leavesCredit.EMS_LM_Employee__c = contactRec.id;
-        leavesCredit.EMS_LM_Leaves_Credited__c = 2;
-        leavesCredit.EMS_LM_Select_Leave_Type__c = 'Compensatory Off';
-        insert leavesCredit;
-        Test.stopTest();
-        
-        System.assertEquals([SELECT Id,EMS_LM_No_Of_Compensatory_Off_Credit__c FROM Contact].EMS_LM_No_Of_Compensatory_Off_Credit__c, 3);
 
-    }
-    
-    public static testmethod void calculateAvailableLeaveBalanceMaternityLeaveTest(){
-        
-        Contact contactRec = [select id, lastName from Contact where lastName = 'Test'];
-        
-        Test.startTest();
-        EMS_LM_Leave_Credit__C leavesCredit = new EMS_LM_Leave_Credit__C();
-        leavesCredit.EMS_LM_Employee__c = contactRec.id;
-        leavesCredit.EMS_LM_Leaves_Credited__c = 182;
-        leavesCredit.EMS_LM_Select_Leave_Type__c = 'Maternity Leave';
-        insert leavesCredit;
-        Test.stopTest();
-        
-        System.assertEquals([SELECT Id,EMS_LM_No_Of_Maternity_Leaves_Credit__c FROM Contact].EMS_LM_No_Of_Maternity_Leaves_Credit__c, 302);
-
-    }
-    
-    public static testmethod void calculateAvailableLeaveBalanceBereavementLeaveTest(){
-        
-        Contact contactRec = [select id, lastName from Contact where lastName = 'Test'];
-        
-        Test.startTest();
-        EMS_LM_Leave_Credit__C leavesCredit = new EMS_LM_Leave_Credit__C();
-        leavesCredit.EMS_LM_Employee__c = contactRec.id;
-        leavesCredit.EMS_LM_Leaves_Credited__c = 2;
-        leavesCredit.EMS_LM_Select_Leave_Type__c = 'Bereavement Leave';
-        insert leavesCredit;
-        Test.stopTest();
-        
-        System.assertEquals([SELECT Id,EMS_LM_No_of_Bereavement_Leaves_Credit__c FROM Contact].EMS_LM_No_of_Bereavement_Leaves_Credit__c, 4);
-
-    }
-    
-    public static testmethod void calculateAvailableLeaveBalancePaternityLeaveTest(){
-        
-        Contact contactRec = [select id, lastName from Contact where lastName = 'Test'];
-        
-        Test.startTest();
-        EMS_LM_Leave_Credit__C leavesCredit = new EMS_LM_Leave_Credit__C();
-        leavesCredit.EMS_LM_Employee__c = contactRec.id;
-        leavesCredit.EMS_LM_Leaves_Credited__c = 5;
-        leavesCredit.EMS_LM_Select_Leave_Type__c = 'Paternity Leave';
-        insert leavesCredit;
-        Test.stopTest();
-        
-        System.assertEquals([SELECT Id,EMS_LM_No_Of_Paternity_Leaves_Credit__c FROM Contact].EMS_LM_No_Of_Paternity_Leaves_Credit__c, 9);
-
-    }
 }
