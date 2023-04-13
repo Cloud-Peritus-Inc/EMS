@@ -128,6 +128,14 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Project_Record_Page1</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -135,13 +143,8 @@
         <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <formFactor>Small</formFactor>
-        <type>Default</type>
-    </actionOverrides>
-    <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>Expense_Layout</compactLayoutAssignment>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>Project_Compact_Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
@@ -153,24 +156,19 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>Expense</label>
+    <label>Project</label>
     <nameField>
-        <displayFormat>EXP{000000}</displayFormat>
-        <label>Expense Name</label>
+        <label>Project Name</label>
         <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
+        <type>Text</type>
     </nameField>
-    <pluralLabel>Expenses</pluralLabel>
+    <pluralLabel>Projects</pluralLabel>
     <searchLayouts>
-        <searchResultsAdditionalFields>Resource__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Bill_Date__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Expense_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Expense_Amount__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>is_Reimbursed__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Approval_Manager__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_StartDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_EndDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_Status__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
