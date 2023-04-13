@@ -138,7 +138,22 @@ public class TestDataFactory {
         }
         
         return user;
-    }    
+    } 
+
+    public static User createCommunityUser3WithAccAndContact(Id accId,Id conId,Boolean doInsert){
+        Id p = [select id from profile where name='Employee - Resource(Community)'].id;
+
+        User user = new User(alias = 'test145', email= 'testemail5@testclass.com.they',
+                             emailencodingkey='UTF-8', lastname='Testing4', Firstname = 'User5', languagelocalekey='en_US',
+                             localesidkey='en_US', profileid = p, country='United States',IsActive =true,
+                             ContactId = conId,
+                             timezonesidkey='America/Los_Angeles', username='testemail5'/*+string.valueOf(system.now())*/+'@gmail.com');
+        if(doInsert){
+            insert user;
+        }
+        
+        return user;
+    }   
     
     public static Grid_Configuration__c createGridConfig(String name, String description,String typeval,String resourcRole,Boolean isCreate){
         Grid_Configuration__c gc = new Grid_Configuration__c();

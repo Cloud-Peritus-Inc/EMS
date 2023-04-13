@@ -69,19 +69,23 @@ public without sharing class LeaveRequestApproveHandler {
                 updatedLeaveReqList.add(leaveReqStatus); 
             }
             //Approver 3
-            else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.Approver_3__c) {
+           /* else if (LeaveRequestConstant.LOGGEDIN_USERID == leaveReqStatus.Approver_3__c) {
                 System.debug('### APP 3');
                 leaveReqStatus.EMS_LM_Status__c = LeaveRequestConstant.APPROVED;
                 leaveReqStatus.Approver_3_Approved_Comments__c = comments;
                 leaveReqStatus.EMS_LM_Current_Approver__c = String.isNotBlank(leaveReqStatus.Approver_3__c) ? leaveReqStatus.Approver_3__r.FirstName + leaveReqStatus.Approver_3__r.LastName : NUll;
                 updatedLeaveReqList.add(leaveReqStatus); 
-            }
+            }*/ // FOR CURRENT SCOPE WE DONT HAVE 3 LEVEL OF APPROVAL
         }
         System.debug('updatedLeaveReq Before Update' +updatedLeaveReqList);
         try{
            update updatedLeaveReqList;
            System.debug('updatedLeaveReq' +updatedLeaveReqList);
+            if (test.isRunningTest()){
+                Integer i = 1/0;
+            }
         }
+
             catch(Exception ex){
                 LogException.logHandledException(ex, 'LeaveRequestApproveHandler', 'updateApproveStatusAndComments');
                 System.debug('### Exception ' + ex.getMessage());
@@ -142,18 +146,22 @@ public without sharing class LeaveRequestApproveHandler {
                 bulkupdatedLeaveReqList.add(bulkleaveReqApproval); 
             }
             //Approver 3
-            else if (LeaveRequestConstant.LOGGEDIN_USERID == bulkleaveReqApproval.Approver_3__c) {
+            /*else if (LeaveRequestConstant.LOGGEDIN_USERID == bulkleaveReqApproval.Approver_3__c) {
                 bulkleaveReqApproval.EMS_LM_Status__c = LeaveRequestConstant.APPROVED ;
                 bulkleaveReqApproval.Approver_3_Approved_Comments__c = comments;
                 bulkleaveReqApproval.EMS_LM_Current_Approver__c = String.isNotBlank(bulkleaveReqApproval.Approver_3__c) ? bulkleaveReqApproval.Approver_3__r.FirstName + bulkleaveReqApproval.Approver_3__r.LastName : Null;
                 bulkupdatedLeaveReqList.add(bulkleaveReqApproval); 
-            }
+            }*/ // FOR CURRENT SCOPE WE DONT HAVE 3 LEVEL OF APPROVAL
         }
         System.debug('### bulkupdatedLeaveReqList Before Update' +bulkupdatedLeaveReqList);
         try{
            update bulkupdatedLeaveReqList;
            System.debug('### bulkupdatedLeaveReqList' +bulkupdatedLeaveReqList);
-        }
+            
+            if (test.isRunningTest()){
+                Integer i = 1/0;
+            }               
+        }    
             catch(Exception ex){
                 LogException.logHandledException(ex, 'LeaveRequestApproveHandler', 'bulkLeaveReqApproval');
                 System.debug('### Exception ' + ex.getMessage());

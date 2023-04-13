@@ -575,12 +575,12 @@
                                                                     variant="label-hidden"
                                                                     value={obj.Certification_Name__c} data-id={obj.Id}
                                                                     onchange={updateValues} options={certificationName}
-                                                                    required placeholder="Select"
+                                                                    required placeholder="Select" dropdown-alignment="bottom-left"
                                                                     name="Certification_Name__c"
                                                                     disabled={readonlyfield}
                                                                     label="Certification Name"></lightning-combobox>
                                                             </td>
-                                                            <template if:true={otherfield}>
+                                                            <template if:true={obj.otherfield}>
                                                                 <td>
                                                                     <lightning-input class="fields"
                                                                         variant="label-hidden" value={obj.Other__c}

@@ -128,11 +128,14 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Assignment_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -141,7 +144,7 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>Expense_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
@@ -153,24 +156,22 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>Expense</label>
+    <label>Assignment</label>
     <nameField>
-        <displayFormat>EXP{000000}</displayFormat>
-        <label>Expense Name</label>
+        <displayFormat>A.ID-{0000}</displayFormat>
+        <label>Assignment Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Expenses</pluralLabel>
+    <pluralLabel>Assignments</pluralLabel>
     <searchLayouts>
-        <searchResultsAdditionalFields>Resource__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Bill_Date__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Expense_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Expense_Amount__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>is_Reimbursed__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Approval_Manager__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_EmployeeName__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_ProjectName_Asgn__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_AssignedAs__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_StartDate_Asgn__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_EndDate_Asgn__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_Status_Asgn__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

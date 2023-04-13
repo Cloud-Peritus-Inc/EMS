@@ -175,9 +175,11 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
                 this.blankRow = []; 
                 this.index = result.length;
             }).catch(error => {
+                var substring = error.body.message.substring(89,400);
+                      console.log(substring);
                 const evt = new ShowToastEvent({
                         
-                        message: error.body.message,
+                        message:substring,
                         variant: 'error',
                         mode: 'dismissable'
                     });
