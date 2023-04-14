@@ -173,6 +173,6 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Expense URL</shortDescription>
-        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/expense/Expense__c</value>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/expense</value>
     </labels>
 </CustomLabels>

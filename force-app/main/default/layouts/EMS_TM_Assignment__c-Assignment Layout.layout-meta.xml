@@ -20,7 +20,7 @@
                 <field>EMS_TM_AssignedAs__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>EMS_TM_Status_Asgn__c</field>
             </layoutItems>
         </layoutColumns>
