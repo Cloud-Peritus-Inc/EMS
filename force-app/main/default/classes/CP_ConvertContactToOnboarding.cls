@@ -21,8 +21,8 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
     	
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
-        	'SELECT id, lastName, EMS_EM_JD__c, Email, Is_PreOnboarding_Mail_Sent__c, Personal_Email__c, EMS_RM_LastName__c,Name, Is_Email_Sent__c from Contact WHERE EMS_EM_JD__c != NULL AND RecordType.Name = \'Applicant\'' 
-        );
+        	'SELECT id, lastName, EMS_EM_JD__c, Email, Is_PreOnboarding_Mail_Sent__c, RecordType.Name, Personal_Email__c, EMS_RM_LastName__c,Name, Is_Email_Sent__c from Contact WHERE EMS_EM_JD__c != NULL' 
+        ); //AND RecordType.Name = \'Applicant\'
     }
     
     public void execute(Database.BatchableContext bc, List<Contact> contactList){
@@ -34,9 +34,10 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         List<Messaging.SingleEmailMessage> itMailList = new List<Messaging.SingleEmailMessage>();
         List<Messaging.SingleEmailMessage> itMailListForDOJ = new List<Messaging.SingleEmailMessage>();
         List<Messaging.SingleEmailMessage> hrMailList = new List<Messaging.SingleEmailMessage>();
+        List<Messaging.SingleEmailMessage> hrDOJTasksMailList = new List<Messaging.SingleEmailMessage>();
         
         for(Contact contactRec : contactList){
-            if(contactRec.EMS_EM_JD__c.addDays(-10) == System.today() && contactRec.Is_PreOnboarding_Mail_Sent__c == False){
+            if(contactRec.EMS_EM_JD__c.addDays(-10) == System.today() && contactRec.Is_PreOnboarding_Mail_Sent__c == False && contactRec.RecordType.Name == 'Applicant'){
                 applicantsToSendMail.add(contactRec);
                 String status = sendOnboardingEmail(contactRec.Personal_Email__c,contactRec.Id);
                 if(status == 'success'){
@@ -50,11 +51,13 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
                 }  
             }
             
-            if(contactRec.EMS_EM_JD__c == System.today()){
+            if(contactRec.EMS_EM_JD__c == System.today() && (contactRec.RecordType.Name == 'Resource' || contactRec.RecordType.Name == 'Applicant')){
                 Messaging.SingleEmailMessage message = adminTeamDOJTasks(contactRec.Id);
                 lstMails.add(message);
                 Messaging.SingleEmailMessage message2 = sendEmailToITTeamOnDOJ(contactRec.Id);
-                itMailListForDOJ.add(message2);
+                itMailListForDOJ.add(message2); 
+                Messaging.SingleEmailMessage message3 = hrDOJTasksEmail(contactRec.Id);
+                hrDOJTasksMailList.add(message3);
             }
         }
         
@@ -63,6 +66,7 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
         Messaging.sendEmail(hrMailList);
         Messaging.sendEmail(lstMails);
         Messaging.sendEmail(itMailListForDOJ);
+        Messaging.sendEmail(hrDOJTasksMailList);
         
         if(applicantsToSendMail.size() > 0){
             for(Contact con : applicantsToSendMail){
@@ -190,6 +194,25 @@ public class CP_ConvertContactToOnboarding implements Database.Batchable<sObject
             mail.setTreatTargetObjectAsRecipient(false);
             mail.setSaveAsActivity(false);  
         	return mail;
+    }
+    
+    public static Messaging.SingleEmailMessage hrDOJTasksEmail(string recordId){
+        
+        EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
+                                      where name ='Mail to complete joining day tasks' LIMIT 1];
+        String hrTeamEmail = [SELECT id, DeveloperName, Email__c from Employee_Details__mdt WHERE DeveloperName = 'HR_Team'].Email__c;
+        String fromEmail = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName = 'Grid'].Id;
+        List<String> hrEmailList = new List<String>();
+        hrEmailList.add(hrTeamEmail);
+        
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.toAddresses = hrEmailList;
+        message.setTemplateID(emailTemplate.Id);
+        message.setTargetObjectId(recordId);
+        message.setTreatTargetObjectAsRecipient(false);
+        message.setOrgWideEmailAddressId(fromEmail);
+        message.setSaveAsActivity(false);
+        return message;
     }
     
     public void finish(Database.BatchableContext bc){    
