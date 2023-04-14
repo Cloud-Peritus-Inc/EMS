@@ -165,7 +165,6 @@
     <pluralLabel>Resource Roles</pluralLabel>
     <searchLayouts>
         <searchResultsAdditionalFields>Active__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Level_of_Approval__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Auto_Approve__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Probation_Days__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Notice_Consider_Days__c</searchResultsAdditionalFields>

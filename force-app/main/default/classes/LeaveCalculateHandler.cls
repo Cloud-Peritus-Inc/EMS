@@ -150,7 +150,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
         }
         }catch(exception ex){
             system.debug('LeaveCalculateHandler exception'+ex);
-            newList[0].adderror(ex.getMessage());
+            newList[0].adderror(ex.getMessage().substring(115, 200));
             
         }     
     }

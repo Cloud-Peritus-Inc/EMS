@@ -153,14 +153,14 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Off boarding Request</label>
+    <label>Offboarding Request</label>
     <nameField>
         <displayFormat>OBR{000000}</displayFormat>
         <label>Off boarding Request Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Off boarding Requests</pluralLabel>
+    <pluralLabel>Offboarding Requests</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
