@@ -166,6 +166,7 @@
         <fields>Request_Priority__c</fields>
         <fields>Skills__c</fields>
         <fields>Status__c</fields>
+<<<<<<< Updated upstream
         <profileName>Employee - Operations(Community)</profileName>
     </profileSearchLayouts>
     <profileSearchLayouts>
@@ -182,6 +183,8 @@
         <fields>Request_Priority__c</fields>
         <fields>Skills__c</fields>
         <fields>Status__c</fields>
+=======
+>>>>>>> Stashed changes
         <profileName>Grid Operations(Internal)</profileName>
     </profileSearchLayouts>
     <profileSearchLayouts>
@@ -190,7 +193,26 @@
         <fields>Request_Priority__c</fields>
         <fields>Skills__c</fields>
         <fields>Status__c</fields>
+<<<<<<< Updated upstream
+=======
+        <profileName>Employee - HR(Community)</profileName>
+    </profileSearchLayouts>
+    <profileSearchLayouts>
+        <fields>NAME</fields>
+        <fields>Resource_Role1__c</fields>
+        <fields>Request_Priority__c</fields>
+        <fields>Skills__c</fields>
+        <fields>Status__c</fields>
+>>>>>>> Stashed changes
         <profileName>Employee - Resource(Community)</profileName>
+    </profileSearchLayouts>
+    <profileSearchLayouts>
+        <fields>NAME</fields>
+        <fields>Resource_Role1__c</fields>
+        <fields>Request_Priority__c</fields>
+        <fields>Skills__c</fields>
+        <fields>Status__c</fields>
+        <profileName>Employee - Operations(Community)</profileName>
     </profileSearchLayouts>
     <searchLayouts>
         <searchResultsAdditionalFields>Resource_Role1__c</searchResultsAdditionalFields>

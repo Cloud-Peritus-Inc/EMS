@@ -161,7 +161,10 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Resource Relationships</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Resource__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Resource_Reports_To__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

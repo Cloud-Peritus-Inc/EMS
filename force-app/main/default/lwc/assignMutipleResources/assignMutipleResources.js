@@ -176,6 +176,9 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
                 this.index = result.length;
             }).catch(error => {
                 var substring = error.body.message.substring(89,400);
+               if (substring.includes('Value does not exist or does not match filter criteria.: [EMS_TM_ProjectName_Asgn__c]')) {
+                    substring ='You cannot assign resources to Global Projects';
+               }
                       console.log(substring);
                 const evt = new ShowToastEvent({
                         

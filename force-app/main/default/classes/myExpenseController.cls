@@ -7,7 +7,7 @@ public static datawrapper getMyExpenseReport(){
         Map<string,string> nameMap = new Map<String,string>();
         User uRec = [SELECT Id,ContactId,Contact.Work_Location__r.Country__c FROM User WHERE Id=:Userinfo.getUserId()];
         Decimal pendingAmount = 0;
-        expList = [SELECT id,Name,Amount__c,Resource__r.Work_Location__c,Resource__r.Work_Location__r.Country__c,
+        expList = [SELECT id,Name,Amount1__c,Resource__r.Work_Location__c,Resource__r.Work_Location__r.Country__c,
                    Expense_Amount__c,Project__c,Project__r.Name,Billing_Currency__c,
                    CreatedDate,Status__c,Reimbursed_Date__c,is_Reimbursed__c FROM Expense__c 
                    WHERE Resource__c=:uRec.ContactId];
