@@ -8,9 +8,9 @@
     <columns>Resource_Role__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>Notification_Type__c</field>
+        <field>Grid_Configuration_Type__c</field>
         <operation>equals</operation>
-        <value>Alert</value>
+        <value>Org Level Alert,Resource Role Alert</value>
     </filters>
     <label>Alert Configurations</label>
 </ListView>

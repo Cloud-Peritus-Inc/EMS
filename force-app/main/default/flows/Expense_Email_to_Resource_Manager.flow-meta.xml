@@ -11,7 +11,7 @@
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -44,13 +44,12 @@
         <connector>
             <targetReference>Email_to_RM</targetReference>
         </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Status__c</field>
-            <operator>EqualTo</operator>
+            <field>Expense_Amount__c</field>
+            <operator>IsNull</operator>
             <value>
-                <stringValue>Submitted</stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
@@ -61,8 +60,8 @@
             </value>
         </filters>
         <object>Expense__c</object>
-        <recordTriggerType>Update</recordTriggerType>
+        <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

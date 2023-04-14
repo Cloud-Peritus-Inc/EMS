@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Mail to complete joining day tasks</name>
+    <style>freeForm</style>
+    <subject>Cloud Peritus: Date of joining tasks</subject>
+    <textOnly>Dear HR Team,
+
+
+Please find the details of the candidate who is going to join us today:
+
+Name: {!Contact.Name}
+
+Contact Number: {!Contact.EMS_Phone_Number__c}
+
+Personal Email ID: {!Contact.Personal_Email__c}
+
+Designation: {!Contact.Resource_Role__c}
+
+
+Please ensure that the joining day tasks are completed with regards to the new employee.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

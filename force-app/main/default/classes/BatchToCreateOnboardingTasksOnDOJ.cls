@@ -36,7 +36,7 @@ global class BatchToCreateOnboardingTasksOnDOJ implements Database.Batchable<sOb
         return Database.getQueryLocator([SELECT Id,EMS_EM_JD__c
                                          FROM CONTACT 
                                          WHERE EMS_EM_JD__c=:dt
-                                         AND RecordTypeId =:ContactConstant.APPLICANT_RECORDTYPEID ]);
+                                         AND (RecordTypeId =:ContactConstant.APPLICANT_RECORDTYPEID OR RecordTypeId =:ContactConstant.RESOURCE_RECORDTYPEID)]);
     }
   
 /**

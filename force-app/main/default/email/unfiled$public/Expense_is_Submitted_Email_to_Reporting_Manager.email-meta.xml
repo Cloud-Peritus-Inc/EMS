@@ -9,10 +9,10 @@
     <textOnly>Dear {!Expense__c.Approval_Manager__c},
 
 
-{!Expense__c.Resource__c} - {!Contact.EMS_RM_Employee_Id__c} working for {!Expense__c.Project__c} has submitted an Expense Reimbursement for the amount of {!Expense__c.Expense_Amount__c} {!Expense__c.Billing_Currency__c} for {!Expense__c.Expense_Type__c} on {!Expense__c.Expense_Date__c}.
+{!Expense__c.Resource__c} - {!Expense__c.Employee_ID__c} working for {!Expense__c.Project__c} has submitted an expense reimbursement request for the amount of {!Expense__c.Expense_Amount__c} {!Expense__c.Billing_Currency__c} for {!Expense__c.Expense_Type__c} on {!Expense__c.Expense_Date__c}.
 
 
-Please find time to review it here and do the necessary.
+Please find time to review it here and do the needful.
 
 
 Regards,

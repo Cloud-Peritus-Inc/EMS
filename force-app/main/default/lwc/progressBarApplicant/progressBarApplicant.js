@@ -1,9 +1,7 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import fetchOnboardingRecords from '@salesforce/apex/ProgressBarApplicantController.fetchOnboardingRecords';
-import { updateRecord } from 'lightning/uiRecordApi';
-import Id from '@salesforce/schema/EMS_EM_Onboarding_Request__c.Id';
-import Progress_Value__c from '@salesforce/schema/EMS_EM_Onboarding_Request__c.Progress_Value__c';
+
 
 export default class ProgressBarApplicant extends LightningElement {
   
@@ -16,7 +14,7 @@ export default class ProgressBarApplicant extends LightningElement {
   educationDetailsFilled;
   error;
   @track progressValueFromDB;
-  @track progressValue = 0;
+  @track progressValue;
 
 
 
@@ -37,12 +35,13 @@ export default class ProgressBarApplicant extends LightningElement {
                 this.certificationDetailsFilled = result[0].Other_Certifications_Value_Filled__c;
                 this.workDetailsFilled = result[0].Work_Details_Filled__c;
                 this.educationDetailsFilled = result[0].Education_Details_Filled__c;
-                this.progressValueFromDB = result[0].Progress_Value__c;
+                //this.progressValueFromDB = result[0].Progress_Value__c;
                 console.log('personalDetailsFilled ==> '+this.personalDetailsFilled);
                 this.progressbarStatus();
             })
             .catch((error) => {
                 this.error = error;
+                console.log('Error=> '+ this.error);
             });
     }
 
@@ -50,45 +49,103 @@ export default class ProgressBarApplicant extends LightningElement {
         this.userDetails();
     }
 
-    progressbarStatus(){
-        /*if(this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && 
-            this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.educationDetailsFilled === true){
-                 this.progressValue = this.progressValue + 16.666;
-        }else if(this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && 
-            this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.educationDetailsFilled === false){
-                 this.progressValue = this.progressValue + 16.666;
-        }else if(this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && 
-            this.certificationDetailsFilled === true && this.workDetailsFilled === false && this.educationDetailsFilled === false){
-                 this.progressValue = this.progressValue + 16.666;
-        }else if(this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && 
-            this.certificationDetailsFilled === false && this.workDetailsFilled === false && this.educationDetailsFilled === false){
-                 this.progressValue = this.progressValue + 16.666;
-        }else if(this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === false && 
-            this.certificationDetailsFilled === false && this.workDetailsFilled === false && this.educationDetailsFilled === false){
-                console.log('Inside condition ==');
-                 this.progressValue = this.progressValue + 16.666;;
-        }else if(this.personalDetailsFilled === true && this.identifyDetailsFilled === false && this.addressDetailsFilled === false && 
-            this.certificationDetailsFilled === false && this.workDetailsFilled === false && this.educationDetailsFilled === false){
-                 this.progressValue = this.progressValue + 16.666;
-        }*/
+    progressbarStatus(){      
+        
+        if((this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true)){
+            this.progressValue = 100;
+            console.log('progressValue => '+this.progressValue);
+        }
+        else if((this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true) ||
+           (this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.workDetailsFilled === true) ||
+           
+           (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true) ||
+           (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.personalDetailsFilled === true) ||
+           
+           (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true) ||
+           (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.identifyDetailsFilled === true) ||
+           
+           (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true) ||
+           (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true && this.addressDetailsFilled === true) ||
+           
+           (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true) ||
+           (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.educationDetailsFilled === true) ||
+           
+           (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true) ||
+           (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.certificationDetailsFilled === true)){
+            this.progressValue = 83.334;
+            console.log('progressValue => '+this.progressValue);
+        }
 
-         if(this.personalDetailsFilled === true || this.identifyDetailsFilled === true || this.addressDetailsFilled === true || 
-             this.certificationDetailsFilled === true || this.workDetailsFilled === true || this.educationDetailsFilled === true){
-                //  var test1 = this.template.querySelector('lightning-progress-bar');
-                  //alert(Number(this.progressValueFromDB) + Number(16.666));
-                this.progressValue = Number(this.progressValueFromDB) + Number(16.666);
-             }
-              const fields = {};
-                fields[Id.fieldApiName] = this.recordId;
-                fields[Progress_Value__c.fieldApiName] =  this.progressValue ;
-                const recordInput = { fields };
-                            updateRecord(recordInput)
-                .then(() => {
-                })
-                .catch(error => {
-                  console.log(error);
-                });
-
+        else if((this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true) ||
+           (this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.certificationDetailsFilled === true) ||
+           (this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.workDetailsFilled === true) ||
+           
+           (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true) ||
+           (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.workDetailsFilled === true) ||
+           (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.personalDetailsFilled === true) ||
+           
+           (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true) ||
+           (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.personalDetailsFilled === true) ||
+           (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.identifyDetailsFilled === true) ||
+           
+           (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true) ||
+           (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.workDetailsFilled === true) ||
+           (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true) ||
+           
+           (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true) ||
+           (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true && this.addressDetailsFilled === true) ||
+           (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true && this.educationDetailsFilled === true) ||
+           
+           (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true) ||
+           (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.educationDetailsFilled === true) ||
+           (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.certificationDetailsFilled === true)){
+               this.progressValue = 66.668;
+               console.log('progressValue => '+this.progressValue);
+        }
+        else if((this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.addressDetailsFilled === true) || 
+            (this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.educationDetailsFilled === true) || 
+            (this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.certificationDetailsFilled === true) || 
+            (this.personalDetailsFilled === true && this.identifyDetailsFilled === true && this.workDetailsFilled === true) ||
+            (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.educationDetailsFilled === true) ||
+            (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.certificationDetailsFilled === true) ||
+            (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.workDetailsFilled === true) ||
+            (this.identifyDetailsFilled === true && this.addressDetailsFilled === true && this.personalDetailsFilled === true) ||
+            (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.certificationDetailsFilled === true) ||
+            (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.workDetailsFilled === true) ||
+            (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.personalDetailsFilled === true) ||
+            (this.addressDetailsFilled === true && this.educationDetailsFilled === true && this.identifyDetailsFilled === true) ||
+            (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.workDetailsFilled === true) ||
+            (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.personalDetailsFilled === true) ||
+            (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.identifyDetailsFilled === true) ||
+            (this.educationDetailsFilled === true && this.certificationDetailsFilled === true && this.addressDetailsFilled === true) ||
+            (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.personalDetailsFilled === true) ||
+            (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.identifyDetailsFilled === true) ||
+            (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.addressDetailsFilled === true) ||
+            (this.certificationDetailsFilled === true && this.workDetailsFilled === true && this.educationDetailsFilled === true) ||
+            (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.identifyDetailsFilled === true) ||
+            (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.addressDetailsFilled === true) ||
+            (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.educationDetailsFilled === true) ||
+            (this.workDetailsFilled === true && this.personalDetailsFilled === true && this.certificationDetailsFilled === true)
+            ){
+                this.progressValue = 50.002;
+                console.log('progressValue => '+this.progressValue);
+        }
+        else if((this.personalDetailsFilled === true && this.identifyDetailsFilled === true) || (this.personalDetailsFilled === true && this.addressDetailsFilled === true)
+        || (this.personalDetailsFilled === true && this.educationDetailsFilled === true) || (this.personalDetailsFilled === true && this.certificationDetailsFilled === true)
+        || (this.personalDetailsFilled === true && this.workDetailsFilled === true) || (this.identifyDetailsFilled === true && this.addressDetailsFilled === true) 
+        || (this.identifyDetailsFilled === true && this.educationDetailsFilled === true) || (this.identifyDetailsFilled === true && this.certificationDetailsFilled === true)
+        || (this.identifyDetailsFilled === true && this.workDetailsFilled === true) || (this.addressDetailsFilled === true && this.educationDetailsFilled === true)
+        || (this.addressDetailsFilled === true && this.certificationDetailsFilled === true) || (this.addressDetailsFilled === true && this.workDetailsFilled === true)
+        || (this.educationDetailsFilled === true && this.certificationDetailsFilled === true) || (this.educationDetailsFilled === true && this.workDetailsFilled === true)
+        || (this.certificationDetailsFilled === true && this.workDetailsFilled === true)){
+            this.progressValue = 33.336;
+            console.log('progressValue => '+progressValue);
+        }
+        else if(this.personalDetailsFilled === true || this.identifyDetailsFilled === true || this.addressDetailsFilled === true || 
+           this.certificationDetailsFilled === true || this.workDetailsFilled === true || this.educationDetailsFilled === true){
+               console.log('progressValue => '+this.progressValue);
+                 this.progressValue = 16.666;
+        }
 
     }
 
