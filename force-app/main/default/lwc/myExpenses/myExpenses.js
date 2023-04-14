@@ -92,6 +92,7 @@ handleFormSubmit(event) {
 
     handleError(event){
         const evt = new ShowToastEvent({
+            title: 'Error!',
             message: event.detail.detail,
             variant: 'error',
             mode:'dismissable'
@@ -120,7 +121,8 @@ handleFormSubmit(event) {
          })
          .then(result => {
             const even = new ShowToastEvent({
-            message: 'Successfully submitted the Expense for an Approval!',
+            title: 'Success!',
+            message: 'Successfully Submitted the expense for an approval!',
             variant: 'success'
         });
         this.dispatchEvent(even);
@@ -139,7 +141,8 @@ handleFormSubmit(event) {
          .catch(error => {
              console.log('===ERROR===='+JSON.stringify(error));
              const event = new ShowToastEvent({
-                 message : 'Error in submitting the Expense. Please Contact System Admin',
+                 title : 'Error',
+                 message : 'Error in submitting the expense. Please Contact System Admin',
                  variant : 'error'
              });
              this.dispatchEvent(event);
@@ -154,7 +157,8 @@ handleFormSubmit(event) {
          })
          .then(result => {
               const even = new ShowToastEvent({
-            message: 'Successfully created an Expense. Please do not forget to Submit the Expense for claim process.!',
+            title: 'Success!',
+            message: 'Successfully Completed the expense create. Please do not forget to submit the expense for claim process.!',
             variant: 'success'
         });
         this.dispatchEvent(even);
@@ -173,7 +177,8 @@ handleFormSubmit(event) {
          .catch(error => {
                console.log('===ERROR===='+JSON.stringify(error));
              const event = new ShowToastEvent({
-                 message : 'Error in updating the Expense. Please Contact System Admin',
+                 title : 'Error',
+                 message : 'Error in updating the expense. Please Contact System Admin',
                  variant : 'error'
              });
              this.dispatchEvent(event);

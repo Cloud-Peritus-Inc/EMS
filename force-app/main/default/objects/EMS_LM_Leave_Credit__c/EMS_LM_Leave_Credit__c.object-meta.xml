@@ -162,11 +162,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Leave Accrueds</pluralLabel>
-    <searchLayouts>
-        <searchResultsAdditionalFields>EMS_LM_Leave_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>EMS_LM_Employee__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>EMS_LM_Leaves_Credited__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

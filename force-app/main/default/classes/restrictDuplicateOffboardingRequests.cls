@@ -4,7 +4,7 @@
 * @description  restrictDuplicateOffboardingRequests Class to restrict the duplicate resignations
 *
 *               Test code coverage provided by the following test class:
-*               -restrictDuplicateOffboardingReqTest 
+*               - 
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -71,26 +71,9 @@ public class restrictDuplicateOffboardingRequests implements TriggerAction.Befor
         for (Case cnew : newlist) {
             if (excludedTypes.contains(cnew.Request_Sub_Type__c)) {
             continue;
-            }
-            System.debug('### cnew.Request_Sub_Type__c'+ cnew.Request_Sub_Type__c);
-            System.debug('### data' + caseWithExistingOffMap.containsKey(cnew.ContactId));
-            if (!requestSubTypeMap.containsKey(cnew.Request_Sub_Type__c) && cnew.Request_Sub_Type__c == 'Family/Dependent Information'){
-                System.debug('### here');
-                List<Family_Information__c> existingFamilyInfo = [SELECT ID,
-                                            							 Is_It_Emergency_Contact__c,
-                                                                         Resource__c
-                                             					  FROM Family_Information__c
-                                                                  WHERE Is_It_Emergency_Contact__c = true
-                                                                  AND Resource__c =: cnew.ContactId
-                                                                  ];
-                System.debug('### existingFamilyInfo' + existingFamilyInfo);
-                System.debug('### existingFamilyInfo' + existingFamilyInfo.size());
-                if (existingFamilyInfo.size()>=1) {
-                   cnew.addError('Only one emergency contact allowed at a time.'); 
-                }
-            }	
+        	}	
             if (caseWithExistingOffMap.containsKey(cnew.ContactId) && !requestSubTypeMap.containsKey(cnew.Request_Sub_Type__c)) {
-                cnew.addError('Only one request allowed at a time. Seems there is an already existing ' + cnew.Request_Sub_Type__c  + ' request is In-Progress or Closed.');
+                cnew.addError('Only one request allowed at a time. Seems there is an already existing ' + cnew.Request_Sub_Type__c  + ' request is In-Progress or Approved.');
             } else if (requestSubTypeMap.containsKey(cnew.Request_Sub_Type__c)) {
                 Date currentDate = Date.today();
                 String requestSubTypeName = requestSubTypeMap.get(cnew.Request_Sub_Type__c);

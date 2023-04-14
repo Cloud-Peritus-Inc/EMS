@@ -1,17 +1,9 @@
 @isTest
 public class BatchToCreateTimesheets_Test {
-       @testSetup
-    public static void getAdminUser(){
-              user adminuser = TestDataFactory.createAdminUser(true);
-             adminuser.Manager_Access__c = true;
-              adminuser.TA_Admin__c = true;
-             adminuser.IT_Admin_Access__c = true;
-             UPDATE adminuser;
-        
-    }
+    
     
     public static testmethod void createTimesheet(){
-        user loginedUser =[SELECT id from User  where firstname ='Alan' AND IsActive = true LIMIT 1];
+        user loginedUser =[SELECT id from User  where IsActive = true LIMIT 1];
         Resource_Role__c role = TestDataFactory.createResourceRole(false);
         role.Name ='Sr Project Manager';
         insert role;
@@ -60,7 +52,6 @@ public class BatchToCreateTimesheets_Test {
         assignmentRec.EMS_TM_EmployeeName__c = con.Id;
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
-        assignmentRec.EMS_TM_EndDate_Asgn__c = system.today()+3;
         assignmentRec.EMS_TM_Billable__c = true;
         INSERT assignmentRec;
         List<EMS_TM_Calendar__c> holidayList = new List<EMS_TM_Calendar__c>();
@@ -93,7 +84,7 @@ public class BatchToCreateTimesheets_Test {
         holiday3.EMS_TM_Type_Of_Holiday__c ='National';
         holidayList.add(holiday3);
         EMS_TM_Calendar__c holiday4 = new EMS_TM_Calendar__c();
-        holiday4.EMS_TM_Calendar_Date__c = System.today()+9;
+        holiday4.EMS_TM_Calendar_Date__c = System.today()+4;
         holiday4.Office_Location__c =officlocRec.Id;
         holiday4.Location__c ='Usa';
         holiday4.Name ='fff';

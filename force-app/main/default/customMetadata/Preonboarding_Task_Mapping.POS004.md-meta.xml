@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Contact_API__c</field>
-        <value xsi:type="xsd:string">Complete_your_Onboarding__c</value>
+        <value xsi:type="xsd:string">Collect_Joining_Kit__c</value>
     </values>
     <values>
         <field>Due_Date_Days__c</field>
@@ -16,11 +16,11 @@
     </values>
     <values>
         <field>Navigation_Required__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Navigation_address__c</field>
-        <value xsi:type="xsd:string">onboardingprocess</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Notification_Required_HR__c</field>
@@ -36,7 +36,7 @@
     </values>
     <values>
         <field>Task_Subject__c</field>
-        <value xsi:type="xsd:string">Complete your Post-Onboarding form</value>
+        <value xsi:type="xsd:string">Collect Joining Kit</value>
     </values>
     <values>
         <field>Type__c</field>

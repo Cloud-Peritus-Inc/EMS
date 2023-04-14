@@ -4,7 +4,7 @@
 * @description  restrictOnlyOneDayOnProbation Class to restrict the leave as only one
 *
 *               Test code coverage provided by the following test class:
-*               - restrictOnlyOneDayOnProbationTest
+*               - 
 *
 * CHANGE HISTORY
 * ====================================================================================================

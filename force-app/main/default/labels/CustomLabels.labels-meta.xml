@@ -154,11 +154,4 @@
         <shortDescription>Post Onboarding Task Creation</shortDescription>
         <value>0</value>
     </labels>
-    <labels>
-        <fullName>Expense_URL</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Expense URL</shortDescription>
-        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/expense/Expense__c</value>
-    </labels>
 </CustomLabels>

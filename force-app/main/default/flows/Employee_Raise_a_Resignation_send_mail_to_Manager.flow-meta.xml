@@ -52,13 +52,6 @@
                 <stringValue>Resignation</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>Case_Assignee__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
         <object>Case</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>

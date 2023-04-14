@@ -16,15 +16,15 @@
                 <field>EMS_LM_Employee__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EMS_LM_Leave_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EMS_LM_Leaves_Credited__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EMS_LM_Leave_Credited_Date__c</field>
             </layoutItems>
         </layoutColumns>

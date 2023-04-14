@@ -1,6 +1,6 @@
 <template>
   <template if:true={showonUi}>    
-<div  style="background-color:  #f2f2f2;border-radius: 5px;padding-top:10px;padding-bottom:10px">
+<div  style="background-color:  #f2f2f2;border-radius: 5px;padding-top:10px">
     <div class="parent" style="margin-bottom: 10px;">
           <div class="child1" style="width:10%;padding-left:10px">
                <lightning-icon icon-name="standard:goals" size="large" alternative-text="In Progress" ></lightning-icon>
@@ -13,7 +13,7 @@
     </div>
 
     
-     <div class="table-container">
+     
       <div class="parent">
           <div class="child1" style="padding:10px;">
             <div class="table-container">
@@ -22,9 +22,7 @@
              <div style="padding:0px 20px 10px 20px; min-height: 75px;align: center;">
                <a href="#" data-id={task.taskid} onclick={handleClick}> <font size="3"> <b> {task.subject}  </b></font> </a> <br/>
                    
-                     <!--   <lightning-formatted-rich-text value={task.description}>
-                           </lightning-formatted-rich-text> -->
-                    
+                                        
                       <b>Complete By: </b> <lightning-formatted-date-time value={task.mygoal.End_Date__c}></lightning-formatted-date-time>
                   </div>   
                   
@@ -33,6 +31,7 @@
            </div>
           </div>
            <div class="child2" style="padding:10px;">
+              <div class="table-container">
             <template for:each={datawrap2} for:item="task">
            <lightning-card key={task.subject}>
              <div style="padding:0px 20px 10px 20px;min-height: 75px;align: center;">
@@ -41,10 +40,10 @@
                   </div>   
                   
            </lightning-card>  <br key={task.subject}/>
-          </template>
+          </template> </div>
            </div>
       </div>
-     </div>     
+           
         
     </div> 
   </template>

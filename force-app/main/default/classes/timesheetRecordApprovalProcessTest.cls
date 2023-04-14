@@ -86,8 +86,8 @@ public class timesheetRecordApprovalProcessTest {
         EMS_TM_Timesheet_Record__c lineitem = new EMS_TM_Timesheet_Record__c();
         lineitem.EMS_Timesheet__c = timesheetRec.Id;
         lineitem.OwnerId = timesheetRec.User__c;
-       // lineitem.Assignment__c = assignmentRec.Id;
-        lineitem.EMS_TM_Project__c = projectRec.Id;
+        lineitem.Assignment__c = assignmentRec.Id;
+        lineitem.EMS_TM_Project__c = assignmentRec.EMS_TM_ProjectName_Asgn__c;
         lineitem.EMS_TM_Mon__c = 0;
         lineitem.EMS_TM_Wed__c = 0;
         lineitem.EMS_TM_Tue__c = 0;
@@ -96,11 +96,11 @@ public class timesheetRecordApprovalProcessTest {
         lineitem.Status__c = 'Saved';
         INSERT lineitem;
         
-        test.startTest();
+        //test.startTest();
         EMS_TM_Timesheet_Record__c timesheetLineRec =[SELECT Id,Status__c FROM EMS_TM_Timesheet_Record__c LIMIT 1];
         timesheetLineRec.Status__c ='Submitted';
         UPDATE timesheetLineRec;
-        test.stopTest();
+        
        /* ProcessInstance objProcessInstance = [SELECT Id,TargetObjectId,Status, CreatedDate FROM ProcessInstance 
                                               WHERE TargetObjectId = :timesheetLineRec.Id];
         System.debug('objProcessInstance'+objProcessInstance);

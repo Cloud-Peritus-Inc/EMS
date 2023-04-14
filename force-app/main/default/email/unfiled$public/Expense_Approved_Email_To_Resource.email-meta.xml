@@ -10,7 +10,7 @@
 
 
 
-Your Expense for {!Expense__c.Expense_Type__c} for the amount of {!Expense__c.Amount__c} {!Expense__c.Billing_Currency__c} has been approved by {!Expense__c.Approval_Manager__c}.
+Your Expense for {!Expense__c.Expense_Type__c} for the amount of {!Expense__c.Expense_Amount__c} has been approved by {!Expense__c.Approval_Manager__c}.
 
 
 

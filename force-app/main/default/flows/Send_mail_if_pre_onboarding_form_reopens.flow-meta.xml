@@ -81,20 +81,6 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
-        <filters>
-            <field>Status__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Reopened</stringValue>
-            </value>
-        </filters>
         <object>EMS_EM_Onboarding_Request__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
