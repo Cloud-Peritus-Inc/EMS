@@ -19,9 +19,9 @@ export default class EMS_LM_LeaveHistory extends NavigationMixin(LightningElemen
     this.currentPageReference = currentPageReference;
   }
 
-  @wire(getLeaveRequest)LeaveRequestwiredDataresult(result) {
+  @wire(getLeaveRequest) LeaveRequestwiredDataresult(result) {
     this.leavebalanceResult = result;
-  if (result.data) {
+    if (result.data) {
 
       if (result.data.length > 0) {
         this.PendingLeaveReq = JSON.parse(JSON.stringify(result.data));
@@ -36,32 +36,32 @@ export default class EMS_LM_LeaveHistory extends NavigationMixin(LightningElemen
     }
   }
 
-   handleRefresh() {
-         const refreshEvent = new CustomEvent('refresh', {
-    bubbles: true
-});
-this.dispatchEvent(refreshEvent);
-    } 
+  handleRefresh() {
+    const refreshEvent = new CustomEvent('refresh', {
+      bubbles: true
+    });
+    this.dispatchEvent(refreshEvent);
+  }
 
-    // for refresh using LMS
-    subscription = null;
+  // for refresh using LMS
+  subscription = null;
 
-    connectedCallback() {
-        const messageContext = createMessageContext();
-        this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
-            this.handleRefreshMessage(message);
-        });
+  connectedCallback() {
+    const messageContext = createMessageContext();
+    this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
+      this.handleRefreshMessage(message);
+    });
+  }
+
+  disconnectedCallback() {
+    unsubscribe(this.subscription);
+    this.subscription = null;
+  }
+
+  handleRefreshMessage(message) {
+    if (message.refresh) {
+      refreshApex(this.leavebalanceResult);
     }
-
-    disconnectedCallback() {
-        unsubscribe(this.subscription);
-        this.subscription = null;
-    }
-
-    handleRefreshMessage(message) {
-        if (message.refresh) {
-            refreshApex(this.leavebalanceResult);
-        }
-    } 
+  }
 
 }

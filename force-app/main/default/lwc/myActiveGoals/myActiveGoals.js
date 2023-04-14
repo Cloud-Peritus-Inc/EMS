@@ -65,7 +65,6 @@ connectedCallback() {
             this.showonUi = result.showUI;
             this.openModal = false;
              const even = new ShowToastEvent({
-            title: 'Success!',
             message: 'Successfully Updated!',
             variant: 'success'
         });
@@ -73,7 +72,6 @@ connectedCallback() {
          })
          .catch(error => {
              const event = new ShowToastEvent({
-                 title : 'Error',
                  message : 'Error in updating the goal. Please Contact System Admin',
                  variant : 'error'
              });
@@ -87,7 +85,6 @@ connectedCallback() {
 
     handleError(event){
         const evt = new ShowToastEvent({
-            title: 'Error!',
             message: event.detail.detail,
             variant: 'error',
             mode:'dismissable'

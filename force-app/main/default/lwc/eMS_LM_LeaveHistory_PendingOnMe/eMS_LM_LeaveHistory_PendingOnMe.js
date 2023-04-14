@@ -125,15 +125,14 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       //console.log('getPicklistValuesByRecordTypeData Pending Tab', data);
       this.leaveTypeValues = data.picklistFieldValues.EMS_LM_Leave_Type_Name__c.values;
       this.picklistValues = data.picklistFieldValues.EMS_LM_Status__c.values;
-      console.log('### picklistValues Pending Tab: ', this.picklistValues);
+      //console.log('### picklistValues Pending Tab: ', this.picklistValues);
 
       //Values to remove from picklistValues
       const statusRemoved = ['Approved', 'Rejected', 'Cancelled', 'Auto Approved']
       const filteredStatusList = this.picklistValues.filter(status => !statusRemoved.includes(status.label));
-      console.log('### filteredStatusList', filteredStatusList);
       this.picklistValues = filteredStatusList;
-      console.log('### picklistValues Pending Tab: ', this.picklistValues);
-      console.log('### leaveTypeValues Pending Tab: ', this.leaveTypeValues);
+      //console.log('### picklistValues Pending Tab: ', this.picklistValues);
+      //console.log('### leaveTypeValues Pending Tab: ', this.leaveTypeValues);
     } else if (error) {
       console.error('Error:', error);
     }
@@ -147,27 +146,24 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     if (data) {
       this.isLoading = false;
       this.showdata = true;
-      console.log('### DATA BEFORE: ', data, this.showdata);
       if (data.length > 0) {
-        console.log('### DATA AFTER: ', data);
+        //console.log('### DATA AFTER: ', data);
         this.showdata = true;
         this.nodata = false;
         this.datahistory = JSON.parse(JSON.stringify(data));
         this.disableButton = false;
-        console.log('### datahistory JSON : ', this.datahistory);
         this.datahistory.forEach(req => {
           //console.log('#### req for approval', req);
           //console.log('### req.EMS_LM_2nd_Approver__c filter: ', req.EMS_LM_2nd_Approver__c);
           //console.log(' ### status--->', req.EMS_LM_Status__c, "--value-->", req.EMS_LM_Status__c == 'Approver 2 Pending', "--uid--", this.uId, "--2nd approval--", req.EMS_LM_2nd_Approver__c, "--value--", req.EMS_LM_2nd_Approver__c === this.uId);
           req.disableButton = !(req.EMS_LM_Status__c == 'Pending' || (req.EMS_LM_Status__c == 'Approver 2 Pending' && req.EMS_LM_2nd_Approver__c != null && req.EMS_LM_2nd_Approver__c === this.uId) || (req.EMS_LM_Status__c == 'Approver 1 Pending' && req.EMS_LM_Approver__c === this.uId));
         });
-        console.log('### datahistory', this.datahistory);
         this.error = undefined;
       } else if (!this.isCheck) {
         this.nodata = true;
-        console.log('### DATA BEFORE esle before: ', data, this.showdata);
+        //console.log('### DATA BEFORE esle before: ', data, this.showdata);
         this.showdata = false;
-        console.log('### DATA BEFORE else: ', data, this.showdata);
+        //console.log('### DATA BEFORE else: ', data, this.showdata);
         this.error = undefined;
       }
     } else if (error) {
@@ -179,7 +175,6 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     } else {
       this.nodata = true;
       this.isLoading = true;
-      console.log('### disableButton ELSE : ');
       this.disableButton = this.nodata === true;
       this.showdata = false;
       this.error = undefined;
@@ -194,7 +189,6 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   startdatechange(event) {
     this.startDate = event.detail.value
     this.isCheck = false;
-    window.console.log('startDate ##' + this.startDate);
     if (this.startDate != null) {
       this.startDate = event.detail.value;
     }
@@ -207,31 +201,25 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   enddatechange(event) {
     this.endDate = event.detail.value;
     this.isCheck = false;
-    window.console.log('endDate ##' + this.endDate);
     if (this.endDate != null) {
       this.endDate = event.detail.value;
     }
   }
 
   handleValueChange(event) {
-    console.log(JSON.stringify(event.detail));
     this.sValue = event.detail;
     this.isCheck = false;
-    console.log('## this.sValue Pending Tab', this.sValue);
   }
 
   handleTypeValueChange(event) {
-    console.log(JSON.stringify(event.detail));
     this.value = event.detail;
     this.isCheck = false;
-    console.log('## this.value Pending Tab', this.value);
   }
 
   //CheckBox
   handleSelect(event) {
-    console.log('SELECTED RECORD : ');
     const selectedRecordCheckboxId = event.currentTarget.dataset.id;
-    console.log('### selectedRecordCheckboxId : ', selectedRecordCheckboxId);
+    //console.log('### selectedRecordCheckboxId : ', selectedRecordCheckboxId);
     this.checkBox = event.target.checked
     if (!this.checkBox) {
       const index = this.multipleApprovals.indexOf(selectedRecordCheckboxId);
@@ -239,40 +227,11 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     } else {
       this.multipleApprovals = [... this.multipleApprovals, selectedRecordCheckboxId];
     }
-    console.log('###  multipleApprovals Child: ', this.multipleApprovals);
   }
 
-  //TO SELECT ALL THE CHECKBOXES
-  /* handleSelectAll(event) {
-     console.log('OUTPUT : ');
-     this.checkBox = event.target.checked
-     if (this.checkBox) {
-       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
-       const selectedRecordIds = [];
-       checkboxElements.forEach(element => {
-         element.checked = !element.disabled && true;
- 
-         console.log('### element.disableButton : ', element.disabled);
-         //console.log('### element.dataset : ', JSON.stringify(element.dataset));
-         selectedRecordIds.push(element.dataset);
-         //console.log('### selectedRecordIds : ', selectedRecordIds);
-       });
-       console.log('Selected Record Ids:', selectedRecordIds);
-       this.multipleApprovals = selectedRecordIds.map(item => item.id);
-       console.log('### multipleApprovals', this.multipleApprovals);
-     } else if (!this.checkBox) {
-       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
-       checkboxElements.forEach(element => {
-         element.checked = false;
-         this.multipleApprovals = [];
-         console.log('### else multipleApprovals : ', this.multipleApprovals);
-       });
-     }
-   }*/
 
   //TO SELECT ALL THE CHECKBOXES
   handleSelectAll(event) {
-    console.log('OUTPUT : ');
     this.checkBox = event.target.checked
     if (this.checkBox) {
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
@@ -284,15 +243,15 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
           selectedRecordIds.push(dataId);
         }
       });
-      console.log('Selected Record Ids:', selectedRecordIds);
+      //console.log('Selected Record Ids:', selectedRecordIds);
       this.multipleApprovals = selectedRecordIds;
-      console.log('### multipleApprovals', this.multipleApprovals);
+      //console.log('### multipleApprovals', this.multipleApprovals);
     } else if (!this.checkBox) {
       const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
       checkboxElements.forEach(element => {
         element.checked = false;
         this.multipleApprovals = [];
-        console.log('### else multipleApprovals : ', this.multipleApprovals);
+        //console.log('### else multipleApprovals : ', this.multipleApprovals);
       });
     }
   }
@@ -314,17 +273,13 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     } else {
       this.isShowModalApproveAll = true;
     }
-    console.log(' APPROVE MODAL OPEN : ');
-
   }
 
   handleApproveAllSave() {
-    console.log('OUTPUT : ');
-    console.log('OUTPUT multipleApprovals: ', JSON.stringify(this.multipleApprovals));
+    //console.log('OUTPUT multipleApprovals: ', JSON.stringify(this.multipleApprovals));
     if (this.template.querySelector('lightning-textarea').reportValidity()) {
       bulkLeaveReqApproval({ bulkleaveReqId: this.multipleApprovals, comments: this.approveAllComments })
         .then((result) => {
-          console.log('Leave Request: ', result);
           this.isShowModalApproveAll = false;
           this.approveAllComments = '';
           const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
@@ -358,15 +313,12 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     } else {
       this.isShowModalRejectAll = true;
     }
-    console.log(' REJECT MODAL OPEN : ');
   }
 
   handleRejectAllSave() {
-    console.log('REJECT SAVE : ');
     if (this.template.querySelector('lightning-textarea').reportValidity()) {
       bulkLeaveReqReject({ bulkRejectId: this.multipleApprovals, comments: this.rejectAllComments })
         .then((result) => {
-          console.log('Leave Request: ', result);
           this.isShowModalRejectAll = false;
           const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
           checkboxElements.forEach(element => {
@@ -402,10 +354,9 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
 
   showModalApprovalBox(event) {
-    console.log('BUTTON CLICKED : ');
-    console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
+    //console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
     this.selectedRecordApproveId = event.currentTarget.dataset.id;
-    console.log('### selectedRecordApproveId : ', this.selectedRecordApproveId);
+    //console.log('### selectedRecordApproveId : ', this.selectedRecordApproveId);
     this.isShowModalApprove = true;
   }
 
@@ -413,7 +364,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
     if (this.template.querySelector('lightning-textarea').reportValidity()) {
       updateApproveStatusAndComments({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
         .then((result) => {
-          console.log('Leave Request: ', result);
+          //console.log('Leave Request: ', result);
           this.isShowModalApprove = false;
           this.approveComments = '';
           const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
@@ -438,20 +389,19 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   }
 
   showModalRejectBox(event) {
-    console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
-    console.log('### event id: ', JSON.stringify(event.currentTarget.dataset.id));
+    //console.log('### event : ', JSON.stringify(event.currentTarget.dataset));
+    //console.log('### event id: ', JSON.stringify(event.currentTarget.dataset.id));
     this.selectedRecordRejectId = event.currentTarget.dataset.id;
-    console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
+    //console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
     this.isShowModalReject = true;
 
   }
 
   handleRejectSave(event) {
-    console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
+    //console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
     if (this.template.querySelector('lightning-textarea').reportValidity()) {
       updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
         .then((result) => {
-          console.log('Leave Request: ', result);
           this.isShowModalReject = false;
           const checkboxElements = this.template.querySelectorAll('input[type="checkbox"]');
           checkboxElements.forEach(element => {
@@ -471,19 +421,19 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
 
   connectedCallback() {
     this.a_Record_URL = window.location.origin;
-    console.log('Base Url' + this.a_Record_URL);
+    //console.log('Base Url' + this.a_Record_URL);
   }
 
   //TO VIEW THE LEAVE RECORD
   handleView(event) {
     const selectedRecordId = event.currentTarget.dataset.id;
-    console.log('### handleView : ', selectedRecordId);
+    //console.log('### handleView : ', selectedRecordId);
     var url = new URL(this.a_Record_URL + '/Grid/s/ems-lm-leave-history/' + selectedRecordId);
     var params = new URLSearchParams();
     params.append("pendingTab", "value");
     url.search += "&" + params.toString();
 
-    console.log('### url : ', JSON.stringify(url));
+    //console.log('### url : ', JSON.stringify(url));
     this[NavigationMixin.Navigate]({
       type: 'standard__webPage',
       attributes: {
@@ -496,7 +446,7 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
   //TO VIEW THE CONTACT RECORD
   handlConClick(event) {
     let selectCon = event.currentTarget.dataset.id;
-    console.log('### selectCon : ', selectCon);
+    //console.log('### selectCon : ', selectCon);
     this[NavigationMixin.Navigate]({
       type: 'standard__recordPage',
       attributes: {
@@ -506,6 +456,4 @@ export default class EMS_LM_LeaveHistory_PendingOnMe extends NavigationMixin(Lig
       },
     });
   }
-
-
 }

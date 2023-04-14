@@ -12,13 +12,13 @@ export default class LeaveReqViewForm extends NavigationMixin(LightningElement) 
 
     connectedCallback() {
         this.a_Record_URL = window.location.origin;
-        console.log('Base Url' + this.a_Record_URL);
+        //console.log('Base Url' + this.a_Record_URL);
     }
 
     @wire(CurrentPageReference)
     getPageReferenceParameters(currentPageReference) {
         if (currentPageReference) {
-            console.log(currentPageReference);
+            //console.log(currentPageReference);
             this.recordId = currentPageReference.attributes.recordId || null;
         }
     }
