@@ -19,6 +19,7 @@ on:
         - EMS-Dev
         - EMS-Qa
         - EMS-Uat
+        - EMS-Prod
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
