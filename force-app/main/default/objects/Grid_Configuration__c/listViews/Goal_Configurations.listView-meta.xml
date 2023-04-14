@@ -7,5 +7,10 @@
     <columns>Goal_End_Date__c</columns>
     <columns>Resource_Role__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Grid_Configuration_Type__c</field>
+        <operation>equals</operation>
+        <value>Org Level Goal,Resource Role Level Goal</value>
+    </filters>
     <label>Goal Configurations</label>
 </ListView>

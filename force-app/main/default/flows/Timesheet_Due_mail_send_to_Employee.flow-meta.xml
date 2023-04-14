@@ -186,8 +186,8 @@
         <object>Contact</object>
         <schedule>
             <frequency>Weekly</frequency>
-            <startDate>2023-02-28</startDate>
-            <startTime>02:30:00.000Z</startTime>
+            <startDate>2023-03-03</startDate>
+            <startTime>00:00:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
