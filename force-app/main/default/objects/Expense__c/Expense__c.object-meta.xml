@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -166,7 +166,7 @@
         <searchResultsAdditionalFields>Bill_Date__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Expense_Type__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Expense_Amount__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields xsi:nil="true"></searchResultsAdditionalFields>
         <searchResultsAdditionalFields>is_Reimbursed__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Approval_Manager__c</searchResultsAdditionalFields>

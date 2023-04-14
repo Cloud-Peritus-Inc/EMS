@@ -153,13 +153,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>PayRoll</label>
+    <label>Payroll</label>
     <nameField>
         <displayFormat>PAY{0000000}</displayFormat>
         <label>PayRoll Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>PayRolls</pluralLabel>
+    <pluralLabel>Payrolls</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>

@@ -1184,35 +1184,38 @@
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
-    <tabs>standard-Account</tabs>
+    <tabs>standard-Dashboard</tabs>
     <tabs>standard-Contact</tabs>
-    <tabs>EMS_LM_Leave_Credit__c</tabs>
-    <tabs>EMS_LM_Leave__c</tabs>
-    <tabs>EMS_LM_Leave_History__c</tabs>
+    <tabs>Resource_Request__c</tabs>
+    <tabs>EMS_EM_Onboarding_Request__c</tabs>
+    <tabs>Resource_Resource_Relationship__c</tabs>
     <tabs>EMS_TM_Project__c</tabs>
     <tabs>EMS_TM_Assignment__c</tabs>
-    <tabs>EMS_TM_Timesheet_Record__c</tabs>
-    <tabs>Resource_Role__c</tabs>
-    <tabs>Resource_Resource_Relationship__c</tabs>
-    <tabs>Grid_Configuration__c</tabs>
-    <tabs>Resource_Request__c</tabs>
-    <tabs>Skill__c</tabs>
-    <tabs>Expense__c</tabs>
-    <tabs>Fiscal_Year__c</tabs>
-    <tabs>PayRoll__c</tabs>
-    <tabs>Off_boarding_Request__c</tabs>
-    <tabs>EMS_RM_Job_Application__c</tabs>
-    <tabs>EMS_Job_Opening__c</tabs>
-    <tabs>EMS_Job_Description__c</tabs>
-    <tabs>Schedule_And_Feedback__c</tabs>
-    <tabs>Office_Location__c</tabs>
-    <tabs>Certifications__c</tabs>
-    <tabs>Pay_Period__c</tabs>
+    <tabs>EMS_LM_Leave_History__c</tabs>
     <tabs>EmpTimeSheet</tabs>
-    <tabs>EMS_Timesheet__c</tabs>
-    <tabs>Reward_And_Recognition__c</tabs>
+    <tabs>EMS_TM_Timesheet_Record__c</tabs>
+    <tabs>Expense__c</tabs>
+    <tabs>PayRoll__c</tabs>
+    <tabs>ems_EM_Additional_Detail__c</tabs>
+    <tabs>Goal__c</tabs>
+    <tabs>standard-Case</tabs>
+    <tabs>Off_boarding_Request__c</tabs>
+    <tabs>Grid_Configuration__c</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>Fiscal_Year__c</tabs>
+    <tabs>Office_Location__c</tabs>
+    <tabs>Pay_Period__c</tabs>
     <tabs>EMS_TM_Calendar__c</tabs>
-    <tabs>EMS_EM_Onboarding_Request__c</tabs>
+    <tabs>Department__c</tabs>
+    <tabs>Skill__c</tabs>
+    <tabs>Resource_Role__c</tabs>
+    <tabs>EMS_LM_Leave__c</tabs>
+    <tabs>EMS_LM_Leave_Credit__c</tabs>
+    <tabs>EMS_Job_Description__c</tabs>
+    <tabs>EMS_Job_Opening__c</tabs>
+    <tabs>EMS_RM_Job_Application__c</tabs>
+    <tabs>Certifications__c</tabs>
+    <tabs>EMS_Timesheet__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Grid_UtilityBar</utilityBar>
 </CustomApplication>

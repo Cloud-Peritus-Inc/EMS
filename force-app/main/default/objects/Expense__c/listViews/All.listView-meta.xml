@@ -6,7 +6,6 @@
     <columns>Bill_Date__c</columns>
     <columns>Expense_Type__c</columns>
     <columns>Expense_Amount__c</columns>
-    <columns>Amount__c</columns>
     <columns>is_Reimbursed__c</columns>
     <columns>Project__c</columns>
     <columns>Approval_Manager__c</columns>

@@ -165,7 +165,16 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Leaves Requests</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>EMS_LM_Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_LM_Leave_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_LM_Leave_Duration__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_LM_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_LM_Reason__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_LM_Current_Approver__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_LM_Approver__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_LM_2nd_Approver__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
