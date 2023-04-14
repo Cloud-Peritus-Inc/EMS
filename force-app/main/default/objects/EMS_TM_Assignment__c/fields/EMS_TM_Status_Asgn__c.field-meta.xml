@@ -29,14 +29,17 @@
             <value>
                 <fullName>Cancelled</fullName>
                 <default>false</default>
+<<<<<<< Updated upstream
                 <isActive>false</isActive>
                 <label>Cancelled</label>
             </value>
             <value>
                 <fullName>Inactive</fullName>
                 <default>false</default>
+=======
+>>>>>>> Stashed changes
                 <isActive>false</isActive>
-                <label>Inactive</label>
+                <label>Cancelled</label>
             </value>
         </valueSetDefinition>
     </valueSet>

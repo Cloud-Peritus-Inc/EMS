@@ -32,6 +32,10 @@
                 <behavior>Edit</behavior>
                 <field>Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Amount1__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -50,10 +54,13 @@
                 <behavior>Edit</behavior>
                 <field>Billable__c</field>
             </layoutItems>
+<<<<<<< Updated upstream
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Amount1__c</field>
             </layoutItems>
+=======
+>>>>>>> Stashed changes
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

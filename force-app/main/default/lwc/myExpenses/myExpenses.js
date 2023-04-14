@@ -45,8 +45,17 @@ loaded = false
 
     handleCancel(event) {
       this.openModal = false;
+<<<<<<< Updated upstream
       this.showFileUpload =false;
      
+=======
+      this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: '/Grid/s'
+            }
+        });
+>>>>>>> Stashed changes
     }
 
 handleNavClick() {
@@ -137,7 +146,17 @@ handleFormSubmit(event) {
             this.loaded = true;
             
             this.openModal = false;
+<<<<<<< Updated upstream
             this.showFileUpload =false;
+=======
+            //window.location.reload();
+            this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: '/Grid/s'
+            }
+        });
+>>>>>>> Stashed changes
          })
          .catch(error => {
              console.log('===ERROR===='+JSON.stringify(error));
@@ -171,7 +190,17 @@ handleFormSubmit(event) {
             this.reimbCurrency = result.expCurrency;
             this.loaded = true;
             this.openModal = false;
+<<<<<<< Updated upstream
             this.showFileUpload =false;
+=======
+            //window.location.reload();
+            this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: '/Grid/s'
+            }
+        });
+>>>>>>> Stashed changes
          })
          .catch(error => {
                console.log('===ERROR===='+JSON.stringify(error));
