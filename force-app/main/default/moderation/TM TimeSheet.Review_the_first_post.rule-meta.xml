@@ -14,6 +14,6 @@
     </entitiesAndFields>
     <masterLabel>Review the first post or comment made by a new member</masterLabel>
     <type>Content</type>
-    <userCriteria>TM TimeSheet.Members_without_contribution</userCriteria>
+    <userCriteria>TM Timesheet.Members_without_contribution</userCriteria>
     <userMessage>You can&apos;t use %BLOCKED_KEYWORD% or other inappropriate words in this community. Review your content and try again.</userMessage>
 </ModerationRule>

@@ -8,5 +8,20 @@
         <plural>true</plural>
         <value>Contacts</value>
     </caseValues>
+    <layouts>
+        <layout>CP Sales _ Contact Layout</layout>
+        <sections>
+            <label></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label></label>
+        <name>Sales_Contact</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

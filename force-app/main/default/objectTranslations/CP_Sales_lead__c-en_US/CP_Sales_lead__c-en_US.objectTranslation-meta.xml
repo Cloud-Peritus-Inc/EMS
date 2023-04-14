@@ -8,5 +8,20 @@
         <plural>true</plural>
         <value>Leads</value>
     </caseValues>
+    <layouts>
+        <layout>CP Sales _ lead Layout</layout>
+        <sections>
+            <label></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>New Section</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

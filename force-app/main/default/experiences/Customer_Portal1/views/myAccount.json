@@ -1,6 +1,7 @@
 {
   "appPageId" : "076fbf40-606d-494d-960f-24aa0c76e4ed",
   "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
   "id" : "779c8482-025b-4e64-a3cd-879062acd3ba",
   "label" : "My Account",
   "regions" : [ {

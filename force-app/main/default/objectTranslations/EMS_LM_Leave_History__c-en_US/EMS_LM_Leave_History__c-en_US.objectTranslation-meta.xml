@@ -8,5 +8,72 @@
         <plural>true</plural>
         <value>Leaves History</value>
     </caseValues>
+    <layouts>
+        <layout>Leave History Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Annual_Insufficient_Leave_Balance</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Annual_Leave_insufficient_balance</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Apply_leave_before48_hours</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Bereavement_leave_duration</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Insufficient_leave_balance</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>LOP_Start_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Leave_Days_Shouldnot_Exceed_5Days</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Leave_End_Date_Greater_than_Start_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Leave_Limit_Exceeded</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>LossOfPay</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Maternity_Leave_Greater_Than_182_Days</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Number_of_WFH_Leaves_in_a_week</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Restrict_Annual_Leaves_Upto</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Restricted_To_Apply_Maternity_Leave</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Restricted_to_apply_paternity_leave</name>
+    </validationRules>
 </CustomObjectTranslation>

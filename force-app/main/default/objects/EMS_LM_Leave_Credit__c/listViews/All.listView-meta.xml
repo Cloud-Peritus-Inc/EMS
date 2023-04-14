@@ -6,6 +6,7 @@
     <columns>EMS_LM_Leaves_Credited__c</columns>
     <columns>EMS_LM_Employee__c</columns>
     <columns>EMS_LM_Select_Leave_Type__c</columns>
+    <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

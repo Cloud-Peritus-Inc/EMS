@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>high_roles</name>
-        <label>high roles</label>
-        <locationX>506</locationX>
-        <locationY>695</locationY>
+        <name>Copy_1_of_high_roles</name>
+        <label>Copy 1 of high roles</label>
+        <locationX>308</locationX>
+        <locationY>575</locationY>
         <actionName>submit</actionName>
         <actionType>submit</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -22,159 +22,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <actionCalls>
-        <name>low_role_approval</name>
-        <label>low role approval</label>
-        <locationX>242</locationX>
-        <locationY>695</locationY>
-        <actionName>submit</actionName>
-        <actionType>submit</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>processDefinitionNameOrId</name>
-            <value>
-                <stringValue>Leave_Approval_Process</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>objectId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>56.0</apiVersion>
-    <decisions>
-        <name>Check_Which_Flow_To_Use</name>
-        <label>Check Which Flow To Use</label>
-        <locationX>374</locationX>
-        <locationY>575</locationY>
-        <defaultConnector>
-            <targetReference>high_roles</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>for_smaller_roles</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Project Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>HR Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>HR Executive</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Senior Project Manager - Salesforce</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Senior Talent Acquisition Partner</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Sr. HR Executive</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Sr. Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Talent Acquisition Partner</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>US Talent Acquisition Partner</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>TA Director</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Lead Data Migration Engineer</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Lead Salesforce Business System Analyst</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Lead Salesforce Developer</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Lead Salesforce Quality Analyst</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Director of Sales</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.EMS_LM_Contact__r.EMS_RM_Current_Job_Role__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>low_role_approval</targetReference>
-            </connector>
-            <label>for smaller roles</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Contact_Approver_Blank</name>
         <label>Contact Approver Blank</label>
@@ -230,10 +78,10 @@
     <recordUpdates>
         <name>Update_Approvers_Values</name>
         <label>Update Approvers Values</label>
-        <locationX>374</locationX>
+        <locationX>308</locationX>
         <locationY>455</locationY>
         <connector>
-            <targetReference>Check_Which_Flow_To_Use</targetReference>
+            <targetReference>Copy_1_of_high_roles</targetReference>
         </connector>
         <inputAssignments>
             <field>EMS_LM_2nd_Approver__c</field>

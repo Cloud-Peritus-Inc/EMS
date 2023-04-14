@@ -3,11 +3,11 @@
     <isVisibleByExternalUsers>false</isVisibleByExternalUsers>
     <language>en_US</language>
     <masterLabel>JO</masterLabel>
-    <originNetwork>TM TimeSheet</originNetwork>
+    <originNetwork>TM Timesheet</originNetwork>
     <relationships>
         <network>
             <access>VIEWER</access>
-            <name>TM TimeSheet</name>
+            <name>TM Timesheet</name>
         </network>
         <workspace>
             <access>INFERRED</access>

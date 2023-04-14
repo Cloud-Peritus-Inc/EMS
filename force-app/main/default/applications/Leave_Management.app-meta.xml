@@ -18,6 +18,8 @@
     <tabs>EMS_LM_Leave_Credit__c</tabs>
     <tabs>EMS_LM_Leave_History__c</tabs>
     <tabs>standard-Contact</tabs>
+    <tabs>standard-Dashboard</tabs>
+    <tabs>standard-report</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Leave_Management_UtilityBar</utilityBar>
 </CustomApplication>

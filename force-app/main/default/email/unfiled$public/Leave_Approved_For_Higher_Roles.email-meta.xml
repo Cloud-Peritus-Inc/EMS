@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template to be shared when leave approved by Higher Roles</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Leave Approved For Higher Roles</name>
+    <style>none</style>
+    <subject>Leave request approved</subject>
+    <textOnly>Dear {!Contact.FirstName} {!Contact.LastName},
+
+Your Leave request type {!EMS_LM_Leave_History__c.EMS_LM_Leave_Type_Name__c} for the following date(s) has been approved.
+
+Apply for date   Status   Day
+{!EMS_LM_Leave_History__c.EMS_LM_Leave_Start_Date__c} TO {!EMS_LM_Leave_History__c.EMS_LM_Leave_End_Date__c}  {!EMS_LM_Leave_History__c.EMS_LM_Status__c}   {!EMS_LM_Leave_History__c.EMS_LM_Day__c}
+
+
+Reason : {!EMS_LM_Leave_History__c.EMS_LM_Reason__c}
+
+
+Regards,
+
+Cloud Peritus India Pvt. Ltd.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

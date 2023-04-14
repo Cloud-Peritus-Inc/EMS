@@ -1,6 +1,7 @@
 {
   "appPageId" : "076fbf40-606d-494d-960f-24aa0c76e4ed",
   "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
   "id" : "8976a44b-d550-44e3-a31d-a2d46e30c44a",
   "label" : "Dashboard Related List",
   "regions" : [ {

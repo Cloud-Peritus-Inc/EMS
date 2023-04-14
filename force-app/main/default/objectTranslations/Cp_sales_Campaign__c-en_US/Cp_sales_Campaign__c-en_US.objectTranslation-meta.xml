@@ -8,5 +8,16 @@
         <plural>true</plural>
         <value>Cp sales_ Campaigns</value>
     </caseValues>
+    <layouts>
+        <layout>Cp sales_ Campaign Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Planning</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,32 @@
         <plural>true</plural>
         <value>Projects</value>
     </caseValues>
+    <layouts>
+        <layout>PROJECT Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label></label>
+        <name>Assingment</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>New_Assignment</name>
+    </quickActions>
+    <recordTypes>
+        <label></label>
+        <name>Client_Projects</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Global_Projects</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Internal_Projects</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

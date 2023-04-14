@@ -6,30 +6,30 @@
     <entitiesAndFields>
         <entityName>FeedItem</entityName>
         <fieldName>Title</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <entitiesAndFields>
         <entityName>FeedPollChoice</entityName>
         <fieldName>ChoiceBody</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <entitiesAndFields>
         <entityName>FeedComment</entityName>
         <fieldName>RawCommentBody</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <entitiesAndFields>
         <entityName>FeedItem</entityName>
         <fieldName>LinkUrl</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <entitiesAndFields>
         <entityName>FeedItem</entityName>
         <fieldName>RawBody</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <masterLabel>Flag posts or comments containing banned keywords</masterLabel>
     <type>Content</type>
-    <userCriteria>TM TimeSheet.Customer_Members</userCriteria>
+    <userCriteria>TM Timesheet.Customer_Members</userCriteria>
     <userMessage>You can&apos;t use %BLOCKED_KEYWORD% or other inappropriate words in this community. Review your content and try again.</userMessage>
 </ModerationRule>

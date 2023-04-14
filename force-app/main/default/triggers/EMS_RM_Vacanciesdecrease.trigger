@@ -6,7 +6,7 @@ trigger EMS_RM_Vacanciesdecrease on Contact (before insert, before update, after
     
     if(trigger.isBefore && trigger.isUpdate){
         //EMS_TM_UpdateContactEmail.sendWelcomeMailtoEmployee(trigger.new,trigger.oldmap);
-        //EMS_EM_aplicantConvertResource.sendTheWelcomeMailtoEmployee(trigger.new,trigger.oldmap);
+        EMS_EM_aplicantConvertResource.sendTheWelcomeMailtoEmployee(trigger.new,trigger.oldmap);
 
     }
     

@@ -6,27 +6,27 @@
     <entitiesAndFields>
         <entityName>FeedComment</entityName>
         <fieldName>RawCommentBody</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <entitiesAndFields>
         <entityName>FeedItem</entityName>
         <fieldName>LinkUrl</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <entitiesAndFields>
         <entityName>FeedItem</entityName>
         <fieldName>RawBody</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <entitiesAndFields>
         <entityName>FeedPollChoice</entityName>
         <fieldName>ChoiceBody</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <entitiesAndFields>
         <entityName>FeedItem</entityName>
         <fieldName>Title</fieldName>
-        <keywordList>TM TimeSheet.Banned</keywordList>
+        <keywordList>TM Timesheet.Banned</keywordList>
     </entitiesAndFields>
     <masterLabel>Block posts or comments containing banned keywords</masterLabel>
     <type>Content</type>

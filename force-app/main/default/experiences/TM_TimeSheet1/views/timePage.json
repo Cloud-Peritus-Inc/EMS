@@ -1,6 +1,7 @@
 {
   "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
   "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
   "id" : "63960632-1f14-4ea3-a017-c2c6957a387f",
   "label" : "TimePage",
   "regions" : [ {

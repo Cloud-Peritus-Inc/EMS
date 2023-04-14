@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExperienceBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>TM TimeSheet</label>
+    <label>TM Timesheet</label>
     <type>ChatterNetworkPicasso</type>
     <urlPathPrefix>CpLink/s</urlPathPrefix>
 </ExperienceBundle>

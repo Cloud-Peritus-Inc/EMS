@@ -124,7 +124,7 @@
           "components" : [ {
             "componentAttributes" : {
               "navAlignment" : "left",
-              "navItemThreshold" : 4,
+              "navItemThreshold" : 5,
               "navigationMenuEditorRefresh" : "Salesforce_objects"
             },
             "componentName" : "forceCommunity:themeNav",

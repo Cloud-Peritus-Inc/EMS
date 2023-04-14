@@ -170,10 +170,12 @@
     <searchLayouts>
         <searchResultsAdditionalFields>EMS_TM_EmployeeName__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EMS_TM_ProjectName_Asgn__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_Allocation__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EMS_TM_AssignedAs__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EMS_TM_StartDate_Asgn__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EMS_TM_EndDate_Asgn__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EMS_TM_Status_Asgn__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EMS_TM_Billable__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

@@ -160,4 +160,8 @@
         <name>Leave_Management</name>
         <type>CustomApplication</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>Employee_Management</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
 </AppMenu>

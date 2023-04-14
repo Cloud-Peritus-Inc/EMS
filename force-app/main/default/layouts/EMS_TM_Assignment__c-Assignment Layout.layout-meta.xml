@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>EMS_TM_Billable__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EMS_TM_Allocation__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

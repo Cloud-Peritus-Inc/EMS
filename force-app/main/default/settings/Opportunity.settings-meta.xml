@@ -3,14 +3,17 @@
     <autoActivateNewReminders>true</autoActivateNewReminders>
     <customizableProductSchedulesEnabled>false</customizableProductSchedulesEnabled>
     <doesEnforceStandardOpportunitySaveLogic>true</doesEnforceStandardOpportunitySaveLogic>
+    <enableExpandedPipelineInspectionSetup>false</enableExpandedPipelineInspectionSetup>
     <enableFindSimilarOpportunities>false</enableFindSimilarOpportunities>
     <enableOpportunityFieldHistoryTracking>false</enableOpportunityFieldHistoryTracking>
     <enableOpportunityTeam>false</enableOpportunityTeam>
+    <enablePipelineInspection>false</enablePipelineInspection>
+    <enablePipelineInspectionSingleCategoryRollup>false</enablePipelineInspectionSingleCategoryRollup>
+    <enableServiceCaseInsights>false</enableServiceCaseInsights>
     <enableUpdateReminders>true</enableUpdateReminders>
     <oppAmountDealMotionEnabled>false</oppAmountDealMotionEnabled>
     <oppCloseDateDealMotionEnabled>false</oppCloseDateDealMotionEnabled>
     <promptToAddProducts>false</promptToAddProducts>
-    <pushCountEnabled>true</pushCountEnabled>
     <simpleOppCreateFromContact>false</simpleOppCreateFromContact>
     <simpleOppCreateFromEvent>false</simpleOppCreateFromEvent>
 </OpportunitySettings>

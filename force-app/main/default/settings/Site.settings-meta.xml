@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SiteSettings xmlns="http://soap.sforce.com/2006/04/metadata">
-    <enableEnhancedSitesAndContentPlatform>true</enableEnhancedSitesAndContentPlatform>
     <enableProxyLoginICHeader>true</enableProxyLoginICHeader>
     <enableSitesRecordReassignOrgPref>true</enableSitesRecordReassignOrgPref>
     <enableTopicsInSites>false</enableTopicsInSites>

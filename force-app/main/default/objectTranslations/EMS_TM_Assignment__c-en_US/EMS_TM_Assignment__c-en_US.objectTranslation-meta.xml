@@ -8,5 +8,28 @@
         <plural>true</plural>
         <value>Assignments</value>
     </caseValues>
+    <layouts>
+        <layout>Assignment Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>StartDateAndEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>start_date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>start_date_Validation</name>
+    </validationRules>
 </CustomObjectTranslation>

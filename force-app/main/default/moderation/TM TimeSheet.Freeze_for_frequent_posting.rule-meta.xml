@@ -16,5 +16,5 @@
     <masterLabel>Freeze members whose posts or comments exceed the allowed rate</masterLabel>
     <timePeriod>Short</timePeriod>
     <type>Rate</type>
-    <userCriteria>TM TimeSheet.Partner_and_Customer_members</userCriteria>
+    <userCriteria>TM Timesheet.Partner_and_Customer_members</userCriteria>
 </ModerationRule>

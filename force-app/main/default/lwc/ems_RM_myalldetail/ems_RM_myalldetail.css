@@ -1,0 +1,11 @@
+.dummy{
+	color : blue;
+}
+.slds-modal__container {
+    max-height: 75rem !important;
+    max-width: 75rem !important;
+    width: 75% !important;
+}
+.hidden{
+    display:none;
+}

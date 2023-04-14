@@ -3,7 +3,7 @@
     <fullName>EMS_Phone_Number__c</fullName>
     <externalId>false</externalId>
     <label>Phone Number</label>
-    <required>true</required>
+    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Phone</type>
 </CustomField>

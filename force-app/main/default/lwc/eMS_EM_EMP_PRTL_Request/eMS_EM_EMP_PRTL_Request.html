@@ -1,0 +1,1398 @@
+<template>
+
+
+  <!-- sldsValidatorIgnore -->
+  <!-- sldsValidatorIgnore -->
+
+
+  <!-- <lightning-card  variant="Narrow"  title="Menu" icon-name="standard:account">
+       <lightning-button-icon  icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions"></lightning-button-icon>
+   </lightning-card>
+slds-theme_shade
+   -->
+
+   <div class="slds-box pink" >
+     <div class="slds-grid slds-gutters slds-grid_vertical-align-center h-55px">
+       <div class="slds-col slds-size_4-of-5">
+         <div class="slds-text-heading_medium"><b class=" text-white">Requests </b></div>
+       </div>
+      <div class="slds-list_horizontal slds-p-around_small">
+         <lightning-input type="date" class="startDate" name="startDate" label="Start Date" onchange={dateHandler}  ></lightning-input>
+         &nbsp; &nbsp;
+       <lightning-input type="date"  class="endDate"  name="endDate" label="End Date"  onchange={dateHandler} ></lightning-input>
+     </div>
+     </div>
+     </div>
+
+   <lightning-tabset variant="vertical">
+       <lightning-tab label="Change of Details">
+       <div class="slds-grid slds-gutters">
+           <div class="slds-col">
+               <span><h1>Change of Details</h1></span>
+               </div>
+               <div class="slds-col">
+               <span><div class="slds-float_right">
+                 &nbsp;
+             <lightning-button-menu alternative-text="Show menu" label="New Request" text="Apply New" variant="brand-outline" onselect={handleOnselect} >
+             <lightning-menu-item value="PersonalDetails" label="Personal Details"></lightning-menu-item>
+             <lightning-menu-item value="AddressDetails" label="Address Details" ></lightning-menu-item>
+             <lightning-menu-item value="EmergencyDetails" label="Emergency Details"></lightning-menu-item>
+             <lightning-menu-item value="EducationalDetails" label="Education Details"></lightning-menu-item>
+             <lightning-menu-item value="VehicleDetails" label="Vehicle Details"></lightning-menu-item>
+             <lightning-menu-item value="BankDetails" label="Bank Details"></lightning-menu-item>
+           </lightning-button-menu>
+       </div>
+       <div></div>
+       <div class="slds-float_right">
+         <lightning-button-menu alternative-text="Show menu" label={selectRequest} text={selectRequest} variant="brand-outline" onselect={handleFilter} >
+           <lightning-menu-item value="Allrequests" label="All Requests" ></lightning-menu-item>
+           <lightning-menu-item value="Auto-Approved" label="Auto-Approved" ></lightning-menu-item>
+           <lightning-menu-item value="Approved" label="Approved" ></lightning-menu-item>
+           <lightning-menu-item value="Pending" label="Pending"></lightning-menu-item>
+           <lightning-menu-item value="Rejected" label="Rejected" ></lightning-menu-item>
+           <lightning-menu-item value="Cancelled" label="Cancelled" ></lightning-menu-item>
+           </lightning-button-menu>
+           </div>
+     </span>
+       </div>
+
+
+
+   </div>
+ </br>
+<!-- Modal for Address details -->
+   <template if:true={ready1}>
+     <div class="slds-box slds-theme_shade">
+       <div class="slds-modal slds-fade-in-open slds-backdrop">
+         <div class="slds-modal__container">
+           <!--HEADER Section-->
+
+           <div class="slds-modal__header">
+             <lightning-button-icon
+               icon-name="utility:close"
+               alternative-text="Close this window"
+               size="large"
+               variant="bare-inverse"
+               onclick={closeModal}
+               class="slds-modal__close"
+             >
+             </lightning-button-icon>
+             <div class="slds-float_left slds-text-heading_medium slds-hyphenate">
+             <h2> Change of Address Details </h2>
+           </div>
+           </div>
+           <!---Body Section-->
+     <!-- old details -->
+     <div class="slds-modal__content slds-p-around_medium">
+           <div class="slds-grid slds-wrap">
+                   <div class="slds-col slds-size_2-of-2 ">
+
+                       <div class="slds-section slds-is-open">
+                           <h3 class="slds-section__title slds-theme_shade">
+
+                             <span>Existing Address Details</span>
+
+                           </h3>
+                         </br>
+                           <div class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                                   <div class="slds-col slds-size_1-of-2">
+                                   <span>
+                                     <div>
+                                     <h1>Current Address</h1>
+                                   </br>
+                                   <lightning-record-edit-form record-id={recordId} object-api-name="Contact">
+                                     <lightning-input-field field-name="EMS_EM_CAddress_Line_1__c" disabled="true"></lightning-input-field>
+                                     <lightning-input-field field-name="EMS_EM_CAddress_Line_2__c" disabled="true"></lightning-input-field>
+                                     <lightning-input-field field-name="EMS_EM_CA_State__c" disabled="true"></lightning-input-field>
+                                     <lightning-input-field field-name="EMS_EM_CA_City__c" disabled="true"></lightning-input-field>
+                                     <lightning-input-field field-name="EMS_EM_CA_Zip__c" disabled="true"></lightning-input-field>
+                                     </lightning-record-edit-form>
+                                     </div>
+                                   </span>
+                                   </div>
+                                   <div class="slds-col slds-size_1-of-2">
+                                   <span>
+                                     <h1>Permanent Address</h1>
+                                   </br>
+                                   <lightning-record-edit-form record-id={recordId} object-api-name="Contact">
+                                     <lightning-input-field field-name="EMS_EM_PAddress_Line_1__c" disabled="true"></lightning-input-field>
+                                     <lightning-input-field field-name="EMS_EM_PAddress_Line_2__c" disabled="true"></lightning-input-field>
+                                     <lightning-input-field field-name="EMS_EM_PA_State__c" disabled="true"></lightning-input-field>
+                                     <lightning-input-field field-name="EMS_EM_PA_City__c" disabled="true"></lightning-input-field>
+                                     <lightning-input-field field-name="EMS_EM_PA_Zip__c" disabled="true"></lightning-input-field>
+                                     </lightning-record-edit-form>
+                                   </span>
+                                   </div>
+                                   </div>
+                           </div>
+                       </div>
+
+                   </div>
+                </div>
+
+
+           <!-- new details -->
+
+               </br>
+               <div class="slds-grid slds-wrap">
+                   <div class="slds-col slds-size_2-of-2 ">
+
+                       <div class="slds-section slds-is-open">
+                           <h3 class="slds-section__title slds-theme_shade">
+                             <span>Update Address Details</span>
+                           </h3>
+                         </br>
+                           <div class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                                   <div class="slds-col slds-size_1-of-2">
+                                   <span>
+                                     <div>
+                                     <h1>Current Address</h1>
+                                   </br>
+                                   <lightning-input value={EMS_EM_CAddress_Line_1__c} required name="EMS_EM_CAddress_Line_1__c" type="text" label="Address Line 1" onchange={handleChange} class="addressClass"></lightning-input>
+
+                                   <lightning-input value={EMS_EM_CAddress_Line_2__c}  name="EMS_EM_CAddress_Line_2__c" type="text"  label="Address Line 2" onchange={handleChange}></lightning-input>
+
+                                   <lightning-input value={EMS_EM_CA_State__c} data-id="addressId" required name="EMS_EM_CA_State__c" pattern="[A-Z a-z._-]{2,60}$" type="text" message-when-pattern-mismatch = "Invalid State" label="State" onchange={handleChange} class="addressClass"></lightning-input>
+
+                                  <lightning-input value={EMS_EM_CA_City__c} required name="EMS_EM_CA_City__c" pattern="[A-Z a-z._-]{2,60}$" type="text" message-when-pattern-mismatch = "Invalid City" label="City" onchange={handleChange} class="addressClass"></lightning-input>
+
+                                  <lightning-input value={EMS_EM_CA_Zip__c} required name="EMS_EM_CA_Zip__c" pattern="[0-9]{6}$" message-when-pattern-mismatch = "Invalid Zip Code" type="text"  label="Zip" onchange={handleChange} class="addressClass"></lightning-input>
+                                     </br>
+                                     </div>
+                                   </span>
+                                   </div>
+
+                                   <div class="slds-col slds-size_1-of-2">
+                                   <span>
+                                     <h1>Permanent Address</h1>
+                                   </br>
+                                   <lightning-input value={EMS_EM_PAddress_Line_1__c} required name="EMS_EM_PAddress_Line_1__c" type="text"  label="Address Line 1" onchange={handleChange}></lightning-input>
+                                     <lightning-input value={EMS_EM_PAddress_Line_2__c}  name="EMS_EM_PAddress_Line_2__c" type="text"  label="Address Line 2" onchange={handleChange}></lightning-input>
+                                     <lightning-input value={EMS_EM_PA_State__c} required name="EMS_EM_PA_State__c" pattern="[A-Z a-z._-]{2,60}$" message-when-pattern-mismatch = "Invalid State" type="text"  label="State" onchange={handleChange}></lightning-input>
+                                     <lightning-input value={EMS_EM_PA_City__c} required name="EMS_EM_PA_City__c" pattern="[A-Z a-z._-]{2,60}$"  message-when-pattern-mismatch = "Invalid City" type="text"  label="City" onchange={handleChange}></lightning-input>
+                                      <lightning-input value={EMS_EM_PA_Zip__c} required name="EMS_EM_PA_Zip__c" type="text" pattern="[0-9]{6}$" message-when-pattern-mismatch = "Invalid Zip Code"  label="Zip" onchange={handleChange}></lightning-input>
+                                   </span>
+                                   </div>
+                                   </div>
+                           </div>
+
+
+                           <div class="slds-grid slds-wrap">
+                           <div class="slds-col slds-size_1-of-13 slds-p-right_x-small">
+                               Permanent Address same as Current Address?
+                           </div>
+                           <div class="slds-col slds-size_1-of-12">
+                                <lightning-input checked={paFlag} type="Checkbox" onchange={AddressCheckboxChange} disabled={disableFlag}></lightning-input>
+                           </div>
+                           </div>
+
+
+
+
+
+
+
+
+
+
+                       </div>
+
+                   </div>
+                </div>
+                </div>
+
+
+           <!--Footer Section-->
+           <div class="slds-modal__footer">
+             <button
+               class="slds-button slds-button_neutral"
+               onclick={closeModal}
+               title="Cancel"
+             >
+               Cancel
+             </button>
+             <button
+               class="slds-button slds-button_brand"
+               onclick={submitAddressDetails}
+               name="addressdetails"
+               title="Submit"
+             >
+             Submit
+             </button>
+
+
+           </div>
+         </div>
+       </div>
+     </div>
+</template>
+
+<!-- Modal for Emergency details -->
+   <template if:true={ready4}>
+     <div class="slds-box slds-theme_shade">
+       <div class="slds-modal slds-fade-in-open slds-backdrop">
+         <div class="slds-modal__container">
+           <!--HEADER Section-->
+
+           <div class="slds-modal__header">
+             <lightning-button-icon
+               icon-name="utility:close"
+               alternative-text="Close this window"
+               size="large"
+               variant="bare-inverse"
+               onclick={closeModal}
+               class="slds-modal__close"
+             >
+             </lightning-button-icon>
+             <div class="slds-float_left slds-text-heading_medium slds-hyphenate">
+             <h2> Change of Emergency Details </h2>
+             </div>
+           </div>
+           <!---Body Section-->
+
+             <div class="slds-modal__content slds-p-around_medium">
+
+
+               <!-- old -->
+               <div class="slds-grid slds-wrap">
+                   <div class="slds-col slds-size_1-of-1 ">
+
+                       <div class="slds-section slds-is-open">
+                           <h3 class="slds-section__title slds-theme_shade">
+
+                             <span class="slds-truncate slds-p-horizontal_small">Existing Emergency Details</span>
+
+                           </h3>
+                           <div class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                                   <div class="slds-col slds-size_1-of-1">
+                                   <span>
+                                     <div>
+                                     <lightning-record-edit-form record-id={recordId} object-api-name="Contact">
+                                       <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                                         <lightning-input-field field-name="EMS_EM_ED_Name__c" disabled="true"> </lightning-input-field>
+                                         <lightning-input-field field-name="EMS_EM_ED_Relation__c" disabled="true"> </lightning-input-field>
+                                         <lightning-input-field field-name="EMS_EM_ED_Address__c" disabled="true"></lightning-input-field>
+                                         <lightning-input-field field-name="EMS_EM_ED_Phone__c" disabled="true"> </lightning-input-field>
+                                         <lightning-input-field field-name="EMS_EM_ED_Email__c" disabled="true"> </lightning-input-field>
+                                       </div>
+                                     </lightning-record-edit-form>
+                                     </div>
+                                   </span>
+                                   </div>
+                                   </div>
+                           </div>
+                       </div>
+
+                   </div>
+                </div>
+               <!--new -->
+
+               <div class="slds-grid slds-wrap">
+                   <div class="slds-col slds-size_1-of-1 ">
+
+                       <div class="slds-section slds-is-open">
+                           <h3 class="slds-section__title slds-theme_shade">
+
+                             <span class="slds-truncate slds-p-horizontal_small">Update Emergency Details</span>
+
+                           </h3>
+
+                           <div class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                                   <div class="slds-col slds-size_1-of-1">
+                                   <span>
+                                     <div>
+                                       <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                                       <lightning-input value={EMS_EM_ED_Name__c} name="EMS_EM_ED_Name__c" type="text" label="Name" message-when-pattern-mismatch = "Invalid Name" pattern="[A-Z a-z._-]{2,50}$" onchange={handleChange}></lightning-input>
+
+                                       <lightning-input value={EMS_EM_ED_Relation__c}  name="EMS_EM_ED_Relation__c" type="text" message-when-pattern-mismatch = "Invalid Input" pattern="[A-Z a-z._-]{2,50}$" label="Relationship" onchange={handleChange}></lightning-input>
+
+                                       <lightning-input value={EMS_EM_ED_Address__c} name="EMS_EM_ED_Address__c" type="text"  label="Address" onchange={handleChange}></lightning-input>
+
+                                      <lightning-input value={EMS_EM_ED_Phone__c} message-when-pattern-mismatch = "Invalid number" pattern="[0-9]{10}$" name="EMS_EM_ED_Phone__c" type="text"  label="Mobile No" onchange={handleChange}></lightning-input>
+
+                                      <lightning-input value={EMS_EM_ED_Email__c} name="EMS_EM_ED_Email__c"  type="email"  label="Email id" onchange={handleChange}></lightning-input>
+
+                                     </div>
+                                     </div>
+                                   </span>
+                                   </div>
+                                   </div>
+                           </div>
+                       </div>
+
+                   </div>
+                </div>
+                </div>
+
+           <!--Footer Section-->
+           <div class="slds-modal__footer">
+             <button
+               class="slds-button slds-button_neutral"
+               onclick={closeModal}
+               title="Cancel"
+             >
+               Cancel
+             </button>
+             <button
+               class="slds-button slds-button_brand"
+               onclick={submitEmergencyDetails}
+               name="addressdetails"
+               title="Submit"
+             >
+             Submit
+             </button>
+
+
+           </div>
+         </div>
+       </div>
+     </div>
+</template>
+
+
+<!-- Vehicle details -->
+
+<template if:true={ready6}>
+           <div class="slds-box slds-theme_shade">
+             <div class="slds-modal slds-fade-in-open slds-backdrop">
+               <div class="slds-modal__container">
+                 <!--HEADER Section-->
+
+                 <div class="slds-modal__header">
+                   <lightning-button-icon
+                     icon-name="utility:close"
+                     alternative-text="Close this window"
+                     size="large"
+                     variant="bare-inverse"
+                     onclick={closeModal}
+                     class="slds-modal__close"
+                   >
+                   </lightning-button-icon>
+                   <div class="slds-float_left slds-text-heading_medium slds-hyphenate">
+                   <h2> Change of Vehicle Details </h2>
+                   </div>
+                 </div>
+                 <!---Body Section-->
+
+                 <div class="slds-modal__content slds-p-around_medium">
+                 <!-- existing -->
+                 <h3 class="slds-section__title slds-theme_shade">
+
+                             <span class="slds-truncate slds-p-horizontal_small">Existing Vehicle Details</span>
+
+                           </h3>
+                         </br>
+                 <lightning-record-edit-form record-id={recordId} object-api-name="Contact">
+                   <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                     <lightning-input-field field-name="Vehicle_Type__c" disabled="true"> </lightning-input-field>
+                     <lightning-input-field field-name="Vehicle_Number__c" disabled="true"> </lightning-input-field>
+                   </div>
+                 </lightning-record-edit-form>
+                 <!-- new -->
+
+
+                   <h3 class="slds-section__title slds-theme_shade">
+
+                             <span class="slds-truncate slds-p-horizontal_small">Update Vehicle Details</span>
+
+                           </h3>
+                         </br>
+                           <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+              <lightning-combobox name="Vehicle_Type__c"
+                                                 label="Vehicle Type"
+                                                 value="Vehicle_Type__c"
+                                                 placeholder="Select"
+                                                 options={VehicleType}
+                                                 onchange={handleChange} ></lightning-combobox>
+             <lightning-input type="text" name="Vehicle_Number__c" message-when-pattern-mismatch = "Invalid Vehicle Number" pattern="[a-z A-Z 0-9]{0,10}$" label="Vehicle Number" onchange={handleChange}></lightning-input>
+                           </div> </br>
+                 </div>
+                 <!--Footer Section-->
+                 <div class="slds-modal__footer">
+                   <button
+                     class="slds-button slds-button_neutral"
+                     onclick={closeModal}
+                     title="Cancel"
+                   >
+                     Cancel
+                   </button>
+                   <button
+                     class="slds-button slds-button_brand"
+                     onclick={submitVehicleDetails}
+                     title="Submit"
+                   >
+                   Submit
+                   </button>
+
+                 </div>
+               </div>
+             </div>
+           </div>
+
+   </template>
+
+   <!-- Bank details -->
+
+<template if:true={ready2}>
+           <div class="slds-box slds-theme_shade">
+             <div class="slds-modal slds-fade-in-open slds-backdrop">
+               <div class="slds-modal__container">
+                 <!--HEADER Section-->
+
+                 <div class="slds-modal__header">
+                   <lightning-button-icon
+                     icon-name="utility:close"
+                     alternative-text="Close this window"
+                     size="large"
+                     variant="bare-inverse"
+                     onclick={closeModal}
+                     class="slds-modal__close"
+                   >
+                   </lightning-button-icon>
+                   <div class="slds-float_left slds-text-heading_medium slds-hyphenate">
+                   <h2> Change of Bank Details </h2>
+                   </div>
+                 </div>
+                 <!---Body Section-->
+                 <div class="slds-modal__content slds-p-around_medium">
+
+                   <!-- exixting details -->
+                   <h3 class="slds-section__title slds-theme_shade">
+
+                             <span class="slds-truncate slds-p-horizontal_small" title="Address Details">Existing Bank Details</span>
+
+                           </h3>
+                         </br>
+                   <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                     <lightning-record-edit-form record-id={recordId} object-api-name="Contact">
+
+                         <lightning-input-field field-name="Bank_Name__c" disabled="true"> </lightning-input-field>
+                         <lightning-input-field field-name="Account_Number__c" disabled="true"> </lightning-input-field>
+                         <lightning-input-field field-name="IFSC_Code__c" disabled="true"></lightning-input-field>
+                         <lightning-input-field field-name="Account_Holder_Name__c" disabled="true"> </lightning-input-field>
+
+                     </lightning-record-edit-form>
+                   </div>
+           <!-- new details -->
+                   <h3 class="slds-section__title slds-theme_shade">
+
+                             <span class="slds-truncate slds-p-horizontal_small" title="Bank Details">Update Bank Details</span>
+
+                           </h3>
+                         </br>
+                 <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+
+                   <lightning-combobox name="Bank_Name__c"
+                                                 label="Bank Name"
+                                                 value="Bank_Name__c"
+                                                 placeholder="Select"
+                                                 options={BankName}
+                                                 required
+                                                 onchange={handleChange} ></lightning-combobox>
+             <lightning-input type="text" name="Account_Number__c" pattern="[0-9]{12,18}$" required message-when-pattern-mismatch = "Invalid Account Number" label="Account Number" class="accNum" onchange={handleChange}></lightning-input>
+             <lightning-input type="text" name="IFSC_Code__c" label="IFSC Code" pattern="[A-Za-z]{4}[a-zA-Z0-9]{7}$" message-when-pattern-mismatch = "Invalid IFSC Code" required class="ifsc" onchange={handleChange}></lightning-input>
+             <lightning-input type="text" name="Account_Holder_Name__c" required message-when-pattern-mismatch = "Invalid Name" pattern="[A-Z a-z._-]{2,100}$" label="Account Holder Name" onchange={handleChange}></lightning-input>
+               </br></br></br>
+                 </div>
+                 </div>
+                 <!--Footer Section-->
+                 <div class="slds-modal__footer">
+                   <button
+                     class="slds-button slds-button_neutral"
+                     onclick={closeModal}
+                     title="Cancel"
+                   >
+                     Cancel
+                   </button>
+                   <button
+                     class="slds-button slds-button_brand"
+                     onclick={submitBankDetails}
+                     title="Submit"
+                   >
+                   Submit
+                   </button>
+
+                 </div>
+               </div>
+               </div>
+             </div>
+
+
+   </template>
+
+
+ <!-- Personal details change -->
+   <template if:true={ready5}>
+           <div class="slds-box slds-theme_shade">
+             <div class="slds-modal slds-fade-in-open slds-backdrop">
+               <div class="slds-modal__container">
+                 <!--HEADER Section-->
+
+                 <div class="slds-modal__header">
+                   <lightning-button-icon
+                     icon-name="utility:close"
+                     alternative-text="Close this window"
+                     size="large"
+                     variant="bare-inverse"
+                     onclick={closeModal}
+                     class="slds-modal__close"
+                   >
+                   </lightning-button-icon>
+                   <div class="slds-float_left slds-text-heading_medium slds-hyphenate">
+                   <h2> Change of Personal Details </h2>
+                   </div>
+                 </div>
+                 <!---Body Section-->
+                 <div class="slds-modal__content slds-p-around_medium">
+
+              <lightning-combobox class="slds-align_absolute-center" style="width:30% !important;" name="What_do_you_want_to_change__c"
+                                                 label="What do you want to change?"
+                                                 value="What_do_you_want_to_change__c"
+                                                 placeholder="Select"
+                                                 options={PersonalDetailsPicklist}
+                                                 onchange={handleChange} ></lightning-combobox>
+               </br></br>
+               <template if:true={DisplayContactInfo}>
+
+                   <!-- old -->
+                   <h3 class="slds-section__title slds-theme_shade">
+
+                             <span>Existing Contact Info</span>
+
+                           </h3>
+                     </br>
+                   <lightning-record-edit-form record-id={recordId} object-api-name="Contact">
+
+                     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+
+                       <lightning-input-field field-name="EMS_Phone_Number__c" disabled="true"> </lightning-input-field>
+                       <lightning-input-field field-name="Personal_Email__c" disabled="true"> </lightning-input-field>
+                     </div>
+
+                     </lightning-record-edit-form>
+
+                    <!-- new -->
+
+                     <h3 class="slds-section__title slds-theme_shade">
+
+                             <span>Update Contact Info</span>
+
+                           </h3>
+                     </br>
+                     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+
+                   <lightning-input type="phone" name="EMS_EM_Contact_Number__c" pattern="[0-9]{10}$" message-when-pattern-mismatch = "Invalid Number" label="Phone Number" onchange={handleChange}></lightning-input>
+                   <lightning-input type="email" name="Personal_Email_Id__c" label="Personal Email" onchange={handleChange}></lightning-input>
+                     </div>
+
+                 </template>
+
+               <template if:true={DisplayMaritalStatus}>
+
+                    <!-- old -->
+                   <h3 class="slds-section__title slds-theme_shade">
+
+                             <span class="slds-truncate slds-p-horizontal_small">Existing Marital Status</span>
+
+                           </h3>
+                     </br>
+                   <lightning-record-edit-form record-id={recordId} object-api-name="Contact">
+                     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                       <lightning-input-field field-name="EMS_EM_Mstatus__c" disabled="true"> </lightning-input-field>
+                       <template if:true={contactMaritalStatusFlag}>
+                          <lightning-input-field field-name="EMS_EM_Spouse__c" disabled="true"> </lightning-input-field>
+                          <lightning-input-field field-name="EMS_EM_DOW__c" disabled="true"> </lightning-input-field>
+                       </template>
+                     </div>
+                     </lightning-record-edit-form>
+
+                    <!-- new -->
+                     <h3 class="slds-section__title slds-theme_shade">
+
+                             <span class="slds-truncate slds-p-horizontal_small" title="Address Details">Update Marital Status</span>
+
+                           </h3>
+
+                     </br>
+                     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                       <lightning-combobox name="EMS_EM_Mstatus__c"
+                                                 label="Marital Status"
+                                                 value="EMS_EM_Mstatus__c"
+                                                 placeholder="Select"
+                                                 options={MaritalStatusPicklist}
+                                                 onchange={handleChange} ></lightning-combobox>
+
+                       <template if:true={SingleMarriedToggle}>
+
+                       <lightning-input type="text" name="EMS_EM_Spouse_Name__c" label="Spouse Name" message-when-pattern-mismatch = "Invalid Name" pattern="[A-Z a-z._-]{2,20}$" onchange={handleChange}></lightning-input>
+                       <lightning-input type="date" name="EMS_EM_DOW__c" value={dow} label="Date of wedding" class="selector" max={maxDate} onchange={handleChange}></lightning-input>
+                       </template>
+                     </div>
+                     </template>
+
+               <template if:true={DisplayUpdateResume}>
+
+                 <h3 class="slds-section__title slds-theme_shade">
+
+                   <span class="slds-truncate slds-p-horizontal_small" >Update Resume</span>
+
+                 </h3>
+           </br>
+           <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+
+                   <abbr class="slds-required" title="required">*</abbr>
+                               Upload Resume &nbsp;&nbsp;
+
+                             <lightning-helptext content="Accepted format: PDF with maximum Size upto 2MB"></lightning-helptext>
+                   <lightning-input type="file"  accept=".pdf" onchange={openfileUpload}></lightning-input>
+
+                   <template if:true={fileData}>
+                       <p>{fileData.filename}</p>
+                   </template>
+                 </div>
+               </template>
+               </br></br></br>
+
+
+                 </div>
+                 <!--Footer Section-->
+                 <div class="slds-modal__footer">
+                   <button
+                     class="slds-button slds-button_neutral"
+                     onclick={closeModal}
+                     title="Cancel"
+                   >
+                     Cancel
+                   </button>
+                   <button
+                     class="slds-button slds-button_brand"
+                     onclick={submitPersonalDetails}
+                     title="Submit"
+                   >
+                   Submit
+                   </button>
+
+                 </div>
+               </div>
+             </div>
+           </div>
+
+   </template>
+
+
+     <!-- Educational details change -->
+   <template if:true={ready3}>
+           <div class="slds-box slds-theme_shade">
+             <div class="slds-modal slds-fade-in-open slds-backdrop">
+               <div class="slds-modal__container">
+                 <!--HEADER Section-->
+
+                 <div class="slds-modal__header">
+                   <lightning-button-icon
+                     icon-name="utility:close"
+                     alternative-text="Close this window"
+                     size="large"
+                     variant="bare-inverse"
+                     onclick={closeModal}
+                     class="slds-modal__close"
+                   >
+                   </lightning-button-icon>
+                   <div class="slds-float_left slds-text-heading_medium slds-hyphenate">
+                   <h2> Change of Educational Details </h2>
+                   </div>
+                 </div>
+                 <!---Body Section-->
+                 <div class="slds-modal__content slds-p-around_medium">
+
+              <lightning-combobox name="EMS_EM_Add_Education__c"
+                                                 label="What do you want to add?"
+                                                 value="EMS_EM_Add_Education__c"
+                                                 placeholder="Select"
+                                                 options={EducationalDetailsPicklist}
+                                                 onchange={handleChange} ></lightning-combobox>
+
+               </br></br>
+
+               <template if:true={DisplayDegreeInfo}>
+
+                 <h3 class="slds-section__title slds-theme_shade">
+
+                   <span class="slds-truncate slds-p-horizontal_small" >Degree</span>
+
+                 </h3>
+                     </br>
+                     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                     <lightning-combobox name="EMS_EM_Level_of_Education__c"
+                                                 label="Level of Education"
+                                                 value="EMS_EM_Level_of_Education__c"
+                                                 placeholder="Select"
+                                                 options={LevelOfEducation}
+                                                 onchange={handleChange} ></lightning-combobox>
+
+                       <lightning-input type="text" name="EMS_EM_Degree__c" label="Degree" message-when-pattern-mismatch = "Invalid Degree" pattern="[A-Z a-z]{2,18}$" onchange={handleChange}></lightning-input>
+                       <lightning-input type="text" name="EMS_EM_IName__c" label="Institution Name" message-when-pattern-mismatch = "Invalid Name" pattern="[A-Z a-z._-]{2,80}$" onchange={handleChange}></lightning-input>
+                       <lightning-input type="text" name="EMS_EM_Field_of_Study__c" label="Field of Study" message-when-pattern-mismatch = "Invalid Name" pattern="[A-Z a-z._-]{2,80}$" onchange={handleChange}></lightning-input>
+                       <lightning-input type="date" name="EMS_EM_GDate__c" max={maxDate} label="Graduation Date" onchange={handleChange}></lightning-input>
+                       </br>
+                       <abbr class="slds-required" title="required">*</abbr>
+                               Upload Certificate &nbsp;&nbsp;
+
+                             <lightning-helptext content="Accepted format: PDF with maximum Size upto 2MB"></lightning-helptext>
+                       <lightning-input type="file"  accept=".pdf" onchange={openfileUpload}>
+                         </lightning-input>
+
+                         <template if:true={fileData}>
+                             <p>{fileData.filename}</p>
+                         </template>
+                       </div>
+               </template>
+
+               <template if:true={DisplayCertificateInfo}>
+
+                 <h3 class="slds-section__title slds-theme_shade">
+
+                   <span class="slds-truncate slds-p-horizontal_small" >Certificate</span>
+
+                 </h3>
+                     </br>
+                     <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                     <lightning-input type="text" name="EMS_EM_Certification_Name__c" label="Certification Name" class="certName" onchange={handleChange}></lightning-input>
+                     </br>
+                     <abbr class="slds-required" title="required">*</abbr>
+                               Upload Certificate &nbsp;&nbsp;
+                     <lightning-helptext content="Accepted format: PDF with maximum Size upto 2MB"></lightning-helptext>
+                     <lightning-input type="file"  accept=".pdf" onchange={openfileUpload}>
+                   </lightning-input>
+
+                   <template if:true={fileData}>
+                       <p>{fileData.filename}</p>
+                   </template>
+                 </div>
+               </template>
+
+
+
+               </br></br></br>
+                 </div>
+                 <!--Footer Section-->
+                 <div class="slds-modal__footer">
+                   <button
+                     class="slds-button slds-button_neutral"
+                     onclick={closeModal}
+                     title="Cancel"
+                   >
+                     Cancel
+                   </button>
+                   <button
+                     class="slds-button slds-button_brand"
+                     onclick={submitEducationalDetails}
+                     title="Submit"
+                   >
+                   Submit
+                   </button>
+
+                 </div>
+               </div>
+             </div>
+           </div>
+           <br/>
+
+   </template>
+
+
+           <!-- ---------------Request History---------------------------- -->
+
+             <table class="slds-table  slds-table_bordered fixed_header">
+
+                 <thead >
+                     <tr class="slds-line-height_reset slds-text-title_caps" >
+                         <th class="slds-is-resizable" scope="col" style="background: #eee;">
+                             <div class="slds-truncate" title="Approver">Approver</div>
+                         </th>
+                         <th class="slds-is-resizable" scope="col" style="background: #eee;">
+                             <div class="slds-truncate" title="Request type">Request type</div>
+                         </th>
+                         <th class="slds-is-resizable" scope="col" style="background: #eee;">
+                             <div class="slds-truncate" title="Raised On">Raised On</div>
+                         </th>
+                         <th class="slds-is-resizable" scope="col" style="background: #eee;">
+                             <div class="slds-truncate" title="Status">Status</div>
+                         </th>
+                         <th class=" slds-is-resizable slds-cell_action-mode" scope="col" style="width:4.25rem; background: #eee;">
+                             <div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+                           </th>
+
+
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <template for:each={data} for:item="Req">
+                         <tr key={Req.Id}>
+                             <td scope="col">
+                                 <div>{Req.Approver__c }</div>
+                             </td>
+                             <td scope="col">
+                                 <div>{Req.EMS_EM_Request_Type__c}</div>
+                             </td>
+                             <td scope="col">
+                                 <div>{Req.EMS_EM_Raised_On__c}</div>
+                             </td>
+                             <td scope="col">
+                                 <div>{Req.EMS_EM_Request_Status__c}</div>
+                             </td>
+                             <th class="slds-cell_action-mode " role="gridcell">
+                               <lightning-button-menu alternative-text="Show menu"  variant="brand"  menu-alignment="right" onclick={handleCancelButton} data-value={Req.EMS_EM_Request_Status__c} data-record-id={Req.Id}>
+                                 <lightning-menu-item value="View" label="View" onclick={HandelViewRequestModel}
+                                     data-value={Req.EMS_EM_Request_Type__c}
+                                     data-value1={Req.What_do_you_want_to_change__c}
+                                     data-value2={Req.EMS_EM_Add_Education__c}
+                                     key-field={Req.Id} data-record-id={Req.Id}
+
+                                     ></lightning-menu-item>
+
+                                 <template if:true={showcancelbutton}>
+                                 <lightning-menu-item value="CanceltheRequest" label="Cancel the Request" onclick={handleConfirmClick} data-value={Req.EMS_EM_Request_Status__c} key-field={Req.Id} data-record-id={Req.Id}></lightning-menu-item>
+                               </template>
+                             </lightning-button-menu>
+                              </th>
+                         </tr>
+                     </template>
+                 </tbody>
+             </table>
+
+           <!--
+           <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> -->
+
+           <!-- -----------Request View ModelPopUp ----------------- -->
+
+           <template if:true={isShowViewRequest}>
+             <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                 <div class="slds-modal__container">
+
+                                <header class="slds-modal__header">
+                                   <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                                      <lightning-icon icon-name="utility:close"
+                                         alternative-text="close"
+                                         variant="inverse"
+                                         size="small" ></lightning-icon>
+                                      <span class="slds-assistive-text">Close</span>
+                                   </button>
+                                   <h2  class="slds-text-heading_medium slds-hyphenate">View Request</h2>
+                                </header>
+                                <!-- ---------------------Address Details---------------------------------- -->
+                                <template if:true={DisplayAddressDetails}>
+                                 <div class="slds-modal__content slds-p-around_medium">
+                                  <h3 class="slds-section__title slds-theme_shade">
+
+                                  </h3>
+                                  <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                                    <lightning-accordion>
+                                      <lightning-accordion-section name="name" class="slds-form-element_compound" variant="Narrow" icon-name="standard:record" label="Existing Address Details">
+
+                                          <div class="slds-section slds-is-open">
+                                              <div aria-hidden="false" class="slds-section__content">
+                                                  <div class="slds-grid slds-gutters ">
+                                                           <div class="slds-col" style="padding-left: 50px;">
+                                                            <h1>Current Address</h1>
+                                                             <span>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_CAddress_Line_1_Old__c"></lightning-output-field></strong>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_CAddress_Line_2_Old__c"></lightning-output-field></strong>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_CA_State_Old__c"></lightning-output-field></strong>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_CA_City_Old__c"></lightning-output-field></strong>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_CA_Zip_Old__c"></lightning-output-field></strong>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-col">
+                                                              <h1>Permanent Address</h1>
+                                                               <span>
+                                                                <strong><lightning-output-field field-name="EMS_EM_PAddress_Line_1_Old__c"></lightning-output-field></strong>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_PAddress_Line_2_Old__c"></lightning-output-field></strong>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_PA_State_Old__c"></lightning-output-field></strong>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_PA_City_Old__c"></lightning-output-field></strong>
+                                                                 <strong><lightning-output-field field-name="EMS_EM_PA_Zip_Old__c"></lightning-output-field></strong>
+                                                                </span>
+                                                           </div>
+                                                  </div>
+
+                                              </div>
+                                          </div>
+                          </lightning-accordion-section>
+
+                              </lightning-accordion>
+                                  </lightning-record-view-form>
+                                  <h3 class="slds-section__title slds-theme_shade">
+                                  </h3>
+                                  <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                                    <lightning-accordion>
+                                      <lightning-accordion-section name="name" class="slds-form-element_compound" label="Updated Address Details">
+
+                                          <div class="slds-section slds-is-open">
+                                            <div aria-hidden="false" class="slds-section__content">
+                                            <div class="slds-grid slds-gutters ">
+                                          <div class="slds-col" style="padding-left: 50px;">
+                                            <span>
+                                              <h1>Current Address</h1>
+                                              <lightning-output-field field-name="EMS_EM_CAddress_Line_1__c"></lightning-output-field>
+                                              <lightning-output-field field-name="EMS_EM_CAddress_Line_2__c"></lightning-output-field>
+                                              <lightning-output-field field-name="EMS_EM_CA_State__c"></lightning-output-field>
+                                              <lightning-output-field field-name="EMS_EM_CA_City__c"></lightning-output-field>
+                                              <lightning-output-field field-name="EMS_EM_CA_Zip__c"></lightning-output-field>
+                                             </span>
+                                          </div>
+                                          <div class="slds-col">
+                                            <span>
+                                              <h1>Permanent Address</h1>
+                                              <lightning-output-field field-name="EMS_EM_PAddress_Line_1__c"></lightning-output-field>
+                                              <lightning-output-field field-name="EMS_EM_PAddress_Line_2__c"></lightning-output-field>
+                                              <lightning-output-field field-name="EMS_EM_PA_State__c"></lightning-output-field>
+                                              <lightning-output-field field-name="EMS_EM_PA_City__c"></lightning-output-field>
+                                              <lightning-output-field field-name="EMS_EM_PA_Zip__c"></lightning-output-field>
+                                              </span>
+                                          </div>
+                                          </div>
+
+                                            </div>
+                                        </div>
+                                </lightning-accordion-section>
+
+                              </lightning-accordion>
+                            </lightning-record-view-form>
+                                 </div>
+                                </template>
+                                <!-- ---------------------Bank Details---------------------------------- -->
+                 <template if:true={DisplayBankDetails}>
+
+                   <div class="slds-modal__content slds-p-around_medium">
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Existing Bank Details">
+
+                             <div class="slds-section slds-is-open">
+                                 <div aria-hidden="false" class="slds-section__content">
+                                     <div class="slds-grid slds-gutters ">
+                                              <div class="slds-col" style="padding-left: 50px;">
+                                               <span>
+                                                 <strong><lightning-output-field field-name="EMS_EM_Bank_Name_Old__c"></lightning-output-field></strong>
+                                                 <strong><lightning-output-field field-name="EMS_EM_Account_Number_Old__c"></lightning-output-field></strong>
+
+                                                   </span>
+                                               </div>
+                                               <div class="slds-col">
+                                                 <span>
+                                                   <strong><lightning-output-field field-name="EMS_EM_IFSC_Code_Old__c"></lightning-output-field></strong>
+                                                   <strong><lightning-output-field field-name="EMS_EM_Account_Holder_Name_Old__c"></lightning-output-field></strong>
+                                                   </span>
+                                              </div>
+                                     </div>
+
+                                 </div>
+                             </div>
+             </lightning-accordion-section>
+
+                 </lightning-accordion>
+                     </lightning-record-view-form>
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Updated Bank Details">
+
+                             <div class="slds-section slds-is-open">
+                               <div aria-hidden="false" class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                             <div class="slds-col" style="padding-left: 50px;">
+                               <span>
+                                 <lightning-output-field field-name="Bank_Name__c"> </lightning-output-field>
+                                 <lightning-output-field field-name="Account_Number__c"> </lightning-output-field>
+
+                                 </span>
+                             </div>
+                             <div class="slds-col">
+                               <span>
+                                 <lightning-output-field field-name="IFSC_Code__c"> </lightning-output-field>
+                                 <lightning-output-field field-name="Account_Holder_Name__c"> </lightning-output-field>
+                                 </span>
+                             </div>
+                             </div>
+
+                               </div>
+                           </div>
+                   </lightning-accordion-section>
+
+                 </lightning-accordion>
+               </lightning-record-view-form>
+                    </div>
+                   </template>
+
+                   <!-- ---------------------Personal Contact Details---------------------------------- -->
+                   <template if:true={DisplayContactsInfo}>
+
+                   <div class="slds-modal__content slds-p-around_medium">
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Existing Contact Details">
+
+                             <div class="slds-section slds-is-open">
+                                 <div aria-hidden="false" class="slds-section__content">
+                                     <div class="slds-grid slds-gutters ">
+                                              <div class="slds-col" style="padding-left: 50px;">
+                                               <span>
+                                                 <strong><lightning-output-field field-name="EMS_EM_Contact_Number_Old__c"></lightning-output-field></strong>
+                                                </span>
+                                               </div>
+                                               <div class="slds-col">
+                                               <span>
+                                                 <strong><lightning-output-field field-name="Personal_Email_Id_Old__c"></lightning-output-field></strong>
+                                                </span>
+                                               </div>
+                                     </div>
+
+                                 </div>
+                             </div>
+             </lightning-accordion-section>
+
+                 </lightning-accordion>
+                     </lightning-record-view-form>
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Updated Contact Details">
+
+                             <div class="slds-section slds-is-open">
+                               <div aria-hidden="false" class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                             <div class="slds-col" style="padding-left: 50px;">
+                               <span>
+                                 <lightning-output-field field-name="EMS_EM_Contact_Number__c"></lightning-output-field>
+                                </span>
+                             </div>
+                             <div class="slds-col">
+                               <span>
+                                 <lightning-output-field field-name="Personal_Email_Id__c"></lightning-output-field>
+                                </span>
+                             </div>
+                             </div>
+
+                               </div>
+                           </div>
+                   </lightning-accordion-section>
+
+                 </lightning-accordion>
+               </lightning-record-view-form>
+                    </div>
+                   </template>
+                   <!-- ---------------------Personal Marital Details---------------------------------- -->
+                   <template if:true={DisplayMaritalsStatus}>
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Existing Marital Details">
+
+                             <div class="slds-section slds-is-open">
+                                 <div aria-hidden="false" class="slds-section__content">
+                                     <div class="slds-grid slds-gutters ">
+                                       <div class="slds-col" style="padding-left: 50px;">
+                                               <span>
+                                                  <strong><lightning-output-field field-name="EMS_EM_Mstatus_Old__c"></lightning-output-field></strong>
+                                                 <strong><lightning-output-field field-name="EMS_EM_Spouse_Name_Old__c"></lightning-output-field></strong>
+                                               </span>
+                                             </div>
+                                       <div class="slds-col">
+                                             <span>
+                                                 <strong><lightning-output-field field-name="EMS_EM_DOW_Old__c"></lightning-output-field></strong>
+                                                </span>
+                                       </div>
+                                     </div>
+
+                                 </div>
+                             </div>
+             </lightning-accordion-section>
+
+                 </lightning-accordion>
+                     </lightning-record-view-form>
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Updated Marital Details">
+
+                             <div class="slds-section slds-is-open">
+                               <div aria-hidden="false" class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                             <div class="slds-col" style="padding-left: 50px;">
+                               <span>
+                                 <strong><lightning-output-field field-name="EMS_EM_Mstatus__c" onchange={handelSpouseandDow} data-value={EMS_EM_Request_Status__c}></lightning-output-field></strong>
+                                 <strong><lightning-output-field field-name="EMS_EM_Spouse_Name__c"></lightning-output-field></strong>
+                               </span>
+                             </div>
+                              <div class="slds-col">
+                               <span>
+                                <strong><lightning-output-field field-name="EMS_EM_DOW__c"></lightning-output-field></strong>
+                                </span>
+                             </div>
+                             </div>
+
+                               </div>
+                           </div>
+                   </lightning-accordion-section>
+
+                 </lightning-accordion>
+               </lightning-record-view-form>
+                    </div>
+                   </template>
+                   <!-- --------------------------------Updated Files----------------- -->
+
+                   <template if:true={DisplayUpdatedResume}>
+                     <div class="slds-modal__content slds-p-around_medium">
+                     <lightning-card title="Updated Resume">
+                       <template for:each={filesList} for:item="file">
+                           <div key={file.value} class="slds-box">
+                               <div class="slds-grid slds-wrap">
+                                   <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                     <p><strong>FileName - </strong>{file.label}</p>
+                                   </div>
+                                   <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                     <a href={file.url} download>Download</a>
+                                   </div>
+                                 </div>
+                           </div>
+                       </template>
+                  </lightning-card>
+
+                     </div>
+                    </template>
+
+                   <!-- ---------------------Emergency Details---------------------------------- -->
+                   <template if:true={DisplayEmergencyDetails}>
+
+                   <div class="slds-modal__content slds-p-around_medium">
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Existing Emergency Details">
+
+                             <div class="slds-section slds-is-open">
+                                 <div aria-hidden="false" class="slds-section__content">
+                                     <div class="slds-grid slds-gutters ">
+                                       <div class="slds-col" style="padding-left: 50px;">
+                                         <span>
+                                           <strong><lightning-output-field field-name="EMS_EM_ED_Name_Old__c"></lightning-output-field></strong>
+                                           <strong><lightning-output-field field-name="EMS_EM_ED_Relation_Old__c"></lightning-output-field></strong>
+                                           <strong><lightning-output-field field-name="EMS_EM_ED_Address_Old__c"></lightning-output-field></strong>
+                                          </span>
+                                         </div>
+                                         <div class="slds-col">
+                                           <span>
+                                             <strong><lightning-output-field field-name="EMS_EM_ED_Phone_Old__c"></lightning-output-field></strong>
+                                             <strong><lightning-output-field field-name="EMS_EM_ED_Email_Old__c"></lightning-output-field></strong>
+                                                   </span>
+                                              </div>
+                                     </div>
+
+                                 </div>
+                             </div>
+             </lightning-accordion-section>
+
+                 </lightning-accordion>
+                     </lightning-record-view-form>
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Updated Emergency Details">
+
+                             <div class="slds-section slds-is-open">
+                               <div aria-hidden="false" class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                             <div class="slds-col" style="padding-left: 50px;">
+                               <span>
+                                 <lightning-output-field field-name="EMS_EM_ED_Name__c"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_ED_Relation__c"></lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_ED_Address__c"></lightning-output-field>
+                                </span>
+                             </div>
+                             <div class="slds-col">
+                               <span>
+                                 <lightning-output-field field-name="EMS_EM_ED_Phone__c"></lightning-output-field>
+                                  <lightning-output-field field-name="EMS_EM_ED_Email__c"></lightning-output-field>
+                                 </span>
+                             </div>
+                             </div>
+
+                               </div>
+                           </div>
+                   </lightning-accordion-section>
+
+                 </lightning-accordion>
+               </lightning-record-view-form>
+                    </div>
+                   </template>
+
+                   <!-- ---------------------Education Degree Details---------------------------------- -->
+                   <template if:true={DisplayDegreesInfo}>
+                   <div class="slds-modal__content slds-p-around_medium">
+                         <h3 class="slds-section__title slds-theme_shade">
+                             <span class="slds-truncate slds-p-horizontal_small">Updated Degree Details</span>
+                           </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+
+                             <div class="slds-section slds-is-open">
+                               <div aria-hidden="false" class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                             <div class="slds-col" style="padding-left: 50px;">
+                               <span>
+                                 <lightning-output-field field-name="EMS_EM_Level_of_Education__c"> </lightning-output-field>
+                                           <lightning-output-field field-name="EMS_EM_Degree__c"> </lightning-output-field>
+                                           <lightning-output-field field-name="EMS_EM_GDate__c"> </lightning-output-field>
+                                </span>
+                             </div>
+                             <div class="slds-col">
+                               <span>
+                                 <lightning-output-field field-name="EMS_EM_IName__c"> </lightning-output-field>
+                                 <lightning-output-field field-name="EMS_EM_Field_of_Study__c"> </lightning-output-field>
+                                 </span>
+                             </div>
+                             </div>
+
+                               </div>
+                           </div>
+               </lightning-record-view-form>
+               <lightning-card title="Updated Degree">
+                 <template for:each={filesList} for:item="file">
+                     <div key={file.value} class="slds-box">
+                         <div class="slds-grid slds-wrap">
+                             <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                               <p><strong>FileName - </strong>{file.label}</p>
+                             </div>
+                             <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                               <a href={file.url} download>Download</a>
+                             </div>
+                           </div>
+                      </div>
+                           </template>
+                       </lightning-card>
+                    </div>
+                   </template>
+
+                   <!-- ---------------------Education Certification Details---------------------------------- -->
+                   <template if:true={DisplayCertificatesInfo}>
+
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                      <h3 class="slds-section__title slds-theme_shade">
+                             <span class="slds-truncate slds-p-horizontal_small">Updated Certification Details</span>
+                           </h3>
+                      <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                             <div class="slds-section slds-is-open">
+                               <div aria-hidden="false" class="slds-section__content">
+                             <div style="
+                             padding-left: 25px;">
+                             <lightning-output-field field-name="EMS_EM_Certification_Name__c"> </lightning-output-field>
+                             </div>
+                             </div>
+                           </div>
+               </lightning-record-view-form>
+               <lightning-card title="Updated Certification">
+                 <template for:each={filesList} for:item="file">
+                     <div key={file.value} class="slds-box">
+                         <div class="slds-grid slds-wrap">
+                             <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                               <p><strong>FileName - </strong>{file.label}</p>
+                             </div>
+                             <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                               <a href={file.url} download>Download</a>
+                             </div>
+                           </div>
+                     </div>
+                 </template>
+            </lightning-card>
+                    </div>
+                   </template>
+
+
+                   <!-- ---------------------Vehicle Details---------------------------------- -->
+                   <template if:true={DisplayVehicleDetails}>
+
+                   <div class="slds-modal__content slds-p-around_medium">
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Existing Vehicle Details">
+
+                             <div class="slds-section slds-is-open">
+                                 <div aria-hidden="false" class="slds-section__content">
+                                     <div class="slds-grid slds-gutters ">
+                                       <div class="slds-col" style="padding-left: 50px;">
+                                         <span>
+                                       <strong><lightning-output-field field-name="EMS_EM_Vehicle_Type_old__c"></lightning-output-field></strong>
+                                          </span>
+                                         </div>
+                                         <div class="slds-col">
+                                           <span>
+                                        <strong><lightning-output-field field-name="EMS_EM_Vehicle_Number_old__c"></lightning-output-field></strong>
+                                                   </span>
+                                              </div>
+                                     </div>
+
+                                 </div>
+                             </div>
+             </lightning-accordion-section>
+
+                 </lightning-accordion>
+                     </lightning-record-view-form>
+                     <h3 class="slds-section__title slds-theme_shade">
+                     </h3>
+                     <lightning-record-view-form record-id={ReqRecordId} object-api-name="EMS_EM_Request__c">
+                       <lightning-accordion>
+                         <lightning-accordion-section name="name" class="slds-form-element_compound" label="Updated Vehicle Details">
+
+                             <div class="slds-section slds-is-open">
+                               <div aria-hidden="false" class="slds-section__content">
+                               <div class="slds-grid slds-gutters ">
+                             <div class="slds-col" style="padding-left: 50px;">
+                               <span>
+                                 <lightning-output-field field-name="Vehicle_Type__c"></lightning-output-field>
+                                </span>
+                             </div>
+                             <div class="slds-col">
+                               <span>
+                                 <lightning-output-field field-name="Vehicle_Number__c"></lightning-output-field>
+                                 </span>
+                             </div>
+                             </div>
+
+                               </div>
+                           </div>
+                   </lightning-accordion-section>
+
+                 </lightning-accordion>
+               </lightning-record-view-form>
+                    </div>
+                   </template>
+                   <!-- ------------------------------------------------------ -->
+
+                           </div>
+                          </section>
+                          <div class="slds-backdrop slds-backdrop_open"></div>
+                       </template>
+
+       </lightning-tab>
+      <!--  <lightning-tab label="Resignation">
+           Two Content !
+       </lightning-tab>  -->
+   </lightning-tabset>
+
+</template>

@@ -1,0 +1,29 @@
+<template>
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+    <div class="acc-container">
+        <lightning-record-Edit-form record-id={recordId} object-api-name="Contact"
+        onsuccess={handleSuccess}>
+            <lightning-accordion-section name="eduDetail" class="slds-form-element_compound slds-truncate" label="Education Details" style="font-weight:bold;">
+			<div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <strong><lightning-input-field field-name="EMS_EM_Level_of_Education__c"></lightning-input-field></strong>
+                    <strong><lightning-input-field field-name="EMS_EM_Degree__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="EMS_EM_GDate__c"></lightning-input-field></strong>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_IName__c"></lightning-input-field></strong>
+                    <strong><lightning-input-field field-name="EMS_EM_Field_of_Study__c"></lightning-input-field></strong>
+
+					<!--<strong><lightning-input-field field-name="EMS_EM_Field_of_Study__c"></lightning-input-field></strong>--->
+                </div>
+            </div>
+			</lightning-accordion-section>
+			<div class="slds-align_absolute-center">
+            <span><lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="btn_name "></lightning-button></span>
+            <span><lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save"></lightning-button></span>
+            </div>
+		</lightning-record-Edit-form>
+	</div>	
+	</lightning-accordion>
+</template>

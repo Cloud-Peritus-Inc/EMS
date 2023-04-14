@@ -8,5 +8,16 @@
         <plural>true</plural>
         <value>Leaves</value>
     </caseValues>
+    <layouts>
+        <layout>Leave Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Leave_Days_Shouldnot_Exceed_5Days</name>
+    </validationRules>
 </CustomObjectTranslation>

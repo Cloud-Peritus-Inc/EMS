@@ -9,6 +9,10 @@
             <access>VIEWER</access>
             <name>Customer Portal</name>
         </network>
+        <network>
+            <access>VIEWER</access>
+            <name>Onboarding</name>
+        </network>
         <workspace>
             <access>INFERRED</access>
             <isManagingWorkspace>true</isManagingWorkspace>

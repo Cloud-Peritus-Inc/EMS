@@ -55,6 +55,16 @@
                 <default>false</default>
                 <label>Inactive</label>
             </value>
+            <value>
+                <fullName>Active - Probation</fullName>
+                <default>false</default>
+                <label>Active - Probation</label>
+            </value>
+            <value>
+                <fullName>Notice Period</fullName>
+                <default>false</default>
+                <label>Notice Period</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

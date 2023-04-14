@@ -9,4 +9,40 @@
         <value>Timesheets</value>
     </caseValues>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Acceptdateinbetweencurrentweek</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Day1</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Day2</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Day3</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Day4</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Day5</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Day6</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Day7</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Totalhours_validation</name>
+    </validationRules>
 </CustomObjectTranslation>

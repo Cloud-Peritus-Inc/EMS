@@ -8,5 +8,16 @@
         <plural>true</plural>
         <value>Leave Credits</value>
     </caseValues>
+    <layouts>
+        <layout>Leave Credit Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Cannot_Edit_Leave_Balance_For_Maternity</name>
+    </validationRules>
 </CustomObjectTranslation>

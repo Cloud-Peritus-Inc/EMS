@@ -1,6 +1,7 @@
 {
   "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
   "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
   "id" : "b391c8c7-0c58-423c-84e7-f794b7a8cf2d",
   "label" : "Leave Management",
   "regions" : [ {

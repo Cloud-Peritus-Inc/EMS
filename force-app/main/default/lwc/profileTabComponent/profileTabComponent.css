@@ -1,0 +1,18 @@
+.btn_name{
+    margin-right:5px;
+}
+.inputWidth{
+    width: 352px;
+}
+.inputfieldWidth{
+    width: 360px;
+}
+label {
+    display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    float: left;
+    padding-top: 5px;
+    text-align: right;
+    width: 145px;
+}
