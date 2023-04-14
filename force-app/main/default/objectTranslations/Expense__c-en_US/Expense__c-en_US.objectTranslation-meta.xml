@@ -8,20 +8,5 @@
         <plural>true</plural>
         <value>Expenses</value>
     </caseValues>
-    <layouts>
-        <layout>Expense Layout</layout>
-        <sections>
-            <label></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Expense Detail</section>
-        </sections>
-    </layouts>
     <startsWith>Consonant</startsWith>
-    <validationRules>
-        <errorMessage></errorMessage>
-        <name>No_Updates_Allowed_After_Approved</name>
-    </validationRules>
 </CustomObjectTranslation>

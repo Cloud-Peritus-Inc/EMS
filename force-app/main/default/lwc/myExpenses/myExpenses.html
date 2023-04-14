@@ -15,7 +15,15 @@
         </div>
 
      <div class="container">
-    <div class="box" style="width:50%"> <font size="48px"><b> <lightning-formatted-number value={reimbursment} format-style="currency" currency-code={reimbCurrency}></lightning-formatted-number> </b></font> <i> <b></b></i> <br/> Reimbursement Pending </div>
+    <div class="box" style="width:50%;padding-left:10px;"> 
+      <font size="48px"><b> 
+        
+        <lightning-formatted-number value={reimbursment} format-style="currency" currency-code={reimbCurrency}></lightning-formatted-number>
+         </b></font>
+           <br/>
+         <div style ="text-align:left"> Reimbursement Pending </div>
+             </div>
+     
     <div class="box" style="width:50%;text-align:right;padding-right:10px"> <lightning-button variant="brand" label="New Claim"  onclick={handleClick}></lightning-button> </div>
    
     <div style="clear: both;"></div> 
@@ -137,12 +145,12 @@
                                
                                   <template if:true={showFileUpload}>
                                     <center style="font-size:14px;color:green"> <i> Succesfully created the expense. Please upload the proof for an expense. Proofs are optional but expense can be rejected without proofs. </i></center>
-                                  <div style="max-width:320px">
+                                  <div style="max-width:320px slds-align_absolute-center">
                                   <center> <lightning-file-upload name="fileUploader" accept={acceptedFormats} record-id={createdRecordId} onuploadfinished={handleUploadFinished} multiple></lightning-file-upload>
                                   </center>
                                   <br />
-                                  <lightning-button variant="brand" name="Close" label="Close" onclick={handleFinish}></lightning-button>
-                                    &nbsp; &nbsp; &nbsp;<lightning-button variant="brand" name="Submit" label="Submit" onclick={handleSubmittedFinish}></lightning-button>
+                               <center> <lightning-button variant="brand" name="Close" label="Close" onclick={handleFinish}></lightning-button>
+                                    &nbsp; &nbsp; &nbsp;<lightning-button variant="brand" name="Submit" label="Submit" onclick={handleSubmittedFinish}></lightning-button></center>
                                   </div>
                                   </template>
                     

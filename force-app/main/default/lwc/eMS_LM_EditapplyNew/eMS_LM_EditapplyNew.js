@@ -65,7 +65,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     let y = today.getFullYear();
     let date = Date.parse(y + '-' + mm + '-' + dd);
     let date1 = new Date(date);
-    console.log('date-->', date);
+   // console.log('date-->', date);
     let formattedDate = date1.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
     this.todaydate = formattedDate;
 
@@ -81,16 +81,16 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
 
   calculateDuration() {
     getLeaveBalance({ userid: this.uId }).then((result) => {
-      console.log('### result : ', result);
+     // console.log('### result : ', result);
 
       if (result) {
-        console.log('### result : ', result);
+       // console.log('### result : ', result);
         this.allavailabledays = result;
         this.annualcompduration = result.EMS_LM_No_Of_Availble_Leaves__c + result.EMS_LM_No_Of_Available_Compensatory_Off__c + 5;
-        console.log('this.annualcompduration' + this.annualcompduration);
+      //  console.log('this.annualcompduration' + this.annualcompduration);
         this.availabledays = result.EMS_LM_No_Of_Availble_Leaves__c;
 
-        console.log('this.annualduration 1122' + this.annualduration);
+      //  console.log('this.annualduration 1122' + this.annualduration);
         this.cId = result.Id;
         this.email = result.Email;
       } else if (result.error) {
@@ -104,7 +104,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   @wire(getLeaveType, { userid: '$uId' })
   wiredltype({ error, data }) {
     if (data) {
-      console.log('leave type data-->', data);
+    //  console.log('leave type data-->', data);
       this.lOptions = data.map((record) => ({
         value: record,
         label: record
@@ -120,7 +120,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   wireleavetype({ error, data }) {
     if (data) {
       this.leavetypeId = data.Id;
-      console.log('type data-->', data.Id);
+    //  console.log('type data-->', data.Id);
       this.error = undefined;
     } else if (error) {
       this.error = error;
@@ -132,7 +132,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
     if (data) {
       this.isbillable = data.EMS_TM_In_Billing__c;
       this.location = data.Work_Location__r.Country__c;
-      console.log('this.isbillable-->', this.isbillable);
+    //  console.log('this.isbillable-->', this.isbillable);
       this.error = undefined;
     } else if (error) {
       this.error = error;
@@ -142,7 +142,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   @wire(getwfhWFHweekends, { stDate: '$startDate1', edDate: '$endDate1' })
   wirewfhWFHweekends({ error, data }) {
     if (data) {
-      console.log('wfhWFHweekends-->', data);
+    //  console.log('wfhWFHweekends-->', data);
       this.weekendwfh = data;
       this.error = undefined;
     } else if (error) {
@@ -155,13 +155,13 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   wirelbalance(result) {
     this.refbalanceleave = result;
     if (result.data) {
-      console.log('data duration' + result.data);
+    //  console.log('data duration' + result.data);
       this.allavailabledays = result.data;
-      console.log('this.allavailabledays' + JSON.stringify(this.allavailabledays));
+    //  console.log('this.allavailabledays' + JSON.stringify(this.allavailabledays));
       this.annualcompduration = result.data.EMS_LM_No_Of_Availble_Leaves__c + result.data.EMS_LM_No_Of_Available_Compensatory_Off__c;
       //  console.log(this.annualcompduration);
       this.annualduration = result.data.EMS_LM_No_Of_Availble_Leaves__c;
-      console.log('annual duration' + this.annualduration);
+   //   console.log('annual duration' + this.annualduration);
       this.cId = result.data.Id;
       if (this.value == 'Annual Leave') {
         this.availabledays = this.annualduration;
@@ -241,7 +241,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
   wiredleaveRequest(result) {
     this.editleaveData = result;
     if (result.data) {
-      console.log('resultsan-->', result.data);
+    //  console.log('resultsan-->', result.data);
       // console.log('resultsan-->', result.data.EMS_LM_Leave_Start_Date__c);
       this.startDate1 = result.data.EMS_LM_Leave_Start_Date__c;
       this.endDate1 = result.data.EMS_LM_Leave_End_Date__c;
@@ -252,7 +252,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
 
       if (result.data.Leave_Type_Name__c != 'Work From Home') {
 
-        console.log('###leave', result.data.Leave_Type_Name__c);
+      //  console.log('###leave', result.data.Leave_Type_Name__c);
         this.hideInotherleave = true;
         this.hideInWorkfromHome = false;
 
@@ -269,6 +269,12 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         console.log('###WorkFROMHOMEleave');
         this.hideInWorkfromHome = true;
         this.hideInotherleave = false;
+      }
+
+      if(result.data.EMS_LM_Day__c != 'Full Day'){
+        this.daycheck = true; 
+      }else{
+        this.daycheck = false;
       }
 
       
@@ -293,13 +299,13 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
           }
         }
         if (this.value == 'Annual Leave') {
-          console.log('total -5 leaves###'+this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c+data);
+        //  console.log('total -5 leaves###'+this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c+data);
           // if (this.annualduration >= data) {
           this.submitcheck = false;
           this.duration = data;
           this.currentAnnualleaves = this.availabledays + this.duration + 5;
           this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
-          console.log('this.currentAnnualleaves-->', this.currentAnnualleaves, 'this.availabledays', this.availabledays);
+        //  console.log('this.currentAnnualleaves-->', this.currentAnnualleaves, 'this.availabledays', this.availabledays);
           this.error = undefined;
         }
       }
@@ -307,7 +313,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         if (this.value == 'Paternity Leave') {
           this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Paternity_Leave__c;
           if (this.startDate != undefined || this.startDate != null) {
-            console.log('this.availabledays##', this.availabledays);
+          //  console.log('this.availabledays##', this.availabledays);
             if (this.availabledays >= data) {
               this.submitcheck = false;
               this.duration = data;
@@ -347,7 +353,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         if (this.value == 'Bereavement Leave') {
           this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Bereavement_Leave__c;
           if (this.startDate != undefined || this.startDate != null) {
-            console.log('this.availabledays##', this.availabledays);
+          //  console.log('this.availabledays##', this.availabledays);
             if (this.availabledays >= data) {
               this.submitcheck = false;
               this.duration = data;
@@ -387,7 +393,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         if (this.value == 'Maternity Leave') {
           this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Maternity_Leave__c;
           if (this.startDate != undefined || this.startDate != null) {
-            console.log('this.availabledays##', this.availabledays);
+          //  console.log('this.availabledays##', this.availabledays);
             if (this.availabledays >= data) {
               this.submitcheck = false;
               this.duration = data;
@@ -427,7 +433,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         if (this.value == 'Marriage Leave') {
           this.availabledays = this.allavailabledays.EMS_LM_No_of_Available_Marriage_Leave__c;
           if (this.startDate != undefined || this.startDate != null) {
-            console.log('this.availabledays##', this.availabledays);
+          //  console.log('this.availabledays##', this.availabledays);
             if (this.availabledays >= data) {
               this.submitcheck = false;
               this.duration = data;
@@ -467,7 +473,7 @@ export default class EMS_LM_EditapplyNew extends LightningElement {
         if (this.value == 'Compensatory Off') {
           this.availabledays = this.allavailabledays.EMS_LM_No_Of_Available_Compensatory_Off__c;
           if (this.startDate != undefined || this.startDate != null) {
-            console.log('this.availabledays##', this.availabledays);
+          //  console.log('this.availabledays##', this.availabledays);
             if (this.availabledays >= data) {
               this.submitcheck = false;
               this.duration = data;
@@ -753,11 +759,11 @@ if (this.endDate1 < this.startDate1 && this.startDate1 != null && this.endDate1 
           guestObj.EMS_LM_Leave_Duration__c = this.duration;
 
 
-          console.log('guestObj', guestObj);
+         // console.log('guestObj', guestObj);
 
           updateleaveRequest({ newRecord: guestObj, recordId: this.selecteditrecordid })
             .then(result => {
-              console.log('sdf-->', result);
+            //  console.log('sdf-->', result);
               this.isLoading = false;
               const event = new ShowToastEvent({
                 message: 'Your request has been updated successfully!',

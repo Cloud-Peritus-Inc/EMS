@@ -139,10 +139,10 @@ public class restrictAssignmentTimePreandPost implements triggerAction.BeforeIns
                 }
                 
                 if(throwEndError){
-                  newRec.addError(projectName +' Please enter the hours only till last date of an assignment other days must enter as zero hours.');  
+                  newRec.addError(projectName +': Please enter time within the start and end dates of your assignment, for other days fill zero hours');  
                 }
                 if(throwStartError){
-                   newRec.addError(projectName +' Please enter the hours only from start date of an assignment other days must enter as zero hours.'); 
+                   newRec.addError(projectName +': Please enter time within the start and end dates of your assignment, for other days fill zero hours'); 
                 }
 
             }   

@@ -61,7 +61,7 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert, Tri
     * ====================================================================================================
     **/
     
-    private void sendOnboardingFormMail(List<Contact> contactList){
+    public static void sendOnboardingFormMail(List<Contact> contactList){
         
         List<EMS_EM_Onboarding_Request__c> applicantsList = new List<EMS_EM_Onboarding_Request__c>();
         List<Contact> applicantsToSendMail = new List<Contact>();
@@ -102,15 +102,26 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert, Tri
         if(applicantsList.size() > 0){
             insert applicantsList;
         }
+        /*try{
+            if(applicantsList.size()>0){
+            	update applicantsList;
+        	}
+        }catch(exception ex){
+            if(ex.getMessage().contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')){
+                contactList[0].adderror(ex.getMessage().substring(89, 400));
+            }else{
+                contactList[0].adderror(ex.getMessage());
+            }  
+        }*/
         
-        List<ems_EM_Additional_Detail__c> additionalDetailsList = new List<ems_EM_Additional_Detail__c>();
+        /*List<ems_EM_Additional_Detail__c> additionalDetailsList = new List<ems_EM_Additional_Detail__c>();
         for(EMS_EM_Onboarding_Request__c onboardingRecords : applicantsList){
             ems_EM_Additional_Detail__c applicantRec = new ems_EM_Additional_Detail__c();
             applicantRec.Onboarding_Request__c = onboardingRecords.id;
             applicantRec.ContactId__c = onboardingRecords.ContactId1__c;
             additionalDetailsList.add(applicantRec);
         }
-        insert additionalDetailsList;
+        insert additionalDetailsList;*/
         
         if(!Test.isRunningTest()){
             Messaging.sendEmail(hrMailList);
@@ -152,6 +163,15 @@ public class CP_SendOnboardingFormMail implements TriggerAction.AfterInsert, Tri
             if(applicantsList.size() > 0){
                 insert applicantsList;
             }
+            
+            /*try{
+                 if(applicantsList.size() > 0){
+                	insert applicantsList;
+            	 }
+            }
+            catch(exception ex){
+                contactList[0].adderror(ex.getMessage()); 
+            } */
             
             List<ems_EM_Additional_Detail__c> additionalDetailsList = new List<ems_EM_Additional_Detail__c>();
             for(EMS_EM_Onboarding_Request__c onboardingRecords : applicantsList){

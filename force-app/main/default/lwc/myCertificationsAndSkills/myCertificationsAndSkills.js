@@ -93,7 +93,6 @@ console.log('In Submit ====');
         getMyCertificationsAndSkills()
          .then(result => {
             const even = new ShowToastEvent({
-            title: 'Success!',
             message: 'Successfully added your skill/certification. keep up the learning spirit!',
             variant: 'success'
         });
@@ -109,7 +108,6 @@ console.log('In Submit ====');
          .catch(error => {
              console.log('===ERROR===='+JSON.stringify(error));
              const event = new ShowToastEvent({
-                 title : 'Error',
                  message : 'Error in creating a record. Please Contact System Admin',
                  variant : 'error'
              });
@@ -120,7 +118,6 @@ console.log('In Submit ====');
     handleError(event){
         console.log('====event.detail.detail======'+JSON.stringify(event.detail.detail));
         const evt = new ShowToastEvent({
-            title: 'Error!',
             message: event.detail.detail,
             variant: 'error',
             mode:'dismissable'

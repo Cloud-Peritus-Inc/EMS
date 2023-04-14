@@ -85,11 +85,11 @@ export default class Acccvalidation extends  NavigationMixin(LightningElement) {
     @wire(getAssignmentProjectWire, { week: new Date(), wireMethod: true, userId: '$userId' } )
     assignmentProject({ error, data }) {
         if (data) {
-            console.log('assignmentProject');
-            console.log('result ',data);
+           // console.log('assignmentProject');
+            //console.log('result ',data);
             // this.timeSheetRecord.User__c = data.User.Id;
             this.timeSheetRecord.Resource__c = data.User.Contacts__r[0].Id;
-            console.log('RESOURCEID'+this.timeSheetRecord.Resource__c);
+           // console.log('RESOURCEID'+this.timeSheetRecord.Resource__c);
             this.enableManagerView = data.enableManagerView;
             this.enableHrManagerView = data.enableHrManagerView;
             if (this.enableManagerView) {

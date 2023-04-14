@@ -4330,7 +4330,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Expense__c.Amount__c</field>
+        <field>Expense__c.Amount1__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

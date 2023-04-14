@@ -28,21 +28,21 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
     @wire(getRelatedAssignments, { prjId: '$recordId'})
     savedRecordIdWire({error,data}) {
         if(data){
-             console.log('===event.detail.345value[0]==='+this.recordId);
+            // console.log('===event.detail.345value[0]==='+this.recordId);
          this.selectedProject = this.recordId;
-         console.log('====selectedProject========'+JSON.stringify(data));
-          console.log('====this.selectedProject========'+this.selectedProject);
+        // console.log('====selectedProject========'+JSON.stringify(data));
+        //  console.log('====this.selectedProject========'+this.selectedProject);
          this.assignDataWrp = data;
          this.index = data.length;
         }else if(error){
-           console.log('====No Date====='+JSON.stringify(error));
+          // console.log('====No Date====='+JSON.stringify(error));
         }
     }
 
     handleAccountId(event){
-        console.log('===event.detail.value[0]==='+this.recordId);
+        //console.log('===event.detail.value[0]==='+this.recordId);
         let projectId = event.detail.value[0];
-         console.log('===event.detail.value[0]==='+projectId);
+        // console.log('===event.detail.value[0]==='+projectId);
         if(projectId !== undefined){
             this.selectedProject = projectId;
             this.assignDataWrp = [];
@@ -60,7 +60,7 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
     }
 
     deleteRecord(event){
-        console.log('==event.target.value==='+event.target.value);
+        //console.log('==event.target.value==='+event.target.value);
         const selectedAss = this.assignDataWrp[event.target.value];
         window.alert(JSON.stringify(this.assignDataWrp) + ' & ' + event.target.value + ' & ' + JSON.stringify(selectedAss));
         deleteAssignmentHandler({assId: selectedAss.Id, projId: selectedAss.EMS_TM_ProjectName_Asgn__c}).then(result => {
@@ -99,12 +99,12 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
 
     setResourceName(event){
         const eventName = event.target.name;
-        console.log('==eventName===='+eventName);
+        //console.log('==eventName===='+eventName);
        // console.log('==event==='+JSON.stringify(event));
         let blankRow = this.blankRow;
         blankRow[eventName].EMS_TM_EmployeeName__c = event.target.value;
         this.blankRow = blankRow;
-        console.log('====this.blankRow===='+JSON.stringify(this.blankRow));
+        //console.log('====this.blankRow===='+JSON.stringify(this.blankRow));
     }
 
     setRole(event){
@@ -134,7 +134,7 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
 
     saveData(event){
         let blankRow = this.blankRow;
-        console.log('=====blankRow======'+JSON.stringify(this.blankRow));
+        //console.log('=====blankRow======'+JSON.stringify(this.blankRow));
         let assDataList = [];
         for(let i = 0; i < blankRow.length; i++){
             if(blankRow[i] !== undefined && blankRow[i].isChecked){
@@ -156,7 +156,7 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
                     mode: 'dismissable'
                 });
                 this.dispatchEvent(evt);
-                console.log('=======return response=='+JSON.stringify(result));
+                //console.log('=======return response=='+JSON.stringify(result));
                 window.location.reload();
                /* let assDataList = this.assignDataWrp;  EMS_TM_EndDate_Asgn__c
                 for(let i = 0; i < result.length; i++){
@@ -176,6 +176,9 @@ export default class AssignMutipleResources extends NavigationMixin(LightningEle
                 this.index = result.length;
             }).catch(error => {
                 var substring = error.body.message.substring(89,400);
+               if (substring.includes('Value does not exist or does not match filter criteria.: [EMS_TM_ProjectName_Asgn__c]')) {
+                    substring ='You cannot assign resources to Global Projects';
+               }
                       console.log(substring);
                 const evt = new ShowToastEvent({
                         

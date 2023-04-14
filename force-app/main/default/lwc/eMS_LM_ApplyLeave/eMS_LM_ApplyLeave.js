@@ -5,7 +5,6 @@ import getLeaveType from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveTyp
 import getbilling from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getbilling';
 import getLeaveDuration from '@salesforce/apex/EMS_LM_Leave_Duration_Handler.getLeaveDuration';
 import getLeaveBalance from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveBalance';
-import createLeaveHistoryRecord from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.createLHRecord';
 import uploadFile from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.uploadFile';
 import getLeaveTypeId from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getLeaveTypeid';
 import LightningConfirm from "lightning/confirm";
@@ -56,7 +55,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   @wire(getLeaveType, { userid: '$uId',annualavailable: '$annualduration' }) wiredltype(result) {
     this.refleaveType = result;
     if (result.data) {
-      console.log('leave type data-->', result.data);
+     // console.log('leave type data-->', result.data);
       this.lOptions = result.data.map((record) => ({
         value: record,
         label: record
@@ -72,7 +71,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   wireleavetype({ error, data }) {
     if (data) {
       this.leavetypeId = data.Id;
-      console.log('type data-->', data.Id);
+     // console.log('type data-->', data.Id);
       this.error = undefined;
     } else if (error) {
       this.error = error;
@@ -84,7 +83,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
     if (data) {
       this.isbillable = data.EMS_TM_In_Billing__c;
       this.Location = data.Work_Location__r.Country__c;
-      console.log('this.isbillable-->', this.isbillable, 'this.Location', this.Location);
+    //  console.log('this.isbillable-->', this.isbillable, 'this.Location', this.Location);
       this.error = undefined;
     } else if (error) {
       this.error = error;
@@ -235,9 +234,9 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
     if (result.data) {
       this.allavailabledays = result.data;
       this.annualcompduration = result.data.EMS_LM_No_Of_Availble_Leaves__c + result.data.EMS_LM_No_Of_Available_Compensatory_Off__c + 5;
-      console.log('this.annualcompduration' + this.annualcompduration);
+    //  console.log('this.annualcompduration' + this.annualcompduration);
       this.annualduration = result.data.EMS_LM_No_Of_Availble_Leaves__c;
-      console.log('this.annualduration' + this.annualduration);
+    //  console.log('this.annualduration' + this.annualduration);
       this.availabledays = this.annualduration;
 
       this.cId = result.data.Id;
@@ -273,14 +272,11 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
   }*/
 
   handleChange(event) {
-
     this.daycheck = false;
     this.startDate = this.startDate1 = this.endDate = this.endDate1 = this.duration = undefined;
 
     this.submitcheck = true;
     this.value = event.detail.value;
-    refreshApex(this.wiredActivities, this.refleaveduration, this.refleaveType);
-
     if (this.value === 'Annual Leave' || this.value === 'Loss of Pay') {
       //this.calculateDuration();
       this.visiableotherdetail = true;
@@ -297,10 +293,11 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       this.dOptions = [{ label: 'Full Day', value: 'Full Day' }];
     }
     if (this.value == 'Annual Leave') {
+     // refreshApex(this.allavailabledays);
       this.visiableotherdetail = true;
 
       this.availabledays = this.allavailabledays.EMS_LM_No_Of_Availble_Leaves__c;
-      console.log('anna  this.availabledays' + this.availabledays);
+    //  console.log('anna  this.availabledays' + this.availabledays);
       this.fileuploadRequired = true;
     }
     if (this.value == 'Paternity Leave') {
@@ -352,7 +349,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
     if (this.value == 'Loss of Pay') {
       this.visiableotherdetail = true;
       if (this.annualcompduration > 0) {
-        console.log(this.annualcompduration);
+      //  console.log(this.annualcompduration);
         this.submitcheck = true;
         const evt = new ShowToastEvent({
           message: 'Loss of Pay will effect your monthly pay check, consider applying leave of annual or comp off type. ',
@@ -369,6 +366,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
       }
 
     }
+   
   }
 
 
@@ -501,10 +499,10 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
         //step3 call the imperation and handle it
         createRecord(recordData).then(result => {
           this.rId = result.id;
-          console.log('this.rId------>', JSON.stringify(result));
+        //  console.log('this.rId------>', JSON.stringify(result));
           if (this.fileData != null) {
             uploadFile({ base64: this.fileData.base64, filename: this.fileData.filename, recordId: this.rId }).then(res => {
-              console.log(res);
+            //  console.log(res);
             }).catch(error => { console.error(error.body.message); });
           }
 
@@ -590,7 +588,7 @@ export default class EMS_LM_ApplyLeave extends LightningElement {
 
   handleRefreshMessage(message) {
     if (message.refresh) {
-       refreshApex(this.refleaveType);
+       refreshApex(this.wiredActivities, this.refleaveduration, this.refleaveType);
     }
   }
 

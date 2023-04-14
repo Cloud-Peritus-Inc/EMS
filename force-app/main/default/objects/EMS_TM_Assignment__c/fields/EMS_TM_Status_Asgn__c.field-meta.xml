@@ -29,6 +29,7 @@
             <value>
                 <fullName>Cancelled</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Cancelled</label>
             </value>
             <value>

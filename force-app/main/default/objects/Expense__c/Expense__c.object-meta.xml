@@ -166,7 +166,6 @@
         <searchResultsAdditionalFields>Bill_Date__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Expense_Type__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Expense_Amount__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>is_Reimbursed__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Project__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Approval_Manager__c</searchResultsAdditionalFields>

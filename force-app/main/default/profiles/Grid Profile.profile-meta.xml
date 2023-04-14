@@ -4334,7 +4334,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Expense__c.Amount__c</field>
+        <field>Expense__c.Amount1__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
