@@ -4,7 +4,25 @@
     justify-content: space-between;
     margin: 10px;
     margin-bottom: 30px;
-    
+    overflow: auto; /* enable vertical scrollbar */  
+}
+
+.parent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.parent::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.parent::-webkit-scrollbar-thumb {
+  /*background: #888;*/
+  background : rgb(223, 185, 235);
+  border-radius: 4px;
+}
+
+.parent::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .child1 {
@@ -18,8 +36,7 @@
 }
 
 .table-container {
-  max-height: 380px; /* set maximum height */
-  overflow: auto; /* enable vertical scrollbar */
+  max-height: 250px; /* set maximum height */
 }
 
 .table-container::-webkit-scrollbar {

@@ -15,5 +15,5 @@
         <operation>equals</operation>
         <value>Contact.Applicant</value>
     </filters>
-    <label>Applicant</label>
+    <label>Applicants</label>
 </ListView>
