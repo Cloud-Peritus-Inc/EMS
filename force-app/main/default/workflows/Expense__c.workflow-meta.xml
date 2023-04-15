@@ -12,4 +12,4 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Expense_is_Approved_Email_to_Finance_Team</template>
     </alerts>
-</Workflow>
+</Workflow> 
