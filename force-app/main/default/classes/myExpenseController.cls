@@ -3,7 +3,7 @@ public without sharing class myExpenseController {
 @AuraEnabled(cacheable=true)
 public static datawrapper getMyExpenseReport(){
         List<Expense__c> expList = new List<Expense__c>();
-       List<expense__c> expNewList = new List<expense__c>();
+       List<expense> expNewList = new List<expense>();
         Map<string,string> nameMap = new Map<String,string>();
         User uRec = [SELECT Id,ContactId,Contact.Work_Location__r.Country__c FROM User WHERE Id=:Userinfo.getUserId()];
         Decimal pendingAmount = 0;
