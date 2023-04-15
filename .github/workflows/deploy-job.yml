@@ -35,4 +35,4 @@ jobs:
       # Runs a single command using the runners shell
         
       - name: Deploys to EMS Qa Org
-        run: sfdx force:source:deploy -p . -u ${{ github.event.inputs.choice }}
+        run: sfdx force:source:deploy -p . -u ${{ github.event.inputs.choice }} -l RunLocalTests
