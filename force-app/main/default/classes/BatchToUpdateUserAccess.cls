@@ -15,7 +15,7 @@
 * ====================================================================================================
 **/
 global class BatchToUpdateUserAccess  implements Database.Batchable<sObject> {
- public Map<String,String> accesswithApi;
+    public Map<String,String> accesswithApi;
     
     global BatchToUpdateUserAccess(){
         this.accesswithApi = new Map<String,String>();
@@ -24,7 +24,7 @@ global class BatchToUpdateUserAccess  implements Database.Batchable<sObject> {
         }
         
     }
- /**
+    /**
 * @author Subba
 * @date 22/01/2023
 * @description start query to get the data of the object that required to process.
@@ -37,26 +37,29 @@ global class BatchToUpdateUserAccess  implements Database.Batchable<sObject> {
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
         if(accesswithApi.isEmpty()){
-         for(User_Access_Mapping__mdt uam : [SELECT Id,Permissionset_API_Name__c,User_Field_API_Name__c FROM User_Access_Mapping__mdt]){
-            accesswithApi.put(uam.Permissionset_API_Name__c,uam.User_Field_API_Name__c);
-        }   
+            for(User_Access_Mapping__mdt uam : [SELECT Id,Permissionset_API_Name__c,User_Field_API_Name__c FROM User_Access_Mapping__mdt]){
+                accesswithApi.put(uam.Permissionset_API_Name__c,uam.User_Field_API_Name__c);
+            }   
         }
         date dt = system.today();
         if(!Test.isRunningTest()){
-        return Database.getQueryLocator([SELECT Id,Email,Name,profile.name,
-                                         (SELECT permissionsetid,PermissionSet.Name FROM permissionsetassignments WHERE PermissionSet.Name IN:accesswithApi.keySet())
-                                         FROM USER 
-                                         WHERE isActive = true AND (profile.name ='Employee - HR(Community)'OR profile.name = 'Employee - Operations(Community)' OR profile.name = 'Employee - Resource(Community)' OR profile.name = 'System Administrator' OR  profile.name = 'Grid Operations(Internal)') ]);
+            return Database.getQueryLocator([SELECT Id,Email,Name,profile.name,
+                                             (SELECT permissionsetid,PermissionSet.Name FROM permissionsetassignments WHERE PermissionSet.Name IN:accesswithApi.keySet())
+                                             FROM USER 
+                                             WHERE isActive = true AND (profile.name ='Employee - HR(Community)'OR profile.name = 'Employee - Operations(Community)' OR profile.name = 'Employee - Resource(Community)' OR profile.name = 'System Administrator' OR  profile.name = 'Grid Operations(Internal)') ]);
         }else{
+            for(User_Access_Mapping__mdt uam : [SELECT Id,Permissionset_API_Name__c,User_Field_API_Name__c FROM User_Access_Mapping__mdt]){
+                accesswithApi.put(uam.Permissionset_API_Name__c,uam.User_Field_API_Name__c);
+            }
             return Database.getQueryLocator([SELECT Id,Email,Name,
-                                         (SELECT permissionsetid,PermissionSet.Name FROM permissionsetassignments WHERE PermissionSet.Name IN:accesswithApi.keySet())
-                                         FROM USER 
-                                         WHERE isActive = true AND (profile.name ='Employee - HR(Community)'OR profile.name = 'Employee - Operations(Community)' OR profile.name = 'Employee - Resource(Community)' OR profile.name = 'System Administrator' OR  profile.name = 'Grid Operations(Internal)') LIMIT 1 ]); 
+                                             (SELECT permissionsetid,PermissionSet.Name FROM permissionsetassignments WHERE PermissionSet.Name IN:accesswithApi.keySet())
+                                             FROM USER 
+                                             WHERE isActive = true AND (profile.name ='Employee - HR(Community)'OR profile.name = 'Employee - Operations(Community)' OR profile.name = 'Employee - Resource(Community)' OR profile.name = 'System Administrator' OR  profile.name = 'Grid Operations(Internal)') LIMIT 1 ]);        
         }
     }
-
-
-/**
+    
+    
+    /**
 * @author Subba
 * @date 22/01/2023
 * @description  Execute method to process the business logic.
@@ -68,22 +71,22 @@ global class BatchToUpdateUserAccess  implements Database.Batchable<sObject> {
 * ====================================================================================================
 **/
     global void execute(Database.BatchableContext BC, List<User> userList) {
-            for(User urec : userList){
-                for(String strApi : accesswithApi.values()){
-                     urec.put(strApi,false);
-                }
-                for(permissionsetassignment psa : urec.permissionsetassignments){
-                        if(accesswithApi.containsKey(psa.PermissionSet.Name)){
-                            urec.put(accesswithApi.get(psa.PermissionSet.Name),true);
-                        }
+        for(User urec : userList){
+            for(String strApi : accesswithApi.values()){
+                urec.put(strApi,false);
+            }
+            for(permissionsetassignment psa : urec.permissionsetassignments){
+                if(accesswithApi.containsKey(psa.PermissionSet.Name)){
+                    urec.put(accesswithApi.get(psa.PermissionSet.Name),true);
                 }
             }
-         try{
-           update userList; 
-        }catch(exception ex){
-           LogException.logHandledException(ex, 'BatchToUpdateUserAccess', 'execute');  
         }
-       
+        try{
+            update userList; 
+        }catch(exception ex){
+            LogException.logHandledException(ex, 'BatchToUpdateUserAccess', 'execute');  
+        }
+        
         
     }
     /**
