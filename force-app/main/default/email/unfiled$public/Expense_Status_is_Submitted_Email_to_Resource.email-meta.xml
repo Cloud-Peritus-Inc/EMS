@@ -9,11 +9,14 @@
     <textOnly>Dear {!Expense__c.Resource__c},
 
 
-Your Expense {!Expense__c.Name} for {!Expense__c.Expense_Type__c} for the amount of {!Expense__c.Expense_Amount__c} for the date
 
-{!Expense__c.Expense_Date__c} has been submitted for reimbursement.
+Your {!Expense__c.Expense_Type__c} expense reimbursement request with the {!Expense__c.Name} for the amount of {!Expense__c.Expense_Amount__c} {!Expense__c.Billing_Currency__c} incurred on
+
+{!Expense__c.Expense_Date__c} has been submitted successfully.
 
 
+
+You can review the status of your expense request here.
 
 
 Regards,
