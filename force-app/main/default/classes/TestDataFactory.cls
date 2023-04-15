@@ -223,7 +223,7 @@ public class TestDataFactory {
     
     
     
-    public static EMS_LM_Leave_History__c createLeaveRequest(String conid,Date startDate,Date endDate,String leaveTypeId, Boolean doInsert, String leaveStatus){
+   public static EMS_LM_Leave_History__c createLeaveRequest(String conid,Date startDate,Date endDate,String leaveTypeId, Boolean doInsert, String leaveStatus){
         EMS_LM_Leave_History__c leaveReq = new EMS_LM_Leave_History__c(); 
         leaveReq.EMS_LM_Contact__c = conid;
         leaveReq.EMS_LM_Day__c = 'Full Day';
@@ -233,9 +233,9 @@ public class TestDataFactory {
         leaveReq.EMS_LM_Leave_Duration__c = startDate.daysBetween(endDate);
         leaveReq.EMS_LM_Reason__c = 'Test Reason';
         leaveReq.EMS_LM_Status__c = leaveStatus != null ? leaveStatus : 'Pending';
-    	EMS_LM_Leave__c leaveType = [SELECT Name FROM EMS_LM_Leave__c WHERE Id = :leaveTypeId];
-    	leaveReq.EMS_LM_Leave_Type_Name__c = leaveType.Name;
-        leaveReq.EMS_LM_Leave_Type__c = leaveType.Id;
+    	List<EMS_LM_Leave__c> leaveType = [SELECT Name FROM EMS_LM_Leave__c WHERE Id = :leaveTypeId];
+    	leaveReq.EMS_LM_Leave_Type_Name__c = leaveType.size() > 0 ? leaveType[0].Name : 'Annual Leave';
+       
         if(doInsert){
             insert leaveReq;
         }
