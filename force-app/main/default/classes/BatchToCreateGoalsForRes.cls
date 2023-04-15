@@ -28,8 +28,8 @@ global class BatchToCreateGoalsForRes implements Database.Batchable<sObject> {
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
         
-        //date dt = Test.isRunningTest() ? system.today().adddays(1) : system.today() ;
-        date dt =  system.today().adddays(1);
+        date dt = Test.isRunningTest() ? system.today().adddays(1) : system.today() ;
+       // date dt =  system.today().adddays(1);
         
         return Database.getQueryLocator([SELECT Id,Description__c,Name,Goal_End_Date__c,Goal_Start_Date__c,Grid_Configuration_Type__c,
                                          Navigation_address__c,is_Navigation_Required__c,Resource_Role__c 

@@ -74,7 +74,7 @@ public class LeaveRequestHRApproveHandlerTest {
             System.assertEquals(LeaveRequestConstant.APPROVED, leaveVal1.EMS_LM_Status__c);
             System.assertEquals(System.today(), leaveVal1.EMS_LM_Approved_On__c);
             System.assertEquals(LeadUser.FirstName + ' ' + LeadUser.LastName, leaveVal1.EMS_LM_Current_Approver__c);
-            System.assertEquals('Rejected by HR', leaveVal1.EMS_LM_Remarks__c);
+            System.assertEquals('Approved by HR', leaveVal1.EMS_LM_Remarks__c);
         	}
         Test.stopTest();
     	}
