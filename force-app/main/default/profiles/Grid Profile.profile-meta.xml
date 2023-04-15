@@ -354,10 +354,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CP_utilizedLeaveBalanceTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CalculateAvailableLeaveBalance</apexClass>
         <enabled>false</enabled>
     </classAccesses>
