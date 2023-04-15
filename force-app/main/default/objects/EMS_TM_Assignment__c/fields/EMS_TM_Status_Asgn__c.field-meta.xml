@@ -32,6 +32,12 @@
                 <isActive>false</isActive>
                 <label>Cancelled</label>
             </value>
+            <value>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Inactive</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

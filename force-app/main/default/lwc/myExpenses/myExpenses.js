@@ -45,6 +45,8 @@ loaded = false
 
     handleCancel(event) {
       this.openModal = false;
+     // this.showFileUpload =false;
+     
     }
 
 handleNavClick() {
@@ -117,6 +119,7 @@ handleFormSubmit(event) {
             updateAndGetData({ 
              expId : this.createdRecordId,
              status : 'Submitted' 
+             
          })
          .then(result => {
             const even = new ShowToastEvent({
@@ -134,7 +137,7 @@ handleFormSubmit(event) {
             this.loaded = true;
             
             this.openModal = false;
-            
+            this.showFileUpload =false;
          })
          .catch(error => {
              console.log('===ERROR===='+JSON.stringify(error));
@@ -168,7 +171,7 @@ handleFormSubmit(event) {
             this.reimbCurrency = result.expCurrency;
             this.loaded = true;
             this.openModal = false;
-            
+            this.showFileUpload =false;
          })
          .catch(error => {
                console.log('===ERROR===='+JSON.stringify(error));

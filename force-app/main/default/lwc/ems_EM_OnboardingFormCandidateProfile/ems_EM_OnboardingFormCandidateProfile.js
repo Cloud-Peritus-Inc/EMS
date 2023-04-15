@@ -150,11 +150,9 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Education Details") {
       this.isEducationDetails = true;
-      console.log('i am here ', this.educationDetails);
       if (this.educationDetails.length == 0) {
-        console.log('i am here inner');
         this.addRowEdu();
-      } console.log('i am here ', seletedDetails);
+      } 
 
       this.isShowPersonalDetails = false;
       this.isIdentifyDetails = false;
@@ -166,6 +164,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else if (seletedDetails === "Other Certifications") {
       this.isOtherCertifications = true;
+      this.statusUpdate = 'In Progress';
       this.isOtherCertificationsCheckbox = true;
       this.isEducationDetails = false;
       this.isShowPersonalDetails = false;
@@ -354,7 +353,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
         if (this.dob >= today) {
-          //console.log("I am in if");
           this.dispatchEvent(
             new ShowToastEvent({
               message: 'Please enter a valid date of birth',
@@ -692,9 +690,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
-    console.log("this.dob", this.dob);
-    console.log("this.graduationDate", this.graduationDate);
-    console.log("today", today);
     if (this.dob >= today) {
       this.dispatchEvent(
         new ShowToastEvent({
@@ -752,13 +747,9 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     this.handleIsLoading(true);
     if (this.isShowPersonalDetails) {
       if (this.selectStep1()) {
-        //console.log('step1 => ',this.selectStep1);
         this.isPersonalUpdateCheckbox = true;
         this.statusUpdate = 'In Progress';
-        //console.log('check box',this.isPersonalUpdateCheckbox);
-        //console.log('check box',this.statusUpdate);
         updateOnBoardingRequest(this);
-        //console.log('check box',this.statusUpdate);
         if (this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false) {
           this.buttonDisable = true;
         }
@@ -897,8 +888,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       });
       this.dispatchEvent(even);
     }
-    //  console.log('photo-->' + event.target.files[0].type);
-    // uploadFilesFromThis(event, this);
+
   }
 
   file3;
@@ -955,16 +945,14 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     { label: 'Salesforce Certified Marketing Cloud Developer', value: 'Salesforce Certified Marketing Cloud Developer' },
     { label: 'Salesforce Certified Marketing Cloud Email Specialist', value: 'Salesforce Certified Marketing Cloud Email Specialist' },
     { label: 'Salesforce Certified Pardot Consultant', value: 'Salesforce Certified Pardot Consultant' },
-    { label: 'Salesforce Certified Pardot Specialist', value: 'Salesforce Certified Pardot Specialist' },
-    { label: 'Other', value: 'Other' }
+    { label: 'Salesforce Certified Pardot Specialist', value: 'Salesforce Certified Pardot Specialist' }
   ];
 
   //to add row
   addRow() {
     this.countcerti = this.records.length + 1;
     let randomId = Math.random() * 16;
-    let myNewElement = { Type__c: 'Certification', Certification_Name__c: "", Other__c: "", Id: randomId, Completion_Date__c: "", Contact__c: this.contactId, 
-    Index2 :this.countcerti, otherfield: this.hideotherfield, Onboarding_Request__c: this.onboardingformId };
+    let myNewElement = { Type__c: 'Certification', Certification_Name__c: "", Other__c: "", Id: randomId, Completion_Date__c: "", Contact__c: this.contactId, Onboarding_Request__c: this.onboardingformId };
     this.records = [...this.records, myNewElement];
     this.countcerti++;
   }
@@ -980,18 +968,17 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   }
 
   @track countcerti = 0;
-  @track hideotherfield = false;
-
+  otherfield = false;
   //update table row values in list
   updateValues(event) {
     var foundelement = this.records.find(ele => ele.Id == event.target.dataset.id);
     if (event.target.name === 'Certification_Name__c') {
       foundelement.Certification_Name__c = event.target.value;
       if (foundelement.Certification_Name__c === 'Other') {
-        this.hideotherfield = true;
+        this.otherfield = true;
       }
       else {
-        this.hideotherfield = false;
+        this.otherfield = false;
       }
     } else if (event.target.name === 'Completion_Date__c') {
       foundelement.Completion_Date__c = event.target.value;
@@ -1013,9 +1000,9 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
   handleSaveAction() {
     this.handleIsLoading(true);
 
-    if (this.deleteCertificationIds !== '') {
+    /* if (this.deleteCertificationIds !== '') {
       this.deleteCertificationIds = this.deleteCertificationIds.substring(1);
-    }
+    } */
 
     this.records.forEach(res => {
       if (!isNaN(res.Id)) {
@@ -1033,6 +1020,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           this.handleIsLoading(false);
           refreshApex(this.wiredRecords);
           this.updateRecordView(this.onboardingformId);
+          this.statusUpdate = 'In Progress';
           updateOnBoardingRequest(this);
           this.dispatchEvent(
             new ShowToastEvent({
@@ -1125,23 +1113,15 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       this.isdel = true;
     }
 
-    console.log('i am here delete', this.count);
     let randomId = Math.random() * 16;
     let myNewElement = { RecordType: { Name: 'Education Details' }, index: this.count, isDelete: this.isdel, EMS_EM_Education__c: "", Id: randomId, EMS_EM_Degree__c: "", EMS_EM_Field_of_Study__c: "", EMS_EM_IName__c: "", EMS_EM_GDate__c: "", Onboarding_Request__c: this.onboardingformId, ContactId__c: this.contactId };
     this.educationDetails = [...this.educationDetails, myNewElement];
     this.count++;
-
-    //console.log('this.educationDetails >>> ', this.educationDetails);
   }
 
   //handle save and process dml 
   handleSaveEduAction() {
     this.handleIsLoading(true);
-
-    if (this.deleteEduWorkIds !== '') {
-      this.deleteEduWorkIds = this.deleteEduWorkIds.substring(1);
-    }
-
     this.educationDetails.forEach(res => {
       if (!isNaN(res.Id)) {
         res.Id = null;
@@ -1155,14 +1135,21 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     if (isInputsCorrect) {
       dmlOnEducation({ data: this.educationDetails, removeEducationIds: this.deleteEduWorkIds })
         .then(result => {
+          /* this.educationDetails=[];
+          for(let i=0;i<result.length;i++){
+            this.educationDetails.push(result[i]); 
+          } */
           this.handleIsLoading(false);
+          this.isEducationDetailsCheckbox = true;
+          this.statusUpdate = 'In Progress';
+          updateOnBoardingRequest(this);
           refreshApex(this.wiredEdu);
           this.updateEduRecordView(this.onboardingformId);
           uploadFiles({ recordId: this.onboardingformId, filedata: JSON.stringify(this.filesData) })
             .then(result => {
               if (result && result == 'success') {
-                updateOnboardingInfoOnPageLoads(this);
                 this.filesData = [];
+                updateOnboardingInfoOnPageLoads(this);
               } else {
                 this.dispatchEvent(
                   new ShowToastEvent({
@@ -1181,9 +1168,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
                 );
               }
             }).finally(() => this.showSpinner = false);
-          this.isEducationDetailsCheckbox = true;
-          this.statusUpdate = 'In Progress';
-          updateOnBoardingRequest(this);
           if (this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false) {
             this.buttonDisable = true;
           }
@@ -1215,9 +1199,10 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   handleDeleteEduAction(event) {
     this.count--;
-
-    if (isNaN(event.target.dataset.id)) {
+     if (isNaN(event.target.dataset.id) && this.deleteEduWorkIds != '' ) {
       this.deleteEduWorkIds = this.deleteEduWorkIds + ',' + event.target.dataset.id;
+    }else{
+      this.deleteEduWorkIds =  event.target.dataset.id;
     }
     this.educationDetails.splice(this.educationDetails.findIndex(row => row.Id === event.target.dataset.id), 1);
   }
@@ -1379,7 +1364,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     }
     else {
       this.showExperienceyouhave = false;
-      //handleDeleteAllWorkAction();
       this.workDetails = [];
 
     }
@@ -1398,7 +1382,7 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
     let myNewElement = {
       RecordType: { Name: 'Work Details' }, EMS_EM_Job_Title__c: "", Id: randomId, EMS_EM_From_Date__c: "",
       EMA_EM_To_Date__c: "", EMS_EM_Previous_Company_Name__c: "", EMS_EM_Previous_Company_HR_EmailId__c: "",
-      index1: this.counting, isHide: this.hidePreviousCompanyHR,  isDelete1: this.isdeleting, Onboarding_Request__c: this.onboardingformId
+      index1: this.counting, isHide: this.hidePreviousCompanyHR,  isDelete1: this.isdeleting, Onboarding_Request__c: this.onboardingformId, ContactId__c: this.contactId
     };
     this.workDetails = [...this.workDetails, myNewElement];
     this.counting++;
@@ -1410,7 +1394,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
       this.deleteWorkIds = this.deleteWorkIds + ',' + event.target.dataset.id;
     }
     this.workDetails.splice(this.workDetails.findIndex(row => row.Id === event.target.dataset.id), 1);
-    if (this.workDetails.length < 1) {
+/*     this.handleSaveWorkAction();
+ */    if (this.workDetails.length < 1) {
       this.doYouHaveExp = undefined;
     }
   }
@@ -1446,9 +1431,9 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   handleSaveWorkAction() {
     this.handleIsLoading(true);
-    if (this.deleteWorkIds !== '') {
+    /* if (this.deleteWorkIds !== '') {
       this.deleteWorkIds = this.deleteWorkIds.substring(1);
-    }
+    } */
     this.workDetails.forEach(res => {
       if (!isNaN(res.Id)) {
         res.Id = null;
@@ -1465,8 +1450,11 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           this.handleIsLoading(false);
           refreshApex(this.wiredEdu);
           this.updateWorkRecordView(this.onboardingformId);
+          this.isWorkExperienceCheckbox = true;
+          this.statusUpdate = 'In Progress';
+          updateOnBoardingRequest(this);
           uploadFiles({ recordId: this.onboardingformId, filedata: JSON.stringify(this.filesDocData) })
-            .then(result => {;
+            .then(result => {
               if (result && result == 'success') {
                 this.filesDocData = [];
                 updateOnboardingInfoOnPageLoads(this);
@@ -1488,9 +1476,6 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
                 );
               }
             }).finally(() => this.showSpinner = false);
-          this.isWorkExperienceCheckbox = true;
-          this.statusUpdate = 'In Progress';
-          updateOnBoardingRequest(this);
           if (this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false) {
             this.buttonDisable = true;
           }
@@ -1502,13 +1487,13 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
               message: 'Details saved successfully',
               variant: 'success',
             }),
-          );updateOnboardingInfoOnPageLoads(this);
+          );
           //this.showToast('Success', result, 'Success', 'dismissable');
         }).catch(error => {
           this.handleIsLoading(false);
           console.log(error);
           this.showToast('Please refresh the page and retry.', error.body.message, 'Error', 'dismissable');
-        });
+        });updateOnboardingInfoOnPageLoads(this);
     } else {
       this.handleIsLoading(false);
       const even = new ShowToastEvent({

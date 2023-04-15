@@ -2,6 +2,7 @@ import { LightningElement, wire } from 'lwc';
 import u_Id from '@salesforce/user/Id';
 import getLoggedInUserResReportsSize from '@salesforce/apex/LeaveHistoryApexController.getLoggedInUserResReportsSize';
 import getUserProfileInfo from '@salesforce/apex/EMS_LM_ContactLeaveUpdate.getProfileName';
+import IMAGES from '@salesforce/resourceUrl/LeaveManagement';
 
 export default class EMS_LM_LeaveManagement extends LightningElement {
     uId = u_Id;
@@ -9,11 +10,12 @@ export default class EMS_LM_LeaveManagement extends LightningElement {
     showTabAdmin = false;
     hidePendingTab;
     activeTabValue;
+    torontoImage = IMAGES;
 
     connectedCallback() {
         getUserProfileInfo({ userid: this.uId }).then(result => {
             this.profileName = result;
-            console.log('### this.profileName : ', this.profileName);
+            //console.log('### this.profileName : ', this.profileName);
             if (this.profileName == 'Employee - HR(Community)' || this.profileName == 'System Administrator') {
                 this.showTabAdmin = true;
             }
@@ -33,11 +35,11 @@ export default class EMS_LM_LeaveManagement extends LightningElement {
     @wire(getLoggedInUserResReportsSize)
     getLoggedInUserResReportsSizeWiredData({ error, data }) {
         if (data) {
-            console.log('### getLoggedInUserResReportsSize', data);
+            //console.log('### getLoggedInUserResReportsSize', data);
             if (data.relationAcess > 0) {
                 this.hidePendingTab = data.relationAcess;
             }
-            console.log('### hidePendingTab : ', this.hidePendingTab);
+            //console.log('### hidePendingTab : ', this.hidePendingTab);
         } else if (error) {
             console.error('Error:', error);
         }

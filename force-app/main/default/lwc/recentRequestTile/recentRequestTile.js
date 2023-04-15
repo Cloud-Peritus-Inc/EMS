@@ -20,7 +20,7 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
 
     connectedCallback() {
         this.a_Record_URL = window.location.origin;
-        console.log('Base Url' + this.a_Record_URL);
+        //console.log('Base Url' + this.a_Record_URL);
     }
 
 
@@ -31,7 +31,7 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
         this._wiredRefreshData = wireResult;
         if (data) {
             this.reqLeaveData = data;
-            console.log('### reqLeaveData : ', this.reqLeaveData);
+            //console.log('### reqLeaveData : ', this.reqLeaveData);
             this.reqLeaveArray = [].concat.apply([], Object.values(this.reqLeaveData));
             if ((this.reqLeaveArray).length <= 0) {
                 this.nodata = true
@@ -51,9 +51,8 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
         this.approveComments = event.target.value;
     }
     showModalApprovalBox(event) {
-        console.log('BUTTON CLICKED : ');
         this.selectedRecordApproveId = event.currentTarget.dataset.id;
-        console.log('### selectedRecordApproveId : ', this.selectedRecordApproveId);
+        //console.log('### selectedRecordApproveId : ', this.selectedRecordApproveId);
         this.isShowModalApprove = true;
     }
 
@@ -61,7 +60,7 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
         if (this.template.querySelector('lightning-textarea').reportValidity()) {
             updateApproveStatusAndComments({ leaveRequestId: this.selectedRecordApproveId, comments: this.approveComments })
                 .then((result) => {
-                    console.log('Leave Request: ', result);
+                    //console.log('Leave Request: ', result);
                     this.isShowModalApprove = false;
                     const evt = new ShowToastEvent({
                         message: 'Leave Request was updated successfully',
@@ -81,20 +80,19 @@ export default class RecentRequestTile extends NavigationMixin(LightningElement)
     }
 
     showModalRejectBox(event) {
-        console.log('BUTTON CLICKED Reject: ');
-        console.log('### event id: ', JSON.stringify(event.currentTarget.dataset.id));
+        //console.log('### event id: ', JSON.stringify(event.currentTarget.dataset.id));
         this.selectedRecordRejectId = event.currentTarget.dataset.id;
-        console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
+        //console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
         this.isShowModalReject = true;
 
     }
 
     handleRejectSave() {
         if (this.template.querySelector('lightning-textarea').reportValidity()) {
-            console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
+            //console.log('### selectedRecordRejectId : ', this.selectedRecordRejectId);
             updateRejecteStatusAndComments({ leaveRequestId: this.selectedRecordRejectId, comments: this.rejectComments })
                 .then((result) => {
-                    console.log('Leave Request: ', result);
+                    //console.log('Leave Request: ', result);
                     this.isShowModalReject = false;
                     this.rejectComments = '';
                     const evt = new ShowToastEvent({
