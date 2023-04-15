@@ -47,7 +47,7 @@
                 <field>Audit_Notes__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Billable__c</field>
             </layoutItems>
         </layoutColumns>

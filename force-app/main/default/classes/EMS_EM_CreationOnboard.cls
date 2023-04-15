@@ -159,7 +159,7 @@ public without Sharing class EMS_EM_CreationOnboard {
         Map<String, Schema.SObjectField> fieldMap = EMS_EM_Onboarding_Request__c.sObjectType.getDescribe().fields.getMap();
         Set<String> setFieldNames = fieldMap.keySet();
         list<String> listOfOnboardingFieldNames = new List<String>(setFieldNames);
-        List<EMS_EM_Onboarding_Request__c> onBoardingDetailsList = Database.query('SELECT ' + String.join(listOfOnboardingFieldNames, ',') + ' FROM EMS_EM_Onboarding_Request__c Where ContactId__c =:onboardingContactId');
+        List<EMS_EM_Onboarding_Request__c> onBoardingDetailsList = Database.query('SELECT ' + String.join(listOfOnboardingFieldNames, ',') + ' FROM EMS_EM_Onboarding_Request__c Where ContactId1__c =:onboardingContactId');
         return onBoardingDetailsList[0];
     }
     
