@@ -462,10 +462,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>EMS_EM_MedicalInsuranceControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>EMS_EM_Request</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -475,10 +471,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EMS_EM_RequestViewFetch_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EMS_EM_Request_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -494,15 +486,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>EMS_LM_AutoLeaveCreditClass_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>EMS_LM_ContactLeaveUpdate</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EMS_LM_ContactLeaveUpdate_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -587,10 +571,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Ems_Em_Request_DataFetch</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Ems_Em_Request_DataFetch_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -793,10 +773,7 @@
         <apexClass>StandardLeadContactHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
-        <apexClass>StandardLeadContactHandlerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
+    
     <classAccesses>
         <apexClass>TestClass_EMS_TM_Lock_Previous_Week</apexClass>
         <enabled>true</enabled>
