@@ -48,24 +48,28 @@ public class EMS_LM_ContactLeaveUpdate_Test {
     @istest
     public static void leaveCalculatemethod(){
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
-        EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
+        EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',false);
         annualtype.EMS_LM_Leave_Type__c='Annual Leave';
-        update annualtype;
-        EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
+        Insert annualtype;
+        EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',false);
         loptype.EMS_LM_Leave_Type__c='Loss of Pay';
-        update loptype;
-        EMS_LM_Leave__c mattype = TestDataFactory.createLeaveType('Maternity Leave',true);
+        Insert loptype;
+        EMS_LM_Leave__c mattype = TestDataFactory.createLeaveType('Maternity Leave',false);
         mattype.EMS_LM_Leave_Type__c='Maternity Leave';
-        update mattype;
-        EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
+        Insert mattype;
+        EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',false);
         compofftype.EMS_LM_Leave_Type__c='Compensatory Off';
-        update compofftype;
-        EMS_LM_Leave__c workfromhome = TestDataFactory.createLeaveType('Work From Home',true);
+        Insert compofftype;
+        EMS_LM_Leave__c workfromhome = TestDataFactory.createLeaveType('Work From Home',false);
         workfromhome.EMS_LM_Leave_Type__c='Work From Home';
-        update workfromhome;
-        EMS_LM_Leave__c Bereavementype = TestDataFactory.createLeaveType('Bereavement Leave',true);
+        Insert workfromhome;
+        
+        EMS_LM_Leave__c paternitytype = TestDataFactory.createLeaveType('Paternity Leave',false);
+        paternitytype.EMS_LM_Leave_Type__c='Paternity Leave';
+        Insert paternitytype;
+     /*   EMS_LM_Leave__c Bereavementype = TestDataFactory.createLeaveType('Bereavement Leave',true);
         Bereavementype.EMS_LM_Leave_Type__c='Bereavement Leave';
-        update Bereavementype;
+        Insert Bereavementype;*/
         
         string annualLeave =annualtype.Name;
         EMS_LM_ContactLeaveUpdate.getLeaveTypeid(annualLeave);
@@ -87,16 +91,18 @@ public class EMS_LM_ContactLeaveUpdate_Test {
         
         system.runAs(u){
             EMS_LM_Leave_Credit__c lcreditAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1.6,annualtype.id, true);
-            EMS_LM_Leave_Credit__c bretAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),20,Bereavementype.id, true);
+          //  EMS_LM_Leave_Credit__c bretAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),20,Bereavementype.id, true);
             EMS_LM_Leave_Credit__c mattypecredit = Testdatafactory.createLeaveCredit(con.id,system.today(),20,mattype.id, true);
             EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, true);
             EMS_LM_Leave_Credit__c workforHome = Testdatafactory.createLeaveCredit(con.id,system.today(),1,workfromhome.id, true);
             EMS_LM_Leave_Credit__c lossofpay = Testdatafactory.createLeaveCredit(con.id,system.today(),1,loptype.id, true);
+            EMS_LM_Leave_Credit__c paternity = Testdatafactory.createLeaveCredit(con.id,system.today(),10,paternitytype.id, true);
             
             Test.startTest();       
             leaverequestList.add(TestDataFactory.createLeaveRequest(con.id, system.today(), system.today().adddays(1), annualtype.id, true ,'Pending'));
-            leaverequestList.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(8), system.today().adddays(9), compofftype.id, true,'Pending'));
+        //    leaverequestList.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(8), system.today().adddays(9), compofftype.id, true,'Pending'));
             leaverequestList.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(10), system.today().adddays(12), workfromhome.id, true,'Pending'));
+            leaverequestList.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(15), system.today().adddays(15), paternitytype.id, true,'Pending'));
             
             String Reason='Personal Reason';
             String startd = string.valueOf(system.today().adddays(13));
