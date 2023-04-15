@@ -45,7 +45,11 @@ loaded = false
 
     handleCancel(event) {
       this.openModal = false;
+<<<<<<< Updated upstream
      // this.showFileUpload =false;
+=======
+      this.showFileUpload =false;
+>>>>>>> Stashed changes
      
     }
 
