@@ -362,7 +362,7 @@ public without Sharing class GetDataForLoginUser {
                  WHERE Id =: newContentDistribution.Id 
                  LIMIT 1 ];
     }
-    
+    @Testvisible
     private static List<Id> getContentDocumentIds(List<ContentDocumentLink> contentDocumentsLinks) {
         List<Id> contentDocumentsIds = new List<Id>();
         for (ContentDocumentLink contentDocumentLink : contentDocumentsLinks) {
