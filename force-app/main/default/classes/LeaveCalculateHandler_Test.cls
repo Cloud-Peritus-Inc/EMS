@@ -1,74 +1,97 @@
 @isTest
 public class LeaveCalculateHandler_Test {
-   
     
-  /*  @isTest
-  //  public static void testLeaveCalculateHandler(){
-        user adminuser = TestDataFactory.createAdminUser(true);
+    
+    @isTest
+    public static void testLeaveCalculateHandler(){      
+        
+        user adminuser = TestDataFactory.createAdminUser(true);       
+        user adminuser2 = TestDataFactory.createAdminUser(true);
         Resource_Role__c role;
-        Resource_Role__c role1;
-        Account acc;
-        Contact con;
-        Contact conRRR;
         EMS_LM_Leave__c annualtype;
-        //  EMS_LM_Leave__c loptype;
-        // EMS_LM_Leave__c compofftype;
-        // EMS_LM_Leave__c wfhtype;
-        Resource_Resource_Relationship__c rrr;
-        list<contact> conlist = new list<contact>();
+        EMS_LM_Leave__c loptype;
+        EMS_LM_Leave__c bretype;
+        EMS_LM_Leave__c compofftype;
+        EMS_LM_Leave__c paternitytype;
+        EMS_LM_Leave__c  Bereavementtype;
+        EMS_LM_Leave__c  workfromhometype;
+        EMS_LM_Leave__c  marriagetype;
+        
+        Account acc;Contact con;
         system.runAs(adminuser){
-            
-            role = TestDataFactory.createResourceRole('Software Engineer',true);
-            role1 = TestDataFactory.createResourceRole('tech Engineer',true);
-            annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
-            EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
-            EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
-            EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
-            EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);
-            
-            //EMS_LM_Leave_Credit__c lcreditAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1.6,annualtype.id, true);
-            
-            
+            role = TestDataFactory.createResourceRole(true);
+            annualtype = TestDataFactory.createLeaveType('Annual Leave',false);
+            annualtype.EMS_LM_Leave_Type__c='Annual Leave';
+            insert annualtype;
+            loptype = TestDataFactory.createLeaveType('Loss of Pay',false);
+            loptype.EMS_LM_Leave_Type__c='Loss of Pay';
+            insert loptype;
+            bretype  = TestDataFactory.createLeaveType('Maternity Leave',false);
+            bretype.EMS_LM_Leave_Type__c='Maternity Leave';
+            insert bretype;
+            compofftype = TestDataFactory.createLeaveType('Compensatory Off',false);
+            compofftype.EMS_LM_Leave_Type__c='Compensatory Off';
+            insert compofftype;
+            paternitytype = TestDataFactory.createLeaveType('Paternity Leave',false);
+            paternitytype.EMS_LM_Leave_Type__c='Paternity Leave';
+            insert paternitytype;
+            Bereavementtype = TestDataFactory.createLeaveType('Bereavement Leave',false);
+            Bereavementtype.EMS_LM_Leave_Type__c='Bereavement Leave';
+            insert Bereavementtype;
+            workfromhometype = TestDataFactory.createLeaveType('Work From Home',false);
+            workfromhometype.EMS_LM_Leave_Type__c='Work From Home';
+            insert workfromhometype;
+            marriagetype = TestDataFactory.createLeaveType('Marriage Leave',false);
+            marriagetype.EMS_LM_Leave_Type__c='Marriage Leave';
+            insert marriagetype;
             acc = TestDataFactory.createAccount(true);
-            con=TestDataFactory.createResourceContact(acc.id, false);
+            con=  TestDataFactory.createResourceContact(acc.id, false);
             con.EMS_RM_Employee_Id__c = 'CP10234';
             con.Resource_Role__c = role.Id;
-            con.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;           
+            con.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
+            con.EMS_LM_Maternity_Leave__c=true;
+            con.EMS_RM_ApplicantStatus_Update__c = 'Active';
+            con.RecordTypeId = ContactConstant.RESOURCE_RECORDTYPEID;
             
-            
-            conlist.add(con);
-            insert conlist;
-            conRRR=TestDataFactory.createResourceContactForRRR(acc.id, false);
-            conRRR.EMS_RM_Employee_Id__c = 'CP10235';
-            conRRR.Resource_Role__c = role1.Id;
-            conRRR.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
-            conRRR.EMS_LM_No_Of_Leaves_Credit__c = 10;
-            insert conRRR;
-            rrr = TestDataFactory.createRRR(con.Id, true, conRRR.Id);
+            insert con;
         }
-        User u1;
-        User u2;
         
-        system.runAs(adminuser){
+        
+        
+        User u;
+       // system.runAs(adminuser){
+            
+         //   u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
+            
+      //  }
+        system.runAs(adminuser2){
+             u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
+            
+            EMS_LM_Leave_Credit__c lcreditAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1.6,annualtype.id, true);
+            EMS_LM_Leave_Credit__c bretAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),20,bretype.id, true);
             Test.startTest();
-            // u1 = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
-            //   u2 = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true);
-            EMS_LM_Leave_History__c request = TestDataFactory.createLeaveRequest(con.id, system.today(), system.today().adddays(1), annualtype.id, true ,'Pending');
-            request.EMS_LM_Status__c='Approved';
-            request.EMS_LM_Leave_Duration__c=2;
-            update request;
-            
-            EMS_LM_Leave_History__c request2 = TestDataFactory.createLeaveRequest(con.id, system.today().adddays(10), system.today().adddays(11), annualtype.id, true ,'Auto Approved');
-            
-            EMS_LM_Leave_History__c request3 = TestDataFactory.createLeaveRequest(con.id, system.today().adddays(8), system.today().adddays(9), annualtype.id, true,'Approver 1 Pending');
-            request3.EMS_LM_Status__c='Approver 2 Pending';
-            update request3;
-            //  request.EMS_LM_Status__c='Approved';
-//update request;
-            Test.stopTest();
+            EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, true);
+            EMS_LM_Leave_Credit__c patAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,paternitytype.id, true); 
+            EMS_LM_Leave_Credit__c berveAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,Bereavementtype.id, true);
+            EMS_LM_Leave_Credit__c lossofpay = Testdatafactory.createLeaveCredit(con.id,system.today(),1,loptype.id, true);
+            EMS_LM_Leave_Credit__c workfromhome = Testdatafactory.createLeaveCredit(con.id,system.today(),1,workfromhometype.id, true);
+            EMS_LM_Leave_Credit__c marriage = Testdatafactory.createLeaveCredit(con.id,system.today(),1,marriagetype.id, true);
         }
-        
-    }*/
+        system.runAs(u){
+            List<EMS_LM_Leave_History__c> hlist = new List<EMS_LM_Leave_History__c>();
+            hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today(), system.today().adddays(1), annualtype.id, false, null));
+            hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(90), system.today().adddays(7), bretype.id, false, null));
+            hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(8), system.today().adddays(9), compofftype.id, false, null));
+            hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(7), system.today().adddays(9), paternitytype.id, false, null));
+            hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(7), system.today().adddays(9), Bereavementtype.id, false, null));
+            hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(7), system.today().adddays(9), loptype.id, false, null));
+             hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(7), system.today().adddays(9), workfromhometype.id, false, null));
+             hlist.add(TestDataFactory.createLeaveRequest(con.id, system.today().adddays(7), system.today().adddays(9), marriagetype.id, false, null));
+            insert hlist;
+        }
+        test.stopTest();
+    }    
+    
     
     @isTest
     public static void testContactLeaveUpdate(){
@@ -117,7 +140,5 @@ public class LeaveCalculateHandler_Test {
             System.assertEquals(2, requestlist.size());
             test.stopTest();
         }
-    }
-    
-    
+    }    
 }

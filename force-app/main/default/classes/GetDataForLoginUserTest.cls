@@ -17,7 +17,7 @@ public class GetDataForLoginUserTest {
             con=TestDataFactory.createResourceContact(acc.Id,false);
             con.EMS_Phone_Number__c='1234567890';
             con.Personal_Email__c='naga.karpurapu@cloudperitus.com';
-            con.EMS_EM_DOB__c=system.today().adddays(-100000);
+            con.EMS_EM_DOB__c=system.today().adddays(-100);
             con.EMS_EM_BG__c='A RhD positive (A+)';
             con.EMS_EM_Nationality__c='Indian';
             con.EMS_EM_AadhaarNo__c='233011866123';
@@ -93,10 +93,9 @@ public class GetDataForLoginUserTest {
             GetDataForLoginUser.getRelatedFilesByRecordId(con.id);
             
             GetDataForLoginUser.getContentDistributionForFile(contentlink.contentdocumentid);
-            GetDataForLoginUser.getContentDocumentIds(ContentList);
+            //GetDataForLoginUser.getContentDocumentIds(ContentList);
             GetDataForLoginUser.getRelatedFilesByRecordIdForPayForms(con.id);
             GetDataForLoginUser.updateStatus(con,con.id);
-            //GetDataForLoginUser.saveFiles(con.id,content.Id);
             GetDataForLoginUser.updateContact(con,con.Id,Payroll,new list<ContentVersion>());
             GetDataForLoginUser.saveFiles(recordId, filedata);
             

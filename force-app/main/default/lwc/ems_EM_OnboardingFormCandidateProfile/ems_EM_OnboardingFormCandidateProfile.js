@@ -745,17 +745,31 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   SaveSubmitOnboarding(event) {
     this.handleIsLoading(true);
+    const isInputsCorrect = [...this.template.querySelectorAll('lightning-input, lightning-combobox')]
+      .reduce((validSoFar, inputField) => {
+        inputField.reportValidity();
+        return validSoFar && inputField.checkValidity();
+      }, true);
     if (this.isShowPersonalDetails) {
       if (this.selectStep1()) {
-        this.isPersonalUpdateCheckbox = true;
-        this.statusUpdate = 'In Progress';
-        updateOnBoardingRequest(this);
-        if (this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false) {
-          this.buttonDisable = true;
-        }
-        else {
-          this.buttonDisable = false;
-        }
+        if(isInputsCorrect){
+          this.isPersonalUpdateCheckbox = true;
+          this.statusUpdate = 'In Progress';
+          updateOnBoardingRequest(this);
+          if (this.isPersonalUpdateCheckbox === false || this.isIdentifyDetailsCheckbox === false || this.isAddressDetailsCheckbox === false || this.isEducationDetailsCheckbox === false || this.isOtherCertificationsCheckbox === false || this.isWorkExperienceCheckbox === false || this.isCompanyInformationValueChecked === false) {
+            this.buttonDisable = true;
+          }
+          else {
+            this.buttonDisable = false;
+          }
+        }else {
+          this.handleIsLoading(false);
+          const even = new ShowToastEvent({
+            message: 'Please complete the required field and avoid invalid data.',
+            variant: 'error'
+          });
+          this.dispatchEvent(even);
+        }      
       }
     }
     if (this.isIdentifyDetails) {

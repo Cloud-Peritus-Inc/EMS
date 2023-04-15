@@ -1,24 +1,28 @@
 @isTest
 public class CustomContactHandlerTest {
-   @isTest
+    @isTest
     public static void CustomContactHandlerTestMethod()
     {
-                
+        EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
+        EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
+        EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
+        EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
+        EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);             
         Contact Con = new Contact();
         con.RecordTypeId=Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Sales Contact').getRecordTypeId();
         Con.FirstName = 'Test';
         Con.LastName = 'SF Contact';
         Con.Email = 'testSF@Salesforce.com';
-        Con.EMS_Phone_Number__c = '123456789';
+        Con.EMS_Phone_Number__c = '1234567890';
         insert Con;  
         
         CP_Sales_Contact__c cp = new CP_Sales_Contact__c();
         cp.Name ='Contact ';
         cp.Contact__c = Con.id;
-        cp.Phone_Number__c = '123456789';
+        cp.Phone_Number__c = '1234567890';
         insert cp;
         update cp;
-             
+        
         Campaign ca1 = new Campaign();
         ca1.Name = '5Rings';
         ca1.IsActive = TRUE;
