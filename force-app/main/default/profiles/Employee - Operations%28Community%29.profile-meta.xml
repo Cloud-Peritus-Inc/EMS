@@ -286,18 +286,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CP_CreateTaskForAddEmpToWhatsAppGroup</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CP_CreateTaskForConductHROrientation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CP_CreateTaskForOffcialEmailCreation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CP_MonthiversaryEmail</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -326,16 +314,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CP_SendMailForAssetAllocation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CP_SendOnboardingFormMail</apexClass>
         <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CP_TaskForAddCandidateToCmpGroupMail</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CP_TasksChecklistUpdate</apexClass>
