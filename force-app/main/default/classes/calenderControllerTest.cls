@@ -12,6 +12,7 @@ public class calenderControllerTest {
          con.EMS_RM_Employee_Id__c = 'CP10234';
          con.Resource_Role__c = role.Id;
          con.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
+         con.EMS_LM_Maternity_Leave__c=true;
          insert con;
          User u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true); 
          EMS_LM_Leave_Credit__c lcreditAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1.6,annualtype.id, true);
