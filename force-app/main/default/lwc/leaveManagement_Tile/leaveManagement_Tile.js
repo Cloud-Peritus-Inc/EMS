@@ -5,6 +5,7 @@ import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
 import { createMessageContext, subscribe, unsubscribe } from 'lightning/messageService';
 import MY_REFRESH_CHANNEL from '@salesforce/messageChannel/refreshothercomponent__c';
+import MY_REFRESH_SEC_CHANNEL from '@salesforce/messageChannel/refreshlmscomponent__c';
 export default class LeaveManagement_Tile extends NavigationMixin(LightningElement) {
 
   contextText = 'This shows your annual leave balance in days'
@@ -14,19 +15,26 @@ export default class LeaveManagement_Tile extends NavigationMixin(LightningEleme
 
   connectedCallback() {
     this.a_Record_URL = window.location.origin;
-    console.log('Base Url' + this.a_Record_URL);
+   // console.log('Base Url' + this.a_Record_URL);
 
-     const messageContext = createMessageContext();
-        this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
-            this.handleRefreshMessage(message);
-        });
+    const messageContext = createMessageContext();
+    this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
+      this.handleRefreshMessage(message);
+    
+    });
+
+    const messageContextsec = createMessageContext();
+    this.subscription = subscribe(messageContextsec, MY_REFRESH_SEC_CHANNEL, (message) => {
+      this.handleRefreshMessagesec(message);
+     
+    });
   }
 
-  @wire(leaveBanlance)leaveBalanceWiredData(result) {
+  @wire(leaveBanlance) leaveBalanceWiredData(result) {
     this.leavebalanceResult = result;
     if (result.data) {
       this.leaveBalanceData = result.data.EMS_LM_No_Of_Availble_Leaves__c;
-      console.log('### leaveBalanceData', this.leaveBalanceData);
+     // console.log('### leaveBalanceData', this.leaveBalanceData);
     } else if (result.error) {
       console.error('Error:', result.error);
     }
@@ -50,25 +58,33 @@ export default class LeaveManagement_Tile extends NavigationMixin(LightningEleme
 
 
   handleRefresh() {
-         const refreshEvent = new CustomEvent('refresh', {
-    bubbles: true
-});
-this.dispatchEvent(refreshEvent);
-    } 
+    const refreshEvent = new CustomEvent('refresh', {
+      bubbles: true
+    });
+    this.dispatchEvent(refreshEvent);
+  }
 
-    // for refresh using LMS
-    subscription = null;
+  // for refresh using LMS
+  subscription = null;
 
-    disconnectedCallback() {
-        unsubscribe(this.subscription);
-        this.subscription = null;
+  disconnectedCallback() {
+    unsubscribe(this.subscription);
+    this.subscription = null;
+  }
+
+  handleRefreshMessage(message) {
+   
+    if (message.refresh) {
+      refreshApex(this.leavebalanceResult);
     }
+  }
 
-    handleRefreshMessage(message) {
-        if (message.refresh) {
-            refreshApex(this.leavebalanceResult);
-        }
-    }  
+  handleRefreshMessagesec(message) {
+    
+    if (message.refresh) {
+      refreshApex(this.leavebalanceResult);
+    }
+  }
 }
 
 //https://cpprd--dev.sandbox.my.site.com/cpgrid/s/leave-management

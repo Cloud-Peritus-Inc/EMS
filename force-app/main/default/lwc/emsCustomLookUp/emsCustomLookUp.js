@@ -24,18 +24,18 @@ export default class EmsCustomLookUp extends LightningElement {
     @track inputClass = '';
 
     connectedCallback() {
-        console.log('CONNECTED CALL BACK');
+        //console.log('CONNECTED CALL BACK');
     }
     @wire(lookUp, {searchTerm : '$searchTerm', myObject : '$objName', filter : '$filter', fullName : '$users'})
     wiredRecords({ error, data }) {
         if (data) {
-            console.log('searchTerm'+this.searchTerm);
-            console.log('filetr'+this.filter);
+           /* console.log('searchTerm'+this.searchTerm);
+            console.log('filetr     '+this.filter);
             console.log('myObject'+this.objName);
-            console.log('filetr'+this.users);
-            console.log("DATA" + JSON.stringify(data));
+            console.log('filetrusres'+this.users);
+            console.log("DATA" + JSON.stringify(data));*/
             this.error = undefined;
-            console.log('this.users...'+this.users);
+            //console.log('this.users...'+this.users);
             this.records = []; // clear the records array
             if (this.users) {
                        
@@ -55,7 +55,7 @@ export default class EmsCustomLookUp extends LightningElement {
                         record.displayName = record.FirstName + ' ' + record.LastName;
                     }
                 });
-                console.log('records '+JSON.stringify(this.records));
+                //console.log('records '+JSON.stringify(this.records));
 
             } else {
                 //this.records = data;
@@ -65,7 +65,7 @@ export default class EmsCustomLookUp extends LightningElement {
                 }
                   
 
-                console.log('PRojectData'+JSON.stringify(this.records));                 
+                //console.log('PRojectData'+JSON.stringify(this.records));                 
             }
 
         } else if (error) {
@@ -110,7 +110,7 @@ export default class EmsCustomLookUp extends LightningElement {
     }
 
     onSelect(event) {
-        console.log('PROJECTONSELECT');
+       // console.log('PROJECTONSELECT');
         //event.preventdefault();
         let selectedId = event.currentTarget.dataset.id;
         let selectedName = event.currentTarget.dataset.name;
@@ -119,8 +119,8 @@ export default class EmsCustomLookUp extends LightningElement {
         returnValue.name = this.name;
         returnValue.index = this.indexId;
         returnValue.recordName = selectedName;
-         console.log('selectedId'+selectedId);
-         console.log('selectedName'+selectedName+'name-------->>>>>>>'+this.name);
+       //  console.log('selectedId'+selectedId);
+         //console.log('selectedName'+selectedName+'name-------->>>>>>>'+this.name);
         this.dispatchEvent( new CustomEvent('lookupselected', {detail:  returnValue }) );
         this.isValueSelected = true;
         this.selectedName = selectedName;

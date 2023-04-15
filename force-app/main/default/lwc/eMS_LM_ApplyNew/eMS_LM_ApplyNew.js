@@ -2,6 +2,7 @@ import { api, LightningElement, track, wire } from 'lwc';
 
 import u_Id from '@salesforce/user/Id';
 
+
 export default class EMS_LM_ApplyNew extends LightningElement {
 
   @api istile = false;
@@ -28,7 +29,7 @@ export default class EMS_LM_ApplyNew extends LightningElement {
     console.log('OUTPUT : ',);
     this.check = true;
     this.selectedValue = event.detail.value;
-    console.log('### selectedValue : ',this.selectedValue);
+   // console.log('### selectedValue : ',this.selectedValue);
    /* if (this.selectedValue == 'Leave') {
       this.check = true;
     }
@@ -39,11 +40,11 @@ export default class EMS_LM_ApplyNew extends LightningElement {
 
   getlvalue(event){
     this.check = event.detail;
-    console.log('this.check-->',this.check);
+   // console.log('this.check-->',this.check);
   }
   gethvalue(event){
     this.check1 = event.detail;
-    console.log('this.check1-->',this.check1);
+  //  console.log('this.check1-->',this.check1);
   }
 
   getclosevalue(event){
@@ -53,7 +54,7 @@ leavetemplate;
 wfhtemplate;
   getleavechecktrue(event){
     this.leavetemplate=event.detail;
-    console.log('this.leavetemplate-->',this.leavetemplate);
+   // console.log('this.leavetemplate-->',this.leavetemplate);
     if(this.leavetemplate==true){
       this.check = true;
     }
@@ -61,7 +62,7 @@ wfhtemplate;
 
   getwfhchcktrue(event){
     this.wfhtemplate=event.detail;
-    console.log('this.wfhtemplate-->',this.wfhtemplate);
+   // console.log('this.wfhtemplate-->',this.wfhtemplate);
     if(this.wfhtemplate==true){
       this.check1 = true;
     }

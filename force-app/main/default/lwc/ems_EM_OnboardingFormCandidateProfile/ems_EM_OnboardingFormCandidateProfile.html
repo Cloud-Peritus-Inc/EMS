@@ -164,7 +164,7 @@
                                                         onkeydown={handleAadharNumberKeyDown} pattern="[0-9]{10}$"
                                                         type="phone" label="Contact Number"></lightning-input>
                                                     <lightning-input class="slds-p-top_small" value={altphone}
-                                                        message-when-pattern-mismatch="Invalid Phone number"
+                                                        message-when-pattern-mismatch="Please enter a valid 10 digit phone number"
                                                         disabled={readonlyfield} pattern="[0-9]{10}$" maxlength="10"
                                                         onchange={altephone} onkeydown={handleAadharNumberKeyDown}
                                                         name="EMS_EM_Phone_Number__c" type="phone"
@@ -580,7 +580,7 @@
                                                                     disabled={readonlyfield}
                                                                     label="Certification Name"></lightning-combobox>
                                                             </td>
-                                                            <template if:true={obj.otherfield}>
+                                                            <template if:true={otherfield}>
                                                                 <td>
                                                                     <lightning-input class="fields"
                                                                         variant="label-hidden" value={obj.Other__c}

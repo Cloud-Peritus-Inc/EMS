@@ -79,10 +79,8 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     };
 
     connectedCallback() {
-
         this.a_Record_URL = window.location.origin;
-        console.log('Base Url' + this.a_Record_URL);
-
+        //console.log('Base Url' + this.a_Record_URL);
         this.LevelOfApproval();
         const messageContext = createMessageContext();
         this.subscription = subscribe(messageContext, MY_REFRESH_CHANNEL, (message) => {
@@ -94,15 +92,11 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     //Based on Level of Approval showing Leave status values
     LevelOfApproval() {
         userLevelOfApproval().then((result) => {
-            console.log('RESULT  : ', JSON.stringify(result));
+            //console.log('RESULT  : ', JSON.stringify(result));
             this.approvalLevel = result.levelOfApproval;
-            console.log('### approvalLevel : ', this.approvalLevel);
             this.autoApproval = result.autoApproval;
-            console.log('### autoApproval : ', this.autoApproval);
             this.overriden = result.overRideCheck;
-            console.log('### overriden : ', this.overriden);
             this.overridenLevel = result.overridelevelOfApproval;
-            console.log('overridenLevel : ', this.overridenLevel);
             this.approvalCheckMethod();
         }).catch((err) => {
             console.log('### err : ', err);
@@ -110,25 +104,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     }
 
     approvalCheckMethod() {
-        /*switch (this.approvalLevel) {
-            case 2:
-                console.log('OUTPUT : ');
-                this.picklistValues = this.listStatus.empStatus;
-                 console.log('this.sValue : ', this.sValue);
-                break;
-            case 1:
-                this.picklistValues = this.listStatus.leadStatus;
-               
-                break;
-            case 0:
-                this.picklistValues = this.listStatus.directorStatus;
-               
-                break;
-            default:
-                this.picklistValues = [];
-                break;
-        }*/
-
         // EMP CHECK
         if (this.approvalLevel === 2) {
             this.picklistValues = this.listStatus.empStatus;
@@ -151,7 +126,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     @wire(getLeaveTypesForUser, { userId: '$uId' })
     wiredlvtype({ error, data }) {
         if (data) {
-            console.log('### data : ', data);
+            //console.log('### data : ', data);
             let leaveTypeOptions = data.map((record) => ({
                 value: record,
                 label: record
@@ -159,7 +134,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
             const workFromHomeOption = { value: 'Work From Home', label: 'Work From Home' };
             leaveTypeOptions.push(workFromHomeOption);
             this.leaveTypeValues = leaveTypeOptions;
-            console.log('### leaveTypeValues : ', this.leaveTypeValues);
+            //console.log('### leaveTypeValues : ', this.leaveTypeValues);
             this.error = undefined;
         } else if (error) {
             this.error = error;
@@ -200,13 +175,12 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
         this._wiredRefreshData = wireResult;
         if (data) {
             this.isLoading = false;
-            console.log('OUTPUT : ', this.isLoading);
+            //console.log('OUTPUT : ', this.isLoading);
             if (data.length > 0) {
-                console.log('### DATA AFTER: ', data);
+                //console.log('### DATA AFTER: ', data);
                 this.showdata = true;
                 this.nodata = false;
                 this.datahistory = JSON.parse(JSON.stringify(data));
-                console.log('### datahistory', this.datahistory);
                 this.datahistory.forEach(req => {
                     req.disableButton = req.EMS_LM_Status__c !== 'Approver 1 Pending' && req.EMS_LM_Status__c !== 'Pending' && req.EMS_LM_Auto_Approve__c != true && req.EMS_LM_Status__c !== 'Auto Approved';
                 });
@@ -232,7 +206,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
 
     startdatechange(event) {
         this.startDate = event.detail.value;
-        console.log(this.startDate);
         if (this.startDate != null) {
             this.startDate = event.detail.value;
         }
@@ -251,28 +224,22 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
 
     //MULTI SELECT LEAVE STATUS
     handleValueChange(event) {
-        console.log(JSON.stringify(event.detail));
         this.sValue = event.detail;
-        console.log('## this.sValue', this.sValue);
     }
 
     //MULTI SELECT LEAVE TYPE
     handleTypeValueChange(event) {
-        console.log(JSON.stringify(event.detail));
         this.value = event.detail;
-        console.log('## this.value', this.value);
     }
 
     
     handleView(event) {
         const selectedRecordId = event.currentTarget.dataset.id;
-        console.log('### handleView : ', selectedRecordId);
         var url = new URL(this.a_Record_URL + '/Grid/s/ems-lm-leave-history/' + selectedRecordId);
         var params = new URLSearchParams();
         params.append("myRequest", "value");
         url.search += "&" + params.toString();
 
-        console.log('### url : ', JSON.stringify(url));
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {
@@ -286,7 +253,7 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     handleEdit(event) {
         this.selectEditRecordId = event.currentTarget.dataset.id;
         const selectedRecordId = event.currentTarget.dataset.id;
-        console.log('### handleEdit : ', selectedRecordId);
+        //console.log('### handleEdit : ', selectedRecordId);
         this.showApplyLeaveEdit = true;
         const messageContext = createMessageContext();
         const payload = {
@@ -303,10 +270,9 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
     handleCancel(event) {
         //this.isLoading = true;
         const selectedRecordId = event.currentTarget.dataset.id;
-        console.log('### handleCancel : ', selectedRecordId);
+        //console.log('### handleCancel : ', selectedRecordId);
         cancleLeaveRequest({ leaveReqCancelId: selectedRecordId })
             .then((result) => {
-                console.log('### result : ', result);
                 refreshApex(this._wiredRefreshData);
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -346,7 +312,6 @@ export default class EMS_LM_AllLeaveHistory extends NavigationMixin(LightningEle
 
     handleRefreshMessage(message) {
         if (message.refresh) {
-            console.log('TEST####REFRESH');
             refreshApex(this._wiredRefreshData)
         }
     }
