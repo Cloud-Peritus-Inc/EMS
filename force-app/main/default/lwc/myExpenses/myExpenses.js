@@ -45,7 +45,7 @@ loaded = false
 
     handleCancel(event) {
       this.openModal = false;
-      this.showFileUpload =false;
+     // this.showFileUpload =false;
      
     }
 
