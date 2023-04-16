@@ -12,7 +12,5 @@
         max-height:unset !important;
         }
     </aura:html>
-    <c:cP_ApplicantConvertButton oncloseQuickAction="{!c.closeQuickAction_AuraMethod}" recordId="{!v.recordId}" ></c:cP_ApplicantConvertButton>
-
 	
 </aura:component>
