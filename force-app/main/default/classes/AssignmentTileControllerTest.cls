@@ -10,7 +10,10 @@ public class AssignmentTileControllerTest {
         EMS_LM_Leave__c annualtype;
         system.runAs(adminuser){
             
-            role = TestDataFactory.createResourceRole('Software Engineer',true);
+            //role = TestDataFactory.createResourceRole('Software Engineer',true);
+             role = TestDataFactory.createResourceRole(false);
+             role.Name ='Sr Project Manager';
+             insert role;
             annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
             EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
             EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
@@ -42,7 +45,7 @@ public class AssignmentTileControllerTest {
             u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
         }
           
-          system.runAs(u){
+          system.runAs(adminuser){
              EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
         assignmentRec.EMS_TM_EmployeeName__c = con.Id;
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;

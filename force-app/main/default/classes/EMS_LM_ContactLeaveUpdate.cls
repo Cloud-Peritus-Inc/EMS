@@ -73,7 +73,7 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
     // This method is used to get the leave type
     @AuraEnabled(Cacheable=true)
     public static EMS_LM_Leave__c getLeaveTypeid(string leavetype){
-        EMS_LM_Leave__c el = [select Id from EMS_LM_Leave__c where EMS_LM_Leave_Type__c = :leavetype LIMIT 1];
+        EMS_LM_Leave__c el = [select Id,EMS_LM_Leave_Type__c from EMS_LM_Leave__c where EMS_LM_Leave_Type__c = :leavetype LIMIT 1];
         return el;
     }
     
@@ -149,34 +149,7 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
     public static User getUserInfo(Id userid){
         user u =[Select id, ContactId, Email from user where id = :userid]; 
         return u;   
-    }  
-    
-    
-    // this methodis used to create leave history record when employee submits the leave request
-    @AuraEnabled
-    Public static Id createLHRecord(String cId, Decimal duration, String stDate, String edDate, String type, String reason , String day)  
-    {       
-        // EMS_LM_Leave__c el = new EMS_LM_Leave__c();
-        EMS_LM_Leave__c el = [select Id from EMS_LM_Leave__c where EMS_LM_Leave_Type__c = :type LIMIT 1];
-        EMS_LM_Leave_History__c e = new EMS_LM_Leave_History__c();
-        Date sd = date.valueOf(stDate);
-        Date ed = date.valueOf(edDate);
-        e.EMS_LM_Contact__c = cId ;
-        e.EMS_LM_Leave_Duration__c = duration;
-        e.EMS_LM_Leave_End_Date__c = ed;
-        e.EMS_LM_Leave_Start_Date__c = sd;
-        e.EMS_LM_Leave_Type_Name__c = type;
-        e.EMS_LM_Status__c=LeaveRequestConstant.PENDING;
-        e.EMS_LM_Reason__c = reason;
-        e.EMS_LM_Day__c = day;
-        if(el != null){
-            e.EMS_LM_Leave_Type__c = el.Id ;
-        }
-        Database.insert(e);
-        Id i = e.Id;
-        system.debug(i);
-        return i;      
-    } 
+    }   
     
     // this methodis used to create leave history(for work from home) record when employee submits the leave request
     @AuraEnabled
@@ -200,20 +173,20 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
         if(el != null){
             e.EMS_LM_Leave_Type__c = el.Id ;
         }
-        Database.insert(e);
+        Database.insert(e,true);
         Id i = e.Id;
         system.debug(i);
         return i;      
     } 
     
     @AuraEnabled
-    public static String uploadFile(String base64, String filename, String recordId) {
-        system.debug(base64 + filename + recordId);
+    public static String uploadFile(String base64, String filename, String recordId) {     
+             system.debug(base64 + filename + recordId);
         ContentVersion cv = createContentVersion(base64, filename);   
         ContentDocumentLink cdl = createContentLink(cv.Id, recordId);
-        if (cv == null || cdl == null) { return null; }
-        return cdl.Id;
-    }
+        if (cv == null || cdl == null) { return null; }   
+            return cdl.Id;
+        }
     /*
 * @method createContentVersion() [private]
 * @desc Creates a content version from a given file's base64 and name
@@ -272,4 +245,5 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
             return null;
         }
     }
+    
 }

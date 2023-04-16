@@ -1,6 +1,6 @@
 @isTest
 public class CustomContactUpdateFromStad_Test {
-    
+
     @isTest
     public static void testmethod1(){
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
@@ -8,6 +8,9 @@ public class CustomContactUpdateFromStad_Test {
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
         EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
         EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);
+        
+        
+        
         Contact Con = new Contact();
         Con.FirstName = 'Test';
         Con.LastName = 'SF Contact';
@@ -32,6 +35,8 @@ public class CustomContactUpdateFromStad_Test {
         m1.CampaignId = ca1.Id;
         m1.Status ='Sent';
         
+        
+        
         Test.StartTest();
         insert m1;
         Database.executeBatch(new CustomContactUpdateFromStad());
@@ -45,6 +50,9 @@ public class CustomContactUpdateFromStad_Test {
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
         EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
         EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);
+        
+        Account acc = TestDataFactory.createAccount(true);
+        
         Contact Con = new Contact();
         Con.FirstName = 'Test';
         Con.LastName = 'SF Contact';
@@ -62,6 +70,12 @@ public class CustomContactUpdateFromStad_Test {
         m1.ContactId = Con.Id; 
         m1.CampaignId = ca1.Id;
         m1.Status ='Sent';
+        
+        CP_Sales_Contact__c cpSalesContactRec = new CP_Sales_Contact__c();
+        cpSalesContactRec.Contact__c = con.id;
+        cpSalesContactRec.Account__c = acc.id;
+        cpSalesContactRec.Name = con.LastName;
+        insert cpSalesContactRec;
         
         Test.StartTest();
         insert m1;
