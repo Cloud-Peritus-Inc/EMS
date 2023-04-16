@@ -4,7 +4,7 @@ public without sharing class EMS_LM_LeaveBalance_Update {
      // this method is called in Leave Credit trigger to calculate available leave balnce of the employee   ----- need to bulkify this code 
      public static void availableLeaveBalanceCalculation(List<EMS_LM_Leave_Credit__C> lcc){
         //  List<EMS_LM_Leave_Credit__C> l = new List<EMS_LM_Leave_Credit__C>();
-          List<Contact> clu = new List<Contact> ();
+       /*   List<Contact> clu = new List<Contact> ();
           for(EMS_LM_Leave_Credit__C lc : lcc){
               Decimal availableAnnualLeave = 0;
               Decimal availablecompoffLeave = 0;
@@ -90,13 +90,13 @@ public without sharing class EMS_LM_LeaveBalance_Update {
           }
           Catch(Exception e){
               system.debug(e.getMessage());
-          }  
+          } */ 
       }
 
 
       // this method is called in Leave History trigger to calculate utilized Leave balnce of the employee  ----- need to bulkify this code 
       public static void utilizedLeaveBalanceCalculation(List<EMS_LM_Leave_History__C> lhc){
-          List<Contact> clu = new List<Contact> ();
+      /*    List<Contact> clu = new List<Contact> ();
           for(EMS_LM_Leave_History__C l : lhc){
              //if(l.EMS_LM_Status__c == 'Approved' || l.EMS_LM_Status__c == 'Pending' || l.EMS_LM_Status__c == 'Approver 2 Pending' || l.EMS_LM_Status__c == 'Approver 1 Pending' ){
               Decimal utilizedAnnualLeave = 0;
@@ -186,7 +186,7 @@ public without sharing class EMS_LM_LeaveBalance_Update {
                       }  
               }                
               //}
-          }    
+          }   */ 
        }
 
 }

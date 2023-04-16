@@ -5,7 +5,7 @@ global class EMS_TM_EmployeeEscalation implements Schedulable {
                  FROM EMS_Timesheet__c 
                  where createddate = this_week 
                  AND EMS_TM_Status__c !='Submitted'];
-        map<id,EMS_Timesheet__c> userMap = new map<id,EMS_Timesheet__c>();
+       /* map<id,EMS_Timesheet__c> userMap = new map<id,EMS_Timesheet__c>();
         for(EMS_Timesheet__c ee : listofNotSubimmetdData){
             if( ee.EMS_TM_Status__c != 'Submitted'){
                 userMap.put(ee.OwnerId,ee);
@@ -14,12 +14,12 @@ global class EMS_TM_EmployeeEscalation implements Schedulable {
         List<Messaging.SingleEmailMessage> mails =  new List<Messaging.SingleEmailMessage>(); 
          EmailTemplate emailTemplate =[Select Id,Subject,Description,HtmlValue,DeveloperName,Body from EmailTemplate
                                       where name ='Escalation Email to Employee'];
-        OrgWideEmailAddress emailid = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName ='Cloud Peritus'];
+        OrgWideEmailAddress emailid = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress where DisplayName ='Cloud Peritus'];*/
       //  List<string>  oficialMailIds = new List<string>(); 
      /*   for(user et :[SELECT Id, Username, LastName, FirstName, Email, IsActive FROM User 
                       where UserRole.name !='Leadership' 
                       AND id =: userMap.keyset()]){ */
-              for(contact et :[SELECT Id,LastName, FirstName, Official_Mail__c,EMS_TM_USER__C FROM contact 
+            /*  for(contact et :[SELECT Id,LastName, FirstName, Official_Mail__c,EMS_TM_USER__C FROM contact 
                       where  
                       EMS_TM_USER__C =: userMap.keyset() 
                       and Official_Mail__c != null
@@ -43,7 +43,9 @@ global class EMS_TM_EmployeeEscalation implements Schedulable {
         }
            System.debug('mails'+mails);
         System.debug('mailssize'+mails.size());
+        if(!Test.isRunningTest()){
         Messaging.sendEmail(mails);
+        }*/
         
              
 }

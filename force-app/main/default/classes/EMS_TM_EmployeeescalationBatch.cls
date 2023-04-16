@@ -89,9 +89,9 @@ global class EMS_TM_EmployeeescalationBatch implements Database.Batchable<sObjec
         System.debug('mailsList'+mailsList);
         System.debug('mailssize'+mailsList.size());
         try{
-            if(!Test.isRunningTest()){
+        if(!Test.isRunningTest()){
         Messaging.sendEmail(mailsList);
-            }
+        }
         }catch(Exception e){
             
         }

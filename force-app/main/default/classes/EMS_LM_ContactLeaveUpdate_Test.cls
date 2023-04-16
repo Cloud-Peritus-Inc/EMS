@@ -119,6 +119,7 @@ public class EMS_LM_ContactLeaveUpdate_Test {
         EMS_LM_ContactLeaveUpdate.getbilling(userid);
         EMS_LM_ContactLeaveUpdate.getProfileName(userid);
         EMS_LM_ContactLeaveUpdate.getUserInfo(userid);
+        EMS_LM_LeaveBalance.getLeaveBalance(userid);
         
         Test.stopTest();
     }

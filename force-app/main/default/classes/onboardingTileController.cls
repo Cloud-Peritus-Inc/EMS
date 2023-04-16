@@ -103,7 +103,7 @@ public without sharing class onboardingTileController {
     public static dataWrapper getMyActiveGoals(){
         user urec = [SELECT Id,ContactId FROM User WHERE Id=:Userinfo.getUserId()];
         List<Goal__c> goalList = new List<Goal__c>();
-        goalList = [SELECT Id,Description__c,End_Date__c,Name,Goal_Name__c,is_Navigation_Required__c,Notes__c,Resource__c,
+        goalList = [SELECT Id,Description__c,End_Date__c,Name,Goal_Name__c,is_Navigation_Required__c,Navigation_address__c,Notes__c,Resource__c,
                         Start_Date__c,Status__c FROM Goal__c WHERE Status__c = 'Active' AND Resource__c=:urec.ContactId ORDER BY End_Date__c DESC  ];
         List<taskInfoWrap> taskInfoWrapper = new List<taskInfoWrap>();
           List<taskInfoWrap> taskInfoWrapper1 = new List<taskInfoWrap>();

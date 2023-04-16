@@ -1,8 +1,8 @@
 public without sharing class createCompoffThroughTimesheet {
-
+  /*
     @AuraEnabled
     public static EMS_LM_Leave_Credit__c createCompOff(Id userId, Decimal compoffhours,Date compOffweek){
-    EMS_LM_Leave__c leaveType = [SELECT Id FROM EMS_LM_Leave__c where EMS_LM_Leave_Type__c ='Compensatory Off' LIMIT 1];
+    EMS_LM_Leave__c leaveType = [SELECT Id FROM EMS_LM_Leave__c where Name ='Compensatory Off' LIMIT 1];
         System.debug('compOffweek'+compOffweek);
       System.debug('userId'+userId);
        Contact contactRec =[SELECT Id,
@@ -36,8 +36,6 @@ public without sharing class createCompoffThroughTimesheet {
                   compOffRecordData[0].EMS_LM_Leaves_Credited__c = compoffhours/8;
                   Update compOffRecordData[0];
        return compOffRecordData[0];
-       /*String errorOccuredWith ='You have already Compoff Record in This Week';
-     throw new AuraHandledException(errorOccuredWith);*/
 
    } 
 
@@ -75,6 +73,6 @@ public without sharing class createCompoffThroughTimesheet {
              compOffAlredyExist = false;
                return compOffAlredyExist;
          }
-     }
+     }*/
 
 }

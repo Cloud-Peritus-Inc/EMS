@@ -40,7 +40,7 @@ public without sharing class populateApproverDetails implements TriggerAction.Be
 *   N/A         N/A                     N/A
 *   ====================================================================================================
 **/
-    private void populateApporverValuesOnLR(List<EMS_LM_Leave_History__c> newlist) {
+    public static void populateApporverValuesOnLR(List<EMS_LM_Leave_History__c> newlist) {
         set<Id> contactIdSet = new set<Id>();
         Map<Id,Contact> resourceMap = new Map<Id,Contact>();
         for(EMS_LM_Leave_History__c newRec : newlist){

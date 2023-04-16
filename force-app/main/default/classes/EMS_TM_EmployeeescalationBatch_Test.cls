@@ -75,5 +75,12 @@ public class EMS_TM_EmployeeescalationBatch_Test {
 		system.schedule('Test BatchToCalculateTheAvaiLeaves Check', sch, testsche );
 		Test.stopTest();
 	}
+         public static testMethod void testscheduleclass1() {
+		Test.StartTest();
+		EMS_TM_EmployeeEscalation testsche = new EMS_TM_EmployeeEscalation();
+		String sch = '0 0 23 * * ?';
+		system.schedule('Test BatchToCalculateTheAvaiLeaves Check1', sch, testsche );
+		Test.stopTest();
+	}
 
 }

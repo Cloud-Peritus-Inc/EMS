@@ -28,7 +28,7 @@ public class updateUserOnContact implements TriggerAction.AfterInsert {
     public void afterInsert(List<user> newList) {      
         System.debug(LoggingLevel.DEBUG, 'updateUserOnContact.afterInsert() : BEGIN');
         if(!System.isFuture() && !System.isQueueable()){
-        updateCommunityUser(newList);
+        //updateCommunityUser(newList);
         }
         System.debug(LoggingLevel.DEBUG, 'updateUserOnContact.afterInsert() : END');
         
@@ -44,7 +44,7 @@ public class updateUserOnContact implements TriggerAction.AfterInsert {
 *   ====================================================================================================
 **/
     
-    public static void updateCommunityUser(List<user> newList){
+   /* public static void updateCommunityUser(List<user> newList){
         map<id,user> userMap = new map<id,user>();
         for(user userRecord : newList){
             if (userRecord.ContactId != null){
@@ -72,5 +72,5 @@ public class updateUserOnContact implements TriggerAction.AfterInsert {
         }
         
         
-    }
+    }*/
 }

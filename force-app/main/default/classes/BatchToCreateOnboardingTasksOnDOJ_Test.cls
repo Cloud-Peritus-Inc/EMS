@@ -26,4 +26,12 @@ public class BatchToCreateOnboardingTasksOnDOJ_Test {
              Database.executeBatch(batchExecute,10);
          Test.stopTest();
     }
+    
+         public static testMethod void testscheduleclass1() {
+		Test.StartTest();
+		BatchToCreateOnboardingTasksOnDOJ_SCH testsche = new BatchToCreateOnboardingTasksOnDOJ_SCH();
+		String sch = '0 0 23 * * ?';
+		system.schedule('Test BatchToCalculateTheAvaiLeaves Check', sch, testsche );
+		Test.stopTest();
+	}
 }
