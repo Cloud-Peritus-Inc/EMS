@@ -322,10 +322,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CP_aplicantConvertResource</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CP_leaveHistoryConstants</apexClass>
         <enabled>false</enabled>
     </classAccesses>
