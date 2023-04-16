@@ -53,5 +53,23 @@ private class BatchToAdd5LeavesEveryQuarterTest {
         Test.stopTest();     
       
     }
+    
+  @isTest
+  public  static void testBatchToAdd5LeavesEveryQuarter2() {
+   
+        Test.startTest();
+        EMS_LM_Leave_Credit__c lc = new EMS_LM_Leave_Credit__c();
+        lc.EMS_LM_Employee__c = [SELECT Id FROM Contact WHERE EMS_RM_Employee_Id__c = 'CP10234' ].Id;
+        lc.EMS_LM_Leave_Credited_Date__c = system.today().adddays(-1);
+        lc.EMS_LM_Leave_Type__c = [Select Id FROM EMS_LM_Leave__c WHERE Name = 'Annual Leave'].Id;
+        lc.EMS_LM_Leaves_Credited__c = 0.83;
+         lc.EMS_LM_Select_Leave_Type__c = 'Annual Leave';
+       insert lc;
+        BatchToAdd5LeavesEveryQuarter batchJob = new BatchToAdd5LeavesEveryQuarter();
+        Database.executeBatch(batchJob);
+        
+        Test.stopTest();     
+      
+    }
 }
 //In this test class, we first set up some test data by creating a test account and contact. Then, we execute the BatchToAdd5LeavesEveryQuarter batch job by creating an instance of the class and passing it to the Database.executeBatch method. After the batch job has finished, we query the EMS_LM_Leave_Credit__c object to verify that a leave credit record was created for the test contact. We assert that the leave credit record has the expected field values.

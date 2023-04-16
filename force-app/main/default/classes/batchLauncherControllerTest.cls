@@ -9,4 +9,13 @@ public class batchLauncherControllerTest {
         Test.stopTest();
     }
     
+     public static testMethod void mytestmethod2(){
+        Test.startTest();
+          String jobId =  batchLauncherController.executeBatch('populateApproverDetails',200);
+        batchLauncherController.getJobDetails(userinfo.getUserId());
+        batchLauncherController.getExistingBatchDetails();
+         
+        Test.stopTest();
+    }
+    
 }
