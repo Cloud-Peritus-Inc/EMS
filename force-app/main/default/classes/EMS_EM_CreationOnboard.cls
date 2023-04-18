@@ -163,7 +163,7 @@ public without Sharing class EMS_EM_CreationOnboard {
         return onBoardingDetailsList[0];
     }
     
-    
+    @AuraEnabled
     public static List<ContentDocument> returnFiles(String onBoardingRecordId){
         
         try{

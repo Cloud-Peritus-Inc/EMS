@@ -376,93 +376,103 @@ export default class ServiceRequestLeaveTypesForm extends NavigationMixin(Lightn
 
     //SUBMIT HANDLER FOR MATERNITY LEAVE
     submitcase(event) {
+        console.log('### fileData : ', this.fileData);
         console.log('### test : ', this.startDate);
-        if (this.fileData != null) {
-            alert('please upload file');
-        } else {
-            if (!this.startDate || !this.endDate) {
-                const evt = new ShowToastEvent({
-                    message: 'Please enter the proper details.',
-                    variant: 'error',
-                });
-                this.dispatchEvent(evt);
-                return;
-            } if (this.duration > 182) {
-                const evt = new ShowToastEvent({
-                    message: 'Leave duration should not exceed 182 days.',
-                    variant: 'error',
-                });
-                this.dispatchEvent(evt);
-                return;
-            }
-            console.log('OUTPUT : ');
-            const currentDate = new Date();
-            currentDate.setHours(0, 0, 0, 0);
-            const minStartDate = new Date(currentDate.getTime() + 8 * 7 * 24 * 60 * 60 * 1000);
-            console.log('### minStartDate : ', minStartDate);
-            const selectedStartDate = new Date(this.startDate);
-            console.log('### getTime : ', selectedStartDate, minStartDate.getTime());
-            const timeDiff = selectedStartDate.getTime() - minStartDate.getTime();
-            console.log('### timeDiff : ', timeDiff);
-            const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            console.log('### diffDays : ', diffDays);
-
-            if (diffDays < 56) {
-                const evt = new ShowToastEvent({
-                    message: 'Start date should be at least 8 weeks from the date of request.',
-                    variant: 'error',
-                });
-                this.dispatchEvent(evt);
-                return;
-            }
-
-            const fields = {
-                'Leave_Start_Date__c': this.startDate, 'Leave_End_Date__c': this.endDate, 'Leave_Duration__c': this.duration,
-                'Priority': this.selectedPriority, 'Type': this.requestType, 'Request_Sub_Type__c': this.selectedLeaveTypes,
-                'ContactId': this.contactRecord.Id,
-                'AccountId': this.contactRecord.AccountId,
-                'Subject': this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedLeaveTypes
-            };
-            console.log('##fields : ', fields);
-            const recordData = { apiName: 'Case', fields };
-            createRecord(recordData).then(result => {
-                this.rId = result.id;
-                console.log('this.rId------>', JSON.stringify(result));
-                if (this.fileData != null) {
-                    uploadFile({ base64: this.fileData.base64, filename: this.fileData.filename, recordId: this.rId }).then(res => {
-                        console.log(res);
-                    }).catch(error => { console.error(error.body.message); });
-                }
-
-                this.dispatchEvent(
-                    new ShowToastEvent({
-
-                        message: 'Successfully created the service request!',
-                        variant: 'success'
-                    }),
-                );
-                this[NavigationMixin.Navigate]({
-                    type: "standard__recordPage",
-                    attributes: {
-                        objectApiName: "Account",
-                        actionName: "view",
-                        recordId: this.rId
-                    }
-                });
-                this.openModal = false;
-
-            }).catch(error => {
-                console.log('error-->', error);
-                console.log('error msg-->', error.body.pageErrors);
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        message: error.body.message,
-                        variant: 'error',
-                    }),
-                );
+        /*if (this.fileData == null) {
+            const evt = new ShowToastEvent({
+                message: 'Please submit the supporting documents.',
+                variant: 'error',
             });
+            this.dispatchEvent(evt);
+            return;
+        } else {*/
+
+        if (!this.startDate || !this.endDate) {
+            const evt = new ShowToastEvent({
+                message: 'Please enter the details.',
+                variant: 'error',
+            });
+            this.dispatchEvent(evt);
+            return;
+        } if (this.duration > 182) {
+            const evt = new ShowToastEvent({
+                message: 'Leave duration should not exceed 182 days.',
+                variant: 'error',
+            });
+            this.dispatchEvent(evt);
+            return;
+        }
+        const currentDate = new Date();
+        const minStartDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        console.log('### minStartDate : ', minStartDate);
+        const selectedStartDate = new Date(this.startDate);
+        console.log('### getTime : ', selectedStartDate, minStartDate.getTime());
+        const timeDiff = selectedStartDate.getTime() - minStartDate.getTime();
+        console.log('### timeDiff : ', timeDiff);
+        const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        console.log('### diffDays : ', diffDays);
+
+        if (diffDays < 56) {
+            const evt = new ShowToastEvent({
+                message: 'Start date should be at least 8 weeks from the date of request.',
+                variant: 'error',
+            });
+            this.dispatchEvent(evt);
+            return;
         }
 
+        const fields = {
+            'Leave_Start_Date__c': this.startDate, 'Leave_End_Date__c': this.endDate, 'Leave_Duration__c': this.duration,
+            'Priority': this.selectedPriority, 'Type': this.requestType, 'Request_Sub_Type__c': this.selectedLeaveTypes,
+            'ContactId': this.contactRecord.Id,
+            'AccountId': this.contactRecord.AccountId,
+            'Subject': this.contactRecord.EMS_RM_Employee_Id__c + '-' + this.contactRecord.Name + '-' + this.selectedLeaveTypes
+        };
+        console.log('##fields : ', fields);
+        const recordData = { apiName: 'Case', fields };
+        createRecord(recordData).then(result => {
+            this.rId = result.id;
+            console.log('this.rId------>', JSON.stringify(result));
+            if (this.fileData == undefined) {
+                const evt = new ShowToastEvent({
+                    message: 'Please submit the supporting documents.',
+                    variant: 'error',
+                });
+                this.dispatchEvent(evt);
+                return;
+            }
+            if (this.fileData != null) {
+                uploadFile({ base64: this.fileData.base64, filename: this.fileData.filename, recordId: this.rId }).then(res => {
+                    console.log(res);
+                }).catch(error => { console.error(error.body.message); });
+            }
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    message: 'Successfully created the service request!',
+                    variant: 'success'
+                }),
+            );
+            this[NavigationMixin.Navigate]({
+                type: "standard__recordPage",
+                attributes: {
+                    objectApiName: "Account",
+                    actionName: "view",
+                    recordId: this.rId
+                }
+            });
+            this.openModal = false;
+
+        }).catch(error => {
+            console.log('error-->', error);
+            console.log('error msg-->', error.body.pageErrors);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    message: error.body.message,
+                    variant: 'error',
+                }),
+            );
+        });
     }
 
     openfileUpload(event) {
