@@ -54,11 +54,12 @@
 									<lightning-layout multiple-rows>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
 											<lightning-input type="Date" label="Start Date" name="startDateCheck"
-												value={startDate} timezone={userTimeZone} onchange={datechange} required>
+												value={startDate} timezone={userTimeZone} onchange={datechange}
+												required>
 											</lightning-input>
 
-											<lightning-input type="Date" label="End Date" name="endDate"
-												value={endDate} onchange={datechange} required></lightning-input>
+											<lightning-input type="Date" label="End Date" name="endDate" value={endDate}
+												onchange={datechange} required></lightning-input>
 										</lightning-layout-item>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
 											<lightning-input type="number" label="Leave Duration" value={duration}
@@ -132,11 +133,12 @@
 									<lightning-layout multiple-rows>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
 											<lightning-input type="Date" label="Start Date" name="startDate"
-												value={startDate} timezone={userTimeZone} onchange={datechange} required>
+												value={startDate} timezone={userTimeZone} onchange={datechange}
+												required>
 											</lightning-input>
 
-											<lightning-input type="Date" label="End Date" name="endDate"
-												value={endDate} onchange={datechange} required></lightning-input>
+											<lightning-input type="Date" label="End Date" name="endDate" value={endDate}
+												onchange={datechange} required></lightning-input>
 										</lightning-layout-item>
 										<lightning-layout-item size="6" class="slds-p-around_xx-small">
 											<lightning-combobox label='Select Day' options={dayValues}

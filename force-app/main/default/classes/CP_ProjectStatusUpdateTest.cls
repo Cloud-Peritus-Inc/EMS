@@ -38,6 +38,7 @@ public class CP_ProjectStatusUpdateTest {
                  Account acc = TestDataFactory.createAccount(true);
                  Contact con=  TestDataFactory.createResourceContact(acc.id, false);
                  con.EMS_RM_Employee_Id__c = 'CP10235';
+                 con.EMS_Phone_Number__c ='1234567890';
                  con.Resource_Role__c = role.Id;
                  con.EMS_TM_User__c = adminUser.Id;
                  INSERT con;
@@ -54,7 +55,7 @@ public class CP_ProjectStatusUpdateTest {
                 EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
                 assignmentRec.EMS_TM_EmployeeName__c = con.Id;
                 assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
-                assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
+                assignmentRec.EMS_TM_StartDate_Asgn__c = system.today()+1;
                 assignmentRec.EMS_TM_Billable__c = true;
                 INSERT assignmentRec; 
                 System.debug('assignmentRec'+assignmentRec);
