@@ -749,7 +749,10 @@
         <apexClass>StandardLeadContactHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
     <classAccesses>
         <apexClass>TestClass_EMS_TM_Lock_Previous_Week</apexClass>
         <enabled>true</enabled>

@@ -742,6 +742,13 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+<<<<<<< Updated upstream
+=======
+        <apexClass>StandardLeadContactHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+>>>>>>> Stashed changes
         <apexClass>TestClass_EMS_TM_Auto_Create_Timsheet</apexClass>
         <enabled>true</enabled>
     </classAccesses>

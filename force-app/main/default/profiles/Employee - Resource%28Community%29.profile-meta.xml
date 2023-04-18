@@ -461,7 +461,11 @@
         <apexClass>EMS_LM_AutoLeaveCreditClass</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+<<<<<<< Updated upstream
     <classAccesses>
+=======
+     <classAccesses>
+>>>>>>> Stashed changes
         <apexClass>EMS_LM_ContactLeaveUpdate</apexClass>
         <enabled>true</enabled>
     </classAccesses>
