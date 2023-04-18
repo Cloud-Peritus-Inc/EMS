@@ -25,7 +25,7 @@ public class EMS_TM_EmployeeescalationBatch_Test {
         con.EMS_EM_CAddress_Line_1__c ='Hyd';
         con.EMS_EM_CA_City__c ='Hyd';
         con.EMS_EM_CA_State__c ='AP';
-        con.Email ='rama@gmail.com';
+        con.Email ='ramakrishna.papana@cloudperitus.com';
         con.Timesheet_NoNeed__c =false;
         con.Resource_Role__c = role.Id;
         con.EMS_TM_User__c =userId.Id;
@@ -73,13 +73,6 @@ public class EMS_TM_EmployeeescalationBatch_Test {
 		EMS_TM_EmployeeescalationBatch_sch testsche = new EMS_TM_EmployeeescalationBatch_sch();
 		String sch = '0 0 23 * * ?';
 		system.schedule('Test BatchToCalculateTheAvaiLeaves Check', sch, testsche );
-		Test.stopTest();
-	}
-         public static testMethod void testscheduleclass1() {
-		Test.StartTest();
-		EMS_TM_EmployeeEscalation testsche = new EMS_TM_EmployeeEscalation();
-		String sch = '0 0 23 * * ?';
-		system.schedule('Test BatchToCalculateTheAvaiLeaves Check1', sch, testsche );
 		Test.stopTest();
 	}
 

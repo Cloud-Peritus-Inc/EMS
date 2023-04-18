@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Email_to_Finance_Team</name>
+        <label>Email to Finance Team</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <actionName>Expense__c.Expense_Approved_Email_to_Finance_Team</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Expense_Approved</name>
         <label>Expense Approved</label>
         <locationX>176</locationX>
         <locationY>335</locationY>
         <actionName>Expense__c.Expense_Approved</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Email_to_Finance_Team</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -18,7 +36,7 @@
     <apiVersion>57.0</apiVersion>
     <environments>Default</environments>
     <interviewLabel>Expense Approved - Email To Employee {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Expense Approved - Email To Employee</label>
+    <label>Expense Approved - Email To Employee and Finance Team</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

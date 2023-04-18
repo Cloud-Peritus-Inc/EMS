@@ -2,6 +2,7 @@ import { LightningElement, track, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import fetchCertifications from '@salesforce/apex/EMS_EM_CreationOnboard.fetchCertifications';
 import dmlOnCertifications from '@salesforce/apex/EMS_EM_CreationOnboard.dmlOnCertifications';
+import returnFiles from '@salesforce/apex/EMS_EM_CreationOnboard.returnFiles';
 import fetchWorkEduData from '@salesforce/apex/EMS_EM_CreationOnboard.fetchEducation';
 import dmlOnEducation from '@salesforce/apex/EMS_EM_CreationOnboard.dmlOnEducation';
 import uploadFiles from '@salesforce/apex/EMS_EM_CreationOnboard.saveFiles';
@@ -745,12 +746,12 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
 
   SaveSubmitOnboarding(event) {
     this.handleIsLoading(true);
-    const isInputsCorrect = [...this.template.querySelectorAll('lightning-input, lightning-combobox')]
+    if (this.isShowPersonalDetails) {
+      const isInputsCorrect = [...this.template.querySelectorAll('lightning-input, lightning-combobox')]
       .reduce((validSoFar, inputField) => {
         inputField.reportValidity();
         return validSoFar && inputField.checkValidity();
       }, true);
-    if (this.isShowPersonalDetails) {
       if (this.selectStep1()) {
         if(isInputsCorrect){
           this.isPersonalUpdateCheckbox = true;
@@ -1162,8 +1163,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           uploadFiles({ recordId: this.onboardingformId, filedata: JSON.stringify(this.filesData) })
             .then(result => {
               if (result && result == 'success') {
-                this.filesData = [];
                 updateOnboardingInfoOnPageLoads(this);
+                this.filesData = [];
               } else {
                 this.dispatchEvent(
                   new ShowToastEvent({
@@ -1471,7 +1472,20 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
             .then(result => {
               if (result && result == 'success') {
                 this.filesDocData = [];
-                updateOnboardingInfoOnPageLoads(this);
+                //updateOnboardingInfoOnPageLoads(this);
+                returnFiles({onBoardingRecordId : this.onboardingformId})
+                .then(result => {
+                  //console.log('result--------->' ,result);
+                  let filteredFiles = result.filter((file) => file.Title.includes('Work_Details_'));
+              if (filteredFiles.length > 0) {
+                this.isUploadReq = false;
+                this.dataDocList = filteredFiles;
+              } else {
+                this.isUploadReq = true;
+                this.dataDocList = undefined;
+              }
+              
+                })
               } else {
                 this.dispatchEvent(
                   new ShowToastEvent({
@@ -1507,7 +1521,8 @@ export default class LightningExampleAccordionMultiple extends LightningElement 
           this.handleIsLoading(false);
           console.log(error);
           this.showToast('Please refresh the page and retry.', error.body.message, 'Error', 'dismissable');
-        });updateOnboardingInfoOnPageLoads(this);
+        });
+        //updateOnboardingInfoOnPageLoads(this);
     } else {
       this.handleIsLoading(false);
       const even = new ShowToastEvent({
