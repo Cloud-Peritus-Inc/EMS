@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email to Finance Team when an expense is approved by Manager</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Expense is Approved - Email to Finance Team</name>
+    <style>freeForm</style>
+    <subject>Cloud Peritus : Expense Approved for {!Expense__c.Employee_ID__c} - {!Expense__c.Resource__c}</subject>
+    <textOnly>Dear Finance Team,
+
+
+
+Expense request by {!Expense__c.Employee_ID__c} - {!Expense__c.Resource__c} for {!Expense__c.Expense_Type__c} has been approved by {!Expense__c.Approval_Manager__c}.
+
+
+
+Expense amount approved: {!Expense__c.Expense_Amount1__c} {!NullValue(Expense__c.Billing_Currency__c&quot;)}
+
+
+
+Please review it here and do the needful.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
