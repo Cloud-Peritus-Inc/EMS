@@ -1,0 +1,52 @@
+<template>
+  <li>
+    <ul>
+      <template if:true={hasReportsTo}>
+      <template for:each={employee.meReportsToList} for:item="report">
+        <li key={report.resourceUserId}>
+          <c-org-chart employee={report}></c-org-chart>
+         <!-- <svg>
+            <line class="line" x1="50%" y1="80%" x2="50%" y2="100%"></line>
+          </svg>-->
+        </li>
+      </template>
+      </template>
+    </ul>
+ <template if:true={hasEmployeeURL}>
+    <div class="node">
+      <div class="image slds-align_absolute-center">
+        <img src={employee.resourcePhotoURL} alt={employee.resourceName} />
+      </div>
+      <div class="info">
+        <div class="slds-align_absolute-center">
+        <h3><b>{employee.resourceName}</b></h3>
+        </div>
+        <div class="slds-align_absolute-center">
+          <p><i>{employee.resourceRole}</i></p>
+        </div>
+      </div>
+    </div>
+ </template>
+    <template if:true={hasHierarchy}>
+        <br/>
+       <b> My Reportees </b>
+    <!--  <svg>
+        <line class="line" x1="50%" y1="0" x2="50%" y2="100%"></line>
+      </svg> -->
+    </template>
+
+    <template if:true={hasHierarchy}>
+      <ul>
+        <template for:each={employee.directReportesUnderme} for:item="report">
+          <li key={report.resourceUserId}>
+            <c-org-chart employee={report}></c-org-chart>
+           <!-- <svg>
+              <line class="line" x1="50%" y1="50%" x2="50%" y2="100%"></line>
+            </svg> -->
+          </li>
+        </template>
+      </ul>
+    </template>
+
+  </li>
+</template>
