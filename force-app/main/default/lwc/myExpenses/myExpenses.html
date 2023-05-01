@@ -1,0 +1,167 @@
+<template>
+
+    <div class="homeCard" style="border-top : 3px solid #9602c7;">
+    <lightning-card>
+        <div class="childparent">
+          <div class="childtext" style="padding-left:20px;">
+               <div style="padding-left:5px;"> 
+          <lightning-icon icon-name="standard:expense_report" size="medium" alternative-text="In Progress" ></lightning-icon>
+           <font size="4"  > &nbsp;&nbsp;<b>My Expenses </b> </font> <br/>
+            </div> 
+          </div>
+           <div class="childimage">
+             
+           </div>
+        </div>
+
+     <div class="container">
+    <div class="box" style="width:50%;padding-left:10px;"> 
+      <font size="48px"><b> 
+        
+        <lightning-formatted-number value={reimbursment} format-style="currency" currency-code={reimbCurrency}></lightning-formatted-number>
+         </b></font>
+           <br/>
+         <div style ="text-align:left"> Reimbursement Pending </div>
+             </div>
+     
+    <div class="box" style="width:50%;text-align:right;padding-right:10px"> <lightning-button variant="brand" label="New Claim"  onclick={handleClick}></lightning-button> </div>
+   
+    <div style="clear: both;"></div> 
+    </div>
+        <br/>
+  <center><div class="table-container"><table>
+    <thead>
+      <tr>
+        <th>Expense Number</th>
+        <th>Repaying Date</th>
+        <th>Project</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template if:true={showtable}>
+      <template for:each={expList} for:item="row">
+        <tr key={row.expid}>
+          <td><a href="#" data-id={row.expid} onclick={handleexpClick}>{row.expName}</a></td>
+          <td><lightning-formatted-date-time value={row.reimbdate}> </lightning-formatted-date-time></td>
+          <td>{row.projectName}</td>
+          <td><!--<lightning-formatted-number value={row.amount} format-style="currency" currency-code={row.amountcurrency}></lightning-formatted-number> --> {row.amount}</td>
+          <td>{row.status}</td>
+        </tr>
+      </template>
+      <br/>
+      </template>
+      
+    </tbody>
+    
+  </table></div> </center>
+   <template if:false={showtable}>
+        <center> No expense claims yet </center>
+        </br>
+      </template>
+  <footer class="slds-modal__footer">
+   <center> <a href="#"  ><font class="uiOutputText" onclick={handleNavClick}>My Expenses</font></a> </center>
+            
+                        </footer>
+    </lightning-card>
+
+
+      <template if:true={openModal}>
+       <div data-modal="custom-modal" class="modalclass">
+            <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" 
+                                            class="slds-modal__close " 
+                                            alternative-text="Close" 
+                                            title="Close"
+                                            size="large"
+                                            variant="bare-inverse"
+                                            onclick={handleCancel} >
+ 
+                    </lightning-button-icon>
+                <font size="5">New Expense</font>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium"
+                    id="modal-content-id-1">
+                   <template if:false={showFileUpload}>
+                    <lightning-record-edit-form
+                                    object-api-name="Expense__c"
+                                    onsuccess={handleSuccess} 
+                                    onerror={handleError} >
+                                    <lightning-messages> </lightning-messages>
+                                    <lightning-layout>
+                                      <lightning-layout-item flexibility="auto" padding="around-small">
+                                      <lightning-input-field field-name="Project__c" required></lightning-input-field>
+                                    
+                                      </lightning-layout-item>
+                                       <lightning-layout-item flexibility="auto" padding="around-small">
+                                        <lightning-input-field field-name="Expense_Amount__c"></lightning-input-field>
+                                   </lightning-layout-item></lightning-layout>
+                                    <lightning-layout>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+                                     <lightning-input-field field-name="Expense_Type__c" required></lightning-input-field>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+                                      <lightning-input-field field-name="Expense_Date__c" required></lightning-input-field>
+                                    </lightning-layout-item>
+                                    </lightning-layout>
+                                    <lightning-layout>
+                                    <lightning-layout-item flexibility="auto" padding="around-small">
+                                     <lightning-input-field field-name="Billing_Currency__c" required></lightning-input-field>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item flexibility="auto" padding="around-small">
+                                      <lightning-input-field field-name="Comments__c" required></lightning-input-field>
+                                    </lightning-layout-item>
+                                    </lightning-layout>
+                                    <lightning-layout>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+                                     <lightning-input-field field-name="Status__c" value="Draft" disabled></lightning-input-field>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+                                      <lightning-input-field field-name="Resource__c" value={resourceId} disabled></lightning-input-field>
+                                    </lightning-layout-item>
+                                    </lightning-layout>
+                                
+                                   <center>  
+                                     <lightning-button label="Close" title="Close" icon-name="utility:close" onclick={handleCancel}></lightning-button>
+                                      &nbsp;&nbsp; &nbsp;&nbsp; <lightning-button
+                                        class="slds-m-top_small"
+                                        variant="brand"
+                                        type="submit"
+                                        name="update"
+                                        label="Next"
+                                    >
+                                    </lightning-button></center>
+                                </lightning-record-edit-form>
+                   </template>
+                               
+                                  <template if:true={showFileUpload}>
+                                    <center style="font-size:14px;color:green"> <i> Succesfully created the expense. Please upload the proof for an expense. Proofs are optional but expense can be rejected without proofs. </i></center>
+                                  <div style="max-width:320px slds-align_absolute-center">
+                                  <center> <lightning-file-upload name="fileUploader" accept={acceptedFormats} record-id={createdRecordId} onuploadfinished={handleUploadFinished} multiple></lightning-file-upload>
+                                  </center>
+                                  <br />
+                               <center> <lightning-button variant="brand" name="Close" label="Close" onclick={handleFinish}></lightning-button>
+                                    &nbsp; &nbsp; &nbsp;<lightning-button variant="brand" name="Submit" label="Submit" onclick={handleSubmittedFinish}></lightning-button></center>
+                                  </div>
+                                  </template>
+                    
+                </div>
+               
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+       </div>
+    </template>
+
+
+    </div>
+</template>

@@ -1,0 +1,171 @@
+<template>
+	<template if:false={openModal}>
+		<lightning-card variant="Narrow" size="large">
+			<div data-modal="custom-modal" class="modalclass">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" cd vf class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<lightning-button-icon icon-name="utility:close" class="slds-modal__close "
+								alternative-text="Close" title="Close" size="large" variant="bare-inverse"
+								onclick={handleCancel}>
+							</lightning-button-icon>
+							<font size="5">Apply a Service Request</font>
+						</header>
+
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+							<div
+								class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+								<lightning-layout>
+									<lightning-layout-item padding="around-small" flexibility="auto">
+										<div class=" slds-p-around_medium slds-text-align_center">
+											<lightning-input type="text" value={requestType} disabled variant="standard"
+												label="Request Type">
+											</lightning-input>
+										</div>
+									</lightning-layout-item>
+									<lightning-layout-item padding="around-small" flexibility="auto">
+										<div class=" slds-p-around_medium slds-text-align_center">
+											<template if:true={leaveTypeValues}>
+												<lightning-combobox name="leaveReqTypes" label="Leave Type"
+													value={selectedLeaveTypes} options={leaveTypeValues}
+													onchange={handleChange}>
+												</lightning-combobox>
+											</template>
+										</div>
+									</lightning-layout-item>
+									<lightning-layout-item padding="around-small" flexibility="auto">
+										<div class=" slds-p-around_medium slds-text-align_center">
+											<template if:true={priorityValues}>
+												<lightning-combobox name="Priority" label="Priority"
+													value={selectedPriority} options={priorityValues}
+													onchange={handleChange}>
+												</lightning-combobox>
+											</template>
+										</div>
+									</lightning-layout-item>
+								</lightning-layout>
+							</div>
+
+							<!------------------------------------   TO SHOW MATERNITY DETAILS   --------------------------------------------->
+							<template if:true={renderMaternity}>
+								<strong>Enter Details</strong>
+								<div class="slds-var-m-around_medium">
+									<lightning-layout multiple-rows>
+										<lightning-layout-item size="6" class="slds-p-around_xx-small">
+											<lightning-input type="Date" label="Start Date" name="startDateCheck"
+												value={startDate} timezone={userTimeZone} onchange={datechange} required>
+											</lightning-input>
+
+											<lightning-input type="Date" label="End Date" name="endDate"
+												value={endDate} onchange={datechange} required></lightning-input>
+										</lightning-layout-item>
+										<lightning-layout-item size="6" class="slds-p-around_xx-small">
+											<lightning-input type="number" label="Leave Duration" value={duration}
+												disabled>
+											</lightning-input>
+										</lightning-layout-item>
+									</lightning-layout>
+								</div>
+								<div class="slds-var-m-around_medium slds-align_absolute-center">
+									<lightning-input type="file" accept=".png, .doc, .docx, .pdf , .jpg, .jpeg"
+										label="Upload Supporting Document" onchange={openfileUpload}></lightning-input>
+								</div>
+								<div class="slds-align_absolute-center">
+									<template if:true={fileData}>
+										<p>{fileData.filename}</p>
+									</template>
+								</div>
+
+								<center>
+									<lightning-button label="Close" title="Close" icon-name="utility:close"
+										onclick={handleCancel}>
+									</lightning-button>
+									&nbsp;&nbsp; &nbsp;&nbsp; <lightning-button class="slds-m-top_small" variant="brand"
+										type="submit" name="update" label="Save" onclick={submitcase}>
+									</lightning-button>
+								</center>
+							</template>
+							<!--template if:true={showFileUpload}>
+								<center style="font-size:14px;color:green">
+									<i> Succesfully created the expense. Please upload the proof for maternity. </i>
+								</center>
+								<div style="max-width:320px">
+									<center>
+										<lightning-file-upload name="fileUploader" accept={acceptedFormats}
+											record-id={createdRecordId} onuploadfinished={handleUploadFinished}
+											multiple required>
+										</lightning-file-upload>
+									</center>
+									<br />
+									<lightning-button variant="brand" name="Close" label="Close" onclick={handleFinish}>
+									</lightning-button>
+									&nbsp; &nbsp; &nbsp;<lightning-button variant="brand" name="Submit" label="Submit"
+										onclick={handleSubmittedFinish}>
+									</lightning-button>
+								</div>
+							</template-->
+
+							<!------------------------------------   TO SHOW PATERNITY, MARRIAGE, BEREAVEMENT  DETAILS   --------------------------------------------->
+							<template if:true={renderReason}>
+								<strong>Enter Reason</strong>
+								<div class="slds-var-m-around_medium">
+									<lightning-record-edit-form object-api-name="Case" onsuccess={handleSuccess}
+										onerror={handleError} onsubmit={onSubmitHandler}>
+										<lightning-input-field field-name="Reason__c"></lightning-input-field>
+
+										<center>
+											<lightning-button label="Close" title="Close" icon-name="utility:close"
+												onclick={handleCancel}>
+											</lightning-button>
+											&nbsp;&nbsp; &nbsp;&nbsp; <lightning-button class="slds-m-top_small"
+												variant="brand" type="submit" name="update" label="Save">
+											</lightning-button>
+										</center>
+									</lightning-record-edit-form>
+								</div>
+							</template>
+							<!------------------------------------   TO SHOW COMP-OFF DETAILS   --------------------------------------------->
+							<template if:true={renderCompOff}>
+								<div class="slds-var-m-around_medium">
+									<strong>Enter Details</strong>
+									<lightning-layout multiple-rows>
+										<lightning-layout-item size="6" class="slds-p-around_xx-small">
+											<lightning-input type="Date" label="Start Date" name="startDate"
+												value={startDate} timezone={userTimeZone} onchange={datechange} required>
+											</lightning-input>
+
+											<lightning-input type="Date" label="End Date" name="endDate"
+												value={endDate} onchange={datechange} required></lightning-input>
+										</lightning-layout-item>
+										<lightning-layout-item size="6" class="slds-p-around_xx-small">
+											<lightning-combobox label='Select Day' options={dayValues}
+												onchange={handleChange} value={selectedDay} name="compOffDay" required>
+											</lightning-combobox>
+											<lightning-input type="number" label="Leave Duration" value={duration}
+												disabled>
+											</lightning-input>
+										</lightning-layout-item>
+									</lightning-layout>
+									<lightning-textarea type="text" maxlength="250" required label="Reason"
+										value={reason} onchange={handleReason}>
+									</lightning-textarea>
+									<center>
+										<lightning-button label="Close" title="Close" icon-name="utility:close"
+											onclick={handleCancel}>
+										</lightning-button>
+										&nbsp;&nbsp; &nbsp;&nbsp; <lightning-button class="slds-m-top_small"
+											variant="brand" type="submit" name="update" label="Save"
+											onclick={handelCompSave}>
+										</lightning-button>
+									</center>
+								</div>
+							</template>
+						</div>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+		</lightning-card>
+	</template>
+</template>

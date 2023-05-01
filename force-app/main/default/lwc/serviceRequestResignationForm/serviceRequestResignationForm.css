@@ -1,0 +1,36 @@
+.slds-modal__container {
+    max-width: 50rem !important;
+    width: 100% !important;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 40%;
+  padding: 7px;
+ height: 300px; /* Should be removed. Only for demonstration */
+  border-right: 2px; /*solid #ccc; /* Add a border on the right side of the column */
+ /* margin-right: 01px;
+  margin-left: 01px;*/
+
+}
+.column1{
+  float: left;
+  width: 60%;
+  padding: 7px;
+ height: 300px; /* Should be removed. Only for demonstration */
+  border-right: 2px; /*solid #ccc; /* Add a border on the right side of the column */
+ /* margin-right: 01px;
+  margin-left: 01px;*/
+
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.slds-backdrop_open {
+    background-color: rgba(0, 0, 0, 0);
+}

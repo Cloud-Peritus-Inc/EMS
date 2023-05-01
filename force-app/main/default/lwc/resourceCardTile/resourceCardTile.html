@@ -1,0 +1,56 @@
+<template>
+ <div class="parent" >
+        <div class="child1">
+            <div class="homeCard" style="border-top : 3px solid #9602c7;">
+                <div class="childparent" >
+                    <div class="childimage">
+                      <div class="profile-picture">
+                            <img src={userImageUrl} class="round" alt="Profile picture" />
+                        </div>
+                    </div>
+                    <div class="childtext">
+                       <font size="4" color="#9602c7" ><b>{resourceName}</b></font> </br>
+                       {resourcerole} <br/>
+                       {resourceId} 
+                       <br/>
+                       <div style="font-color:grey;font-size:12px;" > Medical Insurence: <b> <lightning-formatted-number value={resourceinsurence} format-style="currency" currency-code={rescodecurrency} currency-display-as="code"></lightning-formatted-number> </b> </div>
+                    </div>
+                </div> 
+              
+                    <footer class="slds-modal__footer">
+                       <center> <a href="#" onclick={handleClick}> Update Details </a> </center> 
+                    </footer>
+                       
+            </div>  
+                
+         </div>
+         
+        <div class="child2">
+        	<div class="homeCard" style="border-top :  3px solid #9602c7">
+                <div class="childparent">
+                    <div class="childimage">
+                      <div class="profile-picture">
+                           <img src={paydateimage} alt="" /> 
+                        </div>
+                    </div>
+                    <div class="childtext" style="padding-top: 20px;">
+                       <font size="4" ><b>Next Pay Date</b></font> </br>
+                       <font size="2"> <lightning-formatted-date-time value={nextpaydate}></lightning-formatted-date-time></font><br/>
+                       
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                       <center> <a href="#"> View Payslips </a> </center> 
+                    </footer>   
+            </div> 
+        </div>
+        <div class="child3">
+            <div class="homeCard" style="border-top :  3px solid #9602c7">
+           <c-calenderpto></c-calenderpto>
+            </div>
+        </div>
+       
+    </div>
+
+
+</template>
