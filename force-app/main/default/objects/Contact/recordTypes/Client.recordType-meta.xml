@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client</fullName>
+    <active>true</active>
+    <label>Client</label>
+    <picklistValues>
+        <picklist>Bank_Name__c</picklist>
+        <values>
+            <fullName>Axis Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bandhan Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank of Baroda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank of India</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank of Maharashtra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CSB Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canara Bank</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central Bank of India</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>City Union Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DCB Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dhanlaxmi Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Federal Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HDFC Bank Ltd</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ICICI Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IDBI Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IDFC First Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indian Bank</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indian Overseas Bank</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Induslnd Bank Ltd</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jammu %26 Kashmir Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Karnataka Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Karur Vysya Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kotak Mahindra Bank Ltd</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nainital Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Punjab %26 Sind Bank</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Punjab National Bank</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RBL Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Indian Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>State Bank of India</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tamilnad Mercantile Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UCO Bank</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Union Bank of India</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>YES Bank Ltd%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Contact_Type__c</picklist>
+        <values>
+            <fullName>Current Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potential Customer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_Domain_Technology__c</picklist>
+        <values>
+            <fullName>Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_BG__c</picklist>
+        <values>
+            <fullName>A RhD negative %28A-%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A RhD positive %28A%2B%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AB RhD negative %28AB-%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AB RhD positive %28AB%2B%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B RhD negative %28B-%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B RhD positive %28B%2B%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>O RhD negative %28O-%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>O RhD positive %28O%2B%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Gender__c</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Level_of_Education1__c</picklist>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Graduate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Level_of_Education2__c</picklist>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Graduate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Level_of_Education3__c</picklist>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Graduate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Level_of_Education4__c</picklist>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Under Graduate%28%2B2%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Level_of_Education5__c</picklist>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Graduate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Level_of_Education__c</picklist>
+        <values>
+            <fullName>Std X%2FSSC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Std XII%2FHSC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Mstatus__c</picklist>
+        <values>
+            <fullName>Married</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Single</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_OLocation__c</picklist>
+        <values>
+            <fullName>US</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Shift__c</picklist>
+        <values>
+            <fullName>Afternoon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Night</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_EM_Sodexo_Card_Option__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_Employee_Type__c</picklist>
+        <values>
+            <fullName>Part-time</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_LM_Gender__c</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_LM_Marital_Status__c</picklist>
+        <values>
+            <fullName>Married</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Single</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_RM_ApplicantStatus_Update__c</picklist>
+        <values>
+            <fullName>Hired</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offer accepted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offer rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offer rolled out</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_RM_Certifications__c</picklist>
+        <values>
+            <fullName>ADVANCED ADMINISTRATOR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>APPLICATION ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B2B SOLUTION ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B2C COMMERCE ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B2C COMMERCE DEVELOPER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B2C SOLUTION ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CERTIFIED ADMINISTRATOR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CPQ SPECIALIST</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DATA ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DEVELOPMENT LIFECYCLE %26 DEPLOYMENT ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EDUCATION CLOUD CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EXPERIENCE CLOUD CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FIELD SERVICE CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HEROKU ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IDENTITY %26 ACCESS MANAGEMENT ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INDUSTRIES CPQ DEVELOPER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INTEGRATION ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JAVASCRIPT DEVELOPER I</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MARKETING CLOUD ADMINISTRATOR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MARKETING CLOUD CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MARKETING CLOUD DEVELOPER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MARKETING CLOUD EMAIL SPECIALIST</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NONPROFIT CLOUD CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OMNISTUDIO CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OMNISTUDIO DEVELOPER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PARDOT CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PARDOT SPECIALIST</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PLATFORM APP BUILDER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PLATFORM DEVELOPER I</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PLATFORM DEVELOPER II</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SALES CLOUD CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SERVICE CLOUD CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SHARING %26 VISIBILITY ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STRATEGY DESIGNER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SYSTEM ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TABLEAU CRM %26 EINSTEIN DISCOVERY CONSULTANT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TECHNICAL ARCHITECT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USER EXPERIENCE %28UX%29 DESIGNER</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_RM_Current_Job_Role__c</picklist>
+        <values>
+            <fullName>Accounts Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associate Developer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associate Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Scientist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delivery Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Executive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Administrator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Application Designer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Business Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Data Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Developer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Finance Cloud Consultant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Functional Consultant%2FConsultants</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Marketing Cloud Consultant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Platform Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Product Owner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Solution Architect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security Engineer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_RM_Domain_Technology__c</picklist>
+        <values>
+            <fullName>Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_RM_Education__c</picklist>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Under Graduate%28%2B2%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_RM_Industry__c</picklist>
+        <values>
+            <fullName>Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Human Resource</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Talent Acquisition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_RM_Months__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EMS_RM_Years__c</picklist>
+        <values>
+            <fullName>--0--</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>12</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>14</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>17</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>18</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LeadSource</picklist>
+        <values>
+            <fullName>Advertisement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Google AdWords</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Purchased List</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trade Show</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Webinar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Website</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Location__c</picklist>
+        <values>
+            <fullName>India</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Marital_Status__c</picklist>
+        <values>
+            <fullName>Married</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Un Married</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Name</picklist>
+        <values>
+            <fullName>Dr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mrs%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ms%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prof%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Source_of_Hire__c</picklist>
+        <values>
+            <fullName>Employee Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LinkedIn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sourced</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Vehicle_Type__c</picklist>
+        <values>
+            <fullName>Four-wheeler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Two-wheeler</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
