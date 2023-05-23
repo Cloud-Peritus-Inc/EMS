@@ -3,7 +3,7 @@ public class ResourceriseToHR  implements TriggerAction.AfterInsert{
         /**
     * @author Naga
     * @date 2/22/2023
-    * @description Before Insert 
+    * @description after Insert 
     *
     * CHANGE HISTORY
     * ====================================================================================================
