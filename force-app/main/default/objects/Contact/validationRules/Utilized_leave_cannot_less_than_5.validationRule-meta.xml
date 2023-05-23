@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Utilized_leave_cannot_less_than_5</fullName>
+    <active>true</active>
+    <errorConditionFormula>EMS_LM_No_Of_Availble_Leaves__c  &lt;=-5</errorConditionFormula>
+    <errorMessage>You don&apos;t have enough leave balance. Consider applying for leave of some other type.</errorMessage>
+</ValidationRule>

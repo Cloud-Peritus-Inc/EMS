@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_WFH_Leaves_in_a_week</fullName>
+    <active>false</active>
+    <description>Throw an error if the number of WFH leaves in a single week &gt;3</description>
+    <errorConditionFormula>AND(ISPICKVAL(EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c, &apos;Work from home&apos;),
+ EMS_LM_Leave_Duration__c  &gt; (3))</errorConditionFormula>
+    <errorMessage>&apos;&apos; In a hybrid model, you can&apos;t take more than 3 work from home leaves per week&apos;&apos;</errorMessage>
+</ValidationRule>
