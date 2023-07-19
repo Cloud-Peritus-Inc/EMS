@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_LM_No_Of_Available_Compensatory_Off__c</fullName>
+    <externalId>false</externalId>
+    <formula>EMS_LM_No_Of_Compensatory_Off_Credit__c -  EMS_LM_No_OF_Utilized_Compensatory_Off__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>No of Available Compensatory Off</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

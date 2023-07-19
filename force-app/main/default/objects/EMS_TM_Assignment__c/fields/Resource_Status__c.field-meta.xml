@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resource_Status__c</fullName>
+    <externalId>false</externalId>
+    <formula>Case(EMS_TM_EmployeeName__r.EMS_RM_ApplicantStatus_Update__c, &apos;Active&apos;, &apos;Active&apos;,&apos;Active - Probation&apos;,&apos;Active-Probation&apos;,&apos;Active - Notice Period&apos;,&apos;Active - Notice Period&apos;,&apos;Inactive&apos;,&apos;Inactive&apos;,&apos;Other&apos;)</formula>
+    <label>Resource Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
