@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_Hours__c</fullName>
+    <externalId>false</externalId>
+    <formula>EMS_TM_Fri__c + EMS_TM_Mon__c + EMS_TM_Sat__c + EMS_TM_Sun__c + EMS_TM_Thu__c  + EMS_TM_Tue__c + EMS_TM_Wed__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Number of Hours</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

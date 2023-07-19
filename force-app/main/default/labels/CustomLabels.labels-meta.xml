@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>CP_Logo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CP Logo</shortDescription>
+        <value>https://cpprd--dev.sandbox.file.force.com/servlet/servlet.ImageServer?id=015520000010Wtm&amp;oid=00D52000000L5oZ&amp;lastMod=1675396590000</value>
+    </labels>
+    <labels>
+        <fullName>Grid_Logo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Grid Logo</shortDescription>
+        <value>https://cpprd--dev.sandbox.file.force.com/servlet/servlet.ImageServer?id=015520000010400&amp;oid=00D52000000L5oZ&amp;lastMod=1674198511000</value>
+    </labels>
+</CustomLabels>

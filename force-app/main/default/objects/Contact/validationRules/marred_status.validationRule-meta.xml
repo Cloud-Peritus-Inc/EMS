@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>marred_status</fullName>
+    <active>false</active>
+    <errorConditionFormula>OR((AND(ISPICKVAL( EMS_EM_Mstatus__c , &quot;Married&quot;), ISBLANK(EMS_EM_DOW__c) )),(AND(ISPICKVAL( EMS_EM_Mstatus__c , &quot;Married&quot;), ISBLANK(EMS_EM_Spouse__c) )))</errorConditionFormula>
+    <errorMessage>Please Fill in the Spouse&apos;s Name and  Date of wedding</errorMessage>
+</ValidationRule>
