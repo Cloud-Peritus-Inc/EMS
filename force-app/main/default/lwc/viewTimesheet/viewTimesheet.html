@@ -1,0 +1,138 @@
+<!--
+  @description       : This component is used to show the Leave History in Pending On Me Tab For current Logged in Employee
+  @author            : Vamsi
+  @group             : 
+  @last modified on  : 02-02-2023
+  @last modified by  : 
+-->
+<template>
+	<div class="font">
+		<lightning-card>
+				<!--
+			<div class="spinner">
+			<template if:true={isLoading}>
+					<lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+					</lightning-spinner>
+				</template>
+			</div>
+			-->
+			<div slot="actions">
+				<lightning-button variant="success" label="Approve All" onclick={handleApproveAll}
+					disabled={disableButton}>
+				</lightning-button>
+				&nbsp;&nbsp;
+				<lightning-button variant="destructive" label="Reject All" onclick={handleRejectAll}
+					disabled={disableButton}>
+				</lightning-button>
+			</div>
+	
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr style="border-top:0.5px solid #d4d4d4;border-bottom:0.5px solid #d4d4d4">
+							<th style="padding:8px">
+								
+											<lightning-input type="checkbox" variant="standard"
+												onclick={handleSelectAll}></lightning-input>
+
+							</th>
+                           
+								<th>
+								<div title="Time sheet Lineitem">Timesheet Record</div>
+							</th>
+							<th>
+								<div title="Employee Name">Name of Employee</div>
+							</th>
+							<th>
+								<div title="Project Name">Project Name</div>
+						    	</th>	
+							 <th>
+								<div title="Week Start Date">Week Start Date </div>
+							</th>
+							<th>
+								<div title="Week End Date">Week End Date</div>
+							</th>
+							<th>
+								<div title="Number of Hours">Number of Hours</div>
+							</th>
+			
+							<th class="slds-cell_action-mode" style="width:2.25rem">
+								<div>Actions</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<template for:each={Timesheetdata} for:item="Req">
+							<tr key={Req.Id} style="border-bottom:0.5px solid #d4d4d4">
+								<td style="padding:7px">
+									<div class="slds-truncate dv-dynamic-width">
+										<input type="checkbox" id="checkbox-unique-id-81" name="label" onchange={handleSelect} data-id={Req.Id} data-record-id={Req.id} disabled ={Req.disableButton}/>
+									</div>
+								</td>
+									<td>
+									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<a href="#" data-id={Req.Id} onclick={handlTimesheetrecordclick}>
+											    {Req.Name} 
+										</a>
+									</div>
+								</td>	
+								<td>
+									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<a href="#" data-id={Req.OwnerId} onclick={handlConcontactClick}>
+											{Req.OwnerName}
+										</a>
+									</div>
+								</td>
+								<td>
+									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										<a href="#" data-id={Req.projectid} onclick={handleProjectClick}>
+											{Req.ProjcetName}
+										</a>
+									</div>
+								</td>
+																	
+								<td>
+									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										 {Req.weekStartDate} 
+									</div>
+								</td>
+									<td>
+									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										{Req.weekenddate }
+									</div>
+									 </td>
+									<td>
+									<div class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+										{Req.NumberOfhours }
+									</div>
+								   </td>
+									<td  class="slds-truncate dv-dynamic-width" style={fixedWidth}>
+											<lightning-button-icon variant="brand" size="large"
+												icon-name="action:approval" alternative-text="Approve"
+												onclick={approve} 
+												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}
+												disabled={Req.disableButton}></lightning-button-icon>
+											&nbsp;&nbsp;
+                                            <lightning-button-icon variant="brand" size="large"
+												icon-name="action:reject" alternative-text="Reject"
+												onclick={Reject} data-value={Req.EMS_LM_Status__c}
+												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}
+												disabled={Req.disableButton}>
+											</lightning-button-icon>
+											&nbsp;&nbsp;
+											<lightning-button-icon variant="brand" size="large" class="slds-p-around_xxx-small"
+												icon-name="utility:reassign" alternative-text="Reaasign"
+												onclick={reassiging}
+												key-field={Req.Id} data-record-id={Req.Id} data-id={Req.Id}
+												disabled={Req.disableButton}>
+											</lightning-button-icon>
+											
+										</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+		</lightning-card>
+	</div>
+</template>
