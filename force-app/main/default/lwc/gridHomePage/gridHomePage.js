@@ -11,7 +11,7 @@ export default class GridHomePage extends LightningElement {
             //console.log('### getLoggedInUserResReportsSize', data);
             if (data.relationAcess > 0) {
                 this.hidePendingTab = true;
-                this.hidetimeTab=true;
+              
             }
             if(data.hraccess == true){
               this.hidetimeTab = true;
