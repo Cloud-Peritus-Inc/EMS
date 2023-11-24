@@ -1,4 +1,4 @@
-public class LeaveRequestConstant {
+public  class LeaveRequestConstant {
      public static final Id LOGGEDIN_USERID = UserInfo.getUserId();
      public static final String APPROVER_2_WAITING = 'Approver 1 Pending';
      public static final String APPROVER_3_WAITING = 'Approver 2 Pending';
@@ -14,4 +14,6 @@ public class LeaveRequestConstant {
     public static final String COMPENSATORY_OFF ='Compensatory Off';
     public static final String MATERNITY_LEAVE ='Maternity Leave';
  //   public static final String MATERNITY_LEAVE ='Maternity Leave';
+    public static final String PAID_TIMEOFF ='Paid time off';
+    public static final String UNPAID_TIMEOFF ='UnPaid time off';
 }
