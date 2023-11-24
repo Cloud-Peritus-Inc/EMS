@@ -71,7 +71,10 @@ public class CalculateAvailableLeaveBalance implements TriggerAction.AfterInsert
                  system.debug('====='+contactRec.EMS_LM_No_Of_Leaves_Credit__c);
                  system.debug('====='+leaveCreditRec.EMS_LM_Leaves_Credited__c);
                 Switch on leaveTypeRec{
-                    when 'Annual Leave'{
+                    when 'Annual Leave' {
+                        contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c != null ? contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
+                    }
+                    when 'Paid time off' {
                         contactRec.EMS_LM_No_Of_Leaves_Credit__c = contactRec.EMS_LM_No_Of_Leaves_Credit__c != null ? contactRec.EMS_LM_No_Of_Leaves_Credit__c + leaveCreditRec.EMS_LM_Leaves_Credited__c : leaveCreditRec.EMS_LM_Leaves_Credited__c;
                     }
                     when 'Compensatory Off'{
