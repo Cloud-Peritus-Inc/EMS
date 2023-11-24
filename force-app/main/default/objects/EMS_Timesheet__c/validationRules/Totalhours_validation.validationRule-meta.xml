@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Totalhours_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>EMS_TM_Total__c &gt;168</errorConditionFormula>
+    <errorMessage>Total hours should not be  greater than 168</errorMessage>
+</ValidationRule>

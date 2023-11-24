@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Project_0_to_100_only</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+    Project_Allocation__c &lt; 0,
+    (Project_Allocation__c &gt; 100)
+)</errorConditionFormula>
+    <errorMessage>Project Allocation should accept values between 0 &amp; 100 only</errorMessage>
+</ValidationRule>

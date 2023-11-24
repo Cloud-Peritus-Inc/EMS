@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Edit_Leave_Balance_For_Maternity</fullName>
+    <active>true</active>
+    <description>If the leave type is maternity leave, the user cannot update the leaves credited.</description>
+    <errorConditionFormula>AND(
+   OR(ISPICKVAL(EMS_LM_Select_Leave_Type__c,&apos;Maternity Leave&apos;), ISPICKVAL(EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c,&apos;Maternity Leave&apos;)),
+   ISCHANGED(EMS_LM_Leaves_Credited__c) 
+)</errorConditionFormula>
+    <errorDisplayField>EMS_LM_Leaves_Credited__c</errorDisplayField>
+    <errorMessage>If the leave type is maternity leave, the user cannot update the leave balance.</errorMessage>
+</ValidationRule>

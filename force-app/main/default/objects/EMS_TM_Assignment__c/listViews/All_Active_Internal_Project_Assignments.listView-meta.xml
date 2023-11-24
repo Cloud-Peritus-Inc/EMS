@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Active_Internal_Project_Assignments</fullName>
+    <booleanFilter>5 AND 1 AND 2 AND 3 AND 4 AND 6</booleanFilter>
+    <columns>NAME</columns>
+    <columns>EMS_TM_EmployeeName__c</columns>
+    <columns>EMS_TM_ProjectName_Asgn__c</columns>
+    <columns>EMS_TM_Allocation__c</columns>
+    <columns>EMS_TM_StartDate_Asgn__c</columns>
+    <columns>EMS_TM_EndDate_Asgn__c</columns>
+    <columns>EMS_TM_AssignedAs__c</columns>
+    <columns>EMS_TM_Billable__c</columns>
+    <columns>EMS_TM_Status_Asgn__c</columns>
+    <columns>Client_Project__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>EMS_TM_ProjectName_Asgn__c</field>
+        <operation>notEqual</operation>
+        <value>Juniper</value>
+    </filters>
+    <filters>
+        <field>EMS_TM_ProjectName_Asgn__c</field>
+        <operation>notEqual</operation>
+        <value>Juniper Mobile</value>
+    </filters>
+    <filters>
+        <field>EMS_TM_ProjectName_Asgn__c</field>
+        <operation>notEqual</operation>
+        <value>PennyMac</value>
+    </filters>
+    <filters>
+        <field>EMS_TM_ProjectName_Asgn__c</field>
+        <operation>notEqual</operation>
+        <value>Everbridge</value>
+    </filters>
+    <filters>
+        <field>EMS_TM_Status_Asgn__c</field>
+        <operation>equals</operation>
+        <value>Active</value>
+    </filters>
+    <filters>
+        <field>EMS_TM_ProjectName_Asgn__c</field>
+        <operation>notEqual</operation>
+        <value>Roberthalf</value>
+    </filters>
+    <label>All Active Internal Project Assignments</label>
+</ListView>

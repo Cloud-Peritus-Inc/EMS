@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tentative_Date_of_Joining_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR( AND (ISNEW(),Tentative_Date_of_Joining__c &lt; TODAY()) , AND(ISCHANGED(Tentative_Date_of_Joining__c),Tentative_Date_of_Joining__c &lt; TODAY()))</errorConditionFormula>
+    <errorDisplayField>Tentative_Date_of_Joining__c</errorDisplayField>
+    <errorMessage>Tentative Date of Joining cannot be a past date</errorMessage>
+</ValidationRule>
