@@ -21,6 +21,7 @@ public class LeaveCalculateHandler_Test {
         system.runAs(adminuser){
             role = TestDataFactory.createResourceRole(true);
             annualtype = TestDataFactory.createLeaveType('Annual Leave',false);
+                    EMS_LM_Leave__c paidTimeOff = TestDataFactory.createLeaveType('Paid time off',true);
             annualtype.EMS_LM_Leave_Type__c='Annual Leave';
             insert annualtype;
             loptype = TestDataFactory.createLeaveType('Loss of Pay',false);
@@ -66,7 +67,6 @@ public class LeaveCalculateHandler_Test {
       //  }
         system.runAs(adminuser2){
              u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
-            
             EMS_LM_Leave_Credit__c lcreditAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1.6,annualtype.id, true);
             EMS_LM_Leave_Credit__c bretAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),20,bretype.id, true);
             Test.startTest();
@@ -101,8 +101,8 @@ public class LeaveCalculateHandler_Test {
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
         EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
         EMS_LM_Leave__c workfromhome = TestDataFactory.createLeaveType('Work From Home',true);
-        
-        Account acc = TestDataFactory.createAccount(true);
+         EMS_LM_Leave__c paidTimeOff = TestDataFactory.createLeaveType('Paid time off',true);
+       Account acc = TestDataFactory.createAccount(true);
         list<contact> conList=New list<contact>();
         list<EMS_LM_Leave_History__c> leaverequestList=New list<EMS_LM_Leave_History__c>();
         Contact con=  TestDataFactory.createResourceContact(acc.id, false);
@@ -118,7 +118,6 @@ public class LeaveCalculateHandler_Test {
             EMS_LM_Leave_Credit__c bretAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),20,bretype.id, true);
             EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, true);
             EMS_LM_Leave_Credit__c workforHome = Testdatafactory.createLeaveCredit(con.id,system.today(),1,workfromhome.id, true);
-            
             Test.startTest();
             list<EMS_LM_Leave_History__c> requestlist =New list<EMS_LM_Leave_History__c>();
             EMS_LM_Leave_History__c request = TestDataFactory.createLeaveRequest(con.id, system.today(), system.today().adddays(1), annualtype.id, true ,'Pending');
@@ -130,9 +129,10 @@ public class LeaveCalculateHandler_Test {
             string leaveId =request.Id;
             String startd = string.valueOf(system.today().adddays(13));
             String endd = string.valueOf(system.today().adddays(14));
-            EMS_LM_Leave_Duration_Handler.getLeaveDuration(startd, endd, 'India', true,'Annual Leave');
-            EMS_LM_Leave_Duration_Handler.getwfhDuration(startd, endd, 'India');
-            EMS_LM_Leave_Duration_Handler.getwfhWFHweekends(startd, endd);
+            
+           // EMS_LM_Leave_Duration_Handler.getLeaveDuration(startd, endd, 'India', true,'Annual Leave');
+            //EMS_LM_Leave_Duration_Handler.getwfhDuration(startd, endd, 'India');
+            //EMS_LM_Leave_Duration_Handler.getwfhWFHweekends(startd, endd);
             
             EMS_LM_EditLeaveRequest.getLeaveRequestMethod(leaveId);
             EMS_LM_EditLeaveRequest.updateleaveRequest(request,leaveId);

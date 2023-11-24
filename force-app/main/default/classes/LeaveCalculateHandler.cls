@@ -15,11 +15,21 @@
 public without sharing class LeaveCalculateHandler implements TriggerAction.AfterInsert,TriggerAction.AfterUpdate{
     
     public void afterInsert(List<EMS_LM_Leave_History__c> newList) {      
-        leaveCalculateMethod(newList,null);     
+        leaveCalculateMethod(newList,null);
+                for(EMS_LM_Leave_History__c Pmtoemail:newList){
+            if(Pmtoemail.EMS_LM_Status__c=='auto approved'){
+                Pmtogetmail.getemails(Pmtoemail.EMS_LM_Contact__c,Pmtoemail.Id);
+            }
+             }
     }
     
     public void afterUpdate(List<EMS_LM_Leave_History__c> newList,List<EMS_LM_Leave_History__c> oldList) {      
         leaveCalculateMethod(newList,new Map<Id,EMS_LM_Leave_History__c>(oldList));
+        for(EMS_LM_Leave_History__c Pmtoemail:newList){
+            if(Pmtoemail.EMS_LM_Status__c=='approved'){
+                Pmtogetmail.getemails(Pmtoemail.EMS_LM_Contact__c,Pmtoemail.Id);
+            }
+             }
     }
     
     
@@ -52,7 +62,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
         Decimal Utilized_Leaves=0;
         Decimal utilizedcompoffLeave = 0;
         Decimal utilizedMaternityLeave = 0;
-        
+        Decimal utlilizedfloatleaves=0;
         Decimal utilizedPaternityLeave = 0;
         Decimal utilizedBereavementLeave = 0;
         Decimal utilizedLossOfPay = 0;
@@ -60,7 +70,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
         Decimal utilizedMarriageLeave = 0;
         for(EMS_LM_Leave_History__c l2 : l1){
             
-            if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.ANNUAL_LEAVE && l2.EMS_LM_Leave_Duration__c !=Null  && 
+            if((l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.ANNUAL_LEAVE || l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.PAID_TIMEOFF )&& l2.EMS_LM_Leave_Duration__c !=Null  && 
                (l2.EMS_LM_Status__c== LeaveRequestConstant.PENDING || l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED  || 
                 l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING|| l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
                 l2.EMS_LM_Status__c== LeaveRequestConstant.AUTO_APPROVED))
@@ -102,7 +112,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                 utilizedBereavementLeave = utilizedBereavementLeave + l2.EMS_LM_Leave_Duration__c;
             }
             
-            if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.LOSS_OF_PAY && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+            if((l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.LOSS_OF_PAY ||l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == LeaveRequestConstant.UNPAID_TIMEOFF) && l2.EMS_LM_Leave_Duration__c !=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
                                                                                                                                           l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
                                                                                                                                           l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING ||
                                                                                                                                           l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
@@ -129,6 +139,15 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                 utilizedMarriageLeave = utilizedMarriageLeave + l2.EMS_LM_Leave_Duration__c;
                 
             }
+            
+            if(l2.EMS_LM_Leave_Type__r.EMS_LM_Leave_Type__c == 'Floating Holiday' && l2.EMS_LM_Leave_Duration__c!=Null && (l2.EMS_LM_Status__c==LeaveRequestConstant.PENDING || 
+                                                                                                                                            l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVED || 
+                                                                                                                                             l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_2_WAITING||
+                                                                                                                                             l2.EMS_LM_Status__c==LeaveRequestConstant.APPROVER_3_WAITING ||
+                                                                                                                                             l2.EMS_LM_Status__c== LeaveRequestConstant.AUTO_APPROVED)){
+                utlilizedfloatleaves=utlilizedfloatleaves+l2.EMS_LM_Leave_Duration__c;
+            }	
+ 
         } 
        
         for(Contact con:Resourceleave){
@@ -142,6 +161,7 @@ public without sharing class LeaveCalculateHandler implements TriggerAction.Afte
                 con.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c = utilizedLossOfPay ;
                 con.No_OF_Utilized_Work_from_Home__c = utilizedWorkfromhome;
             	con.EMS_LM_No_of_Utilized_Marriage_Leave__c = utilizedMarriageLeave;
+                con.UtlizedFloatLeaves__c =  utlilizedfloatleaves;
                         conlist.add(con); 
         }
         try{
