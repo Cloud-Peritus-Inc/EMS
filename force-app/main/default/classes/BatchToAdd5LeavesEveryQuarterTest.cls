@@ -27,8 +27,7 @@ private class BatchToAdd5LeavesEveryQuarterTest {
         usofficlocRec.Address__c = '3000 Executive Parkway Suite 215, San Ramon, CA 94583 USA';
         usofficlocRec.Timezone__c = 'America/Los_Angeles';
         INSERT usofficlocRec;
-            //Office_Location__c usofficlocRec =TestDataFactory.createOfficeLocation('California - USA',true);
-            
+         Office_Location__c usofficlocRecc =TestDataFactory.createOfficeLocation('California - USA',true);
             role = TestDataFactory.createResourceRole('Software Engineer',true);
             annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
             EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
@@ -36,11 +35,7 @@ private class BatchToAdd5LeavesEveryQuarterTest {
             EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
             EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);
             EMS_LM_Leave__c paidTimeOff = TestDataFactory.createLeaveType('Paid time off',true);
-<<<<<<< HEAD
                EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
-=======
-              EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
->>>>>>> 49473beebc8712ffd4ee4046bd5ed210c5f53032
         EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
         EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
             acc = TestDataFactory.createAccount(true);
@@ -63,7 +58,7 @@ private class BatchToAdd5LeavesEveryQuarterTest {
             con2.EMS_RM_ApplicantStatus_Update__c ='Active';
             con2.Email = 'test12@cloudperitus.com';
             con2.EMS_EM_JD__c=system.today();
-            con2.Work_Location__c = usofficlocRec.Id;
+            con2.Work_Location__c = usofficlocRecc.Id;
             insert con2;
             
             conRRR=TestDataFactory.createResourceContact(acc.id, false);
