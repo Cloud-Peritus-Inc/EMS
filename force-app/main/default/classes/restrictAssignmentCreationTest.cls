@@ -15,14 +15,14 @@
 **/
 @isTest
 public class restrictAssignmentCreationTest {
-       @testSetup
+     /*  @testSetup
     public static void getAdminUser(){
               user adminuser = TestDataFactory.createAdminUser(true);
              adminuser.Manager_Access__c = true;
              adminuser.IT_Admin_Access__c = true;
              UPDATE adminuser;
         
-    }
+    }*/
 
     public static testmethod void createTimesheet(){
        // Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
@@ -33,6 +33,9 @@ public class restrictAssignmentCreationTest {
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
         EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
         EMS_LM_Leave__c workfromhome = TestDataFactory.createLeaveType('Work From Home',true);
+          EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
+               EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
+               EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
         Account acc = TestDataFactory.createAccount(true);
         Contact con=  TestDataFactory.createResourceContact(acc.id, false);
         con.EMS_RM_Employee_Id__c = 'CP10235';

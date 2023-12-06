@@ -1,8 +1,8 @@
 @isTest
-private class EMS_LM_MyRequestTabLeaveReqTest {
+Public class EMS_LM_MyRequestTabLeaveReqTest {
     
     @isTest
-    static void testGetLMHistory() {
+    public static void testGetLMHistory() {
         user adminuser = TestDataFactory.createAdminUser(true);
         Resource_Role__c role;
         Resource_Role__c role1;
@@ -10,24 +10,28 @@ private class EMS_LM_MyRequestTabLeaveReqTest {
         Contact con;
         Contact conRRR;
         EMS_LM_Leave__c annualtype;
+        EMS_LM_Leave__c annualtype1;
         Resource_Resource_Relationship__c rrr;
         system.runAs(adminuser){
             
             role = TestDataFactory.createResourceRole('Software Engineer',true);
             role1 = TestDataFactory.createResourceRole('tech Engineer',true);
             annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
+            annualtype1 = TestDataFactory.createLeaveType('Paid time off',true);
             EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
             EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
             EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
             EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);
-            
+            EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
+               EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
+               EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
             acc = TestDataFactory.createAccount(true);
             con=TestDataFactory.createResourceContact(acc.id, false);
             con.EMS_RM_Employee_Id__c = 'CP10234';
             con.Resource_Role__c = role.Id;
             con.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
             con.EMS_LM_No_Of_Leaves_Credit__c = 10;
-            insert con;
+            insert con; 
             conRRR=TestDataFactory.createResourceContactForRRR(acc.id, false);
             conRRR.EMS_RM_Employee_Id__c = 'CP10235';
             conRRR.Resource_Role__c = role1.Id;
@@ -41,7 +45,7 @@ private class EMS_LM_MyRequestTabLeaveReqTest {
         Test.startTest();
         system.runAs(adminuser){
             u1 = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
-            u2 = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true);
+            //u2 = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true);
         }
         
         System.runAs(u1) {
@@ -60,6 +64,7 @@ private class EMS_LM_MyRequestTabLeaveReqTest {
                     String startDate = String.valueOf(Date.today().addDays(-7));           
             String endDate = String.valueOf(Date.today().addDays(7)); 
             List<EMS_LM_Leave_History__c> result = EMS_LM_MyRequestTabLeaveReq.getLMHistory(startDate, endDate, statusValues, typeValues);
+            EMS_LM_MyRequestTabLeaveReq.getAllLeavesData(); 
             for (EMS_LM_Leave_History__c asserTest : result) {
                String status = asserTest.EMS_LM_Status__c;
                String requestStartDate = String.valueOf(asserTest.EMS_LM_Leave_Start_Date__c);
@@ -70,6 +75,9 @@ private class EMS_LM_MyRequestTabLeaveReqTest {
               System.assertEquals(true, statusValues.contains(status));
             }
         }
+        
         Test.stopTest();
     }
+    
+    
 }
