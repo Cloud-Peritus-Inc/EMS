@@ -14,4 +14,11 @@
         <shortDescription>leaveforbelowtwoyear</shortDescription>
         <value>1</value>
     </labels>
+    <labels>
+        <fullName>leavegreater2years</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>leavegreater2years</shortDescription>
+        <value>1.25</value>
+    </labels>
 </CustomLabels>
