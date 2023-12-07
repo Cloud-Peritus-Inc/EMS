@@ -34,7 +34,7 @@ private class BatchToAdd5LeavesEveryQuarterTest {
             EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
             EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
             EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);
-            EMS_LM_Leave__c paidTimeOff = TestDataFactory.createLeaveType('Paid time off',true);
+           // EMS_LM_Leave__c paidTimeOff = TestDataFactory.createLeaveType('Paid time off',true);
                EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
         EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
         EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);

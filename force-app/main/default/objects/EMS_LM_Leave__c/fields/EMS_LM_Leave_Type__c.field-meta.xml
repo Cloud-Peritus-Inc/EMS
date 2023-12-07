@@ -51,6 +51,21 @@
                 <default>false</default>
                 <label>Marriage Leave</label>
             </value>
+            <value>
+                <fullName>Paid time off</fullName>
+                <default>false</default>
+                <label>Paid time off</label>
+            </value>
+            <value>
+                <fullName>UnPaid time off</fullName>
+                <default>false</default>
+                <label>UnPaid time off</label>
+            </value>
+            <value>
+                <fullName>Floating Holiday</fullName>
+                <default>false</default>
+                <label>Floating Holiday</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
