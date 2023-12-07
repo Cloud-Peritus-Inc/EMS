@@ -59,6 +59,8 @@ public without sharing class CalculateTheAnnualLeaves implements TriggerAction.A
      private void updateResourceLeaves(List<Contact> contactList,Map<Id,Contact> oldMap) {
       Map<String,Decimal> leaveMap = new Map<String,Decimal>();
       Id AnnualLeaveTypeId = [Select Id FROM EMS_LM_Leave__c  WHERE Name = 'Annual Leave' Limit 1].Id;
+
+
       Id PaidTimeOffTypeId=[SELECT Id FROM EMS_LM_Leave__c WHERE Name='Paid time off' Limit 1].Id;
          
       List<EMS_LM_Leave_Credit__c> leaveCreditList = new List<EMS_LM_Leave_Credit__c>();
