@@ -31,7 +31,7 @@ public without Sharing class LeaveHistoryApexController {
         if(userId != null) {
             User user = [SELECT Id,
                          ContactId, 
-                         Email 
+                         Email,contact.Work_Location__c 
                          FROM User 
                          WHERE Id = :userId];
             try {
@@ -47,6 +47,11 @@ public without Sharing class LeaveHistoryApexController {
                                                          }
                     for(String leaveType : uniqueLeaveTypes) {
                         leaveTypes.add(leaveType);
+                    }
+                    Id WORKLOCATION_USA_ID =[select Id, Name From Office_Location__c WHERE Name='California - USA' LIMIT 1].Id;
+                    
+                    if(user.contact.Work_Location__c == WORKLOCATION_USA_ID){
+                        leaveTypes.add('UnPaid time off');
                     }
                     System.debug('### leaveTypes ' + leaveTypes);
                 }
@@ -89,6 +94,11 @@ public without Sharing class LeaveHistoryApexController {
     @AuraEnabled(Cacheable=true)
     public static IntBolleanWrapper userLevelOfApproval(){
         IntBolleanWrapper returnValues = new IntBolleanWrapper();
+         User usr = [SELECT Id, Contact.timesheet_NoNeed__c,
+						   contactId__c,contactId
+                    FROM User
+                    WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
+        
         Contact con = [SELECT Id, 
                               Resource_Role__c, 
                               Resource_Role__r.Level_of_Approval__c, 
@@ -97,7 +107,7 @@ public without Sharing class LeaveHistoryApexController {
                        		  Level_of_Approval__c,
                               EMS_TM_User__c 
                        FROM Contact 
-                       WHERE EMS_TM_User__c =: LeaveRequestConstant.LOGGEDIN_USERID];
+                       WHERE Id =: usr.contactId];
         System.debug('### con '  + con);
         System.debug('### con '  + con.Resource_Role__r.Level_of_Approval__c);
         System.debug('### con '  + con.Resource_Role__r.Auto_Approve__c);
@@ -148,12 +158,15 @@ public without Sharing class LeaveHistoryApexController {
                                                              WHERE Resource_Reports_To_User__c != null 
                                                              AND  Resource_Reports_To__c =: usr.ContactId__c 
                                              				];
+        List<EMS_TM_Project__c> Project=[select Id,Name,Project_Manager__c	from EMS_TM_Project__c where Project_Manager__c= :usr.ContactId__c];
             userAccessWrapper wrapperData = new userAccessWrapper();
             wrapperData.relationAcess = rrrList.size();
+            wrapperData.relationAcessPM=Project.size();
             if(usr.Contact.timesheet_NoNeed__c == true){
                 wrapperData.hraccess = true;
             }
-        Integer intList = rrrList.size();        
+        Integer intList = rrrList.size(); 
+        Integer PMaccess=Project.Size();
 		return wrapperData;
         }
         public class userAccessWrapper {
@@ -161,5 +174,8 @@ public without Sharing class LeaveHistoryApexController {
         Public  Integer relationAcess {get; set;}
         @AuraEnabled
         public  Boolean hraccess {get; set;}
+         @AuraEnabled
+        public  Integer relationAcessPM {get; set;}
+       
     }
 }
