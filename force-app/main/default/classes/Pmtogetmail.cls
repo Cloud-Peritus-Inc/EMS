@@ -2,7 +2,7 @@ public class Pmtogetmail {
     
     @AuraEnabled
     public static void getemails(Id conId,Id Leaveid){
-        
+  /*      
         contact con=[select id,lastname,EMS_TM_User__c from contact where id =:conId];
         
         list<string> emaillist=new list<string>();
@@ -26,7 +26,7 @@ public class Pmtogetmail {
          Messaging.SingleEmailMessage[] messages = new    List<Messaging.SingleEmailMessage> {message};
              Messaging.SendEmailResult[] results =  Messaging.sendEmail(messages);
        
-              
+          */    
                
         
     }
