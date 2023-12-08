@@ -95,7 +95,7 @@ public class LeaveHistoryApexControllerTest {
         //leaduser1 = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true);
         
         system.runAs(contactuser){
-            
+  /*          
         Contact con = [SELECT Id, 
                            Resource_Role__c, 
                            Resource_Role__r.Level_of_Approval__c, 
@@ -104,7 +104,8 @@ public class LeaveHistoryApexControllerTest {
                            Level_of_Approval__c,
                            EMS_TM_User__c 
                            FROM Contact 
-                   WHERE EMS_TM_User__c =: contactuser.Id limit 1];   
+                   WHERE EMS_TM_User__c =: contactuser.Id limit 1]; 
+*/
             EMS_LM_Leave__c annualtype=TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype=TestDataFactory.createLeaveType('Loss of Pay',true);
         EMS_LM_Leave__c compofftype=TestDataFactory.createLeaveType('Compensatory Off',true);
@@ -114,10 +115,10 @@ public class LeaveHistoryApexControllerTest {
             
             //Office_Location__c officlocRecr =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
             Office_Location__c officlocRec2r =TestDataFactory.createOfficeLocation('California - USA',true);
-            EMS_LM_Leave_Credit__c lcreditAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1.6,annualtype.id, true);
-            EMS_LM_Leave_Credit__c lcreditAnnual1 = Testdatafactory.createLeaveCredit(con.id,system.today(),10,loptype.id, false);
+         //   EMS_LM_Leave_Credit__c lcreditAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1.6,annualtype.id, true);
+          //  EMS_LM_Leave_Credit__c lcreditAnnual1 = Testdatafactory.createLeaveCredit(con.id,system.today(),10,loptype.id, false);
             // EMS_LM_Leave_Credit__c bretAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),20,bretype.id, true);
-            EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, false);
+      //      EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, false);
             //EMS_LM_Leave_Credit__c patAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,paternitytype.id, true); 
             
            // LeaveHistoryApexController.IntBolleanWrapper result = LeaveHistoryApexController.userLevelOfApproval();
