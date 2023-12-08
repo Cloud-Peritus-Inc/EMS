@@ -69,7 +69,7 @@ public class LeaveHistoryApexControllerTest {
     }   
     
     static testMethod void userLevelOfApprovalTest() {
-        User resourceUser = [SELECT Id,ContactId FROM User where isactive=True];
+        User resourceUser = [SELECT Id,ContactId FROM User where isactive=True LIMIT 1];
         system.debug('resourceUser========----------='+resourceUser);
         //User leaduser1;
         
