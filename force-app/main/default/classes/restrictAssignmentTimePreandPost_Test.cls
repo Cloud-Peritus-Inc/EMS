@@ -47,6 +47,7 @@ public class restrictAssignmentTimePreandPost_Test {
         projectRec.EMS_TM_Status__c = 'ongoing';
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con1.Id;
+        projectRec.Offshore_Project_Manager__c=con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);

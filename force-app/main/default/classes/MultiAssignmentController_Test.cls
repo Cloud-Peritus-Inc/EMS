@@ -32,6 +32,7 @@ public class MultiAssignmentController_Test {
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
+        projectRec.Offshore_Project_Manager__c=con.Id;
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);       
         System.debug('ProjectREC'+projectRec);

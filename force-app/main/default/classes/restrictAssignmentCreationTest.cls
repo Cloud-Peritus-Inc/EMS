@@ -55,6 +55,7 @@ public class restrictAssignmentCreationTest {
         projectRec.EMS_TM_Status__c = 'completed';
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con.Id;
+        projectRec.Offshore_Project_Manager__c=con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);
