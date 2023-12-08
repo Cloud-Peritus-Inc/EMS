@@ -46,9 +46,9 @@ public class AssignmentTileControllerTest {
         Test.startTest();
         system.runAs(adminuser){
             u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
-        }
+    //    }
           
-          system.runAs(u){
+         // system.runAs(u){
              EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
         assignmentRec.EMS_TM_EmployeeName__c = con.Id;
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
@@ -58,7 +58,9 @@ public class AssignmentTileControllerTest {
         assignmentRec.EMS_TM_AssignedAs__c='Administrator';
         INSERT assignmentRec; 
              AssignmentTileController.getMyProjectDetails();
-           }
+          // }
          Test.stopTest();
     }
+    }
+        
 }

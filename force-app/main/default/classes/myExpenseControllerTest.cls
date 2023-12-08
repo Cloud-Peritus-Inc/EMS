@@ -114,6 +114,7 @@ public class myExpenseControllerTest {
         projectRec.EMS_TM_Status__c = 'ongoing';
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con2.Id;
+        projectRec.Offshore_Project_Manager__c = con2.Id;
         projectRec.Type_Of_Project__c ='global Projects';
         INSERT projectRec;
         EMS_TM_Project__c projectRec1 = new EMS_TM_Project__c();
@@ -122,6 +123,7 @@ public class myExpenseControllerTest {
         projectRec1.EMS_TM_Status__c = 'ongoing';
         projectRec1.Name = 'project1';
         projectRec1.Project_Manager__c = con2.id;
+        projectRec.Offshore_Project_Manager__c = con2.Id;
         projectRec1.Type_Of_Project__c ='global Projects';
         INSERT projectRec1;
         expense__c exp=new expense__c();

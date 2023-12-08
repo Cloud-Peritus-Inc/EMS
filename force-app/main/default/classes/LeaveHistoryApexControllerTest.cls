@@ -61,7 +61,7 @@ public class LeaveHistoryApexControllerTest {
             contactuser = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true); //tech
             try{
                             leaduser = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true); //pm
-
+                             
             }catch(exception e){
                 system.debug('error==='+e);
             }
@@ -69,7 +69,7 @@ public class LeaveHistoryApexControllerTest {
     }   
     
     static testMethod void userLevelOfApprovalTest() {
-        User resourceUser = [SELECT Id,ContactId FROM User where email='testemail4@testclass.com.they'];
+        User resourceUser = [SELECT Id,ContactId FROM User where isactive=True];
         system.debug('resourceUser========----------='+resourceUser);
         //User leaduser1;
         
