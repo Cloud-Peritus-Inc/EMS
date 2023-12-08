@@ -37,6 +37,7 @@ public class AssignmentTileControllerTest {
         projectRec.Project_Manager__c = con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
         projectRec.Offshore_Project_Manager__c=con.Id;   
+        projectRec.Offshore_Project_Manager__c=con.Id;   
         INSERT projectRec;        
 
             System.debug('con'+ con);

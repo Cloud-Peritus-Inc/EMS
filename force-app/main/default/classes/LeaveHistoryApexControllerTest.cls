@@ -2,6 +2,7 @@
 public class LeaveHistoryApexControllerTest {
     @testSetup static void setup()  {
         user adminuser = TestDataFactory.createAdminUser(true);
+        system.debug('adminuser====================='+adminuser);
         Resource_Role__c techLead;
         Resource_Role__c role1;
         Resource_Role__c role;
@@ -69,6 +70,7 @@ public class LeaveHistoryApexControllerTest {
     
     static testMethod void userLevelOfApprovalTest() {
         User resourceUser = [SELECT Id,ContactId FROM User where email='testemail4@testclass.com.they'];
+        system.debug('resourceUser========----------='+resourceUser);
         //User leaduser1;
         
         //leaduser1 = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true);
