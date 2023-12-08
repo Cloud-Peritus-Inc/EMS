@@ -28,6 +28,9 @@ public class enableAndDisableBillableOnContactTest {
         EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
                EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
                EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
+        
+        Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+        Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('California - USA',true);
          Account acc = TestDataFactory.createAccount(true);
 		 Contact con=  TestDataFactory.createResourceContact(acc.id, false);
         con.EMS_RM_Employee_Id__c = 'CP10235';
@@ -50,6 +53,7 @@ public class enableAndDisableBillableOnContactTest {
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
+        projectRec.Offshore_Project_Manager__c=con.Id; 
         insert projectRec;
                 
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
@@ -57,6 +61,8 @@ public class enableAndDisableBillableOnContactTest {
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
         assignmentRec.EMS_TM_Billable__c = true;
+        assignmentRec.Project_Allocation__c=2;
+        assignmentRec.EMS_TM_AssignedAs__c='Administrator';
         insert assignmentRec;
         
     }

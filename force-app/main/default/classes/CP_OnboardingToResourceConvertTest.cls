@@ -31,6 +31,9 @@ public class CP_OnboardingToResourceConvertTest {
                EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
                 EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
             
+            Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+            Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('California - USA',true);
+            
             Account acc = TestDataFactory.createAccount(true);
             
             Contact con=  TestDataFactory.createResourceContact(acc.id, false);

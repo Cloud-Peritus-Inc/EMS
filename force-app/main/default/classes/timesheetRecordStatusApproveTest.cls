@@ -9,6 +9,8 @@ public class timesheetRecordStatusApproveTest {
        // Id p = [SELECT id FROM profile WHERE name='Employee - Resource(Community)'].id;
         user userId =[SELECT id FROM User  WHERE IsActive = true LIMIT 1];          
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
+        Office_Location__c hydofficlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+Office_Location__c usofficlocRec =TestDataFactory.createOfficeLocation('California - USA',true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
@@ -35,6 +37,7 @@ public class timesheetRecordStatusApproveTest {
         projectRec.EMS_TM_Status__c = 'ongoing';
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con.Id;
+        projectRec.Offshore_Project_Manager__c = con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
         projectRec.Approval_Needed__c ='NO';
         INSERT projectRec;        
@@ -44,6 +47,8 @@ public class timesheetRecordStatusApproveTest {
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
         assignmentRec.EMS_TM_Billable__c = true;
+        assignmentRec.EMS_TM_AssignedAs__c = 'Administrator';
+        assignmentRec.Project_Allocation__c = 1;
         INSERT assignmentRec;  
         EMS_Timesheet__c timesheetRec = new EMS_Timesheet__c();
         timesheetRec.Week_Start_Date__c = System.today();

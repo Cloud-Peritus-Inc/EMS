@@ -11,11 +11,14 @@ public class BatchtoUpdateLeavesInTimesheet_Test {
         Date weekStart = considerDate.toStartofWeek().addDays(1);
         Date weekEnd = considerDate.toStartofWeek().addDays(7); 
         user loginedUser =[SELECT id from User  where IsActive = true LIMIT 1];
+        Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+        Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('California - USA',true);
+        //EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
         Resource_Role__c role = TestDataFactory.createResourceRole(false);
         role.Name ='Sr Project Manager';
         role.Level_of_Approval__c =1;
         insert role;
-        Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hhyderabad',true);
+        //Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hhyderabad',true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
@@ -56,6 +59,7 @@ public class BatchtoUpdateLeavesInTimesheet_Test {
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
+        projectRec.Offshore_Project_Manager__c=con.Id;
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);
         EMS_TM_Project__c projectRec1 = new EMS_TM_Project__c();
@@ -65,6 +69,7 @@ public class BatchtoUpdateLeavesInTimesheet_Test {
         projectRec1.Name = 'OOO';
         projectRec1.Project_Manager__c = con.Id;
         projectRec1.Type_Of_Project__c ='Global Projects';
+        projectRec1.Offshore_Project_Manager__c=con.Id;
         INSERT projectRec1;        
         System.debug('ProjectREC'+projectRec);
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
@@ -72,6 +77,8 @@ public class BatchtoUpdateLeavesInTimesheet_Test {
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
         assignmentRec.EMS_TM_Billable__c = true;
+        assignmentRec.Project_Allocation__c=2;
+        assignmentRec.EMS_TM_AssignedAs__c='Administrator';
         INSERT assignmentRec;
         EMS_Timesheet__c timesheetRec = new EMS_Timesheet__c();
         timesheetRec.Resource__c = con.Id;
@@ -109,7 +116,9 @@ public class BatchtoUpdateLeavesInTimesheet_Test {
         role.Name ='Sr Project Manager';
         role.Level_of_Approval__c =1;
         insert role;
-        Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hhyderabad',true);
+        Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+        Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('California - USA',true);
+        EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
         EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
@@ -147,6 +156,7 @@ public class BatchtoUpdateLeavesInTimesheet_Test {
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
+        projectRec.Offshore_Project_Manager__c = con.Id;
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);
         EMS_TM_Project__c projectRec1 = new EMS_TM_Project__c();
@@ -156,6 +166,7 @@ public class BatchtoUpdateLeavesInTimesheet_Test {
         projectRec1.Name = 'OOO';
         projectRec1.Project_Manager__c = con.Id;
         projectRec1.Type_Of_Project__c ='Global Projects';
+        projectRec1.Offshore_Project_Manager__c = con.Id;
         INSERT projectRec1;        
         System.debug('ProjectREC'+projectRec);
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
@@ -163,6 +174,8 @@ public class BatchtoUpdateLeavesInTimesheet_Test {
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
         assignmentRec.EMS_TM_Billable__c = true;
+        assignmentRec.Project_Allocation__c=2;
+        assignmentRec.EMS_TM_AssignedAs__c='Administrator';
         INSERT assignmentRec;
         EMS_Timesheet__c timesheetRec = new EMS_Timesheet__c();
         timesheetRec.Resource__c = con.Id;

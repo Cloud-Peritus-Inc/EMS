@@ -4,7 +4,7 @@ public class WorkAnniversaryCheckerTest {
     public static void testworkanniversary(){
          user loginedUser =[SELECT id from User  where IsActive = true LIMIT 1];
           Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
-         Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('United States of America',true);
+         Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('California - USA',true);
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
         // Office_Location__c officlocRec =TestDataFactory.createOfficeLocation(true);
         EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
@@ -13,7 +13,7 @@ public class WorkAnniversaryCheckerTest {
         EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
         EMS_LM_Leave__c workfromhome = TestDataFactory.createLeaveType('Work From Home',true);
         EMS_LM_Leave__c paidTimeOff = TestDataFactory.createLeaveType('Paid time off',true);
-          EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
+          //EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
                EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
                EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
         Account acc = TestDataFactory.createAccount(true);

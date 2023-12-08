@@ -3,7 +3,8 @@ public class updateOffboardingOnTaskCompliationsTest {
     public testmethod static void updateOffboardingOnTaskCompliationsMethod(){
         user adminuser = TestDataFactory.createAdminUser(true);
         system.runAs(adminuser){
-            
+            Office_Location__c hydofficlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+Office_Location__c usofficlocRec =TestDataFactory.createOfficeLocation('California - USA',true);
             Resource_Role__c role = TestDataFactory.createResourceRole(true);
             EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
             EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);

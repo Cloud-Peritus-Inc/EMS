@@ -48,6 +48,7 @@ public class BatchToCreateTimesheets_Test {
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
+         projectRec.Offshore_Project_Manager__c=con.Id; 
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);
         EMS_TM_Project__c projectRec1 = new EMS_TM_Project__c();
@@ -57,6 +58,7 @@ public class BatchToCreateTimesheets_Test {
         projectRec1.Name = 'OOO';
         projectRec1.Project_Manager__c = con.Id;
         projectRec1.Type_Of_Project__c ='Global Projects';
+        projectRec1.Offshore_Project_Manager__c=con.Id; 
         INSERT projectRec1;        
         System.debug('ProjectREC'+projectRec);
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
@@ -65,6 +67,8 @@ public class BatchToCreateTimesheets_Test {
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
         assignmentRec.EMS_TM_EndDate_Asgn__c = system.today()+3;
         assignmentRec.EMS_TM_Billable__c = true;
+        assignmentRec.Project_Allocation__c=2;
+        assignmentRec.EMS_TM_AssignedAs__c='Administrator';
         INSERT assignmentRec;
         List<EMS_TM_Calendar__c> holidayList = new List<EMS_TM_Calendar__c>();
         EMS_TM_Calendar__c holiday = new EMS_TM_Calendar__c();

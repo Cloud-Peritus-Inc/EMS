@@ -12,7 +12,8 @@ public class CustomContactUpdateFromStad_Test {
                EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
                EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
         
-        
+        Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+        Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('California - USA',true);
         
         Contact Con = new Contact();
         Con.FirstName = 'Test';
@@ -53,8 +54,11 @@ public class CustomContactUpdateFromStad_Test {
         EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
         EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
         EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);
-        
+        EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
         Account acc = TestDataFactory.createAccount(true);
+        
+        Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+        Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('California - USA',true);
         
         Contact Con = new Contact();
         Con.FirstName = 'Test';

@@ -29,6 +29,8 @@ public class LeaveHistoryApexControllerTest {
                EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
                EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
             
+            Office_Location__c officlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+            Office_Location__c officlocRec2 =TestDataFactory.createOfficeLocation('California - USA',true);
             
            
 
@@ -66,7 +68,10 @@ public class LeaveHistoryApexControllerTest {
     }   
     
     static testMethod void userLevelOfApprovalTest() {
-        User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they'];
+        User resourceUser = [SELECT Id,ContactId FROM User where email='testemail4@testclass.com.they'];
+        //User leaduser1;
+        
+        //leaduser1 = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true);
         system.runAs(resourceUser){
         Contact con = [SELECT Id, 
                            Resource_Role__c, 
@@ -95,11 +100,11 @@ public class LeaveHistoryApexControllerTest {
             system.assertEquals(con.Level_of_Approval__c, result.levelOfApproval);
             System.assertEquals(True, result.autoApproval);
             System.assertEquals(null, result.overridelevelOfApproval);
-            System.assertEquals(false, result.overRideCheck);*/
+            System.assertEquals(false, result.overRideCheck); */
             
         }
         
-    }
+    } 
     static TestMethod void getLeaveTypesForUserTest(){
         User resourceUser = [SELECT Id,ContactId FROM User WHERE isActive=True limit 1];
          system.debug('84');

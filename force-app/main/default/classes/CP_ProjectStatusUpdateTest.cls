@@ -53,6 +53,7 @@ public class CP_ProjectStatusUpdateTest {
                 projectRec.Name = 'project1';
                 projectRec.Project_Manager__c = con.Id;
                 projectRec.Type_Of_Project__c ='Client Projects';
+                projectRec.Offshore_Project_Manager__c=con.Id;
                 INSERT projectRec; 
                  System.runAs(adminUser){
                 EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
@@ -60,6 +61,8 @@ public class CP_ProjectStatusUpdateTest {
                 assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
                 assignmentRec.EMS_TM_StartDate_Asgn__c = system.today()+1;
                 assignmentRec.EMS_TM_Billable__c = true;
+                assignmentRec.Project_Allocation__c=2;
+               assignmentRec.EMS_TM_AssignedAs__c='Administrator';
                 INSERT assignmentRec; 
                 System.debug('assignmentRec'+assignmentRec);
             }

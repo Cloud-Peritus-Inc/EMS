@@ -15,6 +15,8 @@ public class updateTheProbationPeriodOnResource_Test {
             role = TestDataFactory.createResourceRole('Software Engineer',false);
             role.Probation_Days__c=180;
             insert role;
+            Office_Location__c hydofficlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+            Office_Location__c usofficlocRec =TestDataFactory.createOfficeLocation('California - USA',true);
             annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
             EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
             EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);

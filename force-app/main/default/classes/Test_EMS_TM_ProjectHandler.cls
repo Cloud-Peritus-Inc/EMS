@@ -13,6 +13,8 @@ public class Test_EMS_TM_ProjectHandler {
               EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
                EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
                EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
+            Office_Location__c hydofficlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+Office_Location__c usofficlocRec =TestDataFactory.createOfficeLocation('California - USA',true);
           //  recordType rec =[SELECT Id, Name, IsActive FROM RecordType where name ='Client Projects'];
              Contact con = new contact();
         con.Email ='ramakrishna@gmail.com';
@@ -32,12 +34,15 @@ public class Test_EMS_TM_ProjectHandler {
             emp.EMS_TM_Status__c = 'ongoing';
             emp.EMS_TM_StartDate__c = System.today();
             emp.Project_Manager__c=con.Id;
+            emp.Offshore_Project_Manager__c=con.Id;
             emp.EMS_TM_EndDate__c=System.today().addDays(10);
             insert emp;
             EMS_TM_Assignment__C assign = new EMS_TM_Assignment__C();
             assign.EMS_TM_EmployeeName__c = con.id;
             assign.EMS_TM_StartDate_Asgn__c = System.today();
             assign.EMS_TM_ProjectName_Asgn__c = emp.id;
+            assign.EMS_TM_AssignedAs__c ='Administrator';
+             assign.Project_Allocation__c=19;
             assign.EMS_TM_EndDate_Asgn__c=System.today().addDays(10);
             
             insert assign;

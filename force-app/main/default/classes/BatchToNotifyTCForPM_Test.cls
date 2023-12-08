@@ -48,6 +48,7 @@ public class BatchToNotifyTCForPM_Test {
         projectRec.Name = 'project1';
         projectRec.Project_Manager__c = con1.Id;
         projectRec.Type_Of_Project__c ='Client Projects';
+        projectRec.Offshore_Project_Manager__c=con.Id; 
         INSERT projectRec;        
         System.debug('ProjectREC'+projectRec);
         EMS_TM_Assignment__c assignmentRec = new EMS_TM_Assignment__c();
@@ -55,6 +56,8 @@ public class BatchToNotifyTCForPM_Test {
         assignmentRec.EMS_TM_ProjectName_Asgn__c = projectRec.Id;
         assignmentRec.EMS_TM_StartDate_Asgn__c = system.today();
         assignmentRec.EMS_TM_Billable__c = true;
+        assignmentRec.Project_Allocation__c=2;
+        assignmentRec.EMS_TM_AssignedAs__c='Administrator';
         INSERT assignmentRec;  
         EMS_Timesheet__c timesheetRec = new EMS_Timesheet__c();
         timesheetRec.Week_Start_Date__c = System.today();
