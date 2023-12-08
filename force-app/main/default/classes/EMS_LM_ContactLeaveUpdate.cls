@@ -16,9 +16,13 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
     // This method is used to get the Leave types of Leve Credit records of of particular loggedin Employee
     @AuraEnabled(Cacheable=true)
     public static List<String> getLeaveType(Id userid, decimal annualavailable) {
+        system.debug('the annualavailabe leave are:-'+annualavailable);
+        system.debug('the userid  is:-'+userid);
         List<String> s = new List<String>();
+        
+        
         if(userid !=null){
-            user u =[Select id, ContactId, contact.EMS_RM_ApplicantStatus_Update__c, Email from user where id =: userid];
+            user u =[Select id, ContactId, contact.EMS_RM_ApplicantStatus_Update__c, Email,contact.Work_Location__c,contact.UtlizedFloatLeaves__c from user where id =: userid];
             try{         
                 if(u.ContactId !=null){ // if contact Id is not null we will retrieve the data using User contact Id
                      set<String> i = new set<String>();
@@ -53,6 +57,21 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
                     for(String s1 : i){
                         s.add(s1);
                     }
+                    Id WORKLOCATION_USA_ID =[select Id, Name From Office_Location__c WHERE Name='California - USA' LIMIT 1].Id;
+                    
+                    if(u.contact.Work_Location__c == WORKLOCATION_USA_ID){
+                        s.add('UnPaid time off');
+                        s.add('Floating Holiday');
+                    }
+                       Integer indexToRemove = s.indexOf('Floating Holiday');
+                        if (indexToRemove != -1 && u.contact.UtlizedFloatLeaves__c >= 1) {
+                                 s.remove(indexToRemove);
+                            }
+                    
+                    /*Integer indexToRemove1 = s.indexOf('Annual Leave');
+                        if (indexToRemove1 != -1 && u.contact.EMS_RM_ApplicantStatus_Update__c =='Active - Probation') {
+                                 s.remove(indexToRemove1);
+                            } */
                     
                     
                 }
@@ -98,10 +117,10 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
             user u =[Select id, ContactId, Email from user where id = :userid];
             try{
                 if(u.ContactId !=null){
-                    cnt = [select Id, EMS_TM_In_Billing__c,Work_Location__r.Country__c from Contact where Id = :u.ContactId Limit 1];       
+                    cnt = [select Id,EMS_Employee_Type__c, EMS_TM_In_Billing__c,Work_Location__r.Country__c from Contact where Id = :u.ContactId Limit 1];       
                 }
                 else{
-                    cnt = [select Id,EMS_TM_In_Billing__c,Work_Location__r.Country__c from Contact  where Email=:u.Email AND EMS_TM_User__c = :userid Limit 1];
+                    cnt = [select Id,EMS_TM_In_Billing__c,EMS_Employee_Type__c,Work_Location__r.Country__c from Contact  where Email=:u.Email AND EMS_TM_User__c = :userid Limit 1];
                 }
             }
             catch (Exception e){
@@ -138,11 +157,11 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
                 user u =[Select id, ContactId, Email from user where id =: userid];
                 if(u.ContactId !=null){
                     cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c, Email , EMS_LM_No_Of_Available_Compensatory_Off__c,
-                           EMS_LM_No_Of_Available_Maternity_Leave__c,EMS_LM_No_of_Available_Marriage_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
+                           EMS_LM_No_Of_Available_Maternity_Leave__c,EMS_LM_No_of_Available_Marriage_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,UtlizedFloatLeaves__c,
                            EMS_LM_No_Of_Availble_Leaves__c from Contact where Id = :u.ContactId Limit 1];         
                 }
                 else{
-                    cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c,Email, EMS_LM_No_Of_Available_Compensatory_Off__c,
+                    cnt = [select Id, EMS_LM_No_Of_Available_Bereavement_Leave__c,Email, UtlizedFloatLeaves__c,EMS_LM_No_Of_Available_Compensatory_Off__c,
                            EMS_LM_No_Of_Available_Maternity_Leave__c,EMS_LM_No_of_Available_Marriage_Leave__c, EMS_LM_No_Of_Available_Paternity_Leave__c,
                            EMS_LM_No_Of_Availble_Leaves__c from Contact where Email=:u.Email AND EMS_TM_User__c = :userid Limit 1];
                 }
@@ -254,5 +273,26 @@ Public without sharing class EMS_LM_ContactLeaveUpdate {
             return null;
         }
     }
+   
+    @AuraEnabled(Cacheable=true)
+    public static Decimal getExperienceOfUser(Id userId) {
+    Decimal monthsSinceJoin = 0; 
     
+    User userDetails = [SELECT Id, ContactId FROM User WHERE Id = :userId];
+    system.debug('userDetails=============================='+userDetails);
+    if (userDetails != null && userDetails.ContactId != null) {
+        Contact conDetails = [SELECT Id, EMS_EM_JD__c FROM Contact WHERE Id = :userDetails.ContactId AND Work_Location_Country__c = 'United States of America' LIMIT 1];
+        system.debug('conDetails=============================='+conDetails);
+        
+            Date startDate = conDetails.EMS_EM_JD__c;
+            //Date currentDate = Date.today();
+            
+            monthsSinceJoin = startDate.monthsBetween(system.today());
+        
+    }
+    
+    return monthsSinceJoin;
+}
+
+
 }
