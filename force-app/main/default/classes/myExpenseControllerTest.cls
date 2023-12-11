@@ -125,7 +125,7 @@ public class myExpenseControllerTest {
         projectRec1.Project_Manager__c = con2.id;
         projectRec.Offshore_Project_Manager__c = con2.Id;
         projectRec1.Type_Of_Project__c ='global Projects';
-        INSERT projectRec1;
+        // INSERT projectRec1;
         expense__c exp=new expense__c();
         exp.Resource__c=con2.Id;
         exp.Amount1__c=100000;
