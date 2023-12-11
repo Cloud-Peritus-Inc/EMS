@@ -24,7 +24,7 @@
                 <template if:true={hideInotherleave}>
                   <lightning-layout-item padding="around-small" size="12">
                   <div>
-                    <lightning-combobox name="leavetype" label="Leave Type" value={value} placeholder="Select Leave Type"
+                    <lightning-combobox name="leavetype" label="Leave Type" value={value} placeholder="Floating Holiday"
                       options={lOptions} disabled required></lightning-combobox>
                   </div>
                 </lightning-layout-item>
@@ -46,8 +46,10 @@
                       <lightning-combobox name='selectday' label='Select Day' placeholder='Full Day' value={fullday}
                         options={dOptions} onchange={dayChange}></lightning-combobox>
                     </div>
-                  </lightning-layout-item> 
-                
+                  </lightning-layout-item>
+                                
+
+                  <!-- <template if:false={isfloatleave}>  -->
                 <lightning-layout-item padding="around-small" size="6">
                   <div>
                     <lightning-input type="text" label="Leave Duration" value={duration} disabled></lightning-input>
@@ -59,6 +61,7 @@
 										disabled></lightning-input>
 								</div>
 							</lightning-layout-item>
+             <!-- </template>  -->
                 </template>
   
                 
@@ -89,12 +92,44 @@
                 </lightning-layout-item>
                 </template>
                 
+               <!-- loki   -->
+                <template if:true={isfloattype}>
+                  <lightning-layout-item padding="around-small" size="12">
+                  <div>
+                    <lightning-combobox name="leavetype" label="Leave Type" value={value} placeholder="Floating Holiday"
+                      options={lOptions} disabled required></lightning-combobox>
+                  </div>
+                </lightning-layout-item>
+											<lightning-layout-item padding="around-small" size="3">
+											<div>
+												<lightning-input type="Date" label="Start Date" name="startDate1" value={startDate1} timezone={userTimeZone}
+													id='datepicker' onchange={datechange}></lightning-input>
+											</div>
+										</lightning-layout-item>
+										<lightning-layout-item padding="around-small" size="3">
+											<div>
+												<lightning-input type="Date" label="End Date" name="endDate1" value={endDate1}
+													onchange={datechange}></lightning-input>
+											</div>
+										</lightning-layout-item>
+										<lightning-layout-item padding="around-small" size="6">
+											<div>
+												<lightning-combobox name='selectday' label='Select Day' placeholder='Full Day'
+													options={dOptions} onchange={dayChange}></lightning-combobox>
+											</div>
+										</lightning-layout-item>
+									     
+										</template>
+               <!-- loki   -->
                
                 <lightning-layout-item padding="around-small" size="12">
                   <div>
-                    <lightning-textarea type="text" maxlength="250" label="Reason" value={reason} onchange={reasonChange}></lightning-textarea>            
+                    <lightning-textarea required={isReasonRequired} type="text" maxlength="250" label="Reason" value={reason} onchange={reasonChange}></lightning-textarea>            
                   </div>
                 </lightning-layout-item>
+
+
+                
                 <lightning-layout-item padding="around-small" size="12">
                 <template if:true={documents}>
                                               <template for:each={documents} for:item="document">

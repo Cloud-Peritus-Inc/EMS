@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Leave Information">
+        <div class="slds-p-left_x-small">
+            <template if:true={isUSRegion}>
+                <lightning-record-form object-api-name="Contact" record-id={recordId} fields={USfields} columns="2">
+                </lightning-record-form>
+            </template>
+            <template if:false={isUSRegion}>
+                <lightning-record-form object-api-name="Contact" record-id={recordId} fields={nonUSFields} columns="2">
+                </lightning-record-form>
+            </template>
+        </div>
+    </lightning-card>
+</template>
