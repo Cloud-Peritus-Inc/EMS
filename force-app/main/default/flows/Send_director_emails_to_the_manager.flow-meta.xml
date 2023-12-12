@@ -232,7 +232,7 @@
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
     </actionCalls>
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Copy_1_of_Store_OffShore_Email</name>
         <label>Store OffShore Email</label>
