@@ -56,7 +56,6 @@
                 <elementReference>$Record.EMS_LM_Contact__r.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
@@ -115,7 +114,6 @@
                 <elementReference>$Record.EMS_LM_Contact__r.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
@@ -174,7 +172,6 @@
                 <elementReference>$Record.EMS_LM_Contact__r.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
@@ -233,7 +230,6 @@
                 <elementReference>$Record.EMS_LM_Contact__r.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
