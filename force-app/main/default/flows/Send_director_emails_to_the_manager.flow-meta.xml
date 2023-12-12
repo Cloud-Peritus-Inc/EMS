@@ -57,7 +57,6 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_to_OffShoreManagers_New</name>
@@ -116,7 +115,6 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_to_OnShoreManagers</name>
@@ -175,7 +173,6 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_to_OnShoreManagers_New2</name>
@@ -234,9 +231,8 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Copy_1_of_Store_OffShore_Email</name>
         <label>Store OffShore Email</label>
