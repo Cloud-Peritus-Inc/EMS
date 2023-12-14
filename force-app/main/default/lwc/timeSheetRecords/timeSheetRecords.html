@@ -1,0 +1,80 @@
+<!--
+		@description       : This component is used to show the latest 5 leave records of loggedin user in leaveManagement_Tile component. 
+		@author            : Vamsi
+		@group             : 
+		@last modified on  : 26-05-2023
+		@last modified by  : 
+		-->
+
+		<template>
+		<center>
+		<div class="table-container">
+			<table>
+				<thead>
+					<tr>
+						<th> Timesheet Record</th>
+						<th> Employee Name</th>
+						<th> Project</th>
+						<th> Number Of hours</th>
+						
+						<th class="slds-cell_action-mode" style="width:5.25rem">
+										<div>Actions</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={Timesheetdata} for:item="row">
+						<tr key={row.Id}>
+							 <td>
+							         <a href="#" data-id={row.Id} onclick={handlTimesheetrecordclick}>
+											    {row.Name} 
+							        </a>
+							 </td>
+							  <td>
+							         <a href="#" data-id={row.OwnerId} onclick={handlcontactrecordclick}>
+											  {row.OwnerName}
+							        </a>
+							 </td>
+				
+								 <td>
+							         <a href="#" data-id={row.projectid} onclick={handlTimesheetrecordclick}>
+											    {row.ProjcetName} 
+							        </a>
+							    </td>
+							
+							    <td>{row.NumberOfhours}</td>
+									<td class="slds-truncate dv-dynamic-width">
+								
+											<lightning-button-icon variant="brand" size="small" class="slds-p-around_xxx-small slds-p-bottom_xxx-small"
+												icon-name="action:approval" alternative-text="Approve"
+												onclick={clickapprove} 
+												key-field={row.Id} data-record-id={row.Id} data-id={row.Id}
+												disabled={row.disableButton}></lightning-button-icon>
+										
+											<lightning-button-icon variant="brand" size="small" class="slds-p-around_xxx-small"
+												icon-name="action:reject" alternative-text="Reject"
+												onclick={clickreject}
+												key-field={row.Id} data-record-id={row.Id} data-id={row.Id}
+												disabled={row.disableButton}>
+											</lightning-button-icon>
+												
+												<lightning-button-icon variant="brand" size="small" class="slds-p-around_xxx-small"
+												icon-name="utility:reassign" alternative-text="Reaasign"
+												onclick={clickReassing}
+												key-field={row.Id} data-record-id={row.Id} data-id={row.Id}
+												disabled={row.disableButton}>
+											</lightning-button-icon>
+									
+								</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+			<template if:true={nodata}>
+				<h2> No records found
+				</h2>
+				</br>
+			</template>
+		</div>
+		</center>
+		</template>
