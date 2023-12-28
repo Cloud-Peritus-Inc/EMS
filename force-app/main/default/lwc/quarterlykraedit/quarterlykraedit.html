@@ -1,0 +1,1012 @@
+<template>
+    <lightning-card>
+        <lightning-progress-indicator current-step={selectedStep} type="path" variant="base">
+            <template for:each={steps} for:item="step">
+                <lightning-progress-step id={step.value} label={step.label} value={step.value} key={step.label}
+                    onclick={stepSelectionHanler}></lightning-progress-step>
+            </template>
+        </lightning-progress-indicator>
+    </lightning-card>
+
+    <template lwc:if={kraRecord}>
+
+        <!-- REVIEWER DETAILS SECTION-->
+        <template lwc:if={showReviewerDetails}>
+            <div class="pointerTableContainer">
+                <div class="section1" data-reviewer-details>
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item padding="around-small" size="8">
+
+                            <lightning-layout multiple-rows>
+
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <div>
+                                        <p>Review Type</p>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <div>
+                                        <lightning-input required type="text" variant="label-hidden" label="Review Type"
+                                            name="Review_Type__c" value={kraRecord.Review_Type__c}
+                                            disabled='true'
+                                            onchange={handleChange}></lightning-input>
+                                    </div>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <div>
+                                        <p>Reviewer Name</p>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <div>
+                                        <lightning-input required type="text" variant="label-hidden" label="Reviewer Name"
+                                            name="Reviewer_Name__c" value={kraRecord.Reviewer_Name__c}
+                                            disabled='true'
+                                            onchange={handleChange}></lightning-input>
+                                    </div>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <div>
+                                        <p>Reviewer Title</p>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <div>
+                                        <lightning-input required="true" type="text" variant="label-hidden" label="Reviewer Title"
+                                            name="Reviewer_Title__c" value={kraRecord.Reviewer_Title__c}
+                                            disabled='true'
+                                            onchange={handleChange}></lightning-input>
+                                    </div>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <div>
+                                        <p>Date of Review</p>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <div>
+                                        <lightning-input required timezone={userTimeZone} type="date" variant="label-hidden"
+                                            label="Date of Review" name="Date_of_Review__c"
+                                            value={kraRecord.Date_of_Review__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+
+                        </lightning-layout-item>
+                    </lightning-layout> 
+                </div>
+
+                <div class="section2">
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item size="12">
+                            <h6>Measures of performance</h6>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item padding="around-small" size="12">
+                            <table
+                                class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                                aria-labelledby="element-with-table-label other-element-with-table-label">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Rating Score">Rating Score</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Description">Description</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="Rating Score" scope="row">
+                                            <div class="slds-truncate" title="1">
+                                                <a href="javascript:void(0)">1</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Unacceptable">
+                                            <div class="slds-truncate">Unacceptable</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="2" scope="row">
+                                            <div class="slds-truncate" title="2">
+                                                <a href="javascript:void(0)">2</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Needs Improvement">
+                                            <div class="slds-truncate">Needs Improvement</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="3" scope="row">
+                                            <div class="slds-truncate" title="3">
+                                                <a href="javascript:void(0)">3</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Meets Expectations">
+                                            <div class="slds-truncate">Meets Expectations</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="4" scope="row">
+                                            <div class="slds-truncate" title="4">
+                                                <a href="javascript:void(0)">4</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Exceeds Expectations">
+                                            <div class="slds-truncate">Exceeds Expectations</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="5" scope="row">
+                                            <div class="slds-truncate" title="5">
+                                                <a href="javascript:void(0)">5</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Far Exceeds">
+                                            <div class="slds-truncate">Far Exceeds</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+            <br>
+            <footer class="section1">
+                <lightning-button variant="" label="Next" title="Primary action" onclick={handleNextAction} class="slds-var-m-left_x-small"></lightning-button>
+            </footer>
+        </template>
+        <!-- REVIEWER DETAILS SECTION-->
+
+        <!-- TECHNICAL ACUMEN SECTION -->
+        <template lwc:if={showTechnicalAcumen}>
+            <div class="pointerTableContainer2">
+                <div class="section3" data-technical-acumen >
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item padding="around-small" size="12">
+
+                            <lightning-layout class="slds-box contentBox" multiple-rows>
+                                <template if:true={viewwrap.showDevelopment}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Development</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Development_Rating__c" value={kraRecord.Development_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Development_Example__c" value={kraRecord.Development_Example__c}
+                                        disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                                </template>
+                                <template if:true={viewwrap.showTesting}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Testing</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Testing_Rating__c" value={kraRecord.Testing_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Testing_Example__c" value={kraRecord.Testing_Example__c} disabled={isFieldsDisabled}
+                                        max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                                  </template>
+                                <template if:true={viewwrap.showUnderstandingCode}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Understanding Code</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Understanding_Code_Rating__c" value={kraRecord.Understanding_Code_Rating__c}
+                                        disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Understanding_Code_Example__c" value={kraRecord.Understanding_Code_Example__c}
+                                        disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                                </template>
+                                  <template if:true={viewwrap.showPlatformKnowledge}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Platform Knowledge</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Platform_Knowledge_Rating__c" value={kraRecord.Platform_Knowledge_Rating__c}
+                                        disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Platform_Knowledge_Example__c" value={kraRecord.Platform_Knowledge_Example__c}
+                                        disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                                  </template>
+
+                                <template if:true={viewwrap.showDesignArchitecture}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Design and Architecture</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Design_and_Architecture_Rating__c"
+                                        value={kraRecord.Design_and_Architecture_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Design_and_Architecture_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                        value={kraRecord.Design_and_Architecture_Example__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                                </template>
+                                
+                                <template if:true={viewwrap.showDocumentation}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Documentation</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Documentation_Rating__c" value={kraRecord.Documentation_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Documentation_Example__c" value={kraRecord.Documentation_Example__c} disabled={isFieldsDisabled}
+                                        max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showContinuousImprovement}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Continuous Improvement</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Continuous_Improvement_Rating__c" value={kraRecord.Continuous_Improvement_Rating__c}
+                                        disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Continuous_Improvement_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                        value={kraRecord.Continuous_Improvement_Example__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                                <!--  ADDING NEW FIELDS BELOW AS PER NEW UPDATE ON 15/11/22   -->
+                                    <!-- for : Project Management -->
+
+                                    <!-- Project Planning and Scheduling Management -->
+                                    <template if:true={viewwrap.showProjectPlanningSchedulingManagement}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Project Planning and Scheduling Management</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Project_Planning_Scheduling_Rating__c" value={kraRecord.Project_Planning_Scheduling_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Project_Planning_Scheduling_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Project_Planning_Scheduling_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+
+                                    <!-- Documentation & Reporting Management -->
+                                    <template if:true={viewwrap.showDocumentationReportingManagement}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Documentation & Reporting Management</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Documentation_Reporting_Mgmt_Rating__c" value={kraRecord.Documentation_Reporting_Mgmt_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Documentation_Reporting_Mgmt_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Documentation_Reporting_Mgmt_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+
+                                <template if:true={viewwrap.showTaskManagement}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Task Management</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Task_Management_Rating__c" value={kraRecord.Task_Management_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Task_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Task_Management_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+
+                                <template if:true={viewwrap.showRiskManagement}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Risk Management</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Risk_Management_Rating__c" value={kraRecord.Risk_Management_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Risk_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Risk_Management_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+
+                                <template if:true={viewwrap.showResourceManagement}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Resource Management</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Resource_Management_Rating__c" value={kraRecord.Resource_Management_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Resource_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Resource_Management_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+
+                                <template if:true={viewwrap.showStakeholderManagement}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Stakeholder Management</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Stakeholder_Management_Rating__c" value={kraRecord.Stakeholder_Management_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Stakeholder_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Stakeholder_Management_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                    </template>
+
+                                    <template if:true={viewwrap.showCommunicationManagement}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Communication Management</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Communication_Management_Rating__c" value={kraRecord.Communication_Management_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Communication_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Communication_Management_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                    </template>
+                                    <!-- for : Project Management -->
+
+                                    <!-- for : QA Team -->
+                                    <!-- Continuous Learning and Skill Development - NO (Simillar field confirmation pending) -->
+                                    <template if:true={viewwrap.showLearningAndSkillDevelopment}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Continuous Learning and Skill Development</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Learning_and_Skill_Development_Rating__c" value={kraRecord.Learning_and_Skill_Development_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Learning_and_Skill_Development_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Learning_and_Skill_Development_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+                                    <!-- Documentation already added above -->
+                                    <template if:true={viewwrap.showEstimations}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Estimations</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Estimations_Rating__c" value={kraRecord.Estimations_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Estimations_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Estimations_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+
+                                <template if:true={viewwrap.showTestCaseDesignExecution}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Test Case Design and Execution</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Test_Case_Design_Execution_Rating__c" value={kraRecord.Test_Case_Design_Execution_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Test_Case_Design_Execution_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Test_Case_Design_Execution_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+
+                                <template if:true={viewwrap.showDefectManagement}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Defect Management</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Defect_Management_Rating__c" value={kraRecord.Defect_Management_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Defect_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Defect_Management_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+
+                                    <!-- Technical Troubleshooting & Test Environment Prep -->
+                                    <template if:true={viewwrap.showTroubleshootingAndEnvironmentPrep}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <p>Technical Troubleshooting & Test Environment Prep</p>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            name="Troubleshooting_Environment_Prep_Rating__c" value={kraRecord.Troubleshooting_Environment_Prep_Rating__c}
+                                            disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                            name="Troubleshooting_Environment_Prep_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                            value={kraRecord.Troubleshooting_Environment_Prep_Example__c} disabled={isFieldsDisabled}
+                                            onchange={handleChange}></lightning-textarea>
+                                    </lightning-layout-item>
+                                </template>
+                                    <!-- for : QA Team -->
+
+                                    <!-- for : BA Team -->
+                                        <!-- Documentation already added above -->
+                                        <!-- Platform Knowledge already added above -->
+                                        <!-- Design and Architecture already added above -->
+                                        <!-- Continuous Improvement already added above -->
+                                        <template if:true={viewwrap.showRequirementGathering}>
+                                        <lightning-layout-item padding="around-small" size="4">
+                                            <p>Requirement Gathering</p>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item padding="around-small" size="4">
+                                            <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                                name="Requirement_Gathering_Rating__c" value={kraRecord.Requirement_Gathering_Rating__c}
+                                                disabled={isFieldsDisabled}
+                                                onchange={handleChange}></lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item padding="around-small" size="4">
+                                            <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                                name="Requirement_Gathering_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                                value={kraRecord.Requirement_Gathering_Example__c} disabled={isFieldsDisabled}
+                                                onchange={handleChange}></lightning-textarea>
+                                        </lightning-layout-item>
+                                    </template>
+
+                                    <template if:true={viewwrap.showPOVCreationDemos}>
+                                        <lightning-layout-item padding="around-small" size="4">
+                                            <p>POV Creation & Client Demos</p>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item padding="around-small" size="4">
+                                            <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                                name="POV_Creation_Client_Demos_Rating__c" value={kraRecord.POV_Creation_Client_Demos_Rating__c}
+                                                disabled={isFieldsDisabled}
+                                                onchange={handleChange}></lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item padding="around-small" size="4">
+                                            <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                                name="POV_Creation_Client_Demos_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                                value={kraRecord.POV_Creation_Client_Demos_Example__c} disabled={isFieldsDisabled}
+                                                onchange={handleChange}></lightning-textarea>
+                                        </lightning-layout-item>
+                                    </template>
+                                        
+                                    <!-- for : BA Team -->
+
+                                <!--  ADDING NEW FIELDS BELOW AS PER NEW UPDATE ON 15/11/22   -->
+
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+
+
+                </div>
+
+                <div class="footer">
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item size="12">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-button variant="" label="Previous" title="Primary action" onclick={handlePreviousAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-button variant="" label="Next" title="Primary action" onclick={handleNextAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+
+            </div>
+        </template>
+        <!-- TECHNICAL ACUMEN SECTION -->
+
+        <!-- PROFESSIONAL SKILLS SECTION -->
+        <template lwc:if={showProfessionalSkills}>
+            <div class="pointerTableContainer2">
+                <div class="section3" data-professional-skills>
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item padding="around-small" size="12">
+
+                            <lightning-layout class="slds-box contentBox" multiple-rows>
+
+                                <template if:true={viewwrap.showDeliveryAccountability}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Delivery Accountability</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Delivery_Accountability_Rating__c"
+                                        value={kraRecord.Delivery_Accountability_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Delivery_Accountability_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                        value={kraRecord.Delivery_Accountability_Example__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showEffectiveCommunication}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Effective Communication</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Effective_Communication_Rating__c"
+                                        value={kraRecord.Effective_Communication_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Effective_Communication_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                        value={kraRecord.Effective_Communication_Example__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showKnowledgeSharing}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Knowledge Sharing</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Knowledge_Sharing_Rating__c" value={kraRecord.Knowledge_Sharing_Rating__c}
+                                        disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Knowledge_Sharing_Example__c" value={kraRecord.Knowledge_Sharing_Example__c}
+                                        disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showTeamwork}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Teamwork Rating</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Teamwork_Rating__c" value={kraRecord.Teamwork_Rating__c}
+                                        disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Teamwork_Example__c" value={kraRecord.Teamwork_Example__c}
+                                        max-length={maxLength} message-when-too-long={maxLengthError}
+                                        disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showAttitudeBehavior}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Attitude and Behavior</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        name="Attitude_and_Behavior_Rating__c" value={kraRecord.Attitude_and_Behavior_Rating__c}
+                                        disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Attitude_and_Behavior_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                        value={kraRecord.Attitude_and_Behavior_Example__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+
+                </div>
+
+                <div class="footer">
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item size="12">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-button variant="" label="Previous" title="Primary action" onclick={handlePreviousAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-button variant="" label="Next" title="Primary action" onclick={handleNextAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+
+            </div>
+        </template>
+        <!-- PROFESSIONAL SKILLS SECTION -->
+
+        <!-- STRATEGIC IMPACT SECTION -->
+        <template lwc:if={showStrategicImpact}>
+            <div class="pointerTableContainer2">
+                <div class="section3" data-strategic-impact>
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item padding="around-small" size="12">
+
+                            <lightning-layout class="slds-box contentBox" multiple-rows>
+                                <template if:true={viewwrap.showBusinessDevelopment}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Business Development</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" variant="label-stacked"
+                                        label="Rating" name="Business_Development_Rating__c"
+                                        value={kraRecord.Business_Development_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Business_Development_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                        value={kraRecord.Business_Development_Example__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showStrategicWork}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Strategic Work</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" variant="label-stacked"
+                                        label="Rating" name="Strategic_Work_Rating__c"
+                                        value={kraRecord.Strategic_Work_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Strategic_Work_Example__c" value={kraRecord.Strategic_Work_Example__c}
+                                        disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showCompanyGrowth}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Company Growth</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5"
+                                        message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked"
+                                        label="Rating" name="Company_Growth_Rating__c"
+                                        value={kraRecord.Company_Growth_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Company_Growth_Example__c" value={kraRecord.Company_Growth_Example__c}
+                                        disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+
+                <div class="footer">
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item size="12">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-button variant="" label="Previous" title="Primary action" onclick={handlePreviousAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-button variant="" label="Next" title="Primary action" onclick={handleNextAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+
+            </div>
+        </template>
+        <!-- STRATEGIC IMPACT SECTION -->
+
+        <!-- GOALS AND RESULTS SECTION -->
+        <template lwc:if={showGoalsResults}>
+            <div class="pointerTableContainer2">
+                
+                <div class="section3" data-goals-results>
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item padding="around-small" size="12">
+
+                            <lightning-layout class="slds-box contentBox" multiple-rows>
+                                <template if:true={viewwrap.showGoalAchievement}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Goal Achievement</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" variant="label-stacked"
+                                        label="Rating" name="Goal_Achievement_Rating__c"
+                                        value={kraRecord.Goal_Achievement_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Goal_Achievement_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
+                                        value={kraRecord.Goal_Achievement_Example__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showStakeholderSatisfaction}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Stakeholder Satisfaction</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" variant="label-stacked"
+                                        label="Rating" name="Stakeholder_Satisfaction_Rating__c" 
+                                        value={kraRecord.Stakeholder_Satisfaction_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Stakeholder_Satisfaction_Example__c" value={kraRecord.Stakeholder_Satisfaction_Example__c}
+                                        disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                            </template>
+
+                            <template if:true={viewwrap.showProjectSuccess}>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <p>Project Success</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-input required type="number" min="1" max="5" variant="label-stacked"
+                                        label="Rating" name="Project_Success_Rating__c" 
+                                        value={kraRecord.Project_Success_Rating__c} disabled={isFieldsDisabled}
+                                        onchange={handleChange}></lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-textarea required type="text" variant="label-stacked" label="Example"
+                                        name="Project_Success_Example__c" value={kraRecord.Project_Success_Example__c}
+                                        disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
+                                        onchange={handleChange}></lightning-textarea>
+                                </lightning-layout-item>
+                                </template>
+
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+
+                <div class="footer">
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item size="12">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-button variant="" label="Previous" title="Primary action" onclick={handlePreviousAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-button variant="" label="Next" title="Primary action" onclick={handleNextAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+
+            </div>
+        </template>
+
+
+        <!-- OVERALL RATING SECTION -->
+        <template lwc:if={showOverAllRating}>
+            <div class="pointerTableContainer2">
+                
+                <div class="ratingSection">
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item padding="around-small" size="12">
+                            <table
+                                class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                                aria-labelledby="element-with-table-label other-element-with-table-label">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Rating Score">Section Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Description">Average Rating</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="Rating Score" scope="row">
+                                            <div class="slds-truncate" title="Technical Acumen">
+                                                <a href="javascript:void(0)">Technical Acumen</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Technical Acumen">
+                                            <div class="slds-truncate">{kraRecord.Overall_Tech_Rating__c}</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="2" scope="row">
+                                            <div class="slds-truncate" title="Professional Skills">
+                                                <a href="javascript:void(0)">Professional Skills</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Professional Skills">
+                                            <div class="slds-truncate">{kraRecord.Overall_Professional_Rating__c}</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="3" scope="row">
+                                            <div class="slds-truncate" title="Strategic Impact">
+                                                <a href="javascript:void(0)">Strategic Impact</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Strategic Impact">
+                                            <div class="slds-truncate">{kraRecord.Overall_Strategic_Rating__c}</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="4" scope="row">
+                                            <div class="slds-truncate" title="Goals & Results">
+                                                <a href="javascript:void(0)">Goals & Results</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Goals & Results">
+                                            <div class="slds-truncate">{kraRecord.Overall_Goals_Results_Rating__c}</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="5" scope="row">
+                                            <div class="slds-truncate" title="Overall Rating">
+                                                <a href="javascript:void(0)">Overall Rating</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Overall Average Rating">
+                                            <div class="slds-truncate">{kraRecord.Overall_Average_Section_Rating__c}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+
+                <div class="footer">
+                    <lightning-layout multiple-rows class="slds-theme_shade">
+                        <lightning-layout-item size="12">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-button variant="" label="Previous" title="Primary action" onclick={handlePreviousAction}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                </lightning-layout-item>
+
+                                <template lwc:if={showSaveSubmitButtonsVisibility}>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-button variant="brand" label="Save" title="Primary action" onclick={handleSaveAction}
+                                        disabled={isSaveBtnDisabled}
+                                            class="slds-var-m-left_x-small"></lightning-button>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-button variant="success" label="Submit" title="Primary action" onclick={handleSubmitAction}
+                                        disabled={isSubmitBtnDisabled}
+                                        class="slds-var-m-left_x-small"></lightning-button>
+                                    </lightning-layout-item>
+                                </template>
+
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+
+            </div>
+        </template>
+        <!-- OVERALL RATING SECTION -->
+
+
+    </template>
+
+</template>

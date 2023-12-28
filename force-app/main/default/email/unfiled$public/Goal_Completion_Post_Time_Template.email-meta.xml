@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send Email alert to Resource when the Goal Status is changed to &quot;Completed-Post Time&quot;</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Goal Completion Post Time Template</name>
+    <style>freeForm</style>
+    <subject>Goal Completion Notification</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,104 @@
+.tableFixHead {
+  max-height: 600px; /* set maximum height */
+  overflow: auto; /* enable vertical scrollbar */
+  padding:5px;
+}
+
+.tableFixHead::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  border-radius: 4px;
+}
+
+.tableFixHead::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.tableFixHead::-webkit-scrollbar-thumb {
+  /*background: #888;*/
+  background : blue;
+  border-radius: 4px;
+}
+
+.tableFixHead::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.tableheading{
+}
+.tableFixHead table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.tableFixHead thead {
+   padding:0px;
+}
+
+.tableFixHead th {
+  /*  position: sticky;
+    top: 0;
+    z-index: 0;*/
+	color: white; font-size:9pt;
+  font-weight: 2px;
+	padding-top: 0px;
+    background: purple;
+ }
+
+.contacttableFixHead {
+  max-height: 350px; /* set maximum height */
+  overflow: auto; /* enable vertical scrollbar */
+  padding:5px;
+  border-radius: 10px;
+  
+}
+
+.contacttableFixHead::-webkit-scrollbar {
+  width: 6px;
+}
+
+.contacttableFixHead::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.contacttableFixHead::-webkit-scrollbar-thumb {
+  /*background: #888;*/
+  background : lightcoral;
+  border-radius: 4px;
+}
+
+.contacttableFixHead::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.contacttableFixHead{
+}
+.contacttableFixHead table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.contacttableFixHead thead {
+   padding:10px;
+}
+
+
+.contacttableFixHead th {
+  color: black; font-size:9pt;
+	
+    background: #F3F2F2 !important; 
+     
+ }
+
+.hideContent{
+  display: none;
+}
+.displayContent{
+  display: block;
+}
+
+.tableFixHead table{
+  display: table;
+  /* table-layout: fixed; */
+}
+.tableFixHead th, .tableFixHead td{
+  padding: 0.5%;
+}

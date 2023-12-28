@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>FUNCTIONAL ACUME</fullName>
+        <default>false</default>
+        <label>FUNCTIONAL ACUME</label>
+    </customValue>
+    <customValue>
+        <fullName>GOALS AND RESULTS</fullName>
+        <default>false</default>
+        <label>GOALS AND RESULTS</label>
+    </customValue>
+    <customValue>
+        <fullName>PROFESSIONAL SKILLS</fullName>
+        <default>false</default>
+        <label>PROFESSIONAL SKILLS</label>
+    </customValue>
+    <customValue>
+        <fullName>PROJECT MANAGEMENT ACUMEN</fullName>
+        <default>false</default>
+        <label>PROJECT MANAGEMENT ACUMEN</label>
+    </customValue>
+    <customValue>
+        <fullName>STRATEGIC IMPACT</fullName>
+        <default>false</default>
+        <label>STRATEGIC IMPACT</label>
+    </customValue>
+    <customValue>
+        <fullName>TECHNICAL SKILLS</fullName>
+        <default>false</default>
+        <label>TECHNICAL SKILLS</label>
+    </customValue>
+    <masterLabel>KRA Area</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

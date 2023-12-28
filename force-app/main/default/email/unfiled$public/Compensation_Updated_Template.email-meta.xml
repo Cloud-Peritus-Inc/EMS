@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send Email to HR when Compensation Record is Updated</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Compensation Updated  Template</name>
+    <style>freeForm</style>
+    <subject>Compensation Updated Successfully!</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

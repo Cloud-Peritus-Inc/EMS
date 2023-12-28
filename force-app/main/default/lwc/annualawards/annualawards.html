@@ -1,0 +1,485 @@
+<template>
+
+    <template if:false={dataIsLoaded}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+    </template>
+
+    <template if:true={dataIsLoaded}>
+
+        <template if:true={recordsSubmitted}>
+            <div class="outer-container">
+                <div class="top-div slds-align_absolute-center">
+                    <p class="submittedText">{submittedMsg}</p>
+                </div>
+            </div>
+        </template>
+
+        <template if:false={recordsSubmitted}>
+
+            <lightning-card>
+                <lightning-progress-indicator current-step={selectedStep} type="path" variant="base">
+                    <template for:each={steps} for:item="step">
+                        <lightning-progress-step id={step.value} label={step.label} value={step.value} key={step.label}
+                            onclick={stepSelectionHanler}></lightning-progress-step>
+                    </template>
+                </lightning-progress-indicator>
+            </lightning-card>
+
+            <template lwc:if={showBestEntrepreneur}>
+                <div class="outer-container">
+                    <div class="top-div slds-align_absolute-center">
+                        <p>{label.BestEntrepreneurDesc}</p>
+                    </div>
+                    <div class="container slds-align_absolute-center" data-best-entrepreneur>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box left-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <c-reusable-lookup label="Primary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={BE_PR_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount}
+                                                    onvalueremoved={handleValueRemovedOnAccount}>
+                                                </c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    name="PriComments" value={BE_PR_RR.Reason_for_award__c}
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box right-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <c-reusable-lookup label="Secondary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={BE_SE_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount}
+                                                    onvalueremoved={handleValueRemovedOnAccount}>
+                                                </c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="secCom" label="Comments"
+                                                    name="SecComments" value={BE_SE_RR.Reason_for_award__c}
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showMostProfessional}>
+                <div class="outer-container">
+                    <div class="top-div slds-align_absolute-center">
+                        <p>{label.MostProfessionalDesc}</p>
+                    </div>
+                    <div class="container slds-align_absolute-center" data-most-professional>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box left-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Primary Nominee" name="Primary Nominee" value={MP_PrimaryNominee}
+                                                                                onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Primary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={MP_PR_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount}
+                                                    onvalueremoved={handleValueRemovedOnAccount}>
+                                                </c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    value={MP_PR_RR.Reason_for_award__c} name="PriComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box right-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Secondary Nominee" value={MP_SecondaryNominee}
+                                            name="Secondary Nominee" onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Secondary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={MP_SE_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="secCom" label="Comments"
+                                                    value={MP_SE_RR.Reason_for_award__c} name="SecComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showRisingStar}>
+                <div class="outer-container">
+                    <div class="top-div slds-align_absolute-center">
+                        <p>{label.RisingStarDesc}</p>
+                    </div>
+                    <div class="container slds-align_absolute-center">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box left-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Primary Nominee" name="PriComments" value={input1Value}
+                                            onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Primary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={RIS_PR_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible label="Comments"
+                                                    name="PriComments" value={RIS_PR_RR.Reason_for_award__c}
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box right-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Secondary Nominee" value={input1Value}
+                                            name="Secondary Nominee" onchange={handleNomineeChange}>
+                                        </lightning-input> -->
+                                                <c-reusable-lookup label="Secondary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={RIS_SE_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible label="Comments"
+                                                    value={RIS_SE_RR.Reason_for_award__c} name="SecComments"
+                                                    onchange={handleCommentsChange}>
+                                                </lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showRockStar}>
+                <div class="outer-container">
+                    <div class="top-div slds-align_absolute-center">
+                        <p>{label.RockStarDesc}</p>
+                    </div>
+                    <div class="container slds-align_absolute-center">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box left-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Primary Nominee" value={input1Value}
+                                            name="Primary Nominee" onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Primary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={ROS_PR_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    value={ROS_PR_RR.Reason_for_award__c} name="PriComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box right-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Secondary Nominee" value={input2Value}
+                                            name="Secondary Nominee" onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Secondary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={ROS_SE_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="secCom" label="Comments"
+                                                    value={ROS_SE_RR.Reason_for_award__c} name="SecComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showShiningStar}>
+                <div class="outer-container">
+                    <div class="top-div slds-align_absolute-center">
+                        <p>{label.ShiningStarDesc}</p>
+                    </div>
+                    <div class="container slds-align_absolute-center">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box left-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Primary Nominee" value={input1Value}
+                                            name="Primary Nominee" onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Primary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={SS_PR_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    value={SS_PR_RR.Reason_for_award__c} name="PriComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box right-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Secondary Nominee" value={input2Value}
+                                            name="Secondary Nominee" onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Secondary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={SS_SE_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    value={SS_SE_RR.Reason_for_award__c} name="SecComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showGoingAboveBeyond}>
+                <div class="outer-container">
+                    <div class="top-div slds-align_absolute-center">
+                        <p>{label.GoingAboveBeyondDesc}</p>
+                    </div>
+                    <div class="container slds-align_absolute-center">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box left-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Primary Nominee" value={input1Value}
+                                            name="Primary Nominee" onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Primary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={GAB_PR_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    value={GAB_PR_RR.Reason_for_award__c} name="PriComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box right-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Secondary Nominee" value={input2Value}
+                                            name="Secondary Nominee" onchange={handleNomineeChange}>
+                                        </lightning-input> -->
+                                                <c-reusable-lookup label="Secondary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={GAB_SE_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    value={GAB_SE_RR.Reason_for_award__c} name="SecComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showAwardOfExcellence}>
+                <div class="outer-container">
+                    <div class="top-div slds-align_absolute-center">
+                        <p>{label.AwardOfExcellenceDesc}</p>
+                    </div>
+                    <div class="container slds-align_absolute-center">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box left-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Primary Nominee" value={input1Value}
+                                            name="Primary Nominee" onchange={handleNomineeChange}></lightning-input> -->
+                                                <c-reusable-lookup label="Primary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={AE_PR_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    value={AE_PR_RR.Reason_for_award__c} name="PriComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                <div class="box right-box">
+                                    <div class="slds-grid slds-gutters">
+                                        <lightning-layout multiple-rows="true">
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <!-- <lightning-input label="Secondary Nominee" value={input2Value}
+                                            name="Secondary Nominee" onchange={handleNomineeChange}>
+                                        </lightning-input> -->
+                                                <c-reusable-lookup label="Secondary Nominee"
+                                                    selected-icon-name="standard:contact" object-label="Contact"
+                                                    object-api-name="Contact" field-api-name="Name"
+                                                    other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+                                                    other-field-api-name2="EMS_TM_User__r.IsActive"
+                                                    selected-record-id={AE_SE_RR.Resource__c}
+                                                    onvalueselected={handleValueSelectedOnAccount} 
+                                                    onvalueremoved={handleValueRemovedOnAccount}></c-reusable-lookup>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item padding="around-small" flexibility="auto" size="12">
+                                                <lightning-input-rich-text label-visible class="priCom" label="Comments"
+                                                    value={AE_SE_RR.Reason_for_award__c} name="SecComments"
+                                                    onchange={handleCommentsChange}></lightning-input-rich-text>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- FOOTER SECTION FOR BUTTONS -->
+            <footer class="slds-p-around_small slds-text-align_center">
+                <div class="slds-button-group">
+                    <lightning-button variant="brand-outline" class={setBackBtnVisibility} label="BACK"
+                        onclick={handlePreviousButtonAction}></lightning-button>
+                    <lightning-button variant="brand" class={setNextBtnVisibility} label="NEXT"
+                        onclick={handleNextButtonAction}></lightning-button>
+                    <lightning-button variant="brand-outline" class="slds-p-around_medium" label="CANCEL"
+                        onclick={handleCancelButtonAction}></lightning-button>
+                    <lightning-button variant="brand" class={setSaveBtnVisibility} label="SAVE"
+                        onclick={handleSaveButtonAction}></lightning-button>
+                    <lightning-button variant="brand" disabled={disableSubmitBtn} class={setSubmitBtnVisibility} label="SUBMIT"
+                        onclick={handleSubmitButtonAction}></lightning-button>
+                </div>
+            </footer>
+
+        </template>
+
+    </template>
+
+</template>

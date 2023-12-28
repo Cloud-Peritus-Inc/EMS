@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resource__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Resource</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Please select only Active Contacts</errorMessage>
+        <filterItems>
+            <field>Contact.RecordType.Name</field>
+            <operation>equals</operation>
+            <value>Resource</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.EMS_TM_User__r.IsActive</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Rewards And Recognitions</relationshipLabel>
+    <relationshipName>Rewards_And_Recognitions</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

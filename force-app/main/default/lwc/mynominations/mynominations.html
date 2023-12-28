@@ -1,0 +1,82 @@
+<template>
+<lightning-card>
+     <div class="tableFixHead">
+    <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+      <thead>
+        <tr class="slds-line-height_reset" style="color:lightsalmon">
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Name">Resource</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Award Type</div>
+           </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Name"># of Primary Nominations</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Name"># of Secondary Nominations</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Comments</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Submitted On</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Type</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Status</div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <template if:true={nomstable}>
+          <template for:each={nomstable} for:item="sout">
+            <tr key={sout.resourceId}>
+            <td style="word-wrap:break-word;">
+                <div class="slds-wrap">
+                    <a href="#"><b>{sout.resourceName}</b></a></div>
+              </td>
+             <td style="word-wrap:break-word;">
+                <div class="slds-wrap">
+                    <a href="#"><b>{sout.awardType}</b></a></div>
+              </td>
+              <td>
+                 <div class="slds-wrap">
+                    {sout.currentFYName}</div>
+              </td>
+              <td>
+                 <div class="slds-wrap">
+                    {sout.spotType}</div>
+              </td>
+            
+              <td style="width:200px;word-wrap:break-word;">
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={sout.awardComments}></lightning-formatted-rich-text></div>
+              </td>
+              <td>
+                <div class="slds-wrap"><lightning-formatted-date-time value={sout.createdDate}></lightning-formatted-date-time></div>
+              </td>
+                <td>
+                <div class="slds-wrap"> <a href="#">{sout.projectName}</a></div>
+               </td>
+                <td>
+                <div class="slds-wrap"> {sout.Title}</div>
+               </td>
+             
+            </tr>
+          </template>
+        </template>
+      </tbody>
+    </table>
+       <template if:false={nomstable}>
+          <div class="slds-text-align_center slds-p-around_medium">
+            <center>No records found for filter.</center>
+          </div>
+        </template>
+  </div>
+</lightning-card>
+</template>

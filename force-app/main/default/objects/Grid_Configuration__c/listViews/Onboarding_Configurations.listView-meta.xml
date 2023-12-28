@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Onboarding_Configurations</fullName>
+    <columns>NAME</columns>
+    <columns>Grid_Configuration_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Grid_Configuration_Type__c</field>
+        <operation>equals</operation>
+        <value>Welcome aboard,PF Forms,Documents,Company Policies,Company Information - EMP- Onboarding,Company Information - Pre-Onboarding</value>
+    </filters>
+    <label>Onboarding Configurations</label>
+</ListView>

@@ -1,0 +1,277 @@
+<template>
+<lightning-card>
+    <div class="childparent" >
+    <div class="childimage">
+      <div style="padding-left:5px;"> 
+         <lightning-combobox
+            name="Select Award"
+            label="Select Award"
+            value={selectedAward}
+            placeholder="Select Award"
+            dropdown-alignment="bottom-left"
+            options={awarddatalist}
+            onchange={handleChange} ></lightning-combobox>
+       
+           </div></div>
+            <div class="childtext">
+                <template if:true={showthecampare}>
+                  <lightning-button-icon icon-name="utility:refresh"  size="medium" onclick={handleRefresh} alternative-text="Refresh" class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;
+                   <lightning-button variant="success" label="Compare" onclick={handleCompareClick} title="Compare" ></lightning-button>
+                    
+                </template>
+                <template if:true={announcebutton}>
+                 &nbsp;  <lightning-button variant="brand" label="Announce the results" onclick={handleAnnounceClick} title="Announce" ></lightning-button>
+                </template>
+                
+            </div></div>
+</lightning-card>
+  <div class="tableFixHead">
+     <template if:true={showthecampare}>
+    <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+      <thead>
+        <tr class="slds-line-height_reset" style="color:lightcoral">
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Resource</div>
+           </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Name"># Of Primary</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Name"># Of Secondary</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Total Noms</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Reason for noms</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Predicted Status</div>
+          </th>
+           <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Comments</div>
+           </th>
+           <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Actual Status</div>
+           </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <template if:true={scoringTable}>
+          <template for:each={scoringTable} for:item="sout">
+            <tr key={sout.resourceId}>
+             <td style="word-wrap:break-word;">
+                <div class="slds-wrap">
+                     <div class="image">
+        <img src={sout.resourcePhotoURL} />&nbsp;&nbsp; <a href="#">{sout.resourceName}</a>
+      </div> </div>
+              </td>
+              <td>
+                      {sout.currentFYName}
+              </td>
+              <td>
+                <div class="slds-wrap">{sout.spotType}</div>
+              </td>
+              <td>
+                <div class="slds-wrap"> {sout.totalNoms}</div>
+              </td>
+              <td style="width:200px;word-wrap:break-word;">
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={sout.awardComments}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                   <b>   <font color="red">   {sout.Title} </font> </b>
+              </td>
+              <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={sout.projectName}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                   <font color="red">  {sout.statuss} </font>
+              </td>
+             
+            </tr>
+          </template>
+        </template>
+      </tbody>
+    </table>
+       <template if:false={scoringTable}>
+          <div class="slds-text-align_center slds-p-around_medium">
+            <center>No records found for filter.</center>
+          </div>
+        </template>
+     </template>
+     <!--iterated table for all scoring awards-->
+      <template if:false={showthecampare}>
+        
+        <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header allAwards">
+          <thead>
+            <tr class="slds-line-height_reset" style="color:lightcoral">
+              <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="Resource">Resource</div>
+               </th>
+               <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="Award Type">Award Type</div>
+               </th>
+              <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="# Of Primary"># Of Primary</div>
+              </th>
+              <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="# Of Secondary"># Of Secondary</div>
+              </th>
+              <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="Total Noms">Total Noms</div>
+              </th>
+              <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="Reason for noms">Reason for noms</div>
+              </th>
+              <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="Predicted Status">Predicted Status</div>
+              </th>
+               <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="Comments">Comments</div>
+               </th>
+               <th class="slds-border_right tableheading" scope="col">
+                <div class="slds-truncate" title="Actions">Actions</div>
+               </th>
+            </tr>
+          </thead>
+    
+          <tbody>
+    
+            <template if:true={scoringTable}>
+              <template for:each={scoringTable} for:item="item">
+                  <tr key={item.currentName}>
+                    <td style="word-wrap:break-word;">
+                      <div class="slds-wrap">
+                        <div class="image">
+                          <img src={item.currentFYId} />&nbsp;&nbsp; <a href="#">{item.currentName}</a>
+                        </div>
+                        </div>
+                    </td>
+                    <td>
+                      <template for:each={item.currentList} for:item="listItem">
+                        <div class={listItem.borderCls} key={item.currentName}>
+                          <lightning-formatted-rich-text value={listItem.awardType}></lightning-formatted-rich-text></div>
+                        </template>
+                    </td>
+                    <td>
+                      <!--# Of Primary-->
+                    </td>
+                    <td>
+                      <!--# Of Secondary-->
+                    </td>
+                    <td>
+                      <template for:each={item.currentList} for:item="listItem">
+                        <div class={listItem.borderCls} key={item.currentName}>
+                          <lightning-formatted-rich-text value={listItem.totalNoms}></lightning-formatted-rich-text></div>
+                        </template>
+                    </td>
+                    <td>
+                      <!--Reason for nom-->
+                    </td>
+                    <td>
+                      <template for:each={item.currentList} for:item="listItem">
+                        <div class={listItem.borderCls} key={item.currentName}>
+                          <lightning-formatted-rich-text value={listItem.statuss}></lightning-formatted-rich-text></div>
+                        </template>
+                    </td>
+                    <td>
+                      <template for:each={item.currentList} for:item="listItem">
+                        <div class={listItem.borderCls} key={item.currentName}>
+                          <lightning-formatted-rich-text value={listItem.awardComments}></lightning-formatted-rich-text></div>
+                        </template>
+                    </td>
+                    <td>
+                      <!--Actions-->
+                    </td>
+                  </tr>
+                </template>
+            </template>
+          </tbody>
+        </table>
+      </template>
+  </div>
+
+
+  <!--goal Creation modal start -->      
+   <template if:true={showcomparepop}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideKCompareModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">Comparsion</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+            <div class="c-container">
+                 <lightning-layout vertical-align="stretch" multiple-rows="true" class="x-large" >
+                <template for:each={scoringTable} for:item="rrcurrent">
+          
+                    <lightning-layout-item style="border: 1px solid black;border-radius: 5px;" key={rrcurrent.resourceId} flexibility="auto" padding="around-small" class="custom-box">
+                      <lightning-card key={rrcurrent.resourceId}>
+                        <lightning-record-edit-form record-id={rrcurrent.resourceId} object-api-name="Reward_And_Recognition__c"
+                        onsuccess={handleSuccess} onsubmit ={handleSubmit}>
+                      <lightning-messages>
+                      </lightning-messages>
+                      <lightning-output-field field-name="Resource__c">
+                      </lightning-output-field>
+                       <lightning-output-field field-name="of_Primary_Nominations__c">
+                      </lightning-output-field>
+                       <lightning-output-field field-name="of_Secondary_Nominations__c">
+                      </lightning-output-field>
+                       <lightning-output-field field-name="Reason_for_award__c">
+                      </lightning-output-field>
+                      <div style="color:red;padding:10px;"><b><i>
+                       Predicted Status : {rrcurrent.Title} </i></b></div>
+                       <lightning-output-field field-name="Lost_Reason__c">
+                      </lightning-output-field>
+                      <lightning-input-field field-name="Status__c">
+                      </lightning-input-field>
+                      <lightning-input-field field-name="Comments__c">
+                      </lightning-input-field>
+                      <center>
+                      <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update">
+                      </lightning-button> &nbsp;&nbsp;  <button class="slds-button slds-button_neutral" onclick={hideKCompareModalBox}>Close</button>
+                      </center>
+                  </lightning-record-edit-form>
+                      </lightning-card>
+                    </lightning-layout-item>
+                </template>
+     </lightning-layout>
+           
+                 
+          </div>
+
+          </div>
+            
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hideKCompareModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
+ <!-- modal end -->
+
+
+
+
+</template>

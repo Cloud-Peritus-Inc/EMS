@@ -1,0 +1,109 @@
+<template>
+<lightning-card>
+     <div class="tableFixHead">
+    <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+      <thead>
+        <tr class="slds-line-height_reset" style="color:lightcoral">
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Name">Pulse Id</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Pulse Date</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Carrer Dev</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Job Stats</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Work Env</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Communication</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Work Life</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Feedback</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Leadership</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Overall</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">OverallComments</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Location">Status</div>
+          </th>
+         
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <template if:true={tabledata}>
+          <template for:each={tabledata} for:item="accWithContacts">
+            <tr key={accWithContacts.goalid}>
+              <td>
+                <div class="slds-wrap" style="width:100px;word-wrap:break-word;">
+                  <p> <a href="javascript:void(0);" data-id={accWithContacts.goalid} onclick={handleNavClick}>
+                      {accWithContacts.goalname}
+                    </a>
+                  </p>
+                </div>
+              </td>
+              <td>
+                <div class="slds-wrap"><lightning-formatted-date-time value={accWithContacts.CheckinDate}></lightning-formatted-date-time></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.carrerRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.JobStatRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.WorkEnvRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.commRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.workLifeRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.FeedbackRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.LeadershipRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.overallRating}></lightning-formatted-rich-text></div>
+              </td>
+
+              <td style="width:200px;word-wrap:break-word;">
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={accWithContacts.Comments}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap">{accWithContacts.Status}</div>
+              </td>
+              
+            </tr>
+          </template>
+        </template>
+      </tbody>
+    </table>
+       <template if:false={tabledata}>
+          <div class="slds-text-align_center slds-p-around_medium">
+            <center>No records found for filter.</center>
+          </div>
+        </template>
+  </div>
+</lightning-card>
+
+</template>

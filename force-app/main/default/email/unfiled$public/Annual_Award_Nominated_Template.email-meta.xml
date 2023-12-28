@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Whenever an &quot;Annual Award Nomination&quot; is submitted send an email to the Nominated Resource Contact</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Annual Award Nominated Template</name>
+    <style>freeForm</style>
+    <subject>Annual Award Nomination Submitted for You!</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

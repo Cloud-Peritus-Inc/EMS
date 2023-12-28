@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Goal_Configurations</fullName>
+    <columns>NAME</columns>
+    <columns>Grid_Configuration_Type__c</columns>
+    <columns>Goal_Start_Date__c</columns>
+    <columns>Goal_End_Date__c</columns>
+    <columns>Resource_Role__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Grid_Configuration_Type__c</field>
+        <operation>equals</operation>
+        <value>Org Level Goal,Resource Role Level Goal</value>
+    </filters>
+    <label>Goal Configurations</label>
+</ListView>

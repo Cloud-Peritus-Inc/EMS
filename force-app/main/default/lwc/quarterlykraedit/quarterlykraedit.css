@@ -1,0 +1,139 @@
+.dummy{
+	color : black;
+}
+
+.pointerTableContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	border: 2px solid rgb(192, 192, 192);
+	border-radius: 7px;
+}
+
+.pointerTableContainer2{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	border: 2px solid rgb(192, 192, 192);
+	border-radius: 7px;
+}
+
+.pointerTableContainer2 .section3{
+	/*margin-left: 20%;*/
+}
+
+.section1{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.section2{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.section3{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.pointerTable{
+	border: 1px solid black;
+}
+
+.section3 p{
+	margin-top: 20px;
+	font-weight:bold;
+	font-size: 13px;
+}
+
+.section1 p{
+	margin-top: 5px;
+	font-weight:bold;
+	font-size: 13px;
+}
+
+.footer{
+	margin-top:0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+  }
+
+.contentBox{
+	border: 2px solid rgb(192, 192, 192);
+	border-radius: 7px;
+}
+
+.slds-box{
+	border: 2px solid transparent !important;
+}
+
+/* ----------------------- */
+.ratingSection{
+	padding: 10px;
+	width:50%;
+	height:auto;
+	text-align: center;
+}
+
+.ratingSection a{
+	text-decoration: none;
+	color: black;
+	font-size: 14px;
+}
+
+.ratingSection div{
+	text-decoration: none;
+	color: black;
+	font-size: 14px;
+	text-align: center;
+}
+
+.txtarea{
+	resize: none;
+	height: 30px;
+	overflow: hidden;
+	margin-top: 5px;
+	width: -webkit-fill-available;
+	margin-left: 5px;
+	border-radius: 0.25rem;
+	border-color: #D4D4D4;
+}
+
+.txtarea:focus{
+	outline: none !important;
+    border:1px solid rgb(90, 202, 250);
+    box-shadow: 0 0 2px #2a70bc;
+}
+
+.txtarealabel{
+	font-size: 12px;
+	font-family: sans-serif;
+	text-decoration: none;
+	color:#5A5A5A;
+	margin-left: 5px;
+}
+
+label::first-letter {
+	color: #ae1717;
+}
+
+/* ----------------- */
+.submitBtn{
+	width: max-content;
+}
