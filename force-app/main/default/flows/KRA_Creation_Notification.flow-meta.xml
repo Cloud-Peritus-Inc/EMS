@@ -14,8 +14,6 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Goal__c.KRA_Creation_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Send Email to Resource when he Submits his KRA record for his mentor</description>
@@ -32,8 +30,6 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Goal__c.KRA_Submission_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <decisions>
