@@ -16,10 +16,10 @@
 **/
 global class BatchToCreateKRAforQuaterly implements Database.Batchable<sObject> {
     global Database.QueryLocator start(Database.BatchableContext BC) {
-         return Database.getQueryLocator([SELECT Id,Appraisal_Date__c,EMS_TM_User__c,(Select Id,Resource_Reports_To__c FROM Resource_Resource_Relationships__r WHERE Relationship_Type__c INCLUDES ('Mentor')),(SELECT Id,Resource__c,Fiscal_Year__c FROM Fulfillments__r) FROM Contact WHERE EMS_TM_User__r.isActive = true]);
+        return Database.getQueryLocator([SELECT Id,Appraisal_Date__c,EMS_TM_User__c,(Select Id,Resource_Reports_To__c FROM Resource_Resource_Relationships__r WHERE Relationship_Type__c INCLUDES ('Mentor')),(SELECT Id,Resource__c,Fiscal_Year__c FROM Fulfillments__r) FROM Contact WHERE EMS_TM_User__r.isActive = true]);
     }
     global void execute(Database.BatchableContext BC, List<Contact> conList) {
-      Fiscal_Year__c currentFY = [SELECT Id,Name,Start_Date__c,End_Date__c FROM Fiscal_Year__c where Start_Date__c = THIS_FISCAL_YEAR Order BY Start_Date__c ASC];
+        Fiscal_Year__c currentFY = [SELECT Id,Name,Start_Date__c,End_Date__c FROM Fiscal_Year__c where Start_Date__c = THIS_FISCAL_YEAR Order BY Start_Date__c ASC];
         List<Contact> conThatRequiresFulments = new List<Contact>();
         List<Fulfillment__c> fulinserts = new List<Fulfillment__c>();
         Map<Id,Id> contactWithFul = new Map<Id,Id>();
@@ -29,16 +29,16 @@ global class BatchToCreateKRAforQuaterly implements Database.Batchable<sObject> 
                 resourcewithMentor.put(con.Id,con.Resource_Resource_Relationships__r[0].Resource_Reports_To__c);
             }
             if(con.Fulfillments__r.isEmpty()){
-              conThatRequiresFulments.add(con);   
+                conThatRequiresFulments.add(con);   
             }else{
                 for(Fulfillment__c ful : con.Fulfillments__r){
                     if(ful.Fiscal_Year__c == currentFY.Id){
-                       contactWithFul.put(con.Id,ful.Id); 
-                       break;
+                        contactWithFul.put(con.Id,ful.Id); 
+                        break;
                     }
                 } 
                 if(!contactWithFul.containsKey(con.Id)){
-                  conThatRequiresFulments.add(con);  
+                    conThatRequiresFulments.add(con);  
                 }
             }
         }
@@ -58,43 +58,44 @@ global class BatchToCreateKRAforQuaterly implements Database.Batchable<sObject> 
             }
             insert fulinserts;
             for(Fulfillment__c fulmp : fulinserts){
-               contactWithFul.put(fulmp.Resource__c,fulmp.Id);  
+                contactWithFul.put(fulmp.Resource__c,fulmp.Id);  
             }
         }
         List<Goal__c> goalsInsert = new List<Goal__c>();
-         List<Fulfillment__c> fulList = new List<Fulfillment__c>();
+        List<Fulfillment__c> fulList = new List<Fulfillment__c>();
         if(!contactWithFul.isEmpty()){
-            for(Fulfillment__c fi : [SELECT Id,Fiscal_Year__c,Resource__c,OwnerId,(SELECT Id,Type__c,Quarter_Start_Date__c,Quarter_End_Date__c FROM Goals__r WHERE Type__c = 'KRA' AND Quarter_Start_Date__c=THIS_FISCAL_QUARTER) FROM Fulfillment__c WHERE Id IN:contactWithFul.values()]){
+            for(Fulfillment__c fi : [SELECT Id,Fiscal_Year__c,Resource__c,OwnerId,(SELECT Id,Type__c,Quarter_Start_Date__c,Quarter_End_Date__c FROM Goals__r WHERE Type__c = 'KRA' AND Quarter_Start_Date__c= NEXT_FISCAL_QUARTER) FROM Fulfillment__c WHERE Id IN:contactWithFul.values()]){
                 if(fi.Goals__r.isEmpty()){
-                  fulList.add(fi);  
+                    fulList.add(fi);  
                 } 
             }
         }
         if(fulList.size() > 0){
-            Period pd = [Select StartDate,EndDate,FullyQualifiedLabel From Period Where type = 'Quarter' and StartDate = THIS_FISCAL_QUARTER];
+            Period pd = [Select StartDate,EndDate,FullyQualifiedLabel From Period Where type = 'Quarter' and StartDate = NEXT_FISCAL_QUARTER];
             for(Fulfillment__c fis : fulList){
-               Goal__c gol = new Goal__c();
-               gol.Quarter_Start_Date__c = pd.StartDate;
-               gol.Quarter_End_Date__c = pd.EndDate;
-               gol.Type__c = 'KRA';
-               gol.Goal_Name__c = pd.FullyQualifiedLabel;  
-               gol.Start_Date__c = pd.StartDate;
-               gol.End_Date__c = pd.EndDate; 
-               gol.Resource__c = fis.Resource__c;
-               if(resourcewithMentor.containsKey(fis.Resource__c)){
-                 gol.Check_In_By__c = resourcewithMentor.get(fis.Resource__c);
-               }
-               gol.Status__c = 'Active';
-               gol.Fulfillment__c = fis.Id;
-               gol.RecordTypeId = kraRecordTypeId;
-               goalsInsert.add(gol);
+                Goal__c gol = new Goal__c();
+                gol.Quarter_Start_Date__c = pd.StartDate;
+                gol.Quarter_End_Date__c = pd.EndDate;
+                gol.Type__c = 'KRA';
+                gol.Goal_Name__c = pd.FullyQualifiedLabel;  
+                gol.Start_Date__c = pd.StartDate;
+                gol.End_Date__c = pd.EndDate; 
+                gol.Resource__c = fis.Resource__c;
+                if(resourcewithMentor.containsKey(fis.Resource__c)){
+                    gol.Check_In_By__c = resourcewithMentor.get(fis.Resource__c);
+                }
+                gol.Status__c = 'Active';
+                gol.Fulfillment__c = fis.Id;
+                gol.RecordTypeId = kraRecordTypeId;
+                goalsInsert.add(gol);
+                system.debug('goalsInsert >>>>> '+goalsInsert);
             } 
         }  
         
         try{
-           insert goalsInsert; 
+            insert goalsInsert; 
         }catch(exception ex){
-           LogException.logHandledException(ex, 'BatchToCreateKRAforQuaterly', 'execute');  
+            LogException.logHandledException(ex, 'BatchToCreateKRAforQuaterly', 'execute');  
         }
     }
     
