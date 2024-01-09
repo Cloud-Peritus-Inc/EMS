@@ -5,7 +5,7 @@ import saveTheGoal from '@salesforce/apex/myGoalsController.saveTheGoal';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class Showkragoals extends LightningElement {
  @api receivedkraid;
- @track goaltable = [];
+ @track goaltable;
 
  connectedCallback() {
      console.log('===receivedkraid===='+this.receivedkraid);
@@ -14,14 +14,17 @@ export default class Showkragoals extends LightningElement {
 showEditGoal = false;
 showViewGoal = false;
 selectedGoaldId;
-getallGoalsfromserver() {  
-   this.goaltable = [];
+getallGoalsfromserver() {
           getAlltheGoals({ 
              kraId : this.receivedkraid   
          })
          .then(result => {
-              console.log('====result======='+JSON.stringify(result));
-             this.goaltable = result;
+             console.log('====result=======' + JSON.stringify(result));
+             if (result && result.length > 0) {
+                 this.goaltable = [];
+                 this.goaltable = result;
+             }
+             
          })
          .catch(error => {
             console.log('====Error======='+JSON.stringify(error));
@@ -82,7 +85,7 @@ saveTheGoal({
         }).then(res => {
             const evt = new ShowToastEvent({
             title: 'success',
-            message: 'Successfullty marked the goal as completed.',
+            message: 'Successfully marked the goal as completed.',
             variant: 'success',
             mode: 'dismissable'
         });

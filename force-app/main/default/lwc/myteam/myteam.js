@@ -70,6 +70,9 @@ handlerichChange(event) {
   console.log('==selectedresource===='+this.selectedresource);
   this.myVal = '';
   this.getTheKRA();
+  //smaske : Calling getCheckInfo() method on resource change
+  //Fix for Defect PM_009
+  this.getCheckInfo();
  }
 
  checkInToggle(event){
@@ -104,19 +107,20 @@ this.showkras = event.target.checked;
     
  }
 
- getCheckInfo(){
+    getCheckInfo() {
+        getTheCheckInInfo({
+            resourceId: this.selectedresource,
+            fyId : this.selectedfy
+        })
+            .then(result => {
+                console.log('====cintable=======' + JSON.stringify(result));
+                this.cintable = result;
+            })
+            .catch(error => {
+                console.log('====Error=======' + JSON.stringify(error));
+            });
+    }
 
-getTheCheckInInfo({ 
-             resourceId : this.selectedresource   
-         })
-         .then(result => {
-              console.log('====cintable======='+JSON.stringify(result));
-             this.cintable = result;
-         })
-         .catch(error => {
-            console.log('====Error======='+JSON.stringify(error));
-         }); 
-}
 @track isShowCheckInModal = false;
  showCheckInModalBox() {  
         this.isShowCheckInModal = true;
@@ -147,7 +151,7 @@ handleCheckInSave(){
         }).then(res => {
             const evt = new ShowToastEvent({
             title: 'success',
-            message: 'Checked In',
+            message: 'Checked In Successfully !',
             variant: 'success',
             mode: 'dismissable'
         });

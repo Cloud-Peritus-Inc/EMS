@@ -159,7 +159,7 @@ winnerrecordTypeId;
     handleSuccess(event) {
         const evt = new ShowToastEvent({
             title: 'success',
-            message: 'Successfullty submitted your shout out!',
+            message: 'Successfully submitted your shout out!',
             variant: 'success',
             mode: 'dismissable'
         });
@@ -180,7 +180,7 @@ winnerrecordTypeId;
     handleRecSuccess(event) {
         const evt = new ShowToastEvent({
             title: 'success',
-            message: 'Successfullty submitted your recognization!',
+            message: 'Successfully submitted your recognization!',
             variant: 'success',
             mode: 'dismissable'
         });

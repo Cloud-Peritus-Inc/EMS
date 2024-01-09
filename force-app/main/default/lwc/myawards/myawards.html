@@ -5,22 +5,22 @@
       <thead>
         <tr class="slds-line-height_reset" style="color:lightsalmon">
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Location">Award Type</div>
+            <div class="slds-truncate" title="Award Type">Award Type</div>
            </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Name">Recognized By</div>
+            <div class="slds-truncate" title="Recognized By">Recognized By</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Name">Fiscal year</div>
+            <div class="slds-truncate" title="Fiscal year">Fiscal year</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Location">Comments</div>
+            <div class="slds-truncate" title="Comments">Comments</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Location">Given On</div>
+            <div class="slds-truncate" title="Given On">Given On</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Location">Status</div>
+            <div class="slds-truncate" title="Status">Status</div>
           </th>
         </tr>
       </thead>
@@ -32,7 +32,9 @@
             <tr key={sout.resourceId}>
              <td style="word-wrap:break-word;">
                 <div class="slds-wrap">
-                    <a href="#"><b>{sout.awardType}</b></a></div>
+                    <!-- <a href="#"><b>{sout.awardType}</b></a> -->
+                    <p><b>{sout.awardType}</b></p>
+                  </div>
               </td>
               <td>
                  <a href="javascript:void(0);" data-id={sout.resourceId}>
