@@ -5,22 +5,22 @@
       <thead>
         <tr class="slds-line-height_reset" style="color:lightcoral">
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Location">Title</div>
+            <div class="slds-truncate" title="Title">Title</div>
            </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Name">Resource</div>
+            <div class="slds-truncate" title="Resource">Resource</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Name">Type Of Shout Out</div>
+            <div class="slds-truncate" title="Type Of Shout Out">Type Of Shout Out</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Location">Project</div>
+            <div class="slds-truncate" title="Project">Project</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Location">Comments</div>
+            <div class="slds-truncate" title="Comments">Comments</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Location">Given On</div>
+            <div class="slds-truncate" title="Given On">Given On</div>
           </th>
          
           
@@ -34,7 +34,9 @@
             <tr key={sout.resourceId}>
              <td style="word-wrap:break-word;">
                 <div class="slds-wrap">
-                    <a href="#">{sout.Title}</a></div>
+                    <!-- <a href="#">{sout.Title}</a> -->
+                    <p>{sout.Title}</p>
+                  </div>
               </td>
               <td>
                  <a href="javascript:void(0);" data-id={sout.resourceId}>

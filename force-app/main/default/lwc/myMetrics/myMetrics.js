@@ -90,20 +90,20 @@ getallKrafromserver() {
          });    
 }
 
-getCheckInfo(){
-
-getTheCheckInInfo({ 
-             resourceId : null,
-             fyId : this.selectedfy   
-         })
-         .then(result => {
-              console.log('====cintable======='+JSON.stringify(result));
-             this.cintable = result;
-         })
-         .catch(error => {
-            console.log('====Error======='+JSON.stringify(error));
-         }); 
-}
+    getCheckInfo() {
+        console.log("resourceId In getCheckInfo:: " + this.resourceId);
+        getTheCheckInInfo({
+            resourceId: null,
+            fyId: this.selectedfy
+        })
+            .then(result => {
+                console.log('====cintable=======' + JSON.stringify(result));
+                this.cintable = result;
+            })
+            .catch(error => {
+                console.log('====Error=======' + JSON.stringify(error));
+            });
+    }
 
 getpulseInfo(){
 

@@ -523,7 +523,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         let isValid = true;
 
         isValid = this.addObjToArrAndValidate(currentStep);
-
+        console.log('isValid 526' +  isValid);
         if (isValid) {
 
             this.showBestEntrepreneur = false;
@@ -619,6 +619,8 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
                     }
                 }
             }
+        }else{
+            Result = true;
         }
 
         return Result;

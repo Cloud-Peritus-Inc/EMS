@@ -202,6 +202,11 @@ this.goalenddate = event.target.value;
         this.dispatchEvent(evt); 
      } else {
         console.log('selectedFulfilment ' + this.selectedFulfilment);
+        console.log('resourceRTId ' + this.resourceid);
+        console.log('name ' + this.goalname);
+        console.log('startdate ' + this.goalstartdate);
+        console.log('enddate ' + this.goalenddate);
+        console.log('descri ' + this.myVal);
       createTheGoals({
             fulfilmentId : this.selectedFulfilment,
             resourceRTId: this.resourceid,
@@ -212,7 +217,7 @@ this.goalenddate = event.target.value;
         }).then(res => {
             const evt = new ShowToastEvent({
             title: 'success',
-            message: 'Successfullty logged the goal. Make sure to finish the goal with in-time.',
+            message: 'Successfully logged the goal. Make sure to finish the goal with in-time.',
             variant: 'success',
             mode: 'dismissable'
         });
