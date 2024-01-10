@@ -87,15 +87,15 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     }
 
     //getSelectedResourceConDetails
-    @wire(getSelectedResourceConDetails, { selectedResourceId: "$selectedresource"} )
+    @wire(getSelectedResourceConDetails, { selectedResourceId: "$selectedresource" })
     wiredSelectedUserResourceRole({ error, data }) {
         if (data) {
             this.SelectedResourceConDetails = data;
             console.log('getSelectedResourceConDetails DATA :  ' + JSON.stringify(this.SelectedResourceConDetails));
-            this.SelectedResourceResourceRoleTechAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.technical_acumen__c : undefined ;
-            this.SelectedResourceResourceRoleProfSkillAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.professional_skills__c : undefined ; 
-            this.SelectedResourceResourceRoleStrategicAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.strategic_impact__c : undefined ; 
-            this.SelectedResourceResourceRoleGoalRewAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.goals_and_results__c : undefined ;
+            this.SelectedResourceResourceRoleTechAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.technical_acumen__c : undefined;
+            this.SelectedResourceResourceRoleProfSkillAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.professional_skills__c : undefined;
+            this.SelectedResourceResourceRoleStrategicAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.strategic_impact__c : undefined;
+            this.SelectedResourceResourceRoleGoalRewAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.goals_and_results__c : undefined;
             //console.log('SelectedResourceResourceRoleTechAcc DATA :  ' + JSON.stringify(this.SelectedResourceResourceRoleTechAcc));
         } else if (error) {
             console.log('getSelectedResourceConDetails error :  ' + JSON.stringify(error));
@@ -348,7 +348,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleSaveAction() {
         console.log(" handleSaveAction ");
 
-        console.log(JSON.stringify(this.kraRecord));
+        //console.log(JSON.stringify(this.kraRecord));
 
         let isValid = true;
         let allPositiveTechFieldsList = [];
@@ -394,7 +394,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 showStakeholderSatisfaction: ['Stakeholder_Satisfaction_Rating__c', 'Stakeholder_Satisfaction_Example__c'],
                 showProjectSuccess: ['Project_Success_Rating__c', 'Project_Success_Example__c']
             };*/
-            console.log("#getAllPropertyFieldMap 363 : " + JSON.stringify(this.getAllPropertyFieldMap()));
+            //console.log("#getAllPropertyFieldMap 363 : " + JSON.stringify(this.getAllPropertyFieldMap()));
 
             // Validate fields based on viewwrap properties
             Object.entries(propertyFieldMap).forEach(([property, fields]) => {
@@ -454,11 +454,12 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             */
 
             // Call the function for each skill category
-            this.processSkillCategory(this.getTechPropertyFieldMap(), allPositiveTechFieldsList, this.SelectedResourceResourceRoleTechAcc, this.CurrentUserResourceRoleTechAcc, 'Overall_Tech_Rating_2__c');
+            this.processSkillCategory(this.getTechPropertyFieldMap(), allPositiveTechFieldsList, this.SelectedResourceResourceRoleTechAcc, this.CurrentUserResourceRoleTechAcc, "Overall_Tech_Rating_2__c");
+            console.log('458');
             this.processSkillCategory(this.getProfSkillsPropertyFieldMap(), allPositiveProfessionalFieldsList, this.SelectedResourceResourceRoleProfSkillAcc, this.CurrentUserResourceRoleProfSkillAcc, 'Overall_Professional_Rating_2__c');
             this.processSkillCategory(this.getStrategicImpactPropertyFieldMap(), allPositiveStrategicFieldsList, this.SelectedResourceResourceRoleStrategicAcc, this.CurrentUserResourceRoleStrategicAcc, 'Overall_Strategic_Rating_2__c');
             this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c');
-
+            console.log('461');
         }
 
         if (isValid) {
@@ -664,7 +665,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         };
     }
 
-    getProfSkillsPropertyFieldMap(){
+    getProfSkillsPropertyFieldMap() {
         return {
             showDeliveryAccountability: ['Delivery_Accountability_Rating__c'],
             showEffectiveCommunication: ['Effective_Communication_Rating__c'],
@@ -728,7 +729,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         return propertyFieldMap;
     }
 
-    updateAllPositiveFieldsList(sectionPropertyFieldMap,viewwrap,allPositiveFieldsList){
+    updateAllPositiveFieldsList(sectionPropertyFieldMap, viewwrap, allPositiveFieldsList) {
         console.log("#updateAllPositiveTechFieldsList  703 ::: ");
         for (const property in viewwrap) {
             if (viewwrap.hasOwnProperty(property) && viewwrap[property]) {
@@ -742,7 +743,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         return allPositiveFieldsList;
     }
 
-    getTotalSum(kraRecord,allPositiveFieldsList){
+    getTotalSum(kraRecord, allPositiveFieldsList) {
         console.log("#getTotalSum  717 ::: ");
         let sum = 0;
         allPositiveFieldsList.forEach(property => {
@@ -758,16 +759,24 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     processSkillCategory(fieldMap, fieldsList, selectedResourceUserAcc, currentUserRoleAcc, overallRatingField) {
         console.log('# In processSkillCategory');
         let positiveFieldsList = this.updateAllPositiveFieldsList(fieldMap, this.viewwrap, fieldsList);
-        let sum = this.getTotalSum(this.kraRecord, positiveFieldsList);
-        let averageRating = positiveFieldsList.length > 0 ? sum / positiveFieldsList.length : 0;
-    
+        let sum = this.getTotalSum(this.kraRecord, positiveFieldsList); 
+        let averageRating = positiveFieldsList.length > 0 ? sum / positiveFieldsList.length : 0; 
+        
         if (selectedResourceUserAcc) {
-            this.kraRecord[overallRatingField] = averageRating * (selectedResourceUserAcc / 100);
+            let kraRecordMod = { ...this.kraRecord };
+            kraRecordMod[overallRatingField] = averageRating * (selectedResourceUserAcc / 100);
+            this.kraRecord = kraRecordMod;
+            //Old way of updating : this was throwing error hence updated code at top
+            //this.kraRecord[overallRatingField] = averageRating * (selectedResourceUserAcc / 100);
         } else {
-            this.kraRecord[overallRatingField] = averageRating * (currentUserRoleAcc / 100);
+            let kraRecordMod = { ...this.kraRecord };
+            kraRecordMod[overallRatingField] = averageRating * (currentUserRoleAcc / 100);
+            this.kraRecord = kraRecordMod;
+            //Old way of updating : this was throwing error hence updated code at top
+            //this.kraRecord[overallRatingField] = averageRating * (currentUserRoleAcc / 100);
         }
     }
-    
+
 
 
 }

@@ -64,9 +64,12 @@
             <tr key={sout.resourceId}>
              <td style="word-wrap:break-word;">
                 <div class="slds-wrap">
-                     <div class="image">
-        <img src={sout.resourcePhotoURL} />&nbsp;&nbsp; <a href="#">{sout.resourceName}</a>
-      </div> </div>
+                  <div class="image">
+                    <img src={sout.resourcePhotoURL} />&nbsp;&nbsp;
+                    <!-- <a href="#">{sout.resourceName}</a> -->
+                    <p>{sout.resourceName}</p>
+                  </div>
+                </div>
               </td>
               <td>
                       {sout.currentFYName}
@@ -147,7 +150,9 @@
                     <td style="word-wrap:break-word;">
                       <div class="slds-wrap">
                         <div class="image">
-                          <img src={item.currentFYId} />&nbsp;&nbsp; <a href="#">{item.currentName}</a>
+                          <img src={item.currentFYId} />&nbsp;&nbsp;
+                           <!-- <a href="#">{item.currentName}</a> -->
+                           {item.currentName}
                         </div>
                         </div>
                     </td>
