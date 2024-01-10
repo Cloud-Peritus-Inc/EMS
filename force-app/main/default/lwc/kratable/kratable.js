@@ -48,6 +48,11 @@ myVal = '';
 
     hideGoalCreateModalBox() {  
         this.showGoalCreationModal = false;
+        this.myVal = '';
+        this.goalname = '';
+        this.descri = '';
+        this.goalstartdate = null;
+        this.goalenddate = null;
         
     }
 
