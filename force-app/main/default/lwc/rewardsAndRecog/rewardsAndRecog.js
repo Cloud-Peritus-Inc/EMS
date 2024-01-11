@@ -19,6 +19,7 @@ imageUrl = landscape;
 dNominations = true;
 @track showTheAnnualAwards = false;
 drecognise = true;
+
 openshoutout = false;
 annualAwardpop = false;
 openRecogize = false;

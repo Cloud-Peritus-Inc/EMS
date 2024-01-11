@@ -25,12 +25,16 @@ public without sharing class checkInController {
             if(String.isNotBlank(resourceId)){
                 glist = [SELECT Id,Check_In_By__c,Check_In_By__r.Name,Pulse_Id__c,Check_in_Date__c,Feedback_and_Comments__c,
                          Career_Development_Rating__c,Communication_Rating__c,Feedback_and_Recognition_Rating__c,Job_Satisfaction_Rating__c,
-                         Leadership_and_Management_Rating__c,Work_Environment_Rating__c,Work_Life_Balance_Rating__c,Rating__c,Overall_Rating__c,Goal_Name__c,Status__c FROM Goal__c 
+                         Leadership_and_Management_Rating__c,Work_Environment_Rating__c,Work_Life_Balance_Rating__c,Rating__c,Overall_Rating__c,Goal_Name__c,Status__c,
+                         //Smaske : Added Overall_Pulse_Rating__c for PM_027
+                         Overall_Pulse_Rating__c FROM Goal__c 
                          WHERE RecordTypeId=:checkinRecordTypeId AND Resource__c=:resourceId AND CreatedDate >=:startdate and CreatedDate <=:enddate ];
             }else{
                  glist = [SELECT Id,Check_In_By__c,Check_In_By__r.Name,Pulse_Id__c,Check_in_Date__c,Feedback_and_Comments__c,
                          Career_Development_Rating__c,Communication_Rating__c,Feedback_and_Recognition_Rating__c,Job_Satisfaction_Rating__c,
-                         Leadership_and_Management_Rating__c,Work_Environment_Rating__c,Work_Life_Balance_Rating__c,Rating__c,Overall_Rating__c,Goal_Name__c,Status__c FROM Goal__c 
+                         Leadership_and_Management_Rating__c,Work_Environment_Rating__c,Work_Life_Balance_Rating__c,Rating__c,Overall_Rating__c,Goal_Name__c,Status__c,
+                         //Smaske : Added Overall_Pulse_Rating__c for PM_027
+                         Overall_Pulse_Rating__c FROM Goal__c 
                          WHERE RecordTypeId=:checkinRecordTypeId AND Resource__r.EMS_TM_User__c=:Userinfo.getUserId()  AND CreatedDate >=:startdate and CreatedDate <=:enddate ];
             }
         for(Goal__c gc : glist){
@@ -49,6 +53,8 @@ public without sharing class checkInController {
             cw.FeedbackRating = gc.Feedback_and_Recognition_Rating__c;
             cw.LeadershipRating = gc.Leadership_and_Management_Rating__c;
             cw.overallRating = gc.Overall_Rating__c;
+            //Smaske : Added for PM_027
+            cw.overallPulseRating = gc.Overall_Pulse_Rating__c;
              cList.add(cw);
         }  
             
@@ -108,7 +114,7 @@ public without sharing class checkInController {
         Contact resourceCon = [SELECT Id,Name FROM Contact WHERE Id=:resourceId];
         Contact mentorCon = [SELECT Id,Name FROM Contact WHERE Id=:mentorId];
         Goal__c checkInGoal = new Goal__c();
-        checkInGoal.Goal_Name__c = 'Check-In On'+String.valueOf(System.today());
+        checkInGoal.Goal_Name__c = 'Check-In On '+String.valueOf(System.today());
         checkInGoal.Check_In_By__c = mentorCon.Id;
         checkInGoal.Resource__c = resourceCon.Id;
         checkInGoal.Check_in_Date__c = System.today();
@@ -164,6 +170,9 @@ public without sharing class checkInController {
         public String LeadershipRating;
          @AuraEnabled
         public String overallRating;
+        //smaske :Added for PM_027 
+        @AuraEnabled
+        public String overallPulseRating;
          
         
     }
