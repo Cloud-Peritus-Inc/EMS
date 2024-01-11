@@ -3,7 +3,7 @@
     <fullName>Overall_Average_Section_Rating__c</fullName>
     <description>Overall Average Rating based on the average of each section&apos;s rating value.</description>
     <externalId>false</externalId>
-    <formula>(Overall_Tech_Rating__c + Overall_Professional_Rating__c + Overall_Strategic_Rating__c + Overall_Goals_Results_Rating__c)</formula>
+    <formula>ROUND(Overall_Tech_Rating__c, 1) + ROUND(Overall_Professional_Rating__c, 1) + ROUND(Overall_Strategic_Rating__c, 1) + ROUND(Overall_Goals_Results_Rating__c, 1)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Overall Average Section Rating</label>
     <precision>18</precision>

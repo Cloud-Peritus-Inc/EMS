@@ -19,6 +19,7 @@ dontshowThePulse = true;
 @track kratable = [];
 @track cintable = [];
 @track ptable = [];
+disableButton;
 
 //current contact resourceId
 resourceId;
@@ -26,6 +27,23 @@ pulseKraRecord = [];
 
 connectedCallback() {
     this.getallKrafromserver();
+
+    getThePulseInfo({ 
+        resourceId : null,
+         fyId : this.selectedfy  
+    })
+    .then(result => {
+         console.log('====ptable1======='+JSON.stringify(result));
+        this.ptable = result;
+        if(this.ptable ){
+            this.disableButton=false;
+        }else{
+            this.disableButton=true; 
+        }
+    })
+    .catch(error => {
+       console.log('====Error======='+JSON.stringify(error));
+    }); 
 }
 
 

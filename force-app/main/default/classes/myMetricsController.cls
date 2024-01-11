@@ -26,9 +26,22 @@ public without sharing class myMetricsController {
         dwrap.currentFYId = currentFY;
         dwrap.currentName = currentFYName;
         dwrap.fyListMap = fyMap;
+        System.debug('Custom label ' + Boolean.valueOf(Label.Enable_Mentor_Feedback));
         dwrap.dontshowThePulse = !(Boolean.valueOf(Label.Enable_Mentor_Feedback));
+        System.debug('Wrapper btn :' + dwrap.dontshowThePulse);
         dwrap.currentResId = [Select ContactId From User WHERE Id=:Userinfo.getUserId()].ContactId;
         User u = [Select ContactId,Profile.Name From User WHERE Id=:Userinfo.getUserId()];
+        //smaske: FOR : PM_014 : checking if logged in user have Reportess under him
+        List<Resource_Resource_Relationship__c> reportesList = [select id,Resource_Reports_To__c,Relationship_Type__c   from Resource_Resource_Relationship__c WHERE Resource_Reports_To__c =: u.ContactId AND Relationship_Type__c includes ('Mentor')];
+        System.debug('reportesList :' + reportesList);
+        Boolean labelVal = Boolean.valueOf(Label.Enable_Mentor_Feedback);
+        if (!reportesList.isEmpty() && labelVal) {
+            dwrap.dontshowThePulse = false;
+        }else if (reportesList.isEmpty() && labelVal) {
+            dwrap.dontshowThePulse = true;
+        }
+        //smaske: FOR : PM_014 : END
+
         dwrap.showGenPerKra = false;
         if (u.Profile.Name == HR_PROFILE) {
             dwrap.showGenPerKra = true;

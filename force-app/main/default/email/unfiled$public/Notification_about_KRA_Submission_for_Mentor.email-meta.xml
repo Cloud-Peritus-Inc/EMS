@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send an Email to Mentor when Mentee Submits his KRA record for his mentor</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notification about KRA Submission for Mentor</name>
+    <style>freeForm</style>
+    <subject>KRA Submission Confirmation</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
