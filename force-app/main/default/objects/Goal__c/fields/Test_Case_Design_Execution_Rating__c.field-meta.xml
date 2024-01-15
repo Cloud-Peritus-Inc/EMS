@@ -3,9 +3,9 @@
     <fullName>Test_Case_Design_Execution_Rating__c</fullName>
     <externalId>false</externalId>
     <label>Test Case Design and Execution Rating</label>
-    <precision>1</precision>
+    <precision>2</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>1</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Number</type>

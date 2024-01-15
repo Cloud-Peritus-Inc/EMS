@@ -4,9 +4,9 @@
     <description>This field is created for Calculating the average Tech Skills Rating for the Logged in resource based on his Resource Role and created Grid Configuration</description>
     <externalId>false</externalId>
     <label>Overall Tech Rating</label>
-    <precision>1</precision>
+    <precision>2</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>1</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Number</type>

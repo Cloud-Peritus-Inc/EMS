@@ -3,9 +3,9 @@
     <fullName>Design_and_Architecture_Rating__c</fullName>
     <externalId>false</externalId>
     <label>Design and Architecture Rating</label>
-    <precision>1</precision>
+    <precision>2</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>1</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Number</type>
