@@ -108,8 +108,9 @@ public without sharing class quarterlyKRAViewCtrl {
                     Troubleshooting_Environment_Prep_Rating__c, Troubleshooting_Environment_Prep_Example__c,
 
                     /*New Fields Created 26/12/23*/
-                    Overall_Professional_Rating_2__c,Overall_Tech_Rating_2__c,Overall_Strategic_Rating_2__c,Overall_Goals_Results_Rating_2__c
-
+                    Overall_Professional_Rating_2__c,Overall_Tech_Rating_2__c,Overall_Strategic_Rating_2__c,Overall_Goals_Results_Rating_2__c,
+                    /*New Fields Added to Query for  [Defect : PM_040] */
+                    Resource__c,Check_In_By__c
                     FROM Goal__c WHERE Id = :recordId LIMIT 1];
 
                 return getReviewerDetails(goal, selectedresource);
@@ -161,7 +162,7 @@ public without sharing class quarterlyKRAViewCtrl {
                 return goal;
             }
 
-        } catch (Exception e) {
+        } catch (Exception e) { 
             throw new AuraHandledException(e.getMessage());
         }
         
@@ -177,7 +178,13 @@ public without sharing class quarterlyKRAViewCtrl {
     public static Goal__c saveKraRecord( Goal__c kraRecord){
         try {
             System.debug('kraRecord Record Detail : :' + kraRecord);
-            kraRecord.Status__c = STATUS_KRA_INREVIEW;
+            //smaske : Not updating Status for [Defect : PM_040]
+            /*
+            As whenever the the KRA record is created default status is "Active"
+            Hence on SAVE btn click not updating the status ,as Status will change on SUBMIT btn.
+            This will work for both MENTOR AND MENTEE.
+            */
+            //kraRecord.Status__c = STATUS_KRA_INREVIEW;
             Update kraRecord;
             return kraRecord;
         } catch (Exception e) {
@@ -188,8 +195,23 @@ public without sharing class quarterlyKRAViewCtrl {
     @AuraEnabled
     public static Goal__c submitKraRecord( Goal__c kraRecord){
         try {
-            System.debug('kraRecord Record Detail : :' + kraRecord);
-            kraRecord.Status__c = STATUS_KRA_COMPLETE;
+            System.debug('submitKraRecord Record Detail : :' + kraRecord.Resource__c);
+            //smaske: Updating Status conditionally for [Defect : PM_040]
+            /*
+            1) When mentee SUBMIT the KRA, Status will change to "KRA Inreview" as he will submit his KRA to his mentor for review.
+            2) When Mentor SUBMIT the KRA, Status will change to "KRA Complete: as he will Complete KRA review from his end and submit the KRA as a Final Action.
+            */
+
+            Contact con = [SELECT Id, EMS_TM_User__c, EMS_TM_User__r.Profile.Name FROM Contact WHERE EMS_TM_User__c = :UserInfo.getUserId() LIMIT 1];
+            System.debug('con Record Detail : :' + con.Id);
+            if (kraRecord.Resource__c == con.Id) {
+                System.debug('IN 208');
+                kraRecord.Status__c = STATUS_KRA_INREVIEW;
+            }else {
+                System.debug('IN 211');
+                kraRecord.Status__c = STATUS_KRA_COMPLETE;
+            }
+
             Update kraRecord;
             return kraRecord;
         } catch (Exception e) {

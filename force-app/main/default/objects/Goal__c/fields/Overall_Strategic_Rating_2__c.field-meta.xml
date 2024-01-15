@@ -3,9 +3,9 @@
     <fullName>Overall_Strategic_Rating_2__c</fullName>
     <externalId>false</externalId>
     <label>Overall Strategic Rating</label>
-    <precision>1</precision>
+    <precision>2</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>1</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Number</type>

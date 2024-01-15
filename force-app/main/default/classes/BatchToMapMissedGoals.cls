@@ -28,7 +28,9 @@ global class BatchToMapMissedGoals implements Database.Batchable<sObject> {
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
         date dt = Test.isRunningTest() ? system.today().adddays(-10) : system.today().adddays(integer.valueOf(Label.Days_Consider_for_Missed_Goal));
-        return Database.getQueryLocator([SELECT Id,Status__c FROM Goal__c WHERE Status__c='Active' and End_Date__c>=:dt ]);
+        String GOAL_RECORD_TYPE = 'Goal';
+        Id goalRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get(GOAL_RECORD_TYPE).getRecordTypeId();
+        return Database.getQueryLocator([SELECT Id,Status__c FROM Goal__c WHERE Status__c='Active' And RecordTypeId =:goalRecTypeId and End_Date__c>=:dt ]);
     }
     
     /**

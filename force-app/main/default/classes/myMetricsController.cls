@@ -267,9 +267,10 @@ public without sharing class myMetricsController {
         List<Goal__c> pulseRecordList = new List<Goal__c>();
         Id pulseRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get(PULSE_RECORD_TYPE).getRecordTypeId();
         Map<Id, Id> relationshipMap = new Map<Id, Id>();
-
+			//Added condition where Resource is not equal to inactive
+			//PM_044 @Mukesh Rawat
         for (Resource_Resource_Relationship__c rrr : [SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c
-                                                        WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource_Reports_To__c = :loggedInUserConId]) {
+                                                        WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive' AND Resource_Reports_To__c = :loggedInUserConId]) {
             relationshipMap.put(rrr.Resource__c, rrr.Resource_Reports_To__c);
         }
 

@@ -112,7 +112,9 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             console.log("wiredKraRecordResult DATA :: " + JSON.stringify(data));
             this.kraRecord = data;
             //Check if status is COMPLETE/INREVIEW : Disable SUBMIT/SAVE btn
-            this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_INREVIEW ? false : true;
+            //smaske : updating Btn Mode for [Defect : PM_040]
+            // If status is "KRA COMPLETE" then DISABLE SUBMIT btn, else ENABLE SUBMIT Btn
+            this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
             this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
             if (this.profileName == 'Employee - HR(Community)') {
                 this.isSubmitBtnDisabled = false;
@@ -469,16 +471,20 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                     console.log(" result ::" + JSON.stringify(result));
                     this.kraRecord = result;
 
-                    //Check if status is COMPLETE : Disable Submit btn
-                    this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_INREVIEW ? false : true;
+                    //Check if status is COMPLETE/INREVIEW : Disable SUBMIT/SAVE btn
+                    //smaske : updating Btn Mode for [Defect : PM_040]
+                    // If status is "KRA COMPLETE" then DISABLE SUBMIT btn, else ENABLE SUBMIT Btn
+                    this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
                     this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
+
                     if (this.profileName == 'Employee - HR(Community)') {
                         this.isSubmitBtnDisabled = false;
+                        this.isSaveBtnDisabled = false;
                     }
                     //Check if status is COMPLETE : Disable Submit btn
 
                     console.log(" After Save ::" + JSON.stringify(this.kraRecord));
-                    this.showToast('Record updated successfully.', this.successVariant, this.toastMode);
+                    this.showToast('Record saved successfully.', this.successVariant, this.toastMode);
                     return refreshApex(this.wiredKraRecordResult);
                 })
                 .catch(error => {
@@ -585,10 +591,12 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 .then(result => {
                     console.log(" result ::" + JSON.stringify(result));
                     this.kraRecord = result;
+                    
                     //Check if status is COMPLETE : Disable Submit btn
                     this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
                     this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
                     //Check if status is COMPLETE : Disable Submit btn
+
                     console.log(" After Save ::" + JSON.stringify(this.kraRecord));
                     this.showToast('Record updated successfully.', this.successVariant, this.toastMode);
 
@@ -759,9 +767,9 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     processSkillCategory(fieldMap, fieldsList, selectedResourceUserAcc, currentUserRoleAcc, overallRatingField) {
         console.log('# In processSkillCategory');
         let positiveFieldsList = this.updateAllPositiveFieldsList(fieldMap, this.viewwrap, fieldsList);
-        let sum = this.getTotalSum(this.kraRecord, positiveFieldsList); 
-        let averageRating = positiveFieldsList.length > 0 ? sum / positiveFieldsList.length : 0; 
-        
+        let sum = this.getTotalSum(this.kraRecord, positiveFieldsList);
+        let averageRating = positiveFieldsList.length > 0 ? sum / positiveFieldsList.length : 0;
+
         if (selectedResourceUserAcc) {
             let kraRecordMod = { ...this.kraRecord };
             kraRecordMod[overallRatingField] = averageRating * (selectedResourceUserAcc / 100);
