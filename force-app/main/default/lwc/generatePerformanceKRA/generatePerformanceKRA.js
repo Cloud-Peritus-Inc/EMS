@@ -7,6 +7,7 @@ import getResourceKraRecords from '@salesforce/apex/generatePerformanceKRAContro
 import getCompensationDetails from '@salesforce/apex/generatePerformanceKRAController.getCompensationDetails';
 import updateCompensationDetails from '@salesforce/apex/generatePerformanceKRAController.updateCompensationDetails';
 import { NavigationMixin } from 'lightning/navigation';
+import { refreshApex } from '@salesforce/apex';
 export default class GeneratePerformanceKRA extends NavigationMixin(LightningElement) {
     @api resourceId;
     @track CurrentUserConDetails;
@@ -22,10 +23,12 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     @track ContactId;
     @track kraRecords;
     totalkraRecords = 0;
-    averageOverallRating = 0;
+    @track averageOverallRating = 0;
     @track Compensation = {sobjectType:'Compensation__c'};
     @track CompensationDates = [];
     @track dataLoaded = false;
+    //smaske : PM_079/PM_078
+    @track submitButtonDisabled = false;
 
     errorVariant = 'error';
     successVariant = 'success';
@@ -106,14 +109,20 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             this.Compensation.Reviewed_By__c =this.userId;
             this.Compensation.Resource__c =this.member;
             if (this.Contact && this.Contact.Next_Appraisal_Date__c) {
-                this.Compensation.Next_Appraisal_Date__c = this.Contact.Next_Appraisal_Date__c;
+                //smaske : PM_079/PM_078 : for populating date value
+                let RR = { ...this.Compensation };
+                RR.Next_Appraisal_Date__c = this.Contact.Next_Appraisal_Date__c;
+                this.Compensation = RR;
             }
             else if(this.Contact && this.Contact.Last_Appraisal_Date__c) {
                 var lastAppraisalDate = new Date(this.Contact.Last_Appraisal_Date__c);
                 var nextYearDate = new Date(lastAppraisalDate);
                 nextYearDate.setFullYear(lastAppraisalDate.getFullYear() + 1);
                 var formattedNextYearDate = nextYearDate.toISOString().split('T')[0];
-                this.Compensation.Next_Appraisal_Date__c = formattedNextYearDate;
+                //smaske : PM_079/PM_078 : for populating date value
+                let RR = { ...this.Compensation };
+                RR.Next_Appraisal_Date__c = formattedNextYearDate;
+                this.Compensation = RR;
             }
         }
         if (data) {
@@ -122,6 +131,8 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             this.CompensationDates.push(data.Appraisal_Date__c);
             this.CompensationDates.push(data.Next_Appraisal_Date__c);
             this.dataLoaded = true;
+            //smaske : PM_079/PM_078 : Disable Submit btn
+            this.submitButtonDisabled = data.Compensation_Submitted__c == true ? true : false;
         }else if (error) {
             console.log('Compensation Error :' + JSON.stringify(error));
             this.dataLoaded = true;
@@ -150,11 +161,22 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         console.log(JSON.stringify(event.target.name));
         const dataValue = event.target.value;
         const name = event.target.name;
+        var todaysDate = new Date();
 
         let RR = { ...this.Compensation };
 
-        if(name == 'Next_Appraisal_Date__c'){
-            RR[name] = dataValue;
+        if (name === 'Next_Appraisal_Date__c') {
+            if (dataValue <= todaysDate.toISOString().split('T')[0]) {
+                RR[name] = null;
+                const evt = new ShowToastEvent({
+                    message: 'Next Appraisal Date must be a future date.',
+                    variant: 'error',
+                    mode: 'dismissable'
+                });
+                this.dispatchEvent(evt);
+            } else {
+                RR[name] = dataValue;
+            }
         }else if(name == 'Appraisal_Date__c'){
             RR[name] = dataValue;
         }else if(name == 'Comments__c'){
@@ -211,24 +233,45 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     }
 
     handleSubmitButtonAction(){
-        updateCompensationDetails({ record: this.Compensation, fy : this.fy })
-		.then(result => {
-            console.log(" updateCompensationDetails " + JSON.stringify(result));
-			this.Compensation = result;
-            let msg = 'Record Submitted Successfully !';
-            this.showNotification(msg,this.successVariant);
-            this[NavigationMixin.Navigate]({
-                type: 'comm__namedPage',
-                attributes: {
-                    name: 'Home'
-                }
-            });
-		})
-		.catch(error => {
-            let msg = 'Error Submitting Records!';
-            this.showNotification(msg,this.successVariant);
-            console.log(" updateCompensationDetails error " + JSON.stringify(error));
-		})
+        //smaske : PM_079/PM_078 : Updating Submit functionality to avoid duplicate record creation and Field Validation.
+        let isValid = true;
+        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Finalized_Hike__c']; // Replace with your actual field names
+        // Iterate through the list of API field names
+        for (const fieldName of apiFieldNames) {
+            if (!this.Compensation[fieldName]) {
+                console.log(`${fieldName} is blank.`);
+                isValid = false;
+            } else {
+                console.log(`${fieldName} is not blank. Value: ${this.Compensation[fieldName]}`);
+            }
+        }
+
+        if (isValid) {
+            // Update/Create Record when all required fields value is populated.
+            updateCompensationDetails({ record: this.Compensation, fy: this.fy })
+                .then(result => {
+                    console.log(" updateCompensationDetails " + JSON.stringify(result));
+                    this.Compensation = result;
+                    let msg = 'Record Submitted Successfully !';
+                    this.showNotification(msg, this.successVariant);
+                    this[NavigationMixin.Navigate]({
+                        type: 'comm__namedPage',
+                        attributes: {
+                            name: 'Home'
+                        }
+                    });
+
+                    return refreshApex(this.Compensation);
+                })
+                .catch(error => {
+                    let msg = 'Error Submitting Records!';
+                    this.showNotification(msg, this.successVariant);
+                    console.log(" updateCompensationDetails error " + JSON.stringify(error));
+                })
+        }else{
+            let msg = 'All field values are required!';
+            this.showNotification(msg, this.errorVariant);
+        }
     }
 
     getPreviousStep() {
@@ -337,7 +380,8 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     @api
     get isEditButtonVisible(){
         if(this.profileName && this.profileName == 'Employee - HR(Community)'){
-            return true;
+            //smaske : PM_072 : Setting as False ,as we dont need edit button
+            return false;
         }
         return false;
     }

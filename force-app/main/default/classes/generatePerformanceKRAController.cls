@@ -56,7 +56,21 @@ public without sharing class generatePerformanceKRAController {
                     AND Fulfillment__r.Fiscal_Year__c =: fy
                     
                     ];
+                }else { //smaske : [PM_064] added else for fetching KRA records created from Joining date if any appraisal date not found
+                    System.debug('#ELSE 2');
+                    kraGoalRecords = [Select Id,Name,Resource__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
+                    Start_Date__c,End_Date__c,RecordTypeId,
+                    Fulfillment__r.Fiscal_Year__c
+                    
+                    FROM  Goal__c 
+                    WHERE Resource__c =: member.Id 
+                    AND RecordTypeId =: KRARecTypeId
+                    AND Start_Date__c >= :member.EMS_EM_JD__c
+                    AND Fulfillment__r.Fiscal_Year__c =: fy
+                    ];
+                    
                 }
+                
             }
             
             
@@ -74,7 +88,9 @@ public without sharing class generatePerformanceKRAController {
         Compensation__c comp = Null;
         
         try {
-            compList = [SELECT Id, Name, Appraisal_Date__c, Comments__c, Finalized_Hike__c, Next_Appraisal_Date__c, Resource__c, Reviewed_By__c
+            compList = [SELECT Id, Name, Appraisal_Date__c, Comments__c, Finalized_Hike__c, Next_Appraisal_Date__c, Resource__c, Reviewed_By__c,
+            //smaske : PM_079 : Created new field Compensation_Submitted__c
+            Compensation_Submitted__c
                         FROM Compensation__c 
                         WHERE Resource__c = :selectedresource LIMIT 1];
         } catch (Exception e) {
@@ -94,7 +110,15 @@ public without sharing class generatePerformanceKRAController {
         
         try {
             record.Appraisal_Date__c = Date.today();
-            Upsert record;
+            record.Compensation_Submitted__c = true;
+            //smaske : PM_079 : Removed Upsert as multiple records were created.
+            //Upsert record;
+            if (record.Id == null) {
+                insert record;
+            } else {
+                update record;
+            }
+
             updateContactDetails(record);
             updateFulfillmentDetails(record,fy);
         } catch (Exception e) {

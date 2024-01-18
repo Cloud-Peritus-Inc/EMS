@@ -918,58 +918,121 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="slds-hint-parent">
-                                        <th data-label="Rating Score" scope="row">
-                                            <div class="slds-truncate" title="Technical Acumen">
-                                                <a href="javascript:void(0)">Technical Acumen</a>
-                                            </div>
-                                        </th>
-                                        <td data-label="Technical Acumen">
-                                            <div class="slds-truncate">{kraRecord.Overall_Tech_Rating__c}</div>
-                                        </td>
-                                    </tr>
-                                    <tr class="slds-hint-parent">
-                                        <th data-label="2" scope="row">
-                                            <div class="slds-truncate" title="Professional Skills">
-                                                <a href="javascript:void(0)">Professional Skills</a>
-                                            </div>
-                                        </th>
-                                        <td data-label="Professional Skills">
-                                            <div class="slds-truncate">{kraRecord.Overall_Professional_Rating__c}</div>
-                                        </td>
-                                    </tr>
-                                    <tr class="slds-hint-parent">
-                                        <th data-label="3" scope="row">
-                                            <div class="slds-truncate" title="Strategic Impact">
-                                                <a href="javascript:void(0)">Strategic Impact</a>
-                                            </div>
-                                        </th>
-                                        <td data-label="Strategic Impact">
-                                            <div class="slds-truncate">{kraRecord.Overall_Strategic_Rating__c}</div>
-                                        </td>
-                                    </tr>
-                                    <tr class="slds-hint-parent">
-                                        <th data-label="4" scope="row">
-                                            <div class="slds-truncate" title="Goals & Results">
-                                                <a href="javascript:void(0)">Goals & Results</a>
-                                            </div>
-                                        </th>
-                                        <td data-label="Goals & Results">
-                                            <div class="slds-truncate">{kraRecord.Overall_Goals_Results_Rating__c}</div>
-                                        </td>
-                                    </tr>
-                                    <tr class="slds-hint-parent">
-                                        <th data-label="5" scope="row">
-                                            <div class="slds-truncate" title="Overall Rating">
-                                                <a href="javascript:void(0)">Overall Rating</a>
-                                            </div>
-                                        </th>
-                                        <td data-label="Overall Average Rating">
-                                            <div class="slds-truncate">{kraRecord.Overall_Average_Section_Rating__c}</div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                
+
+                                <template lwc:if={selectedresource}>
+                                    <tbody>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="Rating Score" scope="row">
+                                                <div class="slds-truncate" title="Technical Acumen">
+                                                    <a href="javascript:void(0)">Technical Acumen [{SelectedResourceResourceRoleTechAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Technical Acumen">
+                                                <div class="slds-truncate">{kraRecord.Overall_Tech_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="2" scope="row">
+                                                <div class="slds-truncate" title="Professional Skills">
+                                                    <a href="javascript:void(0)">Professional Skills [{SelectedResourceResourceRoleProfSkillAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Professional Skills">
+                                                <div class="slds-truncate">{kraRecord.Overall_Professional_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="3" scope="row">
+                                                <div class="slds-truncate" title="Strategic Impact">
+                                                    <a href="javascript:void(0)">Strategic Impact [{SelectedResourceResourceRoleStrategicAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Strategic Impact">
+                                                <div class="slds-truncate">{kraRecord.Overall_Strategic_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="4" scope="row">
+                                                <div class="slds-truncate" title="Goals & Results">
+                                                    <a href="javascript:void(0)">Goals & Results [{SelectedResourceResourceRoleGoalRewAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Goals & Results">
+                                                <div class="slds-truncate">{kraRecord.Overall_Goals_Results_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="5" scope="row">
+                                                <div class="slds-truncate" title="Overall Rating">
+                                                    <a href="javascript:void(0)">Overall Rating</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Overall Average Rating">
+                                                <div class="slds-truncate">{kraRecord.Overall_Average_Section_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </template>
+
+                                <template lwc:elseif={CurrentUserConDetails}>
+                                    <tbody>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="Rating Score" scope="row">
+                                                <div class="slds-truncate" title="Technical Acumen">
+                                                    <a href="javascript:void(0)">Technical Acumen [{CurrentUserResourceRoleTechAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Technical Acumen">
+                                                <div class="slds-truncate">{kraRecord.Overall_Tech_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="2" scope="row">
+                                                <div class="slds-truncate" title="Professional Skills">
+                                                    <a href="javascript:void(0)">Professional Skills [{CurrentUserResourceRoleProfSkillAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Professional Skills">
+                                                <div class="slds-truncate">{kraRecord.Overall_Professional_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="3" scope="row">
+                                                <div class="slds-truncate" title="Strategic Impact">
+                                                    <a href="javascript:void(0)">Strategic Impact [{CurrentUserResourceRoleStrategicAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Strategic Impact">
+                                                <div class="slds-truncate">{kraRecord.Overall_Strategic_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="4" scope="row">
+                                                <div class="slds-truncate" title="Goals & Results">
+                                                    <a href="javascript:void(0)">Goals & Results [{CurrentUserResourceRoleGoalRewAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Goals & Results">
+                                                <div class="slds-truncate">{kraRecord.Overall_Goals_Results_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="5" scope="row">
+                                                <div class="slds-truncate" title="Overall Rating">
+                                                    <a href="javascript:void(0)">Overall Rating</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Overall Average Rating">
+                                                <div class="slds-truncate">{kraRecord.Overall_Average_Section_Rating__c}</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </template>
+
+
+
+
                             </table>
                         </lightning-layout-item>
                     </lightning-layout>

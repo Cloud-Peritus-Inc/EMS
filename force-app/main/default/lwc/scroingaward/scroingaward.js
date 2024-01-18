@@ -19,10 +19,12 @@ handleChange(event) {
         this.selectedAward = event.detail.value;
         if(event.detail.value != 'All'){
             this.showthecampare = true; 
+            this.announcebutton = false;
             this.getThelInfoByAward();
         }else{
             this.getTheAllAward();
-            this.showthecampare = false;  
+            this.showthecampare = false;
+            this.announcebutton = true; 
         }
        
 }

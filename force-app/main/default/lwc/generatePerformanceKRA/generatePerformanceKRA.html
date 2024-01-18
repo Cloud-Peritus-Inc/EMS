@@ -195,35 +195,35 @@
                                                     other-field-api-name="User_Status__c"
                                                     other-field-api-name2="Hr_Access__c"
                                                     selected-record-id={Compensation.Reviewed_By__c}
-                                                    onvalueselected={handleValueSelectedOnAccount}></c-reusable-lookup>
+                                                    onvalueselected={handleValueSelectedOnAccount} ></c-reusable-lookup>
                             </div>
 
                             <div class="midBox">
-                                <p class="subTitle">Expected Hike : <lightning-formatted-text value={averageOverallRating} format-style="percent"></lightning-formatted-text> </p>                                
+                                <p class="subTitle">Expected Hike : {averageOverallRating}</p>                            
                             </div>
 
                             <div class="midBox">
                                 <p class="subTitle">Comments</p>
-                                <lightning-input-rich-text label-visible="true" type="text" label=" "  name="Comments__c" value={Compensation.Comments__c} onchange={dataHandler}></lightning-input-rich-text>
+                                <lightning-input-rich-text label-visible="true" type="text" label=" "  name="Comments__c" value={Compensation.Comments__c} onchange={dataHandler} ></lightning-input-rich-text>
                             </div>
 
                             <div class="midBox">
                                 <p class="subTitle">Finalized Hike</p>
                                 <lightning-input type="number" min="0" max="100" label=" " name="Finalized_Hike__c"
-                                    value={Compensation.Finalized_Hike__c} onchange={dataHandler}></lightning-input>
+                                    value={Compensation.Finalized_Hike__c} onchange={dataHandler} ></lightning-input>
                             </div>
 
 
                             <div class="midBox">
                                 <p class="subTitle">SCHEDULES</p>
                                 <p class=""><lightning-icon size="xx-small" icon-name="action:approval"
-                                        alternative-text="Approved" title="Approved"></lightning-icon> Demo Schedule
+                                        alternative-text="" title=""></lightning-icon> Demo Schedule
                                 </p>
                                 <p class=""><lightning-icon size="xx-small" icon-name="action:approval"
-                                        alternative-text="Approved" title="Approved"></lightning-icon>  Assesment will be visible 30 days before prior to the Evaluation Date
+                                        alternative-text="" title=""></lightning-icon>  Assesment will be visible 30 days before prior to the Evaluation Date
                                 </p>
                                 <p class=""><lightning-icon size="xx-small" icon-name="action:approval"
-                                        alternative-text="Approved" title="Approved"></lightning-icon>  Assesment will be visible 30 days before prior to the Evaluation Date
+                                        alternative-text="" title=""></lightning-icon>  Assesment will be visible 30 days before prior to the Evaluation Date
                                 </p>
                             </div>
 
@@ -245,7 +245,7 @@
                 <!--<lightning-button variant="brand" class={setSaveBtnVisibility} label="SAVE"
                 onclick={handleSaveButtonAction}></lightning-button>-->
             <lightning-button variant="brand" class={setSubmitBtnVisibility} label="SUBMIT"
-                onclick={handleSubmitButtonAction}></lightning-button>
+                onclick={handleSubmitButtonAction} disabled={submitButtonDisabled} ></lightning-button>
             </div>
         </footer>
 
