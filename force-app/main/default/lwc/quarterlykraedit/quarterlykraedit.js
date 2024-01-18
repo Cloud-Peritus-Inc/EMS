@@ -17,16 +17,16 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     @track kraRecord;
     wiredKraRecordResult;
     @track CurrentUserConDetails;
-    CurrentUserResourceRoleTechAcc;
-    CurrentUserResourceRoleProfSkillAcc;
-    CurrentUserResourceRoleStrategicAcc;
-    CurrentUserResourceRoleGoalRewAcc;
+    CurrentUserResourceRoleTechAcc = 0;
+    CurrentUserResourceRoleProfSkillAcc = 0;
+    CurrentUserResourceRoleStrategicAcc = 0;
+    CurrentUserResourceRoleGoalRewAcc = 0;
 
     @track SelectedResourceConDetails;
-    SelectedResourceResourceRoleTechAcc;
-    SelectedResourceResourceRoleProfSkillAcc;
-    SelectedResourceResourceRoleStrategicAcc;
-    SelectedResourceResourceRoleGoalRewAcc;
+    SelectedResourceResourceRoleTechAcc = 0;
+    SelectedResourceResourceRoleProfSkillAcc= 0;
+    SelectedResourceResourceRoleStrategicAcc= 0;
+    SelectedResourceResourceRoleGoalRewAcc= 0;
 
     profileName;
     error;
@@ -92,10 +92,12 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         if (data) {
             this.SelectedResourceConDetails = data;
             console.log('getSelectedResourceConDetails DATA :  ' + JSON.stringify(this.SelectedResourceConDetails));
-            this.SelectedResourceResourceRoleTechAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.technical_acumen__c : undefined;
-            this.SelectedResourceResourceRoleProfSkillAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.professional_skills__c : undefined;
-            this.SelectedResourceResourceRoleStrategicAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.strategic_impact__c : undefined;
-            this.SelectedResourceResourceRoleGoalRewAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.goals_and_results__c : undefined;
+            //smaske : PM_066 :  Setting value to '0' if not declared 
+            // previously was setting as 'undefined'
+            this.SelectedResourceResourceRoleTechAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.technical_acumen__c : 0;
+            this.SelectedResourceResourceRoleProfSkillAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.professional_skills__c : 0;
+            this.SelectedResourceResourceRoleStrategicAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.strategic_impact__c : 0;
+            this.SelectedResourceResourceRoleGoalRewAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.goals_and_results__c : 0;
             //console.log('SelectedResourceResourceRoleTechAcc DATA :  ' + JSON.stringify(this.SelectedResourceResourceRoleTechAcc));
         } else if (error) {
             console.log('getSelectedResourceConDetails error :  ' + JSON.stringify(error));
@@ -117,7 +119,8 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
             this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
             if (this.profileName == 'Employee - HR(Community)') {
-                this.isSubmitBtnDisabled = false;
+                this.isSubmitBtnDisabled = true;
+                this.isSaveBtnDisabled = true;
             }
             //Check if status is COMPLETE : Disable Submit btn
             this.error = undefined;
@@ -478,8 +481,8 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                     this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
 
                     if (this.profileName == 'Employee - HR(Community)') {
-                        this.isSubmitBtnDisabled = false;
-                        this.isSaveBtnDisabled = false;
+                        this.isSubmitBtnDisabled = true;
+                        this.isSaveBtnDisabled = true;
                     }
                     //Check if status is COMPLETE : Disable Submit btn
 
@@ -604,8 +607,12 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                         type: 'comm__namedPage',
                         attributes: {
                             name: 'Home'
-                        }
+                        },
                     });*/
+                    setTimeout(function(){
+                         window.location.reload();
+                    }, 2000);
+
                     return refreshApex(this.wiredKraRecordResult);
                 })
                 .catch(error => {

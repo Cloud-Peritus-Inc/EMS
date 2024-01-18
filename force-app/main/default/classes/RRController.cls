@@ -72,6 +72,8 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         dwrap.winnerrecordtypeId = RR_WINNER_RECORDTYPEID;
         dwrap.currentList = currentList;
         dwrap.FywithNominations = FywithNominations;
+        //smaske : [PM_052] :Assigning UserConId
+        dwrap.currentUserConId = urecord.ContactId;
         return dwrap;
     }
     
@@ -179,28 +181,43 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
          User loggedinUser = [SELECT Id,ContactId FROM User WHERE Id=:Userinfo.getUserId()];
         system.debug('===fyId======'+fyId);
          system.debug('===Userinfo.getUserId()======'+Userinfo.getUserId());
-        for(Reward_And_Recognition__c rr : [SELECT Id,Recognization_By__c,Recognization_By__r.Name,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
+
+         //smaske: [PM_056] : Creating a new Map for PM_056 to store Contact.
+         //Created a List and iterating insted of iterating in a for loop soql.
+         Set<Id> contactIds = new Set<Id>();
+         List<Reward_And_Recognition__c> rrList = [SELECT Id,Recognization_By__c,Recognization_By__r.Name,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
                                             Resource__c,Award_Type__c,Fiscal_Year__c,Project__c,Types_of_Recognition__c,Project__r.Name,RecordTypeId,Fiscal_Year__r.Name,Type__c,Type_of_Shout_Out__c,
-                                            Comments__c,Shout_Out_Heading__c,CreatedDate FROM Reward_And_Recognition__c 
+                                            Comments__c,Shout_Out_Heading__c,CreatedDate,
+                                            //smaske: Added ContactId in querry
+                                            Recognization_By__r.ContactId FROM Reward_And_Recognition__c 
                                             WHERE RecordTypeId =:RR_WINNER_RECORDTYPEID
                                             AND Type__c = 'Recognize'
                                             AND Fiscal_Year__c=:fyId
-                                            AND Resource__c =:loggedinUser.ContactId]){
-          
-                winnerdetails wd = new winnerdetails();
-                 wd.awardType = rr.Award_Type__c;
-                 wd.currentFYName = rr.Fiscal_Year__r.Name;
-                 wd.resourceName = rr.Recognization_By__r.Name;
-                 wd.spotType = rr.Types_of_Recognition__c;
-                 wd.awardComments = rr.Reason_for_award__c;
-                wd.resourceId = rr.Recognization_By__c;
-                wd.projectName = rr.Project__r.Name;
-                wd.Title = rr.Shout_Out_Heading__c;
-                wd.createdDate = Date.valueOf(rr.CreatedDate);
-              currentList.add(wd);
+                                            AND Resource__c =:loggedinUser.ContactId];
+        for (Reward_And_Recognition__c rr : rrList) {
+            contactIds.add(rr.Recognization_By__r.ContactId);
         }
+        //Map to store Id,Contact for Fetching Name value later
+        Map<Id, Contact> contactMap = new Map<Id, Contact>([SELECT Id, Name FROM Contact WHERE Id IN :contactIds]);
+
+        for(Reward_And_Recognition__c rr :  rrList){
+          
+            winnerdetails wd = new winnerdetails();
+            wd.awardType = rr.Award_Type__c;
+            wd.currentFYName = rr.Fiscal_Year__r.Name;
+            //wd.resourceName = rr.Recognization_By__r.Name; 
+            wd.resourceName = contactMap.get(rr.Recognization_By__r.ContactId).Name;
+            wd.spotType = rr.Types_of_Recognition__c;
+            wd.awardComments = rr.Reason_for_award__c;
+            wd.resourceId = rr.Recognization_By__c;
+            wd.projectName = rr.Project__r.Name;
+            wd.Title = rr.Shout_Out_Heading__c;
+            wd.createdDate = Date.valueOf(rr.CreatedDate);
+            currentList.add(wd);
+        }
+        //smaske: [PM_056] : Done
        
- 
+
         return currentList;
     }
     
@@ -266,18 +283,32 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
          User loggedinUser = [SELECT Id,ContactId FROM User WHERE Id=:Userinfo.getUserId()];
         system.debug('===fyId======'+fyId);
          system.debug('===Userinfo.getUserId()======'+Userinfo.getUserId());
-        for(Reward_And_Recognition__c rr : [SELECT Id,Recognization_By__c,Recognization_By__r.Name,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
+         //smaske: [PM_056] : Creating a new Map for PM_056 to store Contact.
+         //Created a List and iterating insted of iterating in a for loop soql.
+         Set<Id> contactIds = new Set<Id>();
+         List<Reward_And_Recognition__c> rrList = [SELECT Id,Recognization_By__c,Recognization_By__r.Name,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
                                             Resource__c,Award_Type__c,Fiscal_Year__c,Project__c,Project__r.Name,RecordTypeId,Fiscal_Year__r.Name,Type__c,Type_of_Shout_Out__c,
-                                            Comments__c,Shout_Out_Heading__c,CreatedDate FROM Reward_And_Recognition__c 
+                                            Comments__c,Shout_Out_Heading__c,CreatedDate,
+                                            //smaske: Added ContactId in querry
+                                            Recognization_By__r.ContactId FROM Reward_And_Recognition__c 
                                             WHERE RecordTypeId =:RR_WINNER_RECORDTYPEID
                                             AND Type__c = 'ShoutOut'
                                             AND Fiscal_Year__c=:fyId
-                                            AND Resource__c =:loggedinUser.ContactId]){
+                                            AND Resource__c =:loggedinUser.ContactId];
+        
+        for (Reward_And_Recognition__c rr : rrList) {
+            contactIds.add(rr.Recognization_By__r.ContactId);
+        }
+        //Map to store Id,Contact for Fetching Name value later
+        Map<Id, Contact> contactMap = new Map<Id, Contact>([SELECT Id, Name FROM Contact WHERE Id IN :contactIds]);
+                                            
+        for(Reward_And_Recognition__c rr :  rrList){
           
                 winnerdetails wd = new winnerdetails();
                  wd.awardType = rr.Award_Type__c;
                  wd.currentFYName = rr.Fiscal_Year__r.Name;
-                 wd.resourceName = rr.Recognization_By__r.Name;
+                 //wd.resourceName = rr.Recognization_By__r.Name;
+                 wd.resourceName = contactMap.get(rr.Recognization_By__r.ContactId).Name;
                  wd.spotType = rr.Type_of_Shout_Out__c;
                  wd.awardComments = rr.Reason_for_award__c;
                 wd.resourceId = rr.Recognization_By__c;
@@ -287,8 +318,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                
               currentList.add(wd);
         }
-       
- 
+        //smaske: [PM_056] : Done
         return currentList;
     }
     
@@ -400,6 +430,10 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         public List<winnerdetails> currentList;
         @AuraEnabled
         public Map<String,List<Reward_And_Recognition__c>> FywithNominations;
+        //smaske :[PM_052] Adding New variable for returning Logged in User ContactId
+        @AuraEnabled
+        public String currentUserConId;
+
     }
     
     public class winnerdetails{

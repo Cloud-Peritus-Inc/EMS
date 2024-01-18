@@ -79,7 +79,9 @@ public without sharing class myMetricsController {
                qw.typeval = gl.Type__c;
                qw.rating = String.valueOf(gl.Rating__c);
                qw.allowedit = false;
-                if(gl.Status__c != 'KRA Completed'){
+               //smaske : PM_061 : updating conditon to only allow edit when status is "Active" in MY METRIC TAB
+               //Previously it was : gl.Status__c != 'KRA Complete'
+                if(gl.Status__c == 'Active'){
                   qw.allowedit = true;  
                 }
                 qlist.add(qw);
@@ -182,7 +184,9 @@ public without sharing class myMetricsController {
                qw.typeval = gl.Type__c;
                qw.rating = String.valueOf(gl.Rating__c);
                qw.allowedit = false;
-                if(gl.Status__c != 'KRA Completed'){
+                //smaske : PM_061 : updating conditon to only allow edit when status is "KRA Inreview" in MY TEAM TAB for selected Reportee's KRA
+               //Previously it was : gl.Status__c != 'KRA Completed'
+                if(gl.Status__c == 'KRA Inreview'){
                   qw.allowedit = true;  
                 }
                 qlist.add(qw);
@@ -229,10 +233,13 @@ public without sharing class myMetricsController {
 
             System.debug(' getKraPulseRecords records ' + records);
             for (Resource_Resource_Relationship__c rrr : [SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c
-                                                            WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource_Reports_To__c = :loggedInUserConId]) {
-                relationshipMap.put(loggedInUserConId, rrr.Resource__c);
-                                    //Testing   , Lokesh
-            }
+                                                          WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource_Reports_To__c = :loggedInUserConId 
+                                                          AND Resource__r.EMS_TM_User__r.isActive = true
+                                                          AND Resource__r.EMS_RM_ApplicantStatus_Update__c IN ('Active', 'Active - Probation')
+                                                          AND Resource__r.EMS_TM_User__r.IsPortalEnabled = true]){//[SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c  WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource_Reports_To__c = :loggedInUserConId]) {                                                                                                               
+                                                              relationshipMap.put(loggedInUserConId, rrr.Resource__c);
+                                                              //Testing   , Lokesh
+                                                          }
 
             if (!records.isEmpty()) {
 
@@ -270,9 +277,12 @@ public without sharing class myMetricsController {
 			//Added condition where Resource is not equal to inactive
 			//PM_044 @Mukesh Rawat
         for (Resource_Resource_Relationship__c rrr : [SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c
-                                                        WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive' AND Resource_Reports_To__c = :loggedInUserConId]) {
-            relationshipMap.put(rrr.Resource__c, rrr.Resource_Reports_To__c);
-        }
+                                                      WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource__r.EMS_RM_ApplicantStatus_Update__c IN ('Active', 'Active - Probation') 
+                                                      AND Resource__r.EMS_TM_User__r.isActive = true AND Resource__r.EMS_TM_User__r.IsPortalEnabled = true
+                                                      AND Resource_Reports_To__c = :loggedInUserConId]){/*[SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c  WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive' AND Resource_Reports_To__c = :loggedInUserConId]) {*/
+                                                                                                                                                 
+                                                          relationshipMap.put(rrr.Resource__c, rrr.Resource_Reports_To__c);
+                                                      }
 
         System.debug(' INSIDE  relationshipMap ' + relationshipMap);
         for (Id resource : relationshipMap.keySet()) {

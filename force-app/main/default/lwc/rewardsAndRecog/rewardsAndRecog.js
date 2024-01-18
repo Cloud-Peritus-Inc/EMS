@@ -35,11 +35,14 @@ activeTab = '1';
 selectedfy;
 showscroingTab = false;
 @track userId = USER_ID;
+@track LogggedInUserConId;
 winnerrecordTypeId;
 @track name;
    @wire(getTheCurrentRRTrends) 
     wiredRR({error, data}){
         if(data){
+            //smaske : [PM_052] :Assigning UserConId
+            this.LogggedInUserConId = data.currentUserConId;
         this.dNominations = data.disableNominations;
         this.drecognise = data.disableRecognize;
         this.selectedfy = data.currentName;
@@ -148,15 +151,27 @@ winnerrecordTypeId;
     }
 
     handleSubmit(event) {
-    event.preventDefault();
-    const fields = event.detail.fields;
-    fields.Status__c = 'Completed';
-    fields.Recognization_By__c = this.userId;
-    fields.Fiscal_Year__c = this.currentFY;
-    fields.Type__c = 'ShoutOut';
-    this.template
-        .querySelector('lightning-record-edit-form').submit(fields);
+        event.preventDefault();
+        const fields = event.detail.fields;
+        //smaske : Preventing Self Recognize record creation for Loggedin User 
+        // DEFECT : PM_053
+        if (this.LogggedInUserConId != fields.Resource__c) {
+            fields.Status__c = 'Completed';
+            fields.Recognization_By__c = this.userId;
+            fields.Fiscal_Year__c = this.currentFY;
+            fields.Type__c = 'ShoutOut';
+            this.template.querySelector('lightning-record-edit-form').submit(fields);
+        }else{
+            const evt = new ShowToastEvent({
+                title: 'Warning',
+                message: 'Self Shoutout is not allowed!',
+                variant: 'warning',
+                mode: 'dismissable'
+            });
+            this.dispatchEvent(evt);
+        }
     }
+
     handleSuccess(event) {
         const evt = new ShowToastEvent({
             title: 'success',
@@ -169,15 +184,27 @@ winnerrecordTypeId;
     }
 
     handleRecSubmit(event) {
-    event.preventDefault();
-    const fields = event.detail.fields;
-    fields.Status__c = 'Completed';
-    fields.Recognization_By__c = this.userId;
-    fields.Fiscal_Year__c = this.currentFY;
-    fields.Type__c = 'Recognize';
-    this.template
-        .querySelector('lightning-record-edit-form').submit(fields);
+        event.preventDefault();
+        //smaske : Preventing Self Recognize record creation for Loggedin User 
+        // DEFECT : PM_052
+        const fields = event.detail.fields; 
+        if (this.LogggedInUserConId != fields.Resource__c) {
+            fields.Status__c = 'Completed';
+            fields.Recognization_By__c = this.userId;
+            fields.Fiscal_Year__c = this.currentFY;
+            fields.Type__c = 'Recognize';
+            this.template.querySelector('lightning-record-edit-form').submit(fields);
+        }else{
+            const evt = new ShowToastEvent({
+                title: 'Warning',
+                message: 'Self Recognisation is not allowed!',
+                variant: 'warning',
+                mode: 'dismissable'
+            });
+            this.dispatchEvent(evt);
+        }
     }
+
     handleRecSuccess(event) {
         const evt = new ShowToastEvent({
             title: 'success',
