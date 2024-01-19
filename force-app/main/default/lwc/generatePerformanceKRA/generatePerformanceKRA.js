@@ -165,15 +165,15 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
 
         let RR = { ...this.Compensation };
 
-        if (name === 'Next_Appraisal_Date__c') {
+        if (name === 'Next_Appraisal_Date__c') {8
             if (dataValue <= todaysDate.toISOString().split('T')[0]) {
-                RR[name] = null;
                 const evt = new ShowToastEvent({
                     message: 'Next Appraisal Date must be a future date.',
                     variant: 'error',
                     mode: 'dismissable'
                 });
                 this.dispatchEvent(evt);
+                this.template.querySelector('lightning-input').value = '';
             } else {
                 RR[name] = dataValue;
             }
