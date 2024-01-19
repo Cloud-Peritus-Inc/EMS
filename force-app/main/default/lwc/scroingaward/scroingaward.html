@@ -164,9 +164,17 @@
                     </td>
                     <td>
                       <!--# Of Primary-->
+                      <template for:each={item.currentList} for:item="listItem">
+                        <div class={listItem.borderCls} key={item.currentName}>
+                          <lightning-formatted-rich-text value={listItem.currentFYName}></lightning-formatted-rich-text></div>
+                        </template>
                     </td>
                     <td>
                       <!--# Of Secondary-->
+                      <template for:each={item.currentList} for:item="listItem">
+                        <div class={listItem.borderCls} key={item.currentName}>
+                          <lightning-formatted-rich-text value={listItem.spotType}></lightning-formatted-rich-text></div>
+                        </template>
                     </td>
                     <td>
                       <template for:each={item.currentList} for:item="listItem">

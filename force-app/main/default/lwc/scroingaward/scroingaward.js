@@ -47,7 +47,8 @@ handleChange(event) {
         getTheScoringbyAllAward({ 
         fyId : this.selectedfy
         }).then(result => {
-        console.log('======result=All==='+JSON.stringify(result));
+        //console.log('======result=All==='+JSON.stringify(result));
+        console.log('======result=All===');
         this.scoringTable = result;
         let modifiedArr = JSON.parse(JSON.stringify(this.scoringTable));
 
@@ -60,7 +61,7 @@ handleChange(event) {
         })
         this.scoringTable = JSON.parse(JSON.stringify(modifiedArr));
 
-        console.log('======Modified result=All==='+JSON.stringify(this.scoringTable));
+        //console.log('======Modified result=All==='+JSON.stringify(this.scoringTable));
         
         }).catch(error => {
           console.log('======error=errorAll==='+JSON.stringify(error));
