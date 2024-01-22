@@ -48,9 +48,7 @@ public class LeaveHistoryApexControllerTest {
             conRRR.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
             conRRR.EMS_LM_No_Of_Leaves_Credit__c = 10;
             insert conRRR;
-            rrr = TestDataFactory.createRRR(con.Id, false, conRRR.Id);
-            rrr.Relationship_Type__c='Mentor';
-            insert rrr;
+            rrr = TestDataFactory.createRRR(con.Id, true, conRRR.Id);
             
         }
         User contactuser;
