@@ -56,8 +56,6 @@
                 <elementReference>$Record.EMS_LM_Contact__r.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_to_OffShoreManagers_New</name>
@@ -115,8 +113,6 @@
                 <elementReference>$Record.EMS_LM_Contact__r.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_to_OnShoreManagers</name>
@@ -174,8 +170,6 @@
                 <elementReference>$Record.EMS_LM_Contact__r.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_to_OnShoreManagers_New2</name>
@@ -233,8 +227,6 @@
                 <elementReference>$Record.EMS_LM_Contact__r.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <assignments>
