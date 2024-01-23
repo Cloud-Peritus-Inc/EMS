@@ -164,6 +164,7 @@ public class timesheetRecordApprovalProcessTest {
         Resource_Resource_Relationship__c resourceRelationship = new Resource_Resource_Relationship__c();
         resourceRelationship.Resource__c = con.Id;
         resourceRelationship.Resource_Reports_To__c = con1.Id;
+        resourceRelationship.Relationship_Type__c='Mentor';
         insert resourceRelationship;
         test.startTest();
         List<EMS_TM_Timesheet_Record__c> timesheetLineRecs =[SELECT Id,Status__c FROM EMS_TM_Timesheet_Record__c];
@@ -334,6 +335,7 @@ public class timesheetRecordApprovalProcessTest {
         Resource_Resource_Relationship__c resourceRelationship = new Resource_Resource_Relationship__c();
         resourceRelationship.Resource__c = con.Id;
         resourceRelationship.Resource_Reports_To__c = con1.Id;
+        resourceRelationship.Relationship_Type__c='Mentor';
         insert resourceRelationship;
         test.startTest();
         List<EMS_TM_Timesheet_Record__c> timesheetLineRecs =[SELECT Id,Status__c FROM EMS_TM_Timesheet_Record__c];
@@ -515,6 +517,7 @@ public class timesheetRecordApprovalProcessTest {
         
         Resource_Resource_Relationship__c resourceRelationship = new Resource_Resource_Relationship__c();
         resourceRelationship.Resource__c = con.Id;
+        resourceRelationship.Relationship_Type__c='Mentor';
         resourceRelationship.Resource_Reports_To__c = con1.Id;
         insert resourceRelationship;
         test.startTest();

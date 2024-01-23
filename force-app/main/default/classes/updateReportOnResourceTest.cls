@@ -39,6 +39,7 @@ public class updateReportOnResourceTest {
       Resource_Resource_Relationship__c rrr = new Resource_Resource_Relationship__c();
       rrr.Resource__c = con1.Id;
       rrr.Resource_Reports_To__c = con2.Id;
+      rrr.Relationship_Type__c='Mentor';
       insert rrr;
       system.assertEquals(con2.Id, [SELECT ReportsToId FROM Contact WHERE Id=:con1.Id ].ReportsToId, 'Not Updated as expected');
     } 
