@@ -9,6 +9,7 @@ public class CustomLeadUpdateHandlerTest {
         led.Company = 'Salesforce';
         led.Industry = 'Agriculture';
         //led.Status = 'Open';
+         led.Our_Offerings__c='Advisory Services';
         insert led;
         
         /*
