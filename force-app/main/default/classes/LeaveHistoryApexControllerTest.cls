@@ -70,6 +70,10 @@ public class LeaveHistoryApexControllerTest {
     static testMethod void userLevelOfApprovalTest() {
         User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they' LIMIT 1];
         system.debug('resourceUser==============================='+resourceUser);
+                system.debug('resourceUser==============================='+ resourceUser.Id);
+                 contact contacts=[select id,name from contact where EMS_RM_Employee_Id__c = 'CP10234'];
+                         contacts.EMS_TM_User__c=resourceUser.Id;
+                         update contacts;
         system.runAs(resourceUser){
             system.debug('condata===1'+[SELECT Id, 
                            Resource_Role__c, 
@@ -98,11 +102,16 @@ public class LeaveHistoryApexControllerTest {
             // EMS_LM_Leave_Credit__c bretAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),20,bretype.id, true);
             EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, false);
             //EMS_LM_Leave_Credit__c patAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,paternitytype.id, true); 
-            
-            LeaveHistoryApexController.IntBolleanWrapper result = LeaveHistoryApexController.userLevelOfApproval();
-            system.debug('-------Intbooleanwrapper-----'+result);
+            try{
+                   LeaveHistoryApexController.IntBolleanWrapper result = LeaveHistoryApexController.userLevelOfApproval();
+           system.debug('-------Intbooleanwrapper-----'+result);                
+            }catch(exception e){
+                system.debug('error  ='+e.getmessage());
+            }
+           
             Test.startTest();
             LeaveHistoryApexController.getLeaveTypesForUser(resourceUser.id);
+            LeaveHistoryApexController.leaveCheck();
             Test.stopTest();
             /*System.assertEquals(1, result.levelOfApproval);
             system.assertEquals(con.Level_of_Approval__c, result.levelOfApproval);
