@@ -112,7 +112,7 @@ public class TestDataFactory {
     
     public static User createCommunityUserWithAccAndContact(Id accId,Id conId,Boolean doInsert){
         Id p = [select id from profile where name='Employee - Resource(Community)'].id;
-
+		//UserRole userrole = [Select Id, DeveloperName From UserRole Where DeveloperName = 'Leadership' Limit 1];
         User user = new User(alias = 'test123', email= 'testemail@testclass.com.they',
                              emailencodingkey='UTF-8', lastname='Testing', Firstname = 'User', languagelocalekey='en_US',
                              localesidkey='en_US', profileid = p, country='United States',IsActive =true,
@@ -178,12 +178,12 @@ public class TestDataFactory {
         Grid_Configuration__c gc = new Grid_Configuration__c();
         gc.Name = name;
         gc.Description__c = description;
-        gc.Goal_Start_Date__c = system.today().adddays(1);
-        gc.Goal_End_Date__c = system.today().adddays(12);
+       // gc.Goal_Start_Date__c = system.today().adddays(1);
+       // gc.Goal_End_Date__c = system.today().adddays(12);
         gc.Grid_Configuration_Type__c = typeval;
-        if(resourcRole != null){
+       /* if(resourcRole != null){
             gc.Resource_Role__c = resourcRole;   
-        }
+        }*/
         
         if(isCreate){
             insert gc;

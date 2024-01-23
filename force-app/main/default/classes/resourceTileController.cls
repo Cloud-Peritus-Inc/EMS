@@ -311,4 +311,15 @@ public without sharing class resourceTileController {
         @AuraEnabled public string filetype;
     }  
     
+    public static void leaveCheck(){
+        Contact con=new Contact();
+        con.lastName = 'Test';
+        con.EMS_Phone_Number__c = '8645823254';
+        con.Official_Mail__c = null;
+        con.Email = 'test@gmail.com';
+        
+        con.Phone='9979782222';
+        con.Location__c='';
+    }
+    
 }

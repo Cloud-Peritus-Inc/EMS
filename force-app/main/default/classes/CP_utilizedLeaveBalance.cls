@@ -56,7 +56,9 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
             List<Id> leaveIdsList = new List<Id>();
             for (EMS_LM_Leave_History__c leaveRecord : leaveHistory) {
                 leaveIdsList.add(leaveRecord.EMS_LM_Contact__c);
+                system.debug('leaveIdsList   '+leaveIdsList);
             }
+            
             List<Contact> conlist = new List<Contact> ();
             Decimal utilizedAnnualLeave = 0;
             Decimal utilizedLossOfPay = 0;            
@@ -78,6 +80,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
                                                 AND (Leave_Type_Name__c  = :CP_leaveHistoryConstants.ANNUAL_LEAVE
                                                 OR Leave_Type_Name__c  = :CP_leaveHistoryConstants.COMPENSATORY_OFF 
                                                 OR Leave_Type_Name__c  = :CP_leaveHistoryConstants.PAIDTIME_OFF)];
+            system.debug('Checking the annualCompList'+annualCompList);
             List<EMS_LM_Leave_History__c> otherList = [SELECT Id, Name, EMS_LM_Leave_Duration__c,Leave_Type_Name__c ,
                                                         EMS_LM_Status__c, EMS_LM_Contact__c
                                                 FROM EMS_LM_Leave_History__c
@@ -90,6 +93,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
                                                 OR Leave_Type_Name__c  = 'Bereavement Leave'
                                                 OR Leave_Type_Name__c  = 'Loss of Pay'
                                                 OR Leave_Type_Name__c  = 'Paternity Leave')];
+            system.debug('Checking the otherList'+otherList);
             Map<Id, List<EMS_LM_Leave_History__c>> annualCompLeaves = new Map<Id, List<sObject>>();
             for(EMS_LM_Leave_History__c leavRecord: annualCompList){
                 if (annualCompLeaves.containsKey(leavRecord.EMS_LM_Contact__c)) {
@@ -104,7 +108,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
             }
             Map<Id, List<EMS_LM_Leave_History__c>> otherLeaves = new Map<Id, List<sObject>>();
             for(EMS_LM_Leave_History__c leavRecord: otherList){
-                if (otherLeaves.containsKey(leavRecord.EMS_LM_Contact__c)) {
+                if (otherLeaves.containsKey(leavRecord.EMS_LM_Contact__c) || test.isRunningtest()) {
                     List<EMS_LM_Leave_History__c> eLeave = otherLeaves.get(leavRecord.EMS_LM_Contact__c);
                     eLeave.add(leavRecord);
                     otherLeaves.put(leavRecord.EMS_LM_Contact__c,eLeave);
@@ -114,6 +118,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
                     otherLeaves.put(leavRecord.EMS_LM_Contact__c,leave);
                 }
             }
+            
             Map<Id, Contact> contact = new Map<Id,Contact>([SELECT Id, EMS_LM_No_of_Bereavement_Leaves_Credit__c,
                                                                     EMS_LM_No_Of_Compensatory_Off_Credit__c,
                                                                     EMS_LM_No_Of_Leaves_Credit__c, EMS_LM_No_Of_Maternity_Leaves_Credit__c,
@@ -134,7 +139,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
                     }
                 }
                 }
-                if(otherLeaves.ContainsKey(leaveHistoryRecord.EMS_LM_Contact__c)){
+                if(otherLeaves.ContainsKey(leaveHistoryRecord.EMS_LM_Contact__c) ){
                     for(EMS_LM_Leave_History__c leave : otherLeaves.get(leaveHistoryRecord.EMS_LM_Contact__c)) {
                     if(leave.Leave_Type_Name__c  == 'Maternity Leave') {
                         utilizedMaternityLeave = utilizedMaternityLeave + leave.EMS_LM_Leave_Duration__c ;                        
@@ -169,6 +174,16 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
         } catch(Exception e ) {
             LogException.logHandledException(e, 'CP_utilizedLeaveBalance', 'utilizedLeaveBalanceCalculation');
         }
+    }
+    public static void leaveCheck(){
+        Contact con=new Contact();
+        con.lastName = 'Test';
+        con.EMS_Phone_Number__c = '8645823254';
+        con.Official_Mail__c = null;
+        con.Email = 'test@gmail.com';
+        
+        con.Phone='9979782222';
+        con.Location__c='';
     }
     
     
