@@ -41,7 +41,7 @@ public class TestDataFactory {
     }
 
     public static Resource_Resource_Relationship__c createRRR(Id ContactId, Boolean doInsert, Id ConId){
-        Resource_Resource_Relationship__c rrr = new Resource_Resource_Relationship__c(Resource__c = ContactId, Resource_Reports_To__c = conId);
+        Resource_Resource_Relationship__c rrr = new Resource_Resource_Relationship__c(Resource__c = ContactId, Resource_Reports_To__c = conId,Relationship_Type__c='Mentor');
         if (doInsert) {
             insert rrr;
         }
