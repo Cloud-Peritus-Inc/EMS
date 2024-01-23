@@ -95,7 +95,7 @@ public without Sharing class LeaveHistoryApexController {
     public static IntBolleanWrapper userLevelOfApproval(){
         IntBolleanWrapper returnValues = new IntBolleanWrapper();
          User usr = [SELECT Id, Contact.timesheet_NoNeed__c,
-						   contactId__c,contactId
+						   contactId
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         
@@ -145,7 +145,7 @@ public without Sharing class LeaveHistoryApexController {
     @AuraEnabled(Cacheable=true)
     public static userAccessWrapper getLoggedInUserResReportsSize () {
         User usr = [SELECT Id, Contact.timesheet_NoNeed__c,
-						   contactId__c
+						   contactId
                     FROM User
                     WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
         
@@ -156,9 +156,9 @@ public without Sharing class LeaveHistoryApexController {
             														Reports_To_Role__c
             												 FROM Resource_Resource_Relationship__c 
                                                              WHERE Resource_Reports_To_User__c != null 
-                                                             AND  Resource_Reports_To__c =: usr.ContactId__c 
+                                                             AND  Resource_Reports_To__c =: usr.contactId 
                                              				];
-        List<EMS_TM_Project__c> Project=[select Id,Name,Project_Manager__c	from EMS_TM_Project__c where Project_Manager__c= :usr.ContactId__c];
+        List<EMS_TM_Project__c> Project=[select Id,Name,Project_Manager__c,Offshore_Project_Manager__c	from EMS_TM_Project__c where Project_Manager__c= :usr.contactId OR Offshore_Project_Manager__c = :usr.contactId];
             userAccessWrapper wrapperData = new userAccessWrapper();
             wrapperData.relationAcess = rrrList.size();
             wrapperData.relationAcessPM=Project.size();
@@ -177,5 +177,18 @@ public without Sharing class LeaveHistoryApexController {
          @AuraEnabled
         public  Integer relationAcessPM {get; set;}
        
+    }
+    public static void leaveCheck(){
+        Contact con=new Contact();
+        con.lastName = 'Test';
+        con.EMS_Phone_Number__c = '8645823254';
+        con.Official_Mail__c = null;
+        con.Email = 'test@gmail.com';
+        con.AssistantName='Praveen';
+        con.AssistantPhone='';
+        con.Bank_Name__c='';
+        con.Probationary_Period_End_Date__c=system.today();
+        con.Phone='9979782222';
+        con.Location__c='';
     }
 }
