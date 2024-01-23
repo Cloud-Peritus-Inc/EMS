@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Resource Reports To</label>
     <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Resource Relationships (Resource Reportees)</relationshipLabel>
     <relationshipName>Relationships_Reports</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

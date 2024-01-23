@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Resource</label>
     <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Resource Relationships (Reports To)</relationshipLabel>
     <relationshipName>Resource_Resource_Relationships</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>
