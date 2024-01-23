@@ -48,7 +48,9 @@ public class LeaveHistoryApexControllerTest {
             conRRR.EMS_LM_No_Of_Maternity_Leaves_Credit__c = 0;
             conRRR.EMS_LM_No_Of_Leaves_Credit__c = 10;
             insert conRRR;
-            rrr = TestDataFactory.createRRR(con.Id, true, conRRR.Id);
+            rrr = TestDataFactory.createRRR(con.Id, false, conRRR.Id);
+            rrr.Relationship_Type__c='Mentor';
+            insert rrr;
             
         }
         User contactuser;
@@ -66,7 +68,7 @@ public class LeaveHistoryApexControllerTest {
     }   
     
     static testMethod void userLevelOfApprovalTest() {
-        User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they'];
+        User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they' LIMIT 1];
         system.runAs(resourceUser){
         Contact con = [SELECT Id, 
                            Resource_Role__c, 

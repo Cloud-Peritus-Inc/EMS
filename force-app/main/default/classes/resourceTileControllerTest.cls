@@ -28,7 +28,7 @@ public class resourceTileControllerTest {
         insert gCon;
         gCon1.add(Testdatafactory.createGridConfig1('namevalue','test description','Resource Role Alert',role.id,false));
         insert gCon1;
-        gCon2.add(Testdatafactory.createGridConfig1('namevalue','test description','Videocast',role.id,false));
+        gCon2.add(Testdatafactory.createGridConfig1('namevalue','test description','PF Forms',role.id,false));
         insert gCon2;
       
         Account acc = TestDataFactory.createAccount(true);
@@ -49,15 +49,21 @@ public class resourceTileControllerTest {
         Resource_Resource_Relationship__c resourceRelationship = new Resource_Resource_Relationship__c();
         resourceRelationship.Resource__c = con.Id;
         resourceRelationship.Resource_Reports_To__c=con.Id;
+        resourceRelationship.Relationship_Type__c ='Mentor';
         insert resourceRelationship;
         
-        
-
-         User u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
-        User u1 = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con1.Id,false);
-        u1.Username='test@admin.com';
-        //insert u1;
-         con.ReportsToId=u1.contactId;
+         User u;
+         User u1;
+       //user userCommunity = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
+			System.runAs ( new User(Id = UserInfo.getUserId()) ) {
+          u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
+         // u1 = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con1.Id,false);
+         // u1.Username='test@admin.com';
+          // insert u1;
+            }
+      
+       
+         con.ReportsToId=u.contactId;
         //update con;
         Contact con2=  TestDataFactory.createResourceContact(acc.id, false);
         con2.EMS_RM_Employee_Id__c = 'CP10236';
@@ -70,10 +76,6 @@ public class resourceTileControllerTest {
        EMS_EM_Benefits__c benifit=new EMS_EM_Benefits__c(Amount__c=500000,EMS_EM_Nominee__c=con2.Id,Type__c='Medical Insurence');
         insert benifit;
         
-   
-        
-        
-        
         resourceTileController.datawrapper datawrap=new resourceTileController.datawrapper();
         datawrap.resourceName = con.Name;
         datawrap.resourcePhotoURL = con.EMS_TM_User__r.FullPhotoUrl;
@@ -85,15 +87,22 @@ public class resourceTileControllerTest {
          Test.startTest();
           resourceTileController.getTheCurrentAlerts();
           system.runAs(u){
-              resourceTileController.getContactInfo(con.Id);
-             resourceTileController.getUserInfo(u.Id);
+             resourceTileController.getContactInfo(con.Id);
+             resourceTileController.getUserInfo(u.Id); 
               resourceTileController.getUserHiearchyInfo(u.Id);
                resourceTileController.fileWrapper filewrap=new resourceTileController.fileWrapper();
               resourceTileController.getUserReportees(u.Id);
-              resourceTileController.getMyInsurenceBenf(con2);
+             Decimal result=  resourceTileController.getMyInsurenceBenf(con1);
+             //System.assertEquals(500000, result, 'Unexpected default benefit amount');
+             Decimal result2=  resourceTileController.getMyInsurenceBenf(con2);
+             System.assertEquals(benifit.Amount__c, result2, 'Unexpected benefit amount');
+			resourceTileController.getRelatedFilesByRecordId();
+              resourceTileController.leaveCheck();
+              
            }
-        resourceTileController.getRelatedFilesByRecordId();
          Test.stopTest();
     }
+    
+    
    
 }
