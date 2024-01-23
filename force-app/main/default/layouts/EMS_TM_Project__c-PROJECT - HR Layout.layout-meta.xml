@@ -16,6 +16,10 @@
                 <field>Project_Manager__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Offshore_Project_Manager__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Opportunity__c</field>
             </layoutItems>
@@ -97,12 +101,20 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>EMS_TM_Project__c.Raise_Resource_Request</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>1</sortOrder>
+            <sortOrder>2</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
+        <quickActionListItems>
+            <quickActionName>EMS_TM_Project__c.Raise_Resource_Request</quickActionName>
+        </quickActionListItems>
         <quickActionListItems>
             <quickActionName>FeedItem.TextPost</quickActionName>
         </quickActionListItems>
@@ -135,11 +147,19 @@
         <fields>NAME</fields>
         <fields>EMS_TM_EmployeeName__c</fields>
         <fields>EMS_TM_AssignedAs__c</fields>
-        <fields>Resource_Status__c</fields>
         <fields>EMS_TM_StartDate_Asgn__c</fields>
         <fields>EMS_TM_EndDate_Asgn__c</fields>
         <fields>EMS_TM_Billable__c</fields>
+        <fields>Resource_Status__c</fields>
         <relatedList>EMS_TM_Assignment__c.EMS_TM_ProjectName_Asgn__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Expected_Start_Date__c</fields>
+        <fields>Requested_By__c</fields>
+        <fields>Skills__c</fields>
+        <relatedList>Resource_Request__c.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>EMS_Timesheet__c</fields>
@@ -149,7 +169,6 @@
         <relatedList>EMS_TM_Timesheet_Record__c.EMS_TM_Project__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
         <fields>Resource__c</fields>
         <fields>Bill_Date__c</fields>
         <fields>Expense_Amount__c</fields>
@@ -166,7 +185,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5e00000Clm3s</masterLabel>
+        <masterLabel>00h52000004JcfG</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

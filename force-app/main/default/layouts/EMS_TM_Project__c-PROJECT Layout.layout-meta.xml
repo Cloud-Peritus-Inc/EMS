@@ -21,6 +21,10 @@
                 <field>Project_Manager__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Offshore_Project_Manager__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Opportunity__c</field>
             </layoutItems>
@@ -99,6 +103,9 @@
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
+            <quickActionName>EMS_TM_Project__c.Raise_Resource_Request</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
             <quickActionName>FeedItem.TextPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
@@ -127,11 +134,19 @@
         <fields>NAME</fields>
         <fields>EMS_TM_EmployeeName__c</fields>
         <fields>EMS_TM_AssignedAs__c</fields>
-        <fields>Resource_Status__c</fields>
         <fields>EMS_TM_StartDate_Asgn__c</fields>
         <fields>EMS_TM_EndDate_Asgn__c</fields>
         <fields>EMS_TM_Billable__c</fields>
+        <fields>Resource_Status__c</fields>
         <relatedList>EMS_TM_Assignment__c.EMS_TM_ProjectName_Asgn__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Expected_Start_Date__c</fields>
+        <fields>Requested_By__c</fields>
+        <fields>Skills__c</fields>
+        <relatedList>Resource_Request__c.Project__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>EMS_Timesheet__c</fields>
@@ -141,16 +156,11 @@
         <relatedList>EMS_TM_Timesheet_Record__c.EMS_TM_Project__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
         <fields>Resource__c</fields>
         <fields>Bill_Date__c</fields>
         <fields>Expense_Amount__c</fields>
         <fields>Expense_Date__c</fields>
         <relatedList>Expense__c.Project__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Project_Task__c.Project_Name__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

@@ -24,7 +24,7 @@
                 <field>EMS_TM_Status_Asgn__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Project_Allocation__c</field>
             </layoutItems>
         </layoutColumns>

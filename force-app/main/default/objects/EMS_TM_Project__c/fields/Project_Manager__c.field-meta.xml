@@ -3,10 +3,10 @@
     <fullName>Project_Manager__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
     <externalId>false</externalId>
-    <label>Project Manager</label>
+    <label>Onshore Project Manager</label>
     <lookupFilter>
         <active>true</active>
-        <booleanFilter>1 AND (2 OR 3 OR 4 OR 5)</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <filterItems>
             <field>Contact.RecordTypeId</field>
             <operation>equals</operation>
@@ -21,16 +21,6 @@
             <field>Contact.Resource_Role__r.Name</field>
             <operation>equals</operation>
             <value>Project Manager</value>
-        </filterItems>
-        <filterItems>
-            <field>Contact.Resource_Role__r.Name</field>
-            <operation>equals</operation>
-            <value>Lead Salesforce QA</value>
-        </filterItems>
-        <filterItems>
-            <field>Contact.Resource_Role__r.Name</field>
-            <operation>equals</operation>
-            <value>Senior BA</value>
         </filterItems>
         <isOptional>true</isOptional>
     </lookupFilter>

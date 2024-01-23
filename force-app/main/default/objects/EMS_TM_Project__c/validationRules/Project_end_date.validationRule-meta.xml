@@ -2,6 +2,9 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Project_end_date</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(ISNEW(), EMS_TM_EndDate__c &lt; EMS_TM_StartDate__c)</errorConditionFormula>
-    <errorMessage>End date should be grater than or equal start date</errorMessage>
+    <errorConditionFormula>AND(
+    OR(ISNEW(), ISCHANGED(EMS_TM_StartDate__c), ISCHANGED(EMS_TM_EndDate__c)),
+    EMS_TM_EndDate__c &lt; EMS_TM_StartDate__c
+)</errorConditionFormula>
+    <errorMessage>End date should be greater than or equal to the  start date</errorMessage>
 </ValidationRule>

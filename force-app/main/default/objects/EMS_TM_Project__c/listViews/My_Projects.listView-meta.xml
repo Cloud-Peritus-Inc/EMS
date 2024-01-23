@@ -3,6 +3,7 @@
     <fullName>My_Projects</fullName>
     <columns>NAME</columns>
     <columns>Project_Manager__c</columns>
+    <columns>Offshore_Project_Manager__c</columns>
     <columns>Type_Of_Project__c</columns>
     <columns>EMS_TM_StartDate__c</columns>
     <columns>EMS_TM_EndDate__c</columns>
