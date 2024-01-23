@@ -45,8 +45,9 @@ public class CustomLeadUpdateFromStad_Test {
         led.Company = 'Salesforce';
         led.Industry = 'Agriculture';
        // led.Status = 'Open';
-        insert led;  
         led.Our_Offerings__c='Advisory Services';
+        insert led;  
+       // led.Our_Offerings__c='Advisory Services';
         update led;
       
         Campaign ca1 = new Campaign();
