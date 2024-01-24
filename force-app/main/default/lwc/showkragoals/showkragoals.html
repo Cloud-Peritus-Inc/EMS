@@ -35,10 +35,13 @@
             <tr key={goalwrap.nameid}>
               <td>
                 <div class="slds-wrap" style="width:100px;word-wrap:break-word;">
-                  <p> <a href="javascript:void(0);" data-id={goalwrap.nameid} onclick={handleNavClick}>
+                  <!-- @Mukesh Rawat
+                  Defect - PM_112 Removed Hyperlink to the Goal Name -->
+                  <!-- <p> <a href="javascript:void(0);" data-id={goalwrap.nameid} onclick={handleNavClick}>
                       {goalwrap.name}
                     </a>
-                  </p>
+                  </p> -->
+                  <p>{goalwrap.name}</p>
                 </div>
               </td>
               <td>
@@ -61,7 +64,7 @@
               <td>
                 <lightning-button-icon icon-name="action:preview"  size="large" variant="bare" alternative-text="View Goal" data-id={goalwrap.nameid} onclick={handleViewClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
                 <template if:true={goalwrap.showedit}>
-                <lightning-button-icon icon-name="action:edit"  size="large"  variant="bare" alternative-text="Edit Goal"  data-id={goalwrap.nameid} onclick={handleeditClick} class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;&nbsp;
+                <lightning-button-icon icon-name="action:edit"  size="large"  variant="bare" alternative-text="Edit Goal"  data-id={goalwrap.nameid} data-status={goalwrap.status} onclick={handleeditClick} class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;&nbsp;
                 </template>
               </td>
             </tr>
@@ -79,6 +82,12 @@
 
     <template if:true={showEditGoal}>
      <lightning-card>
+        <div class="spinner">
+        <template if:true={isLoading}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+        </template>
+    </div>
       <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
        <div class="slds-modal__container">
         <!-- modal header start -->
@@ -118,15 +127,17 @@
                   </lightning-input-rich-text>
              </lightning-layout-item>
          </lightning-layout>
-                 
+    
               
-
           </div>
 
           <!-- modal footer start-->
           <footer class="slds-modal__footer">
           
                <lightning-button variant="destructive" label="Cancel" title="Cancel" onclick={hideGoalEditModalBox} class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
+               <template if:true={showinprogress}>
+                <lightning-button variant="brand" label="In Progress" title="In-Progress" onclick={updatetheGoaltoInprogress} class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
+                </template>
                 <lightning-button variant="brand" label="Save and Complete" title="Save and Complete" onclick={saveTheGoal} class="slds-m-left_x-small"></lightning-button>
                
           </footer>

@@ -31,7 +31,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
             }
             fyMap.put(fy.Name,fy.Id);
         }
-        
+       
         for(Reward_And_Recognition__c rr : [SELECT Id,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
                                             Resource__c,Award_Type__c,Fiscal_Year__c,Project__c,RecordTypeId,Fiscal_Year__r.Name,
                                             Comments__c FROM Reward_And_Recognition__c 
@@ -72,24 +72,81 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         dwrap.winnerrecordtypeId = RR_WINNER_RECORDTYPEID;
         dwrap.currentList = currentList;
         dwrap.FywithNominations = FywithNominations;
+        system.debug(currentFY+'=====currentList=='+currentList);
+        system.debug('=====checkTheAnnualAnn(currentFY)=='+checkTheAnnualAnn(currentFY));
+        dwrap.showtheWinners = !currentList.isEmpty() && checkTheAnnualAnn(currentFY);
         //smaske : [PM_052] :Assigning UserConId
         dwrap.currentUserConId = urecord.ContactId;
         return dwrap;
     }
     
+    @AuraEnabled
+    public static String updateTheWinners(List<winnerdetails> winnerlist,String fyId){
+        Savepoint sp = Database.setSavepoint(); 
+        List<Grid_Configuration__c> gAnnualCheck = new List<Grid_Configuration__c>();
+       
+        List<Reward_And_Recognition__c> updateListRR = new List<Reward_And_Recognition__c>();
+        gAnnualCheck = [SELECT Id,Show_Winners__c FROM Grid_Configuration__c WHERE Fiscal_Year__c=:fyId AND Grid_Configuration_Type__c = 'Annual Award Result' ];
+        if(!winnerlist.isEmpty()){
+            for(Reward_And_Recognition__c rr : [SELECT Id,Recognization_By__c,Recognization_By__r.Name,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
+                                            Resource__c,Award_Type__c,Fiscal_Year__c,Project__c,Types_of_Recognition__c,Project__r.Name,RecordTypeId,Fiscal_Year__r.Name,Type__c,Type_of_Shout_Out__c,
+                                            Comments__c,Shout_Out_Heading__c,CreatedDate,Status__c,RecordType.Name,of_Primary_Nominations__c,of_Secondary_Nominations__c FROM Reward_And_Recognition__c 
+                                            WHERE Fiscal_Year__c=:fyId AND RecordTypeId =:RR_NOMINATION_RECORDTYPEID
+                                            AND Type__c = 'Annual Award'
+                                            AND Status__c = 'Winner']){
+               rr.RecordTypeId = RR_WINNER_RECORDTYPEID;
+               rr.Status__c = 'Winner';
+               updateListRR.add(rr);
+            }
+        }
+        try{
+            
+        if(!gAnnualCheck.isEmpty()){
+            for(Grid_Configuration__c gcex : gAnnualCheck){
+                gcex.Show_Winners__c = true;
+            }
+            update gAnnualCheck;
+        }else{
+            Grid_Configuration__c gcnew = new Grid_Configuration__c(); 
+            gcnew.Name = 'Annual Award Publish '+String.valueOf(System.today());
+            gcnew.Show_Winners__c = true;
+            gcnew.Fiscal_Year__c = fyId;
+            gcnew.Grid_Configuration_Type__c = 'Annual Award Result';
+            insert gcnew;
+        }
+
+            update updateListRR;
+            return 'Successfully updated and announced the winners to GRID portal.';
+        }catch(exception ex){
+           Database.rollback(sp);
+            throw new AuraHandledException(ex.getMessage());
+        }
+      
+    }
+    
+    
+    
+    public static boolean checkTheAnnualAnn(String fyId)
+    {
+        List<Grid_Configuration__c> gAnnualCheck = new List<Grid_Configuration__c>();
+        gAnnualCheck = [SELECT Id FROM Grid_Configuration__c WHERE Fiscal_Year__c=:fyId AND Show_Winners__c=true AND Grid_Configuration_Type__c = 'Annual Award Result' ];
+        return !gAnnualCheck.isEmpty();
+    }
+    
      public static Map<String,String> getPickListValuesIntoList(){
        Map<String,String> pickListValuesList= new Map<String,String>();
          pickListValuesList.put('All','All');
-		Schema.DescribeFieldResult fieldResult = Reward_And_Recognition__c.Award_Type__c.getDescribe();
-		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-		for( Schema.PicklistEntry pickListVal : ple){
-			pickListValuesList.put(pickListVal.getlabel(),pickListVal.getValue());
-		}     
-		return pickListValuesList;
+        Schema.DescribeFieldResult fieldResult = Reward_And_Recognition__c.Award_Type__c.getDescribe();
+        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+        for( Schema.PicklistEntry pickListVal : ple){
+            pickListValuesList.put(pickListVal.getlabel(),pickListVal.getValue());
+        }     
+        return pickListValuesList;
     }
     
     @AuraEnabled(cacheable=true)
-    public static List<winnerdetails> getTheCurrentFYTrends(String fyId){
+    public static datawrapper getTheCurrentFYTrends(String fyId){
+         datawrapper dwrap = new datawrapper();
        List<winnerdetails> currentList = new List<winnerdetails>();    
          Map<String,winnerdetails> winnerMap = new Map<String,winnerdetails>(); 
         for(Reward_And_Recognition__c rr : [SELECT Id,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
@@ -111,8 +168,9 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                 }
         }
        currentList.addAll(winnerMap.values());
- 
-        return  currentList;
+         dwrap.currentList = currentList;
+        dwrap.showtheWinners = !currentList.isEmpty() && checkTheAnnualAnn(fyId);
+        return  dwrap;
     }
     
      @AuraEnabled
@@ -278,6 +336,35 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
     }
     
     @AuraEnabled
+    public static List<winnerdetails> getFinalNominsWinners(String fyId){
+         List<winnerdetails> currentList = new List<winnerdetails>();   
+         User loggedinUser = [SELECT Id,ContactId FROM User WHERE Id=:Userinfo.getUserId()];
+        system.debug('===fyId======'+fyId);
+         system.debug('===Userinfo.getUserId()======'+Userinfo.getUserId());
+        for(Reward_And_Recognition__c rr : [SELECT Id,Recognization_By__c,Recognization_By__r.Name,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
+                                            Resource__c,Award_Type__c,Fiscal_Year__c,Project__c,Types_of_Recognition__c,Project__r.Name,RecordTypeId,Fiscal_Year__r.Name,Type__c,Type_of_Shout_Out__c,
+                                            Comments__c,Shout_Out_Heading__c,CreatedDate,Status__c,RecordType.Name,of_Primary_Nominations__c,of_Secondary_Nominations__c FROM Reward_And_Recognition__c 
+                                            WHERE Fiscal_Year__c=:fyId AND RecordTypeId =:RR_NOMINATION_RECORDTYPEID
+                                            AND Type__c = 'Annual Award'
+                                            AND Status__c = 'Winner']){
+          
+                winnerdetails wd = new winnerdetails();
+                 wd.awardType = rr.Award_Type__c;
+                 wd.currentFYName = rr.of_Primary_Nominations__c != null ? string.valueOf(rr.of_Primary_Nominations__c) : '0';
+                 wd.resourceName = rr.Resource__r.Name;
+                 wd.spotType = rr.of_Secondary_Nominations__c != null ? String.valueOf(rr.of_Secondary_Nominations__c) : '0';
+                 wd.awardComments = rr.Comments__c;
+                wd.resourceId = rr.Id;
+                wd.projectName = rr.RecordType.Name;
+                wd.Title = rr.Status__c;
+                wd.totalNoms = rr.Fiscal_Year__r.Name;
+                wd.createdDate = Date.valueOf(rr.CreatedDate);
+              currentList.add(wd);
+        }
+        return currentList;
+    }
+    
+    @AuraEnabled
     public static List<winnerdetails> getShoutoutsReceived(String fyId){
          List<winnerdetails> currentList = new List<winnerdetails>();   
          User loggedinUser = [SELECT Id,ContactId FROM User WHERE Id=:Userinfo.getUserId()];
@@ -433,6 +520,8 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         //smaske :[PM_052] Adding New variable for returning Logged in User ContactId
         @AuraEnabled
         public String currentUserConId;
+        @AuraEnabled
+        public Boolean showtheWinners;
 
     }
     

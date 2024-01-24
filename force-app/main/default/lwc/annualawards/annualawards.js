@@ -77,7 +77,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+        //Status__c: 'Nominated',
         Primary_Nomination__c: true,
         Secondary_Nomination__c: false
     };
@@ -90,7 +90,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: false,
         Secondary_Nomination__c: true
     };
@@ -103,7 +103,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: true,
         Secondary_Nomination__c: false
     };
@@ -116,7 +116,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: false,
         Secondary_Nomination__c: true
     };
@@ -129,7 +129,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: true,
         Secondary_Nomination__c: false
     };
@@ -142,7 +142,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+        //Status__c: 'Nominated',
         Primary_Nomination__c: false,
         Secondary_Nomination__c: true
     };
@@ -155,7 +155,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+        //Status__c: 'Nominated',
         Primary_Nomination__c: true,
         Secondary_Nomination__c: false
     };
@@ -168,7 +168,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: false,
         Secondary_Nomination__c: true
     };
@@ -181,7 +181,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: true,
         Secondary_Nomination__c: false
     };
@@ -194,7 +194,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: false,
         Secondary_Nomination__c: true
     };
@@ -207,7 +207,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: true,
         Secondary_Nomination__c: false
     };
@@ -220,7 +220,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: false,
         Secondary_Nomination__c: true
     };
@@ -233,7 +233,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+       // Status__c: 'Nominated',
         Primary_Nomination__c: true,
         Secondary_Nomination__c: false
     };
@@ -246,7 +246,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         Resource__c: null,
         Fiscal_Year__c: this.currentfy,
         Recognization_By__c: this.userId,
-        Status__c: 'Nominated',
+        //Status__c: 'Nominated',
         Primary_Nomination__c: false,
         Secondary_Nomination__c: true
     };
@@ -663,13 +663,13 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         console.log("isPrevSectionValPopulated " + isPrevSectionValPopulated);
         var Result = this.addObjToArrAndValidate(this.selectedStep);
         console.log("Result " + Result);
-
+  
 
         if (Result) {
             if (isPrevSectionValPopulated) {
                 //if (this.rewardAndRecognitionRecords.length > 0) {
                 if (sectionObjects.length > 0) {
-                    createAnnualAwardNominationRecords({ recordsToCreate: sectionObjects, currentfy: this.currentfy })
+                    createAnnualAwardNominationRecords({ recordsToCreate: sectionObjects, currentfy: this.currentfy,status :'Draft' })
                         .then(result => {
                             console.log('Records created successfully: ' + JSON.stringify(result));
 
@@ -686,6 +686,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
                             console.log("## AFTER SAVE rewardAndRecognitionRecords data" + JSON.stringify(this.rewardAndRecognitionRecords));
                             this.showNotification(this.recordSaved, this.successVariant);
                             this.disableSubmitBtn = false;
+                           
                         })
                         .catch(error => {
                             console.error('Error creating records: ' + JSON.stringify(error));
@@ -756,16 +757,19 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
                     console.log("recordsToBeSubmitted " + JSON.stringify(recordsToBeSubmitted));
                     if (recordsToBeSubmitted.length > 0) {
                         console.log("#679");
-                        submitAnnualAwardNominationRecords({ recordsToSubmit: recordsToBeSubmitted, currentfy: this.currentfy })
+                        submitAnnualAwardNominationRecords({ recordsToSubmit: recordsToBeSubmitted, currentfy: this.currentfy, status :'Nominated' })
                             .then(result => {
                                 console.log('Submit result : ' + JSON.stringify(result));
                                 this.showNotification(this.recordSubmitted, this.successVariant);
-                                this[NavigationMixin.Navigate]({
+                                setTimeout(function(){
+                                    window.location.reload();
+                                 }, 5000);
+                                /*this[NavigationMixin.Navigate]({
                                     type: 'comm__namedPage',
                                     attributes: {
                                         name: 'Home'
                                     }
-                                });
+                                });*/
                             })
                             .catch(error => {
                                 console.error('Error creating records: ' + JSON.stringify(error));

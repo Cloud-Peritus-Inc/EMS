@@ -28,14 +28,14 @@ public without sharing class checkInController {
                          Leadership_and_Management_Rating__c,Work_Environment_Rating__c,Work_Life_Balance_Rating__c,Rating__c,Overall_Rating__c,Goal_Name__c,Status__c,
                          //Smaske : Added Overall_Pulse_Rating__c for PM_027
                          Overall_Pulse_Rating__c FROM Goal__c 
-                         WHERE RecordTypeId=:checkinRecordTypeId AND Resource__c=:resourceId AND CreatedDate >=:startdate and CreatedDate <=:enddate ];
+                         WHERE RecordTypeId=:checkinRecordTypeId AND Resource__c=:resourceId AND CreatedDate >=:startdate and CreatedDate <=:enddate ORDER BY CreatedDate DESC];
             }else{
                  glist = [SELECT Id,Check_In_By__c,Check_In_By__r.Name,Pulse_Id__c,Check_in_Date__c,Feedback_and_Comments__c,
                          Career_Development_Rating__c,Communication_Rating__c,Feedback_and_Recognition_Rating__c,Job_Satisfaction_Rating__c,
                          Leadership_and_Management_Rating__c,Work_Environment_Rating__c,Work_Life_Balance_Rating__c,Rating__c,Overall_Rating__c,Goal_Name__c,Status__c,
                          //Smaske : Added Overall_Pulse_Rating__c for PM_027
                          Overall_Pulse_Rating__c FROM Goal__c 
-                         WHERE RecordTypeId=:checkinRecordTypeId AND Resource__r.EMS_TM_User__c=:Userinfo.getUserId()  AND CreatedDate >=:startdate and CreatedDate <=:enddate ];
+                         WHERE RecordTypeId=:checkinRecordTypeId AND Resource__r.EMS_TM_User__c=:Userinfo.getUserId()  AND CreatedDate >=:startdate and CreatedDate <=:enddate ORDER BY CreatedDate DESC ];
             }
         for(Goal__c gc : glist){
             checkinWrapper cw = new checkinWrapper();

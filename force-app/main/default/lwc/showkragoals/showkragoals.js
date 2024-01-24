@@ -3,18 +3,46 @@ import getAlltheGoals from '@salesforce/apex/myGoalsController.getAlltheGoals';
 import getTheGoals from '@salesforce/apex/myGoalsController.getTheGoals';
 import saveTheGoal from '@salesforce/apex/myGoalsController.saveTheGoal';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { updateRecord } from 'lightning/uiRecordApi';
+import STATUS_FIELD from '@salesforce/schema/Goal__c.Status__c';
+import ID_FIELD from '@salesforce/schema/Goal__c.Id';
+import { refreshApex } from '@salesforce/apex';
 export default class Showkragoals extends LightningElement {
     @api receivedkraid;
     @track goaltable;
+    @track error;
 
+    @track showinprogress = false;
     connectedCallback() {
         console.log('===receivedkraid====' + this.receivedkraid);
-        this.getallGoalsfromserver();
+       // this.getallGoalsfromserver();
     }
     showEditGoal = false;
     showViewGoal = false;
     selectedGoaldId;
-    getallGoalsfromserver() {
+
+@track goalRecord ;
+     @wire(getAlltheGoals,{ kraId: '$receivedkraid'}) 
+    goalsData(result) {
+
+            console.log('RecordId is============');
+            this.goalRecord = result;
+            console.log('Data===='+JSON.stringify(this.goalRecord));
+        if (result.data) {
+            this.goaltable = [];
+            this.goaltable = result.data;          
+            this.error = undefined;
+
+        } else if (result.error) {
+             console.log('ddddddddddd'+result.error);
+            this.goaltable = undefined;
+            this.error = result.error;
+
+        }
+
+    }
+
+   /* getallGoalsfromserver() {
         getAlltheGoals({
             kraId: this.receivedkraid
         })
@@ -29,16 +57,22 @@ export default class Showkragoals extends LightningElement {
             .catch(error => {
                 console.log('====Error=======' + JSON.stringify(error));
             });
-    }
+    } */
 
-    handleNavClick(event) {
+    /* handleNavClick(event) {
         let node = event.currentTarget.dataset.id;
         console.log('==node====' + node);
 
-    }
+    } */
 
     handleeditClick(event) {
         let node = event.currentTarget.dataset.id;
+        let goalstatus =  event.currentTarget.dataset.status;
+        console.log('goooo+++++++++++++'+goalstatus);
+        if(goalstatus =='Active'){
+        this.showinprogress = true;
+        }
+        console.log('showinprogress'+this.showinprogress);
         this.selectedGoaldId = node;
         console.log('==node====' + node);
         this.showGoalEditModalBox();
@@ -57,10 +91,12 @@ export default class Showkragoals extends LightningElement {
     showGoalViewModalBox() {
         this.getTheGoalDetails();
         this.showViewGoal = true;
+         this.showinprogress = false;
     }
 
     hideGoalEditModalBox() {
         this.showEditGoal = false;
+         this.showinprogress = false;
 
     }
 
@@ -138,6 +174,47 @@ export default class Showkragoals extends LightningElement {
             this.dispatchEvent(evt);
 
         });
+    }
+
+    updatetheGoaltoInprogress(){
+
+            this.isLoading = true;
+            // Create the recordInput object Status__c Goal__c
+            const fields = {};
+            fields[ID_FIELD.fieldApiName] = this.selectedGoaldId;
+            fields[STATUS_FIELD.fieldApiName] = 'In Progress';
+
+            const recordInput = { fields };
+            console.log(recordInput);
+
+            updateRecord(recordInput)
+                .then(() => {
+                    this.showToast('Success!!', 'Goal updated Inprogress successfully!!', 'success', 'dismissable');
+                    // Display fresh data in the form
+                    this.  hideGoalEditModalBox();
+                    this.isLoading = false;
+                     return refreshApex(this.goalRecord);
+                     // this.goaltable = [];
+                      //console.log('kraid======'+this.receivedkraid);
+                     //this.getallGoalsfromserver();
+                    
+                })
+                .catch(error => {
+                    this.isLoading = false;
+                    this.showToast('Error!!', error.body.message, 'error', 'dismissable');
+                });        
+    
+
+    }
+
+     showToast(title, message, variant, mode) {
+        const evt = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+            mode: mode
+        });
+        this.dispatchEvent(evt);
     }
 
 }
