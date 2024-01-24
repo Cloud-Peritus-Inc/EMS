@@ -4,7 +4,7 @@ public without sharing class ReusableLookupController {
         try {
             if (inputWrapper != null) {
                 String fieldsToQuery = 'SELECT Id, ';
-                if (String.isNotBlank(inputWrapper.fieldApiName)) {
+                if (String.isNotBlank(inputWrapper.fieldApiName) ) {
                     fieldsToQuery = fieldsToQuery + inputWrapper.fieldApiName;
                 }
                 if (String.isNotBlank(inputWrapper.otherFieldApiName)) {
@@ -14,20 +14,12 @@ public without sharing class ReusableLookupController {
                 if (String.isNotBlank(inputWrapper.otherFieldApiName2)) {
                     fieldsToQuery = fieldsToQuery + ', ' + inputWrapper.otherFieldApiName2;
                 }
-
-                String query = fieldsToQuery + ' FROM ' + inputWrapper.objectApiName;
-                String filterCriteria = inputWrapper.fieldApiName + ' LIKE ' + '\'' + String.escapeSingleQuotes(inputWrapper.searchString.trim()) + '%\'';
-                
-                //filterCriteria += ' AND ' + inputWrapper.otherFieldApiName + ' = \'Active\' LIMIT 10';
-
-
+           
+                String query   = fieldsToQuery + ' FROM ' + inputWrapper.objectApiName;
+         String filterCriteria = inputWrapper.fieldApiName + ' LIKE ' + '\'' + String.escapeSingleQuotes(inputWrapper.searchString.trim()) + '%\'';
                 filterCriteria += ' AND ' + inputWrapper.otherFieldApiName + ' = \'Active\'';
                 filterCriteria += ' AND ' + inputWrapper.otherFieldApiName2 + ' = true LIMIT 10'; // Assuming otherFieldApiName2 is a checkbox field
-
-
-
-
-
+					
 
                 if (String.isNotBlank(inputWrapper.selectedRecordId)) {
                     query += ' WHERE Id = \'' + inputWrapper.selectedRecordId + '\'';
@@ -53,7 +45,7 @@ public without sharing class ReusableLookupController {
             throw new AuraHandledException(err.getMessage());
         }
     }
-
+    
     public class ResultWrapper{
         @AuraEnabled public String mainField{get;set;}
         @AuraEnabled public String subField{get;set;}
@@ -71,4 +63,12 @@ public without sharing class ReusableLookupController {
         @AuraEnabled public String parentRecordId{get;set;}
         @AuraEnabled public String parentFieldApiName{get;set;}
     }
+    
+    @AuraEnabled
+    public static Contact fetcgLoggedinContact(){
+        Id userId = UserInfo.getUserId();
+            User userContact = [select Id,ContactId from User where Id=:userId];
+            Contact conRecord = [Select Id,Name from Contact where Id=:userContact.ContactId ];
+        return conRecord;
+    } 
 }
