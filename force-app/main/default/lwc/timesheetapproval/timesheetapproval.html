@@ -1,0 +1,49 @@
+<!--
+@description       : This component is used to shown leave balance and latest leave records in home page. 
+@author            : Vamsi
+@group             : 
+@last modified on  : 26-05-2023
+@last modified by  : 
+-->
+
+<template>
+<div class="homeCard" style="border-top : 3px solid #9602c7;">
+<lightning-card>
+<div class="childparent">
+	<div class="childimage" style="width:18%;Padding-left:10px;Padding-Bottom:40px;" >
+		<lightning-icon icon-name='standard:approval' alternative-text='defer' size='Medium' >
+	</lightning-icon> 	
+	</div>
+	
+	<div class="childtext" style="width:82%;">
+		<div style="padding-Top:5px;">
+		<font size="4"><b>Pending Timesheet Approval<lightning-helptext content={contextText} class="help-icon" >
+			</lightning-helptext></b></font>
+		</div>
+					<div class="childparent">
+			<div class="childtext"><font size="6"> <b>{NumberofApprovals}</b> </font> <font size="2"><b></b></font></div> 
+			<div class="childimage" style="float:right;"> 	</div>
+
+				</div> 
+			
+			
+	</div>
+</div>
+
+<div>
+		<c-time-sheet-records ongetsearchvalue={refreshtimesheet}>
+	</c-time-sheet-records>
+
+	
+</div>
+<center><div style="width:95%">
+	<footer class="slds-modal__footer">
+		
+		<center> <a href="#" onclick={handleLMNavigation}> View Timesheet</a> </center>
+	
+	</footer>
+
+</div> </center>
+</lightning-card>
+</div>
+</template>
