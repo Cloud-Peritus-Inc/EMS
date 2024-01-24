@@ -4,8 +4,8 @@
             <div class="slds-combobox_container" if:false={isValueSelected}>
                 <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                        <lightning-input onchange={handleChange} type="search" autocomplete="off" label={label}
-                            required={required} field-level-help={helpText} placeholder={placeholder}
+                        <lightning-input onchange={handleChange} type="search" autocomplete="off" data-label={label}
+                            required={required} placeholder={placeholder}
                             onblur={handleInputBlur}></lightning-input>
                     </div>
                 </div>
@@ -29,8 +29,8 @@
                                 class="slds-input_faux slds-combobox__input slds-combobox__input-value"
                                 aria-labelledby="combobox-label-id-34 combobox-id-5-selected-value"
                                 id="combobox-id-5-selected-value" aria-controls="listbox-id-5" aria-expanded="false"
-                                aria-haspopup="listbox">
-                                <span class="slds-truncate" id="combobox-value-id-19">{selectedRecordName}</span>
+                                aria-haspopup="listbox" onclick={popupopen}>
+                                <span class="slds-truncate"  id="combobox-value-id-19">{selectedRecordName}</span>
                             </button>
                             <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
                                 title="Remove selected option" onclick={handleCommit}>
@@ -40,6 +40,7 @@
                         </div>
                     </div>
                 </div>
+                
             </template>
             <template if:true={showRecentRecords}>
                 <div id="listbox-id-4" tabindex="0" onblur={handleBlur} onmousedown={handleDivClick}

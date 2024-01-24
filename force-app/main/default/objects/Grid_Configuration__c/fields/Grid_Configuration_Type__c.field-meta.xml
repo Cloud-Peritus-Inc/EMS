@@ -71,6 +71,11 @@
                 <default>false</default>
                 <label>Annual Award</label>
             </value>
+            <value>
+                <fullName>Annual Award Result</fullName>
+                <default>false</default>
+                <label>Annual Award Result</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

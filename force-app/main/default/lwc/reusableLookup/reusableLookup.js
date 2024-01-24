@@ -1,7 +1,10 @@
 //Source : https://salesforcediaries.com/2022/12/30/reusable-lookup-field-in-lwc/
 
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api,track } from 'lwc';
 import fetchRecords from '@salesforce/apex/ReusableLookupController.fetchRecords';
+import fetcgLoggedinContact from '@salesforce/apex/ReusableLookupController.fetcgLoggedinContact';
+
+
 /** The delay used when debouncing event handlers before invoking Apex. */
 const DELAY = 500;
 
@@ -26,10 +29,21 @@ export default class ReusableLookup extends LightningElement {
     @api parentFieldApiName;
     //smaske
     @api selectedFieldLabel = "";
+    logUserContactId;
+    psLabels;
+    @track psRecordId;
+    selectedRecordIds=[];
+     jsonData = [
+        {"id":"0035200000nvtyaAAA","mainField":"Ramacommunity_3","subField":"Active"},
+        {"id":"0035200000nwFyvAAE","mainField":"Mukesh Rawat","subField":"Active"},
+        {"id":"0035200000nwG3nAAE","mainField":"jaswanthi maganti","subField":"Active"}
+    ];
 
     preventClosingOfSerachPanel = false;
 
     get methodInput() {
+
+        
         return {
             objectApiName: this.objectApiName,
             fieldApiName: this.fieldApiName,
@@ -55,17 +69,37 @@ export default class ReusableLookup extends LightningElement {
         if (this.selectedRecordId) {
             this.fetchSobjectRecords(true);
         }
+       
+        fetcgLoggedinContact({   
+        }).then(result => {
+            this.logUserContactId=result.Id;
+            console.log(result.Id);
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     //call the apex method
-    fetchSobjectRecords(loadEvent) {
+    fetchSobjectRecords(loadEvent,recordId,label) {
         fetchRecords({
             inputWrapper: this.methodInput
         }).then(result => {
-            if (loadEvent && result) {
+            if (loadEvent && result) { 
+                console.log('83');             
                 this.selectedRecordName = result[0].mainField;
             } else if (result) {
-                this.recordsList = JSON.parse(JSON.stringify(result));
+                if((recordId!=null & label!=null) && (label=='Primary Nominee')){
+                this.recordsList = this.jsonData;//result.filter(item => item.id !== this.logUserContactId && item.id !== recordId);//JSON.parse(JSON.stringify(result));
+                console.log(this.recordsList);
+                this.psLabels =label;
+                this.psRecordId=recordId;
+                console.log(recordId);
+                console.log(label);
+                console.log('97'); 
+            }else{
+                this.recordsList = result.filter(item => item.id !== this.logUserContactId);//JSON.parse(JSON.stringify(result));
+                console.log(JSON.stringify(result));//JSON.parse(JSON.stringify(result)));
+            }
             } else {
                 this.recordsList = [];
             }
@@ -81,7 +115,12 @@ export default class ReusableLookup extends LightningElement {
     //handler for calling apex when user change the value in lookup
     handleChange(event) {
         this.searchString = event.target.value;
-        this.fetchSobjectRecords(false);
+        console.log('118');
+        console.log(this.selectedRecordIds);
+        console.log(event.currentTarget.dataset.label)
+       
+        this.fetchSobjectRecords(false) ;
+    
     }
 
     //handler for clicking outside the selection panel
@@ -111,20 +150,32 @@ export default class ReusableLookup extends LightningElement {
         this.selectedRecordName = "";
     }
 
+    handleOkay(){
+        this.showWarning=false;
+    }
+    popupopen(){
+        this.showWarning = true;
+    }
     //handler for selection of records from lookup result list
     handleSelect(event) {
+      
         let selectedRecord = {
             mainField: event.currentTarget.dataset.mainfield,
             subField: event.currentTarget.dataset.subfield,
             id: event.currentTarget.dataset.id,
             //smaske
             label: event.currentTarget.dataset.label
-        };
+        }; 
         this.selectedRecordId = selectedRecord.id;
         this.selectedRecordName = selectedRecord.mainField;
+        this.psRecordId=selectedRecord.id;
+        this.psLabels=event.currentTarget.dataset.label;
+        this.selectedRecordIds.push(this.selectedRecordId);
+        console.log(this.selectedRecordIds);
         //smaske
         this.selectedFieldLabel = selectedRecord.label;
-
+        console.log('160');
+        
         this.recordsList = [];
         // Creates the event
         const selectedEvent = new CustomEvent('valueselected', {
@@ -132,7 +183,10 @@ export default class ReusableLookup extends LightningElement {
         });
         //dispatching the custom event
         this.dispatchEvent(selectedEvent);
-    }
+       if((this.psRecordId!=null & this.psLabels!=null) && (this.psLabels=='Primary Nominee')){
+            this.recordsList = '';
+        }
+        }
 
     //to close the search panel when clicked outside of search input
     handleInputBlur(event) {

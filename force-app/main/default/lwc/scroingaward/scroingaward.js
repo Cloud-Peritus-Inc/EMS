@@ -2,6 +2,8 @@ import { LightningElement,api,track } from 'lwc';
 import getTheScoringbyAward from '@salesforce/apex/RRController.getTheScoringbyAward';
 import getTheScoringbyAllAward from '@salesforce/apex/RRController.getTheScoringbyAllAward';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import getFinalNominsWinners from '@salesforce/apex/RRController.getFinalNominsWinners';
+import updateTheWinners from '@salesforce/apex/RRController.updateTheWinners';
 export default class Scroingaward extends LightningElement {
 @api selectedfy;
 @api awarddatalist = [];
@@ -10,7 +12,9 @@ selectedAward = 'All';
 showthecampare = false;
 showcomparepop = false;
 announcebutton = true;
-
+nomstable = [];
+disableconfirmbutton = false;
+showtable = false;
 connectedCallback() {
      this.getTheAllAward();    
 }
@@ -47,8 +51,8 @@ handleChange(event) {
         getTheScoringbyAllAward({ 
         fyId : this.selectedfy
         }).then(result => {
-        //console.log('======result=All==='+JSON.stringify(result));
-        console.log('======result=All===');
+        console.log('======result=All==='+JSON.stringify(result));
+        //console.log('======result=All===');
         this.scoringTable = result;
         let modifiedArr = JSON.parse(JSON.stringify(this.scoringTable));
 
@@ -61,15 +65,47 @@ handleChange(event) {
         })
         this.scoringTable = JSON.parse(JSON.stringify(modifiedArr));
 
-        //console.log('======Modified result=All==='+JSON.stringify(this.scoringTable));
+        console.log('======Modified result=All==='+JSON.stringify(this.scoringTable));
         
         }).catch(error => {
           console.log('======error=errorAll==='+JSON.stringify(error));
         }); 
     }
 
-    handleAnnounceClick(){
+    pulishTheAwards(){
+         this.disableconfirmbutton = true;
+        console.log('======nomstable===='+JSON.stringify(this.nomstable));
+        updateTheWinners({ 
+        winnerlist : this.nomstable,
+        fyId : this.selectedfy
+        }).then(result => {
+            this.showannualann = false; 
+        console.log('======result=All==='+JSON.stringify(result));
+        const evt = new ShowToastEvent({
+            title: 'SUCCESS',
+            message: result,
+            variant: 'success',
+            });
+            this.dispatchEvent(evt);
+        window.location.reload();
+        
+        }).catch(error => {
+             this.disableconfirmbutton = false;
+          console.log('======error=errorAll==='+JSON.stringify(error));
+           const evt = new ShowToastEvent({
+            title: 'Error',
+            message: 'Something went wrong..'+JSON.stringify(error),
+            variant: 'error',
+            });
+            this.dispatchEvent(evt);
 
+        }); 
+    }
+
+    handleAnnounceClick(){
+        this.getTheMyNoms();
+        console.log('====current fy====='+selectedfy);
+      this.showAnnualAnnModalBox();
     }
 
     handleRefresh(){
@@ -89,6 +125,38 @@ handleChange(event) {
         this.showcomparepop = false; 
         
     }
+
+     showAnnualAnnModalBox() { 
+         this.showannualann = true; 
+    }
+
+    hideAnnualAnnModalBox() {  
+        this.showannualann = false; 
+        
+    }
+
+
+    showannualann = false;
+   
+    getTheMyNoms(){
+        getFinalNominsWinners({ 
+        fyId : this.selectedfy   
+        }).then(result => {
+            console.log('====winnnerlist===result====='+JSON.stringify(result));
+        this.nomstable = result;
+        if(result.length > 0){
+            this.showtable = true;
+            this.disableconfirmbutton = false;
+        }else{
+            this.showtable = false;
+             this.disableconfirmbutton = true;
+        }
+         this.showannualann = true;
+        }).catch(error => {
+            console.log('=======error====='+JSON.stringify(error));
+        }); 
+    }
+
 
     handleSubmit(event) {
         console.log('onsubmit event recordEditForm'+ event.detail.fields);

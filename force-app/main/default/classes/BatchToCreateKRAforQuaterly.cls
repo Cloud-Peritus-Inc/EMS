@@ -64,14 +64,14 @@ global class BatchToCreateKRAforQuaterly implements Database.Batchable<sObject> 
         List<Goal__c> goalsInsert = new List<Goal__c>();
         List<Fulfillment__c> fulList = new List<Fulfillment__c>();
         if(!contactWithFul.isEmpty()){
-            for(Fulfillment__c fi : [SELECT Id,Fiscal_Year__c,Resource__c,OwnerId,(SELECT Id,Type__c,Quarter_Start_Date__c,Quarter_End_Date__c FROM Goals__r WHERE Type__c = 'KRA' AND Quarter_Start_Date__c= NEXT_FISCAL_QUARTER) FROM Fulfillment__c WHERE Id IN:contactWithFul.values()]){
+            for(Fulfillment__c fi : [SELECT Id,Fiscal_Year__c,Resource__c,OwnerId,(SELECT Id,Type__c,Quarter_Start_Date__c,Quarter_End_Date__c FROM Goals__r WHERE Type__c = 'KRA' AND Quarter_Start_Date__c= THIS_FISCAL_QUARTER) FROM Fulfillment__c WHERE Id IN:contactWithFul.values()]){
                 if(fi.Goals__r.isEmpty()){
                     fulList.add(fi);  
                 } 
             }
         }
         if(fulList.size() > 0){
-            Period pd = [Select StartDate,EndDate,FullyQualifiedLabel From Period Where type = 'Quarter' and StartDate = NEXT_FISCAL_QUARTER];
+            Period pd = [Select StartDate,EndDate,FullyQualifiedLabel From Period Where type = 'Quarter' and StartDate = THIS_FISCAL_QUARTER];
             for(Fulfillment__c fis : fulList){
                 Goal__c gol = new Goal__c();
                 gol.Quarter_Start_Date__c = pd.StartDate;
