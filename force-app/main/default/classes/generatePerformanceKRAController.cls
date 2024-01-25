@@ -143,9 +143,10 @@ public without sharing class generatePerformanceKRAController {
     @AuraEnabled
     public static void updateFulfillmentDetails(Compensation__c record,Id fy){
         try {
-            Fulfillment__c ff = [Select Id,Appraisal_Date__c,Fiscal_Year__c,Overall_Comments__c,Resource__c FROM Fulfillment__c WHERE Resource__c =: record.Resource__c AND Fiscal_Year__c =: fy];
+            Fulfillment__c ff = [Select Id,Appraisal_Date__c,Status__c,Fiscal_Year__c,Overall_Comments__c,Resource__c FROM Fulfillment__c WHERE Resource__c =: record.Resource__c AND Fiscal_Year__c =: fy];
             ff.Appraisal_Date__c = Date.today();
             ff.Overall_Comments__c = record.Comments__c;
+            ff.Status__c='Completed';
             update ff;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

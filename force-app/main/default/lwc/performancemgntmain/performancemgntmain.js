@@ -1,9 +1,9 @@
 import { LightningElement,wire } from 'lwc';
-//import checkTheTeam from '@salesforce/apex/myTeamController.checkTheTeam';
+import checkTheTeam from '@salesforce/apex/myTeamController.checkTheTeam';
 export default class Performancemgntmain extends LightningElement {
  dontshowTheTeam = false;
 connectedCallback() {
-    //this.callandCheckTheTeam();
+    this.callandCheckTheTeam();
     console.log('In Performance one');
 }
 //  //Commented for my team tab hiding when the HR profile having custom permission 'Performance Management Admin'--Praveen

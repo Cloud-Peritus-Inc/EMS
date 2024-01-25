@@ -9,7 +9,7 @@ connectedCallback() {
     console.log('====tabledata======'+JSON.stringify(this.tabledata));
     this.tbData= JSON.parse(JSON.stringify(this.tabledata))
 
-    if(this.tbData!= null){
+    if(this.tbData.length>0){
         this.pulseTableAvailble=true;
     }else{
         this.pulseTableAvailble=false;

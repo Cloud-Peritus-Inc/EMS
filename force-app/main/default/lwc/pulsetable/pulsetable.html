@@ -11,31 +11,31 @@
             <div class="slds-truncate" title="Pulse Date">Pulse Date</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Carrer Dev">Carrer Dev</div>
+            <div class="slds-truncate" title="Career Development">Career Development</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Job Stats">Job Stats</div>
+            <div class="slds-truncate" title="Job Satisfaction">Job Satisfaction</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Work Env">Work Env</div>
+            <div class="slds-truncate" title="Work Environment">Work Environment</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
             <div class="slds-truncate" title="Communication">Communication</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Work Life">Work Life</div>
+            <div class="slds-truncate" title="Work-Life Balance">Work-Life Balance</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Feedback">Feedback</div>
+            <div class="slds-truncate" title="Feedback and Recognition">Feedback and Recognition</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Leadership">Leadership</div>
+            <div class="slds-truncate" title="Leadership and Management">Leadership and Management</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Overall">Overall</div>
+            <div class="slds-truncate" title="Overall Rating">Overall Rating</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="OverallComments">OverallComments</div>
+            <div class="slds-truncate" title="Comments">Overall Comments</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
             <div class="slds-truncate" title="Status">Status</div>
@@ -46,7 +46,7 @@
 
       <tbody>
 
-        <template if:true={tabledata}>
+        <template if:true={pulseTableAvailble}>
           <template for:each={tabledata} for:item="accWithContacts">
             <tr key={accWithContacts.goalid}>
               <td>
@@ -58,7 +58,7 @@
                 </div>
               </td>
               <td>
-                <div class="slds-wrap"><lightning-formatted-date-time value={accWithContacts.CheckinDate}></lightning-formatted-date-time></div>
+                <div class="slds-wrap" style="width:100px;word-wrap:break-word;"><lightning-formatted-date-time value={accWithContacts.CheckinDate}></lightning-formatted-date-time></div>
               </td>
                <td>
                 <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.carrerRating}></lightning-formatted-rich-text></div>
@@ -98,7 +98,7 @@
         </template>
       </tbody>
     </table>
-       <template if:false={tabledata}>
+       <template if:false={pulseTableAvailble}>
           <div class="slds-text-align_center slds-p-around_medium">
             <center>No records found for filter.</center>
           </div>

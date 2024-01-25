@@ -104,6 +104,9 @@
                           <div class="slds-truncate" title="Rating">Rating</div>
                         </th>
                         <th class="slds-border_right tableheading" scope="col"  >
+                          <div class="slds-truncate" title="Rating">Overall Rating</div>
+                        </th>
+                        <th class="slds-border_right tableheading" scope="col"  >
                           <div class="slds-truncate" title="Actions"> Actions</div>
                         </th>
                       </tr>
@@ -136,6 +139,10 @@
                             <div class="slds-wrap" >
                                {contactItem.rating}
                               </div><!--email-->
+                          </td>
+                          <td >
+                            <div class="slds-wrap" ><lightning-formatted-rich-text  value={contactItem.overallRating}></lightning-formatted-rich-text>
+                              </div>
                           </td>
                           <td >
                             <div class="slds-wrap" >
