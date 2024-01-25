@@ -170,7 +170,7 @@ public without sharing class myMetricsController {
         List<Fulfillment__c> returnList = new List<Fulfillment__c>();
         List<perfWrapper> returnval = new List<perfWrapper>();
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                         (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Rating__c,Status__c,Type__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
+                         (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Rating__c,Status__c,Type__c, Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
         
         
         for(Fulfillment__c ful : returnList){
@@ -184,7 +184,7 @@ public without sharing class myMetricsController {
                qw.status = gl.Status__c;
                qw.typeval = gl.Type__c;
                qw.rating = String.valueOf(gl.Rating__c);
-                qw.overallRating = gl.Overall_Rating__c;
+               qw.overallRating = gl.Overall_Rating__c;
                qw.allowedit = false;
                 //smaske : PM_061 : updating conditon to only allow edit when status is "KRA Inreview" in MY TEAM TAB for selected Reportee's KRA
                //Previously it was : gl.Status__c != 'KRA Completed'
