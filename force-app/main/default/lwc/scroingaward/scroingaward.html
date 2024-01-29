@@ -308,10 +308,15 @@
           <!-- modal body start -->
           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-6">
             <div class="c-container">
+              <template if:true={alreadyAnnounced}>
+         <center> The Annual Awards results are already announced for the selected Fiscal Year. </center>
+       </template>
+       <template if:false={alreadyAnnounced}>
+         
             <center><b><i>Following is the final list of Winner for this fiscal year from nominations list.</i></b></center> <br/>
 
            <div style="padding:5px"> <i>  Note: Once the winner list confirmed, the list will published to GRID portal and changes can not be reverted. </i> </div>  
-   
+       
                      <div class="tableFixHead">
     <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
       <thead>
@@ -398,7 +403,7 @@
             <center>No winners are yet finalized from nominations.</center>
           </div>
         </template>
-  </div>  <br/>    
+  </div>  </template> <br/>    
   <center> 
      <button class="slds-button slds-button_neutral" onclick={hideAnnualAnnModalBox}>Close</button>
      &nbsp;&nbsp; <lightning-button variant="brand" disabled={disableconfirmbutton} onclick={pulishTheAwards} label="Confirm" title="Confirm"></lightning-button>

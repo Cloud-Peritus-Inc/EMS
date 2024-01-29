@@ -3,46 +3,4 @@
     <fullName>checkin</fullName>
     <active>true</active>
     <label>checkin</label>
-    <picklistValues>
-        <picklist>Status__c</picklist>
-        <values>
-            <fullName>Active</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed - OnTime</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed - PostTime</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Missed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>New</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Type__c</picklist>
-        <values>
-            <fullName>KRA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Survey</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
 </RecordType>
