@@ -51,11 +51,7 @@ winnerrecordTypeId;
         this.currentFY = data.currentName;
         this.currentdata = data.currentList;
         console.log('====data.currentList.length===='+data.currentList.length);
-        if(data.currentList.length > 0){
-         this.showTheAnnualAwards = true;
-        }else{
-            this.showTheAnnualAwards = false; 
-        }
+        this.showTheAnnualAwards = data.showtheWinners;
          console.log('====this.showTheAnnualAwards===='+this.showTheAnnualAwards);
         this.winnerrecordTypeId = data.winnerrecordtypeId;
         var consts = data.fyListMap;
@@ -139,12 +135,8 @@ winnerrecordTypeId;
                 fyId : this.selectedfy   
             })
             .then(result => {
-                 this.currentdata = result;
-                 if(result.length > 0){
-                this.showTheAnnualAwards = true;
-                }else{
-                    this.showTheAnnualAwards = false; 
-                }
+                 this.currentdata = result.currentList;
+                 this.showTheAnnualAwards = result.showtheWinners;
             })
             .catch(error => {
             }); 
@@ -323,6 +315,7 @@ winnerrecordTypeId;
         fyId : this.selectedfy   
         }).then(result => {
         this.mynoms = result;
+        console.log('this.mynoms' ,this.mynoms);
         if(this.mynoms.length > 0){
          this.showrectable = true;
         }else{

@@ -21,9 +21,12 @@ public without sharing class myGoalsController {
                qw.Description = gl.Description__c;
                qw.comments = gl.Feedback_and_Comments__c;
                qw.showedit = false;
-               if(gl.Status__c == 'Active' || gl.Status__c == 'Draft'){
+               if(gl.Status__c == 'Active' || gl.Status__c == 'Draft' || gl.Status__c =='In Progress'){
                    qw.showedit = true; 
                }
+             /*  if(gl.Status__c == 'Active'){
+                 qw.showInprogress = true;
+               } */
                gwList.add(qw);
         }
         return gwList;
@@ -117,6 +120,8 @@ public without sharing class myGoalsController {
         public String comments;
         @AuraEnabled
         public boolean showedit;
+    /*    @AuraEnabled
+        public boolean showInprogress; */
         
     }
 

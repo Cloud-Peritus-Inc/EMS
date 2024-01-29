@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_KRA_reminder_mail_to_mentor</name>
+        <label>Send KRA reminder mail to mentor</label>
+        <locationX>50</locationX>
+        <locationY>360</locationY>
+        <actionName>Goal__c.KRA_Remainder_mail_to_Mentor</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Goal__c.KRA_Remainder_mail_to_Mentor</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>59.0</apiVersion>
+    <decisions>
+        <name>Check_the_Days</name>
+        <label>Check the Days</label>
+        <locationX>182</locationX>
+        <locationY>252</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_the_remainder_days</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>CheckFisrtDay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TodayDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CheckSeventhDay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TodayDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CheckFiftinthDay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TodayDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_KRA_reminder_mail_to_mentor</targetReference>
+            </connector>
+            <label>Check the remainder days</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>CheckFiftinthDay</name>
+        <dataType>Date</dataType>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 15,  {!$Record.Quarter_End_Date__c} - 16)</expression>
+    </formulas>
+    <formulas>
+        <name>CheckFisrtDay</name>
+        <dataType>Date</dataType>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 29,  {!$Record.Quarter_End_Date__c} - 30)</expression>
+    </formulas>
+    <formulas>
+        <name>CheckSeventhDay</name>
+        <dataType>Date</dataType>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 23,  {!$Record.Quarter_End_Date__c} - 24)</expression>
+    </formulas>
+    <formulas>
+        <name>Dayofthemonth</name>
+        <dataType>Number</dataType>
+        <expression>DAY({!$Record.Quarter_End_Date__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>TodayDate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <interviewLabel>Send KRA remainder Mail to Mentor {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send KRA remainder Mail to Mentor</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_the_Days</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>01252000003pXPFAA2</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Check_In_By__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Goal__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2024-01-01</startDate>
+            <startTime>03:30:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Draft</status>
+    <textTemplates>
+        <name>Dummymail</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear  {!$Record.Check_In_By__r.ContactName__c},
+Please submit the KRA for {!$Record.Goal_Name__c} before {!$Record.Quarter_End_Date__c}
+Regards,
+The Cloud Peritus Team</text>
+    </textTemplates>
+    <textTemplates>
+        <name>EmailSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Complete the KRA {!$Record.Goal_Name__c}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>GridEmail</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>no-reply.grid@cloudperitus.com</text>
+    </textTemplates>
+</Flow>

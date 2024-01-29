@@ -15,6 +15,7 @@ announcebutton = true;
 nomstable = [];
 disableconfirmbutton = false;
 showtable = false;
+alreadyAnnounced = false;
 connectedCallback() {
      this.getTheAllAward();    
 }
@@ -143,7 +144,8 @@ handleChange(event) {
         fyId : this.selectedfy   
         }).then(result => {
             console.log('====winnnerlist===result====='+JSON.stringify(result));
-        this.nomstable = result;
+        this.nomstable = result.CurrentList;
+        this.alreadyAnnounced = result.alreadyannounced;
         if(result.length > 0){
             this.showtable = true;
             this.disableconfirmbutton = false;
