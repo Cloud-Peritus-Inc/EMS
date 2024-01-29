@@ -3,14 +3,12 @@
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>Cloud_Peritus_Inc</letterhead>
-    <name>KRA remainder mail to Mentor</name>
+    <name>KRA remainder mail to reportee</name>
     <style>freeForm</style>
-    <subject>Complete the KRA {!Goal__c.Goal_Name__c}</subject>
-    <textOnly>Dear {!Goal__c.Check_In_By__c},
-
+    <subject>Submit the self review for {!Goal__c.Goal_Name__c}</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
 
 Please submit the KRA for {!Goal__c.Goal_Name__c} before {!Goal__c.Quarter_End_Date__c}. For submission click here.
-
 
 Regards,
 The Cloud Peritus Team</textOnly>
