@@ -25,6 +25,8 @@ public class createProjectAfterOppWonTest {
         oppList[0].Contract_Start_Date__c = System.today();
         opplist[0].Lead_Generation__c='Test Lead';
         opplist[0].Identify_Target_Market__c='	Advisory Services';
+        opplist[0].Final Agreement Date =system.today()+10;
+        opplist[0].Expected_Kick_off_Date__c=system.today()+15;
         INSERT oppList;
         
         test.startTest();
