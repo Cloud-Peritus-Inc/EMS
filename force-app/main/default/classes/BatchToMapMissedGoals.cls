@@ -23,14 +23,16 @@ global class BatchToMapMissedGoals implements Database.Batchable<sObject> {
 * CHANGE HISTORY
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION
-* N/A           N/A                     N/A
+* 29-01-2024	Shubham MASKE			Updated batch to update goal status based on date value.
 * ====================================================================================================
 **/
     global Database.QueryLocator start(Database.BatchableContext BC) {
         date dt = Test.isRunningTest() ? system.today().adddays(-10) : system.today().adddays(integer.valueOf(Label.Days_Consider_for_Missed_Goal));
         String GOAL_RECORD_TYPE = 'Goal';
         Id goalRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get(GOAL_RECORD_TYPE).getRecordTypeId();
-        return Database.getQueryLocator([SELECT Id,Status__c FROM Goal__c WHERE Status__c='Active' And RecordTypeId =:goalRecTypeId and End_Date__c>=:dt ]);
+        //return Database.getQueryLocator([SELECT Id,Status__c,End_Date__c,RecordTypeId FROM Goal__c WHERE Status__c='Active' And RecordTypeId =:goalRecTypeId and End_Date__c>=:dt ]);
+        //smaske :[PM_070] : updating query [commented above line as not considering the records based on custom lable]
+        return Database.getQueryLocator([SELECT Id,Status__c,Start_Date__c,End_Date__c,RecordTypeId FROM Goal__c WHERE (Status__c='Active' OR Status__c='Missed' OR Status__c='Draft' OR Status__c='In Progress') And RecordTypeId =:goalRecTypeId]);
     }
     
     /**
@@ -44,13 +46,20 @@ global class BatchToMapMissedGoals implements Database.Batchable<sObject> {
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-    global void execute(Database.BatchableContext BC, List<Goal__c> goalList) {
+    global void execute(Database.BatchableContext BC, List<Goal__c> goalList) { 
         for(Goal__c gl : goalList){
-            gl.status__c = 'Missed';
+            //smaske :[PM_070] : updating conditions
+            if(gl.status__c == 'Draft' && gl.Start_Date__c == System.today() ){
+                gl.status__c = 'Active';
+            }
+            if( (gl.status__c == 'In Progress' || gl.status__c == 'Active' || gl.status__c == 'Draft') && gl.End_Date__c < System.today() ){
+                gl.status__c = 'Missed';
+            }
         }
          try{
            update goalList;
         }catch(exception ex){
+            System.debug('exception ' + ex);
            LogException.logHandledException(ex, 'BatchToCreateGoalsForRes', 'execute');  
         }
     }

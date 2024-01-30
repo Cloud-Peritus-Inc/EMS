@@ -32,7 +32,7 @@ shoutouttable = [];
 shoutoutreceived = [];
 showNomstab = false;
 activeTab = '1';
-selectedfy;
+@track selectedfy;
 showscroingTab = false;
 @track userId = USER_ID;
 @track LogggedInUserConId;
@@ -227,7 +227,11 @@ winnerrecordTypeId;
       this.getTheMyAwards();
      }else if(this.activeTab == "5"){
       this.getTheMyNoms();
-     }
+      } else if (this.activeTab == "6") {
+          //smaske :
+          this.template.querySelector('c-scroingaward').handleChange2(this.selectedfy);
+      }
+     
     }
 
     getThelatestSpotAwardGiven(){

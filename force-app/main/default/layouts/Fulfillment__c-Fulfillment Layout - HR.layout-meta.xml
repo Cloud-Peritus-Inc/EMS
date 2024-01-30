@@ -104,6 +104,7 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
         <fields>Goal_Name__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>Status__c</fields>
