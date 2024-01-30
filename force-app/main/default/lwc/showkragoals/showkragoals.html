@@ -30,7 +30,7 @@
 
       <tbody>
 
-        <template if:true={goaltable}>
+        <template if:true={showGoalRecords}>
           <template for:each={goaltable} for:item="goalwrap">
             <tr key={goalwrap.nameid}>
               <td>
@@ -72,7 +72,7 @@
         </template>
       </tbody>
     </table>
-       <template if:false={goaltable}>
+       <template if:false={showGoalRecords}>
           <div class="slds-text-align_center slds-p-around_medium">
             <center>No goals found.</center>
           </div>

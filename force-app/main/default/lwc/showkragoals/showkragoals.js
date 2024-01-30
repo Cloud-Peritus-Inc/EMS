@@ -13,6 +13,7 @@ export default class Showkragoals extends LightningElement {
     @track error;
 
     @track showinprogress = false;
+    showGoalRecords;
     connectedCallback() {
         console.log('===receivedkraid====' + this.receivedkraid);
        // this.getallGoalsfromserver();
@@ -30,7 +31,12 @@ export default class Showkragoals extends LightningElement {
             console.log('Data===='+JSON.stringify(this.goalRecord));
         if (result.data) {
             this.goaltable = [];
-            this.goaltable = result.data;          
+            this.goaltable = result.data; 
+            if(this.goaltable.length>0){
+            this.showGoalRecords=true;
+            }else{
+                this.showGoalRecords=false;
+            }     
             this.error = undefined;
 
         } else if (result.error) {
@@ -129,9 +135,12 @@ export default class Showkragoals extends LightningElement {
                 });
                 this.dispatchEvent(evt);
                 this.mycomments = '';
-                this.getallGoalsfromserver();
+                // @Mukesh 
+                //i commented because this funtion is commented above
+                //this.getallGoalsfromserver();
                 this.hideGoalEditModalBox();
             }).catch(err => {
+                console.log('err' ,err);
                 const evt = new ShowToastEvent({
                     title: 'Toast Error',
                     message: 'Some thing went wrong...' + JSON.stringify(err),

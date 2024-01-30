@@ -7,7 +7,9 @@ public without sharing class myGoalsController {
          Id goalRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('Goal').getRecordTypeId();
         for(Goal__c gl : [SELECT Id,Name,Goal_Name__c,Parent_Goal__c,Start_Date__c,CreatedDate,End_Date__c,Status__c,Description__c,Feedback_and_Comments__c 
                           FROM Goal__c WHERE RecordTypeId=:goalRecTypeId 
+                          //@Mukesh - For Defect- PM_126, Added a condition where Goals created in the current Quarter will show in only the Linked KRAs 
                           AND Parent_Goal__r.Fulfillment__c =:currentKRA.Fulfillment__c
+                          AND Parent_Goal__r.Id = :currentKRA.Id
                           //smaske
                           AND Resource__c =: currentKRA.Resource__c 
                           ORDER BY CreatedDate DESC]){

@@ -5,10 +5,12 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>KRA remainder mail to reportee</name>
     <style>freeForm</style>
-    <subject>Submit the self review for {!Goal__c.Goal_Name__c}</subject>
+    <subject>Remainder Notification to Submit the Self Ratings</subject>
     <textOnly>Dear {!Goal__c.Resource__c},
 
-Please submit the KRA for {!Goal__c.Goal_Name__c} before {!Goal__c.Quarter_End_Date__c}. For submission click here.
+We are pleased to inform you that you have not provided the Self-ratings for the Current {!Goal__c.Goal_Name__c}, which is due.
+
+Please click here to Provide the Self-ratings on an immediate basis to avoid any strikes.
 
 Regards,
 The Cloud Peritus Team</textOnly>
