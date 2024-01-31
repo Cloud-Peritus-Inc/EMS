@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>Remainder_mail_to_reportee_for_KRA_submission</fullName>
-        <description>Remainder mail to reportee for KRA submission</description>
+        <fullName>AlertToMentorWhenGoalIsCompleted</fullName>
+        <description>AlertToMentorWhenGoalIsCompleted</description>
         <protected>false</protected>
         <recipients>
-            <field>Resource__c</field>
-            <type>contactLookup</type>
+            <type>creator</type>
         </recipients>
         <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/KRA_remainder_mail_to_reportee</template>
+        <template>unfiled$public/EmailToMetnorGoalCompleted2</template>
+    </alerts>
+    <alerts>
+        <fullName>SendEmailToMentorWhenGoalIsCreated</fullName>
+        <description>SendEmailToMentorWhenGoalIsCreated</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/EmailToMetnorGoalCreated</template>
     </alerts>
 </Workflow>

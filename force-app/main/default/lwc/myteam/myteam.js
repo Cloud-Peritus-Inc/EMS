@@ -181,6 +181,7 @@ handleCheckInSave(){
 
     modalCloseHandler(){
         this.isShowGeneratePerformaneKraModal = false;
+        this.getTheKRA();
     }
 
 }

@@ -37,8 +37,6 @@ handleChange(event) {
     //smaske : [PM_087] : created below method to call from Parent to fetch scoring table data based on selected FY 
     @api handleChange2(fy) {
         this.selectedfy = fy;
-        console.log("Child Console " + this.selectedAward);
-        console.log("Child Console2 " + this.selectedfy);
         if(this.selectedAward != 'All'){
             console.log('42');
             this.showthecampare = true; 
@@ -85,7 +83,6 @@ handleChange(event) {
         this.scoringTable = JSON.parse(JSON.stringify(modifiedArr));
 
         console.log('======Modified result=All==='+JSON.stringify(this.scoringTable));
-        this.selectedfy = '';
         
         }).catch(error => {
           console.log('======error=errorAll==='+JSON.stringify(error));
