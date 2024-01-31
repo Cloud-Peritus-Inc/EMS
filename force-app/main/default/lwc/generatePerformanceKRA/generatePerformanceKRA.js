@@ -235,7 +235,8 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     handleSubmitButtonAction(){
         //smaske : PM_079/PM_078 : Updating Submit functionality to avoid duplicate record creation and Field Validation.
         let isValid = true;
-        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Finalized_Hike__c']; // Replace with your actual field names
+        //smaske :[EN_05] : Removed "Finalized_Hike__c" from API Array as field is commented
+        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c']; // Replace with your actual field names
         // Iterate through the list of API field names
         for (const fieldName of apiFieldNames) {
             if (!this.Compensation[fieldName]) {
@@ -254,12 +255,13 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                     this.Compensation = result;
                     let msg = 'Record Submitted Successfully !';
                     this.showNotification(msg, this.successVariant);
-                    this[NavigationMixin.Navigate]({
+                    this.dispatchEvent(new CustomEvent('close'))
+                    /* this[NavigationMixin.Navigate]({
                         type: 'comm__namedPage',
                         attributes: {
                             name: 'Home'
                         }
-                    });
+                    }); */
 
                     return refreshApex(this.Compensation);
                 })

@@ -106,12 +106,12 @@
                                                         </td>
                                                         <td>
                                                             <div class="slds-wrap"> <lightning-formatted-date-time
-                                                                    value={kra.Start_Date__c}></lightning-formatted-date-time>
+                                                                    value={kra.Quarter_Start_Date__c}></lightning-formatted-date-time>
                                                             </div>
                                                         </td>
                                                         <td style="word-wrap:break-word;">
                                                             <div class="slds-wrap"><lightning-formatted-date-time
-                                                                    value={kra.End_Date__c}></lightning-formatted-date-time>
+                                                                    value={kra.Quarter_End_Date__c}></lightning-formatted-date-time>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -199,7 +199,8 @@
                             </div>
 
                             <div class="midBox">
-                                <p class="subTitle">Expected Hike : {averageOverallRating}</p>                            
+                                <!-- smaske : [PM_129] : Updated Label Value -->
+                                <p class="subTitle">Overall Average Rating : {averageOverallRating}</p>                            
                             </div>
 
                             <div class="midBox">
@@ -207,11 +208,12 @@
                                 <lightning-input-rich-text label-visible="true" type="text" label=" "  name="Comments__c" value={Compensation.Comments__c} onchange={dataHandler} ></lightning-input-rich-text>
                             </div>
 
-                            <div class="midBox">
+                        <!-- smaske [EN_05] : Commented as per latest feedback -->
+                         <!--   <div class="midBox">
                                 <p class="subTitle">Finalized Hike</p>
                                 <lightning-input type="number" min="0" max="100" label=" " name="Finalized_Hike__c"
                                     value={Compensation.Finalized_Hike__c} onchange={dataHandler} ></lightning-input>
-                            </div>
+                            </div> -->
 
 
                             <div class="midBox">
