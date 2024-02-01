@@ -577,11 +577,19 @@
                     <lightning-layout multiple-rows class="slds-theme_shade">
                         <lightning-layout-item size="12">
                             <lightning-layout multiple-rows>
-                                <lightning-layout-item padding="around-small" size="6">
+                                <lightning-layout-item padding="around-small" size="4"> <!-- smaske :  changed from 6 to 4 -->
                                     <lightning-button variant="" label="Previous" onclick={handlePreviousAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
-                                <lightning-layout-item padding="around-small" size="6">
+
+                                <!-- Adding SAVE BUTTON -->
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-button variant="brand" label="Save" onclick={handleSaveAction} disabled={isSaveBtnDisabled}
+                                        class={showSaveSubmitButtonsVisibility}></lightning-button>
+                                </lightning-layout-item>
+                                <!-- Adding SAVE BUTTON -->
+
+                                <lightning-layout-item padding="around-small" size="4"> <!-- smaske :  changed from 6 to 4 -->
                                     <lightning-button variant="" label="Next" onclick={handleNextAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
@@ -704,11 +712,19 @@
                     <lightning-layout multiple-rows class="slds-theme_shade">
                         <lightning-layout-item size="12">
                             <lightning-layout multiple-rows>
-                                <lightning-layout-item padding="around-small" size="6">
+                                <lightning-layout-item padding="around-small" size="4"> <!-- smaske :  changed from 6 to 4 -->
                                     <lightning-button variant="" label="Previous"  onclick={handlePreviousAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
-                                <lightning-layout-item padding="around-small" size="6">
+
+                                <!-- Adding SAVE BUTTON -->
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-button variant="brand" label="Save" onclick={handleSaveAction} disabled={isSaveBtnDisabled}
+                                        class={showSaveSubmitButtonsVisibility}></lightning-button>
+                                </lightning-layout-item>
+                                <!-- Adding SAVE BUTTON -->
+
+                                <lightning-layout-item padding="around-small" size="4"> <!-- smaske :  changed from 6 to 4 -->
                                     <lightning-button variant="" label="Next" onclick={handleNextAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
@@ -793,11 +809,19 @@
                     <lightning-layout multiple-rows class="slds-theme_shade">
                         <lightning-layout-item size="12">
                             <lightning-layout multiple-rows>
-                                <lightning-layout-item padding="around-small" size="6">
+                                <lightning-layout-item padding="around-small" size="4"> <!-- smaske :  changed from 6 to 4 -->
                                     <lightning-button variant="" label="Previous"  onclick={handlePreviousAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
-                                <lightning-layout-item padding="around-small" size="6">
+
+                                <!-- Adding SAVE BUTTON -->
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-button variant="brand" label="Save" onclick={handleSaveAction} disabled={isSaveBtnDisabled}
+                                        class={showSaveSubmitButtonsVisibility}></lightning-button>
+                                </lightning-layout-item>
+                                <!-- Adding SAVE BUTTON -->
+
+                                <lightning-layout-item padding="around-small" size="4"> <!-- smaske :  changed from 6 to 4 -->
                                     <lightning-button variant="" label="Next"  onclick={handleNextAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
@@ -882,11 +906,19 @@
                     <lightning-layout multiple-rows class="slds-theme_shade">
                         <lightning-layout-item size="12">
                             <lightning-layout multiple-rows>
-                                <lightning-layout-item padding="around-small" size="6">
+                                <lightning-layout-item padding="around-small" size="4"> <!-- smaske :  changed from 6 to 4 -->
                                     <lightning-button variant="" label="Previous" onclick={handlePreviousAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
-                                <lightning-layout-item padding="around-small" size="6">
+
+                                <!-- Adding SAVE BUTTON -->
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-button variant="brand" label="Save" onclick={handleSaveAction} disabled={isSaveBtnDisabled}
+                                        class={showSaveSubmitButtonsVisibility}></lightning-button>
+                                </lightning-layout-item>
+                                <!-- Adding SAVE BUTTON -->
+
+                                <lightning-layout-item padding="around-small" size="4"> <!-- smaske :  changed from 6 to 4 -->
                                     <lightning-button variant="" label="Next" onclick={handleNextAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
@@ -1043,23 +1075,21 @@
                     <lightning-layout multiple-rows class="slds-theme_shade">
                         <lightning-layout-item size="12">
                             <lightning-layout multiple-rows>
+                                
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-button variant="" label="Previous"  onclick={handlePreviousAction}
+                                    <lightning-button variant="" label="Previous" onclick={handlePreviousAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
-
-                                <template lwc:if={showSaveSubmitButtonsVisibility}>
-                                    <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-button variant="brand" label="Save" onclick={handleSaveAction}
-                                        disabled={isSaveBtnDisabled}
-                                            class="slds-var-m-left_x-small"></lightning-button>
-                                    </lightning-layout-item>
-                                    <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-button variant="success" label="Submit" onclick={handleSubmitAction}
-                                        disabled={isSubmitBtnDisabled}
-                                        class="slds-var-m-left_x-small"></lightning-button>
-                                    </lightning-layout-item>
-                                </template>
+                                
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-button variant="brand" label="Save" onclick={handleSaveAction} disabled={isSaveBtnDisabled}
+                                        class={showSaveSubmitButtonsVisibility}></lightning-button>
+                                </lightning-layout-item>
+                                
+                                <lightning-layout-item padding="around-small" size="4">
+                                    <lightning-button variant="success" label="Submit" onclick={handleSubmitAction} disabled={isSubmitBtnDisabled}
+                                        class={showSaveSubmitButtonsVisibility}></lightning-button>
+                                </lightning-layout-item>
 
                             </lightning-layout>
                         </lightning-layout-item>

@@ -137,3 +137,11 @@ label::first-letter {
 .submitBtn{
 	width: max-content;
 }
+
+.hidden-button {
+    visibility: hidden;
+}
+
+.hidden-button2 {
+    display: none;
+}

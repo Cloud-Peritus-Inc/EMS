@@ -14,6 +14,25 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Remainder_mail_to_reportee_for_KRA_submission</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_email_to_Resource</name>
+        <label>Send email to Resource</label>
+        <locationX>578</locationX>
+        <locationY>468</locationY>
+        <actionName>Goal__c.KRA_Missed_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Goal__c.KRA_Missed_Alert</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_KRA_reminder_mail_to_mentor</name>
@@ -29,12 +48,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.KRA_Remainder_mail_to_Mentor</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <decisions>
         <name>Check_the_Days</name>
         <label>Check the Days</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>252</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -123,6 +144,35 @@
             </connector>
             <label>Send Remainder Mail to Mentor</label>
         </rules>
+        <rules>
+            <name>Change_Status_to_Missed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>KRA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CheckFiftinthDay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TodayDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Status_to_Missed</targetReference>
+            </connector>
+            <label>Change Status to Missed</label>
+        </rules>
     </decisions>
     <environments>Default</environments>
     <formulas>
@@ -187,8 +237,24 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Status_to_Missed</name>
+        <label>Update Status to Missed</label>
+        <locationX>578</locationX>
+        <locationY>360</locationY>
+        <connector>
+            <targetReference>Send_email_to_Resource</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Missed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_the_Days</targetReference>

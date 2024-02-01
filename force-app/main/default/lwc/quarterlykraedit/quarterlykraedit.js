@@ -392,7 +392,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
        return Number(input.toFixed(0));
     }
 
-
+    // *** SAVE BUTTON CODE *** 
     handleSaveAction() {
         console.log(" handleSaveAction ");
 
@@ -444,15 +444,17 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             };*/
             //console.log("#getAllPropertyFieldMap 363 : " + JSON.stringify(this.getAllPropertyFieldMap()));
 
+            
+            //smaske :[EN_002] : Disabling Field Validation on SAVE as per Feedback
             // Validate fields based on viewwrap properties
-            Object.entries(propertyFieldMap).forEach(([property, fields]) => {
+            /*Object.entries(propertyFieldMap).forEach(([property, fields]) => {
                 if (this.viewwrap[property]) {
                     if (fields.some(field => !this.kraRecord[field])) {
                         console.error(`${property} fields are blank in the kraRecord object`);
                         isValid = false;
                     }
                 }
-            });
+            });*/
 
             /*
             //Calculate Overall_Tech_Rating_2__c based on Visibile Tech Rating Fields for User Resource Role.
@@ -503,11 +505,9 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
             // Call the function for each skill category
             this.processSkillCategory(this.getTechPropertyFieldMap(), allPositiveTechFieldsList, this.SelectedResourceResourceRoleTechAcc, this.CurrentUserResourceRoleTechAcc, "Overall_Tech_Rating_2__c");
-            console.log('458');
             this.processSkillCategory(this.getProfSkillsPropertyFieldMap(), allPositiveProfessionalFieldsList, this.SelectedResourceResourceRoleProfSkillAcc, this.CurrentUserResourceRoleProfSkillAcc, 'Overall_Professional_Rating_2__c');
             this.processSkillCategory(this.getStrategicImpactPropertyFieldMap(), allPositiveStrategicFieldsList, this.SelectedResourceResourceRoleStrategicAcc, this.CurrentUserResourceRoleStrategicAcc, 'Overall_Strategic_Rating_2__c');
             this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c');
-            console.log('461');
         }
 
         if (isValid) {
@@ -525,7 +525,8 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
                     if (this.profileName == 'Employee - HR(Community)') {
                         this.isSubmitBtnDisabled = true;
-                        this.isSaveBtnDisabled = true;
+                        //smaske :[EN_002] : Not Disabling SAVE btn as per Feedback
+                        //this.isSaveBtnDisabled = true;
                     }
                     //Check if status is COMPLETE : Disable Submit btn
 
@@ -677,12 +678,17 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     }
 
 
+    //smaske :[EN_002] : Updated code for setting Class instead of hiding whole layout-item
     @api
     get showSaveSubmitButtonsVisibility() {
         if (this.mode == 'View') {
             console.log('#524');
             //HIDE SAVE/SUBMIT buttons
-            return false;
+            if(this.selectedStep != 'overAllRating'){
+                return 'slds-var-m-left_x-small hidden-button2';
+            }
+            return 'slds-var-m-left_x-small hidden-button2';
+            
         } else {
             // mode == 'Edit'
             console.log('#showSaveSubmitButtonsVisibility');
@@ -690,10 +696,10 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 console.log('#531');
                 this.isSubmitBtnDisabled = false;
                 //SHOW SAVE/SUBMIT buttons
-                return true;
+                return 'slds-var-m-left_x-small';
             }
             //HIDE SAVE/SUBMIT buttons
-            return true;
+            return 'slds-var-m-left_x-small';
         }
     }
 
