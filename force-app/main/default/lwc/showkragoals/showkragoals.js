@@ -128,7 +128,7 @@ export default class Showkragoals extends LightningElement {
                 finalComments: this.mycomments
             }).then(res => {
                 const evt = new ShowToastEvent({
-                    title: 'success',
+                    //title: 'success',
                     message: 'Successfully marked the goal as completed.',
                     variant: 'success',
                     mode: 'dismissable'
@@ -142,7 +142,7 @@ export default class Showkragoals extends LightningElement {
             }).catch(err => {
                 console.log('err' ,err);
                 const evt = new ShowToastEvent({
-                    title: 'Toast Error',
+                    //title: 'Toast Error',
                     message: 'Some thing went wrong...' + JSON.stringify(err),
                     variant: 'error',
                     mode: 'dismissable'
@@ -152,7 +152,7 @@ export default class Showkragoals extends LightningElement {
             });
         }else{
             const evt = new ShowToastEvent({
-                title: 'Toast Error',
+                //title: 'Toast Error',
                 message: 'Final Comments field must not be left empty',
                 variant: 'error',
                 mode: 'dismissable'
@@ -175,7 +175,7 @@ export default class Showkragoals extends LightningElement {
         }).catch(err => {
             console.log('===err=======' + JSON.stringify(err));
             const evt = new ShowToastEvent({
-                title: 'Toast Error',
+                //title: 'Toast Error',
                 message: 'Some thing went wrong...' + JSON.stringify(err),
                 variant: 'error',
                 mode: 'dismissable'
@@ -218,7 +218,7 @@ export default class Showkragoals extends LightningElement {
 
      showToast(title, message, variant, mode) {
         const evt = new ShowToastEvent({
-            title: title,
+            //title: title,
             message: message,
             variant: variant,
             mode: mode

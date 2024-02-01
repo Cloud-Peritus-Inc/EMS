@@ -31,42 +31,42 @@ public without sharing class generatePerformanceKRAController {
                 if ( member.Last_Appraisal_Date__c != Null && member.Next_Appraisal_Date__c != Null ) {
                     System.debug('#IF ');
                     kraGoalRecords = [Select Id,Name,Resource__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
-                    Start_Date__c,End_Date__c,RecordTypeId,
+                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
                     Fulfillment__r.Fiscal_Year__c
                     
                     FROM  Goal__c 
                     WHERE Resource__c =: member.Id 
                     AND RecordTypeId =: KRARecTypeId
-                    AND Start_Date__c >= :member.Last_Appraisal_Date__c
-                    AND End_Date__c <= :member.Next_Appraisal_Date__c
-                    AND Fulfillment__r.Fiscal_Year__c =: fy
+                    AND Quarter_Start_Date__c >= :member.Last_Appraisal_Date__c
+                    AND Quarter_End_Date__c <= :member.Next_Appraisal_Date__c
+                    //AND Fulfillment__r.Fiscal_Year__c =: fy
                     
                     ];
                 }else if(member.Last_Appraisal_Date__c == Null && member.Next_Appraisal_Date__c != Null){
                     System.debug('#ELSE ');
                     kraGoalRecords = [Select Id,Name,Resource__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
-                    Start_Date__c,End_Date__c,RecordTypeId,
+                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
                     Fulfillment__r.Fiscal_Year__c
                     
                     FROM  Goal__c 
                     WHERE Resource__c =: member.Id 
                     AND RecordTypeId =: KRARecTypeId
-                    AND Start_Date__c >= :member.EMS_EM_JD__c
-                    AND End_Date__c <= :member.Next_Appraisal_Date__c
-                    AND Fulfillment__r.Fiscal_Year__c =: fy
+                    AND Quarter_Start_Date__c >= :member.EMS_EM_JD__c
+                    AND Quarter_End_Date__c <= :member.Next_Appraisal_Date__c
+                    //AND Fulfillment__r.Fiscal_Year__c =: fy
                     
                     ];
                 }else { //smaske : [PM_064] added else for fetching KRA records created from Joining date if any appraisal date not found
                     System.debug('#ELSE 2');
                     kraGoalRecords = [Select Id,Name,Resource__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
-                    Start_Date__c,End_Date__c,RecordTypeId,
+                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
                     Fulfillment__r.Fiscal_Year__c
                     
                     FROM  Goal__c 
                     WHERE Resource__c =: member.Id 
                     AND RecordTypeId =: KRARecTypeId
-                    AND Start_Date__c >= :member.EMS_EM_JD__c
-                    AND Fulfillment__r.Fiscal_Year__c =: fy
+                    AND Quarter_Start_Date__c>= :member.EMS_EM_JD__c
+                    //AND Fulfillment__r.Fiscal_Year__c =: fy
                     ];
                     
                 }

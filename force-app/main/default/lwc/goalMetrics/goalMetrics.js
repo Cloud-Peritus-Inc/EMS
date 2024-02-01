@@ -20,11 +20,13 @@ loaded = false
         if(data){
        
         this.goaldata = data.goalList;
+        console.log('23');
+        console.log(this.goaldata);
         this.wrapdate = data;
         this.numberofCompleted = data.numberofCompleted;
          this.numberofInprogress = data.numberofInprogress;
           this.numberofMissed = data.numberofMissed;
-           this.numberofstricks = data.numberofstricks;
+           //this.numberofstricks = data.numberofstricks;
            this.utlizationPercentage = data.utlizationPercentage;
            this.lastPto = data.lastPto;
       

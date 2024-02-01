@@ -168,7 +168,7 @@ public without sharing class onboardingTileController {
          Id goalRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('Goal').getRecordTypeId();
       List<taskInfoWrap> taskInfoWrapper = new List<taskInfoWrap>();
         List<Goal__c> goalList = new List<Goal__c>();
-        goalList = [SELECT Id,Name,Status__c,End_Date__c FROM Goal__c 
+        goalList = [SELECT Id,Name,Status__c,Goal_Name__c,Start_Date__c,End_Date__c FROM Goal__c 
                     WHERE Resource__r.EMS_TM_User__c=:Userinfo.getUserId() 
                     AND End_Date__c=THIS_FISCAL_YEAR And Type__c != 'Survey' and RecordTypeId=:goalRecordTypeId ORDER BY End_Date__c DESC	];
         Integer numberofCompleted = 0;

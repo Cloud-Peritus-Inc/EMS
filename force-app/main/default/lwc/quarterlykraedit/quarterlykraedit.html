@@ -161,7 +161,7 @@
             </div>
             <br>
             <footer class="section1">
-                <lightning-button variant="" label="Next" onclick={handleNextAction} class="slds-var-m-left_x-small"></lightning-button>
+                <lightning-button variant="" label="Next"  onclick={handleNextAction} class="slds-var-m-left_x-small"></lightning-button>
             </footer>
         </template>
         <!-- REVIEWER DETAILS SECTION-->
@@ -179,7 +179,7 @@
                                     <p>Development</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Development_Rating__c" value={kraRecord.Development_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
                                 </lightning-layout-item>
@@ -195,7 +195,7 @@
                                     <p>Testing</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Testing_Rating__c" value={kraRecord.Testing_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
                                 </lightning-layout-item>
@@ -211,7 +211,7 @@
                                     <p>Understanding Code</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Understanding_Code_Rating__c" value={kraRecord.Understanding_Code_Rating__c}
                                         disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -228,7 +228,7 @@
                                     <p>Platform Knowledge</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5"  message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1"  message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Platform_Knowledge_Rating__c" value={kraRecord.Platform_Knowledge_Rating__c}
                                         disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -246,7 +246,7 @@
                                     <p>Design and Architecture</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5"  message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1"  message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Design_and_Architecture_Rating__c"
                                         value={kraRecord.Design_and_Architecture_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -264,7 +264,7 @@
                                     <p>Documentation</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Documentation_Rating__c" value={kraRecord.Documentation_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
                                 </lightning-layout-item>
@@ -281,7 +281,7 @@
                                     <p>Continuous Improvement</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Continuous_Improvement_Rating__c" value={kraRecord.Continuous_Improvement_Rating__c}
                                         disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -303,10 +303,11 @@
                                         <p>Project Planning and Scheduling Management</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Project_Planning_Scheduling_Rating__c" value={kraRecord.Project_Planning_Scheduling_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
+                                            
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
@@ -322,7 +323,7 @@
                                         <p>Documentation & Reporting Management</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Documentation_Reporting_Mgmt_Rating__c" value={kraRecord.Documentation_Reporting_Mgmt_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -340,7 +341,7 @@
                                         <p>Task Management</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Task_Management_Rating__c" value={kraRecord.Task_Management_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -358,7 +359,7 @@
                                         <p>Risk Management</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Risk_Management_Rating__c" value={kraRecord.Risk_Management_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -376,7 +377,7 @@
                                         <p>Resource Management</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Resource_Management_Rating__c" value={kraRecord.Resource_Management_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -394,7 +395,7 @@
                                         <p>Stakeholder Management</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Stakeholder_Management_Rating__c" value={kraRecord.Stakeholder_Management_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -412,7 +413,7 @@
                                         <p>Communication Management</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Communication_Management_Rating__c" value={kraRecord.Communication_Management_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -433,7 +434,7 @@
                                         <p>Continuous Learning and Skill Development</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Learning_and_Skill_Development_Rating__c" value={kraRecord.Learning_and_Skill_Development_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -451,7 +452,7 @@
                                         <p>Estimations</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Estimations_Rating__c" value={kraRecord.Estimations_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -469,7 +470,7 @@
                                         <p>Test Case Design and Execution</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Test_Case_Design_Execution_Rating__c" value={kraRecord.Test_Case_Design_Execution_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -487,7 +488,7 @@
                                         <p>Defect Management</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Defect_Management_Rating__c" value={kraRecord.Defect_Management_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -506,7 +507,7 @@
                                         <p>Technical Troubleshooting & Test Environment Prep</p>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                        <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                             name="Troubleshooting_Environment_Prep_Rating__c" value={kraRecord.Troubleshooting_Environment_Prep_Rating__c}
                                             disabled={isFieldsDisabled}
                                             onchange={handleChange}></lightning-input>
@@ -530,7 +531,7 @@
                                             <p>Requirement Gathering</p>
                                         </lightning-layout-item>
                                         <lightning-layout-item padding="around-small" size="4">
-                                            <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                                 name="Requirement_Gathering_Rating__c" value={kraRecord.Requirement_Gathering_Rating__c}
                                                 disabled={isFieldsDisabled}
                                                 onchange={handleChange}></lightning-input>
@@ -548,7 +549,7 @@
                                             <p>POV Creation & Client Demos</p>
                                         </lightning-layout-item>
                                         <lightning-layout-item padding="around-small" size="4">
-                                            <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                            <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                                 name="POV_Creation_Client_Demos_Rating__c" value={kraRecord.POV_Creation_Client_Demos_Rating__c}
                                                 disabled={isFieldsDisabled}
                                                 onchange={handleChange}></lightning-input>
@@ -607,7 +608,7 @@
                                     <p>Delivery Accountability</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Delivery_Accountability_Rating__c"
                                         value={kraRecord.Delivery_Accountability_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -625,7 +626,7 @@
                                     <p>Effective Communication</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Effective_Communication_Rating__c"
                                         value={kraRecord.Effective_Communication_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -643,7 +644,7 @@
                                     <p>Knowledge Sharing</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Knowledge_Sharing_Rating__c" value={kraRecord.Knowledge_Sharing_Rating__c}
                                         disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -661,7 +662,7 @@
                                     <p>Teamwork</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Teamwork_Rating__c" value={kraRecord.Teamwork_Rating__c}
                                         disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -680,7 +681,7 @@
                                     <p>Attitude and Behavior</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked" label="Rating"
                                         name="Attitude_and_Behavior_Rating__c" value={kraRecord.Attitude_and_Behavior_Rating__c}
                                         disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -704,7 +705,7 @@
                         <lightning-layout-item size="12">
                             <lightning-layout multiple-rows>
                                 <lightning-layout-item padding="around-small" size="6">
-                                    <lightning-button variant="" label="Previous" onclick={handlePreviousAction}
+                                    <lightning-button variant="" label="Previous"  onclick={handlePreviousAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="6">
@@ -733,7 +734,7 @@
                                     <p>Business Development</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" variant="label-stacked"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" variant="label-stacked"
                                         label="Rating" name="Business_Development_Rating__c"
                                         value={kraRecord.Business_Development_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -751,7 +752,7 @@
                                     <p>Strategic Work</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" variant="label-stacked"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" variant="label-stacked"
                                         label="Rating" name="Strategic_Work_Rating__c"
                                         value={kraRecord.Strategic_Work_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -769,7 +770,7 @@
                                     <p>Company Growth</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1"
                                         message-when-range-overflow="Enter Value between 1 to 5" variant="label-stacked"
                                         label="Rating" name="Company_Growth_Rating__c"
                                         value={kraRecord.Company_Growth_Rating__c} disabled={isFieldsDisabled}
@@ -793,11 +794,11 @@
                         <lightning-layout-item size="12">
                             <lightning-layout multiple-rows>
                                 <lightning-layout-item padding="around-small" size="6">
-                                    <lightning-button variant="" label="Previous" onclick={handlePreviousAction}
+                                    <lightning-button variant="" label="Previous"  onclick={handlePreviousAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="6">
-                                    <lightning-button variant="" label="Next" onclick={handleNextAction}
+                                    <lightning-button variant="" label="Next"  onclick={handleNextAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
                             </lightning-layout>
@@ -823,7 +824,7 @@
                                     <p>Goal Achievement</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" variant="label-stacked"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" variant="label-stacked"
                                         label="Rating" name="Goal_Achievement_Rating__c"
                                         value={kraRecord.Goal_Achievement_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -841,7 +842,7 @@
                                     <p>Stakeholder Satisfaction</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" variant="label-stacked"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" variant="label-stacked"
                                         label="Rating" name="Stakeholder_Satisfaction_Rating__c" 
                                         value={kraRecord.Stakeholder_Satisfaction_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -859,7 +860,7 @@
                                     <p>Project Success</p>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-input required type="number" min="1" max="5" step="0.5" variant="label-stacked"
+                                    <lightning-input required type="number" min="1" max="5" step="0.1" variant="label-stacked"
                                         label="Rating" name="Project_Success_Rating__c" 
                                         value={kraRecord.Project_Success_Rating__c} disabled={isFieldsDisabled}
                                         onchange={handleChange}></lightning-input>
@@ -886,7 +887,7 @@
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
                                 <lightning-layout-item padding="around-small" size="6">
-                                    <lightning-button variant="" label="Next"  onclick={handleNextAction}
+                                    <lightning-button variant="" label="Next" onclick={handleNextAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
                             </lightning-layout>
@@ -1043,18 +1044,18 @@
                         <lightning-layout-item size="12">
                             <lightning-layout multiple-rows>
                                 <lightning-layout-item padding="around-small" size="4">
-                                    <lightning-button variant="" label="Previous" onclick={handlePreviousAction}
+                                    <lightning-button variant="" label="Previous"  onclick={handlePreviousAction}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                 </lightning-layout-item>
 
                                 <template lwc:if={showSaveSubmitButtonsVisibility}>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-button variant="brand" label="Save"  onclick={handleSaveAction}
+                                        <lightning-button variant="brand" label="Save" onclick={handleSaveAction}
                                         disabled={isSaveBtnDisabled}
                                             class="slds-var-m-left_x-small"></lightning-button>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-small" size="4">
-                                        <lightning-button variant="success" label="Submit"  onclick={handleSubmitAction}
+                                        <lightning-button variant="success" label="Submit" onclick={handleSubmitAction}
                                         disabled={isSubmitBtnDisabled}
                                         class="slds-var-m-left_x-small"></lightning-button>
                                     </lightning-layout-item>

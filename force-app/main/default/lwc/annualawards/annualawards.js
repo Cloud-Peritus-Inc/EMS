@@ -652,13 +652,58 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         }
     }
 
+    validationOnSaveButton(){
+
+        let Result = false;
+        if (this.BE_PR_RR || this.BE_SE_RR) {
+            if (this.BE_PR_RR.Resource__c === this.BE_SE_RR.Resource__c) {
+                this.removeDuplicateRecord(this.BE_SE_RR.Resource__c, this.BE_SE_RR.Award_Type__c);
+                this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+                Result = false;
+            } }else if(this.MP_PR_RR || this.MP_SE_RR){
+                if (this.MP_PR_RR.Resource__c === this.BE_SE_RR.Resource__c) {
+                    this.removeDuplicateRecord(this.MP_SE_RR.Resource__c, this.MP_SE_RR.Award_Type__c);
+                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+                    Result = false;
+                }
+            }else if(this.RIS_PR_RR || this.RIS_SE_RR){
+                if (this.RIS_PR_RR.Resource__c === this.RIS_SE_RR.Resource__c) {
+                    this.removeDuplicateRecord(this.RIS_SE_RR.Resource__c, this.RIS_SE_RR.Award_Type__c);
+                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+                    Result = false;
+                }
+            }else if(this.ROS_PR_RR || this.ROS_SE_RR){
+                if (this.ROS_PR_RR.Resource__c === this.ROS_SE_RR.Resource__c) {
+                    this.removeDuplicateRecord(this.ROS_SE_RR.Resource__c, this.ROS_SE_RR.Award_Type__c);
+                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+                    Result = false;
+                }
+            }else if(this.SS_PR_RR || this.SS_SE_RR){
+                if (this.SS_PR_RR.Resource__c === this.SS_SE_RR.Resource__c) {
+                    this.removeDuplicateRecord(this.SS_SE_RR.Resource__c, this.SS_SE_RR.Award_Type__c);
+                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+                    Result = false;
+                }
+            }else if(this.GAB_PR_RR || this.GAB_SE_RR){
+                if (this.GAB_PR_RR.Resource__c === this.GAB_SE_RR.Resource__c) {
+                    this.removeDuplicateRecord(this.GAB_SE_RR.Resource__c, this.GAB_SE_RR.Award_Type__c);
+                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+                    Result = false;
+                }
+            }else{
+                Result = true;
+            }
+
+    }
+
     //SAVE BUTTON CODE
     handleSaveButtonAction() {
         console.log("Save Start");
         console.log("## B4 SAVE rewardAndRecognitionRecords data" + JSON.stringify(this.rewardAndRecognitionRecords));
         let sectionObjects = [this.BE_PR_RR, this.BE_SE_RR, this.MP_PR_RR, this.MP_SE_RR, this.RIS_PR_RR, this.RIS_SE_RR, this.ROS_PR_RR, this.ROS_SE_RR, this.SS_PR_RR, this.SS_SE_RR, this.GAB_PR_RR, this.GAB_SE_RR, this.AE_PR_RR, this.AE_SE_RR];
         //console.log(" $ sectionObjects " + JSON.stringify(sectionObjects));
-
+        console.log(this.BE_PR_RR);
+        this.validationOnSaveButton();
         let isPrevSectionValPopulated = this.hasObjectWithPopulatedValues();
         console.log("isPrevSectionValPopulated " + isPrevSectionValPopulated);
         var Result = this.addObjToArrAndValidate(this.selectedStep);

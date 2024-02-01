@@ -158,7 +158,7 @@ this.goalenddate = event.target.value;
      var givenDate = new Date(this.goalstartdate);
      if(!this.goalname){
        const evt = new ShowToastEvent({
-            title: 'Toast Error',
+            //title: 'Toast Error',
             message: 'Goal Name is required',
             variant: 'error',
             mode: 'dismissable'
@@ -166,7 +166,7 @@ this.goalenddate = event.target.value;
         this.dispatchEvent(evt);
      }else if(!this.goalstartdate){
        const evt = new ShowToastEvent({
-            title: 'Toast Error',
+            //title: 'Toast Error',
             message: 'Goal Start Date is required',
             variant: 'error',
             mode: 'dismissable'
@@ -174,7 +174,7 @@ this.goalenddate = event.target.value;
         this.dispatchEvent(evt);
      }else if(!this.goalenddate){
        const evt = new ShowToastEvent({
-            title: 'Toast Error',
+            //title: 'Toast Error',
             message: 'Goal End Date is required',
             variant: 'error',
             mode: 'dismissable'
@@ -182,7 +182,7 @@ this.goalenddate = event.target.value;
         this.dispatchEvent(evt);
      }else if(!this.myVal){
        const evt = new ShowToastEvent({
-            title: 'Toast Error',
+            //title: 'Toast Error',
             message: 'Description is required',
             variant: 'error',
             mode: 'dismissable'
@@ -190,7 +190,7 @@ this.goalenddate = event.target.value;
         this.dispatchEvent(evt);
      }else if(this.goalstartdate > this.goalenddate) {
         const evt = new ShowToastEvent({
-            title: 'Toast Error',
+            //title: 'Toast Error',
             message: 'Start date should be less than end date',
             variant: 'error',
             mode: 'dismissable'
@@ -199,7 +199,7 @@ this.goalenddate = event.target.value;
 
      } else if(givenDate < todaysDate) {
          const evt = new ShowToastEvent({
-            title: 'Toast Error',
+            //title: 'Toast Error',
             message: 'Start Date should be in future.',
             variant: 'error',
             mode: 'dismissable'
@@ -221,7 +221,7 @@ this.goalenddate = event.target.value;
             descri:this.myVal
         }).then(res => {
             const evt = new ShowToastEvent({
-            title: 'success',
+            //title: 'success',
             message: 'Successfully logged the goal. Make sure to finish the goal with in-time.',
             variant: 'success',
             mode: 'dismissable'
@@ -235,7 +235,7 @@ this.goalenddate = event.target.value;
         this.goalenddate = null;
         }).catch(err => {
              const evt = new ShowToastEvent({
-            title: 'Toast Error',
+            //title: 'Toast Error',
             message: 'Some thing went wrong...'+JSON.stringify(err.message),
             variant: 'error',
             mode: 'dismissable'

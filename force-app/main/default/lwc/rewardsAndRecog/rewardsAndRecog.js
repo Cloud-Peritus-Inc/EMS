@@ -155,7 +155,7 @@ winnerrecordTypeId;
             this.template.querySelector('lightning-record-edit-form').submit(fields);
         }else{
             const evt = new ShowToastEvent({
-                title: 'Warning',
+                //title: 'Warning',
                 message: 'Self Shoutout is not allowed!',
                 variant: 'warning',
                 mode: 'dismissable'
@@ -166,7 +166,7 @@ winnerrecordTypeId;
 
     handleSuccess(event) {
         const evt = new ShowToastEvent({
-            title: 'success',
+            //title: 'success',
             message: 'Successfully submitted your shout out!',
             variant: 'success',
             mode: 'dismissable'
@@ -188,7 +188,7 @@ winnerrecordTypeId;
             this.template.querySelector('lightning-record-edit-form').submit(fields);
         }else{
             const evt = new ShowToastEvent({
-                title: 'Warning',
+                //title: 'Warning',
                 message: 'Self Recognisation is not allowed!',
                 variant: 'warning',
                 mode: 'dismissable'
@@ -199,7 +199,7 @@ winnerrecordTypeId;
 
     handleRecSuccess(event) {
         const evt = new ShowToastEvent({
-            title: 'success',
+            //title: 'success',
             message: 'Successfully submitted your recognization!',
             variant: 'success',
             mode: 'dismissable'

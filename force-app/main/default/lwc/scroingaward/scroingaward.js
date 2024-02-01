@@ -99,7 +99,7 @@ handleChange(event) {
             this.showannualann = false; 
         console.log('======result=All==='+JSON.stringify(result));
         const evt = new ShowToastEvent({
-            title: 'SUCCESS',
+            //title: 'SUCCESS',
             message: result,
             variant: 'success',
             });
@@ -110,7 +110,7 @@ handleChange(event) {
              this.disableconfirmbutton = false;
           console.log('======error=errorAll==='+JSON.stringify(error));
            const evt = new ShowToastEvent({
-            title: 'Error',
+            //title: 'Error',
             message: 'Something went wrong..'+JSON.stringify(error),
             variant: 'error',
             });
@@ -184,7 +184,7 @@ handleChange(event) {
        
         this.getThelInfoByAward();
          const evt = new ShowToastEvent({
-            title: 'SUCCESS',
+            //title: 'SUCCESS',
             message: 'Succesfully updated the scoring.',
             variant: 'success',
             });
