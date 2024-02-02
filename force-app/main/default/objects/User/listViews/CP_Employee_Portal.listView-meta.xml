@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_Employee_Portal</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CORE.USERS.USERNAME</columns>
+    <columns>CORE.USER_ROLE.NAME</columns>
+    <columns>CORE.USERS.ACTIVE</columns>
+    <columns>CORE.PROFILE.NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.PROFILE.NAME</field>
+        <operation>equals</operation>
+        <value>TM Customer Community</value>
+    </filters>
+    <label>CP Employee Portal</label>
+</ListView>

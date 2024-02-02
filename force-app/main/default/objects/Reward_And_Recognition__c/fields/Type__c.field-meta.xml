@@ -26,6 +26,30 @@
                 <default>false</default>
                 <label>Annual Award</label>
             </value>
+            <value>
+                <fullName>Final Evaluation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Final Evaluation</label>
+            </value>
+            <value>
+                <fullName>Nominee</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Nominee</label>
+            </value>
+            <value>
+                <fullName>ShortListed</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ShortListed</label>
+            </value>
+            <value>
+                <fullName>Winner</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Winner</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
