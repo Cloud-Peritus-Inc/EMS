@@ -788,6 +788,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         var Result = this.addObjToArrAndValidate(this.selectedStep);
         console.log("# isPrevSectionValPopulated # " + JSON.stringify(Result));
         console.log("# Result # " + JSON.stringify(Result));
+        this.validationOnSaveButton();
 
         if (Result) {
             if (isPrevSectionValPopulated) {

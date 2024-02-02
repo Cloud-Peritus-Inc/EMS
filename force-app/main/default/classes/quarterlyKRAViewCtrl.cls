@@ -282,106 +282,135 @@ public without sharing class quarterlyKRAViewCtrl {
        
 
         
-        for(Grid_Configuration__c gc : [SELECT Id,KRA_Competency__c FROM Grid_Configuration__c WHERE Grid_Configuration_Type__c = 'KRA' and Resource_Role__c=:resourceRoleId and KRA_Competency__c!=null]){
+        for(Grid_Configuration__c gc : [SELECT Id,KRA_Competency__c,KRA_Competency_Overview__c FROM Grid_Configuration__c WHERE Grid_Configuration_Type__c = 'KRA' and Resource_Role__c=:resourceRoleId and KRA_Competency__c!=null]){
             System.debug('#FOR GC ' + gc);
             if(gc.KRA_Competency__c == 'Development'){
                returnWrap.showDevelopment = true;
+               returnWrap.developmentRtngTxt = gc.KRA_Competency_Overview__c;
                //break;
             }else if(gc.KRA_Competency__c == 'Testing'){
                returnWrap.showTesting = true;
+               returnWrap.testingRtngTxt = gc.KRA_Competency_Overview__c;
                //break; 
             }else if(gc.KRA_Competency__c == 'Understanding Code'){
                returnWrap.showUnderstandingCode = true;
+               returnWrap.understandingCodeRtngTxt = gc.KRA_Competency_Overview__c;
                //break;  
             }else if(gc.KRA_Competency__c == 'Platform Knowledge'){
                returnWrap.showPlatformKnowledge = true;
+               returnWrap.platformKnowledgeRtngTxt = gc.KRA_Competency_Overview__c;
                //break;
             }else if(gc.KRA_Competency__c == 'Design and Architecture'){
                 returnWrap.showDesignArchitecture = true;
+                returnWrap.designArchitectureRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Documentation'){
                 returnWrap.showDocumentation = true;
+                returnWrap.documentationRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Continuous Improvement'){
                 returnWrap.showContinuousImprovement = true;
+                returnWrap.continuousImprovementRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Delivery Accountability'){
                 returnWrap.showDeliveryAccountability = true;
+                returnWrap.deliveryAccountabilityRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Effective Communication'){
                 returnWrap.showEffectiveCommunication = true;
+                returnWrap.effectiveCommunicationRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Knowledge Sharing'){
                 returnWrap.showKnowledgeSharing = true;
+                returnWrap.knowledgeSharingRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Teamwork'){
                 returnWrap.showTeamwork = true;
+                returnWrap.teamworkRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Attitude and Behavior'){
                 returnWrap.showAttitudeBehavior = true;
+                returnWrap.attitudeBehaviorRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Business Development'){
                 returnWrap.showBusinessDevelopment = true;
+                returnWrap.businessDevelopmentRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Strategic Work'){
                 returnWrap.showStrategicWork = true;
+                returnWrap.strategicWorkRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Company Growth'){
                 returnWrap.showCompanyGrowth = true;
+                returnWrap.companyGrowthRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Requirement Gathering'){
                 returnWrap.showRequirementGathering = true;
+                returnWrap.requirementGatheringRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'POV Creation & Demos'){
                 returnWrap.showPOVCreationDemos = true;
+                returnWrap.povCreationDemosRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Project Planning and Scheduling Management'){
                 returnWrap.showProjectPlanningSchedulingManagement = true;
+                returnWrap.projectPlanningSchedulingManagementRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Task Management'){
                 returnWrap.showTaskManagement = true;
+                returnWrap.taskManagementRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Risk Management'){
                 returnWrap.showRiskManagement = true;
+                returnWrap.riskManagementRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Resource Management'){
                 returnWrap.showResourceManagement = true;
+                returnWrap.resourceManagementRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Stakeholder Management'){
                 returnWrap.showStakeholderManagement = true;
+                returnWrap.stakeholderManagementRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Communication Management'){
                 returnWrap.showCommunicationManagement = true;
+                returnWrap.communicationManagementRtngTxt = gc.KRA_Competency_Overview__c;
                 ////break;
             }else if(gc.KRA_Competency__c == 'Documentation & Reporting Management'){
                 returnWrap.showDocumentationReportingManagement = true;
+                returnWrap.documentationReportingManagementRtngTxt = gc.KRA_Competency_Overview__c;
                 ////break;
             }else if(gc.KRA_Competency__c == 'Estimations'){
                 returnWrap.showEstimations = true;
+                returnWrap.estimationsRtngTxt = gc.KRA_Competency_Overview__c;
                 ////break;
             }else if(gc.KRA_Competency__c == 'Test Case Design and Execution'){
                 returnWrap.showTestCaseDesignExecution = true;
+                returnWrap.testCaseDesignExecutionRtngTxt = gc.KRA_Competency_Overview__c;
                 ////break;
             }else if(gc.KRA_Competency__c == 'Defect Management'){
                 returnWrap.showDefectManagement = true;
+                returnWrap.defectManagementRtngTxt = gc.KRA_Competency_Overview__c;
                 ////break;
             }else if(gc.KRA_Competency__c == 'Technical Troubleshooting & Test Environment Prep'){
                 returnWrap.showTroubleshootingAndEnvironmentPrep = true;
+                returnWrap.troubleshootingAndEnvironmentPrepRtngTxt = gc.KRA_Competency_Overview__c;
                 ////break;
             }else if(gc.KRA_Competency__c == 'Project Success'){
-                returnWrap.showCommunicationManagement = true;
+                returnWrap.showProjectSuccess = true;
+                returnWrap.projectSuccessRtngTxt = gc.KRA_Competency_Overview__c;
                 ////break;
             }else if(gc.KRA_Competency__c == 'Stakeholder Satisfaction'){
                 returnWrap.showStakeholderSatisfaction = true;
-                //break;
-            }else if(gc.KRA_Competency__c == 'Project Success'){
-                returnWrap.showProjectSuccess = true;
+                returnWrap.stakeholderSatisfactionRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Goal Achievement'){
                 returnWrap.showGoalAchievement = true;
+                returnWrap.goalAchievementRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }else if(gc.KRA_Competency__c == 'Continuous Learning and Skill Development'){
                 returnWrap.showLearningAndSkillDevelopment = true;
+                returnWrap.continuousImprovementRtngTxt = gc.KRA_Competency_Overview__c;
                 //break;
             }
 
@@ -392,6 +421,9 @@ public without sharing class quarterlyKRAViewCtrl {
 
     //KraWrapper
     public class KraVisiableWrapper {
+
+        //Boolean variables for Visibility
+
         @AuraEnabled
         public Boolean showDevelopment;
         @AuraEnabled
@@ -464,6 +496,152 @@ public without sharing class quarterlyKRAViewCtrl {
         @AuraEnabled
         public Boolean showProjectSuccess;
 
+        //String Variables for RatingFields ToolTip
+        
+        @AuraEnabled 
+        public String developmentRtngTxt;
+        @AuraEnabled 
+        public String testingRtngTxt;
+        @AuraEnabled 
+        public String understandingCodeRtngTxt;
+        @AuraEnabled 
+        public String platformKnowledgeRtngTxt;
+
+        @AuraEnabled 
+        public String designArchitectureRtngTxt;
+        @AuraEnabled 
+        public String documentationRtngTxt;
+        @AuraEnabled 
+        public String continuousImprovementRtngTxt;
+        @AuraEnabled 
+        public String deliveryAccountabilityRtngTxt;
+
+        @AuraEnabled 
+        public String effectiveCommunicationRtngTxt;
+        @AuraEnabled 
+        public String knowledgeSharingRtngTxt;
+        @AuraEnabled 
+        public String teamworkRtngTxt;
+        @AuraEnabled 
+        public String attitudeBehaviorRtngTxt;
+
+        @AuraEnabled 
+        public String businessDevelopmentRtngTxt;
+        @AuraEnabled 
+        public String strategicWorkRtngTxt;
+        @AuraEnabled 
+        public String companyGrowthRtngTxt;
+        @AuraEnabled 
+        public String requirementGatheringRtngTxt;
+
+        @AuraEnabled 
+        public String povCreationDemosRtngTxt;
+        @AuraEnabled 
+        public String projectPlanningSchedulingManagementRtngTxt;
+        @AuraEnabled 
+        public String taskManagementRtngTxt;
+        @AuraEnabled 
+        public String riskManagementRtngTxt;
+
+        @AuraEnabled 
+        public String resourceManagementRtngTxt;
+        @AuraEnabled 
+        public String stakeholderManagementRtngTxt;
+        @AuraEnabled 
+        public String communicationManagementRtngTxt;
+        @AuraEnabled 
+        public String documentationReportingManagementRtngTxt;
+
+        @AuraEnabled 
+        public String estimationsRtngTxt;
+        @AuraEnabled 
+        public String testCaseDesignExecutionRtngTxt;
+        @AuraEnabled 
+        public String defectManagementRtngTxt;
+        @AuraEnabled 
+        public String troubleshootingAndEnvironmentPrepRtngTxt;
+        @AuraEnabled 
+        public String learningAndSkillDevelopmentRtngTxt;
+
+        @AuraEnabled 
+        public String goalAchievementRtngTxt;
+        @AuraEnabled 
+        public String stakeholderSatisfactionRtngTxt;
+        @AuraEnabled 
+        public String projectSuccessRtngTxt;
+
+        /*String Variables for ExampleFields ToolTip
+        @AuraEnabled 
+        public String developmentExTxt;
+        @AuraEnabled 
+        public String testingExTxt;
+        @AuraEnabled 
+        public String understandingCodeExTxt;
+        @AuraEnabled 
+        public String platformKnowledgeExTxt;
+
+        @AuraEnabled 
+        public String designArchitectureExTxt;
+        @AuraEnabled 
+        public String documentationExTxt;
+        @AuraEnabled 
+        public String continuousImprovementExTxt;
+        @AuraEnabled 
+        public String deliveryAccountabilityExTxt;
+
+        @AuraEnabled 
+        public String effectiveCommunicationExTxt;
+        @AuraEnabled 
+        public String knowledgeSharingExTxt;
+        @AuraEnabled 
+        public String teamworkExTxt;
+        @AuraEnabled 
+        public String attitudeBehaviorExTxt;
+
+        @AuraEnabled 
+        public String businessDevelopmentExTxt;
+        @AuraEnabled 
+        public String strategicWorkExTxt;
+        @AuraEnabled 
+        public String companyGrowthExTxt;
+        @AuraEnabled 
+        public String requirementGatheringExTxt;
+
+        @AuraEnabled 
+        public String povCreationDemosExTxt;
+        @AuraEnabled 
+        public String projectPlanningSchedulingManagementExTxt;
+        @AuraEnabled 
+        public String taskManagementExTxt;
+        @AuraEnabled 
+        public String riskManagementExTxt;
+
+        @AuraEnabled 
+        public String resourceManagementExTxt;
+        @AuraEnabled 
+        public String stakeholderManagementExTxt;
+        @AuraEnabled 
+        public String communicationManagementExTxt;
+        @AuraEnabled 
+        public String documentationReportingManagementExTxt;
+
+        @AuraEnabled 
+        public String estimationsExTxt;
+        @AuraEnabled 
+        public String testCaseDesignExecutionExTxt;
+        @AuraEnabled 
+        public String defectManagementExTxt;
+        @AuraEnabled 
+        public String troubleshootingAndEnvironmentPrepExTxt;
+        @AuraEnabled 
+        public String learningAndSkillDevelopmentExTxt;
+
+        @AuraEnabled 
+        public String goalAchievementExTxt;
+        @AuraEnabled 
+        public String stakeholderSatisfactionExTxt;
+        @AuraEnabled 
+        public String projectSuccessExTxt;*/
         
     }
 
