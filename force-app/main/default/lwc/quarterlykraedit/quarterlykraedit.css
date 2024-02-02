@@ -63,6 +63,7 @@
 }
 
 .footer{
+	background-color: #D4D4D4;
 	margin-top:0px;
 	display: flex;
 	justify-content: center;
@@ -143,5 +144,6 @@ label::first-letter {
 }
 
 .hidden-button2 {
-    display: none;
+	visibility: hidden;
+	display: none;
 }

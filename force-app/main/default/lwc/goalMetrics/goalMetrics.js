@@ -7,6 +7,8 @@ export default class GoalMetrics extends NavigationMixin(LightningElement) {
 numberofCompleted;
 numberofInprogress;
 numberofMissed;
+numberofDraft;
+numberofActive;
 numberofstricks;
 utlizationPercentage;lastPto;
 
@@ -23,9 +25,11 @@ loaded = false
         console.log('23');
         console.log(this.goaldata);
         this.wrapdate = data;
+        console.log(this.wrapdate);
         this.numberofCompleted = data.numberofCompleted;
          this.numberofInprogress = data.numberofInprogress;
           this.numberofMissed = data.numberofMissed;
+          this.numberofDraft = data.numberofDraft;
            //this.numberofstricks = data.numberofstricks;
            this.utlizationPercentage = data.utlizationPercentage;
            this.lastPto = data.lastPto;

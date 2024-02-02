@@ -170,7 +170,7 @@ public without sharing class resourceTileController {
         
         
         User urecord = [SELECT FullPhotoUrl,Id,Name,Employee_Id__c,Contact.EMS_RM_Employee_Id__c,ContactId,contact.ReportsToId,
-                        Contact.ReportsTo.Name,Contact.Resource_Role__r.Name FROM User WHERE Id = :Userinfo.getUserId() and ContactId != null and IsPortalEnabled = true];
+                        Contact.ReportsTo.Name,Contact.Resource_Role__r.Name FROM User WHERE Id = :Userinfo.getUserId() and ContactId != null];
         
         Contact conRec = [SELECT Id,Work_Location__c,Work_Location__r.Country__c,ReportsTo.Resource_Role__r.Name,(SELECT Id,Resource_Reports_Name__c,Resource_Reports_To__c FROM Resource_Resource_Relationships__r where Relationship_Type__c='Mentor')
                           ReportsTo.EMS_RM_Employee_Id__c,ReportsTo.EMS_TM_User__c,
@@ -187,7 +187,7 @@ public without sharing class resourceTileController {
             if(rrr.Resource__c == urecord.contactId){
                 myrepotiescontids.add(rrr.Resource__c); 
             }
-            if(rrr.Resource_Reports_To__c == urecord.contactId ){
+            if(rrr.Resource_Reports_To__c == urecord.contactId){
                 mereportsTo.add(rrr.Resource__c); 
             }
             
@@ -243,14 +243,19 @@ public without sharing class resourceTileController {
     public static List<datawrapper> getUserReportees(Id userId) {
         User urecord = [SELECT FullPhotoUrl,Id,Name,Employee_Id__c,Contact.EMS_RM_Employee_Id__c,ContactId,contact.ReportsToId,
                         Contact.ReportsTo.Name,Contact.Resource_Role__r.Name FROM User WHERE Id = :userId and ContactId != null];
+        
         List<Resource_Resource_Relationship__c> resourceList =[select id,Resource__r.id,Resource_Reports_To__c from Resource_Resource_Relationship__c where Resource_Reports_To__c=:urecord.contactId and Resource__r.EMS_TM_User__r.IsPortalEnabled = true and Relationship_Type__c ='Mentor' and Resource__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive'];
         Set<Id> resourceIds = new Set<Id>();
         for(Resource_Resource_Relationship__c rr:resourceList){
             resourceIds.add(rr.Resource__r.id);
         }
+        
         List<Contact> directReports = [SELECT Id,Name,EMS_TM_User__r.FullPhotoUrl,EMS_RM_Employee_Id__c,Resource_Role__r.Name,ReportsTo.Name,
                                        EMS_TM_User__c FROM Contact WHERE ID IN : resourceIds AND ReportsToId=:urecord.contactId AND EMS_RM_ApplicantStatus_Update__c != 'Inactive' AND EMS_TM_User__r.IsPortalEnabled = true ];
-       
+        
+        /*List<Contact> directReports = [SELECT Id,Name,EMS_TM_User__r.FullPhotoUrl,EMS_RM_Employee_Id__c,Resource_Role__r.Name,ReportsTo.Name,
+                                       EMS_TM_User__c FROM Contact WHERE ReportsToId=:urecord.contactId AND EMS_RM_ApplicantStatus_Update__c != 'Inactive'];*/
+        
         List<datawrapper> reporteesList = new List<datawrapper>();
         for(Contact reportee : directReports){
             datawrapper dwrap = new datawrapper();
