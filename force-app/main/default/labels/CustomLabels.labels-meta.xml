@@ -74,4 +74,11 @@ going the extra mile consistently on their project</value>
         <shortDescription>ShiningStarDesc</shortDescription>
         <value>Project + Firm initiatives Focused: The Shining Star candidate should have demonstrated going the extra mile consistently on their project and firm initiatives</value>
     </labels>
+    <labels>
+        <fullName>exampleHelpText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>exampleHelpText</shortDescription>
+        <value>Please provide a brief description.</value>
+    </labels>
 </CustomLabels>

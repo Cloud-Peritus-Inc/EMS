@@ -174,6 +174,8 @@ public without sharing class onboardingTileController {
         Integer numberofCompleted = 0;
         Integer numberofInprogress = 0;
          Integer numberofMissed = 0;
+        Integer numberofDraft = 0;
+        Integer numberofActive = 0;
          Integer numberofstricks = 0;
          integer utlizationPercentage = 0;
          Integer lastPto = 0;
@@ -184,6 +186,8 @@ public without sharing class onboardingTileController {
                 numberofCompleted = numberofCompleted +1;
             }else if(gl.Status__c == 'Missed'){
                 numberofMissed = numberofMissed +1;
+            }else if(gl.Status__c == 'Draft'){
+                numberofDraft = numberofDraft +1;
             }
         }
        Date dt = system.today();
@@ -198,6 +202,7 @@ public without sharing class onboardingTileController {
         dwrap.numberofCompleted=numberofCompleted;
         dwrap.numberofInprogress=numberofInprogress;
          dwrap.numberofMissed=numberofMissed;
+         dwrap.numberofDraft = numberofDraft;
          dwrap.numberofstricks=numberofstricks;
          dwrap.utlizationPercentage=utlizationPercentage;
          dwrap.lastPto=lastPto;
@@ -212,6 +217,8 @@ public without sharing class onboardingTileController {
         public integer numberofInprogress;
         @AuraEnabled
         public integer numberofMissed;
+        @AuraEnabled
+        public integer numberofDraft;
         @AuraEnabled
         public integer numberofstricks;
         @AuraEnabled 

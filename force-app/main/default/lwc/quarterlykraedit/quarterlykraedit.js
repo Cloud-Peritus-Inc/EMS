@@ -7,6 +7,8 @@ import getCurrentUserConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getC
 import getSelectedResourceConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getSelectedResourceConDetails';
 import getGridConfigurationKRAData from '@salesforce/apex/quarterlyKRAViewCtrl.getGridConfigurationKRAData';
 //other imports
+import exampleHelpText from "@salesforce/label/c.exampleHelpText";
+
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
@@ -54,7 +56,12 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     maxLength = 255;
     maxLengthError = 'Text is too long. Maximum allowed length is 255 characters.';
-     enterredValues = [];
+
+    label = {
+        exampleHelpText
+    };
+
+    enterredValues = [];
     steps = [
         { label: 'REVIEWER DETAILS', value: 'reviewerDetails' },
         { label: 'TECHNICAL ACUMEN', value: 'technicalAcumen' },
@@ -681,13 +688,12 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     //smaske :[EN_002] : Updated code for setting Class instead of hiding whole layout-item
     @api
     get showSaveSubmitButtonsVisibility() {
-        if (this.mode == 'View') {
-            console.log('#524');
-            //HIDE SAVE/SUBMIT buttons
-            if(this.selectedStep != 'overAllRating'){
-                return 'slds-var-m-left_x-small hidden-button2';
-            }
-            return 'slds-var-m-left_x-small hidden-button2';
+        if (this.mode == 'View') { 
+            this.isSaveBtnDisabled = true;
+            /*if(this.selectedStep != 'overAllRating'){
+                return 'slds-var-m-left_small hidden-button2';
+            }*/
+            return 'slds-var-m-left_small hidden-button2';
             
         } else {
             // mode == 'Edit'
@@ -696,10 +702,10 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 console.log('#531');
                 this.isSubmitBtnDisabled = false;
                 //SHOW SAVE/SUBMIT buttons
-                return 'slds-var-m-left_x-small';
+                return 'slds-var-m-left_small';
             }
             //HIDE SAVE/SUBMIT buttons
-            return 'slds-var-m-left_x-small';
+            return 'slds-var-m-left_small';
         }
     }
 
