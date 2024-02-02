@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Vehicle_Number</fullName>
+    <active>false</active>
+    <errorConditionFormula>NOT(
+   OR(
+       REGEX(Vehicle_Number__c, &quot;(\\D)+(\\d)+&quot;),          
+       REGEX(Vehicle_Number__c,&quot;[^%$#@&amp;!*()^+_-]&quot;),
+       REGEX(Vehicle_Number__c,&quot;[^=,&lt;.&gt;/?~`]&quot;)
+   )
+)</errorConditionFormula>
+    <errorDisplayField>Vehicle_Number__c</errorDisplayField>
+    <errorMessage>Enter a valid vehicle number</errorMessage>
+</ValidationRule>
