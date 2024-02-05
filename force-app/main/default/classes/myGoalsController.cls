@@ -5,12 +5,14 @@ public without sharing class myGoalsController {
         Goal__c currentKRA = [SELECT Id,Fulfillment__c,Resource__c From Goal__c WHERE Fulfillment__c != null and Id=:kraId];
         List<goalWrapper> gwList = new List<goalWrapper>();
          Id goalRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('Goal').getRecordTypeId();
-        for(Goal__c gl : [SELECT Id,Name,Goal_Name__c,Parent_Goal__c,Start_Date__c,CreatedDate,End_Date__c,Status__c,Description__c,Feedback_and_Comments__c 
+        //smaske : [PM_133] : Fetching Loggedin User Proifle details to HIDE the Edit button for Goal if HR-PROFILE 
+        User userData = [SELECT Id,Profile.Name FROM User WHERE Id=:Userinfo.getUserId() LIMIT 1];
+ 
+         for(Goal__c gl : [SELECT Id,Name,Goal_Name__c,Parent_Goal__c,Start_Date__c,CreatedDate,End_Date__c,Status__c,Description__c,Feedback_and_Comments__c 
                           FROM Goal__c WHERE RecordTypeId=:goalRecTypeId 
                           //@Mukesh - For Defect- PM_126, Added a condition where Goals created in the current Quarter will show in only the Linked KRAs 
                           AND Parent_Goal__r.Fulfillment__c =:currentKRA.Fulfillment__c
                           AND Parent_Goal__r.Id = :currentKRA.Id
-                          //smaske
                           AND Resource__c =: currentKRA.Resource__c 
                           ORDER BY CreatedDate DESC]){
                goalWrapper qw = new goalWrapper();
@@ -26,6 +28,9 @@ public without sharing class myGoalsController {
                if(gl.Status__c == 'Active' || gl.Status__c == 'Draft' || gl.Status__c =='In Progress'){
                    qw.showedit = true; 
                }
+               //smaske : [PM_133] : Passing back profile Name to LWC
+               qw.profileName = userData.Profile.Name;
+
              /*  if(gl.Status__c == 'Active'){
                  qw.showInprogress = true;
                } */
@@ -124,6 +129,8 @@ public without sharing class myGoalsController {
         public boolean showedit;
     /*    @AuraEnabled
         public boolean showInprogress; */
+        @AuraEnabled
+        public String profileName;
         
     }
 

@@ -14,7 +14,7 @@ public without sharing class myMetricsController {
         Date currentdate = system.today();
        
         
-        for(Fiscal_Year__c fy : [SELECT Id,Name,Start_Date__c,End_Date__c FROM Fiscal_Year__c Order BY Start_Date__c ASC]){
+        for(Fiscal_Year__c fy : [SELECT Id,Name,Start_Date__c,End_Date__c FROM Fiscal_Year__c Where End_Date__c<=THIS_FISCAL_YEAR Order BY Start_Date__c ASC]){
             if(fy.Start_Date__c <= currentdate && fy.End_Date__c >= currentdate){
                currentFY = fy.Id;
                currentFYName = fy.Id;

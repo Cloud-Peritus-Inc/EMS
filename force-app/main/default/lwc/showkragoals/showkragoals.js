@@ -11,6 +11,7 @@ export default class Showkragoals extends LightningElement {
     @api receivedkraid;
     @track goaltable;
     @track error;
+    @api tab;
 
     @track showinprogress = false;
     showGoalRecords;
@@ -25,17 +26,29 @@ export default class Showkragoals extends LightningElement {
 @track goalRecord ;
      @wire(getAlltheGoals,{ kraId: '$receivedkraid'}) 
     goalsData(result) {
-
             console.log('RecordId is============');
             this.goalRecord = result;
             console.log('Data===='+JSON.stringify(this.goalRecord));
         if (result.data) {
             this.goaltable = [];
-            this.goaltable = result.data; 
-            if(this.goaltable.length>0){
-            this.showGoalRecords=true;
-            }else{
-                this.showGoalRecords=false;
+            this.goaltable = result.data;
+
+            console.log('Tab is ' + this.tab);   
+            if (this.goaltable.length > 0) {
+                this.showGoalRecords = true;
+                //smaske :[PM_133]: Disabling Edit button for HR PROFILE USER
+                const HR = 'Employee - HR(Community)';
+                this.goaltable = this.goaltable.map(goalRecord => {
+                    //console.log('profileName is ' + goalRecord.profileName);
+                    //console.log('showedit is ' + goalRecord.showedit);
+                    const modifiedGoalRecord = { ...goalRecord };
+                    modifiedGoalRecord.showedit = goalRecord.profileName === HR && this.tab === 'My Team' ? false : goalRecord.showedit;
+                    return modifiedGoalRecord;
+                });
+                //console.log('MODIFIED' + JSON.stringify( this.goaltable) );
+                 
+            } else {
+                this.showGoalRecords = false;
             }     
             this.error = undefined;
 
