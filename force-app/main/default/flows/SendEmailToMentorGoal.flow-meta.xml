@@ -14,6 +14,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.AlertToMentorWhenGoalIsCompleted</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Copy_1_of_SendEmailMentor</name>
@@ -29,6 +31,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.SendEmailToMentorWhenGoalIsCreated</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <decisions>
