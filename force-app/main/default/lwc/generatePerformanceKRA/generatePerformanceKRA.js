@@ -10,6 +10,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
 export default class GeneratePerformanceKRA extends NavigationMixin(LightningElement) {
     @api resourceId;
+    @api tab;
     @track CurrentUserConDetails;
     profileName; 
 

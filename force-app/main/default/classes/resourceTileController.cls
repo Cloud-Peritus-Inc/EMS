@@ -183,12 +183,16 @@ public without sharing class resourceTileController {
         List<Contact> mydirectReports = new List<Contact>();
         Set<Id> myrepotiescontids = new Set<Id>();
         Set<Id> mereportsTo = new Set<Id>();
-        for(Resource_Resource_Relationship__c rrr : [SELECT Id,Resource__c,Resource_Reports_To__c FROM Resource_Resource_Relationship__c WHERE ( Resource_Reports_To__c=:urecord.contactId OR Resource__c=:urecord.contactId) AND Relationship_Type__c = 'Mentor']){
+        for(Resource_Resource_Relationship__c rrr : [SELECT Id,Resource__c,Resource_Reports_To__c,Relationship_Type__c FROM Resource_Resource_Relationship__c WHERE ( Resource_Reports_To__c=:urecord.contactId OR Resource__c=:urecord.contactId) ]){//AND Relationship_Type__c = 'Mentor']){
             if(rrr.Resource__c == urecord.contactId){
-                myrepotiescontids.add(rrr.Resource__c); 
+                if(rrr.Relationship_Type__c.contains('Mentor')){
+                myrepotiescontids.add(rrr.Resource__c);
+                    }
             }
             if(rrr.Resource_Reports_To__c == urecord.contactId){
-                mereportsTo.add(rrr.Resource__c); 
+                if(rrr.Relationship_Type__c.contains('Mentor')){
+                mereportsTo.add(rrr.Resource__c);
+                }
             }
             
         }
@@ -244,10 +248,12 @@ public without sharing class resourceTileController {
         User urecord = [SELECT FullPhotoUrl,Id,Name,Employee_Id__c,Contact.EMS_RM_Employee_Id__c,ContactId,contact.ReportsToId,
                         Contact.ReportsTo.Name,Contact.Resource_Role__r.Name FROM User WHERE Id = :userId and ContactId != null];
         
-        List<Resource_Resource_Relationship__c> resourceList =[select id,Resource__r.id,Resource_Reports_To__c from Resource_Resource_Relationship__c where Resource_Reports_To__c=:urecord.contactId and Resource__r.EMS_TM_User__r.IsPortalEnabled = true and Relationship_Type__c ='Mentor' and Resource__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive'];
-        Set<Id> resourceIds = new Set<Id>();
+        List<Resource_Resource_Relationship__c> resourceList =[select id,Resource__r.id,Resource_Reports_To__c,Relationship_Type__c from Resource_Resource_Relationship__c where Resource_Reports_To__c=:urecord.contactId and Resource__r.EMS_TM_User__r.IsPortalEnabled = true and Resource__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive'];
+          Set<Id> resourceIds = new Set<Id>();
         for(Resource_Resource_Relationship__c rr:resourceList){
+            if(rr.Relationship_Type__c.contains('Mentor')){
             resourceIds.add(rr.Resource__r.id);
+            }
         }
         
         List<Contact> directReports = [SELECT Id,Name,EMS_TM_User__r.FullPhotoUrl,EMS_RM_Employee_Id__c,Resource_Role__r.Name,ReportsTo.Name,

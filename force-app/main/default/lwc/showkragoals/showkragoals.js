@@ -42,7 +42,10 @@ export default class Showkragoals extends LightningElement {
                     //console.log('profileName is ' + goalRecord.profileName);
                     //console.log('showedit is ' + goalRecord.showedit);
                     const modifiedGoalRecord = { ...goalRecord };
-                    modifiedGoalRecord.showedit = goalRecord.profileName === HR && this.tab === 'My Team' ? false : goalRecord.showedit;
+                    //modifiedGoalRecord.showedit = goalRecord.profileName === HR && this.tab === 'My Team' ? false : goalRecord.showedit;
+                    if (goalRecord.profileName === HR && this.tab === 'My Team') {
+                        modifiedGoalRecord.showedit = false;
+                    }
                     return modifiedGoalRecord;
                 });
                 //console.log('MODIFIED' + JSON.stringify( this.goaltable) );

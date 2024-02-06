@@ -187,7 +187,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Development_Example__c" value={kraRecord.Development_Example__c}
                                         disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.developmentExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                                 </template>
                                 <template if:true={viewwrap.showTesting}>
@@ -203,7 +203,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Testing_Example__c" value={kraRecord.Testing_Example__c} disabled={isFieldsDisabled}
                                         max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.testingExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                                   </template>
                                 <template if:true={viewwrap.showUnderstandingCode}>
@@ -220,7 +220,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Understanding_Code_Example__c" value={kraRecord.Understanding_Code_Example__c}
                                         disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.understandingCodeExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                                 </template>
                                   <template if:true={viewwrap.showPlatformKnowledge}>
@@ -237,7 +237,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Platform_Knowledge_Example__c" value={kraRecord.Platform_Knowledge_Example__c}
                                         disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.platformKnowledgeExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                                   </template>
 
@@ -255,7 +255,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Design_and_Architecture_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                         value={kraRecord.Design_and_Architecture_Example__c} disabled={isFieldsDisabled}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.designArchitectureExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                                 </template>
                                 
@@ -272,7 +272,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Documentation_Example__c" value={kraRecord.Documentation_Example__c} disabled={isFieldsDisabled}
                                         max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.documentationExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -290,7 +290,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Continuous_Improvement_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                         value={kraRecord.Continuous_Improvement_Example__c} disabled={isFieldsDisabled}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.continuousImprovementExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -313,7 +313,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Project_Planning_Scheduling_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Project_Planning_Scheduling_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.projectPlanningSchedulingManagementExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
 
@@ -332,7 +332,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Documentation_Reporting_Mgmt_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Documentation_Reporting_Mgmt_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.documentationReportingManagementExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
 
@@ -350,7 +350,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Task_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Task_Management_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.taskManagementExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
 
@@ -368,7 +368,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Risk_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Risk_Management_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.riskManagementExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
 
@@ -386,7 +386,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Resource_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Resource_Management_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.resourceManagementExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
 
@@ -404,7 +404,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Stakeholder_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Stakeholder_Management_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.stakeholderManagementExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                     </template>
 
@@ -422,7 +422,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Communication_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Communication_Management_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.communicationManagementExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                     </template>
                                     <!-- for : Project Management -->
@@ -443,7 +443,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Learning_and_Skill_Development_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Learning_and_Skill_Development_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange}  title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange}  field-level-help={viewwrap.learningAndSkillDevelopmentExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
                                     <!-- Documentation already added above -->
@@ -461,7 +461,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Estimations_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Estimations_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.estimationsExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
 
@@ -479,7 +479,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Test_Case_Design_Execution_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Test_Case_Design_Execution_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.testCaseDesignExecutionExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
 
@@ -497,7 +497,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Defect_Management_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Defect_Management_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.defectManagementExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
 
@@ -516,7 +516,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                             name="Troubleshooting_Environment_Prep_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                             value={kraRecord.Troubleshooting_Environment_Prep_Example__c} disabled={isFieldsDisabled}
-                                            onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                            onchange={handleChange} field-level-help={viewwrap.troubleshootingAndEnvironmentPrepExTxt} ></lightning-textarea>
                                     </lightning-layout-item>
                                 </template>
                                     <!-- for : QA Team -->
@@ -540,7 +540,7 @@
                                             <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                                 name="Requirement_Gathering_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                                 value={kraRecord.Requirement_Gathering_Example__c} disabled={isFieldsDisabled}
-                                                onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                                onchange={handleChange} field-level-help={viewwrap.requirementGatheringExTxt} ></lightning-textarea>
                                         </lightning-layout-item>
                                     </template>
 
@@ -558,7 +558,7 @@
                                             <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                                 name="POV_Creation_Client_Demos_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                                 value={kraRecord.POV_Creation_Client_Demos_Example__c} disabled={isFieldsDisabled}
-                                                onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                                onchange={handleChange} field-level-help={viewwrap.povCreationDemosExTxt} ></lightning-textarea>
                                         </lightning-layout-item>
                                     </template>
                                         
@@ -623,7 +623,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Delivery_Accountability_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                         value={kraRecord.Delivery_Accountability_Example__c} disabled={isFieldsDisabled}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.deliveryAccountabilityExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -641,7 +641,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Effective_Communication_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                         value={kraRecord.Effective_Communication_Example__c} disabled={isFieldsDisabled}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.effectiveCommunicationExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -659,7 +659,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Knowledge_Sharing_Example__c" value={kraRecord.Knowledge_Sharing_Example__c}
                                         disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.knowledgeSharingExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -678,7 +678,7 @@
                                         name="Teamwork_Example__c" value={kraRecord.Teamwork_Example__c}
                                         max-length={maxLength} message-when-too-long={maxLengthError}
                                         disabled={isFieldsDisabled}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.teamworkExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -696,7 +696,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Attitude_and_Behavior_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                         value={kraRecord.Attitude_and_Behavior_Example__c} disabled={isFieldsDisabled}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.attitudeBehaviorExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -755,7 +755,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Business_Development_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                         value={kraRecord.Business_Development_Example__c} disabled={isFieldsDisabled}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.businessDevelopmentExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -773,7 +773,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Strategic_Work_Example__c" value={kraRecord.Strategic_Work_Example__c}
                                         disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.strategicWorkExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -792,7 +792,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Company_Growth_Example__c" value={kraRecord.Company_Growth_Example__c}
                                         disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.companyGrowthExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -851,7 +851,7 @@
                                         <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Goal_Achievement_Example__c" max-length={maxLength} message-when-too-long={maxLengthError}
                                         value={kraRecord.Goal_Achievement_Example__c} disabled={isFieldsDisabled}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.goalAchievementExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -869,7 +869,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Stakeholder_Satisfaction_Example__c" value={kraRecord.Stakeholder_Satisfaction_Example__c}
                                         disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.stakeholderSatisfactionExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                             </template>
 
@@ -887,7 +887,7 @@
                                     <lightning-textarea required type="text" variant="label-stacked" label="Example"
                                         name="Project_Success_Example__c" value={kraRecord.Project_Success_Example__c}
                                         disabled={isFieldsDisabled} max-length={maxLength} message-when-too-long={maxLengthError}
-                                        onchange={handleChange} title={label.exampleHelpText} ></lightning-textarea>
+                                        onchange={handleChange} field-level-help={viewwrap.projectSuccessExTxt} ></lightning-textarea>
                                 </lightning-layout-item>
                                 </template>
 
@@ -1009,7 +1009,7 @@
                                                 </div>
                                             </th>
                                             <td data-label="Technical Acumen">
-                                                <div class="slds-truncate">{kraRecord.Overall_Tech_Rating__c}</div>
+                                                <div class="slds-truncate">{kraRecord.Average_Tech_Rating__c}({kraRecord.Overall_Tech_Rating__c})</div>
                                             </td>
                                         </tr>
                                         <tr class="slds-hint-parent">
@@ -1019,7 +1019,7 @@
                                                 </div>
                                             </th>
                                             <td data-label="Professional Skills">
-                                                <div class="slds-truncate">{kraRecord.Overall_Professional_Rating__c}</div>
+                                                <div class="slds-truncate">{kraRecord.Average_Professional_Rating__c}({kraRecord.Overall_Professional_Rating__c})</div>
                                             </td>
                                         </tr>
                                         <tr class="slds-hint-parent">
@@ -1029,7 +1029,7 @@
                                                 </div>
                                             </th>
                                             <td data-label="Strategic Impact">
-                                                <div class="slds-truncate">{kraRecord.Overall_Strategic_Rating__c}</div>
+                                                <div class="slds-truncate">{kraRecord.Average_Strategic_Rating__c}({kraRecord.Overall_Strategic_Rating__c})</div>
                                             </td>
                                         </tr>
                                         <tr class="slds-hint-parent">
@@ -1039,7 +1039,7 @@
                                                 </div>
                                             </th>
                                             <td data-label="Goals & Results">
-                                                <div class="slds-truncate">{kraRecord.Overall_Goals_Results_Rating__c}</div>
+                                                <div class="slds-truncate">{kraRecord.Average_Goals_Results_Rating__c}({kraRecord.Overall_Goals_Results_Rating__c})</div>
                                             </td>
                                         </tr>
                                         <tr class="slds-hint-parent">

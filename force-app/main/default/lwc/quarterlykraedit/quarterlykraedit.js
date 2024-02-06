@@ -127,7 +127,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
             if (this.profileName == 'Employee - HR(Community)') {
                 this.isSubmitBtnDisabled = true;
-                this.isSaveBtnDisabled = true;
+               // this.isSaveBtnDisabled = true;
             }
             //Check if status is COMPLETE : Disable Submit btn
             this.error = undefined;
@@ -140,7 +140,8 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 this.isFieldsDisabled = false;
             }
         } else if (error) {
-            console.log("IF ERROR :: " + JSON.stringify(error));
+            console.log("IF ERROR :: " + JSON.stringify(error))
+            console.log("wiredKraRecords ERROR :: " + error);
             this.error = error;
             this.kraRecord = undefined;
         }
@@ -511,10 +512,10 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             */
 
             // Call the function for each skill category
-            this.processSkillCategory(this.getTechPropertyFieldMap(), allPositiveTechFieldsList, this.SelectedResourceResourceRoleTechAcc, this.CurrentUserResourceRoleTechAcc, "Overall_Tech_Rating_2__c");
-            this.processSkillCategory(this.getProfSkillsPropertyFieldMap(), allPositiveProfessionalFieldsList, this.SelectedResourceResourceRoleProfSkillAcc, this.CurrentUserResourceRoleProfSkillAcc, 'Overall_Professional_Rating_2__c');
-            this.processSkillCategory(this.getStrategicImpactPropertyFieldMap(), allPositiveStrategicFieldsList, this.SelectedResourceResourceRoleStrategicAcc, this.CurrentUserResourceRoleStrategicAcc, 'Overall_Strategic_Rating_2__c');
-            this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c');
+            this.processSkillCategory(this.getTechPropertyFieldMap(), allPositiveTechFieldsList, this.SelectedResourceResourceRoleTechAcc, this.CurrentUserResourceRoleTechAcc, "Overall_Tech_Rating_2__c", 'Average_Tech_Rating__c');
+            this.processSkillCategory(this.getProfSkillsPropertyFieldMap(), allPositiveProfessionalFieldsList, this.SelectedResourceResourceRoleProfSkillAcc, this.CurrentUserResourceRoleProfSkillAcc, 'Overall_Professional_Rating_2__c', 'Average_Professional_Rating__c');
+            this.processSkillCategory(this.getStrategicImpactPropertyFieldMap(), allPositiveStrategicFieldsList, this.SelectedResourceResourceRoleStrategicAcc, this.CurrentUserResourceRoleStrategicAcc, 'Overall_Strategic_Rating_2__c', 'Average_Strategic_Rating__c');
+            this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c', 'Average_Goals_Results_Rating__c');
         }
 
         if (isValid) {
@@ -632,10 +633,10 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             });
 
             // Call the function for each skill category
-            this.processSkillCategory(this.getTechPropertyFieldMap(), allPositiveTechFieldsList, this.SelectedResourceResourceRoleTechAcc, this.CurrentUserResourceRoleTechAcc, 'Overall_Tech_Rating_2__c');
-            this.processSkillCategory(this.getProfSkillsPropertyFieldMap(), allPositiveProfessionalFieldsList, this.SelectedResourceResourceRoleProfSkillAcc, this.CurrentUserResourceRoleProfSkillAcc, 'Overall_Professional_Rating_2__c');
-            this.processSkillCategory(this.getStrategicImpactPropertyFieldMap(), allPositiveStrategicFieldsList, this.SelectedResourceResourceRoleStrategicAcc, this.CurrentUserResourceRoleStrategicAcc, 'Overall_Strategic_Rating_2__c');
-            this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c');
+            this.processSkillCategory(this.getTechPropertyFieldMap(), allPositiveTechFieldsList, this.SelectedResourceResourceRoleTechAcc, this.CurrentUserResourceRoleTechAcc, 'Overall_Tech_Rating_2__c', 'Average_Tech_Rating__c');
+            this.processSkillCategory(this.getProfSkillsPropertyFieldMap(), allPositiveProfessionalFieldsList, this.SelectedResourceResourceRoleProfSkillAcc, this.CurrentUserResourceRoleProfSkillAcc, 'Overall_Professional_Rating_2__c', 'Average_Professional_Rating__c');
+            this.processSkillCategory(this.getStrategicImpactPropertyFieldMap(), allPositiveStrategicFieldsList, this.SelectedResourceResourceRoleStrategicAcc, this.CurrentUserResourceRoleStrategicAcc, 'Overall_Strategic_Rating_2__c', 'Average_Strategic_Rating__c');
+            this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c', 'Average_Goals_Results_Rating__c');
         }
 
 
@@ -826,21 +827,24 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         return sum;
     }
 
-    processSkillCategory(fieldMap, fieldsList, selectedResourceUserAcc, currentUserRoleAcc, overallRatingField) {
+    processSkillCategory(fieldMap, fieldsList, selectedResourceUserAcc, currentUserRoleAcc, overallRatingField, averageRatings) {
         console.log('# In processSkillCategory');
         let positiveFieldsList = this.updateAllPositiveFieldsList(fieldMap, this.viewwrap, fieldsList);
         let sum = this.getTotalSum(this.kraRecord, positiveFieldsList);
         let averageRating = positiveFieldsList.length > 0 ? sum / positiveFieldsList.length : 0;
+        console.log('averageRating' , averageRating);
 
         if (selectedResourceUserAcc) {
             let kraRecordMod = { ...this.kraRecord };
             kraRecordMod[overallRatingField] = averageRating * (selectedResourceUserAcc / 100);
+            kraRecordMod[averageRatings] = averageRating;
             this.kraRecord = kraRecordMod;
             //Old way of updating : this was throwing error hence updated code at top
             //this.kraRecord[overallRatingField] = averageRating * (selectedResourceUserAcc / 100);
         } else {
             let kraRecordMod = { ...this.kraRecord };
             kraRecordMod[overallRatingField] = averageRating * (currentUserRoleAcc / 100);
+            kraRecordMod[averageRatings] = averageRating;
             this.kraRecord = kraRecordMod;
             //Old way of updating : this was throwing error hence updated code at top
             //this.kraRecord[overallRatingField] = averageRating * (currentUserRoleAcc / 100);
