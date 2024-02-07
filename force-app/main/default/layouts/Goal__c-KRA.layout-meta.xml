@@ -124,22 +124,6 @@
                 <behavior>Edit</behavior>
                 <field>Troubleshooting_Environment_Prep_Example__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Overall_Tech_Rating_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Overall_Professional_Rating_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Overall_Strategic_Rating_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Overall_Goals_Results_Rating_2__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -177,10 +161,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Fulfillment__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Overall_Average_Section_Rating__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -233,6 +213,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Test_Case_Design_Execution_Example__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Overall_Average_Section_Rating__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -299,6 +283,10 @@
                 <field>Continuous_Improvement_Rating__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Average_Tech_Rating__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Overall_Tech_Rating__c</field>
             </layoutItems>
@@ -332,6 +320,10 @@
                 <behavior>Edit</behavior>
                 <field>Continuous_Improvement_Example__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Overall_Tech_Rating_2__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -362,6 +354,10 @@
                 <field>Attitude_and_Behavior_Rating__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Average_Professional_Rating__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Overall_Professional_Rating__c</field>
             </layoutItems>
@@ -387,6 +383,10 @@
                 <behavior>Edit</behavior>
                 <field>Attitude_and_Behavior_Example__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Overall_Professional_Rating_2__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -409,6 +409,10 @@
                 <field>Company_Growth_Rating__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Average_Strategic_Rating__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Overall_Strategic_Rating__c</field>
             </layoutItems>
@@ -426,6 +430,10 @@
                 <behavior>Edit</behavior>
                 <field>Company_Growth_Example__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Overall_Strategic_Rating_2__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -436,11 +444,20 @@
         <label>Goals &amp; Results</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Average_Goals_Results_Rating__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Overall_Goals_Results_Rating__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Overall_Goals_Results_Rating_2__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -511,6 +528,9 @@
         <fields>CORE.USERS.FULL_NAME</fields>
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>

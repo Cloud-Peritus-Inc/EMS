@@ -88,7 +88,7 @@ public without sharing class generatePerformanceKRAController {
         Compensation__c comp = Null;
         
         try {
-            compList = [SELECT Id, Name, Appraisal_Date__c, Comments__c, Finalized_Hike__c, Next_Appraisal_Date__c, Resource__c, Reviewed_By__c,
+            compList = [SELECT Id, Name, Appraisal_Date__c, Comments__c, Finalized_Hike__c, Next_Appraisal_Date__c, Resource__c, Reviewed_By__c,Fulfillment__c,
             //smaske : PM_079 : Created new field Compensation_Submitted__c
             Compensation_Submitted__c
                         FROM Compensation__c 
@@ -107,8 +107,19 @@ public without sharing class generatePerformanceKRAController {
     @AuraEnabled
     public static Compensation__c updateCompensationDetails(Compensation__c record,Id fy){
         System.debug('record :' + record);
-        
+        System.debug('fy ID :' + fy);
         try {
+            //smaske : Updated code to associate Compensation with Selected FY fulfilment record
+            List<Fulfillment__c> FulfList = New List<Fulfillment__c>();
+            if (record.Fulfillment__c == null) {
+                FulfList = [select id,Resource__c,Fiscal_Year__c 
+                FROM Fulfillment__c where Fiscal_Year__c =: fy AND Resource__c =: record.Resource__c
+                ORDER BY CreatedDate DESC LIMIT 1];
+            }
+            if (record.Fulfillment__c == null && !FulfList.isEmpty() && FulfList.size() >= 1) {
+                record.Fulfillment__c = FulfList[0].Id;
+            }
+
             record.Appraisal_Date__c = Date.today();
             record.Compensation_Submitted__c = true;
             //smaske : PM_079 : Removed Upsert as multiple records were created.
