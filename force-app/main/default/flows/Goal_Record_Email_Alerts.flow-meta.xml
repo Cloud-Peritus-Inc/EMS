@@ -16,6 +16,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>senderAddress</name>
             <value>
                 <stringValue>no-reply.grid@cloudperitus.com</stringValue>
@@ -42,7 +48,7 @@
         <inputParameters>
             <name>recipientId</name>
             <value>
-                <elementReference>$Record.Resource__r.Id</elementReference>
+                <elementReference>MentorId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -51,6 +57,8 @@
                 <elementReference>GoalCompletionOnTimeTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Goal Completion Post Time  email alert to mentor</description>
@@ -68,6 +76,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>senderAddress</name>
             <value>
                 <stringValue>no-reply.grid@cloudperitus.com</stringValue>
@@ -94,7 +108,7 @@
         <inputParameters>
             <name>recipientId</name>
             <value>
-                <elementReference>$Record.Resource__r.Id</elementReference>
+                <elementReference>MentorId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -103,6 +117,8 @@
                 <elementReference>GoalCompletionPostTimeTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Goal created email alert to Mentor</description>
@@ -117,6 +133,12 @@
             <name>emailAddresses</name>
             <value>
                 <elementReference>MentorEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -146,7 +168,7 @@
         <inputParameters>
             <name>recipientId</name>
             <value>
-                <elementReference>$Record.Resource__r.Id</elementReference>
+                <elementReference>MentorId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -155,6 +177,8 @@
                 <elementReference>GoalCreatedTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Goal Missed email alert to mentor</description>
@@ -169,6 +193,12 @@
             <name>emailAddresses</name>
             <value>
                 <elementReference>MentorEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -198,7 +228,7 @@
         <inputParameters>
             <name>recipientId</name>
             <value>
-                <elementReference>$Record.Resource__r.Id</elementReference>
+                <elementReference>MentorId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -207,6 +237,8 @@
                 <elementReference>GoalMissedTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Completion_Email</name>
@@ -222,6 +254,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_On_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Completion_Email2</name>
@@ -240,6 +274,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_On_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>When a &quot;GOAL&quot; is created send confirmation email to  Resource</description>
@@ -256,6 +292,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Created_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>When a &quot;GOAL&quot; is created send confirmation email to  Resource</description>
@@ -275,6 +313,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Created_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Missed_Email</name>
@@ -290,6 +330,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Missed_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Missed_Email2</name>
@@ -308,6 +350,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Missed_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Post_Completion_Email</name>
@@ -323,6 +367,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_Post_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Post_Completion_Email2</name>
@@ -341,6 +387,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_Post_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <assignments>
@@ -360,6 +408,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>RR_Loop.Resource_Reports_To__r.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MentorId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RR_Loop.Resource_Reports_To__r.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -870,6 +925,13 @@ We are doing this to send email alert to mentor.</description>
     </variables>
     <variables>
         <name>MentorEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>MentorId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

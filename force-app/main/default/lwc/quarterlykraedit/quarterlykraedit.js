@@ -348,7 +348,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             let text =this.inputValue.toString();
             let splitValue =text.split('.')[0];
             event.target.value= Number(splitValue);
-            var msg = 'Please enter Ratings like 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 4.5 ,5';
+            var msg = 'Please enter Ratings like 1, 1.5, 2, 2.5, 3, 3.5, 4 4.5 ,5';
             this.showToast(msg, this.errorVariant, this.toastMode);
 
          }
