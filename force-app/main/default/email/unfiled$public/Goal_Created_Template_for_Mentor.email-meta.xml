@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When a &quot;GOAL&quot; is created send confirmation email to &quot;GOAL&quot; Mentor</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Goal Created Template for Mentor</name>
+    <style>freeForm</style>
+    <subject>Goal Creation Confirmation</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

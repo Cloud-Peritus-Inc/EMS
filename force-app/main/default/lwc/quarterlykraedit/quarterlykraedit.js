@@ -837,14 +837,14 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         if (selectedResourceUserAcc) {
             let kraRecordMod = { ...this.kraRecord };
             kraRecordMod[overallRatingField] = averageRating * (selectedResourceUserAcc / 100);
-            kraRecordMod[averageRatings] = averageRating;
+            kraRecordMod[averageRatings] = averageRating.toFixed(1);
             this.kraRecord = kraRecordMod;
             //Old way of updating : this was throwing error hence updated code at top
             //this.kraRecord[overallRatingField] = averageRating * (selectedResourceUserAcc / 100);
         } else {
             let kraRecordMod = { ...this.kraRecord };
             kraRecordMod[overallRatingField] = averageRating * (currentUserRoleAcc / 100);
-            kraRecordMod[averageRatings] = averageRating;
+            kraRecordMod[averageRatings] = averageRating.toFixed(1);
             this.kraRecord = kraRecordMod;
             //Old way of updating : this was throwing error hence updated code at top
             //this.kraRecord[overallRatingField] = averageRating * (currentUserRoleAcc / 100);
