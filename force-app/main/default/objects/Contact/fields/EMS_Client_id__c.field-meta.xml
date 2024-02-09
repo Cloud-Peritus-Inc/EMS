@@ -4,5 +4,6 @@
     <displayFormat>CL.ID-{000}</displayFormat>
     <externalId>false</externalId>
     <label>Client Id</label>
+    <trackHistory>false</trackHistory>
     <type>AutoNumber</type>
 </CustomField>

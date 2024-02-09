@@ -37,6 +37,10 @@
                 <behavior>Readonly</behavior>
                 <field>Resource_Reports_To_User__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Resource_Reports_Name__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

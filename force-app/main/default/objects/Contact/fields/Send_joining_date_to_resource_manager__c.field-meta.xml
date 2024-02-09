@@ -5,5 +5,6 @@
     <externalId>false</externalId>
     <label>Send joining date to resource manager</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

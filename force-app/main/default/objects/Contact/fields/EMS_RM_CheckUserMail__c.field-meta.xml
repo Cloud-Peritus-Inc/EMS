@@ -6,6 +6,7 @@
     <label>User Email</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Email</type>
     <unique>true</unique>
 </CustomField>

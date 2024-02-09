@@ -5,6 +5,7 @@
     <formula>TEXT(Work_Location__r.Country__c)</formula>
     <label>Work Location Country</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

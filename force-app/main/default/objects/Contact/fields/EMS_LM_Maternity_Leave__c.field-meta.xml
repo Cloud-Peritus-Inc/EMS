@@ -6,5 +6,6 @@
     <externalId>false</externalId>
     <label>Maternity Leave</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

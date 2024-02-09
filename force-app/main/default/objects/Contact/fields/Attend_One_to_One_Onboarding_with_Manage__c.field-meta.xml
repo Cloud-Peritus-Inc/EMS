@@ -5,5 +5,6 @@
     <externalId>false</externalId>
     <label>Attend One to One Onboarding with Manage</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

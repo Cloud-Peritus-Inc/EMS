@@ -4,5 +4,6 @@
     <displayFormat>AP.ID-{000000}</displayFormat>
     <externalId>false</externalId>
     <label>Applicant ID</label>
+    <trackHistory>false</trackHistory>
     <type>AutoNumber</type>
 </CustomField>

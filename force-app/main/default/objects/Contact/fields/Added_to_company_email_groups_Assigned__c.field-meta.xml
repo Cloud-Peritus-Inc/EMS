@@ -5,5 +5,6 @@
     <externalId>false</externalId>
     <label>Add to Company Email Groups: For IT Team</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

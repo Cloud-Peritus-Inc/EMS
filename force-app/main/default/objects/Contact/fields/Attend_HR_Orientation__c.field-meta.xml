@@ -5,5 +5,6 @@
     <externalId>false</externalId>
     <label>Attend HR Orientation</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -34,5 +34,6 @@
     <relationshipName>Contacts</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Lookup</type>
 </CustomField>

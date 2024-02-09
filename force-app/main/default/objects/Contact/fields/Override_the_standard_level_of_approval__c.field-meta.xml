@@ -5,5 +5,6 @@
     <externalId>false</externalId>
     <label>Override the Standard Level of Approval</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

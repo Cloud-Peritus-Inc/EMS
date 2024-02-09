@@ -5,5 +5,6 @@
     <externalId>false</externalId>
     <label>Do you have a Vehicle?</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

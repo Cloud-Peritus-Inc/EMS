@@ -5,5 +5,6 @@
     <externalId>false</externalId>
     <label>Add to WhatsApp Group: For HR Team</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>
