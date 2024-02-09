@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <description>Goal Completion on time  email alert to Mentor</description>
-        <name>GCOTRME</name>
-        <label>GCOTRME</label>
-        <locationX>578</locationX>
-        <locationY>1487</locationY>
+        <name>GCEM</name>
+        <label>GCEM</label>
+        <locationX>138</locationX>
+        <locationY>1271</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Iterate_Mentors1</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>MentorEmail</elementReference>
+                <elementReference>Iterate_Mentors1.Resource_Reports_To__r.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -30,7 +32,7 @@
         <inputParameters>
             <name>emailSubject</name>
             <value>
-                <stringValue>Goal Completion Notification</stringValue>
+                <stringValue>Goal Creation Confirmation</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -48,123 +50,13 @@
         <inputParameters>
             <name>recipientId</name>
             <value>
-                <elementReference>MentorId</elementReference>
+                <elementReference>Iterate_Mentors1.Resource_Reports_To__r.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>emailTemplateId</name>
-            <value>
-                <elementReference>GoalCompletionOnTimeTemplateforMentor.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <description>Goal Completion Post Time  email alert to mentor</description>
-        <name>GCPTRME</name>
-        <label>GCPTRME</label>
-        <locationX>1106</locationX>
-        <locationY>1487</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>MentorEmail</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderType</name>
-            <value>
-                <stringValue>OrgWideEmailAddress</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderAddress</name>
-            <value>
-                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <stringValue>Goal Completion Notification</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>sendRichBody</name>
+            <name>logEmailOnSend</name>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>relatedRecordId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recipientId</name>
-            <value>
-                <elementReference>MentorId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailTemplateId</name>
-            <value>
-                <elementReference>GoalCompletionPostTimeTemplateforMentor.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <description>Goal created email alert to Mentor</description>
-        <name>GCRME</name>
-        <label>GCRME</label>
-        <locationX>50</locationX>
-        <locationY>1379</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>MentorEmail</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderType</name>
-            <value>
-                <stringValue>OrgWideEmailAddress</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderAddress</name>
-            <value>
-                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <stringValue>Goal Creation Update</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>sendRichBody</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>relatedRecordId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recipientId</name>
-            <value>
-                <elementReference>MentorId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -173,20 +65,24 @@
                 <elementReference>GoalCreatedTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
-        <description>Goal Missed email alert to mentor</description>
-        <name>GMRME</name>
-        <label>GMRME</label>
-        <locationX>1634</locationX>
-        <locationY>1487</locationY>
+        <name>GCOEM</name>
+        <label>GCOEM</label>
+        <locationX>754</locationX>
+        <locationY>1379</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Iterate_Mentors2</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>MentorEmail</elementReference>
+                <elementReference>Iterate_Mentors2.Resource_Reports_To__r.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -204,7 +100,7 @@
         <inputParameters>
             <name>emailSubject</name>
             <value>
-                <stringValue>Important: Goal Update</stringValue>
+                <stringValue>Goal Completion Notification</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -222,7 +118,149 @@
         <inputParameters>
             <name>recipientId</name>
             <value>
-                <elementReference>MentorId</elementReference>
+                <elementReference>Iterate_Mentors2.Resource_Reports_To__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>GoalCompletionOnTimeTemplateforMentor.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>GCPEM</name>
+        <label>GCPEM</label>
+        <locationX>1370</locationX>
+        <locationY>1379</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Iterate_Mentors3</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Iterate_Mentors3.Resource_Reports_To__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Goal Completion Notification</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>Iterate_Mentors3.Resource_Reports_To__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>GoalCompletionPostTimeTemplateforMentor.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>GMEM</name>
+        <label>GMEM</label>
+        <locationX>1986</locationX>
+        <locationY>1379</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Iterate_Mentors4</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Iterate_Mentors4.Resource_Reports_To__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Goal Completion Notification</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>Iterate_Mentors4.Resource_Reports_To__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -231,12 +269,14 @@
                 <elementReference>GoalMissedTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Completion_Email</name>
         <label>Goal Completion Email</label>
-        <locationX>842</locationX>
-        <locationY>1271</locationY>
+        <locationX>930</locationX>
+        <locationY>1055</locationY>
         <actionName>Goal__c.Goal_Completion_On_Time_Alert_for_Mentee</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -246,12 +286,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_On_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Completion_Email2</name>
         <label>Goal Completion Email</label>
-        <locationX>578</locationX>
-        <locationY>1271</locationY>
+        <locationX>666</locationX>
+        <locationY>1055</locationY>
         <actionName>Goal__c.Goal_Completion_On_Time_Alert_for_Mentee</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -264,13 +306,15 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_On_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>When a &quot;GOAL&quot; is created send confirmation email to  Resource</description>
         <name>Goal_Created_Email</name>
         <label>Goal Created Email</label>
         <locationX>314</locationX>
-        <locationY>1163</locationY>
+        <locationY>947</locationY>
         <actionName>Goal__c.Goal_Created_Alert_for_Mentee</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -280,13 +324,15 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Created_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>When a &quot;GOAL&quot; is created send confirmation email to  Resource</description>
         <name>Goal_Created_Email2</name>
         <label>Goal Created Email</label>
         <locationX>50</locationX>
-        <locationY>1163</locationY>
+        <locationY>947</locationY>
         <actionName>Goal__c.Goal_Created_Alert_for_Mentee</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -299,12 +345,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Created_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Missed_Email</name>
         <label>Goal Missed Email</label>
-        <locationX>1898</locationX>
-        <locationY>1271</locationY>
+        <locationX>2162</locationX>
+        <locationY>1055</locationY>
         <actionName>Goal__c.Goal_Missed_Alert_for_Mentee</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -314,12 +362,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Missed_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Missed_Email2</name>
         <label>Goal Missed Email</label>
-        <locationX>1634</locationX>
-        <locationY>1271</locationY>
+        <locationX>1898</locationX>
+        <locationY>1055</locationY>
         <actionName>Goal__c.Goal_Missed_Alert_for_Mentee</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -332,12 +382,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Missed_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Post_Completion_Email</name>
         <label>Post Completion Email</label>
-        <locationX>1370</locationX>
-        <locationY>1271</locationY>
+        <locationX>1546</locationX>
+        <locationY>1055</locationY>
         <actionName>Goal__c.Goal_Completion_Post_Time_Alert_for_Mentee</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -347,12 +399,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_Post_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Post_Completion_Email2</name>
         <label>Post Completion Email</label>
-        <locationX>1106</locationX>
-        <locationY>1271</locationY>
+        <locationX>1282</locationX>
+        <locationY>1055</locationY>
         <actionName>Goal__c.Goal_Completion_Post_Time_Alert_for_Mentee</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -365,81 +419,37 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_Post_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
-    <assignments>
-        <name>Assign_Mentor_Data</name>
-        <label>Assign Mentor Data</label>
-        <locationX>1392</locationX>
-        <locationY>647</locationY>
-        <assignmentItems>
-            <assignToReference>MentorName</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>RR_Loop.Resource_Reports_Name__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>MentorEmail</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>RR_Loop.Resource_Reports_To__r.Email</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>MentorId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>RR_Loop.Resource_Reports_To__r.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>RR_Loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Store</name>
-        <label>Store</label>
-        <locationX>1304</locationX>
-        <locationY>839</locationY>
-        <assignmentItems>
-            <assignToReference>Mentors</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Mentor_Records</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>New_or_Updated</targetReference>
-        </connector>
-    </assignments>
     <collectionProcessors>
         <name>Mentor_Records</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Mentor Records</label>
-        <locationX>1392</locationX>
+        <locationX>1524</locationX>
         <locationY>539</locationY>
-        <assignNextValueToReference>currentItem_Mentor_Records_0</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_Mentor_Records</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_RR_Data</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_Mentor_Records_0.Relationship_Type__c</leftValueReference>
+            <leftValueReference>currentItem_Mentor_Records.Relationship_Type__c</leftValueReference>
             <operator>Contains</operator>
             <rightValue>
                 <stringValue>Mentor</stringValue>
             </rightValue>
         </conditions>
         <connector>
-            <targetReference>Assign_Mentor_Data</targetReference>
+            <targetReference>RR_Loop</targetReference>
         </connector>
     </collectionProcessors>
     <decisions>
         <description>Check the status value and send email respectively</description>
         <name>Check_Status</name>
         <label>Check Status</label>
-        <locationX>1436</locationX>
-        <locationY>1055</locationY>
+        <locationX>1612</locationX>
+        <locationY>839</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>On_Time</name>
@@ -554,7 +564,7 @@
         <name>Mentor1</name>
         <label>Mentor</label>
         <locationX>182</locationX>
-        <locationY>1055</locationY>
+        <locationY>839</locationY>
         <defaultConnector>
             <targetReference>Goal_Created_Email</targetReference>
         </defaultConnector>
@@ -563,7 +573,7 @@
             <name>Mentor_Aassigned1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Mentors</leftValueReference>
+                <leftValueReference>Mentor_Records</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -578,8 +588,8 @@
     <decisions>
         <name>Mentor2</name>
         <label>Mentor</label>
-        <locationX>710</locationX>
-        <locationY>1163</locationY>
+        <locationX>798</locationX>
+        <locationY>947</locationY>
         <defaultConnector>
             <targetReference>Goal_Completion_Email</targetReference>
         </defaultConnector>
@@ -588,7 +598,7 @@
             <name>Mentor_Aassigned2</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Mentors</leftValueReference>
+                <leftValueReference>Mentor_Records</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -603,8 +613,8 @@
     <decisions>
         <name>Mentor3</name>
         <label>Mentor</label>
-        <locationX>1238</locationX>
-        <locationY>1163</locationY>
+        <locationX>1414</locationX>
+        <locationY>947</locationY>
         <defaultConnector>
             <targetReference>Post_Completion_Email</targetReference>
         </defaultConnector>
@@ -613,7 +623,7 @@
             <name>Mentor_Aassigned3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Mentors</leftValueReference>
+                <leftValueReference>Mentor_Records</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -628,8 +638,8 @@
     <decisions>
         <name>Mentor4</name>
         <label>Mentor</label>
-        <locationX>1766</locationX>
-        <locationY>1163</locationY>
+        <locationX>2030</locationX>
+        <locationY>947</locationY>
         <defaultConnector>
             <targetReference>Goal_Missed_Email</targetReference>
         </defaultConnector>
@@ -638,7 +648,7 @@
             <name>Mentor_Aassigned4</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Mentors</leftValueReference>
+                <leftValueReference>Mentor_Records</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -653,8 +663,8 @@
     <decisions>
         <name>New_or_Updated</name>
         <label>New or Updated</label>
-        <locationX>1304</locationX>
-        <locationY>947</locationY>
+        <locationX>1436</locationX>
+        <locationY>731</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>New</name>
@@ -705,9 +715,53 @@
     <interviewLabel>Goal Record Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Goal Record Email Alerts</label>
     <loops>
+        <name>Iterate_Mentors1</name>
+        <label>Iterate Mentors</label>
+        <locationX>50</locationX>
+        <locationY>1163</locationY>
+        <collectionReference>Mentor_Records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>GCEM</targetReference>
+        </nextValueConnector>
+    </loops>
+    <loops>
+        <name>Iterate_Mentors2</name>
+        <label>Iterate Mentors</label>
+        <locationX>666</locationX>
+        <locationY>1271</locationY>
+        <collectionReference>Mentor_Records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>GCOEM</targetReference>
+        </nextValueConnector>
+    </loops>
+    <loops>
+        <name>Iterate_Mentors3</name>
+        <label>Iterate Mentors</label>
+        <locationX>1282</locationX>
+        <locationY>1271</locationY>
+        <collectionReference>Mentor_Records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>GCPEM</targetReference>
+        </nextValueConnector>
+    </loops>
+    <loops>
+        <name>Iterate_Mentors4</name>
+        <label>Iterate Mentors</label>
+        <locationX>1898</locationX>
+        <locationY>1271</locationY>
+        <collectionReference>Mentor_Records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>GMEM</targetReference>
+        </nextValueConnector>
+    </loops>
+    <loops>
         <name>RR_Loop</name>
         <label>RR Loop</label>
-        <locationX>1304</locationX>
+        <locationX>1436</locationX>
         <locationY>431</locationY>
         <collectionReference>Get_RR_Data</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -715,7 +769,7 @@
             <targetReference>Mentor_Records</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Store</targetReference>
+            <targetReference>New_or_Updated</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -742,7 +796,7 @@
 We are doing this to send email alert to mentor.</description>
         <name>Get_RR_Data</name>
         <label>Get RR Data</label>
-        <locationX>1304</locationX>
+        <locationX>1436</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -754,13 +808,6 @@ We are doing this to send email alert to mentor.</description>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.Resource__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Relationship_Type__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
@@ -777,11 +824,11 @@ We are doing this to send email alert to mentor.</description>
     <recordLookups>
         <name>GoalCompletionOnTimeTemplateforMentor</name>
         <label>Goal Completion On Time Template for Mentor</label>
-        <locationX>578</locationX>
-        <locationY>1379</locationY>
+        <locationX>666</locationX>
+        <locationY>1163</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GCOTRME</targetReference>
+            <targetReference>Iterate_Mentors2</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -798,11 +845,11 @@ We are doing this to send email alert to mentor.</description>
     <recordLookups>
         <name>GoalCompletionPostTimeTemplateforMentor</name>
         <label>Goal Completion Post Time Template for Mentor</label>
-        <locationX>1106</locationX>
-        <locationY>1379</locationY>
+        <locationX>1282</locationX>
+        <locationY>1163</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GCPTRME</targetReference>
+            <targetReference>Iterate_Mentors3</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -820,10 +867,10 @@ We are doing this to send email alert to mentor.</description>
         <name>GoalCreatedTemplateforMentor</name>
         <label>Goal Created Template for Mentor</label>
         <locationX>50</locationX>
-        <locationY>1271</locationY>
+        <locationY>1055</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GCRME</targetReference>
+            <targetReference>Iterate_Mentors1</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -840,11 +887,11 @@ We are doing this to send email alert to mentor.</description>
     <recordLookups>
         <name>GoalMissedTemplateforMentor</name>
         <label>Goal Missed Template for Mentor</label>
-        <locationX>1634</locationX>
-        <locationY>1379</locationY>
+        <locationX>1898</locationX>
+        <locationY>1163</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GMRME</targetReference>
+            <targetReference>Iterate_Mentors4</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -859,7 +906,7 @@ We are doing this to send email alert to mentor.</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>1178</locationX>
+        <locationX>1310</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_RR_Data</targetReference>
@@ -892,36 +939,12 @@ We are doing this to send email alert to mentor.</description>
     </start>
     <status>Active</status>
     <variables>
-        <name>currentItem_Mentor_Records_0</name>
+        <name>currentItem_Mentor_Records</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Resource_Resource_Relationship__c</objectType>
-    </variables>
-    <variables>
-        <name>MentorEmail</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>MentorId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>MentorName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>Mentor</stringValue>
-        </value>
     </variables>
     <variables>
         <name>Mentors</name>
