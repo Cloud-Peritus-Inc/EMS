@@ -13,6 +13,7 @@
 * ====================================================================================================
 **/
 public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
+/*
     /**
     * @author Rakshitha
     * @date 11/01/2023
@@ -186,6 +187,8 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
         con.Phone='9979782222';
         con.Location__c='';
     }
+*/
+}
     
     
 }
