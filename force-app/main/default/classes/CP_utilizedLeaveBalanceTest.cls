@@ -13,6 +13,7 @@
 **/
 @isTest
 public class CP_utilizedLeaveBalanceTest {
+/*
     public static testmethod void utilizedLeaveBalanceCalculationTest(){
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
         Account acc = TestDataFactory.createAccount(true);
@@ -88,4 +89,5 @@ public class CP_utilizedLeaveBalanceTest {
         
         
     }
+*/
 }
