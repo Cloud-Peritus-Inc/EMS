@@ -36,8 +36,8 @@ global without sharing class BatchToCalculateTheAvailableLeaves implements Datab
                                          (SELECT EMS_LM_Employee__c,
                                           EMS_LM_Leave_Credited_Date__c,Leave_Type_Name__c, 
                                           EMS_LM_Leave_Type__c,EMS_LM_Leaves_Credited__c  FROM Leave_Credits__r WHERE EMS_LM_Leave_Credited_Date__c = THIS_YEAR ),
-                                         (SELECT Id,Leave_Type_Name__c,EMS_LM_Leave_Duration__c FROM Leaves_History__r 
-                                          WHERE EMS_LM_Leave_End_Date__c = THIS_YEAR AND EMS_LM_Status__c != 'Cancelled' AND EMS_LM_Status__c != 'Rejected' )
+                                         (SELECT Id,Leave_Type_Name__c,EMS_LM_Leave_Duration__c,EMS_LM_Leave_End_Date__c,CreatedDate FROM Leaves_History__r 
+                                          WHERE EMS_LM_Status__c != 'Cancelled' AND EMS_LM_Status__c != 'Rejected' )
                                          FROM CONTACT WHERE RecordTypeId =:ContactConstant.RESOURCE_RECORDTYPEID AND (EMS_RM_ApplicantStatus_Update__c = 'Active' OR EMS_RM_ApplicantStatus_Update__c = 'Active - Probation' ) ]);
     }
   
@@ -54,6 +54,8 @@ global without sharing class BatchToCalculateTheAvailableLeaves implements Datab
 **/
     global void execute(Database.BatchableContext BC, List<Contact> conList) {
          List<Contact> finalContactList = new List<Contact>();
+        Integer thisYear = System.today().year();
+		Integer nextYear = thisYear + 1;
         for(Contact contactRec : conList){  
             contactRec.EMS_LM_No_Of_Leaves_Credit__c = 0;
             contactRec.EMS_LM_No_Of_Compensatory_Off_Credit__c = 0;
@@ -95,6 +97,8 @@ global without sharing class BatchToCalculateTheAvailableLeaves implements Datab
             }
             
           for(EMS_LM_Leave_History__c  leaveutilRec : contactRec.Leaves_History__r){
+              if((leaveutilRec.EMS_LM_Leave_End_Date__c.year() == thisYear && leaveutilRec.CreatedDate.year() == thisYear) || (leaveutilRec.EMS_LM_Leave_End_Date__c.year() == nextYear && leaveutilRec.CreatedDate.year() == thisYear) ){
+
                 String leaveTypeRec = leaveutilRec.Leave_Type_Name__c ;
                 Switch on leaveTypeRec{
                     when 'Annual Leave'{
@@ -115,7 +119,8 @@ global without sharing class BatchToCalculateTheAvailableLeaves implements Datab
                     when 'Paternity Leave'{
                         contactRec.No_Of_Utilized_Paternity_Leaves__c = contactRec.No_Of_Utilized_Paternity_Leaves__c + leaveutilRec.EMS_LM_Leave_Duration__c;
                     }
-                }               
+                }
+          }
           }
             
              finalContactList.add(contactRec);
