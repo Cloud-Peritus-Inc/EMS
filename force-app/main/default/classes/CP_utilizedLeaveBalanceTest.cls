@@ -13,8 +13,9 @@
 **/
 @isTest
 public class CP_utilizedLeaveBalanceTest {
-/*
+
     public static testmethod void utilizedLeaveBalanceCalculationTest(){
+        /*
         Resource_Role__c role = TestDataFactory.createResourceRole(true);
         Account acc = TestDataFactory.createAccount(true);
         
@@ -35,16 +36,6 @@ public class CP_utilizedLeaveBalanceTest {
         insert con;
         List<EMS_LM_Leave_History__c> leaveHistoryList = new List<EMS_LM_Leave_History__c>();
         List<EMS_LM_Leave_History__c> leaveHistoryOldList = new List<EMS_LM_Leave_History__c>();
-       /*
-        EMS_LM_Leave_History__c leaveHistory = new EMS_LM_Leave_History__c();
-        leaveHistory.EMS_LM_Leave_Type_Name__c = 'Annual Leave';
-        leaveHistory.EMS_LM_Status__c = 'Approved';
-        leaveHistory.EMS_LM_Leave_Duration__c = 3;
-        leaveHistory.EMS_LM_Contact__c = con.Id;
-        leaveHistory.EMS_LM_Leave_End_Date__c = date.parse('1/23/2024');
-        leaveHistory.EMS_LM_Leave_Start_Date__c = date.parse('1/23/2024');
-        insert leaveHistory;
-*/
          EMS_LM_Leave_History__c leaveHistory = new EMS_LM_Leave_History__c(); 
             leaveHistory.EMS_LM_Contact__c = con.Id;
             leaveHistory.EMS_LM_Day__c = 'Full Day';
@@ -86,8 +77,8 @@ public class CP_utilizedLeaveBalanceTest {
         CP_utilizedLeaveBalance.afterUpdate(leaveHistoryList,leaveHistoryOldList);
         CP_utilizedLeaveBalance.leaveCheck();
         test.stopTest(); 
-        
+       */ 
         
     }
-*/
+
 }
