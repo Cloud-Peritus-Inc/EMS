@@ -197,6 +197,9 @@ public with sharing class ChangeProjectActionButtonController {
         System.debug(' ## Updated assignments :: ' + assignmentToUpdate);
         UPDATE assignmentToUpdate;
     }
+@AuraEnabled
+Public static void fetchContactRecordsData(){
+}
     
     //------------
     
