@@ -58,6 +58,15 @@ public without sharing class generatePerformanceKRAController {
                     ];
                 }else { //smaske : [PM_064] added else for fetching KRA records created from Joining date if any appraisal date not found
                     System.debug('#ELSE 2');
+
+                    //smaske:[QA_PR_031] : Showing records for current quarter.
+                    Date today = Date.today();
+                    Integer quarterNumber = (Integer)Math.ceil(today.month() / 3.0);
+                    // Calculate start date of the quarter
+                    Date quarterStart = Date.newInstance(today.year(), (quarterNumber - 1) * 3 + 1, 1);
+                    // Calculate end date of the quarter
+                    Date quarterEnd = quarterStart.addMonths(3).addDays(-1);
+
                     kraGoalRecords = [Select Id,Name,Resource__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
                     Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
                     Fulfillment__r.Fiscal_Year__c
@@ -65,8 +74,9 @@ public without sharing class generatePerformanceKRAController {
                     FROM  Goal__c 
                     WHERE Resource__c =: member.Id 
                     AND RecordTypeId =: KRARecTypeId
-                    AND Quarter_Start_Date__c>= :member.EMS_EM_JD__c
-                    //AND Fulfillment__r.Fiscal_Year__c =: fy
+                    //AND Quarter_Start_Date__c>= :member.EMS_EM_JD__c
+                    AND Quarter_Start_Date__c >= :quarterStart
+                    AND Quarter_End_Date__c <= :quarterEnd
                     ];
                     
                 }
