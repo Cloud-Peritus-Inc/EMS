@@ -13,7 +13,7 @@
 * ====================================================================================================
 **/
 public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
-/*
+
     /**
     * @author Rakshitha
     * @date 11/01/2023
@@ -26,6 +26,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
     * ====================================================================================================
     **/
     public static void afterUpdate(List<EMS_LM_Leave_History__c> newList, List<EMS_LM_Leave_History__c> oldList) {
+     /*   
         try {
             System.debug(LoggingLevel.DEBUG, 'CP_utilizedLeaveBalance.afterUpdate() : BEGIN');
             List<EMS_LM_Leave_History__c> l = new List<EMS_LM_Leave_History__c>();
@@ -42,7 +43,9 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
         } catch(Exception e ) {
             LogException.logHandledException(e, 'CP_utilizedLeaveBalance', 'afterUpdate');
         }
+*/
     }
+
     /**
     *   {Purpose} - Method to populate used for leave balance updating after utilized leaves
     *
@@ -53,6 +56,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
     *   ====================================================================================================
     **/
     public static void utilizedLeaveBalanceCalculation(List<EMS_LM_Leave_History__c> leaveHistory) {
+       /* 
         try {
             List<Id> leaveIdsList = new List<Id>();
             for (EMS_LM_Leave_History__c leaveRecord : leaveHistory) {
@@ -176,6 +180,7 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
         } catch(Exception e ) {
             LogException.logHandledException(e, 'CP_utilizedLeaveBalance', 'utilizedLeaveBalanceCalculation');
         }
+*/
     }
     public static void leaveCheck(){
         Contact con=new Contact();
@@ -187,8 +192,6 @@ public class CP_utilizedLeaveBalance implements TriggerAction.AfterUpdate{
         con.Phone='9979782222';
         con.Location__c='';
     }
-*/
 }
     
     
-}
