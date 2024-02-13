@@ -242,7 +242,7 @@ public without sharing class myMetricsController {
                                                               relationshipMap.put(loggedInUserConId, rrr.Resource__c);
                                                               //Testing   , Lokesh
                                                           }
-
+                                                          System.debug(' relationshipMap records ' + relationshipMap);
             if (!records.isEmpty()) {
 
                 for(Goal__c go : records){
@@ -253,20 +253,32 @@ public without sharing class myMetricsController {
                     for(Id key : relationshipMap.keySet()) {
                         Id subContactRRR = relationshipMap.get(loggedInUserConId);
                         Id subContactGoal = goalsMap.get(loggedInUserConId);
-                        System.debug(' INSIDE MAP CHECK');
+
+                        System.debug(' INSIDE MAP CHECK ' + subContactRRR  + ' --- ' + subContactGoal);
                         if( subContactRRR != subContactGoal){
                             pulseRecordList = createKraPulseRecords(loggedInUserConId,full.Id);
                         }
                     }
                 }
+
+                //smaske [QA_PR_037]: copying all records to pulseRecordList,
+                // coz if for all mentee pulse is created and no new pulse is getting created data was returning null,
+                // as we are not returning the "records"
+                if (pulseRecordList.isEmpty()) {
+                    pulseRecordList.addAll(records);
+                }
+
             }else{
+                System.debug(' records not empty 271 ');
                 pulseRecordList = createKraPulseRecords(loggedInUserConId,full.Id);
+                System.debug(' records not empty 271 ' + pulseRecordList);
             }
 
         } catch (Exception e) {
             System.debug('An error occurred: ' + e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
+        System.debug(' B4 RETURN ' + pulseRecordList);
         return pulseRecordList;     
     }
 
