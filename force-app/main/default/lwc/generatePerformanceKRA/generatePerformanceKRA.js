@@ -107,6 +107,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     @wire(getCompensationDetails, { selectedresource: '$member'})
     wiredComp({ data, error }) {
         if(data == null){
+            console.log("getCompensationDetails NULL");
             this.Compensation.Reviewed_By__c =this.userId;
             this.Compensation.Resource__c =this.member;
             if (this.Contact && this.Contact.Next_Appraisal_Date__c) {
@@ -119,6 +120,15 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                 var lastAppraisalDate = new Date(this.Contact.Last_Appraisal_Date__c);
                 var nextYearDate = new Date(lastAppraisalDate);
                 nextYearDate.setFullYear(lastAppraisalDate.getFullYear() + 1);
+                var formattedNextYearDate = nextYearDate.toISOString().split('T')[0];
+                //smaske : PM_079/PM_078 : for populating date value
+                let RR = { ...this.Compensation };
+                RR.Next_Appraisal_Date__c = formattedNextYearDate;
+                this.Compensation = RR;
+            } else {
+                var today = new Date();
+                var nextYearDate = new Date(today);
+                nextYearDate.setFullYear(today.getFullYear() + 1);
                 var formattedNextYearDate = nextYearDate.toISOString().split('T')[0];
                 //smaske : PM_079/PM_078 : for populating date value
                 let RR = { ...this.Compensation };

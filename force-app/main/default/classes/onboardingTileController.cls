@@ -180,7 +180,7 @@ public without sharing class onboardingTileController {
          integer utlizationPercentage = 0;
          Integer lastPto = 0;
         for(Goal__c gl : goalList){
-            if(gl.Status__c == 'Active'){
+            if(gl.Status__c == 'In Progress'){//'Active'){
                 numberofInprogress = numberofInprogress +1;
             }else if(gl.Status__c == 'Completed - OnTime' || gl.Status__c == 'Completed - PostTime'){
                 numberofCompleted = numberofCompleted +1;
