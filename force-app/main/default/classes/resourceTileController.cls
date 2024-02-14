@@ -168,31 +168,32 @@ public without sharing class resourceTileController {
     @AuraEnabled(cacheable=true)
     public static datawrapper getUserHiearchyInfo(Id userId) {
         
-        
+        Id conReportToId;
         User urecord = [SELECT FullPhotoUrl,Id,Name,Employee_Id__c,Contact.EMS_RM_Employee_Id__c,ContactId,contact.ReportsToId,
                         Contact.ReportsTo.Name,Contact.Resource_Role__r.Name FROM User WHERE Id = :Userinfo.getUserId() and ContactId != null];
         
-        Contact conRec = [SELECT Id,Work_Location__c,Work_Location__r.Country__c,ReportsTo.Resource_Role__r.Name,(SELECT Id,Resource_Reports_Name__c,Resource_Reports_To__c FROM Resource_Resource_Relationships__r where Relationship_Type__c='Mentor')
+        Contact conRec = [SELECT Id,Work_Location__c,Work_Location__r.Country__c,ReportsTo.Resource_Role__r.Name,(SELECT Id,Resource_Reports_Name__c,Resource_Reports_To__c FROM Resource_Resource_Relationships__r where Relationship_Type__c INCLUDES('Mentor'))
                           ReportsTo.EMS_RM_Employee_Id__c,ReportsTo.EMS_TM_User__c,
                           ReportsTo.EMS_TM_User__r.FullPhotoUrl,ReportsTo.Name,ReportsToId FROM Contact WHERE Id=:urecord.contactId AND EMS_RM_ApplicantStatus_Update__c != 'Inactive'];
         
         if (!conRec.Resource_Resource_Relationships__r.isEmpty()) {
-          Id mentorId = conRec.Resource_Resource_Relationships__r[0].Id;
+            Id mentorId = conRec.Resource_Resource_Relationships__r[0].Id;
+            conReportToId = conRec.Resource_Resource_Relationships__r[0].Resource_Reports_To__c;
         }
         
         List<Contact> mydirectReports = new List<Contact>();
         Set<Id> myrepotiescontids = new Set<Id>();
         Set<Id> mereportsTo = new Set<Id>();
-        for(Resource_Resource_Relationship__c rrr : [SELECT Id,Resource__c,Resource_Reports_To__c,Relationship_Type__c FROM Resource_Resource_Relationship__c WHERE ( Resource_Reports_To__c=:urecord.contactId OR Resource__c=:urecord.contactId) ]){//AND Relationship_Type__c = 'Mentor']){
+        for(Resource_Resource_Relationship__c rrr : [SELECT Id,Resource__c,Resource_Reports_To__c,Relationship_Type__c FROM Resource_Resource_Relationship__c WHERE ( Resource_Reports_To__c=:urecord.contactId OR Resource__c=:urecord.contactId) AND Relationship_Type__c INCLUDES('Mentor')]){
             if(rrr.Resource__c == urecord.contactId){
                 if(rrr.Relationship_Type__c.contains('Mentor')){
-                myrepotiescontids.add(rrr.Resource__c);
-                    }
+                    myrepotiescontids.add(rrr.Resource__c);
+                }
             }
             if(rrr.Resource_Reports_To__c == urecord.contactId){
-                if(rrr.Relationship_Type__c.contains('Mentor')){
+                // if(rrr.Relationship_Type__c.contains('Mentor')){
                 mereportsTo.add(rrr.Resource__c);
-                }
+                // }
             }
             
         }
@@ -221,25 +222,27 @@ public without sharing class resourceTileController {
                                        dwrap2.resourceContactId = myreporties.id;
                                        directReportsList.add(dwrap2);
                                    }
-        
-            for(Contact myreporties : [SELECT Id,Name,EMS_TM_User__r.FullPhotoUrl,EMS_RM_Employee_Id__c,Resource_Role__r.Name,ReportsTo.Name
-                                       ,(SELECT Id,Resource_Reports_Name__c FROM Resource_Resource_Relationships__r where Relationship_Type__c='Mentor'),EMS_TM_User__c FROM Contact WHERE Id=:conRec.Resource_Resource_Relationships__r[0].Resource_Reports_To__c AND EMS_TM_User__r.isActive = true AND EMS_RM_ApplicantStatus_Update__c != 'Inactive']){
-                                           datawrapper dwrap2 = new datawrapper();
-                                           dwrap2.resourceName = myreporties.Name;
-                                           dwrap2.resourcePhotoURL = myreporties.EMS_TM_User__r.FullPhotoUrl;
-                                           dwrap2.resourceCpId = myreporties.EMS_RM_Employee_Id__c;
-                                           dwrap2.resourceRole = myreporties.Resource_Role__r.Name;
-                                           if (!myreporties.Resource_Resource_Relationships__r.isEmpty()) {
-                                               dwrap2.resourceReportTo = myreporties.Resource_Resource_Relationships__r[0].Resource_Reports_Name__c;//myreporties.ReportsTo.Name;
-                                           }
-                                           
-                                           dwrap2.resourceUserId = myreporties.EMS_TM_User__c;
-                                           dwrap2.resourceContactId = myreporties.id;
-                                           meReportsToList.add(dwrap2);
+        if (conReportToId != null) {
+        for(Contact myreporties : [SELECT Id,Name,EMS_TM_User__r.FullPhotoUrl,EMS_RM_Employee_Id__c,Resource_Role__r.Name,ReportsTo.Name
+                                   ,(SELECT Id,Resource_Reports_Name__c FROM Resource_Resource_Relationships__r where Relationship_Type__c INCLUDES('Mentor')),EMS_TM_User__c FROM Contact WHERE Id=:conReportToId AND EMS_TM_User__r.isActive = true AND EMS_RM_ApplicantStatus_Update__c != 'Inactive']){
+                                       datawrapper dwrap2 = new datawrapper();
+                                       dwrap2.resourceName = myreporties.Name;
+                                       dwrap2.resourcePhotoURL = myreporties.EMS_TM_User__r.FullPhotoUrl;
+                                       dwrap2.resourceCpId = myreporties.EMS_RM_Employee_Id__c;
+                                       dwrap2.resourceRole = myreporties.Resource_Role__r.Name;
+                                       if (!myreporties.Resource_Resource_Relationships__r.isEmpty()) {
+                                           dwrap2.resourceReportTo = myreporties.Resource_Resource_Relationships__r[0].Resource_Reports_Name__c;//myreporties.ReportsTo.Name;
                                        }
+                                       
+                                       dwrap2.resourceUserId = myreporties.EMS_TM_User__c;
+                                       dwrap2.resourceContactId = myreporties.id;
+                                       meReportsToList.add(dwrap2);
+                                   }
+            dwrap.meReportsToList = meReportsToList;
+        }
         
         dwrap.directReportesUnderme = directReportsList;
-        dwrap.meReportsToList = meReportsToList;
+        
         
         return dwrap;  
     }
@@ -249,10 +252,10 @@ public without sharing class resourceTileController {
                         Contact.ReportsTo.Name,Contact.Resource_Role__r.Name FROM User WHERE Id = :userId and ContactId != null];
         
         List<Resource_Resource_Relationship__c> resourceList =[select id,Resource__r.id,Resource_Reports_To__c,Relationship_Type__c from Resource_Resource_Relationship__c where Resource_Reports_To__c=:urecord.contactId and Resource__r.EMS_TM_User__r.IsPortalEnabled = true and Resource__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive'];
-          Set<Id> resourceIds = new Set<Id>();
+        Set<Id> resourceIds = new Set<Id>();
         for(Resource_Resource_Relationship__c rr:resourceList){
             if(rr.Relationship_Type__c.contains('Mentor')){
-            resourceIds.add(rr.Resource__r.id);
+                resourceIds.add(rr.Resource__r.id);
             }
         }
         
@@ -260,7 +263,7 @@ public without sharing class resourceTileController {
                                        EMS_TM_User__c FROM Contact WHERE ID IN : resourceIds AND ReportsToId=:urecord.contactId AND EMS_RM_ApplicantStatus_Update__c != 'Inactive' AND EMS_TM_User__r.IsPortalEnabled = true ];
         
         /*List<Contact> directReports = [SELECT Id,Name,EMS_TM_User__r.FullPhotoUrl,EMS_RM_Employee_Id__c,Resource_Role__r.Name,ReportsTo.Name,
-                                       EMS_TM_User__c FROM Contact WHERE ReportsToId=:urecord.contactId AND EMS_RM_ApplicantStatus_Update__c != 'Inactive'];*/
+			EMS_TM_User__c FROM Contact WHERE ReportsToId=:urecord.contactId AND EMS_RM_ApplicantStatus_Update__c != 'Inactive'];*/
         
         List<datawrapper> reporteesList = new List<datawrapper>();
         for(Contact reportee : directReports){
