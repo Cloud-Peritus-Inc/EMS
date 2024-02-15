@@ -67,7 +67,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
     showShiningStar = false;
     showGoingAboveBeyond = false;
     showAwardOfExcellence = false;
-
+    Result = false;
     //Declared sObject variable for each section for Primary and Secondary nomination
     BE_PR_RR = {
         sobjectType: this.RAR,
@@ -654,47 +654,54 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
 
     validationOnSaveButton(){
 
-        let Result = false;
-        if (this.BE_PR_RR || this.BE_SE_RR) {
+        //let Result = false;
+
+        if(this.BE_PR_RR.Resource__c!=null && this.BE_SE_RR!=null){
             if (this.BE_PR_RR.Resource__c === this.BE_SE_RR.Resource__c) {
                 this.removeDuplicateRecord(this.BE_SE_RR.Resource__c, this.BE_SE_RR.Award_Type__c);
                 this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-                Result = false;
-            } }else if(this.MP_PR_RR || this.MP_SE_RR){
-                if (this.MP_PR_RR.Resource__c === this.BE_SE_RR.Resource__c) {
-                    this.removeDuplicateRecord(this.MP_SE_RR.Resource__c, this.MP_SE_RR.Award_Type__c);
-                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-                    Result = false;
-                }
-            }else if(this.RIS_PR_RR || this.RIS_SE_RR){
-                if (this.RIS_PR_RR.Resource__c === this.RIS_SE_RR.Resource__c) {
-                    this.removeDuplicateRecord(this.RIS_SE_RR.Resource__c, this.RIS_SE_RR.Award_Type__c);
-                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-                    Result = false;
-                }
-            }else if(this.ROS_PR_RR || this.ROS_SE_RR){
-                if (this.ROS_PR_RR.Resource__c === this.ROS_SE_RR.Resource__c) {
-                    this.removeDuplicateRecord(this.ROS_SE_RR.Resource__c, this.ROS_SE_RR.Award_Type__c);
-                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-                    Result = false;
-                }
-            }else if(this.SS_PR_RR || this.SS_SE_RR){
-                if (this.SS_PR_RR.Resource__c === this.SS_SE_RR.Resource__c) {
-                    this.removeDuplicateRecord(this.SS_SE_RR.Resource__c, this.SS_SE_RR.Award_Type__c);
-                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-                    Result = false;
-                }
-            }else if(this.GAB_PR_RR || this.GAB_SE_RR){
-                if (this.GAB_PR_RR.Resource__c === this.GAB_SE_RR.Resource__c) {
-                    this.removeDuplicateRecord(this.GAB_SE_RR.Resource__c, this.GAB_SE_RR.Award_Type__c);
-                    this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-                    Result = false;
-                }
-            }else{
-                Result = true;
+                return false;
+            } 
+          }else if(this.MP_PR_RR.Resource__c!=null && this.MP_SE_RR.Resource__c!=null){
+             if (this.MP_PR_RR.Resource__c === this.MP_SE_RR.Resource__c) {
+                this.removeDuplicateRecord(this.MP_SE_RR.Resource__c, this.MP_SE_RR.Award_Type__c);
+                this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+                return false;
             }
-
-    }
+           }else if(this.RIS_PR_RR.Resource__c!=null && this.RIS_SE_RR.Resource__c!=null){
+            if (this.RIS_PR_RR.Resource__c === this.RIS_SE_RR.Resource__c) {
+               this.removeDuplicateRecord(this.RIS_SE_RR.Resource__c, this.RIS_SE_RR.Award_Type__c);
+               this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+               return false;
+           }
+           }else if(this.ROS_PR_RR.Resource__c!=null && this.ROS_SE_RR.Resource__c!=null){
+        if (this.ROS_PR_RR.Resource__c === this.ROS_SE_RR.Resource__c) {
+           this.removeDuplicateRecord(this.ROS_SE_RR.Resource__c, this.ROS_SE_RR.Award_Type__c);
+           this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+           return false;
+          }
+         }else if(this.SS_PR_RR.Resource__c!=null && this.SS_SE_RR.Resource__c!=null){
+    if (this.SS_PR_RR.Resource__c === this.SS_SE_RR.Resource__c) {
+       this.removeDuplicateRecord(this.SS_SE_RR.Resource__c, this.SS_SE_RR.Award_Type__c);
+       this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+       return false;
+   }
+     }else if(this.GAB_PR_RR.Resource__c!=null && this.GAB_SE_RR.Resource__c!=null){
+    if (this.GAB_PR_RR.Resource__c === this.GAB_SE_RR.Resource__c) {
+       this.removeDuplicateRecord(this.GAB_SE_RR.Resource__c, this.GAB_SE_RR.Award_Type__c);
+       this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+       return false;
+     }
+      }else if(this.AE_PR_RR.Resource__c!=null && this.AE_SE_RR.Resource__c!=null){
+        if (this.AE_PR_RR.Resource__c === this.AE_SE_RR.Resource__c) {
+           this.removeDuplicateRecord(this.AE_SE_RR.Resource__c, this.AE_SE_RR.Award_Type__c);
+           this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+           return false;
+         }
+          }else {
+            return true;
+          }
+        }
 
     //SAVE BUTTON CODE
     handleSaveButtonAction() {
@@ -703,7 +710,11 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         let sectionObjects = [this.BE_PR_RR, this.BE_SE_RR, this.MP_PR_RR, this.MP_SE_RR, this.RIS_PR_RR, this.RIS_SE_RR, this.ROS_PR_RR, this.ROS_SE_RR, this.SS_PR_RR, this.SS_SE_RR, this.GAB_PR_RR, this.GAB_SE_RR, this.AE_PR_RR, this.AE_SE_RR];
         //console.log(" $ sectionObjects " + JSON.stringify(sectionObjects));
         console.log(this.BE_PR_RR);
-        this.validationOnSaveButton();
+        let returnValue = this.validationOnSaveButton();
+        if (returnValue==false){
+            return false;
+        }
+
         let isPrevSectionValPopulated = this.hasObjectWithPopulatedValues();
         console.log("isPrevSectionValPopulated " + isPrevSectionValPopulated);
         var Result = this.addObjToArrAndValidate(this.selectedStep);
@@ -788,8 +799,10 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         var Result = this.addObjToArrAndValidate(this.selectedStep);
         console.log("# isPrevSectionValPopulated # " + JSON.stringify(Result));
         console.log("# Result # " + JSON.stringify(Result));
-        this.validationOnSaveButton();
-
+        let returnValue = this.validationOnSaveButton();
+        if (returnValue==false){
+            return false;
+        }
         if (Result) {
             if (isPrevSectionValPopulated) {
                 //14/12/2024 : passing sectionObjects instead of rewardAndRecognitionRecords to apex

@@ -186,6 +186,8 @@ public without sharing class onboardingTileController {
                 numberofCompleted = numberofCompleted +1;
             }else if(gl.Status__c == 'Missed'){
                 numberofMissed = numberofMissed +1;
+            }else if(gl.Status__c == 'Active'){
+                numberofActive = numberofActive+1;
             }else if(gl.Status__c == 'Draft'){
                 numberofDraft = numberofDraft +1;
             }
@@ -202,6 +204,7 @@ public without sharing class onboardingTileController {
         dwrap.numberofCompleted=numberofCompleted;
         dwrap.numberofInprogress=numberofInprogress;
          dwrap.numberofMissed=numberofMissed;
+         dwrap.numberofActive = numberofActive;
          dwrap.numberofDraft = numberofDraft;
          dwrap.numberofstricks=numberofstricks;
          dwrap.utlizationPercentage=utlizationPercentage;
@@ -215,6 +218,8 @@ public without sharing class onboardingTileController {
         public integer numberofCompleted;
         @AuraEnabled
         public integer numberofInprogress;
+         @AuraEnabled
+        public integer numberofActive;
         @AuraEnabled
         public integer numberofMissed;
         @AuraEnabled

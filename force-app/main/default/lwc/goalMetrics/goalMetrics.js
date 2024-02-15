@@ -30,6 +30,7 @@ loaded = false
          this.numberofInprogress = data.numberofInprogress;
           this.numberofMissed = data.numberofMissed;
           this.numberofDraft = data.numberofDraft;
+          this.numberofActive = data.numberofActive;
            //this.numberofstricks = data.numberofstricks;
            this.utlizationPercentage = data.utlizationPercentage;
            this.lastPto = data.lastPto;
