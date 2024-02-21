@@ -63,6 +63,7 @@ handlerichChange(event) {
   this.selectedfy = event.detail.value;
   console.log('==selectedfy===='+this.selectedfy);
   this.getTheKRA();
+  this.getCheckInfo();
  }
   handleResourceChange(event) {
   this.showtheFY = true;
@@ -93,6 +94,8 @@ this.showkras = event.target.checked;
 }
 
  getTheKRA(){
+    console.log("IN GET KRA LWC");
+    console.log(" RESOURCE VALUE " + this.selectedresource);
      getResourceKRAs({ 
              resourceId : this.selectedresource,
              fyId : this.selectedfy   
