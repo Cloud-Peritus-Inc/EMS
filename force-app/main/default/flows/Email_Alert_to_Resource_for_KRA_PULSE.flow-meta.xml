@@ -18,6 +18,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Email_alert_to_Team_Member_on_Kra_Pulse_Creation</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>When the CHECKIN user Submits the PLUSE (Feeback) Send a confirmation email</description>
@@ -34,6 +36,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Pulse_Feedback_Submitted_Alert</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Send an email alert to update the user that feedback has been sent. (Who is requesting the feedback)</description>
@@ -50,6 +54,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Pulse_Review_Alert_for_Feedback_Receiver</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <decisions>

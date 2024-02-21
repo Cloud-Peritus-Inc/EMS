@@ -65,7 +65,8 @@ public without sharing class myMetricsController {
                   
             }
         }
-          returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
+        //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
+          returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
                          (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Rating__c,Status__c,Type__c, Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
@@ -95,7 +96,8 @@ public without sharing class myMetricsController {
                pw.lastmodifyby =ful.LastModifiedBy.Name;
                pw.rating = String.valueOf(ful.Avg_Rating__c);
                pw.lastmodified = ful.LastModifiedDate;
-               pw.nextappdate = ful.Resource__r.Appraisal_Date__c;
+               //smaske : [UAT_PR_008] : replacing Appraisal_Date__c to Next_Appraisal_Date__c
+               pw.nextappdate = ful.Resource__r.Next_Appraisal_Date__c;
                pw.qualList = qlist;
                pw.status = ful.Status__c;
                pw.dontallowCreateGoals = true;
@@ -169,7 +171,8 @@ public without sharing class myMetricsController {
         Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
         List<Fulfillment__c> returnList = new List<Fulfillment__c>();
         List<perfWrapper> returnval = new List<perfWrapper>();
-        returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
+        //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
+        returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
                          (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Rating__c,Status__c,Type__c, Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
         
         
@@ -201,7 +204,8 @@ public without sharing class myMetricsController {
                pw.lastmodifyby =ful.LastModifiedBy.Name;
                pw.rating = String.valueOf(ful.Avg_Rating__c);
                pw.lastmodified = ful.LastModifiedDate;
-               pw.nextappdate = ful.Resource__r.Appraisal_Date__c;
+               //smaske : [UAT_PR_008] : replacing Appraisal_Date__c to Next_Appraisal_Date__c
+               pw.nextappdate = ful.Resource__r.Next_Appraisal_Date__c;
                pw.qualList = qlist;
                pw.status = ful.Status__c;
                pw.dontallowCreateGoals = true;

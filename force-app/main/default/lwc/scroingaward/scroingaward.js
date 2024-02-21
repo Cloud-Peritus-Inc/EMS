@@ -160,9 +160,10 @@ handleChange(event) {
         fyId : this.selectedfy   
         }).then(result => {
             console.log('====winnnerlist===result====='+JSON.stringify(result));
-        this.nomstable = result.CurrentList;
+        this.nomstable = result.currentList;
         this.alreadyAnnounced = result.alreadyannounced;
-        if(result.length > 0){
+        //smaske : [UAT_PR_010] : updated the if condition as old condition was failing
+        if(result.currentList.length > 0){
             this.showtable = true;
             this.disableconfirmbutton = false;
         }else{
