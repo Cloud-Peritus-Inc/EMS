@@ -164,7 +164,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                  wd.currentFYName = rr.Fiscal_Year__r.Name;
                  wd.resourceName = rr.Resource__r.Name;
                  wd.resourcePhotoURL = rr.Resource__r.EMS_TM_User__r.FullPhotoUrl;
-                 wd.awardComments = rr.Reason_for_award__c;
+                 wd.awardComments = rr.Reason_for_award__c.stripHtmlTags();
                 wd.resourceId = rr.Resource__c;
                winnerMap.put(uniqueKey,wd);
                 }
@@ -186,7 +186,10 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                                             WHERE RecordTypeId =:RR_WINNER_RECORDTYPEID
                                             AND Type__c = 'ShoutOut'
                                             AND Fiscal_Year__c=:fyId
-                                            AND Recognization_By__c =:Userinfo.getUserId()]){
+                                            AND Recognization_By__c =:Userinfo.getUserId()
+                                            //smaske : updated query to return data in DESC order based on createdDate
+                                            ORDER BY CreatedDate DESC
+                                            ]){
           
                 winnerdetails wd = new winnerdetails();
                  wd.awardType = rr.Award_Type__c;
@@ -216,7 +219,10 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                                             WHERE RecordTypeId =:RR_WINNER_RECORDTYPEID
                                             AND Type__c = 'Recognize'
                                             AND Fiscal_Year__c=:fyId
-                                            AND Recognization_By__c =:Userinfo.getUserId()]){
+                                            AND Recognization_By__c =:Userinfo.getUserId()
+                                            //smaske : updated query to return data in DESC order based on createdDate
+                                            ORDER BY CreatedDate DESC
+                                            ]){
           
                 winnerdetails wd = new winnerdetails();
                  wd.awardType = rr.Award_Type__c;
@@ -253,7 +259,10 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                                             WHERE RecordTypeId =:RR_WINNER_RECORDTYPEID
                                             AND Type__c = 'Recognize'
                                             AND Fiscal_Year__c=:fyId
-                                            AND Resource__c =:loggedinUser.ContactId];
+                                            AND Resource__c =:loggedinUser.ContactId
+                                            //smaske : updated query to return data in DESC order based on createdDate
+                                            ORDER BY CreatedDate DESC
+                                            ];
         for (Reward_And_Recognition__c rr : rrList) {
             contactIds.add(rr.Recognization_By__r.ContactId);
         }
@@ -292,7 +301,11 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                                             Comments__c,Shout_Out_Heading__c,CreatedDate,Status__c FROM Reward_And_Recognition__c 
                                             WHERE RecordTypeId =:RR_WINNER_RECORDTYPEID
                                             AND Type__c = 'Annual Award'
-                                            AND Resource__c =:loggedinUser.ContactId]){
+                                            AND Fiscal_Year__c=:fyId
+                                            AND Resource__c =:loggedinUser.ContactId
+                                            //smaske : updated query to return data in DESC order based on createdDate
+                                            ORDER BY CreatedDate DESC
+                                            ]){
           
                 winnerdetails wd = new winnerdetails();
                  wd.awardType = rr.Award_Type__c;
@@ -317,10 +330,16 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
          system.debug('===Userinfo.getUserId()======'+Userinfo.getUserId());
         for(Reward_And_Recognition__c rr : [SELECT Id,Recognization_By__c,Recognization_By__r.Name,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,
                                             Resource__c,Award_Type__c,Fiscal_Year__c,Project__c,Types_of_Recognition__c,Project__r.Name,RecordTypeId,Fiscal_Year__r.Name,Type__c,Type_of_Shout_Out__c,
-                                            Comments__c,Shout_Out_Heading__c,CreatedDate,Status__c,RecordType.Name,of_Primary_Nominations__c,of_Secondary_Nominations__c FROM Reward_And_Recognition__c 
+                                            Comments__c,Shout_Out_Heading__c,CreatedDate,Status__c,RecordType.Name,of_Primary_Nominations__c,of_Secondary_Nominations__c,Nomination_Submitted__c FROM Reward_And_Recognition__c 
                                             WHERE Fiscal_Year__c=:fyId
                                             AND Type__c = 'Annual Award'
-                                            AND Recognization_By__c =:loggedinUser.Id]){
+                                            AND Recognization_By__c =:loggedinUser.Id
+                                            //smaske : [UAT_PR_013] : Only fetching Nominations Recordtype records,where status is Nominated/Draft/Winner/Lost
+                                            AND RecordTypeId =: RR_NOMINATION_RECORDTYPEID
+                                            AND Status__c IN ('Nominated', 'Draft', 'Winner', 'Lost')
+                                            //smaske : updated query to return data in DESC order based on createdDate
+                                            ORDER BY CreatedDate DESC
+                                            ]){
           
                 winnerdetails wd = new winnerdetails();
                  wd.awardType = rr.Award_Type__c;
@@ -388,7 +407,10 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                                             WHERE RecordTypeId =:RR_WINNER_RECORDTYPEID
                                             AND Type__c = 'ShoutOut'
                                             AND Fiscal_Year__c=:fyId
-                                            AND Resource__c =:loggedinUser.ContactId];
+                                            AND Resource__c =:loggedinUser.ContactId
+                                            //smaske : updated query to return data in DESC order based on createdDate
+                                            ORDER BY CreatedDate DESC
+                                            ];
         
         for (Reward_And_Recognition__c rr : rrList) {
             contactIds.add(rr.Recognization_By__r.ContactId);

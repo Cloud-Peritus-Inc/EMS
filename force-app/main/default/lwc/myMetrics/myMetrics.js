@@ -96,6 +96,7 @@ export default class MyMetrics extends LightningElement {
     }
 
     getallKrafromserver() {
+        console.log('Called by child');
         getAllKRAs({
             fyId: this.selectedfy
         })

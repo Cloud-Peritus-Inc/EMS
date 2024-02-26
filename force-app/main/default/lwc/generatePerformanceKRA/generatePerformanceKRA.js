@@ -26,6 +26,8 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     totalkraRecords = 0;
     @track averageOverallRating = 0;
     @track Compensation = {sobjectType:'Compensation__c'};
+    //smaske : [PM_075] : declared new variable for refresh 
+    wiredCompensations;
     @track CompensationDates = [];
     @track dataLoaded = false;
     //smaske : PM_079/PM_078
@@ -105,7 +107,10 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     }
 
     @wire(getCompensationDetails, { selectedresource: '$member'})
-    wiredComp({ data, error }) {
+    //smaske : [PM_075] : Updated wired method to handle refreshapex
+    wiredComp(value) {
+        this.wiredCompensations = value; // track the provisioned value 
+        const { data, error } = value; // destructure the provisioned value
         if(data == null){
             console.log("getCompensationDetails NULL");
             this.Compensation.Reviewed_By__c =this.userId;
@@ -267,14 +272,9 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                     let msg = 'Record Submitted Successfully !';
                     this.showNotification(msg, this.successVariant);
                     this.dispatchEvent(new CustomEvent('close'))
-                    /* this[NavigationMixin.Navigate]({
-                        type: 'comm__namedPage',
-                        attributes: {
-                            name: 'Home'
-                        }
-                    }); */
 
-                    return refreshApex(this.Compensation);
+                    //smaske : [PM_075] : Refreshing wiredCompensations 
+                    return refreshApex(this.wiredCompensations);
                 })
                 .catch(error => {
                     let msg = 'Error Submitting Records!';

@@ -8,9 +8,6 @@
         <locationY>431</locationY>
         <actionName>Reward_And_Recognition__c.Annual_Award_Submission_Alert</actionName>
         <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>Email_to_Nominee</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -18,6 +15,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Annual_Award_Submission_Alert</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;Recognize&quot; is created Send an Email to the &quot;CREATOR&quot;</description>
@@ -34,6 +33,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Recognition_Email_alert_for_Creator</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;SHOUTOUT&quot; is created Send an Email to the &quot;CREATOR&quot;</description>
@@ -50,22 +51,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <description>Whenever a &quot;Annual Award Nomination&quot; is submitted send an email to Nominated Resource</description>
-        <name>Email_to_Nominee</name>
-        <label>Email to Nominee</label>
-        <locationX>578</locationX>
-        <locationY>539</locationY>
-        <actionName>Reward_And_Recognition__c.Annual_Award_Nominated_Alert</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Shoutout_Email_alert_for_Creator</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;Recognize&quot; is created Send an Email to the &quot;RESOURCE&quot;</description>
@@ -85,6 +72,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Recognition_Email_alert_for_Resource</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;SHOUTOUT&quot; is created Send an Email to the &quot;RESOURCE&quot;</description>
@@ -104,6 +93,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Shoutout_Email_alert_for_Resource</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <decisions>
@@ -227,6 +218,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Nominated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nominations</stringValue>
                 </rightValue>
             </conditions>
             <connector>

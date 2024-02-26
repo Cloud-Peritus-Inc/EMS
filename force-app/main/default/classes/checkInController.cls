@@ -86,11 +86,13 @@ public without sharing class checkInController {
             }
         
             if(String.isNotBlank(resourceId)){
-                glist = [SELECT Id,Check_In_By__c,Check_In_By__r.Name,Check_in_Date__c,Feedback_and_Comments__c,Goal_Name__c,Status__c FROM Goal__c 
-                         WHERE RecordTypeId=:checkinRecordTypeId AND Resource__c=:resourceId  AND Check_in_Date__c >=:startdate and Check_in_Date__c <=:enddate ];
+                //smaske : updated query to return data in DESC order based on createdDate
+                glist = [SELECT Id,Check_In_By__c,Check_In_By__r.Name,Check_in_Date__c,Feedback_and_Comments__c,Goal_Name__c,Status__c,CreatedDate FROM Goal__c 
+                         WHERE RecordTypeId=:checkinRecordTypeId AND Resource__c=:resourceId  AND Check_in_Date__c >=:startdate and Check_in_Date__c <=:enddate ORDER BY CreatedDate DESC ];
             }else{
-                 glist = [SELECT Id,Check_In_By__c,Check_In_By__r.Name,Check_in_Date__c,Feedback_and_Comments__c,Goal_Name__c,Status__c FROM Goal__c 
-                         WHERE RecordTypeId=:checkinRecordTypeId AND Resource__r.EMS_TM_User__c=:Userinfo.getUserId()  AND Check_in_Date__c >=:startdate and Check_in_Date__c <=:enddate ];
+                //smaske : updated query to return data in DESC order based on createdDate
+                 glist = [SELECT Id,Check_In_By__c,Check_In_By__r.Name,Check_in_Date__c,Feedback_and_Comments__c,Goal_Name__c,Status__c,CreatedDate FROM Goal__c 
+                         WHERE RecordTypeId=:checkinRecordTypeId AND Resource__r.EMS_TM_User__c=:Userinfo.getUserId()  AND Check_in_Date__c >=:startdate and Check_in_Date__c <=:enddate ORDER BY CreatedDate DESC ];
             }
         for(Goal__c gc : glist){
             checkinWrapper cw = new checkinWrapper();

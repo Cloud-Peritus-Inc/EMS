@@ -656,51 +656,24 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
 
         //let Result = false;
 
-        if(this.BE_PR_RR.Resource__c!=null && this.BE_SE_RR!=null){
-            if (this.BE_PR_RR.Resource__c === this.BE_SE_RR.Resource__c) {
-                this.removeDuplicateRecord(this.BE_SE_RR.Resource__c, this.BE_SE_RR.Award_Type__c);
-                this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-                return false;
-            } 
-          }else if(this.MP_PR_RR.Resource__c!=null && this.MP_SE_RR.Resource__c!=null){
-             if (this.MP_PR_RR.Resource__c === this.MP_SE_RR.Resource__c) {
-                this.removeDuplicateRecord(this.MP_SE_RR.Resource__c, this.MP_SE_RR.Award_Type__c);
-                this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-                return false;
+        const recordPairs = [
+            [this.BE_PR_RR, this.BE_SE_RR],
+            [this.MP_PR_RR, this.MP_SE_RR],
+            [this.RIS_PR_RR, this.RIS_SE_RR],
+            [this.ROS_PR_RR, this.ROS_SE_RR],
+            [this.SS_PR_RR, this.SS_SE_RR],
+            [this.GAB_PR_RR, this.GAB_SE_RR],
+            [this.AE_PR_RR, this.AE_SE_RR]
+          ];
+          
+          for (const [prRecord, seRecord] of recordPairs) {
+            if (prRecord.Resource__c !== null && seRecord.Resource__c !== null && prRecord.Resource__c === seRecord.Resource__c) {
+              this.removeDuplicateRecord(seRecord.Resource__c, seRecord.Award_Type__c);
+              this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
+              return false;
             }
-           }else if(this.RIS_PR_RR.Resource__c!=null && this.RIS_SE_RR.Resource__c!=null){
-            if (this.RIS_PR_RR.Resource__c === this.RIS_SE_RR.Resource__c) {
-               this.removeDuplicateRecord(this.RIS_SE_RR.Resource__c, this.RIS_SE_RR.Award_Type__c);
-               this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-               return false;
-           }
-           }else if(this.ROS_PR_RR.Resource__c!=null && this.ROS_SE_RR.Resource__c!=null){
-        if (this.ROS_PR_RR.Resource__c === this.ROS_SE_RR.Resource__c) {
-           this.removeDuplicateRecord(this.ROS_SE_RR.Resource__c, this.ROS_SE_RR.Award_Type__c);
-           this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-           return false;
           }
-         }else if(this.SS_PR_RR.Resource__c!=null && this.SS_SE_RR.Resource__c!=null){
-    if (this.SS_PR_RR.Resource__c === this.SS_SE_RR.Resource__c) {
-       this.removeDuplicateRecord(this.SS_SE_RR.Resource__c, this.SS_SE_RR.Award_Type__c);
-       this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-       return false;
-   }
-     }else if(this.GAB_PR_RR.Resource__c!=null && this.GAB_SE_RR.Resource__c!=null){
-    if (this.GAB_PR_RR.Resource__c === this.GAB_SE_RR.Resource__c) {
-       this.removeDuplicateRecord(this.GAB_SE_RR.Resource__c, this.GAB_SE_RR.Award_Type__c);
-       this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-       return false;
-     }
-      }else if(this.AE_PR_RR.Resource__c!=null && this.AE_SE_RR.Resource__c!=null){
-        if (this.AE_PR_RR.Resource__c === this.AE_SE_RR.Resource__c) {
-           this.removeDuplicateRecord(this.AE_SE_RR.Resource__c, this.AE_SE_RR.Award_Type__c);
-           this.showNotification(this.resourceDuplicateAlert, this.warningVariant);
-           return false;
-         }
-          }else {
-            return true;
-          }
+
         }
 
     //SAVE BUTTON CODE
@@ -708,8 +681,7 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         console.log("Save Start");
         console.log("## B4 SAVE rewardAndRecognitionRecords data" + JSON.stringify(this.rewardAndRecognitionRecords));
         let sectionObjects = [this.BE_PR_RR, this.BE_SE_RR, this.MP_PR_RR, this.MP_SE_RR, this.RIS_PR_RR, this.RIS_SE_RR, this.ROS_PR_RR, this.ROS_SE_RR, this.SS_PR_RR, this.SS_SE_RR, this.GAB_PR_RR, this.GAB_SE_RR, this.AE_PR_RR, this.AE_SE_RR];
-        //console.log(" $ sectionObjects " + JSON.stringify(sectionObjects));
-        console.log(this.BE_PR_RR);
+        
         let returnValue = this.validationOnSaveButton();
         if (returnValue==false){
             return false;
@@ -742,7 +714,10 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
                             console.log("## AFTER SAVE rewardAndRecognitionRecords data" + JSON.stringify(this.rewardAndRecognitionRecords));
                             this.showNotification(this.recordSaved, this.successVariant);
                             this.disableSubmitBtn = false;
-                           
+                            //smaske : [PM_075] : Dispatching event for refresehing My Nomination Tab data
+                            const event = new CustomEvent('refreshdata');
+                            this.dispatchEvent(event);
+
                         })
                         .catch(error => {
                             console.error('Error creating records: ' + JSON.stringify(error));
@@ -820,6 +795,10 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
                             .then(result => {
                                 console.log('Submit result : ' + JSON.stringify(result));
                                 this.showNotification(this.recordSubmitted, this.successVariant);
+                                //smaske : [PM_075] : Dispatching event for refresehing My Nomination Tab data
+                                const event = new CustomEvent('refreshdata');
+                                this.dispatchEvent(event);
+
                                 setTimeout(function(){
                                     window.location.reload();
                                  }, 5000);
@@ -1118,6 +1097,5 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
         });
         this.dispatchEvent(evt);
     }
-
 
 }

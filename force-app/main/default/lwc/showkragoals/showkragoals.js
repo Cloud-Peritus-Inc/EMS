@@ -17,13 +17,19 @@ export default class Showkragoals extends LightningElement {
     showGoalRecords;
     connectedCallback() {
         console.log('===receivedkraid====' + this.receivedkraid);
-       // this.getallGoalsfromserver();
+       return refreshApex(this.goalRecord);
     }
     showEditGoal = false;
     showViewGoal = false;
     selectedGoaldId;
 
+    renderedCallback() {
+        console.log('call renderedCallback=======');
+        return refreshApex(this.goalRecord);
+    }
+
 @track goalRecord ;
+
      @wire(getAlltheGoals,{ kraId: '$receivedkraid'}) 
     goalsData(result) {
             console.log('RecordId is============');
@@ -86,7 +92,7 @@ export default class Showkragoals extends LightningElement {
         console.log('==node====' + node);
 
     } */
-
+    
     handleeditClick(event) {
         let node = event.currentTarget.dataset.id;
         let goalstatus =  event.currentTarget.dataset.status;
@@ -151,10 +157,12 @@ export default class Showkragoals extends LightningElement {
                 });
                 this.dispatchEvent(evt);
                 this.mycomments = '';
+                
                 // @Mukesh 
                 //i commented because this funtion is commented above
                 //this.getallGoalsfromserver();
                 this.hideGoalEditModalBox();
+                     return refreshApex(this.goalRecord);
             }).catch(err => {
                 console.log('err' ,err);
                 const evt = new ShowToastEvent({
@@ -216,9 +224,10 @@ export default class Showkragoals extends LightningElement {
                 .then(() => {
                     this.showToast('Success!!', 'Goal updated Inprogress successfully!!', 'success', 'dismissable');
                     // Display fresh data in the form
-                    this.  hideGoalEditModalBox();
+                    this.hideGoalEditModalBox();
                     this.isLoading = false;
-                     return refreshApex(this.goalRecord);
+                    return refreshApex(this.goalRecord);
+                     
                      // this.goaltable = [];
                       //console.log('kraid======'+this.receivedkraid);
                      //this.getallGoalsfromserver();

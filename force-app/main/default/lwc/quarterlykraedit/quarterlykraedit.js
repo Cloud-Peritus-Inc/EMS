@@ -646,7 +646,9 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 .then(result => {
                     console.log(" result ::" + JSON.stringify(result));
                     this.kraRecord = result;
-                    
+                    console.log('going to close');
+                    this.dispatchEvent(new CustomEvent('close'));
+                    console.log('closed$$$$$$$$$');
                     //Check if status is COMPLETE : Disable Submit btn
                     this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
                     this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
@@ -661,9 +663,9 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                             name: 'Home'
                         },
                     });*/
-                    setTimeout(function(){
+                    /* setTimeout(function(){
                          window.location.reload();
-                    }, 2000);
+                    }, 2000); */
 
                     return refreshApex(this.wiredKraRecordResult);
                 })

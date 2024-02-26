@@ -173,6 +173,8 @@ winnerrecordTypeId;
         });
         this.dispatchEvent(evt);
         this.hideShoutOutModalBox();
+        //smaske:PM_075 : Refresh data
+        this.getThelatestSpotAwardGiven();
     }
 
     handleRecSubmit(event) {
@@ -206,6 +208,8 @@ winnerrecordTypeId;
         });
         this.dispatchEvent(evt);
         this.hideRecModalBox();
+        //smaske:PM_075 : Refresh data
+        this.getThelatestRecGiven();
     }
 
     handleActive(event) {
@@ -331,5 +335,11 @@ winnerrecordTypeId;
 
     modalCloseHandler(){
         this.hideAnnualModalBox();
+    }
+
+    //smaske : [PM_075] : Handling event for refresehing My Nomination Tab data
+    handleRefreshData(event){
+        console.log('INSIDE handleRefreshData ');
+        this.getTheMyNoms();
     }
 }

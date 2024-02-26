@@ -31,6 +31,7 @@ myVal = '';
 
     hideKRAEditModalBox() {  
         this.showKRAEditModal = false;
+        this.dispatchEvent(new CustomEvent('kradata'));
         
     }
 
