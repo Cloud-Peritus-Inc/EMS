@@ -1,0 +1,52 @@
+.childparent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+	margin: 0px;
+    padding: 0px;
+}
+
+.childimage {
+    width: 30%;
+	padding-left : 0px;
+	border-right: 1px black;
+    padding-right: 10px;
+    text-align:right;
+}
+
+.childimage2 {
+    width: 0%;
+	padding-left : 10px;
+	border-right: 1px black;
+}
+
+.childtext2 {
+    width: 80%;
+	padding-bottom: 0px;
+    padding-left : 0px;
+}
+
+.childtext {
+    width: 70%;
+	padding-bottom: 0px;
+    padding-left : 0px;
+}
+
+.homeCard {
+    background-color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(226, 162, 237, 0.2), 0 6px 20px 0 rgba(216, 170, 238, 0.19);
+    margin-top: 20px; /* increased from 10px */
+    margin-bottom: 30px; /* increased from 20px */
+    border-radius: 5px;
+}
+
+.text-helpicon-container {
+  display: flex;
+  align-items: center;
+}
+.total-leave-balance {
+  margin-left: 8px;
+}
+.help-icon {
+  margin-left: 8px;
+}

@@ -81,4 +81,32 @@ going the extra mile consistently on their project</value>
         <shortDescription>exampleHelpText</shortDescription>
         <value>Please provide a brief description.</value>
     </labels>
+    <labels>
+        <fullName>TimeSheet_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TimeSheet Label</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/timesheet</value>
+    </labels>
+    <labels>
+        <fullName>Timesheet_Approval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Timesheet Approval</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/detail/</value>
+    </labels>
+    <labels>
+        <fullName>Timesheet_Line_Item</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Timesheet_Line_Item</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-tm-timesheet-record/</value>
+    </labels>
+    <labels>
+        <fullName>Timesheet_Record_Navigation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Timesheet Record Navigation</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-tm-timesheet-record/</value>
+    </labels>
 </CustomLabels>
