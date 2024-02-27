@@ -74,17 +74,17 @@ export default class Myteam extends LightningElement {
         this.showtheFY = true;
         this.selectedresource = event.detail.value;
         console.log('==selectedresource====' + this.selectedresource);
-        this.myVal = '';
+        this.myVal = '';        
+        //smaske : [EN_13]: Reseting Values and fetching Reportees till root
+        this.secondarySelectedResource = null;
+        this.viewonlymode = false;
+        this.reporteesmapdata = null;
+        this.GetReporteesHierarchy();
+
         this.getTheKRA();
         //smaske : Calling getCheckInfo() method on resource change
         //Fix for Defect PM_009
         this.getCheckInfo();
-        
-        //smaske : [EN_13]: Reseting Values and fetching Reportees till root
-        this.secondarySelectedResource = '';
-        this.viewonlymode = false;
-        this.reporteesmapdata = null;
-        this.GetReporteesHierarchy();
     }
 
     //smaske : [EN_13]: New dropdown handler
@@ -137,7 +137,7 @@ export default class Myteam extends LightningElement {
         })
             .then(result => {
                 console.log('====result getResourceKRAs =======' + JSON.stringify(result));
-
+                //smaske : [EN_13]: Disabling Edit KRA button when Indirect Reportee are selected
                 result.forEach(item => {
                     item.qualList.forEach(qualItem => {
                         if (this.viewonlymode == true) {
@@ -146,7 +146,11 @@ export default class Myteam extends LightningElement {
                         }
                     });
                 });
-                console.log('====Modified getResourceKRAs =======' + JSON.stringify(result));
+
+                //smaske : [EN_13]: Disabling CREATE GOAL button when Indirect Reportee are selected
+                if (this.viewonlymode == true) {
+                    result[0].dontallowCreateGoals = true;
+                }
                 this.kratable = result;
             })
             .catch(error => {

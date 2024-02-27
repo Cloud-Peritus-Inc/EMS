@@ -19,8 +19,8 @@ public without sharing class generatePerformanceKRAController {
         return con;
     }
 
-    @AuraEnabled(cacheable=true)
-    public static List<Goal__c> getResourceKraRecords(Contact member,Id fy){
+    @AuraEnabled
+    public static List<Goal__c> getResourceKraRecords(Contact member,Date startDate, Date endDate){
         System.debug('#Member ' + member);
         Id KRARecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
         System.debug('#KRARecTypeId ' + KRARecTypeId);
@@ -28,62 +28,16 @@ public without sharing class generatePerformanceKRAController {
         List<Goal__c> kraGoalRecords = Null;
         try {
             if (member != Null && member.Id != Null) {
-                if ( member.Last_Appraisal_Date__c != Null && member.Next_Appraisal_Date__c != Null ) {
-                    System.debug('#IF ');
-                    kraGoalRecords = [Select Id,Name,Resource__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
+                    kraGoalRecords = [Select Id,Name,Resource__c, Goal_Name__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
                     Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
                     Fulfillment__r.Fiscal_Year__c
-                    
                     FROM  Goal__c 
                     WHERE Resource__c =: member.Id 
                     AND RecordTypeId =: KRARecTypeId
-                    AND Quarter_Start_Date__c >= :member.Last_Appraisal_Date__c
-                    AND Quarter_End_Date__c <= :member.Next_Appraisal_Date__c
-                    //AND Fulfillment__r.Fiscal_Year__c =: fy
-                    
-                    ];
-                }else if(member.Last_Appraisal_Date__c == Null && member.Next_Appraisal_Date__c != Null){
-                    System.debug('#ELSE ');
-                    kraGoalRecords = [Select Id,Name,Resource__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
-                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
-                    Fulfillment__r.Fiscal_Year__c
-                    
-                    FROM  Goal__c 
-                    WHERE Resource__c =: member.Id 
-                    AND RecordTypeId =: KRARecTypeId
-                    AND Quarter_Start_Date__c >= :member.EMS_EM_JD__c
-                    AND Quarter_End_Date__c <= :member.Next_Appraisal_Date__c
-                    //AND Fulfillment__r.Fiscal_Year__c =: fy
-                    
-                    ];
-                }else { //smaske : [PM_064] added else for fetching KRA records created from Joining date if any appraisal date not found
-                    System.debug('#ELSE 2');
-
-                    //smaske:[QA_PR_031] : Showing records for current quarter.
-                    Date today = Date.today();
-                    Integer quarterNumber = (Integer)Math.ceil(today.month() / 3.0);
-                    // Calculate start date of the quarter
-                    Date quarterStart = Date.newInstance(today.year(), (quarterNumber - 1) * 3 + 1, 1);
-                    // Calculate end date of the quarter
-                    Date quarterEnd = quarterStart.addMonths(3).addDays(-1);
-
-                    kraGoalRecords = [Select Id,Name,Resource__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
-                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
-                    Fulfillment__r.Fiscal_Year__c
-                    
-                    FROM  Goal__c 
-                    WHERE Resource__c =: member.Id 
-                    AND RecordTypeId =: KRARecTypeId
-                    //AND Quarter_Start_Date__c>= :member.EMS_EM_JD__c
-                    AND Quarter_Start_Date__c >= :quarterStart
-                    AND Quarter_End_Date__c <= :quarterEnd
-                    ];
-                    
-                }
-                
+					AND Status__c = 'KRA Completed'
+                    AND Quarter_Start_Date__c >= :startDate
+                    AND Quarter_End_Date__c <= :endDate];
             }
-            
-            
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -100,7 +54,9 @@ public without sharing class generatePerformanceKRAController {
         try {
             compList = [SELECT Id, Name, Appraisal_Date__c, Comments__c, Finalized_Hike__c, Next_Appraisal_Date__c, Resource__c, Reviewed_By__c,Fulfillment__c,
             //smaske : PM_079 : Created new field Compensation_Submitted__c
-            Compensation_Submitted__c
+            Compensation_Submitted__c,
+             //Mukesh :: Created new field Overall_KRA_Average_Rating__c
+             Overall_KRA_Average_Rating__c
                         FROM Compensation__c 
                         WHERE Resource__c = :selectedresource LIMIT 1];
         } catch (Exception e) {
@@ -115,12 +71,13 @@ public without sharing class generatePerformanceKRAController {
     }
 
     @AuraEnabled
-    public static Compensation__c updateCompensationDetails(Compensation__c record,Id fy){
+    public static Compensation__c updateCompensationDetails(Compensation__c record, List<Goal__c> kraRecords, Id fy){
         System.debug('record :' + record);
         System.debug('fy ID :' + fy);
         try {
             //smaske : Updated code to associate Compensation with Selected FY fulfilment record
             List<Fulfillment__c> FulfList = New List<Fulfillment__c>();
+            List<Goal__c> KraList = New List<Goal__c>();
             if (record.Fulfillment__c == null) {
                 FulfList = [select id,Resource__c,Fiscal_Year__c 
                 FROM Fulfillment__c where Fiscal_Year__c =: fy AND Resource__c =: record.Resource__c
@@ -142,6 +99,15 @@ public without sharing class generatePerformanceKRAController {
 
             updateContactDetails(record);
             updateFulfillmentDetails(record,fy);
+             // Update KRA records
+        	if (!kraRecords.isEmpty()) {
+            	for (Goal__c kra : kraRecords) {
+                // Update KRA record fields
+                	kra.Status__c = 'HR KRA Completed';
+                    KraList.add(kra);
+            	}
+                update KraList;
+        }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

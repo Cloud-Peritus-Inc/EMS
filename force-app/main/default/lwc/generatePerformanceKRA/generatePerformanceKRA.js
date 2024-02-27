@@ -12,7 +12,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     @api resourceId;
     @api tab;
     @track CurrentUserConDetails;
-    profileName; 
+    profileName;
 
     userId = Id;
     @api member = '';
@@ -25,7 +25,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     @track kraRecords;
     totalkraRecords = 0;
     @track averageOverallRating = 0;
-    @track Compensation = {sobjectType:'Compensation__c'};
+    @track Compensation = { sobjectType: 'Compensation__c' };
     //smaske : [PM_075] : declared new variable for refresh 
     wiredCompensations;
     @track CompensationDates = [];
@@ -64,12 +64,41 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         }
     }
 
+    @track fromValue;
+    @track toValue;
+    @track qStartDate;
+
     @wire(getResourceDetails, { selectedresource: '$member' })
     wiredResule({ data, error }) {
         if (data) {
             console.log('Wired Data :' + JSON.stringify(data));
             this.Contact = data;
             this.ContactId = data.Id;
+            //@Mukesh 
+            // Changes for using From and To filter
+            const currentdate = new Date();
+            this.toValue = currentdate.toISOString().slice(0, 10);
+
+            if (data.Last_Appraisal_Date__c != null) {
+                this.fromValue = data.Last_Appraisal_Date__c;
+                console.log('before on changethis.fromValue', this.fromValue);
+                const lastAppraisalDate = new Date(data.Last_Appraisal_Date__c);
+                const quarter = Math.floor((lastAppraisalDate.getMonth() / 3));
+                const quarterStart = new Date(lastAppraisalDate.getFullYear(), quarter * 3, 1);
+                const quarterStartAdjusted = new Date(quarterStart.getTime() - (quarterStart.getTimezoneOffset() * 60000));
+                this.qStartDate = quarterStartAdjusted.toISOString().slice(0, 10);
+                console.log('before on change this.qStartDate', this.qStartDate);
+            }
+            else {
+                this.fromValue = data.EMS_EM_JD__c;
+                const dateOfJoining = new Date(data.EMS_EM_JD__c);
+                const quarter = Math.floor((dateOfJoining.getMonth() / 3));
+                const quarterStart = new Date(dateOfJoining.getFullYear(), quarter * 3, 1);
+                const quarterStartAdjusted = new Date(quarterStart.getTime() - (quarterStart.getTimezoneOffset() * 60000));
+                this.qStartDate = quarterStartAdjusted.toISOString().slice(0, 10);
+                console.log('this.fromValue', this.fromValue);
+            }
+            this.callToGetKraData();
         } else if (error) {
             console.log('Wired Error :' + JSON.stringify(error));
             msg = 'Unable to fetch details for selected resource';
@@ -78,50 +107,70 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         }
     }
 
-    @wire(getResourceKraRecords, { member: '$Contact' , fy : '$fy' })
-    wiredKraRecords({ data, error }) {
-        if(data == null){
-            this.dataLoaded = true;
+    handleChangeAction(event) {
+        this.kraRecords = '';
+        let name = event.target.name;
+        const dataValue = event.target.value;
+        if (name === 'From') {
+            this.qStartDate = dataValue;
+            this.fromValue = this.qStartDate;
+            console.log(' After onChange this.qStartDate ' + this.qStartDate);
         }
-        if (data) {
-            console.log('Data kra ' + JSON.stringify(data));
-            if (data.length > 0) {
-                this.kraRecords = data;
-                this.totalkraRecords = data.length;
-                let sumOverallRating = 0;
-                this.kraRecords.forEach(record => {
-                    sumOverallRating += record.Overall_Average_Section_Rating__c || 0; // Ensure numeric values
-                });
-                this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(1) : 0;
-            }
-            this.dataLoaded = true;
-            console.log('member :' + this.member);
-            console.log('resourceId :' + this.resourceId);
-            
-        } else if (error) {
-            console.log('Wired kraRecords Error :' + JSON.stringify(error));
-            msg = 'Unable to fetch Goal records for selected resource';
-            this.showNotification(msg, this.errorVariant);
-            this.dataLoaded = true;
+        if (name === 'To') {
+            this.toValue = dataValue;
+            console.log('toValue ' + this.toValue);
         }
+        this.callToGetKraData();
+    }
+    
+    callToGetKraData() {
+        getResourceKraRecords({ member: this.Contact, startDate: this.qStartDate, endDate: this.toValue })
+            .then(result => {
+                const data = result;
+                if (data) {
+                    console.log('Data kra ' + JSON.stringify(data));
+                    if (data.length > 0) {
+                        this.kraRecords = data;
+                        this.totalkraRecords = data.length;
+                        let sumOverallRating = 0;
+                        this.kraRecords.forEach(record => {
+                            sumOverallRating += record.Overall_Average_Section_Rating__c || 0; // Ensure numeric values
+                        });
+                        this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(1) : 0;
+                    }
+                    this.dataLoaded = true;
+                    console.log('member :' + this.member);
+                    console.log('resourceId :' + this.resourceId);
+
+                } else if (error) {
+                    console.log('Wired kraRecords Error :' + JSON.stringify(error));
+                    msg = 'Unable to fetch Goal records for selected resource';
+                    this.showNotification(msg, this.errorVariant);
+                    this.dataLoaded = true;
+                }
+            })
+            .catch(error => {
+                console.log('error :' + JSON.stringify(error));
+                this.dataLoaded = true;
+            });
     }
 
-    @wire(getCompensationDetails, { selectedresource: '$member'})
+    @wire(getCompensationDetails, { selectedresource: '$member' })
     //smaske : [PM_075] : Updated wired method to handle refreshapex
     wiredComp(value) {
         this.wiredCompensations = value; // track the provisioned value 
         const { data, error } = value; // destructure the provisioned value
-        if(data == null){
+        if (data == null) {
             console.log("getCompensationDetails NULL");
-            this.Compensation.Reviewed_By__c =this.userId;
-            this.Compensation.Resource__c =this.member;
+            this.Compensation.Reviewed_By__c = this.userId;
+            this.Compensation.Resource__c = this.member;
             if (this.Contact && this.Contact.Next_Appraisal_Date__c) {
                 //smaske : PM_079/PM_078 : for populating date value
                 let RR = { ...this.Compensation };
                 RR.Next_Appraisal_Date__c = this.Contact.Next_Appraisal_Date__c;
                 this.Compensation = RR;
             }
-            else if(this.Contact && this.Contact.Last_Appraisal_Date__c) {
+            else if (this.Contact && this.Contact.Last_Appraisal_Date__c) {
                 var lastAppraisalDate = new Date(this.Contact.Last_Appraisal_Date__c);
                 var nextYearDate = new Date(lastAppraisalDate);
                 nextYearDate.setFullYear(lastAppraisalDate.getFullYear() + 1);
@@ -149,7 +198,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             this.dataLoaded = true;
             //smaske : PM_079/PM_078 : Disable Submit btn
             this.submitButtonDisabled = data.Compensation_Submitted__c == true ? true : false;
-        }else if (error) {
+        } else if (error) {
             console.log('Compensation Error :' + JSON.stringify(error));
             this.dataLoaded = true;
         }
@@ -163,16 +212,16 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         this.showReview = this.selectedStep === 'Review';
     }
 
-    handleValueSelectedOnAccount(event){
+    handleValueSelectedOnAccount(event) {
         const selectedLookupValue = event.detail;
-        console.log(" selectedLookupValue " + JSON.stringify(selectedLookupValue) );
+        console.log(" selectedLookupValue " + JSON.stringify(selectedLookupValue));
         const value = selectedLookupValue.id;
         const label = selectedLookupValue.label;
         this.Compensation.Reviewed_By__c = value;
-        console.log(" this.Compensation.Reviewed_By__c " + JSON.stringify(this.Compensation.Reviewed_By__c) );
+        console.log(" this.Compensation.Reviewed_By__c " + JSON.stringify(this.Compensation.Reviewed_By__c));
     }
 
-    dataHandler(event){
+    dataHandler(event) {
         console.log(JSON.stringify(event.target.value));
         console.log(JSON.stringify(event.target.name));
         const dataValue = event.target.value;
@@ -181,7 +230,8 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
 
         let RR = { ...this.Compensation };
 
-        if (name === 'Next_Appraisal_Date__c') {8
+        if (name === 'Next_Appraisal_Date__c') {
+            8
             if (dataValue <= todaysDate.toISOString().split('T')[0]) {
                 const evt = new ShowToastEvent({
                     message: 'Next Appraisal Date must be a future date.',
@@ -193,11 +243,11 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             } else {
                 RR[name] = dataValue;
             }
-        }else if(name == 'Appraisal_Date__c'){
+        } else if (name == 'Appraisal_Date__c') {
             RR[name] = dataValue;
-        }else if(name == 'Comments__c'){
+        } else if (name == 'Comments__c') {
             RR[name] = dataValue;
-        }else if(name == 'Finalized_Hike__c'){
+        } else if (name == 'Finalized_Hike__c') {
             RR[name] = dataValue;
         }
         this.Compensation = RR;
@@ -248,11 +298,19 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         }
     }
 
-    handleSubmitButtonAction(){
+    handleSubmitButtonAction() {
+
+        // Check if kraRecords is not blank
+        if (!this.kraRecords || this.kraRecords.length === 0) {
+            let msg = 'No KRA records available to Generate performance KRA!';
+            this.showNotification(msg, this.errorVariant);
+            return;
+        }
         //smaske : PM_079/PM_078 : Updating Submit functionality to avoid duplicate record creation and Field Validation.
+        this.Compensation.Overall_KRA_Average_Rating__c = this.averageOverallRating;
         let isValid = true;
         //smaske :[EN_05] : Removed "Finalized_Hike__c" from API Array as field is commented
-        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c']; // Replace with your actual field names
+        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Overall_KRA_Average_Rating__c']; // Replace with your actual field names
         // Iterate through the list of API field names
         for (const fieldName of apiFieldNames) {
             if (!this.Compensation[fieldName]) {
@@ -265,7 +323,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
 
         if (isValid) {
             // Update/Create Record when all required fields value is populated.
-            updateCompensationDetails({ record: this.Compensation, fy: this.fy })
+            updateCompensationDetails({ record: this.Compensation, kraRecords: this.kraRecords, fy: this.fy })
                 .then(result => {
                     console.log(" updateCompensationDetails " + JSON.stringify(result));
                     this.Compensation = result;
@@ -281,7 +339,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                     this.showNotification(msg, this.successVariant);
                     console.log(" updateCompensationDetails error " + JSON.stringify(error));
                 })
-        }else{
+        } else {
             let msg = 'All field values are required!';
             this.showNotification(msg, this.errorVariant);
         }
@@ -362,24 +420,24 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     showKRAViewModal = false;
     mode;
 
-    handleViewKRAClick(event){
+    handleViewKRAClick(event) {
         let node = event.currentTarget.dataset.id;
         this.selectedKraQuaterly = node;
         this.mode = 'View';
         this.showKRAViewModalBox();
     }
 
-    handleEditKRAClick(event){
+    handleEditKRAClick(event) {
         let node = event.currentTarget.dataset.id;
         this.selectedKraQuaterly = node;
         this.mode = 'Edit';
         this.showKRAEditModalBox();
     }
 
-    showKRAEditModalBox() { 
-        this.showKRAEditModal = true; 
-   }
-    hideKRAEditModalBox() {  
+    showKRAEditModalBox() {
+        this.showKRAEditModal = true;
+    }
+    hideKRAEditModalBox() {
         this.showKRAEditModal = false;
     }
 
@@ -391,8 +449,8 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     }
 
     @api
-    get isEditButtonVisible(){
-        if(this.profileName && this.profileName == 'Employee - HR(Community)'){
+    get isEditButtonVisible() {
+        if (this.profileName && this.profileName == 'Employee - HR(Community)') {
             //smaske : PM_072 : Setting as False ,as we dont need edit button
             return false;
         }
