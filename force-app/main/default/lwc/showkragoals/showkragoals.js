@@ -12,10 +12,12 @@ export default class Showkragoals extends LightningElement {
     @track goaltable;
     @track error;
     @api tab;
+    @api viewonlymode = false;
 
     @track showinprogress = false;
     showGoalRecords;
     connectedCallback() {
+        console.log('===receivedkraid====' + this.receivedkraid);
         console.log('===receivedkraid====' + this.receivedkraid);
        return refreshApex(this.goalRecord);
     }
@@ -52,6 +54,11 @@ export default class Showkragoals extends LightningElement {
                     if (goalRecord.profileName === HR && this.tab === 'My Team') {
                         modifiedGoalRecord.showedit = false;
                     }
+
+                    if (this.viewonlymode == true) {
+                        modifiedGoalRecord.showedit = false;
+                    }
+
                     return modifiedGoalRecord;
                 });
                 //console.log('MODIFIED' + JSON.stringify( this.goaltable) );

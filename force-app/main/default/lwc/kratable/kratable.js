@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import createTheGoals from '@salesforce/apex/myGoalsController.createTheGoals';
 export default class Kratable extends NavigationMixin(LightningElement) {
 @api tab;
+@api viewonlymode = false;
 @api tabledata = [];
 @api resourceid = '';
 selectedKraQuaterly;
@@ -13,6 +14,7 @@ selectedKraQuaterly;
 connectedCallback() {
    console.log('====resourceid==='+JSON.stringify(this.resourceid));
    console.log('====tab==='+ this.tab);
+   console.log('====viewonlymode==='+ this.viewonlymode);
 }
  @track showKRAViewModal = false;
  @track showKRAEditModal = false;

@@ -13,30 +13,32 @@
         </div>
 
          <div class="childparent2">
-          <div class="childtext2">
-              <lightning-combobox
-                name=""
-                label=""
-                value={selectedresource}
-                placeholder="Select Resource"
-                options={resourcemapdata}
-                onchange={handleResourceChange} required>
-            </lightning-combobox>
-            
-          </div>
-           <div class="childimage2">
+            <div class="childtext2">
+               <lightning-combobox name="" label="Direct Reportees" value={selectedresource} placeholder="Select Resource"
+                  options={resourcemapdata} onchange={handleResourceChange} required>
+               </lightning-combobox>
+         
+            </div>
+            <div class="childimage2">
                <template if:true={showtheFY}>
-             <lightning-combobox
-                name=""
-                label=""
-                value={selectedfy}
-                placeholder="Fiscal Year"
-                options={fymapdata}
-                onchange={handleFYChange} >
-            </lightning-combobox>
+                  <lightning-combobox name="" label="" value={selectedfy} placeholder="Fiscal Year" options={fymapdata}
+                     onchange={handleFYChange}>
+                  </lightning-combobox>
                </template>
-           </div>
-        </div>
+            </div>
+         </div>
+
+      <!-- smaske : [EN_13 : New Dropdown for related reportess -->
+      <template lwc:if={setReporteesHierarchyVisibility}>
+         <div class="childparent2">
+            <div class="childtext2">
+               <lightning-combobox name="" label="Indirect Reportees" value={secondarySelectedResource} placeholder="Select Resource"
+                  options={reporteesmapdata} onchange={handleSecondaryResourceChange}>
+               </lightning-combobox>
+            </div>
+         </div>
+      </template>
+      
     
       <hr class="new5">
     
@@ -83,7 +85,7 @@
 
 <template if:true={showkras}>
   <br/>
- <c-kratable tabledata={kratable} resourceid={selectedresource} onkradata={getTheKRA} tab="My Team"></c-kratable>
+ <c-kratable tabledata={kratable} resourceid={selectedresource} onkradata={getTheKRA} tab="My Team" viewonlymode={viewonlymode} ></c-kratable>
 </template>
 
  </template>
@@ -149,7 +151,7 @@
 
          <!-- modal body start -->
          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
-            <c-generate-performance-k-r-a fy={selectedfy} resource-id={resourceId} member={selectedresource} onclose={modalCloseHandler} tab="My Team" ></c-generate-performance-k-r-a>
+            <c-generate-performance-k-r-a fy={selectedfy} resource-id={resourceId} member={selectedresource} onclose={modalCloseHandler} tab="My Team" viewonlymode={viewonlymode} ></c-generate-performance-k-r-a>
          </div>
 
          <!-- modal footer start

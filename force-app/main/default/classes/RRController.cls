@@ -438,7 +438,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         return currentList;
     }
     
-     @AuraEnabled(cacheable=true)
+     @AuraEnabled
     public static List<winnerdetails> getTheScoringbyAward(String fyId,String awardType){
         List<winnerdetails> currentList = new List<winnerdetails>();
         for(Reward_And_Recognition__c rr : [SELECT Id,Name,Resource__r.Name,Resource__r.EMS_TM_User__c,Reason_for_award__c,Resource__r.EMS_TM_User__r.FullPhotoUrl,System_Predicted_Status__c,

@@ -1,0 +1,207 @@
+<template>
+    <lightning-card>
+        <header class="slds-modal__header">
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Assign Multiple Resources</h2>
+        </header>
+        <div class="slds-p-horizontal_small">
+            <lightning-record-edit-form object-api-name="EMS_TM_Assignment__c" style="width:fit-content">
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="6"
+                        padding="around-small">
+                        <lightning-input-field field-name="EMS_TM_ProjectName_Asgn__c" value={recordId}
+                            onchange={handleAccountId}></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-record-edit-form><br />
+            <template if:true={assignDataWrp}>
+                <div>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Select Contact"></div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Resource Name">Resource Name</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Role">Assigned As</div>
+                                </th>
+                                <th class="" scope="col" style="text-align: center;">
+                                    <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                                <!-- Project Allocation -->
+                                <th class="" scope="col" style="text-align: center;">
+                                    <div class="slds-truncate" title="Status">Project Allocation</div>
+                                </th>
+                                <!-- Project Allocation -->
+                                <th class="" scope="col" style="text-align: center;">
+                                    <div class="slds-truncate" title="Start Date">Start Date</div>
+                                </th>
+                                <th class="" scope="col" style="text-align: center;">
+                                    <div class="slds-truncate" title="End Date">End Date</div>
+                                </th>
+                                <th class="" scope="col" style="text-align: center;">
+                                    <div class="slds-truncate" title="Billable">Billable</div>
+                                </th>
+                                <th class="" scope="col" style="text-align: center;">
+                                    <div class="slds-truncate" title="Action">Action</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template if:true={assignDataWrp}>
+                                <template for:each={assignDataWrp} for:item="con" for:index="index">
+                                    <tr class="slds-hint-parent" key={con.Id}>
+                                        <td data-label="Select Assignment">
+                                            <div class="slds-truncate" title="Select Assignment">
+                                                <lightning-input type="checkbox" disabled={disabledCheckbox}
+                                                    name="input1"></lightning-input>
+                                            </div>
+                                        </td>
+                                        <td data-label="Resource Name">
+                                            <div class="slds-truncate" title="Resource Name">{con.Resource_Full_Name__c}
+                                            </div>
+                                        </td>
+                                        <td data-label="Role">
+                                            <div class="slds-truncate" title="Assigned As">{con.EMS_TM_AssignedAs__c}
+                                            </div>
+                                        </td>
+                                        <td data-label="Status" style="text-align: center;">
+                                            <div class="slds-truncate" title="Status">{con.EMS_TM_Status_Asgn__c}</div>
+                                        </td>
+                                        <!-- Project Allocation -->
+                                        <td data-label="Project Allocation" style="text-align: center;">
+                                            <div class="slds-truncate" title="Project Allocation">
+                                                {con.Project_Allocation__c}</div>
+                                        </td>
+                                        <!-- Project Allocation -->
+                                        <td data-label="Start date" style="text-align: center;">
+                                            <div class="slds-truncate" title="Start date"><lightning-formatted-date-time
+                                                    value={con.EMS_TM_StartDate_Asgn__c}></lightning-formatted-date-time>
+                                            </div>
+                                        </td>
+                                        <td data-label="End date" style="text-align: center;">
+                                            <div class="slds-truncate" title="End date"><lightning-formatted-date-time
+                                                    value={con.EMS_TM_EndDate_Asgn__c}></lightning-formatted-date-time>
+                                            </div>
+                                        </td>
+                                        <td data-label="Billable" style="text-align: center;">
+                                            <div class="slds-truncate" title="Billable"><lightning-input disabled
+                                                    type="checkbox" variant="label-hidden" name="EMS_TM_Billable__c"
+                                                    checked={con.EMS_TM_Billable__c}></lightning-input></div>
+                                        </td>
+                                        <td data-label="Action" style="text-align: center;">
+                                            <div class="slds-truncate" title="Action">
+                                                <lightning-button label="Delete" variant="neutral" value={index}
+                                                    onclick={deleteRecord}></lightning-button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                            <template if:true={blankRow}>
+
+                                <template for:each={blankRow} for:item="con" for:index="ind">
+
+                                    <tr class="slds-hint-parent" key={con.Id}>
+                                        <td data-label="Select Assignment">
+                                            <div class="slds-truncate" title="Select Assignment">
+
+                                                <lightning-input type="checkbox" name={ind} value={con.isChecked}
+                                                    onchange={setCheckBox}></lightning-input>
+
+                                            </div>
+                                        </td>
+                                        <td data-label="Resource Name">
+                                            <lightning-record-edit-form object-api-name="EMS_TM_Assignment__c">
+                                                <lightning-input-field variant="label-hidden"
+                                                    field-name="EMS_TM_EmployeeName__c" name={ind}
+                                                    value={con.EMS_TM_EmployeeName__c} onchange={setResourceName}
+                                                    required></lightning-input-field>
+                                            </lightning-record-edit-form>
+                                        </td>
+                                        <td data-label="Role">
+                                            <lightning-record-edit-form object-api-name="EMS_TM_Assignment__c">
+                                                <lightning-input-field variant="label-hidden"
+                                                    field-name="EMS_TM_AssignedAs__c" name={ind}
+                                                    value={con.EMS_TM_AssignedAs__c} onchange={setRole}
+                                                    required></lightning-input-field>
+                                            </lightning-record-edit-form>
+
+                                        </td>
+                                        <td data-label="Status" style="text-align: center;">
+                                            <lightning-record-edit-form object-api-name="EMS_TM_Assignment__c">
+                                                <lightning-input-field variant="label-hidden"
+                                                    field-name="EMS_TM_Status_Asgn__c" name={ind}
+                                                    value={con.EMS_TM_Status_Asgn__c}
+                                                    onchange={setStatus}></lightning-input-field>
+                                            </lightning-record-edit-form>
+
+                                        </td>
+                                        <!-- Project Allocation -->
+                                        <td data-label="Project Allocation" style="text-align: center;">
+                                            <lightning-record-edit-form object-api-name="EMS_TM_Assignment__c">
+                                                <lightning-input-field variant="label-hidden"
+                                                    field-name="Project_Allocation__c" name={ind}
+                                                    value={con.Project_Allocation__c}
+                                                    onchange={setProjectAllocation}></lightning-input-field>
+                                            </lightning-record-edit-form>
+                                        </td>
+                                        <!-- Project Allocation -->
+                                        <td data-label="Start Date" style="text-align: center;">
+                                            <lightning-record-edit-form object-api-name="EMS_TM_Assignment__c">
+                                                <lightning-input-field variant="label-hidden"
+                                                    field-name="EMS_TM_StartDate_Asgn__c" name={ind}
+                                                    value={con.EMS_TM_StartDate_Asgn__c} onchange={setStartDate}
+                                                    required></lightning-input-field>
+                                            </lightning-record-edit-form>
+
+                                        </td>
+                                        <td data-label="End Date" style="text-align: center;">
+                                            <lightning-record-edit-form object-api-name="EMS_TM_Assignment__c">
+                                                <lightning-input-field variant="label-hidden"
+                                                    field-name="EMS_TM_EndDate_Asgn__c" name={ind}
+                                                    value={con.EMS_TM_EndDate_Asgn__c}
+                                                    onchange={setEndDate}></lightning-input-field>
+                                            </lightning-record-edit-form>
+
+                                        </td>
+                                        <td data-label="Billable" style="text-align: center;">
+                                            <lightning-record-edit-form object-api-name="EMS_TM_Assignment__c">
+                                                <lightning-input-field variant="label-hidden"
+                                                    field-name="EMS_TM_Billable__c" name={ind}
+                                                    value={con.EMS_TM_Billable__c}
+                                                    onchange={setBillable}></lightning-input-field>
+                                            </lightning-record-edit-form>
+
+                                        </td>
+                                        <td data-label="Action" style="text-align: center;">
+                                            <lightning-button label="Remove" variant="neutral" value={ind}
+                                                onclick={removeRow}></lightning-button>
+                                        </td>
+                                    </tr>
+
+                                </template>
+
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+        </div>
+        <div slot="footer">
+            <template if:true={selectedProject}>
+                <lightning-button name="Cancel" label="Cancel" class="slds-p-around_xx-small" variant="destructive-text"
+                    onclick={handleCancel}></lightning-button>
+                <lightning-button name="multipleRowSave" label="Save Assignments" class="slds-p-around_xx-small"
+                    variant="brand" onclick={saveData}></lightning-button>
+                <!-- <lightning-button name="Cancel" label="Cancel" class="slds-p-around_xx-small" variant="destructive" onclick={handleCancel}></lightning-button> -->
+                <lightning-button name="multipleRowAddition" label="Add Row" class="slds-p-around_xx-small"
+                    variant="brand" onclick={addRow}></lightning-button>
+                <lightning-button name="multipleRowRemoval" class="slds-p-around_xx-small" label="Remove Row"
+                    variant="destructive" onclick={removeRow}></lightning-button>
+            </template>
+        </div>
+    </lightning-card>
+</template>
