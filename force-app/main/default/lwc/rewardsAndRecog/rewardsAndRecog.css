@@ -10,6 +10,7 @@
   border-radius: 5px;
 }
 
+/*
 .container .btn {
   position: absolute;
   top: 50%;
@@ -24,6 +25,27 @@
   border-radius: 5px;
   text-align: center;
   max-height : 20%;
+}*/
+
+
+.btn2 {
+  width: 100%; /* Full width */
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  width: 100%;
+  color: white;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.btn-container lightning-button {
+  margin-left: 10px; /* Add margin between buttons */
 }
 
 .container .btn:hover {

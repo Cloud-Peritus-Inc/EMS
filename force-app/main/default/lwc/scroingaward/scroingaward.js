@@ -53,12 +53,14 @@ handleChange(event) {
  getThelInfoByAward(){
      this.scoringTable = [];
           console.log('======selectedfy===='+JSON.stringify(this.selectedfy));
+          let currentAward = this.selectedAward;
         getTheScoringbyAward({ 
         fyId : this.selectedfy,
          awardType : this.selectedAward  
         }).then(result => {
         console.log('======scoringTable===='+JSON.stringify(result));
         this.scoringTable = result;
+        this.selectedAward=currentAward;
         }).catch(error => {
         }); 
     }

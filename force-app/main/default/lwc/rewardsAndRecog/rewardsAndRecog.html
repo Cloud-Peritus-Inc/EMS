@@ -2,11 +2,23 @@
  <lightning-card>
 <div class="container">
     <img src={imageUrl} style="max-height:250px;" alt="Snow">
-    <div class="btn">
+    <!-- <div class="btn">
      <lightning-button variant="brand" label="Shout Out" title="Shout Out" onclick={showShoutOutiewModalBox} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      <lightning-button variant="brand" label="Recognise" title="Recognise" onclick={showRecModalBox} disabled={drecognise} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      <lightning-button variant="brand" label="Award Nominations" title="Award Nominations" onclick={showAnnualModalBox} disabled={dNominations} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </div>        
+    </div>         -->
+</div>
+
+<br/>
+<div class="btn2">
+   <div class="btn-container">
+      <lightning-button variant="brand" label="Shout Out" title="Shout Out"
+         onclick={showShoutOutiewModalBox}></lightning-button> 
+      <lightning-button variant="brand" label="Recognise" title="Recognise" onclick={showRecModalBox}
+         disabled={drecognise}></lightning-button>
+      <lightning-button variant="brand" label="Award Nominations" title="Award Nominations" onclick={showAnnualModalBox}
+         disabled={dNominations}></lightning-button>
+   </div>
 </div>
 
 <br/>
