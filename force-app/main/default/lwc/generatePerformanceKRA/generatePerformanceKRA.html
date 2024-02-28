@@ -62,7 +62,7 @@
 			<div class="slds-wrap slds-grid">
 				<div class="slds-col slds-size_6-of-12 slds-p-horizontal--small slds-m-bottom--medium">
 					<div class="slds-form-element__control ">
-						<lightning-input type="Date" label="From" value={fromValue} name="From"
+						<lightning-input type="Date" label="Last Appraisal Date/Date of Joining" value={fromValue} name="From"
 							onchange={handleChangeAction}></lightning-input>
 					</div>
 				</div>
@@ -72,12 +72,6 @@
 						</lightning-input>
 					</div>
 				</div>
-
-				<!-- <div class="slds-col slds-2-of-12 slds-m-bottom--medium"
-					style="text-align:center; width:40px; margin:auto;">
-					<lightning-button type="brand" label="Search" variant="brand" size="small" onclick={searchAction}>
-					</lightning-button>
-				</div> -->
 
 			</div>
 
@@ -262,19 +256,19 @@
 							<div class="midBox">
 								<p class="subTitle">SCHEDULES</p>
 								<p class="">
+									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text="" title=""></lightning-icon> 
+									&nbsp;Assessment will be visible for 15 days from the date of trigger.
+								</p>
+								<!-- <p class="">
 									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
-										title=""></lightning-icon> Demo Schedule
+										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
+									Evaluation Date
 								</p>
 								<p class="">
 									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
 										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
 									Evaluation Date
-								</p>
-								<p class="">
-									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
-										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
-									Evaluation Date
-								</p>
+								</p> -->
 							</div>
 
 						</div>
