@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Feedback_and_Recognition_Rating__c</fullName>
+    <externalId>false</externalId>
+    <formula>IMAGE(
+IF( Feedback_and_Recognition__c &lt;1 , &quot;/img/samples/stars_000.gif&quot;,
+IF(Feedback_and_Recognition__c&lt;2, &quot;/img/samples/stars_100.gif&quot;,
+IF(Feedback_and_Recognition__c&lt;3, &quot;/img/samples/stars_200.gif&quot;,
+IF(Feedback_and_Recognition__c&lt;4, &quot;/img/samples/stars_300.gif&quot;,
+IF(Feedback_and_Recognition__c&lt;5, &quot;/img/samples/stars_400.gif&quot;, &quot;/img/samples/stars_500.gif&quot;
+))))),
+&quot;Rating&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Feedback and Recognition Rating</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

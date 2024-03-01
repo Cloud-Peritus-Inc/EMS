@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Annual_Awards_Scoring</fullName>
+    <columns>NAME</columns>
+    <columns>Award_Type__c</columns>
+    <columns>Fiscal_Year__c</columns>
+    <columns>Resource__c</columns>
+    <columns>Status__c</columns>
+    <columns>Recognization_By__c</columns>
+    <columns>Reason_for_award__c</columns>
+    <columns>of_Primary_Nominations__c</columns>
+    <columns>of_Secondary_Nominations__c</columns>
+    <columns>of_Total_Nominations__c</columns>
+    <columns>System_Predicted_Status__c</columns>
+    <columns>Comments__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Reward_And_Recognition__c.Scoring</value>
+    </filters>
+    <label>Annual Awards Scoring</label>
+</ListView>

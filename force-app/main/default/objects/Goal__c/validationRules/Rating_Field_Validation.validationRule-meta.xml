@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rating_Field_Validation</fullName>
+    <active>true</active>
+    <description>Restrict user for entering values other than between 1 and 5 in Rating fields</description>
+    <errorConditionFormula>AND(
+    OR(
+        AND(
+            NOT(ISBLANK(Development_Rating__c)),
+            OR(Development_Rating__c &lt; 1, Development_Rating__c &gt; 5)
+        ),
+        AND(
+            NOT(ISBLANK(Testing_Rating__c)),
+            OR(Testing_Rating__c &lt; 1, Testing_Rating__c &gt; 5)
+        ),
+        AND(
+            NOT(ISBLANK(Understanding_Code_Rating__c)),
+            OR(Understanding_Code_Rating__c &lt; 1, Understanding_Code_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Platform_Knowledge_Rating__c)),
+            OR(Platform_Knowledge_Rating__c &lt; 1, Platform_Knowledge_Rating__c &gt; 5)
+        ),
+        AND(
+            NOT(ISBLANK(Design_and_Architecture_Rating__c)),
+            OR(Design_and_Architecture_Rating__c &lt; 1, Design_and_Architecture_Rating__c &gt; 5)
+        ),
+        AND(
+            NOT(ISBLANK(Documentation_Rating__c)),
+            OR(Documentation_Rating__c &lt; 1, Documentation_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Continuous_Improvement_Rating__c)),
+            OR(Continuous_Improvement_Rating__c &lt; 1, Continuous_Improvement_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Delivery_Accountability_Rating__c)),
+            OR(Delivery_Accountability_Rating__c &lt; 1, Delivery_Accountability_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Effective_Communication_Rating__c)),
+            OR(Effective_Communication_Rating__c &lt; 1, Effective_Communication_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Knowledge_Sharing_Rating__c)),
+            OR(Knowledge_Sharing_Rating__c &lt; 1, Knowledge_Sharing_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Teamwork_Rating__c)),
+            OR(Teamwork_Rating__c &lt; 1, Teamwork_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Attitude_and_Behavior_Rating__c)),
+            OR(Attitude_and_Behavior_Rating__c &lt; 1, Attitude_and_Behavior_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Business_Development_Rating__c)),
+            OR(Business_Development_Rating__c &lt; 1, Business_Development_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Strategic_Work_Rating__c)),
+            OR(Strategic_Work_Rating__c &lt; 1, Strategic_Work_Rating__c &gt; 5)
+        ),
+		AND(
+            NOT(ISBLANK(Company_Growth_Rating__c)),
+            OR(Company_Growth_Rating__c &lt; 1, Company_Growth_Rating__c &gt; 5)
+        )
+		
+    )
+)</errorConditionFormula>
+    <errorMessage>Rating should be between 1 and 5</errorMessage>
+</ValidationRule>

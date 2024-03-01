@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_In</fullName>
+    <columns>NAME</columns>
+    <columns>Goal_Name__c</columns>
+    <columns>Check_In_By__c</columns>
+    <columns>Resource__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Goal__c.checkin</value>
+    </filters>
+    <label>Check In</label>
+</ListView>

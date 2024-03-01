@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Overall_KRA_Average_Rating__c</fullName>
+    <description>This field is storing all KRA Overall Average Rating</description>
+    <externalId>false</externalId>
+    <label>Overall KRA Average Rating</label>
+    <precision>2</precision>
+    <required>false</required>
+    <scale>1</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

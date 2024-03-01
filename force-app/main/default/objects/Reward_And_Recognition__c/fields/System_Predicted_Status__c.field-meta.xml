@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>System_Predicted_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>System Predicted Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Might Looser</fullName>
+                <default>false</default>
+                <label>Most Likely Winner</label>
+            </value>
+            <value>
+                <fullName>Might Winner</fullName>
+                <default>false</default>
+                <label>Might Winner</label>
+            </value>
+            <value>
+                <fullName>Winner</fullName>
+                <default>false</default>
+                <label>Winner</label>
+            </value>
+            <value>
+                <fullName>Looser</fullName>
+                <default>false</default>
+                <label>Potential Winner</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

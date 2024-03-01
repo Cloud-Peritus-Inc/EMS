@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nominations</fullName>
+    <active>true</active>
+    <label>Nominations</label>
+    <picklistValues>
+        <picklist>Award_Type__c</picklist>
+        <values>
+            <fullName>Award of Excellence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Best Entrepreneur</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Going Above and Beyond</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Most Professional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rising Star</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rock Star</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shining Star</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Draft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nominated</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Review In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Winner</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>System_Predicted_Status__c</picklist>
+        <values>
+            <fullName>Looser</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Might Looser</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Might Winner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Winner</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Annual Award</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recognize</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ShoutOut</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Shout_Out__c</picklist>
+        <values>
+            <fullName>Chief Fun Officer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Great Job</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incentives</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kudos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Make a Difference</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pat on the back%21</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personalized Thank You</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recognition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Star Performer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>The Innovation Ninja</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Types_of_Recognition__c</picklist>
+        <values>
+            <fullName>Monetary Rewards</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Peer Recognition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance-Based Recognition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prize Recognition</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
