@@ -4,6 +4,7 @@
     <columns>NAME</columns>
     <columns>Check_In_By__c</columns>
     <columns>Resource__c</columns>
+    <columns>Status__c</columns>
     <columns>Check_in_Date__c</columns>
     <columns>Fulfillment__c</columns>
     <filterScope>Everything</filterScope>

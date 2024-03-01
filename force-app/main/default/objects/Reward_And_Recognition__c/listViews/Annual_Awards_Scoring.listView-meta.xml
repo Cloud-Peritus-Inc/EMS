@@ -13,6 +13,8 @@
     <columns>of_Total_Nominations__c</columns>
     <columns>System_Predicted_Status__c</columns>
     <columns>Comments__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>UPDATEDBY_USER</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>RECORDTYPE</field>

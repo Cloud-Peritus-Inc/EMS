@@ -24,7 +24,7 @@
             <value>
                 <fullName>Lost</fullName>
                 <default>false</default>
-                <label>Lost</label>
+                <label>Not Qualified</label>
             </value>
             <value>
                 <fullName>Winner</fullName>

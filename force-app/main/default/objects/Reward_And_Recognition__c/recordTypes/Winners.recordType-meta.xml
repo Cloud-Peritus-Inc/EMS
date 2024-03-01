@@ -41,6 +41,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Draft</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lost</fullName>
             <default>false</default>
         </values>

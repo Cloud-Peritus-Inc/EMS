@@ -14,7 +14,7 @@
             <value>
                 <fullName>Might Looser</fullName>
                 <default>false</default>
-                <label>Might Looser</label>
+                <label>Most Likely Winner</label>
             </value>
             <value>
                 <fullName>Might Winner</fullName>
@@ -29,7 +29,7 @@
             <value>
                 <fullName>Looser</fullName>
                 <default>false</default>
-                <label>Looser</label>
+                <label>Potential Winner</label>
             </value>
         </valueSetDefinition>
     </valueSet>

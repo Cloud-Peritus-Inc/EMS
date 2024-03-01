@@ -91,21 +91,22 @@ public without sharing class myGoalsController {
         return [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c,Description__c,Feedback_and_Comments__c FROM Goal__c WHERE Id=:goalId];
     }
     
-     @AuraEnabled 
+    @AuraEnabled 
     public static void saveTheGoal(String goalId, String finalComments){
-       Goal__c gl = [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c,Description__c,Feedback_and_Comments__c,Status__c FROM Goal__c WHERE Id=:goalId];
-       gl.Feedback_and_Comments__c = finalComments;
-        if(gl.End_Date__c >= system.today()){
-          gl.Status__c = 'Completed - OnTime';  
-        }else{
-          gl.Status__c = '	Completed - PostTime';    
-        }
         try{
-              update gl;  
-            }catch(exception ex){
-             String errorMsg = ex.getMessage();
+            Goal__c gl = [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c,Description__c,Feedback_and_Comments__c,Status__c FROM Goal__c WHERE Id=:goalId];
+            gl.Feedback_and_Comments__c = finalComments;
+            if(gl.End_Date__c >= system.today()){
+                gl.Status__c = 'Completed - OnTime';  
+            }else{
+                gl.Status__c = '	Completed - PostTime';    
+            }
+            
+            update gl;  
+        }catch(exception ex){
+            String errorMsg = ex.getMessage();
             throw new AuraHandledException(ErrorMsg); 
-            } 
+        } 
     }
     
     public class goalWrapper {

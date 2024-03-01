@@ -11,6 +11,7 @@
     <columns>Reason_for_award__c</columns>
     <columns>Primary_Nomination__c</columns>
     <columns>Secondary_Nomination__c</columns>
+    <columns>Type__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Type__c</field>
