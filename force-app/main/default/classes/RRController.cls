@@ -359,7 +359,8 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
     @AuraEnabled
     public static datawrapper getFinalNominsWinners(String fyId){
           datawrapper dwrap = new datawrapper();
-       List<winnerdetails> currentList = new List<winnerdetails>();    
+       List<winnerdetails> currentList = new List<winnerdetails>(); 
+       Map<String,winnerdetails> winnerfinalMap = new Map<String,winnerdetails>();
          User loggedinUser = [SELECT Id,ContactId FROM User WHERE Id=:Userinfo.getUserId()];
         system.debug('===fyId==alreadyannounced===='+fyId);
          system.debug('===Userinfo.getUserId()======'+Userinfo.getUserId());
@@ -369,7 +370,8 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                                             WHERE Fiscal_Year__c=:fyId AND RecordTypeId =:RR_NOMINATION_RECORDTYPEID
                                             AND Type__c = 'Annual Award'
                                             AND Status__c = 'Winner']){
-          
+            String uniqueKey = rr.Award_Type__c+'-'+rr.Resource__r.Name;
+                if(!winnerfinalMap.containsKey(uniqueKey)){                                
                 winnerdetails wd = new winnerdetails();
                  wd.awardType = rr.Award_Type__c;
                  wd.currentFYName = rr.of_Primary_Nominations__c != null ? string.valueOf(rr.of_Primary_Nominations__c) : '0';
@@ -381,7 +383,9 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                 wd.Title = rr.Status__c;
                 wd.totalNoms = rr.Fiscal_Year__r.Name;
                 wd.createdDate = Date.valueOf(rr.CreatedDate);
+                 winnerfinalMap.put(uniqueKey,wd);
               currentList.add(wd);
+                                                }
         }
         
         dwrap.CurrentList = currentList;
