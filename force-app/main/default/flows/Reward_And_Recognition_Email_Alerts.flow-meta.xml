@@ -15,8 +15,6 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Reward_And_Recognition__c.Annual_Award_Submission_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;Recognize&quot; is created Send an Email to the &quot;CREATOR&quot;</description>
@@ -36,8 +34,6 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Reward_And_Recognition__c.Recognition_Email_alert_for_Creator</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;SHOUTOUT&quot; is created Send an Email to the &quot;CREATOR&quot;</description>
@@ -54,8 +50,6 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Reward_And_Recognition__c.Shoutout_Email_alert_for_Creator</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Email_to_Member</name>
@@ -119,8 +113,6 @@
                 <elementReference>Get_Template.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;Recognize&quot; is created Send an Email to the &quot;RESOURCE&quot;</description>
@@ -140,8 +132,6 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Reward_And_Recognition__c.Recognition_Email_alert_for_Resource</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;SHOUTOUT&quot; is created Send an Email to the &quot;RESOURCE&quot;</description>
@@ -161,8 +151,6 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Reward_And_Recognition__c.Shoutout_Email_alert_for_Resource</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <assignments>
