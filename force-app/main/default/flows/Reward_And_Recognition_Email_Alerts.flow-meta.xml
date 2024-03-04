@@ -4,7 +4,7 @@
         <description>Whenever a &quot;Annual Award Nomination&quot; is submitted send an email to nomination Creator</description>
         <name>Email_to_Creator_AA</name>
         <label>Email to Creator</label>
-        <locationX>666</locationX>
+        <locationX>1634</locationX>
         <locationY>431</locationY>
         <actionName>Reward_And_Recognition__c.Annual_Award_Submission_Alert</actionName>
         <actionType>emailAlert</actionType>
@@ -15,13 +15,15 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Annual_Award_Submission_Alert</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;Recognize&quot; is created Send an Email to the &quot;CREATOR&quot;</description>
         <name>Email_to_Creator_Recognition</name>
         <label>Email to Creator</label>
-        <locationX>402</locationX>
-        <locationY>539</locationY>
+        <locationX>842</locationX>
+        <locationY>431</locationY>
         <actionName>Reward_And_Recognition__c.Recognition_Email_alert_for_Creator</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -34,6 +36,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Recognition_Email_alert_for_Creator</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;SHOUTOUT&quot; is created Send an Email to the &quot;CREATOR&quot;</description>
@@ -50,12 +54,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Shoutout_Email_alert_for_Creator</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Email_to_Member</name>
         <label>Email to Member</label>
-        <locationX>490</locationX>
-        <locationY>1079</locationY>
+        <locationX>930</locationX>
+        <locationY>863</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -113,25 +119,8 @@
                 <elementReference>Get_Template.Id</elementReference>
             </value>
         </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <description>Whenever a new &quot;Recognize&quot; is created Send an Email to the &quot;RESOURCE&quot;</description>
-        <name>Email_to_Resource_Recognition</name>
-        <label>Email to Resource</label>
-        <locationX>402</locationX>
-        <locationY>431</locationY>
-        <actionName>Reward_And_Recognition__c.Recognition_Email_alert_for_Resource</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>Email_to_Creator_Recognition</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Whenever a new &quot;SHOUTOUT&quot; is created Send an Email to the &quot;RESOURCE&quot;</description>
@@ -151,29 +140,562 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Reward_And_Recognition__c.Shoutout_Email_alert_for_Resource</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Monetary_Email</name>
+        <label>Monetary Email</label>
+        <locationX>314</locationX>
+        <locationY>1787</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Monetary_Email_to_Res</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddressesArray</name>
+            <value>
+                <elementReference>GroupEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Resource__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>Monetary_Template.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Monetary_Email_to_Res</name>
+        <label>Monetary Email to Res</label>
+        <locationX>314</locationX>
+        <locationY>1895</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Resource__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Resource__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>Monetary_Template.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Peer_Email</name>
+        <label>Peer Email</label>
+        <locationX>842</locationX>
+        <locationY>1787</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Peer_Email_to_Res</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Resource__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddressesArray</name>
+            <value>
+                <elementReference>GroupEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Resource__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>Peer_Template.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Peer_Email_to_Res</name>
+        <label>Peer Email to Res</label>
+        <locationX>842</locationX>
+        <locationY>1895</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Resource__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Resource__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>Peer_Template.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Performance_Email</name>
+        <label>Performance Email</label>
+        <locationX>578</locationX>
+        <locationY>1787</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Performance_Email_to_Res</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Resource__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddressesArray</name>
+            <value>
+                <elementReference>GroupEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Resource__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>Performance_Template.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Performance_Email_to_Res</name>
+        <label>Performance Email to Res</label>
+        <locationX>578</locationX>
+        <locationY>1895</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Resource__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Resource__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>Performance_Template.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Prize_Email</name>
+        <label>Prize Email</label>
+        <locationX>1106</locationX>
+        <locationY>1787</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Prize_Email_to_Res</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Resource__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddressesArray</name>
+            <value>
+                <elementReference>GroupEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Resource__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>Prize_Template.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Prize_Email_to_Res</name>
+        <label>Prize Email to Res</label>
+        <locationX>1106</locationX>
+        <locationY>1895</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Resource__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply.grid@cloudperitus.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Resource__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <elementReference>Prize_Template.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <assignments>
-        <description>Iterate and add email to the ProjectMembersEmail list variable.</description>
-        <name>Add_Email</name>
-        <label>Add Email</label>
-        <locationX>490</locationX>
-        <locationY>971</locationY>
+        <description>Store Email Id of Mentor and Resource Manager</description>
+        <name>Store_Emails</name>
+        <label>Store Emails</label>
+        <locationX>930</locationX>
+        <locationY>1379</locationY>
         <assignmentItems>
-            <assignToReference>ProjectMembersEmail</assignToReference>
+            <assignToReference>GroupEmails</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Iterate_Member_Records.EMS_TM_EmployeeName__r.Email</elementReference>
+                <elementReference>Loop_FilteredRRR.Resource_Reports_To__r.Email</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Email_to_Member</targetReference>
+            <targetReference>Loop_FilteredRRR</targetReference>
         </connector>
     </assignments>
+    <collectionProcessors>
+        <description>Here we are filtering on records where Relationship Type Field Contains Mentor or Resource Manager</description>
+        <name>Filter</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter</label>
+        <locationX>842</locationX>
+        <locationY>1163</locationY>
+        <assignNextValueToReference>currentItem_Filter</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>RRR</collectionReference>
+        <conditionLogic>or</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Filter.Relationship_Type__c</leftValueReference>
+            <operator>Contains</operator>
+            <rightValue>
+                <stringValue>Mentor</stringValue>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_Filter.Relationship_Type__c</leftValueReference>
+            <operator>Contains</operator>
+            <rightValue>
+                <stringValue>Resource Manager</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Loop_FilteredRRR</targetReference>
+        </connector>
+    </collectionProcessors>
     <decisions>
         <name>Check_Type</name>
         <label>Check Type</label>
-        <locationX>490</locationX>
+        <locationX>974</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -244,7 +766,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Email_to_Resource_Recognition</targetReference>
+                <targetReference>Email_to_Creator_Recognition</targetReference>
             </connector>
             <label>Recognition Type</label>
         </rules>
@@ -307,6 +829,73 @@
             <label>Annual Award Type</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Type_of_Recognition</name>
+        <label>Type of Recognition</label>
+        <locationX>842</locationX>
+        <locationY>1571</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Monetary</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Types_of_Recognition__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Monetary Rewards</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Monetary_Template</targetReference>
+            </connector>
+            <label>Monetary</label>
+        </rules>
+        <rules>
+            <name>Performance</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Types_of_Recognition__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Performance-Based Recognition</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Performance_Template</targetReference>
+            </connector>
+            <label>Performance</label>
+        </rules>
+        <rules>
+            <name>Peer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Types_of_Recognition__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Peer Recognition</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Peer_Template</targetReference>
+            </connector>
+            <label>Peer</label>
+        </rules>
+        <rules>
+            <name>Prize</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Types_of_Recognition__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prize Recognition</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prize_Template</targetReference>
+            </connector>
+            <label>Prize</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Rewards and Recogni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Reward And Recognition Email Alerts</label>
@@ -314,13 +903,31 @@
         <description>Iterate through fetched Project Memebers and store their email in a list for sending email notifications.</description>
         <name>Iterate_Member_Records</name>
         <label>Iterate Member Records</label>
-        <locationX>402</locationX>
-        <locationY>863</locationY>
+        <locationX>842</locationX>
+        <locationY>755</locationY>
         <collectionReference>Get_Project_Assignees</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Add_Email</targetReference>
+            <targetReference>Email_to_Member</targetReference>
         </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>RRR</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Looping through the RRR records who contained Mentor/Resource Manager to fetch there email Id</description>
+        <name>Loop_FilteredRRR</name>
+        <label>Loop FilteredRRR</label>
+        <locationX>842</locationX>
+        <locationY>1271</locationY>
+        <collectionReference>Filter</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Store_Emails</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Type_of_Recognition</targetReference>
+        </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -345,8 +952,8 @@
         <description>Get all the members assigned to same project as the resource.</description>
         <name>Get_Project_Assignees</name>
         <label>Get Project Assignees</label>
-        <locationX>402</locationX>
-        <locationY>647</locationY>
+        <locationX>842</locationX>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Template</targetReference>
@@ -388,8 +995,8 @@
         <description>Fetch Recognition Email template for Project Members template</description>
         <name>Get_Template</name>
         <label>Get Template</label>
-        <locationX>402</locationX>
-        <locationY>755</locationY>
+        <locationX>842</locationX>
+        <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Iterate_Member_Records</targetReference>
@@ -406,8 +1013,128 @@
         <object>EmailTemplate</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Monetary_Template</name>
+        <label>Monetary Template</label>
+        <locationX>314</locationX>
+        <locationY>1679</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Monetary_Email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Monetary_Recognition_Email_template_for_Resource</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailTemplate</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Peer_Template</name>
+        <label>Peer Template</label>
+        <locationX>842</locationX>
+        <locationY>1679</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Peer_Email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Peer_Recognition_Email_template_for_Resource</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailTemplate</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Performance_Template</name>
+        <label>Performance Template</label>
+        <locationX>578</locationX>
+        <locationY>1679</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Performance_Email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Performance_Recognition_Email_template_for_Resource</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailTemplate</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Prize_Template</name>
+        <label>Prize Template</label>
+        <locationX>1106</locationX>
+        <locationY>1679</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Prize_Email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Prize_Recognition_Email_template_for_Resource</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailTemplate</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetch the Mentor and Resource Manager</description>
+        <name>RRR</name>
+        <label>RRR</label>
+        <locationX>842</locationX>
+        <locationY>1055</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Filter</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Resource__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Resource__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Resource_Reports_To__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Relationship_Type__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Resource_Resource_Relationship__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
-        <locationX>364</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Type</targetReference>
@@ -433,7 +1160,15 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>ProjectMembersEmail</name>
+        <name>currentItem_Filter</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Resource_Resource_Relationship__c</objectType>
+    </variables>
+    <variables>
+        <name>GroupEmails</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
