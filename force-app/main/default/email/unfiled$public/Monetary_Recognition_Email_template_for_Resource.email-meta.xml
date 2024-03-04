@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
     <available>true</available>
-    <description>an email notification to all Project members if any Project member received Recognition</description>
+    <description>When an employee gets a ‘Monetary reward’ based recognition</description>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>Cloud_Peritus_Inc</letterhead>
-    <name>Recognition Email template for Project Members</name>
+    <name>Monetary Recognition Email template for Resource</name>
     <style>freeForm</style>
-    <subject>RnR - Recognition for {!Reward_And_Recognition__c.Project__c} project</subject>
+    <subject>RnR - Monetary Reward for Outstanding Performance</subject>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
