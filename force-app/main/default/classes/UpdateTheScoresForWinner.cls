@@ -68,8 +68,8 @@ public without sharing class UpdateTheScoresForWinner implements TriggerAction.A
                      system.debug('====Winnerscoring==='+Winnerscoring);
                       system.debug(newRec.Resource__c+'====Winnerscoring==='+Winnerscoring.Resource__c);
                      if(Winnerscoring.Status__c == 'Winner' && Winnerscoring.Resource__c == newRec.Resource__c){
-                        newRec.Status__c = 'Lost';
-                        newRec.System_Predicted_Status__c = 'Looser';
+                        newRec.Status__c = 'Not Qualified';
+                        newRec.System_Predicted_Status__c = 'Potential Winner';
                        // newRec.Comments__c =  Winnerscoring.Comments__c; 
                         newRec.Lost_Reason__c = 'This resource already a winner for award : '+Winnerscoring.Award_Type__c;
                         updateNomsDML.put(newRec.Id,newRec);
@@ -82,13 +82,13 @@ public without sharing class UpdateTheScoresForWinner implements TriggerAction.A
                  FROM Reward_And_Recognition__c WHERE Status__c = 'Review In Progress' and Id NOT IN:rrIds
                   and RecordTypeId=:scoringRecordTypeId and Award_Type__c IN:considerAwards]){
                       if(updateNomsDML.containsKey(newRec.id)){
-                        updateNomsDML.get(newRec.id).Status__c = 'Lost';
-                        updateNomsDML.get(newRec.id).System_Predicted_Status__c = 'Looser';
+                        updateNomsDML.get(newRec.id).Status__c = 'Not Qualified';
+                        updateNomsDML.get(newRec.id).System_Predicted_Status__c = 'Potential Winner';
                         updateNomsDML.get(newRec.id).Lost_Reason__c = 'One of the contender for this award has been marked as winner.';
                        
                       }else{
-                        newRec.Status__c = 'Lost';
-                        newRec.System_Predicted_Status__c = 'Looser';
+                        newRec.Status__c = 'Not Qualified';
+                        newRec.System_Predicted_Status__c = 'Potential Winner';
                         newRec.Lost_Reason__c = 'One of the contender for this award has been marked as winner.';
                         updateNomsDML.put(newRec.Id,newRec); 
                       }

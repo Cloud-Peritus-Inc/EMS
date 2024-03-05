@@ -22,7 +22,7 @@
                 <label>Review In Progress</label>
             </value>
             <value>
-                <fullName>Lost</fullName>
+                <fullName>Not Qualified</fullName>
                 <default>false</default>
                 <label>Not Qualified</label>
             </value>

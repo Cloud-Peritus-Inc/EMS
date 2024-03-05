@@ -13,8 +13,8 @@ global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
             resources.add(rr.Resource__c); 
              scoringUpdateMap.put(rr.Id,rr);
              if(rr.Resource__r.Not_Eligible_For_Annual_Awards__c){
-              scoringUpdateMap.get(rr.Id).Status__c = 'Lost';  
-              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Looser';
+              scoringUpdateMap.get(rr.Id).Status__c = 'Not Qualified';  
+              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Potential Winner';
               scoringUpdateMap.get(rr.Id).Lost_Reason__c = 'Resource is not eligiable for annual awards.';               
             }
           }
@@ -27,8 +27,8 @@ global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
             contact resou = contacMap.get(rr.Resource__c);
             Integer oOfdayFromJoining = (resou.EMS_EM_JD__c).daysBetween(System.today()) ;
             if(rr.Award_Type__c == 'Rising Star' && resou.EMS_EM_Exp__c != null && ( resou.EMS_EM_Exp__c > 3 || oOfdayFromJoining < 180 ) ){
-               scoringUpdateMap.get(rr.Id).Status__c = 'Lost';  
-               scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Looser';
+               scoringUpdateMap.get(rr.Id).Status__c = 'Not Qualified';  
+               scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Potential Winner';
                scoringUpdateMap.get(rr.Id).Lost_Reason__c = 'Resource might have more then 3 years of exp or less than 6 months to cloudperitus.'; 
                 continue;
             }
@@ -38,7 +38,7 @@ global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
               scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Might Winner';
               scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got more nomiation when compared to other Contenders.'; 
             }else{
-              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Might Looser';
+              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Most Likely Winner';
               scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got less nomiation when compared to other Contenders.';  
             }     
             

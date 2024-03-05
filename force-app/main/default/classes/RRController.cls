@@ -336,7 +336,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                                             AND Recognization_By__c =:loggedinUser.Id
                                             //smaske : [UAT_PR_013] : Only fetching Nominations Recordtype records,where status is Nominated/Draft/Winner/Lost
                                             AND RecordTypeId =: RR_NOMINATION_RECORDTYPEID
-                                            AND Status__c IN ('Nominated', 'Draft', 'Winner', 'Lost')
+                                            AND Status__c IN ('Nominated', 'Draft', 'Winner', 'Not Qualified')
                                             //smaske : updated query to return data in DESC order based on createdDate
                                             ORDER BY CreatedDate DESC
                                             ]){

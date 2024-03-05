@@ -4,7 +4,7 @@
 * @description  UpdateTheNomsBasedOnScoring Class to update all the nominations based on score result
 *
 *               Test code coverage provided by the following test class:
-*               - 
+*               - UpdateTheNomsBasedOnScoringTest
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -46,7 +46,7 @@ public without sharing class UpdateTheNomsBasedOnScoring implements TriggerActio
           Map<String,Reward_And_Recognition__c> resWithRecord = new Map<String,Reward_And_Recognition__c>();
           for(Reward_And_Recognition__c newRec :  newlist){
               Reward_And_Recognition__c oldRec = oldMap.get(newRec.Id);
-              if(newRec.recordTypeId == scoringRecordTypeId && (newRec.Status__c == 'Winner' || newRec.Status__c == 'Lost') && (newRec.Status__c != oldRec.Status__c)){
+              if(newRec.recordTypeId == scoringRecordTypeId && (newRec.Status__c == 'Winner' || newRec.Status__c == 'Not Qualified') && (newRec.Status__c != oldRec.Status__c)){
                  String uniqueKey = newRec.Resource__c+';'+newRec.Award_Type__c;
                  resWithRecord.put(uniqueKey,newRec);
                  resourceId.add(newRec.Resource__c);
@@ -67,8 +67,8 @@ public without sharing class UpdateTheNomsBasedOnScoring implements TriggerActio
                         newRec.Status__c = 'Winner';
                         newRec.Comments__c =  scoring.Comments__c;
                         updateNomsDML.add(newRec);
-                     }else if(scoring.Status__c == 'Lost' && scoring.Resource__c == newRec.Resource__c && scoring.Award_Type__c == newRec.Award_Type__c){
-                        newRec.Status__c = 'Lost';
+                     }else if(scoring.Status__c == 'Not Qualified' && scoring.Resource__c == newRec.Resource__c && scoring.Award_Type__c == newRec.Award_Type__c){
+                        newRec.Status__c = 'Not Qualified';
                        // newRec.Comments__c =  scoring.Comments__c; 
                         newRec.Lost_Reason__c = scoring.Lost_Reason__c;
                          updateNomsDML.add(newRec);
