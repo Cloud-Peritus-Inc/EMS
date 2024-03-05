@@ -4,10 +4,6 @@
         <apexClass>sendEmailToResourceManagerAndMentor</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
-        <apexClass>sendEmailToResourceManagerAndMentor_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
         <editable>false</editable>
