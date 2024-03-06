@@ -45,12 +45,12 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Lost</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Nominated</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Not Qualified</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Review In Progress</fullName>
@@ -64,15 +64,15 @@
     <picklistValues>
         <picklist>System_Predicted_Status__c</picklist>
         <values>
-            <fullName>Looser</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Might Looser</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Might Winner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Most Likely Winner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potential Winner</fullName>
             <default>false</default>
         </values>
         <values>

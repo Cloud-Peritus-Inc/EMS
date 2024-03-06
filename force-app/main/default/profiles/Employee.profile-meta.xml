@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
-    <classAccesses>
-        <apexClass>sendEmailToResourceManagerAndMentor</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
     <custom>true</custom>
     <fieldPermissions>
         <editable>false</editable>
@@ -696,6 +692,16 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Grid_Configuration__c.Goal_End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Grid_Configuration__c.Goal_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Reward_And_Recognition__c.Award_Type__c</field>
         <readable>false</readable>
@@ -805,6 +811,54 @@
         <field>Reward_And_Recognition__c.of_Total_Nominations__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <layoutAssignments>
+        <layout>Compensation__c-Compensation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Fulfillment__c-Fulfillment Layout</layout>
+        <recordType>Fulfillment__c.Appraisal</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Fulfillment__c-Fulfillment Layout</layout>
+        <recordType>Fulfillment__c.Recognization</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Fulfillment__c-Fulfillment Layout - HR</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Goal__c-Goal Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Goal__c-Goal Layout</layout>
+        <recordType>Goal__c.Goal</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Goal__c-KRA</layout>
+        <recordType>Goal__c.KRA</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Goal__c-Pulse</layout>
+        <recordType>Goal__c.pulse</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Goal__c-checkin</layout>
+        <recordType>Goal__c.checkin</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reward_And_Recognition__c-Nomination</layout>
+        <recordType>Reward_And_Recognition__c.Nominations</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reward_And_Recognition__c-Scoring</layout>
+        <recordType>Reward_And_Recognition__c.Scoring</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reward_And_Recognition__c-Winners Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reward_And_Recognition__c-Winners Layout</layout>
+        <recordType>Reward_And_Recognition__c.Winners</recordType>
+    </layoutAssignments>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>Fulfillment__c.Appraisal</recordType>

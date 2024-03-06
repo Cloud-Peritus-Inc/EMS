@@ -42,7 +42,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Lost</fullName>
+            <fullName>Not Qualified</fullName>
             <default>false</default>
         </values>
         <values>
@@ -57,15 +57,15 @@
     <picklistValues>
         <picklist>System_Predicted_Status__c</picklist>
         <values>
-            <fullName>Looser</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Might Looser</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Might Winner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Most Likely Winner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potential Winner</fullName>
             <default>false</default>
         </values>
         <values>
