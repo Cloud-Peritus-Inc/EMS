@@ -1,252 +1,290 @@
 <template>
- <lightning-card>
-<div class="container">
-    <img src={imageUrl} style="max-height:250px;" alt="Snow">
-    <!-- <div class="btn">
+	<lightning-card>
+		<div class="container">
+			<img src={imageUrl} style="max-height:250px;" alt="Snow">
+			<!-- <div class="btn">
      <lightning-button variant="brand" label="Shout Out" title="Shout Out" onclick={showShoutOutiewModalBox} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      <lightning-button variant="brand" label="Recognise" title="Recognise" onclick={showRecModalBox} disabled={drecognise} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      <lightning-button variant="brand" label="Award Nominations" title="Award Nominations" onclick={showAnnualModalBox} disabled={dNominations} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </div>         -->
-</div>
+		</div>
 
-<br/>
-<div class="btn2">
-   <div class="btn-container">
-      <lightning-button variant="brand" label="Shout Out" title="Shout Out"
-         onclick={showShoutOutiewModalBox}></lightning-button> 
-      <lightning-button variant="brand" label="Recognise" title="Recognise" onclick={showRecModalBox}
-         disabled={drecognise}></lightning-button>
-      <lightning-button variant="brand" label="Award Nominations" title="Award Nominations" onclick={showAnnualModalBox}
-         disabled={dNominations}></lightning-button>
-   </div>
-</div>
+		<br/>
+		<div class="btn2">
+			<div class="btn-container">
+				<lightning-button variant="brand" label="Shout Out" title="Shout Out" onclick={showShoutOutiewModalBox}>
+				</lightning-button>
+				<lightning-button variant="brand" label="Recognise" title="Recognise" onclick={showRecModalBox}
+					disabled={drecognise}></lightning-button>
+				<lightning-button variant="brand" label="Award Nominations" title="Award Nominations"
+					onclick={showAnnualModalBox} disabled={dNominations}></lightning-button>
+			</div>
+		</div>
 
-<br/>
+		<br/>
 
-<div class="childparent" >
-    <div class="childimage">
-      <div style="padding-left:5px;"> 
-         <template if:true={showTheAnnualAwards}>
-     <lightning-layout horizontal-align="space" >
-     <template for:each={currentdata} for:item="rrcurrent">
-         <lightning-layout-item key={rrcurrent.Id} padding="around-small">
-           <lightning-card key={rrcurrent.Id}>
-         <center> 
-             <div class="image">
-        <img src={rrcurrent.resourcePhotoURL} />
-      </div> 
-           <div style="padding-top:5px;">  <font size="4" color="blue">  {rrcurrent.awardType}  <lightning-helptext content={rrcurrent.awardComments}></lightning-helptext> </font><br/>
-               <br/>  <font size="3" color="purple"> <b> {rrcurrent.resourceName} </b> </font> <br/> </div> 
-             </center>
-           </lightning-card>
-         </lightning-layout-item>
-     </template>
-     </lightning-layout>
-         </template>
-       <template if:false={showTheAnnualAwards}>
-       <center> <font size="4" color="purple"> <b><i>  Annual Awards for the current year was not yet announced. Please check later </i></b> </font> </center>
-       </template>
-       
-           </div></div>
-            <div class="childtext">
-            <lightning-combobox
-                name=""
-                label=""
-                value={selectedfy}
-                placeholder="Fiscal Year"
-                options={fymapdata}
-                onchange={handleFYChange} >
-            </lightning-combobox>
-            </div></div>
-             
+		<div class="childparent">
+			<div class="childimage">
+				<div style="padding-left:5px;">
+					<template if:true={showTheAnnualAwards}>
+						<lightning-layout horizontal-align="space">
+							<template for:each={currentdata} for:item="rrcurrent">
+								<lightning-layout-item key={rrcurrent.Id} padding="around-small">
+									<lightning-card key={rrcurrent.Id}>
+										<center>
+											<div class="image">
+												<img src={rrcurrent.resourcePhotoURL} />
+      </div>
+												<div style="padding-top:5px;">
+													<font size="4" color="blue"> {rrcurrent.awardType}
+														<lightning-helptext content={rrcurrent.awardComments}>
+														</lightning-helptext>
+													</font><br/>
+													<br/>
+													<font size="3" color="purple"> <b> {rrcurrent.resourceName} </b>
+													</font> <br/> </div>
+										</center>
+									</lightning-card>
+								</lightning-layout-item>
+							</template>
+						</lightning-layout>
+					</template>
+					<template if:false={showTheAnnualAwards}>
+						<center>
+							<font size="4" color="purple">
+								<b><i>  Annual Awards for the current year was not yet announced. Please check later </i></b>
+							</font>
+						</center>
+					</template>
 
-<br/>
+				</div>
+			</div>
+			<div class="childtext">
+				<lightning-combobox name="" label="" value={selectedfy} placeholder="Fiscal Year" options={fymapdata}
+					onchange={handleFYChange}>
+				</lightning-combobox>
+			</div>
+		</div>
 
-<lightning-tabset>
-    <lightning-tab label="My Recognitions" value="1" onactive={handleActive} >
-      <c-recrecieved rectable={recreceived}  showthetable={showrectable}> </c-recrecieved>
-    </lightning-tab>
-     <template if:false={drecognise}>
-     <lightning-tab label="Recognitions Given" value="7" onactive={handleActive} >
-      <c-recgiven recgiventable={recgiven} showtable={showrectable}> </c-recgiven>
-    </lightning-tab>
-     </template>
-    <lightning-tab label="My Awards" value="2" onactive={handleActive}  >
-      <c-myawards   awardtable={myawards} showtable={showrectable}> </c-myawards>
-    </lightning-tab>
-    <lightning-tab label="Shout Outs Given" value="3" onactive={handleActive} >
-       <c-shoutoutgiven shouttable={shoutouttable} showtable={showrectable}> </c-shoutoutgiven>
-    </lightning-tab>
-    <lightning-tab label="Shout Outs Received" value="4" onactive={handleActive}>
-       <c-shoutoutreceived shoutrecived={shoutoutreceived} showtable={showrectable}  > </c-shoutoutreceived>
-    </lightning-tab>
-    <template if:true={showNomstab}>
-    <lightning-tab label="My Nominations" value="5" onactive={handleActive}>
-       <c-mynominations nomstable={mynoms} showtable={showrectable} > </c-mynominations>
-    </lightning-tab>
-    </template>
-    <template if:true={showscroingTab}>
-    <lightning-tab label="Scoring" value="6" onactive={handleActive}>
-        <c-scroingaward awarddatalist={awardsdata} selectedfy={selectedfy}  ></c-scroingaward>
-    </lightning-tab>
-    </template>
-</lightning-tabset>
 
- </lightning-card>
+		<br/>
 
-  <!--shout out modal start -->      
-   <template if:true={openshoutout}>
-     <lightning-card>
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-       <div class="slds-modal__container">
-        <!-- modal header start -->
-          <header class="slds-modal__header">
-             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideShoutOutModalBox}>
+		<lightning-tabset>
+			<lightning-tab label="My Recognitions" value="1" onactive={handleActive}>
+				<c-recrecieved rectable={recreceived} showthetable={showrectable}> </c-recrecieved>
+			</lightning-tab>
+			<template if:false={drecognise}>
+				<lightning-tab label="Recognitions Given" value="7" onactive={handleActive}>
+					<c-recgiven recgiventable={recgiven} showtable={showrectable}> </c-recgiven>
+				</lightning-tab>
+			</template>
+			<lightning-tab label="My Awards" value="2" onactive={handleActive}>
+				<c-myawards awardtable={myawards} showtable={showrectable}> </c-myawards>
+			</lightning-tab>
+			<lightning-tab label="Shout Outs Given" value="3" onactive={handleActive}>
+				<c-shoutoutgiven shouttable={shoutouttable} showtable={showrectable}> </c-shoutoutgiven>
+			</lightning-tab>
+			<lightning-tab label="Shout Outs Received" value="4" onactive={handleActive}>
+				<c-shoutoutreceived shoutrecived={shoutoutreceived} showtable={showrectable}> </c-shoutoutreceived>
+			</lightning-tab>
+			<template if:true={showNomstab}>
+				<lightning-tab label="My Nominations" value="5" onactive={handleActive}>
+					<c-mynominations nomstable={mynoms} showtable={showrectable}> </c-mynominations>
+				</lightning-tab>
+			</template>
+			<template if:true={showscroingTab}>
+				<lightning-tab label="Scoring" value="6" onactive={handleActive}>
+					<c-scroingaward awarddatalist={awardsdata} selectedfy={selectedfy}></c-scroingaward>
+				</lightning-tab>
+			</template>
+		</lightning-tabset>
+
+	</lightning-card>
+
+	<!--shout out modal start -->
+	<template if:true={openshoutout}>
+		<lightning-card>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideShoutOutModalBox}>
                 <lightning-icon icon-name="utility:close"
                    alternative-text="close"
                    variant="inverse"
                    size="small" ></lightning-icon>
                 <span class="slds-assistive-text">Close</span>
              </button>
-             <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">New Shout Out</h2>
-          </header>
-      
-          <!-- modal body start -->
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
-            <center> <p><i> Note: Once shout-out given, it can't be recalled or updated. </i></p></center> <br/>
-                <lightning-record-edit-form object-api-name="Reward_And_Recognition__c" record-type-id={winnerrecordTypeId} 
-                        onsuccess={handleSuccess} onsubmit ={handleSubmit}>
-                    <lightning-messages>
-                    </lightning-messages>
-                    <lightning-input-field field-name="Shout_Out_Heading__c" required>
-                    </lightning-input-field>
-                    <lightning-input-field field-name="Resource__c" required>
-                    </lightning-input-field>
-                    <lightning-input-field field-name="Project__c">
-                    </lightning-input-field>
-                    <lightning-input-field field-name="Type_of_Shout_Out__c" required>
-                    </lightning-input-field> 
-                    <lightning-input-field field-name="Reason_for_award__c" required>
-                    </lightning-input-field>
-                    
-                    <br/>
-                   <center> <lightning-button class="slds-m-top_small" variant="brand" type="submit"  label="Save">
-                    </lightning-button> &nbsp;&nbsp;&nbsp;
-                      <lightning-button variant="destructive" label="Cancel" title="Cancel" onclick={hideShoutOutModalBox} class="slds-m-left_x-small"></lightning-button>  </center>
-                </lightning-record-edit-form>
-          </div>
-            
-          </div>
+						<h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">New Shout Out</h2>
+					</header>
 
-          <!-- modal footer start-->
-          <footer class="slds-modal__footer">
-           <center>
-                 <lightning-button variant="destructive" label="Cancel" title="Cancel" onclick={hideShoutOutModalBox} class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
-                 <lightning-button variant="brand" label="Create" title="Create"  class="slds-m-left_x-small"></lightning-button>
-               </center> 
-          </footer>
-       
-       </div>
-    </section>
-    <div class="slds-backdrop slds-backdrop_open"></div>
-     </lightning-card>
- </template>
- <!-- modal end -->
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+						<center>
+							<p><i> Note: Once shout-out given, it can't be recalled or updated. </i></p>
+						</center> <br/>
+						<lightning-record-edit-form object-api-name="Reward_And_Recognition__c"
+							record-type-id={winnerrecordTypeId} onsuccess={handleSuccess} onsubmit={handleSubmit}>
+							<lightning-messages>
+							</lightning-messages>
+							<lightning-input-field field-name="Shout_Out_Heading__c" required>
+							</lightning-input-field>
+							<lightning-input-field field-name="Resource__c" required>
+							</lightning-input-field>
+							<lightning-input-field field-name="Project__c">
+							</lightning-input-field>
+							<lightning-input-field field-name="Type_of_Shout_Out__c" required>
+							</lightning-input-field>
+							<!-- @Mukesh for defect UAT_007 -->
+							<lightning-input-rich-text label='Reason for ShoutOut' field-name="Reason_for_ShoutOut" label-visible=true required="true"
+								onchange={handleChangeReason}>
+							</lightning-input-rich-text>
+							<template if:true={hideInputField}>
+								<lightning-input-field value={myReasonVal} field-name="Reason_for_award__c" required>
+								</lightning-input-field>
+							</template>
+							<br/>
+							<center>
+								<lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save">
+								</lightning-button> &nbsp;&nbsp;&nbsp;
+								<lightning-button variant="destructive" label="Cancel" title="Cancel"
+									onclick={hideShoutOutModalBox} class="slds-m-left_x-small"></lightning-button>
+							</center>
+						</lightning-record-edit-form>
+					</div>
 
- <!--Annual modal start -->      
-   <template if:true={annualAwardpop}>
-     <lightning-card>
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-       <div class="slds-modal__container annualAward">
-        <!-- modal header start -->
-          <header class="slds-modal__header">
-             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideAnnualModalBox}>
+				</div>
+
+				<!-- modal footer start-->
+				<footer class="slds-modal__footer">
+					<center>
+						<lightning-button variant="destructive" label="Cancel" title="Cancel"
+							onclick={hideShoutOutModalBox} class="slds-m-left_x-small"></lightning-button>
+						&nbsp;&nbsp;&nbsp;
+						<lightning-button variant="brand" label="Create" title="Create" class="slds-m-left_x-small">
+						</lightning-button>
+					</center>
+				</footer>
+
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</lightning-card>
+	</template>
+	<!-- modal end -->
+
+	<!--Annual modal start -->
+	<template if:true={annualAwardpop}>
+		<lightning-card>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container annualAward">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideAnnualModalBox}>
                 <lightning-icon icon-name="utility:close"
                    alternative-text="close"
                    variant="inverse"
                    size="small" ></lightning-icon>
                 <span class="slds-assistive-text">Close</span>
              </button>
-             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Annual Award Nominations</h2>
-          </header>
-      
-          <!-- modal body start -->
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-           <c-annualawards currentfy={currentFY} onclose={modalCloseHandler} onrefreshdata={handleRefreshData}> </c-annualawards>
-           </div>
-            
-          </div>
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Annual Award
+							Nominations</h2>
+					</header>
 
-          <!-- modal footer start-->
-          <footer class="slds-modal__footer">
-          <center>
-               <lightning-button variant="destructive" label="Cancel" title="Cancel" onclick={hideAnnualModalBox} class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
-               
-               </center>
-          </footer>
-       
-       </div>
-    </section>
-    <div class="slds-backdrop slds-backdrop_open"></div>
-     </lightning-card>
- </template>
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<c-annualawards currentfy={currentFY} onclose={modalCloseHandler}
+							onrefreshdata={handleRefreshData}> </c-annualawards>
+					</div>
 
-   <!-- NEW Recognize modal start -->      
-   <template if:true={openRecogize}>
-     <lightning-card>
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-       <div class="slds-modal__container">
-        <!-- modal header start -->
-          <header class="slds-modal__header">
-             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideRecModalBox}>
+				</div>
+
+				<!-- modal footer start-->
+				<footer class="slds-modal__footer">
+					<center>
+						<lightning-button variant="destructive" label="Cancel" title="Cancel"
+							onclick={hideAnnualModalBox} class="slds-m-left_x-small"></lightning-button>
+						&nbsp;&nbsp;&nbsp;
+
+					</center>
+				</footer>
+
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</lightning-card>
+	</template>
+
+	<!-- NEW Recognize modal start -->
+	<template if:true={openRecogize}>
+		<lightning-card>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideRecModalBox}>
                 <lightning-icon icon-name="utility:close"
                    alternative-text="close"
                    variant="inverse"
                    size="small" ></lightning-icon>
                 <span class="slds-assistive-text">Close</span>
              </button>
-             <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Recognize</h2>
-          </header>
-      
-          <!-- modal body start -->
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
-                       <center> <p><i> Note: Once Recognition given, it can't be recalled or updated. </i></p></center> <br/>
-                <lightning-record-edit-form object-api-name="Reward_And_Recognition__c" record-type-id={winnerrecordTypeId} 
-                        onsuccess={handleRecSuccess} onsubmit ={handleRecSubmit}>
-                    <lightning-messages>
-                    </lightning-messages>
-                    <lightning-input-field field-name="Shout_Out_Heading__c" required>
-                    </lightning-input-field>
-                    <lightning-input-field field-name="Resource__c" required>
-                    </lightning-input-field>
-                    <lightning-input-field field-name="Project__c" required>
-                    </lightning-input-field>
-                    <lightning-input-field field-name="Types_of_Recognition__c" required>
-                    </lightning-input-field> 
-                    <lightning-input-field field-name="Reason_for_award__c" required>
-                    </lightning-input-field>
-                    
-                    <br/>
-                   <center> <lightning-button class="slds-m-top_small" variant="brand" type="submit"  label="Save">
-                    </lightning-button> &nbsp;&nbsp;&nbsp;
-                      <lightning-button variant="destructive" label="Cancel" title="Cancel" onclick={hideRecModalBox} class="slds-m-left_x-small"></lightning-button>  </center>
-                </lightning-record-edit-form>           
-             
+						<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Recognize</h2>
+					</header>
 
-          </div>
-            
-          </div>
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+						<center>
+							<p><i> Note: Once Recognition given, it can't be recalled or updated. </i></p>
+						</center> <br/>
+						<lightning-record-edit-form object-api-name="Reward_And_Recognition__c"
+							record-type-id={winnerrecordTypeId} onsuccess={handleRecSuccess} onsubmit={handleRecSubmit}>
+							<lightning-messages>
+							</lightning-messages>
+							<lightning-input-field field-name="Shout_Out_Heading__c" required>
+							</lightning-input-field>
+							<lightning-input-field field-name="Resource__c" required>
+							</lightning-input-field>
+							<lightning-input-field field-name="Project__c" required>
+							</lightning-input-field>
+							<lightning-input-field field-name="Types_of_Recognition__c" required>
+							</lightning-input-field>
+							<!-- @Mukesh for defect UAT_007 -->
+							<lightning-input-rich-text label='Reason for Recognition' label-visible=true required="true"
+								onchange={handleChangeRecognize}>
+							</lightning-input-rich-text>
+							<template if:true={hideInputField}>
+								<lightning-input-field value={myRecognizeReason} field-name="Reason_for_award__c" required>
+								</lightning-input-field>
+							</template>
 
-          <!-- modal footer start-->
-          <footer class="slds-modal__footer">
-           <center>
-           </center> 
-          </footer>
-       
-       </div>
-    </section>
-    <div class="slds-backdrop slds-backdrop_open"></div>
-     </lightning-card>
- </template>
+							<br/>
+							<center>
+								<lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save">
+								</lightning-button> &nbsp;&nbsp;&nbsp;
+								<lightning-button variant="destructive" label="Cancel" title="Cancel"
+									onclick={hideRecModalBox} class="slds-m-left_x-small"></lightning-button>
+							</center>
+						</lightning-record-edit-form>
+
+
+					</div>
+
+				</div>
+
+				<!-- modal footer start-->
+				<footer class="slds-modal__footer">
+					<center>
+					</center>
+				</footer>
+
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</lightning-card>
+	</template>
 
 </template>

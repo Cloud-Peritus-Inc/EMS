@@ -19,7 +19,7 @@ imageUrl = landscape;
 dNominations = true;
 @track showTheAnnualAwards = false;
 drecognise = true;
-
+hideInputField =false;
 openshoutout = false;
 annualAwardpop = false;
 openRecogize = false;
@@ -98,19 +98,23 @@ winnerrecordTypeId;
 
     showShoutOutiewModalBox() { 
          this.openshoutout = true; 
+         this.myReasonVal = '';
     }
 
     hideShoutOutModalBox() {  
         this.openshoutout = false;
+        this.myReasonVal = '';
         
     }
 
      showRecModalBox() { 
          this.openRecogize = true; 
+         this.myRecognizeReason = '';
     }
 
     hideRecModalBox() {  
         this.openRecogize = false;
+        this.myRecognizeReason = '';
         
     }
 
@@ -127,6 +131,16 @@ winnerrecordTypeId;
         console.log('==selectedfy===='+this.selectedfy);
         this.getThelatestAwards();
         this.checkActiveTabandgetInfo();
+    }
+    //@Mukesh for defect UAT_007
+    @track myReasonVal;
+    @track myRecognizeReason;
+
+    handleChangeReason(event){
+        this.myReasonVal = event.detail.value;
+    }
+    handleChangeRecognize(event){
+        this.myRecognizeReason = event.detail.value;
     }
 
     getThelatestAwards(){
@@ -152,7 +166,19 @@ winnerrecordTypeId;
             fields.Recognization_By__c = this.userId;
             fields.Fiscal_Year__c = this.currentFY;
             fields.Type__c = 'ShoutOut';
-            this.template.querySelector('lightning-record-edit-form').submit(fields);
+            //@Mukesh for defect UAT_007 making required
+            if(this.myReasonVal){
+                this.template.querySelector('lightning-record-edit-form').submit(fields);
+            }else{
+                const evt = new ShowToastEvent({
+                //title: 'Warning',
+                message: 'Please complete required fields.',
+                variant: 'warning',
+                mode: 'dismissable'
+            });
+            this.dispatchEvent(evt);
+            }
+            //this.template.querySelector('lightning-record-edit-form').submit(fields);
         }else{
             const evt = new ShowToastEvent({
                 //title: 'Warning',
@@ -176,7 +202,7 @@ winnerrecordTypeId;
         //smaske:PM_075 : Refresh data
         this.getThelatestSpotAwardGiven();
     }
-
+    
     handleRecSubmit(event) {
         event.preventDefault();
         //smaske : Preventing Self Recognize record creation for Loggedin User 
@@ -187,7 +213,19 @@ winnerrecordTypeId;
             fields.Recognization_By__c = this.userId;
             fields.Fiscal_Year__c = this.currentFY;
             fields.Type__c = 'Recognize';
-            this.template.querySelector('lightning-record-edit-form').submit(fields);
+            //@Mukesh for defect UAT_007 making required
+            if(this.myRecognizeReason){
+                this.template.querySelector('lightning-record-edit-form').submit(fields);
+            }else{
+                const evt = new ShowToastEvent({
+                //title: 'Warning',
+                message: 'Please complete required fields.',
+                variant: 'warning',
+                mode: 'dismissable'
+            });
+            this.dispatchEvent(evt);
+            }
+            
         }else{
             const evt = new ShowToastEvent({
                 //title: 'Warning',
