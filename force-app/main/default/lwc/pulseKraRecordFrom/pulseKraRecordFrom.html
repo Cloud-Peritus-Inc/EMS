@@ -1,0 +1,232 @@
+<template>
+
+    <template lwc:if={showForm} >
+    <lightning-card>
+        <div class="container">
+
+            <div class="slds-text-heading_medium slds-text-align_center headerText">
+                <h6>Submit feedback for: {getResourceName}</h6>
+            </div>
+
+            <!-- Work Environment -->
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg">
+                    <lightning-tile class="title" label="Comfort and safety in the workplace.
+            Clarity of goals and expectations. 
+            Support from colleagues and management" type="media" href="#" >
+            <div class="rate">
+                        <div class="rate">
+                            <input type="radio" id="star5" name="Work Environment" value="5" onchange={rating} />
+                            <label for="star5" title="">5 stars</label>
+                            <input type="radio" id="star4" name="Work Environment" value="4" onchange={rating} />
+                            <label for="star4" title="">4 stars</label>
+                            <input type="radio" id="star3" name="Work Environment" value="3" onchange={rating} />
+                            <label for="star3" title="">3 stars</label>
+                            <input type="radio" id="star2" name="Work Environment" value="2" onchange={rating} />
+                            <label for="star2" title="">2 stars</label>
+                            <input type="radio" id="star1" name="Work Environment" value="1" onchange={rating} />
+                            <label for="star1" title="">1 star</label>
+                        </div>
+                        </div>
+                    </lightning-tile>
+                </div>
+            </div>
+
+            <!-- Communication -->
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg">
+                    <lightning-tile class="title"  label="Effectiveness of communication within the team.
+            Transparency of information.
+            Availability and responsiveness of supervisors and colleagues" type="media" href="#" >
+
+                        <div class="rate">
+                            <div class="rate">
+                                <input type="radio" id="star15" name="Communication" value="5" onchange={rating} />
+                                <label for="star15" title="">5 stars</label>
+                                <input type="radio" id="star14" name="Communication" value="4" onchange={rating} />
+                                <label for="star14" title="">4 stars</label>
+                                <input type="radio" id="star13" name="Communication" value="3" onchange={rating} />
+                                <label for="star13" title="">3 stars</label>
+                                <input type="radio" id="star12" name="Communication" value="2" onchange={rating} />
+                                <label for="star12" title="">2 stars</label>
+                                <input type="radio" id="star11" name="Communication" value="1" onchange={rating} />
+                                <label for="star11" title="">1 star</label>
+                            </div>
+                        </div>
+                    </lightning-tile>
+
+                </div>
+            </div>
+
+            <!-- Career Development -->
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg">
+                    <lightning-tile class="title"  label="Opportunities for professional growth and advancement.
+            Access to training and development programs.
+            Clarity on career paths within the organization" type="media" href="#" >
+
+                        <div class="rate">
+                            <div class="rate">
+                                <input type="radio" id="star25" name="Career Development" value="5" onchange={rating} />
+                                <label for="star25" title="">5 stars</label>
+                                <input type="radio" id="star24" name="Career Development" value="4" onchange={rating} />
+                                <label for="star24" title="">4 stars</label>
+                                <input type="radio" id="star23" name="Career Development" value="3" onchange={rating} />
+                                <label for="star23" title="">3 stars</label>
+                                <input type="radio" id="star22" name="Career Development" value="2" onchange={rating} />
+                                <label for="star22" title="">2 stars</label>
+                                <input type="radio" id="star21" name="Career Development" value="1" onchange={rating} />
+                                <label for="star21" title="">1 star</label>
+                            </div>
+                        </div>
+                    </lightning-tile>
+
+                </div>
+            </div>
+
+            <!-- Work-Life Balance -->
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg">
+                    <lightning-tile class="title" label="Ability to maintain a healthy work-life balance.
+            Frequency of working overtime or weekends." type="media" href="#" >
+                        <div class="rate">
+                            <div class="rate">
+                                <input type="radio" id="star35" name="Work-Life Balance" value="5" onchange={rating} />
+                                <label for="star35" title="">5 stars</label>
+                                <input type="radio" id="star34" name="Work-Life Balance" value="4" onchange={rating} />
+                                <label for="star34" title="">4 stars</label>
+                                <input type="radio" id="star33" name="Work-Life Balance" value="3" onchange={rating} />
+                                <label for="star33" title="">3 stars</label>
+                                <input type="radio" id="star32" name="Work-Life Balance" value="2" onchange={rating} />
+                                <label for="star32" title="">2 stars</label>
+                                <input type="radio" id="star31" name="Work-Life Balance" value="1" onchange={rating} />
+                                <label for="star31" title="">1 star</label>
+                            </div>
+                        </div>
+                    </lightning-tile>
+                </div>
+            </div>
+
+            <!-- Feedback and Recognition -->
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg">
+                    <lightning-tile class="title"  label="Feedback mechanisms and how often they are utilized.
+            Recognition and appreciation for contributions.
+            Opportunities for providing input and suggestions" type="media" href="#" >
+                        <div class="rate">
+                            <div class="rate">
+                                <input type="radio" id="star45" name="Feedback and Recognition" value="5"
+                                    onchange={rating} />
+                                <label for="star45" title="">5 stars</label>
+                                <input type="radio" id="star44" name="Feedback and Recognition" value="4"
+                                    onchange={rating} />
+                                <label for="star44" title="">4 stars</label>
+                                <input type="radio" id="star43" name="Feedback and Recognition" value="3"
+                                    onchange={rating} />
+                                <label for="star43" title="">3 stars</label>
+                                <input type="radio" id="star42" name="Feedback and Recognition" value="2"
+                                    onchange={rating} />
+                                <label for="star42" title="">2 stars</label>
+                                <input type="radio" id="star41" name="Feedback and Recognition" value="1"
+                                    onchange={rating} />
+                                <label for="star41" title="">1 star</label>
+                            </div>
+                        </div>
+                    </lightning-tile>
+                </div>
+            </div>
+
+
+            <!-- Leadership and Management -->
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg">
+                    <lightning-tile class="title" 
+                        label="Evaluation of leadership effectiveness.Fairness and consistency in decision-making.Managerial support and coaching."
+                        type="media" href="#" >
+                        <div class="rate">
+                            <div class="rate">
+                                <input type="radio" id="star50" name="Leadership and Management" value="5"
+                                    onchange={rating} />
+                                <label for="star50" title="">5 stars</label>
+                                <input type="radio" id="star49" name="Leadership and Management" value="4"
+                                    onchange={rating} />
+                                <label for="star49" title="">4 stars</label>
+                                <input type="radio" id="star48" name="Leadership and Management" value="3"
+                                    onchange={rating} />
+                                <label for="star48" title="">3 stars</label>
+                                <input type="radio" id="star47" name="Leadership and Management" value="2"
+                                    onchange={rating} />
+                                <label for="star47" title="">2 stars</label>
+                                <input type="radio" id="star46" name="Leadership and Management" value="1"
+                                    onchange={rating} />
+                                <label for="star46" title="">1 star</label>
+                            </div>
+                        </div>
+                    </lightning-tile>
+                </div>
+            </div>
+
+            <!--NEW :  Job Satisfaction -->
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg">
+                    <lightning-tile class="title" 
+                        label="How would you describe your current level of job satisfaction"
+                        type="media" href="#" >
+                        <div class="rate">
+                            <div class="rate">
+                                <input type="radio" id="star55" name="Job Satisfaction" value="5"
+                                    onchange={rating} />
+                                <label for="star55" title="">5 stars</label>
+                                <input type="radio" id="star54" name="Job Satisfaction" value="4"
+                                    onchange={rating} />
+                                <label for="star54" title="">4 stars</label>
+                                <input type="radio" id="star53" name="Job Satisfaction" value="3"
+                                    onchange={rating} />
+                                <label for="star53" title="">3 stars</label>
+                                <input type="radio" id="star52" name="Job Satisfaction" value="2"
+                                    onchange={rating} />
+                                <label for="star52" title="">2 stars</label>
+                                <input type="radio" id="star51" name="Job Satisfaction" value="1"
+                                    onchange={rating} />
+                                <label for="star51" title="">1 star</label>
+                            </div>
+                        </div>
+                    </lightning-tile>
+                </div>
+            </div>
+            <br>
+
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg">
+                    <p>Feedback and Comments</p>
+                </div>
+                <div class="slds-p-around_medium lgc-bg">
+                    <lightning-input-rich-text class="textRichArea" label="Feedback and Comments" value={FeedbackComments}
+                    onchange={setFeedbackComments}>
+                    </lightning-input-rich-text>
+                </div>
+            </div>
+            <br>
+            <div class="slds-m-top_medium slds-m-bottom_x-large">
+                <div class="slds-p-around_medium lgc-bg slds-float_right ">
+                    <lightning-button class="BtnSubmit" disabled={disableSubmitBtn} variant="brand"  label="Submit Review" onclick={handleSubmit}> </lightning-button>
+                    <lightning-button class="BtnCancle" variant="neutral"  label="Cancel" onclick={handleCancle}> </lightning-button>
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+    </lightning-card>
+    </template>
+
+    <template lwc:if={showFormSubmittedMsg} >
+    <lightning-card variant="base">
+        <!-- Card Body  -->
+        <div class="cards">
+            <p>You have already submitted the feedback.</p>
+        </div>
+    </lightning-card>
+    </template>
+
+
+</template>

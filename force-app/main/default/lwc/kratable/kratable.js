@@ -11,10 +11,25 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     @track mode;
     @track iconName = "utility:chevrondown";
     @track iconParentName = "utility:chevronright";
+    @track kraTableAvailble = false;
     connectedCallback() {
         console.log('====resourceid===' + JSON.stringify(this.resourceid));
         console.log('====tab===' + this.tab);
         console.log('====viewonlymode===' + this.viewonlymode);
+        this.tbData = JSON.parse(JSON.stringify(this.tabledata))
+
+        if (this.tbData.length > 0) {
+            this.kraTableAvailble = true;
+            this.tbData.forEach(item => {
+                if (item.qualList && item.qualList.length > 0) {
+                    this.qualListdata = true;
+                } else {
+                    this.qualListdata = false;
+                }
+            });
+        } else {
+            this.kraTableAvailble = false;
+        }
         //this.enableDisableCreateGoalButton();
     }
     @track showKRAViewModal = false;
@@ -227,7 +242,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
             }).then(res => {
                 const evt = new ShowToastEvent({
                     //title: 'success',
-                    message: 'Successfully logged the goal. Make sure to finish the goal with in-time.',
+                    message: 'The goal has been set successfully. Make sure to finish it within the specified deadlines.',
                     variant: 'success',
                     mode: 'dismissable'
                 });
