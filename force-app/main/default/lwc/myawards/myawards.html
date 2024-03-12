@@ -1,0 +1,72 @@
+<template>
+  <lightning-card>
+       <div class="tableFixHead">
+      <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+        <thead>
+          <tr class="slds-line-height_reset" style="color:lightsalmon">
+            <th class="slds-border_right tableheading" scope="col">
+              <div class="" title="Award Type">Award Type</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+             </th>
+            <th class="slds-border_right tableheading" scope="col">
+              <div class="" title="Recognized By">Recognized By</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+            </th>
+            <th class="slds-border_right tableheading" scope="col">
+              <div class="" title="Fiscal year">Fiscal year</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+            </th>
+            <th class="slds-border_right tableheading" scope="col">
+              <div class="slds-truncate" title="Comments">Comments</div>
+            </th>
+            <th class="slds-border_right tableheading" scope="col">
+              <div class="slds-truncate" title="Given On">Given On</div>
+            </th>
+            <th class="slds-border_right tableheading" scope="col">
+              <div class="slds-truncate" title="Status">Status</div>
+            </th>
+          </tr>
+        </thead>
+  
+        <tbody>
+  
+          <template if:true={showtable}>
+            <template for:each={awardtable} for:item="sout">
+              <tr key={sout.resourceId}>
+               <td style="word-wrap:break-word;">
+                  <div class="slds-wrap">
+                      <!-- <a href="#"><b>{sout.awardType}</b></a> -->
+                      <p><b>{sout.awardType}</b></p>
+                    </div>
+                </td>
+                <td>
+                  <div class="slds-wrap">{sout.resourceName}</div>
+                   <!-- <a href="javascript:void(0);" data-id={sout.resourceId}>
+                        {sout.resourceName}
+                      </a> -->
+                </td>
+                <td>
+                  <div class="slds-wrap">{sout.currentFYName}</div>
+                </td>
+              
+                <td style="width:200px;word-wrap:break-word;">
+                  <div class="slds-wrap"><lightning-formatted-rich-text
+                      value={sout.awardComments}></lightning-formatted-rich-text></div>
+                </td>
+                <td>
+                  <div class="slds-wrap"><lightning-formatted-date-time value={sout.createdDate}></lightning-formatted-date-time></div>
+                </td>
+                  <td>
+                  <div class="slds-wrap">{sout.Title}</div>
+                 </td>
+               
+              </tr>
+            </template>
+          </template>
+        </tbody>
+      </table>
+         <template if:false={showtable}>
+            <div class="slds-text-align_center slds-p-around_medium">
+              <center> <font size="2" color="purple">Annual award not a measurment for your hardwork its just a recognisation among the employee. Keep hardworking as you today. All the best for next annual awards.</font> </center>
+            </div>
+          </template>
+    </div>
+  </lightning-card>
+  </template>
