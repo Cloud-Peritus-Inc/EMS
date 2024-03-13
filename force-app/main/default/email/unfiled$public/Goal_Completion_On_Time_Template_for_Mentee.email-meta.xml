@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send Email alert to Resource when the Goal Status is changed to &quot;Completed-On Time&quot;</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Goal Completion On Time Template for Mentee</name>
+    <style>freeForm</style>
+    <subject>Goal Completion Notification</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+We&apos;re pleased to notify you that your Goal has been successfully completed.
+
+
+
+Please find the details below.
+
+Name
+
+Start Date
+
+End Date
+
+{!Goal__c.Goal_Name__c}
+
+{!Goal__c.Start_Date__c}
+
+{!Goal__c.End_Date__c}
+
+
+Thank you for your dedication and hard work in meeting this goal within the specified timeframe.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
