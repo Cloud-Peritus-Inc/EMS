@@ -131,7 +131,7 @@
 							<lightning-input-field field-name="Shout_Out_Heading__c" required>
 							</lightning-input-field>
 							<!-- @smaske : [UAT_022] : Adding onchange for Lookup Validation -->
-							<lightning-input-field field-name="Resource__c" onchange={handleShoutOutResourceSelection} required>
+							<lightning-input-field field-name="Resource__c" onchange={handleShoutOutResourceSelection} class="SOResource" required>
 							</lightning-input-field>
 							<lightning-input-field field-name="Project__c">
 							</lightning-input-field>
@@ -244,7 +244,7 @@
 							<lightning-input-field field-name="Shout_Out_Heading__c" required>
 							</lightning-input-field>
 							<!-- @smaske : [UAT_022] : Adding onchange for Lookup Validation -->
-							<lightning-input-field field-name="Resource__c" onchange={handleRecognitionResourceSelection} required>
+							<lightning-input-field field-name="Resource__c" onchange={handleRecognitionResourceSelection} class="REResource" required>
 							</lightning-input-field>
 							<lightning-input-field field-name="Project__c" required>
 							</lightning-input-field>

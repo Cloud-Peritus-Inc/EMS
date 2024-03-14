@@ -98,7 +98,7 @@
                         </th>
 
                         <th class="slds-border_right tableheading" scope="col">
-                          <div class="slds-truncate" title="Type">Type</div>
+                          <div class="" title="Type">Type</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
                         <th class="slds-border_right tableheading" scope="col"  >
                           <div class="" title="Rating">Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
@@ -315,8 +315,8 @@
             <lightning-layout>
              <lightning-layout-item flexibility="auto" padding="around-small">
                  <lightning-input type="text" name="goalname" label="Name" placeholder="Type a goal..."  onchange={handleGoalNameChange} value={goalname} required></lightning-input>
-                  <lightning-input type="date" name="startdate" label="Start Date" value={goalstartdate} onchange={handleGoalStartChange} required></lightning-input>
-                  <lightning-input type="date" name="enddate" label="End Date" value={goalenddate} onchange={handleGoalEndChange} required></lightning-input>
+                  <lightning-input type="date" name="startdate" label="Start Date" value={goalstartdate} onchange={handleGoalStartChange} required min={minDate} ></lightning-input>
+                  <lightning-input type="date" name="enddate" label="End Date" value={goalenddate} onchange={handleGoalEndChange} required min={minDate}></lightning-input>
              </lightning-layout-item>
               <lightning-layout-item flexibility="auto" padding="around-small">
                  <lightning-input-rich-text

@@ -208,6 +208,13 @@ winnerrecordTypeId;
         console.log('You selected Resource: ' + event.detail.value[0]);
         let selectedContactResource = event.detail.value[0];
         if (this.LogggedInUserConId == selectedContactResource) {
+            const inputFields = this.template.querySelectorAll('.SOResource');
+            if (inputFields) {
+                inputFields.forEach(field => {
+                    field.reset();
+                });
+            }
+
             const evt = new ShowToastEvent({
                 message: 'Self Shoutout is not allowed!',
                 variant: 'warning',
@@ -222,6 +229,12 @@ winnerrecordTypeId;
         console.log('You selected Resource: ' + event.detail.value[0]);
         let selectedContactResource = event.detail.value[0];
         if (this.LogggedInUserConId == selectedContactResource) {
+            const inputFields = this.template.querySelectorAll('.REResource');
+            if (inputFields) {
+                inputFields.forEach(field => {
+                    field.reset();
+                });
+            }
             const evt = new ShowToastEvent({
                 message: 'Self Recognisation is not allowed!',
                 variant: 'warning',

@@ -336,52 +336,77 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     //smaske : [UAT_008] : Changed the validation code for restricting user from entering invalid values.
     //removed the methods "getDecimalPart" & "removeDecimalPoint" as not required after code change. 
+    
     handleChange(event) {
-
         const fieldName = event.target.name;
         const fieldType = event.target.type;
-        const inputRating = parseFloat(event.target.value);
-        let kraRecordMod = { ...this.kraRecord };
-        let oldRating = kraRecordMod[fieldName];
-        console.log("oldRating " + oldRating);
-       console.log(fieldName);
-       console.log(fieldType);
-        const validValues = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
-
-        if(fieldType === 'number'){
-        if (!validValues.includes(inputRating)) {
-            console.log("Invalid value : " + inputRating);
-
-            if (oldRating) {
-                kraRecordMod[fieldName] = oldRating;
-                this.kraRecord = kraRecordMod;
-
-                if (inputRating < 1 || inputRating > 5) {
-                    event.target.value = oldRating;
-                }else{
-                    event.target.value = '';
-                }
-                
-            }
-
+       
+       
+        this.inputValue = event.target.value;
+       // this.inputValue = this.removeDecimalPoint(this.inputValue);
+        const decimalPart = this.getDecimalPart();
+         console.log(decimalPart);
+         if(decimalPart!=''){
+         if(decimalPart!=='.5' ){//&& decimalPart!=='.9'
+            let text =this.inputValue.toString();
+            let splitValue =text.split('.')[0];
+            event.target.value= Number(splitValue);
             var msg = 'Please enter Ratings like 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5 ,5';
             this.showToast(msg, this.errorVariant, this.toastMode);
-            event.target.setCustomValidity("");
-        } else {
-            console.log("Valid value");
-            const updatedValue = fieldType === 'number' ? Number(inputRating) : inputRating;
-            console.log('fieldType : ' + fieldType + ' updatedValue :' + updatedValue);
-            if (fieldType === 'number' && (isNaN(updatedValue) || updatedValue < 1 || updatedValue > 5)) {
-                let msg = 'Rating should be between 1 and 5';
-                this.showToast(msg, this.errorVariant, this.toastMode);
-            } else {
-                kraRecordMod[fieldName] = updatedValue;
-                this.kraRecord = kraRecordMod;
+
+         }
+        }
+         // Validate the input
+         const validValues = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
+        if(!validValues.includes(this.inputValue)){
+            
+            if (this.inputValue < 1 || this.inputValue > 5) {
+                event.target.value = '';
             }
-            event.target.setCustomValidity("");
         }
+         
+
+        //const updatedValue = event.target.value;
+        const updatedValue = fieldType === 'number' ? Number(event.target.value) : event.target.value;
+      
+        console.log('fieldType : ' + fieldType);
+        console.log('updatedValue : ' + updatedValue);
+        let kraRecordMod = { ...this.kraRecord };
+
+
+        // Check if the value is not between 1 and 5
+        //if (updatedValue < 1 || updatedValue > 5) {
+        if (fieldType === 'number' && (isNaN(updatedValue) || updatedValue < 1 || updatedValue > 5)) {
+            let msg = 'Rating should be between 1 and 5';
+            this.showToast(msg, this.errorVariant, this.toastMode);
+        } else {
+            kraRecordMod[fieldName] = updatedValue;
+            this.kraRecord = kraRecordMod;
         }
-        event.target.reportValidity();
+
+    }
+
+    isInvalidInput() {
+        // If the input is empty, it's valid
+        if (!this.inputValue) {
+            return false;
+        }
+
+        // Implement your validation logic here
+        const decimalPart = this.getDecimalPart();
+        return decimalPart !== '.5' && decimalPart !== '.9';
+    }
+
+    getDecimalPart() {
+        // Extract the decimal part of the input value
+        const match = this.inputValue.match(/\.\d+/);
+        return match ? match[0] : '';
+    }
+
+    removeDecimalPoint(input) {
+        // Remove decimal point from the input value
+        //return input.replace(/\./g, '');
+       return Number(input.toFixed(0));
     }
 
     // *** SAVE BUTTON CODE *** 
