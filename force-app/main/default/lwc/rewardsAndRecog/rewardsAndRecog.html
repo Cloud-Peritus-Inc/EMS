@@ -2,11 +2,6 @@
 	<lightning-card>
 		<div class="container">
 			<img src={imageUrl} style="max-height:250px;" alt="Snow">
-			<!-- <div class="btn">
-     <lightning-button variant="brand" label="Shout Out" title="Shout Out" onclick={showShoutOutiewModalBox} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <lightning-button variant="brand" label="Recognise" title="Recognise" onclick={showRecModalBox} disabled={drecognise} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <lightning-button variant="brand" label="Award Nominations" title="Award Nominations" onclick={showAnnualModalBox} disabled={dNominations} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </div>         -->
 		</div>
 
 		<br/>
@@ -247,8 +242,16 @@
 							<!-- @smaske : [UAT_022] : Adding onchange for Lookup Validation -->
 							<lightning-input-field field-name="Resource__c" onchange={handleRecognitionResourceSelection} class="REResource" required>
 							</lightning-input-field>
-							<lightning-input-field field-name="Project__c" required>
+							
+							<!-- @smaske : [UAT_045] : creating Picklist for Project to show based on selected Resource -->
+							<!--
+								<lightning-input-field field-name="Project__c" required>
 							</lightning-input-field>
+							-->
+							
+							<lightning-combobox name="Project" label="Project" placeholder="Select Project" options={projectAlloc}
+							variant="label-stacked" required="true" value={selectedProject} onchange={handleProjectSelectionChange}></lightning-combobox>
+
 							<lightning-input-field field-name="Types_of_Recognition__c" required>
 							</lightning-input-field>
 							<!-- @Mukesh for defect UAT_007 -->

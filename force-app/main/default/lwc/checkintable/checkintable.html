@@ -1,0 +1,115 @@
+<template>
+<lightning-card>
+     <div class="tableFixHead">
+    <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+      <thead>
+        <tr class="slds-line-height_reset" style="color:lightcoral">
+          <th class="slds-border_right tableheading"  style="width: 15%;" scope="col">
+            <div class="slds-truncate" title="Name">Name</div>
+          </th>
+          <th class="slds-border_right tableheading"  style="width: 15%;" scope="col">
+            <div class="" title="Check In By">Check In By</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+          </th>
+          <th class="slds-border_right tableheading"  style="width: 15%;" scope="col">
+            <div class="slds-truncate" title="Check in Date">Check In Date</div>
+          </th>
+          <th class="slds-border_right tableheading"  style="width: 40%;" scope="col">
+            <div class="slds-truncate" title="Comments">Comments</div>
+          </th>
+          <th class="slds-border_right tableheading"  style="width: 15%;" scope="col">
+            <div class="slds-truncate" title="Status">Status</div>
+          </th>
+          
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <template if:true={checkInsTableAvailble}>
+          <template for:each={tabledata} for:item="accWithContacts">
+            <tr key={accWithContacts.goalid}>
+              <td  style="width: 15%;">
+                <div class="slds-wrap" style="width:100px;word-wrap:break-word;">
+                  <p> <a href="javascript:void(0);" data-id={accWithContacts.goalid} onclick={handleNavClick}>
+                      {accWithContacts.goalname}
+                    </a>
+                  </p>
+                </div>
+              </td>
+              <td style=";word-wrap:break-word; width: 15%;">
+                <div class="slds-wrap">{accWithContacts.checkbyName}</div>
+              </td>
+              <td  style="width: 15%;">
+                <div class="slds-wrap"><lightning-formatted-date-time value={accWithContacts.CheckinDate}></lightning-formatted-date-time></div>
+              </td>
+              <td style="width:200px;word-wrap:break-word; width: 40%;">
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={accWithContacts.Comments}></lightning-formatted-rich-text></div>
+              </td>
+               <td  style="width: 15%;">
+                <div class="slds-wrap">{accWithContacts.Status}</div>
+              </td>
+             
+            </tr>
+          </template>
+        </template>
+      </tbody>
+    </table>
+       <template if:false={checkInsTableAvailble}>
+          <div class="slds-text-align_center slds-p-around_medium">
+            <center>No check-ins found for the selected fiscal year.</center>
+          </div>
+        </template>
+  </div>
+</lightning-card>
+
+<!--check In modal start -->      
+   <template if:true={isShowCheckInModal}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideCheckInModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Resource Check-In View</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p><i></i></p> <br/>
+                <div class="c-container">
+                 <lightning-layout vertical-align="start" class="slds-grid slds-wrap">
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <b>Name: &nbsp;</b> <lightning-formatted-text value={wrapperdata.goalname}> </lightning-formatted-text><br/><br/>
+                    <b>Comments : &nbsp;</b>  <lightning-formatted-rich-text value={wrapperdata.Comments}></lightning-formatted-rich-text>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <b> Check-In By:&nbsp;</b> <lightning-formatted-text value={wrapperdata.checkbyName}> </lightning-formatted-text> <br/><br/>
+                     <b> Check In Date :&nbsp;</b> <lightning-formatted-date-time value={wrapperdata.CheckinDate}></lightning-formatted-date-time>
+                     
+                    </lightning-layout-item>
+                 </lightning-layout>
+                </div>
+
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hideCheckInModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
+ <!-- modal end -->
+
+</template>
