@@ -1,0 +1,415 @@
+<template>
+	<template if:true={dataLoaded}>
+
+		<lightning-card>
+			<lightning-progress-indicator current-step={selectedStep} type="path" variant="base">
+				<template for:each={steps} for:item="step">
+					<lightning-progress-step id={step.value} label={step.label} value={step.value} key={step.label}
+						onclick={stepSelectionHanler}></lightning-progress-step>
+				</template>
+			</lightning-progress-indicator>
+		</lightning-card>
+
+		<template lwc:if={showGeneral}>
+
+			<template if:true={Contact}>
+				<div class="outer-container" data-review>
+					<div class="boxGeneral">
+						<div class="detailBox">
+							<p class="headerText">Selected Resource Details</p>
+							<lightning-record-view-form object-api-name={objectName} record-id={ContactId}>
+								<div class="slds-grid">
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-output-field field-name="Name"> </lightning-output-field>
+										<lightning-output-field field-name="Work_Location_Country__c">
+										</lightning-output-field>
+										<lightning-output-field field-name="EMS_EM_JD__c"> </lightning-output-field>
+										<lightning-output-field field-name="Last_Appraisal_Date__c">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-output-field field-name="Email"> </lightning-output-field>
+										<lightning-output-field field-name="Resource_Role__c"> </lightning-output-field>
+										<lightning-output-field field-name="EMS_Employee_Type__c">
+										</lightning-output-field>
+										<lightning-output-field field-name="Next_Appraisal_Date__c">
+										</lightning-output-field>
+									</div>
+								</div>
+							</lightning-record-view-form>
+						</div>
+					</div>
+					<br>
+
+
+                </div>
+			</template>
+
+			<template if:false={Contact}>
+				<div class="outer-container" data-review>
+					<div class="boxGeneral">
+						<div class="detailBox">
+							<p class="warningMsg">No records available for selected resource.</p>
+						</div>
+					</div>
+				</div>
+			</template>
+
+		</template>
+
+		<template lwc:if={showContent}>
+            <!-- @Mukesh Added From and To date Filter -->
+			<div class="slds-wrap slds-grid">
+				<div class="slds-col slds-size_6-of-12 slds-p-horizontal--small slds-m-bottom--medium">
+					<div class="slds-form-element__control ">
+						<lightning-input type="Date" label="Last Appraisal Date/Date of Joining" value={fromValue} name="From"
+							onchange={handleChangeAction}></lightning-input>
+					</div>
+				</div>
+				<div class="slds-col slds-6-of-12 slds-p-horizontal--small slds-m-bottom--medium">
+					<div class="slds-form-element__control">
+						<lightning-input type="Date" label="To" value={toValue} name="To" onchange={handleChangeAction}>
+						</lightning-input>
+					</div>
+				</div>
+
+			</div>
+
+			<template if:true={kraRecords}>
+				<div class="outer-container" data-review>
+					<div class="boxContiner">
+						<div class="midBox">
+							<div class="tableFixHead">
+
+								<!--contacts table -starts-->
+								<template if:true={kraRecords}>
+
+									<div class="contacttableFixHead">
+										<table
+											class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header"
+											style="display:table;">
+											<thead>
+												<tr class="slds-line-height_reset">
+
+													<th class="slds-border_right tableheading" scope="col">
+														<div class="slds-truncate" title="Name">Name</div>
+													</th>
+													<th class="slds-border_right tableheading" scope="col">
+														<div class="slds-truncate" title="Start Date">Start Date</div>
+													</th>
+													<th class="slds-border_right tableheading" scope="col">
+														<div class="slds-truncate" title="End Date">End Date</div>
+													</th>
+													<th class="slds-border_right tableheading" scope="col">
+														<div class="slds-truncate" title="Status">Status</div>
+													</th>
+
+													<th class="slds-border_right tableheading" scope="col">
+														<div class="slds-truncate" title="Average Rating">Average Rating</div>
+													</th>
+													<th class="slds-border_right tableheading" scope="col">
+														<div class="slds-truncate" title="Actions"> Actions</div>
+													</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<template for:each={kraRecords} for:item="kra">
+													<tr key={kra.Id}>
+
+														<td>
+															<div class="slds-wrap">
+																{kra.Goal_Name__c}
+															</div>
+														</td>
+														<td>
+															<div class="slds-wrap">
+																<lightning-formatted-date-time
+																	value={kra.Quarter_Start_Date__c}>
+																</lightning-formatted-date-time>
+															</div>
+														</td>
+														<td style="word-wrap:break-word;">
+															<div class="slds-wrap">
+																<lightning-formatted-date-time
+																	value={kra.Quarter_End_Date__c}>
+																</lightning-formatted-date-time>
+															</div>
+														</td>
+														<td>
+															<div class="slds-wrap">{kra.Status__c}</div>
+														</td>
+
+														<td>
+															<div class="slds-wrap">
+																{kra.Overall_Average_Section_Rating__c}
+															</div>
+														</td>
+
+														<td>
+															<div class="slds-wrap">
+																<lightning-button-icon icon-name="action:preview"
+																	size="large" variant="bare"
+																	alternative-text="View KRA" data-id={kra.Id}
+																	onclick={handleViewKRAClick}
+																	class="slds-m-left_xx-small">
+																</lightning-button-icon>&nbsp;&nbsp;
+																<template lwc:if={isEditButtonVisible}>
+																	<lightning-button-icon icon-name="action:edit"
+																		size="large" variant="bare"
+																		alternative-text="Edit KRA" data-id={kra.Id}
+																		onclick={handleEditKRAClick}
+																		class="slds-m-left_xx-small">
+																	</lightning-button-icon>&nbsp;&nbsp;
+																</template>
+																<lightning-button-icon icon-name="action:goal"
+																	size="large" variant="bare"
+																	alternative-text="View Goals" data-id={kra.Id}
+																	onclick={handleViewGoalClick}
+																	class="slds-m-left_xx-small">
+																</lightning-button-icon>
+															</div>
+														</td>
+
+													</tr>
+												</template>
+												<tr>
+													<td colspan="4" class="colSpan">
+														<div class="slds-wrap">
+															Overall Average Rating
+														</div>
+													</td>
+													<td>
+														<div class="slds-wrap">
+															<b>{averageOverallRating}</b>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+
+										</table>
+									</div>
+								</template>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</template>
+
+			<template if:false={kraRecords}>
+				<div class="outer-container" data-review>
+					<div class="boxContiner">
+						<div class="midBox">
+							<p class="warningMsg">No KRA records available for selected resource.</p>
+						</div>
+					</div>
+				</div>
+			</template>
+
+		</template>
+
+		<template lwc:if={showReview}>
+			<div class="outer-container" data-review>
+				<lightning-accordion class="e_accordion" active-section-name="IPR"
+					onsectiontoggle={handleToggleSection}>
+					<lightning-accordion-section name="IPR" label="PERFORMANCE REVIEW">
+						<div class="boxContiner">
+							<div class="leftBox">
+								<p class="subTitle">Due Date for Next Appraisal</p>
+								<lightning-input type="date" name="Next_Appraisal_Date__c"
+									value={Compensation.Next_Appraisal_Date__c} onchange={dataHandler}>
+								</lightning-input>
+							</div>
+							<!-- <div class="rightBox">
+							</div> -->
+							<div class="midBox">
+								<p class="subTitle">Reviewers</p>
+								<c-reusable-lookup label="" selected-icon-name="standard:contact" object-label="Contact"
+									object-api-name="User" field-api-name="Name" other-field-api-name="User_Status__c"
+									other-field-api-name2="Hr_Access__c"
+									selected-record-id={Compensation.Reviewed_By__c}
+									onvalueselected={handleValueSelectedOnAccount}></c-reusable-lookup>
+							</div>
+
+							<div class="midBox">
+								<!-- smaske : [PM_129] : Updated Label Value -->
+								<p class="subTitle">Overall Average Rating: {averageOverallRating}</p>
+							</div>
+
+							<div class="midBox">
+								<p class="subTitle">Comments</p>
+								<lightning-input-rich-text label-visible="false" type="text" label=" " name="Comments__c"
+									value={Compensation.Comments__c} onchange={dataHandler}></lightning-input-rich-text>
+							</div>
+
+							<!-- smaske [EN_05] : Commented as per latest feedback -->
+							<!--   <div class="midBox">
+                                <p class="subTitle">Finalized Hike</p>
+                                <lightning-input type="number" min="0" max="100" label=" " name="Finalized_Hike__c"
+                                    value={Compensation.Finalized_Hike__c} onchange={dataHandler} ></lightning-input>
+                            </div> -->
+
+
+							<div class="midBox">
+								<p class="subTitle">SCHEDULES</p>
+								<p class="">
+									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text="" title=""></lightning-icon> 
+									&nbsp;Assessment will be visible for 15 days from the date of trigger.
+								</p>
+								<!-- <p class="">
+									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
+										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
+									Evaluation Date
+								</p>
+								<p class="">
+									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
+										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
+									Evaluation Date
+								</p> -->
+							</div>
+
+						</div>
+					</lightning-accordion-section>
+				</lightning-accordion>
+			</div>
+		</template>
+
+		<!-- FOOTER SECTION FOR BUTTONS -->
+		<footer class="slds-text-align_center footer">
+			<div class="slds-button-group">
+				<lightning-button variant="brand-outline" class="slds-p-around_small" label="Cancel"
+					onclick={handleCancelButtonAction}></lightning-button>
+				<lightning-button variant="brand-outline" class={setBackBtnVisibility} label="Back"
+					onclick={handlePreviousButtonAction}></lightning-button>
+				<lightning-button variant="brand" class={setNextBtnVisibility} label="Next"
+					onclick={handleNextButtonAction}></lightning-button>
+				<!--<lightning-button variant="brand" class={setSaveBtnVisibility} label="SAVE"
+                onclick={handleSaveButtonAction}></lightning-button>-->
+				<lightning-button variant="brand" class={setSubmitBtnVisibility} label="Submit"
+					onclick={handleSubmitButtonAction} disabled={submitButtonDisabled}></lightning-button>
+			</div>
+		</footer>
+
+
+	</template>
+
+	<!--showKRAViewModal modal start -->
+	<template if:true={showKRAViewModal}>
+		<lightning-card>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={hideKRAViewModalBox}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Quaterly KRA View</h2>
+					</header>
+
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<p><i></i></p> <br />
+						<div class="c-container">
+							<!-- VIEW MODE -->
+							<c-quarterlykraedit mode={mode} receivedkraid={selectedKraQuaterly}
+								selectedresource={member}> </c-quarterlykraedit>
+						</div>
+
+					</div>
+
+					<!-- modal footer start-->
+					<footer class="slds-modal__footer">
+						<button class="slds-button slds-button_neutral" onclick={hideKRAViewModalBox}>Close</button>
+					</footer>
+
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</lightning-card>
+	</template>
+	<!-- showKRAViewModal modal end -->
+
+	<!--showKRAEditModal modal start -->
+	<template if:true={showKRAEditModal}>
+		<lightning-card>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={hideKRAEditModalBox}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+						<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Quaterly KRA Edit</h2>
+					</header>
+
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+						<!-- EDIT MODE -->
+						<c-quarterlykraedit mode={mode} receivedkraid={selectedKraQuaterly} selectedresource={member}>
+						</c-quarterlykraedit>
+					</div>
+
+					<!-- modal footer start-->
+					<footer class="slds-modal__footer">
+						<button class="slds-button slds-button_neutral" onclick={hideKRAEditModalBox}>Close</button>
+					</footer>
+
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</lightning-card>
+	</template>
+	<!-- showKRAEditModal modal end -->
+
+
+	<!--Goal modal start -->
+	<template if:true={showGoalModal}>
+		<lightning-card>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={hideGoalModalBox}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+						<h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Goals</h2>
+					</header>
+
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+						<p><i></i></p> <br />
+						<div class="c-container">
+							<c-showkragoals receivedkraid={selectedKraQuaterly} tab={tab}> </c-showkragoals>
+						</div>
+					</div>
+
+					<!-- modal footer start-->
+					<footer class="slds-modal__footer">
+
+						<button class="slds-button slds-button_neutral" onclick={hideGoalModalBox}>Close</button>
+					</footer>
+
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</lightning-card>
+	</template>
+	<!-- modal end -->
+
+
+
+</template>
