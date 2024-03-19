@@ -1,0 +1,24 @@
+.outer-container {
+    width: 100%;
+}
+
+
+.outer-container p{
+    font-size: 14px;
+    text-align: center;
+    color:#800080;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.submittedText{
+    font-size: 18px !important;
+    font-style: normal;
+    color: black;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

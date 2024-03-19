@@ -1,82 +1,7 @@
-.container {
-  position: relative;
-  width: 100%;
-  max-height: 20%;
-}
-
-.container img {
-  width: 100%;
-  height: 20%;
-  border-radius: 5px;
-}
-
-.container .btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  color: white;
-  font-size: 16px;
-  padding: 12px 24px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-  max-height : 20%;
-}
-
-.container .btn:hover {
- 
-}
-
-.childparent {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-	padding: 5px;
-}
-
-.addscroll{
-   max-width: 100%;
-    overflow: auto;
-}
-
-.childimage {
-    width: 40%;
-	padding:0px;
-	border-right: 1px black;
-    padding-right: 6px;
-}
-
-.childtext {
-    width: 60%;
-	padding-bottom: 10px;
-    padding-left : 3px;
-	text-align: right;
-}
-
-.image img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.annualAward {
-  max-width: 90rem !important;
-  width: 100% !important;
-}
-
 .tableFixHead {
   max-height: 600px; /* set maximum height */
   overflow: auto; /* enable vertical scrollbar */
   padding:5px;
-}
-
-.tableFixHead table, th, td {
-  border: 0.5px solid #31363F;
-  border-collapse: collapse;
 }
 
 .tableFixHead::-webkit-scrollbar {
@@ -116,7 +41,7 @@
 	color: white; font-size:9pt;
   font-weight: 2px;
 	padding-top: 0px;
-  background: #7F8DE1;
+    background: #7F8DE1;
  }
 
 .contacttableFixHead {
@@ -176,15 +101,4 @@
 }
 .tableFixHead th, .tableFixHead td{
   padding: 0.5%;
-}
-
-.slds-modal__container{
-    width: 90% !important;
-    max-width: 90% !important;  
-}
-.allAwards td{
-  padding: 0;
-}
-.borderClr{
-  border-bottom: 1px solid #31363F;
 }
