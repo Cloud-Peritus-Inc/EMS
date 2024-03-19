@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send an email alert to update the user that feedback has been sent.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Pulse Review Template for Feedback Receiver</name>
+    <style>freeForm</style>
+    <subject>Feedback Requested</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
