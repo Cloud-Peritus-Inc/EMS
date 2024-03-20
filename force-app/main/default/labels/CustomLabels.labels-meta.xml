@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>BestEntrepreneurDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BestEntrepreneurDesc</shortDescription>
+        <value>The Best Entrepreneur candidate should have consistently suggested new/improved ideas and kick start value initiatives with little or no help. Self starter with a motivation to innovate.</value>
+    </labels>
+</CustomLabels>
