@@ -1,0 +1,73 @@
+<template>
+<lightning-card>
+     <div class="tableFixHead">
+    <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+      <thead>
+        <tr class="slds-line-height_reset" style="color:lightcoral">
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Title">Title</div>
+           </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Resource">Recognition For</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" title="Type Of Recognization">Type of Recognition</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" title="Project">Project</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+          </th>
+          <th class="slds-border_right tableheading" scope="col" style="width: 35%;">
+            <div class="slds-truncate" title="Comments">Comments</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Given On">Given On</div>
+          </th>
+         
+          
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <template if:true={showtable}>
+          <template for:each={recgiventable} for:item="sout">
+            <tr key={sout.resourceId}>
+             <td style="word-wrap:break-word;">
+                <div class="slds-wrap">
+                    <!--<a href="#">{sout.Title}</a>-->
+                    <p>{sout.Title}</p>
+                  </div>
+              </td>
+              <td>
+                 <!--<a href="javascript:void(0);" data-id={sout.resourceId}></a>-->
+                     <p> {sout.resourceName}</p>
+                    
+                  
+              </td>
+              <td>
+                <div class="slds-wrap">{sout.spotType}</div>
+              </td>
+              <td>
+                <div class="slds-wrap"><p> {sout.projectName}</p></div><!--<a href="#"></a>-->
+              </td>
+              <td style="width:200px;word-wrap:break-word;">
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={sout.awardComments}></lightning-formatted-rich-text></div>
+              </td>
+              <td>
+                <div class="slds-wrap"><lightning-formatted-date-time value={sout.createdDate}></lightning-formatted-date-time></div>
+              </td>
+             
+            </tr>
+          </template>
+        </template>
+      </tbody>
+    </table>
+       <template if:false={showtable}>
+          <div class="slds-text-align_center slds-p-around_medium">
+            <center><font size="2" color="purple">No recognition has been given to any resource yet. We encourage you to recognize your team member's work.</font></center>
+          </div>
+        </template>
+  </div>
+</lightning-card>
+</template>

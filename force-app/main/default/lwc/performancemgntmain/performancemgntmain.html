@@ -1,0 +1,18 @@
+<template>
+    <lightning-tabset active-tab-value="one">
+        <lightning-tab label="My Metrics" value="one">
+          <c-my-metrics></c-my-metrics>
+        </lightning-tab>
+        <template if:false={dontshowTheTeam}>
+        <lightning-tab label="My Team" value="two">
+          <c-myteam></c-myteam>
+        </lightning-tab>
+      </template>
+        <lightning-tab label="Rewards and Recognition" value="three">
+           <c-rewards-and-recog> </c-rewards-and-recog>
+        </lightning-tab>
+         <lightning-tab label="Company KRA's" value="four">
+           <c-companykra></c-companykra>
+        </lightning-tab>
+    </lightning-tabset>
+</template>
