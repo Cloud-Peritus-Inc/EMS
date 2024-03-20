@@ -3,8 +3,9 @@
     <fullName>POV_Creation_Client_Demos_Example__c</fullName>
     <externalId>false</externalId>
     <label>POV Creation &amp; Client Demos Example</label>
-    <required>false</required>
+    <length>10000</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>LongTextArea</type>
+    <visibleLines>8</visibleLines>
 </CustomField>

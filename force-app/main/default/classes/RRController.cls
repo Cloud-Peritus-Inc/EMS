@@ -526,6 +526,21 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         }
         return dwList;
     }
+
+    //smaske : [UAT_045] : This method returns a map of Project Name and its Id based on the Passed Conatct Id.
+    @AuraEnabled(cacheable=true)
+    public static Map<String,String> getResourceProjectAllocations(String contactResource){
+        try {
+            Map<String,String> DataMap = new Map<String,String>();
+            for (EMS_TM_Assignment__c projAll : [Select id,name,EMS_TM_EmployeeName__c,EMS_TM_Status_Asgn__c, EMS_TM_ProjectName_Asgn__c, EMS_TM_ProjectName_Asgn__r.Name,  EMS_TM_ProjectName_Asgn__r.EMS_TM_Status__c  from EMS_TM_Assignment__c WHERE EMS_TM_EmployeeName__c =: contactResource AND EMS_TM_ProjectName_Asgn__r.EMS_TM_Status__c = 'Ongoing' AND EMS_TM_Status_Asgn__c = 'Active']) {
+                DataMap.put(projAll.EMS_TM_ProjectName_Asgn__c, projAll.EMS_TM_ProjectName_Asgn__r.Name);
+            }
+            return DataMap;
+
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
     
     public class datawrapper {
         @AuraEnabled

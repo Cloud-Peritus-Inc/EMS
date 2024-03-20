@@ -61,7 +61,7 @@ export default class PulseKraRecordFrom extends NavigationMixin(LightningElement
 
     @api
     get getResourceName() {
-        return this.resourceName.toUpperCase();
+        return this.resourceName;
     }
 
     rating(event) {

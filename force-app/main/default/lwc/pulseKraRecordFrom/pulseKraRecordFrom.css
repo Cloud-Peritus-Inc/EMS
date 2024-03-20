@@ -80,12 +80,12 @@
 }
 
 .BtnSubmit{
-    margin-right: 10px;
     font-size: 14px;
     font-weight: bold;
 }
 
 .BtnCancle{
+    margin-right: 10px;
     font-size: 14px;
     font-weight: bold;
 }

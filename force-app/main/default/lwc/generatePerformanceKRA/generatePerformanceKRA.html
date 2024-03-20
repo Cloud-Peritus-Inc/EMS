@@ -95,21 +95,20 @@
 														<div class="slds-truncate" title="Name">Name</div>
 													</th>
 													<th class="slds-border_right tableheading" scope="col">
-														<div class="slds-truncate" title="Title">Start Date</div>
+														<div class="slds-truncate" title="Start Date">Start Date</div>
 													</th>
 													<th class="slds-border_right tableheading" scope="col">
-														<div class="slds-truncate" title="Email">End date</div>
+														<div class="slds-truncate" title="End Date">End Date</div>
 													</th>
 													<th class="slds-border_right tableheading" scope="col">
-														<div class="slds-truncate" title="phoneNumber">Status</div>
+														<div class="slds-truncate" title="Status">Status</div>
 													</th>
 
 													<th class="slds-border_right tableheading" scope="col">
-														<div class="slds-truncate" title="Mailing Address">Average
-															Rating</div>
+														<div class="slds-truncate" title="Average Rating">Average Rating</div>
 													</th>
 													<th class="slds-border_right tableheading" scope="col">
-														<div class="slds-truncate" title="Action"> Actions</div>
+														<div class="slds-truncate" title="Actions"> Actions</div>
 													</th>
 												</tr>
 											</thead>
@@ -218,13 +217,13 @@
 					<lightning-accordion-section name="IPR" label="PERFORMANCE REVIEW">
 						<div class="boxContiner">
 							<div class="leftBox">
-								<p class="subTitle">Due date for Next Appraisal</p>
+								<p class="subTitle">Due Date for Next Appraisal</p>
 								<lightning-input type="date" name="Next_Appraisal_Date__c"
 									value={Compensation.Next_Appraisal_Date__c} onchange={dataHandler}>
 								</lightning-input>
 							</div>
-							<div class="rightBox">
-							</div>
+							<!-- <div class="rightBox">
+							</div> -->
 							<div class="midBox">
 								<p class="subTitle">Reviewers</p>
 								<c-reusable-lookup label="" selected-icon-name="standard:contact" object-label="Contact"
@@ -236,12 +235,12 @@
 
 							<div class="midBox">
 								<!-- smaske : [PM_129] : Updated Label Value -->
-								<p class="subTitle">Overall Average Rating : {averageOverallRating}</p>
+								<p class="subTitle">Overall Average Rating: {averageOverallRating}</p>
 							</div>
 
 							<div class="midBox">
 								<p class="subTitle">Comments</p>
-								<lightning-input-rich-text label-visible="true" type="text" label=" " name="Comments__c"
+								<lightning-input-rich-text label-visible="false" type="text" label=" " name="Comments__c"
 									value={Compensation.Comments__c} onchange={dataHandler}></lightning-input-rich-text>
 							</div>
 
@@ -280,15 +279,15 @@
 		<!-- FOOTER SECTION FOR BUTTONS -->
 		<footer class="slds-text-align_center footer">
 			<div class="slds-button-group">
-				<lightning-button variant="brand-outline" class={setBackBtnVisibility} label="BACK"
-					onclick={handlePreviousButtonAction}></lightning-button>
-				<lightning-button variant="brand" class={setNextBtnVisibility} label="NEXT"
-					onclick={handleNextButtonAction}></lightning-button>
-				<lightning-button variant="brand-outline" class="slds-p-around_small" label="CANCEL"
+				<lightning-button variant="brand-outline" class="slds-p-around_small" label="Cancel"
 					onclick={handleCancelButtonAction}></lightning-button>
+				<lightning-button variant="brand-outline" class={setBackBtnVisibility} label="Back"
+					onclick={handlePreviousButtonAction}></lightning-button>
+				<lightning-button variant="brand" class={setNextBtnVisibility} label="Next"
+					onclick={handleNextButtonAction}></lightning-button>
 				<!--<lightning-button variant="brand" class={setSaveBtnVisibility} label="SAVE"
                 onclick={handleSaveButtonAction}></lightning-button>-->
-				<lightning-button variant="brand" class={setSubmitBtnVisibility} label="SUBMIT"
+				<lightning-button variant="brand" class={setSubmitBtnVisibility} label="Submit"
 					onclick={handleSubmitButtonAction} disabled={submitButtonDisabled}></lightning-button>
 			</div>
 		</footer>

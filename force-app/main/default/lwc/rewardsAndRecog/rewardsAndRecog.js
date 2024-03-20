@@ -8,6 +8,7 @@ import getRecGiven from '@salesforce/apex/RRController.getRecGiven';
 import getRecReceived from '@salesforce/apex/RRController.getRecReceived';
 import getMyAnnualAwards from '@salesforce/apex/RRController.getMyAnnualAwards';
 import getMyNomins from '@salesforce/apex/RRController.getMyNomins';
+import getResourceProjectAllocations from '@salesforce/apex/RRController.getResourceProjectAllocations';
 import landscape from '@salesforce/resourceUrl/landscape';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import RR_OBJECT from '@salesforce/schema/Reward_And_Recognition__c';
@@ -225,6 +226,8 @@ winnerrecordTypeId;
     }
 
     //smaske : [UAT_022] : Showing Error on selecting same contact as logged in users Contact.
+    //smaske : [UAT_045] : New variables for storing options
+    @track projectAlloc = [];
     handleRecognitionResourceSelection(event){
         console.log('You selected Resource: ' + event.detail.value[0]);
         let selectedContactResource = event.detail.value[0];
@@ -242,6 +245,25 @@ winnerrecordTypeId;
             });
             this.dispatchEvent(evt);
         }
+        //smaske : [UAT_045] : Fetching Project Allocated for selected resource(Contact)
+        getResourceProjectAllocations({ contactResource: selectedContactResource })
+            .then((result) => {
+                if (result) {
+                    this.projectAlloc = Object.keys(result).map(key => ({
+                        label: result[key],
+                        value: key
+                    }));
+                }
+            })
+            .catch((error) => {
+                console.log('Error Fetching Projects ' + error);
+            });
+    }
+
+    //smaske : [UAT_045] : Project Change Handler
+    @track selectedProject;
+    handleProjectSelectionChange(event){
+        this.selectedProject = event.detail.value;
     }
     
     handleRecSubmit(event) {
@@ -256,7 +278,9 @@ winnerrecordTypeId;
             fields.Type__c = 'Recognize';
             //@Mukesh for defect UAT_007 making required
             fields.Reason_for_award__c = this.myRecognizeReason;
-            if(this.myRecognizeReason){
+            //@smaske : [UAT_045] : Assigning Project Value
+            fields.Project__c = this.selectedProject;
+            if(this.myRecognizeReason && this.selectedProject){
                 this.template.querySelector('lightning-record-edit-form').submit(fields);
             }else{
                 const evt = new ShowToastEvent({
@@ -282,7 +306,7 @@ winnerrecordTypeId;
     handleRecSuccess(event) {
         const evt = new ShowToastEvent({
             //title: 'success',
-            message: 'Successfully submitted your recognization!',
+            message: 'Successfully submitted your recognition',
             variant: 'success',
             mode: 'dismissable'
         });

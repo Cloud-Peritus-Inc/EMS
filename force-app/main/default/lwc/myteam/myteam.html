@@ -60,14 +60,13 @@
     </lightning-layout-item>
     <lightning-layout-item size="5">
       <div class="green">
-        <lightning-button label="Check In"  title="Check-in" icon-name="utility:checkin" class="slds-m-left_x-small" onclick={showCheckInModalBox}></lightning-button>
-               <!--<lightning-button  label="Get Pulse" onclick={getPulseHandler}  title="Get Pulse" icon-name="standard:feed" class="slds-m-left_x-small"></lightning-button>-->
-            <template lwc:if={showGenPerKra}>
-               <lightning-button label="Generate Performance KRA" title="Generate Performance"
-                  icon-name="standard:historical_adherence" class="slds-m-left_x-small" onclick={generatePerformanceKRAHandler}>
-               </lightning-button>
-            </template>
-               
+         <template lwc:if={showGenPerKra}>
+            <lightning-button label="Generate Performance KRA" title="Generate Performance KRA"
+               icon-name="standard:historical_adherence" class="slds-m-left_x-small slds-float_right" onclick={generatePerformanceKRAHandler}>
+            </lightning-button>
+         </template>
+        <lightning-button label="Check In"  title="Check In" icon-name="utility:checkin" class="slds-m-left_x-small slds-float_right" onclick={showCheckInModalBox}></lightning-button>
+              
      </div>
     </lightning-layout-item>
 </lightning-layout>
@@ -108,7 +107,7 @@
       
           <!-- modal body start -->
           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                <p><i>Note: Once Check-in created. can't be modified.</i></p> <br/>
+                <p><i>Note: Once Check-in created, it can't be modified.</i></p> <br/>
                 <div class="c-container">
                   <lightning-input-rich-text
                      value={myVal}
@@ -123,8 +122,9 @@
 
           <!-- modal footer start-->
           <footer class="slds-modal__footer">
-              <lightning-button  label="Save"  title="Save" icon-name="utility:checkin" class="slds-m-left_x-small" onclick={handleCheckInSave}></lightning-button>&nbsp;&nbsp;
-             <button class="slds-button slds-button_neutral" onclick={hideCheckInModalBox}>Cancel</button>
+            <button class="slds-button slds-button_neutral" onclick={hideCheckInModalBox}>Cancel</button>&nbsp;&nbsp;
+            <lightning-button  label="Save"  title="Save" icon-name="utility:checkin" class="slds-m-left_x-small" onclick={handleCheckInSave}></lightning-button>
+
           </footer>
        
        </div>

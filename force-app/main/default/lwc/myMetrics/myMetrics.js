@@ -44,6 +44,9 @@ export default class MyMetrics extends LightningElement {
             .catch(error => {
                 console.log('====Error=======' + JSON.stringify(error));
             });
+
+        /*smaske [UAT_062] : calling Pulse method / Checkin method for toggle issue*/
+        this.getCheckInfo(); 
     }
 
 
@@ -158,17 +161,17 @@ export default class MyMetrics extends LightningElement {
                     });
 
                     if (allSubmitted) {
-                        let msgg = "You have already received feedback from the Reportee(s)";
+                        let msgg = "You have already received feedback from your reportee(s) for this quarter";
                         let vari = "info";
                         this.showNotification(msgg, vari);
                     } else {
-                        let msgg = "You have Successfully requested the Pulse Request. Please wait for the request to be processed";
+                        let msgg = "You have successfully requested the Pulse Request. Please wait for your reportee(s) to submit the feedback";
                         let vari = "info";
                         this.showNotification(msgg, vari);
                     }
 
                 } else {
-                    let msg = `You have already requested a Pulse. Please wait for the previous request to be processed.`;
+                    let msg = `You have Successfully requested a Pulse. Please wait for the previous request to be processed.`;
                     const event = new ShowToastEvent({
                         message: msg,
                         variant: 'info',

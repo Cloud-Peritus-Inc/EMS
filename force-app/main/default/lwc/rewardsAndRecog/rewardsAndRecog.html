@@ -2,11 +2,6 @@
 	<lightning-card>
 		<div class="container">
 			<img src={imageUrl} style="max-height:250px;" alt="Snow">
-			<!-- <div class="btn">
-     <lightning-button variant="brand" label="Shout Out" title="Shout Out" onclick={showShoutOutiewModalBox} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <lightning-button variant="brand" label="Recognise" title="Recognise" onclick={showRecModalBox} disabled={drecognise} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <lightning-button variant="brand" label="Award Nominations" title="Award Nominations" onclick={showAnnualModalBox} disabled={dNominations} ></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </div>         -->
 		</div>
 
 		<br/>
@@ -37,11 +32,11 @@
       </div>
 												<div style="padding-top:5px;">
 													<font size="4" color="blue"> {rrcurrent.awardType}
-														<lightning-helptext content={rrcurrent.awardComments}>
+														&nbsp;<lightning-helptext content={rrcurrent.awardComments}>
 														</lightning-helptext>
-													</font><br/>
+													</font>
 													<br/>
-													<font size="3" color="purple"> <b> {rrcurrent.resourceName} </b>
+													<font size="3"> <b> {rrcurrent.resourceName} </b>
 													</font> <br/> </div>
 										</center>
 									</lightning-card>
@@ -51,8 +46,8 @@
 					</template>
 					<template if:false={showTheAnnualAwards}>
 						<center>
-							<font size="4" color="purple">
-								<b><i>  Annual Awards for the current year was not yet announced. Please check later </i></b>
+							<font size="4">
+								<b>  Annual Awards for the current year was not yet announced. Please check later</b>
 							</font>
 						</center>
 					</template>
@@ -122,7 +117,7 @@
 					<!-- modal body start -->
 					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
 						<center>
-							<p><i> Note: Once shout-out given, it can't be recalled or updated. </i></p>
+							<p><i> Note: Once a shout-out is given, it can't be recalled or updated. </i></p>
 						</center> <br/>
 						<lightning-record-edit-form object-api-name="Reward_And_Recognition__c"
 							record-type-id={winnerrecordTypeId} onsuccess={handleSuccess} onsubmit={handleSubmit}>
@@ -138,15 +133,16 @@
 							<lightning-input-field field-name="Type_of_Shout_Out__c" required>
 							</lightning-input-field>
 							<!-- @Mukesh for defect UAT_007 -->
-							<lightning-input-rich-text label='Reason for ShoutOut' field-name="Reason_for_ShoutOut" label-visible=true required="true"
+							<lightning-input-rich-text label='Reason for Shout Out' field-name="Reason_for_ShoutOut" label-visible=true required="true"
 								onchange={handleChangeReason}>
 							</lightning-input-rich-text>
 							<br/>
 							<center>
-								<lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save">
-								</lightning-button> &nbsp;&nbsp;&nbsp;
 								<lightning-button variant="destructive" label="Cancel" title="Cancel"
-									onclick={hideShoutOutModalBox} class="slds-m-left_x-small"></lightning-button>
+									onclick={hideShoutOutModalBox} class="slds-m-left_x-small"></lightning-button>&nbsp;&nbsp;&nbsp;
+								<lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save">
+								</lightning-button> 
+								
 							</center>
 						</lightning-record-edit-form>
 					</div>
@@ -235,7 +231,7 @@
 					<!-- modal body start -->
 					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
 						<center>
-							<p><i> Note: Once Recognition given, it can't be recalled or updated. </i></p>
+							<p><i> Note: Once a recognition is given, it can't be recalled or updated. </i></p>
 						</center> <br/>
 						<lightning-record-edit-form object-api-name="Reward_And_Recognition__c"
 							record-type-id={winnerrecordTypeId} onsuccess={handleRecSuccess} onsubmit={handleRecSubmit}>
@@ -246,8 +242,16 @@
 							<!-- @smaske : [UAT_022] : Adding onchange for Lookup Validation -->
 							<lightning-input-field field-name="Resource__c" onchange={handleRecognitionResourceSelection} class="REResource" required>
 							</lightning-input-field>
-							<lightning-input-field field-name="Project__c" required>
+							
+							<!-- @smaske : [UAT_045] : creating Picklist for Project to show based on selected Resource -->
+							<!--
+								<lightning-input-field field-name="Project__c" required>
 							</lightning-input-field>
+							-->
+							
+							<lightning-combobox name="Project" label="Project" placeholder="Select Project" options={projectAlloc}
+							variant="label-stacked" required="true" value={selectedProject} onchange={handleProjectSelectionChange}></lightning-combobox>
+
 							<lightning-input-field field-name="Types_of_Recognition__c" required>
 							</lightning-input-field>
 							<!-- @Mukesh for defect UAT_007 -->
@@ -256,10 +260,10 @@
 							</lightning-input-rich-text>
 							<br/>
 							<center>
-								<lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save">
-								</lightning-button> &nbsp;&nbsp;&nbsp;
 								<lightning-button variant="destructive" label="Cancel" title="Cancel"
-									onclick={hideRecModalBox} class="slds-m-left_x-small"></lightning-button>
+									onclick={hideRecModalBox} class="slds-m-left_x-small"></lightning-button>&nbsp;&nbsp;&nbsp;
+								<lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save">
+								</lightning-button>
 							</center>
 						</lightning-record-edit-form>
 

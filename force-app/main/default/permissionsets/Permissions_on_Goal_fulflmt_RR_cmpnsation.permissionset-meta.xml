@@ -47,6 +47,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Fulfillment__c.Avg_Rating__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Fulfillment__c.Fiscal_Year__c</field>
         <readable>true</readable>
@@ -334,6 +339,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Goal__c.Job_Satisfaction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Goal__c.KRA_Pulse__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,35 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>Check_In_Alert_1</fullName>
-        <description>Check In Alert 1</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Check_In_By__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Check_In_Template_1</template>
-    </alerts>
-    <alerts>
-        <fullName>Check_In_Alert_2</fullName>
-        <description>Check In Alert 2</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Resource__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Check_In_Template_2</template>
-    </alerts>
-    <alerts>
         <fullName>Email_alert_to_Team_Member_on_Kra_Pulse_Creation</fullName>
         <description>Email alert to Team Member on Kra Pulse Creation</description>
         <protected>false</protected>
         <recipients>
-            <field>Check_In_By__c</field>
+            <field>Resource__c</field>
             <type>contactLookup</type>
         </recipients>
         <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
@@ -37,99 +13,11 @@
         <template>unfiled$public/Email_alert_to_Team_Member_on_Kra_Pulse_Creation</template>
     </alerts>
     <alerts>
-        <fullName>KRA_Creation_Alert</fullName>
-        <description>KRA Creation Alert</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Check_In_By__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <field>Resource__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Notification_about_KRA_Creation</template>
-    </alerts>
-    <alerts>
-        <fullName>KRA_Missed_Alert</fullName>
-        <description>KRA Missed Alert</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Resource__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/KRA_Missed_Template</template>
-    </alerts>
-    <alerts>
-        <fullName>KRA_Remainder_mail_to_Mentor</fullName>
-        <description>Remainder mail to Mentor</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Check_In_By__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/KRA_remainder_mail_to_Mentor</template>
-    </alerts>
-    <alerts>
-        <fullName>KRA_Submission_Alert</fullName>
-        <description>KRA Submission Alert</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Resource__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Notification_about_KRA_Submission</template>
-    </alerts>
-    <alerts>
-        <fullName>KRA_Submission_Alert_2</fullName>
-        <description>KRA Submission Alert 2</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Resource__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Notification_about_KRA_Submission_2</template>
-    </alerts>
-    <alerts>
-        <fullName>KRA_Submission_Alert_by_Mentor</fullName>
-        <description>KRA Submission Alert by Mentor</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Check_In_By__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Notification_about_KRA_Submission_By_Mentor</template>
-    </alerts>
-    <alerts>
-        <fullName>KRA_Submission_Alert_for_Mentor</fullName>
-        <description>KRA Submission Alert for Mentor</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Check_In_By__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Notification_about_KRA_Submission_for_Mentor</template>
-    </alerts>
-    <alerts>
         <fullName>Pulse_Feedback_Submitted_Alert</fullName>
         <description>Pulse Feedback Submitted Alert</description>
         <protected>false</protected>
         <recipients>
-            <field>Check_In_By__c</field>
+            <field>Resource__c</field>
             <type>contactLookup</type>
         </recipients>
         <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
@@ -141,23 +29,11 @@
         <description>Pulse Review Alert for Feedback Receiver</description>
         <protected>false</protected>
         <recipients>
-            <field>Resource__c</field>
+            <field>Check_In_By__c</field>
             <type>contactLookup</type>
         </recipients>
         <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Pulse_Review_Template_for_Feedback_Receiver</template>
-    </alerts>
-    <alerts>
-        <fullName>Remainder_mail_to_reportee_for_KRA_submission</fullName>
-        <description>Remainder mail to reportee for KRA submission</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Resource__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/KRA_remainder_mail_to_reportee</template>
     </alerts>
 </Workflow>

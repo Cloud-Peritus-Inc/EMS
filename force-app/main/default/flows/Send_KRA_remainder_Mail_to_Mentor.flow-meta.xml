@@ -168,6 +168,7 @@
             <label>Change Status to Missed</label>
         </rules>
     </decisions>
+    <description>Updated Flow timing for 11:30 PM</description>
     <environments>Default</environments>
     <formulas>
         <name>CheckFiftinthDay</name>
@@ -291,7 +292,7 @@
         <schedule>
             <frequency>Daily</frequency>
             <startDate>2024-01-01</startDate>
-            <startTime>03:30:00.000Z</startTime>
+            <startTime>23:30:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>

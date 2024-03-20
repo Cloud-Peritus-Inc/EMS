@@ -20,8 +20,10 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         console.log('====tab===' + this.tab);
         console.log('====viewonlymode===' + this.viewonlymode);
         this.tbData = JSON.parse(JSON.stringify(this.tabledata))
-
+        
         if (this.tbData.length > 0) {
+            console.log(this.tbData.nameid);
+            console.log(this.tbData[0].nameid);           
             this.kraTableAvailble = true;
             this.tbData.forEach(item => {
                 if (item.qualList && item.qualList.length > 0) {
@@ -94,10 +96,31 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     }
 
 
+//   displayChildRecords(nodeID){
+//         let node = nodeID;
+//         console.log(nodeID);
+//         let childNode = this.template.querySelector(`tr[data-parentid="${node}"]`);
+//         console.log('Child node');
+//          console.log(childNode);
+//         if (childNode.classList.contains('hideContent')) {
+//             childNode.classList.remove('hideContent');
+//             this.template.querySelector(`lightning-icon[data-id="${node}"]`).iconName = this.iconName;
+
+//         } else {
+//             childNode.classList.add('hideContent');
+//             this.template.querySelector(`lightning-icon[data-id="${node}"]`).iconName = this.iconParentName;
+//         }
+
+//   }
+
     // display/hide the nested content
     handleContactChild(event) {
         let node = event.currentTarget.dataset.id;
+        console.log('node');
+        console.log(node);
         let childNode = this.template.querySelector(`tr[data-parentid="${node}"]`);
+        console.log('Child node');
+         console.log(childNode);
         if (childNode.classList.contains('hideContent')) {
             childNode.classList.remove('hideContent');
             this.template.querySelector(`lightning-icon[data-id="${node}"]`).iconName = this.iconName;

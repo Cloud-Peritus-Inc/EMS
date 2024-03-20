@@ -183,11 +183,65 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     handleNextAction() {
         console.log('handleNextAction ' + this.selectedStep);
-        let isValid = true;
+
+        var moveToNextStep = this.selectedStep;
+            switch (moveToNextStep) {
+                case 'reviewerDetails':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = true;
+                    this.showProfessionalSkills = false;
+                    this.showStrategicImpact = false;
+                    this.showGoalsResults = false;
+                    this.showOverAllRating = false;
+                    this.selectedStep = 'technicalAcumen';
+                    break;
+                case 'technicalAcumen':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = false;
+                    this.showProfessionalSkills = true;
+                    this.showStrategicImpact = false;
+                    this.showGoalsResults = false;
+                    this.showOverAllRating = false;
+                    this.selectedStep = 'professionalSkills';
+                    break;
+                case 'professionalSkills':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = false;
+                    this.showProfessionalSkills = false;
+                    this.showStrategicImpact = true;
+                    this.showGoalsResults = false;
+                    this.showOverAllRating = false;
+                    this.selectedStep = 'strategicImpact';
+                    break;
+                case 'strategicImpact':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = false;
+                    this.showProfessionalSkills = false;
+                    this.showStrategicImpact = false;
+                    this.showGoalsResults = true;
+                    this.showOverAllRating = false;
+                    this.selectedStep = 'goalsResults';
+                    break;
+                case 'goalsResults':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = false;
+                    this.showProfessionalSkills = false;
+                    this.showStrategicImpact = false;
+                    this.showGoalsResults = false;
+                    this.showOverAllRating = true;
+                    this.selectedStep = 'overAllRating';
+                    break;
+            }
+
+        /*smaske: [UAT_018] : Commenting Below Next button field validation code as per new requirement we dont need validation.
+        Keeping the code commneted for Future Reference.
+        Only keeping the navigation code above for switching between tabs on NEXT button.*/
+
+        
+        /*let isValid = true;
         let divToValidate;
         let inputFields = null;
-        console.log('next');
-       // console.log(this.enterredValues);
+
         if (this.mode == 'Edit') {
             var moveToNextStep = this.selectedStep;
             if (moveToNextStep == 'reviewerDetails') {
@@ -236,8 +290,6 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
         }
 
-
-        console.log(' ## isValid :: ' + isValid);
         if (isValid) {
             var moveToNextStep = this.selectedStep;
             switch (moveToNextStep) {
@@ -291,7 +343,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         } else {
             var msg = 'Field value cannot be empty.';
             this.showToast(msg, this.errorVariant, this.toastMode);
-        }
+        } */
 
     }
 
@@ -335,7 +387,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     }
 
     //smaske : [UAT_008] : Changed the validation code for restricting user from entering invalid values.
-    //removed the methods "getDecimalPart" & "removeDecimalPoint" as not required after code change. 
+    //Praveen : [UAT_019] : Updating method for saving Example value  
     
     handleChange(event) {
         const fieldName = event.target.name;
@@ -358,13 +410,14 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         }
          // Validate the input
          const validValues = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
+         if(fieldType === 'number'){
         if(!validValues.includes(this.inputValue)){
             
             if (this.inputValue < 1 || this.inputValue > 5) {
                 event.target.value = '';
             }
         }
-         
+    }
 
         //const updatedValue = event.target.value;
         const updatedValue = fieldType === 'number' ? Number(event.target.value) : event.target.value;
@@ -377,7 +430,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         // Check if the value is not between 1 and 5
         //if (updatedValue < 1 || updatedValue > 5) {
         if (fieldType === 'number' && (isNaN(updatedValue) || updatedValue < 1 || updatedValue > 5)) {
-            let msg = 'Rating should be between 1 and 5';
+            let msg = 'Rating should be between 1 and 5';            
             this.showToast(msg, this.errorVariant, this.toastMode);
         } else {
             kraRecordMod[fieldName] = updatedValue;
@@ -548,7 +601,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                     //Check if status is COMPLETE : Disable Submit btn
 
                     console.log(" After Save ::" + JSON.stringify(this.kraRecord));
-                    this.showToast('Record saved successfully.', this.successVariant, this.toastMode);
+                    this.showToast('KRA saved successfully.', this.successVariant, this.toastMode);
                     return refreshApex(this.wiredKraRecordResult);
                 })
                 .catch(error => {
@@ -573,25 +626,6 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         let allPositiveStrategicFieldsList = [];
         let allPositiveGoalResultFieldsList = [];
         let inputFields = [];
-
-        /*var moveToNextStep = this.selectedStep;
-        if (moveToNextStep == 'overAllRating') {
-            inputFields = [
-                ...this.template.querySelectorAll('lightning-input'),
-                ...this.template.querySelectorAll('lightning-textarea')
-            ];
-        }
-        console.log(" inputFields  " + JSON.stringify(inputFields));
-
-        inputFields.forEach(inputField => {
-            const fieldName = inputField.name;
-            console.log(' ## inputFields fieldName :: ' + JSON.stringify(fieldName));
-            const value = this.kraRecord[fieldName];
-            console.log(' ## inputFields value :: ' + JSON.stringify(value));
-            if (!value) {
-                isValid = false;
-            }
-        });*/
 
         if (this.viewwrap) {
             // Define relationships between viewwrap properties and associated fields
@@ -664,17 +698,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                     //Check if status is COMPLETE : Disable Submit btn
 
                     console.log(" After Save ::" + JSON.stringify(this.kraRecord));
-                    this.showToast('Record updated successfully.', this.successVariant, this.toastMode);
-
-                    /*this[NavigationMixin.Navigate]({
-                        type: 'comm__namedPage',
-                        attributes: {
-                            name: 'Home'
-                        },
-                    });*/
-                    /* setTimeout(function(){
-                         window.location.reload();
-                    }, 2000); */
+                    this.showToast('KRA submitted successfully.', this.successVariant, this.toastMode);
 
                     return refreshApex(this.wiredKraRecordResult);
                 })
@@ -682,7 +706,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                     this.showToast('Error updating record: ' + error.body.message, this.errorVariant, this.toastMode);
                 });
         } else {
-            var msg = 'Field value cannot be empty.';
+            var msg = 'Please make sure to circle back and fill all the marked fields.';
             this.showToast(msg, this.errorVariant, this.toastMode);
         }
     }

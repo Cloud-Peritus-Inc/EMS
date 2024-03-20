@@ -33,7 +33,6 @@ public without sharing class myMetricsController {
         User u = [Select ContactId,Profile.Name From User WHERE Id=:Userinfo.getUserId()];
         //smaske: FOR : PM_014 : checking if logged in user have Reportess under him
         List<Resource_Resource_Relationship__c> reportesList = [select id,Resource_Reports_To__c,Relationship_Type__c   from Resource_Resource_Relationship__c WHERE Resource_Reports_To__c =: u.ContactId AND Relationship_Type__c includes ('Mentor')];
-        System.debug('reportesList :' + reportesList);
         Boolean labelVal = Boolean.valueOf(Label.Enable_Mentor_Feedback);
         if (!reportesList.isEmpty() && labelVal) {
             dwrap.dontshowThePulse = false;
@@ -66,6 +65,7 @@ public without sharing class myMetricsController {
             }
         }
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
+        
           returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
                          (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Rating__c,Status__c,Type__c, Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
         for(Fulfillment__c ful : returnList){
@@ -106,7 +106,6 @@ public without sharing class myMetricsController {
                 }
                returnval.add(pw);
         }
-        
         return returnval;
     }
     
@@ -142,7 +141,7 @@ public without sharing class myMetricsController {
     public static List<perfWrapper> getAllRoleKRAs(String resourceRoleId){
         List<perfWrapper> kraAreaList = new List<perfWrapper>();
         Map<String,List<quatWrapper>> areawithcompeneny = new Map<String,List<quatWrapper>>();
-        for(Grid_Configuration__c gc : [SELECT Id,KRA_Area__c,KRA_Competency__c,Description__c FROM Grid_Configuration__c WHERE Resource_Role__c=:resourceRoleId]){
+        for(Grid_Configuration__c gc : [SELECT Id,KRA_Area__c,KRA_Competency__c,Description__c FROM Grid_Configuration__c WHERE Resource_Role__c=:resourceRoleId And Grid_Configuration_Type__c='KRA']){
             if(areawithcompeneny.containsKey(gc.KRA_Area__c)){
                 quatWrapper qw = new quatWrapper();
                 qw.name=gc.KRA_Competency__c;
@@ -223,11 +222,11 @@ public without sharing class myMetricsController {
     public static List<Goal__c> getKraPulseRecords(String loggedInUserConId,String FyId) {
         System.debug(' INSIDE getKraPulseRecords');
 
-        
+        //smaske : [UAT_037] : Updating the logic for record creation as we need to create records 4 quarter wise.
 
         List<Goal__c> pulseRecordList = new List<Goal__c>();
         try {
-            Fulfillment__c full = [Select Id,Fiscal_Year__c,Resource__c,Status__c FROM Fulfillment__c WHERE Fiscal_Year__c =: FyId AND Resource__c =:loggedInUserConId AND Status__c = 'Active'];
+            Fulfillment__c full = [Select Id,Fiscal_Year__c,Resource__c,Status__c FROM Fulfillment__c WHERE Fiscal_Year__c =: FyId AND Resource__c =:loggedInUserConId];
             System.debug(' INSIDE full ' + full);
 
             Map<Id, Id> relationshipMap = new Map<Id, Id>();
@@ -235,36 +234,32 @@ public without sharing class myMetricsController {
 
             Id pulseRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get(PULSE_RECORD_TYPE).getRecordTypeId();
             
-            List<Goal__c> records = [SELECT Id, Check_in_Date__c, Check_In_By__c, Check_In_By__r.Name, Status__c, Resource__c,Fulfillment__c FROM Goal__c WHERE RecordTypeId = :pulseRecTypeId AND (Status__c = :STATUS_REQUESTED OR Status__c = :STATUS_SUBMITTED) AND Resource__c = :loggedInUserConId AND Fulfillment__c=:full.Id];
+            List<Goal__c> records = [SELECT Id,CreatedDate,KRA_Pulse__c, Check_in_Date__c, Check_In_By__c, Check_In_By__r.Name, Status__c, Resource__c,Fulfillment__c FROM Goal__c WHERE RecordTypeId = :pulseRecTypeId AND (Status__c = :STATUS_REQUESTED OR Status__c = :STATUS_SUBMITTED) AND Check_In_By__c = :loggedInUserConId AND Fulfillment__c=:full.Id AND CreatedDate = THIS_QUARTER]; //AND CreatedDate = THIS_QUARTER
 
             System.debug(' getKraPulseRecords records ' + records);
             for (Resource_Resource_Relationship__c rrr : [SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c
                                                           WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource_Reports_To__c = :loggedInUserConId 
                                                           AND Resource__r.EMS_TM_User__r.isActive = true
                                                           AND Resource__r.EMS_RM_ApplicantStatus_Update__c IN ('Active', 'Active - Probation')
-                                                          AND Resource__r.EMS_TM_User__r.IsPortalEnabled = true]){//[SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c  WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource_Reports_To__c = :loggedInUserConId]) {                                                                                                               
-                                                              relationshipMap.put(loggedInUserConId, rrr.Resource__c);
-                                                              //Testing   , Lokesh
+                                                          AND Resource__r.EMS_TM_User__r.IsPortalEnabled = true]){
+                                                              relationshipMap.put(rrr.Resource__c, loggedInUserConId);
+                                                              //Lokesh   , Testing Employee
                                                           }
                                                           System.debug(' relationshipMap records ' + relationshipMap);
             if (!records.isEmpty()) {
-
                 for(Goal__c go : records){
-                    goalsMap.put(loggedInUserConId, go.Check_In_By__c);
+                    goalsMap.put(go.Resource__c, loggedInUserConId);
                 }
 
-                if(!relationshipMap.isEmpty() && !goalsMap.isEmpty()){
-                    for(Id key : relationshipMap.keySet()) {
-                        Id subContactRRR = relationshipMap.get(loggedInUserConId);
-                        Id subContactGoal = goalsMap.get(loggedInUserConId);
-
-                        System.debug(' INSIDE MAP CHECK ' + subContactRRR  + ' --- ' + subContactGoal);
-                        if( subContactRRR != subContactGoal){
-                            pulseRecordList = createKraPulseRecords(loggedInUserConId,full.Id);
+                if (!relationshipMap.isEmpty() && !goalsMap.isEmpty()) {
+                    for (Id rrrKey : relationshipMap.keySet()) {
+                        System.debug(' INSIDE MAP CHECK rrrKey' + rrrKey);
+                        if (!goalsMap.containsKey(rrrKey)) {
+                            // If the goalKey doesn't exist in the relationshipMap, it means the goal should be created
+                            pulseRecordList = createKraPulseRecords(loggedInUserConId, full.Id);
                         }
                     }
                 }
-
                 //smaske [QA_PR_037]: copying all records to pulseRecordList,
                 // coz if for all mentee pulse is created and no new pulse is getting created data was returning null,
                 // as we are not returning the "records"
@@ -273,9 +268,9 @@ public without sharing class myMetricsController {
                 }
 
             }else{
-                System.debug(' records not empty 271 ');
+                System.debug(' records empty 289 ');
                 pulseRecordList = createKraPulseRecords(loggedInUserConId,full.Id);
-                System.debug(' records not empty 271 ' + pulseRecordList);
+                System.debug(' records empty 291 ' + pulseRecordList);
             }
 
         } catch (Exception e) {
@@ -297,22 +292,62 @@ public without sharing class myMetricsController {
         for (Resource_Resource_Relationship__c rrr : [SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c
                                                       WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource__r.EMS_RM_ApplicantStatus_Update__c IN ('Active', 'Active - Probation') 
                                                       AND Resource__r.EMS_TM_User__r.isActive = true AND Resource__r.EMS_TM_User__r.IsPortalEnabled = true
-                                                      AND Resource_Reports_To__c = :loggedInUserConId]){/*[SELECT Id, Resource__c, Resource_Reports_To__c FROM Resource_Resource_Relationship__c  WHERE Resource_Reports_To__c != NULL AND Resource__c != NULL AND Resource__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive' AND Resource_Reports_To__c = :loggedInUserConId]) {*/
-                                                                                                                                                 
-                                                          relationshipMap.put(rrr.Resource__c, rrr.Resource_Reports_To__c);
+                                                      AND Resource_Reports_To__c = :loggedInUserConId]){
+                                                        relationshipMap.put(rrr.Resource__c, rrr.Resource_Reports_To__c);
                                                       }
 
         System.debug(' INSIDE  relationshipMap ' + relationshipMap);
-        for (Id resource : relationshipMap.keySet()) {
-            Goal__c pulseRecord = new Goal__c(
-                Resource__c = relationshipMap.get(resource),
-                Check_In_By__c = resource,
-                Check_in_Date__c = Date.today(),
-                Status__c = STATUS_REQUESTED,
-                Fulfillment__c = fullId,
-                RecordTypeId = pulseRecTypeId
-            );
-            pulseRecordList.add(pulseRecord);
+
+        //smaske : [UAT_037]   : Fetching Existing Goal records to check if a new reporte is added and missed getting feedback email
+        
+        List<Goal__c> records = [SELECT Id,CreatedDate,KRA_Pulse__c, Check_in_Date__c, Check_In_By__c, Check_In_By__r.Name, Status__c, Resource__c,Fulfillment__c FROM Goal__c WHERE RecordTypeId = :pulseRecTypeId AND (Status__c = :STATUS_REQUESTED OR Status__c = :STATUS_SUBMITTED) AND Check_In_By__c = :loggedInUserConId AND Fulfillment__c=:fullId AND  CreatedDate = THIS_FISCAL_QUARTER]; //AND CreatedDate = THIS_QUARTER
+        Set<Id> uniqueResourceSet = new Set<Id>();
+        Set<Id> resources = new Set<Id>();
+        for(Goal__c gg : records){
+            resources.add(gg.Resource__c);
+        }
+
+        System.debug(' INSIDE  records ' + resources);
+        if (!resources.isEmpty()) {
+            for(Id key : relationshipMap.keySet()) {
+                Boolean result = resources.contains(key);
+                if (!result) {
+                    uniqueResourceSet.add(key);
+                }
+            }
+        }
+
+        Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
+        List<Goal__c> KRA = [SELECT Id,CreatedDate,Fulfillment__c FROM Goal__c WHERE RecordTypeId = :kraRecordTypeId AND Fulfillment__c=: fullId AND Quarter_Start_Date__c = THIS_FISCAL_QUARTER LIMIT 1];
+        System.debug(' INSIDE  KRA ' + KRA[0]);
+
+        System.debug(' INSIDE  resourceSet ' + uniqueResourceSet);
+        if (!uniqueResourceSet.isEmpty()) {
+            for (Id resource : uniqueResourceSet ) {
+                Goal__c pulseRecord = new Goal__c(
+                    Resource__c = resource,
+                    Check_In_By__c = relationshipMap.get(resource),
+                    Check_in_Date__c = Date.today(),
+                    Status__c = STATUS_REQUESTED,
+                    Fulfillment__c = fullId,
+                    RecordTypeId = pulseRecTypeId,
+                    KRA_Pulse__c = KRA[0].Id
+                );
+                pulseRecordList.add(pulseRecord);
+            }
+        }else {
+            for (Id resource : relationshipMap.keySet()) {
+                Goal__c pulseRecord = new Goal__c(
+                    Resource__c = resource,
+                    Check_In_By__c = relationshipMap.get(resource),
+                    Check_in_Date__c = Date.today(),
+                    Status__c = STATUS_REQUESTED,
+                    Fulfillment__c = fullId,
+                    RecordTypeId = pulseRecTypeId,
+                    KRA_Pulse__c = KRA[0].Id
+                );
+                pulseRecordList.add(pulseRecord);
+            }
         }
 
         System.debug(' INSIDE  pulseRecordList ' + pulseRecordList);

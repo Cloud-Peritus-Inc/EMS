@@ -22,11 +22,6 @@
                 <label>Personalized Thank You</label>
             </value>
             <value>
-                <fullName>Incentives</fullName>
-                <default>false</default>
-                <label>Incentives</label>
-            </value>
-            <value>
                 <fullName>Make a Difference</fullName>
                 <default>false</default>
                 <label>Make a Difference</label>
@@ -60,6 +55,12 @@
                 <fullName>The Innovation Ninja</fullName>
                 <default>false</default>
                 <label>The Innovation Ninja</label>
+            </value>
+            <value>
+                <fullName>Incentives</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Incentives</label>
             </value>
         </valueSetDefinition>
     </valueSet>
