@@ -17,7 +17,7 @@
             <div class="slds-truncate" title="Status">Status</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Rating">Rating</div>
+            <div class="" title="Rating">Rating</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
           </th>
            <th class="slds-border_right tableheading" scope="col">
             <div class="slds-truncate" title="Next Apprasial">Next Apprasial</div>
@@ -33,7 +33,7 @@
 
       <tbody>
 
-        <template if:true={tabledata}>
+        <template if:true={kraTableAvailble}>
           <template for:each={tabledata} for:item="accWithContacts">
             <tr key={accWithContacts.nameid}>
               <td data-label={accWithContacts.nameid}>
@@ -91,7 +91,7 @@
                           <div class="slds-truncate" title="Start Date">Start Date</div>
                         </th>
                         <th class="slds-border_right tableheading" scope="col" >
-                          <div class="slds-truncate" title="End date">End date</div>
+                          <div class="slds-truncate" title="End date">End Date</div>
                         </th>
                         <th class="slds-border_right tableheading" scope="col">
                           <div class="slds-truncate" title="Status">Status</div>
@@ -101,10 +101,10 @@
                           <div class="slds-truncate" title="Type">Type</div>
                         </th>
                         <th class="slds-border_right tableheading" scope="col"  >
-                          <div class="slds-truncate" title="Rating">Rating</div>
+                          <div class="" title="Rating">Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
                         <th class="slds-border_right tableheading" scope="col"  >
-                          <div class="slds-truncate" title="Rating">Overall Rating</div>
+                          <div class="" title="Rating">Overall Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
                         <th class="slds-border_right tableheading" scope="col"  >
                           <div class="slds-truncate" title="Actions"> Actions</div>
@@ -167,7 +167,7 @@
         </template>
       </tbody>
     </table>
-       <template if:false={tabledata}>
+       <template if:false={kraTableAvailble}>
           <div class="slds-text-align_center slds-p-around_medium">
             <center>No records found for selected Fiscal year.</center>
           </div>

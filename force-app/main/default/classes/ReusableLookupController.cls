@@ -16,7 +16,13 @@ public without sharing class ReusableLookupController {
                 }
            
                 String query   = fieldsToQuery + ' FROM ' + inputWrapper.objectApiName;
-         String filterCriteria = inputWrapper.fieldApiName + ' LIKE ' + '\'' + String.escapeSingleQuotes(inputWrapper.searchString.trim()) + '%\'';
+                //smaske : [UAT_012] : Updated below filter conditon to search for Contacts based on FirstName and LastName using inputWrapper.searchString
+                
+                // Old Filter Criteria
+                //String filterCriteria = inputWrapper.fieldApiName + ' LIKE ' + '\'' + String.escapeSingleQuotes(inputWrapper.searchString.trim()) + '%\'';
+
+                //New Filter Criteria for : [UAT_012]
+                String filterCriteria = inputWrapper.fieldApiName + ' LIKE \'%' + String.escapeSingleQuotes(inputWrapper.searchString.trim()) + '%\'';
                 filterCriteria += ' AND ' + inputWrapper.otherFieldApiName + ' = \'Active\'';
                 filterCriteria += ' AND ' + inputWrapper.otherFieldApiName2 + ' = true LIMIT 10'; // Assuming otherFieldApiName2 is a checkbox field
 					

@@ -25,7 +25,7 @@
 
       <tbody>
 
-        <template if:true={tabledata}>
+        <template if:true={checkInsTableAvailble}>
           <template for:each={tabledata} for:item="accWithContacts">
             <tr key={accWithContacts.goalid}>
               <td>
@@ -55,9 +55,9 @@
         </template>
       </tbody>
     </table>
-       <template if:false={tabledata}>
+       <template if:false={checkInsTableAvailble}>
           <div class="slds-text-align_center slds-p-around_medium">
-            <center>No records found for filter.</center>
+            <center>No Check Ins found.</center>
           </div>
         </template>
   </div>

@@ -1,10 +1,11 @@
-import { LightningElement,wire,api } from 'lwc';
+import { LightningElement,track, wire,api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 export default class Pulsetable extends LightningElement {
 @api tabledata = [];
 @api resourceid;
 @api fyid;
 tbData;
+@track pulseTableAvailble=false;
 connectedCallback() {
     console.log('====tabledata======'+JSON.stringify(this.tabledata));
     this.tbData= JSON.parse(JSON.stringify(this.tabledata))
