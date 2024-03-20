@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pulse_Average_Rating__c</fullName>
+    <description>Calculating the Average rating for Pule Review</description>
+    <externalId>false</externalId>
+    <formula>( Work_Environment__c + Communication__c + Career_Development__c + Work_Life_Balance__c + Feedback_and_Recognition__c + Leadership_and_Management__c + Job_Satisfaction__c ) / 7</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Pulse Average Rating</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

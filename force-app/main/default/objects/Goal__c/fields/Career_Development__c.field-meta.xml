@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Career_Development__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Opportunities for professional growth and advancement.
+Access to training and development programs.
+Clarity on career paths within the organization.</inlineHelpText>
+    <label>Career Development</label>
+    <precision>1</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
