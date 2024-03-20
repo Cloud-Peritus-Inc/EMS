@@ -7,6 +7,32 @@
     <name>Goal Created Template for Mentor</name>
     <style>freeForm</style>
     <subject>Goal Creation Confirmation</subject>
+    <textOnly>Dear Mentor,
+
+
+The goal has been successfully created by your reportee {!Goal__c.Resource__c}.
+
+
+
+Please find the details below:
+
+Name
+
+Start Date
+
+End Date
+
+{!Goal__c.Goal_Name__c}
+
+{!Goal__c.Start_Date__c}
+
+{!Goal__c.End_Date__c}
+
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

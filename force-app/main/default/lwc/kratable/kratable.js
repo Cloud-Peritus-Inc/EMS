@@ -12,6 +12,9 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     @track iconName = "utility:chevrondown";
     @track iconParentName = "utility:chevronright";
     @track kraTableAvailble = false;
+    @track minDate;//smaske :[UAT_005]
+
+
     connectedCallback() {
         console.log('====resourceid===' + JSON.stringify(this.resourceid));
         console.log('====tab===' + this.tab);
@@ -30,6 +33,16 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         } else {
             this.kraTableAvailble = false;
         }
+
+        //smaske :[UAT_005] : Setting the minimum date to tomorrow 
+        var d = new Date();
+        var today = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, '0') + '-' + d.getDate().toString().padStart(2, '0');
+        var tomorrow = new Date(d);
+        tomorrow.setDate(d.getDate() + 1);
+        var month = (tomorrow.getMonth() + 1).toString().padStart(2, '0');
+        var day = tomorrow.getDate().toString().padStart(2, '0');
+        this.minDate = `${tomorrow.getFullYear()}-${month}-${day}`;
+
         //this.enableDisableCreateGoalButton();
     }
     @track showKRAViewModal = false;

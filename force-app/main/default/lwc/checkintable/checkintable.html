@@ -8,7 +8,7 @@
             <div class="slds-truncate" title="Name">Name</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Check In By">Check In By</div>
+            <div class="" title="Check In By">Check In By</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
           </th>
           <th class="slds-border_right tableheading" scope="col">
             <div class="slds-truncate" title="Check in Date">Check In Date</div>
@@ -57,7 +57,7 @@
     </table>
        <template if:false={checkInsTableAvailble}>
           <div class="slds-text-align_center slds-p-around_medium">
-            <center>No Check Ins found.</center>
+            <center>No check-ins found for the selected fiscal year.</center>
           </div>
         </template>
   </div>

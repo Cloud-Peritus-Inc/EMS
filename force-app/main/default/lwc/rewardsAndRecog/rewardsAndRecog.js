@@ -19,7 +19,6 @@ imageUrl = landscape;
 dNominations = true;
 @track showTheAnnualAwards = false;
 drecognise = true;
-hideInputField =false;
 openshoutout = false;
 annualAwardpop = false;
 openRecogize = false;
@@ -167,6 +166,7 @@ winnerrecordTypeId;
             fields.Fiscal_Year__c = this.currentFY;
             fields.Type__c = 'ShoutOut';
             //@Mukesh for defect UAT_007 making required
+            fields.Reason_for_award__c = this.myReasonVal;
             if(this.myReasonVal){
                 this.template.querySelector('lightning-record-edit-form').submit(fields);
             }else{
@@ -202,6 +202,47 @@ winnerrecordTypeId;
         //smaske:PM_075 : Refresh data
         this.getThelatestSpotAwardGiven();
     }
+
+    //smaske : [UAT_022] : Showing Error on selecting same contact as logged in users Contact.
+    handleShoutOutResourceSelection(event){
+        console.log('You selected Resource: ' + event.detail.value[0]);
+        let selectedContactResource = event.detail.value[0];
+        if (this.LogggedInUserConId == selectedContactResource) {
+            const inputFields = this.template.querySelectorAll('.SOResource');
+            if (inputFields) {
+                inputFields.forEach(field => {
+                    field.reset();
+                });
+            }
+
+            const evt = new ShowToastEvent({
+                message: 'Self Shoutout is not allowed!',
+                variant: 'warning',
+                mode: 'dismissable'
+            });
+            this.dispatchEvent(evt);
+        }
+    }
+
+    //smaske : [UAT_022] : Showing Error on selecting same contact as logged in users Contact.
+    handleRecognitionResourceSelection(event){
+        console.log('You selected Resource: ' + event.detail.value[0]);
+        let selectedContactResource = event.detail.value[0];
+        if (this.LogggedInUserConId == selectedContactResource) {
+            const inputFields = this.template.querySelectorAll('.REResource');
+            if (inputFields) {
+                inputFields.forEach(field => {
+                    field.reset();
+                });
+            }
+            const evt = new ShowToastEvent({
+                message: 'Self Recognisation is not allowed!',
+                variant: 'warning',
+                mode: 'dismissable'
+            });
+            this.dispatchEvent(evt);
+        }
+    }
     
     handleRecSubmit(event) {
         event.preventDefault();
@@ -214,6 +255,7 @@ winnerrecordTypeId;
             fields.Fiscal_Year__c = this.currentFY;
             fields.Type__c = 'Recognize';
             //@Mukesh for defect UAT_007 making required
+            fields.Reason_for_award__c = this.myRecognizeReason;
             if(this.myRecognizeReason){
                 this.template.querySelector('lightning-record-edit-form').submit(fields);
             }else{

@@ -7,6 +7,32 @@
     <name>Goal Completion Post Time Template for Mentor</name>
     <style>freeForm</style>
     <subject>Goal Completion Notification</subject>
+    <textOnly>Dear Mentor,
+
+
+We&apos;re pleased to notify you that your Reportee {!Goal__c.Resource__c} has successfully completed their goal, albeit after the initially specified timeframe. Their dedication and effort throughout this process have been commendable.
+
+
+
+Please find the details below:
+
+Name
+
+Start Date
+
+End Date
+
+{!Goal__c.Goal_Name__c}
+
+{!Goal__c.Start_Date__c}
+
+{!Goal__c.End_Date__c}
+
+Actual Completion Date: {!Goal__c.LastModifiedDate}
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

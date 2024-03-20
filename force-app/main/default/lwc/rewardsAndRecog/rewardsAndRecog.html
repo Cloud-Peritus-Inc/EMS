@@ -130,7 +130,8 @@
 							</lightning-messages>
 							<lightning-input-field field-name="Shout_Out_Heading__c" required>
 							</lightning-input-field>
-							<lightning-input-field field-name="Resource__c" required>
+							<!-- @smaske : [UAT_022] : Adding onchange for Lookup Validation -->
+							<lightning-input-field field-name="Resource__c" onchange={handleShoutOutResourceSelection} class="SOResource" required>
 							</lightning-input-field>
 							<lightning-input-field field-name="Project__c">
 							</lightning-input-field>
@@ -140,10 +141,6 @@
 							<lightning-input-rich-text label='Reason for ShoutOut' field-name="Reason_for_ShoutOut" label-visible=true required="true"
 								onchange={handleChangeReason}>
 							</lightning-input-rich-text>
-							<template if:true={hideInputField}>
-								<lightning-input-field value={myReasonVal} field-name="Reason_for_award__c" required>
-								</lightning-input-field>
-							</template>
 							<br/>
 							<center>
 								<lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save">
@@ -246,7 +243,8 @@
 							</lightning-messages>
 							<lightning-input-field field-name="Shout_Out_Heading__c" required>
 							</lightning-input-field>
-							<lightning-input-field field-name="Resource__c" required>
+							<!-- @smaske : [UAT_022] : Adding onchange for Lookup Validation -->
+							<lightning-input-field field-name="Resource__c" onchange={handleRecognitionResourceSelection} class="REResource" required>
 							</lightning-input-field>
 							<lightning-input-field field-name="Project__c" required>
 							</lightning-input-field>
@@ -256,11 +254,6 @@
 							<lightning-input-rich-text label='Reason for Recognition' label-visible=true required="true"
 								onchange={handleChangeRecognize}>
 							</lightning-input-rich-text>
-							<template if:true={hideInputField}>
-								<lightning-input-field value={myRecognizeReason} field-name="Reason_for_award__c" required>
-								</lightning-input-field>
-							</template>
-
 							<br/>
 							<center>
 								<lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save">
