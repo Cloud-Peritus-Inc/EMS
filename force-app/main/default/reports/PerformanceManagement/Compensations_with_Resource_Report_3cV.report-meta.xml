@@ -50,7 +50,7 @@
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
-        <language>en_US</language>
+        <language></language>
     </filter>
     <format>Tabular</format>
     <name>Compensations with Resource Report</name>
