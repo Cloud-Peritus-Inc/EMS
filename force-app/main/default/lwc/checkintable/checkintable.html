@@ -4,21 +4,22 @@
     <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
       <thead>
         <tr class="slds-line-height_reset" style="color:lightcoral">
-          <th class="slds-border_right tableheading" scope="col">
+          <th class="slds-border_right tableheading"  style="width: 15%;" scope="col">
             <div class="slds-truncate" title="Name">Name</div>
           </th>
-          <th class="slds-border_right tableheading" scope="col">
+          <th class="slds-border_right tableheading"  style="width: 15%;" scope="col">
             <div class="" title="Check In By">Check In By</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
           </th>
-          <th class="slds-border_right tableheading" scope="col">
+          <th class="slds-border_right tableheading"  style="width: 15%;" scope="col">
             <div class="slds-truncate" title="Check in Date">Check In Date</div>
           </th>
-          <th class="slds-border_right tableheading" scope="col">
+          <th class="slds-border_right tableheading"  style="width: 40%;" scope="col">
             <div class="slds-truncate" title="Comments">Comments</div>
           </th>
-          <th class="slds-border_right tableheading" scope="col">
+          <!-- smaske : UAT_058 : commenting status column 
+          <th class="slds-border_right tableheading"  style="width: 15%;" scope="col">
             <div class="slds-truncate" title="Status">Status</div>
-          </th>
+          </th> -->
           
         </tr>
       </thead>
@@ -28,7 +29,7 @@
         <template if:true={checkInsTableAvailble}>
           <template for:each={tabledata} for:item="accWithContacts">
             <tr key={accWithContacts.goalid}>
-              <td>
+              <td  style="width: 15%;">
                 <div class="slds-wrap" style="width:100px;word-wrap:break-word;">
                   <p> <a href="javascript:void(0);" data-id={accWithContacts.goalid} onclick={handleNavClick}>
                       {accWithContacts.goalname}
@@ -36,19 +37,20 @@
                   </p>
                 </div>
               </td>
-              <td style=";word-wrap:break-word;">
+              <td style=";word-wrap:break-word; width: 15%;">
                 <div class="slds-wrap">{accWithContacts.checkbyName}</div>
               </td>
-              <td>
+              <td  style="width: 15%;">
                 <div class="slds-wrap"><lightning-formatted-date-time value={accWithContacts.CheckinDate}></lightning-formatted-date-time></div>
               </td>
-              <td style="width:200px;word-wrap:break-word;">
+              <td style="width:200px;word-wrap:break-word; width: 40%;">
                 <div class="slds-wrap"><lightning-formatted-rich-text
                     value={accWithContacts.Comments}></lightning-formatted-rich-text></div>
               </td>
-               <td>
+              <!-- smaske : UAT_058 : commenting status column 
+               <td  style="width: 15%;">
                 <div class="slds-wrap">{accWithContacts.Status}</div>
-              </td>
+              </td>-->
              
             </tr>
           </template>

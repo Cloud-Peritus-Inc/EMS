@@ -77,7 +77,7 @@ handleChange(event) {
 
         modifiedArr.forEach(ele =>{      
             for(var i=0;i<ele.currentList.length;i++){   
-                if(ele.currentList.length>1){ 
+                if(ele.currentList.length>=1){ 
                     ele.currentList[i].borderCls = (i == ele.currentList.length-1) ? "slds-wrap slds-p-around_small" : "slds-wrap borderClr slds-p-around_small";
                  }
             }                  

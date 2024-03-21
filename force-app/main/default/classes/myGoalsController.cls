@@ -8,7 +8,7 @@ public without sharing class myGoalsController {
         //smaske : [PM_133] : Fetching Loggedin User Proifle details to HIDE the Edit button for Goal if HR-PROFILE 
         User userData = [SELECT Id,Profile.Name FROM User WHERE Id=:Userinfo.getUserId() LIMIT 1];
  
-         for(Goal__c gl : [SELECT Id,Name,Goal_Name__c,Parent_Goal__c,Start_Date__c,CreatedDate,End_Date__c,Status__c,Description__c,Feedback_and_Comments__c 
+         for(Goal__c gl : [SELECT Id,Name,Goal_Name__c,Parent_Goal__c,Start_Date__c, Goal_Completed_Date__c, CreatedDate,End_Date__c,Status__c,Description__c,Feedback_and_Comments__c 
                           FROM Goal__c WHERE RecordTypeId=:goalRecTypeId 
                           //@Mukesh - For Defect- PM_126, Added a condition where Goals created in the current Quarter will show in only the Linked KRAs 
                           AND Parent_Goal__r.Fulfillment__c =:currentKRA.Fulfillment__c
@@ -24,6 +24,7 @@ public without sharing class myGoalsController {
                qw.creaedDate = Date.valueOf(gl.CreatedDate);
                qw.Description = gl.Description__c;
                qw.comments = gl.Feedback_and_Comments__c;
+               qw.goalCompletedDate = gl.Goal_Completed_Date__c;
                qw.showedit = false;
                if(gl.Status__c == 'Active' || gl.Status__c == 'Draft' || gl.Status__c =='In Progress'){
                    qw.showedit = true; 
@@ -88,19 +89,32 @@ public without sharing class myGoalsController {
     
     @AuraEnabled 
     public static Goal__c getTheGoals(String goalId){
-        return [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c,Description__c,Feedback_and_Comments__c FROM Goal__c WHERE Id=:goalId];
+        return [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c, Goal_Completed_Date__c, Description__c,Feedback_and_Comments__c FROM Goal__c WHERE Id=:goalId];
     }
     
     @AuraEnabled 
     public static void saveTheGoal(String goalId, String finalComments){
         try{
-            Goal__c gl = [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c,Description__c,Feedback_and_Comments__c,Status__c FROM Goal__c WHERE Id=:goalId];
+            Goal__c gl = [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c, Goal_Completed_Date__c, Description__c,Feedback_and_Comments__c,Status__c FROM Goal__c WHERE Id=:goalId];
             gl.Feedback_and_Comments__c = finalComments;
+            gl.Goal_Completed_Date__c = system.today();
             if(gl.End_Date__c >= system.today()){
                 gl.Status__c = 'Completed - OnTime';  
             }else{
                 gl.Status__c = '	Completed - PostTime';    
             }
+            
+            update gl;  
+        }catch(exception ex){
+            String errorMsg = ex.getMessage();
+            throw new AuraHandledException(ErrorMsg); 
+        } 
+    }
+    @AuraEnabled 
+    public static void updateRecord(String goalId){
+        try{
+            Goal__c gl = [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c, Goal_Completed_Date__c, Description__c,Feedback_and_Comments__c,Status__c FROM Goal__c WHERE Id=:goalId];
+                gl.Status__c = 'In Progress';  
             
             update gl;  
         }catch(exception ex){
@@ -118,6 +132,8 @@ public without sharing class myGoalsController {
         public Date qstartdate;
          @AuraEnabled
         public Date qendate;
+        @AuraEnabled
+        public Date goalCompletedDate;
         @AuraEnabled
         public Date creaedDate;
          @AuraEnabled

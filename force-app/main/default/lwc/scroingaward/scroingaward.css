@@ -75,7 +75,7 @@
 }
 
 .tableFixHead table, th, td {
-  border: 0.5px solid purple;
+  border: 0.5px solid #31363F;
   border-collapse: collapse;
 }
 
@@ -186,5 +186,5 @@
   padding: 0;
 }
 .borderClr{
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #31363F;
 }

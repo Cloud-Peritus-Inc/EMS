@@ -6,7 +6,29 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Check-In Template 1</name>
     <style>freeForm</style>
-    <subject>New Check-In Record Created</subject>
+    <subject>Performance: New Check-In Record Created</subject>
+    <textOnly>Dear {!Goal__c.Check_In_By__c},
+
+
+We hope this message finds you well. We&apos;re pleased to inform you that a new Check-In record has been created by you.
+
+
+Check-In Details:
+
+Date: {!Goal__c.Check_in_Date__c}
+
+Resource: {!Goal__c.Resource__c}
+
+
+
+Notes:
+
+{!Goal__c.Feedback_and_Comments__c}
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

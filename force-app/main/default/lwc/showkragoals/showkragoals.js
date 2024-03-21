@@ -3,7 +3,9 @@ import getAlltheGoals from '@salesforce/apex/myGoalsController.getAlltheGoals';
 import getTheGoals from '@salesforce/apex/myGoalsController.getTheGoals';
 import saveTheGoal from '@salesforce/apex/myGoalsController.saveTheGoal';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { updateRecord } from 'lightning/uiRecordApi';
+//import { updateRecord } from 'lightning/uiRecordApi';
+import updateRecord from '@salesforce/apex/myGoalsController.updateRecord';
+
 import STATUS_FIELD from '@salesforce/schema/Goal__c.Status__c';
 import ID_FIELD from '@salesforce/schema/Goal__c.Id';
 import { refreshApex } from '@salesforce/apex';
@@ -146,6 +148,7 @@ export default class Showkragoals extends LightningElement {
     goalstartdate;
     goalenddate;
     goalname;
+    goalCompdate;
     mycomments;
     myVal = '';
 
@@ -203,6 +206,7 @@ export default class Showkragoals extends LightningElement {
             this.mycomments = res.Feedback_and_Comments__c;
             this.goalstartdate = res.Start_Date__c;
             this.goalenddate = res.End_Date__c;
+            this.goalCompdate = res.Goal_Completed_Date__c;
         }).catch(err => {
             console.log('===err=======' + JSON.stringify(err));
             const evt = new ShowToastEvent({
@@ -219,15 +223,8 @@ export default class Showkragoals extends LightningElement {
     updatetheGoaltoInprogress(){
 
             this.isLoading = true;
-            // Create the recordInput object Status__c Goal__c
-            const fields = {};
-            fields[ID_FIELD.fieldApiName] = this.selectedGoaldId;
-            fields[STATUS_FIELD.fieldApiName] = 'In Progress';
 
-            const recordInput = { fields };
-            console.log(recordInput);
-
-            updateRecord(recordInput)
+            updateRecord({goalId: this.selectedGoaldId})
                 .then(() => {
                     this.showToast('Success!!', 'Goal updated Inprogress successfully!!', 'success', 'dismissable');
                     // Display fresh data in the form

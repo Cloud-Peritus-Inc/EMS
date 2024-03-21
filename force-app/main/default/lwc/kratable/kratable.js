@@ -292,7 +292,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
             }).catch(err => {
                 const evt = new ShowToastEvent({
                     //title: 'Toast Error',
-                    message: 'Some thing went wrong...' + JSON.stringify(err.message),
+                    message: 'Something went wrong...' + JSON.stringify(err.message),
                     variant: 'error',
                     mode: 'dismissable'
                 });

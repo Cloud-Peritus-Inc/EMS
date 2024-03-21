@@ -29,12 +29,12 @@
                 <field>End_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Description__c</field>
+                <behavior>Edit</behavior>
+                <field>Goal_Completed_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Feedback_and_Comments__c</field>
+                <behavior>Required</behavior>
+                <field>Description__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -57,6 +57,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Parent_Goal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Feedback_and_Comments__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

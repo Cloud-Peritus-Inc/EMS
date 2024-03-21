@@ -51,9 +51,9 @@
             <tr key={accWithContacts.goalid}>
               <td>
                 <div class="slds-wrap" style="width:100px;word-wrap:break-word;">
-                  <p> <a href="javascript:void(0);" data-id={accWithContacts.goalid} onclick={handleNavClick}>
+                 <p>  <!-- <a href="javascript:void(0);" data-id={accWithContacts.goalid} onclick={handleNavClick}> </a> -->
                       {accWithContacts.goalname}
-                    </a>
+                   
                   </p>
                 </div>
               </td>
@@ -89,7 +89,7 @@
                 <div class="slds-wrap"><lightning-formatted-rich-text
                     value={accWithContacts.Comments}></lightning-formatted-rich-text></div>
               </td>
-               <td>
+              <td>
                 <div class="slds-wrap">{accWithContacts.Status}</div>
               </td>
               
