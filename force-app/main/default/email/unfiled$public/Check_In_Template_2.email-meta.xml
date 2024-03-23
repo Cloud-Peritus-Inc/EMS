@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send Email to &quot;Resource&quot; Contact When CHECK IN record is created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Check-In Template 2</name>
+    <style>freeForm</style>
+    <subject>Performance: New Check-In Record Created</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+We hope this message finds you well. We&apos;re pleased to inform you that a new Check-In record has been created for you.
+
+
+Check-In Details:
+
+Date: {!Goal__c.Check_in_Date__c}
+
+Check-In By: {!Goal__c.Check_In_By__c}
+
+
+
+Notes:
+
+{!Goal__c.Feedback_and_Comments__c}
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

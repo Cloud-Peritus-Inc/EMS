@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When an employee gets a ‘Monetary reward’ based recognition</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Monetary Recognition Email template for Resource</name>
+    <style>freeForm</style>
+    <subject>RnR: Monetary Reward for Outstanding Performance</subject>
+    <textOnly>Dear {!Reward_And_Recognition__c.Resource__c},
+
+
+We hope this message finds you well. We are pleased to inform you that your recent achievements and exceptional performance have not gone unnoticed. In recognition of your hard work and dedication, {!Reward_And_Recognition__c.Recognization_By__c} has nominated for awarding you a monetary bonus as part of {!Reward_And_Recognition__c.Project__c} project.
+
+
+
+Your contributions have significantly impacted our success, and we want to express our gratitude for your continued commitment to excellence.
+
+
+
+Congratulations on this well-deserved reward!
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

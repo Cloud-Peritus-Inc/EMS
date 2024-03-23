@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Whenever a new &quot;Recognize&quot; is created Send an Email to the &quot;CREATOR&quot;</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Recognition  Email template for Creator</name>
+    <style>freeForm</style>
+    <subject>RnR: Successful submission of recognition for {!Reward_And_Recognition__c.Resource__c}</subject>
+    <textOnly>Dear {!Reward_And_Recognition__c.Recognization_By__c},
+
+
+Congratulations! Your Recognition for {!Reward_And_Recognition__c.Resource__c} has been successfully submitted.
+
+
+Thanks for the appreciation!
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
