@@ -6,7 +6,42 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Compensation Updated  Template</name>
     <style>freeForm</style>
-    <subject>Compensation Updated Successfully!</subject>
+    <subject>Performance: Compensation Updated Successfully!</subject>
+    <textOnly>Dear {!Compensation__c.LastModifiedBy},
+
+
+This is to inform you that a new compensation record has been successfully updated in the system.
+
+
+Compensation Details:
+
+Name
+
+Resource
+
+Appraisal Date
+
+Next Appraisal Date
+
+Finalized Hike %
+
+{!Compensation__c.Name}
+
+{!Compensation__c.Resource__c}
+
+{!Compensation__c.Appraisal_Date__c}
+
+{!Compensation__c.Next_Appraisal_Date__c}
+
+{!Compensation__c.Finalized_Hike__c}
+
+
+For further details or any necessary actions, please log in to the GRID system.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

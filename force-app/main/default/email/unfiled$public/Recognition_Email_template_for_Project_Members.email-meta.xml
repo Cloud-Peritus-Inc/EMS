@@ -6,7 +6,24 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Recognition Email template for Project Members</name>
     <style>freeForm</style>
-    <subject>RnR - Recognition for {!Reward_And_Recognition__c.Project__c} project</subject>
+    <subject>RnR: Recognition for {!Reward_And_Recognition__c.Project__c} project</subject>
+    <textOnly>Dear Team Member,
+
+
+We are thrilled to share some fantastic news with the entire team and inform you that {!Reward_And_Recognition__c.Resource__c} has received a {!Reward_And_Recognition__c.Types_of_Recognition__c} for their outstanding contributions as part of our {!Reward_And_Recognition__c.Project__c} project.
+
+
+
+{!Reward_And_Recognition__c.Resource__c} has consistently demonstrated exceptional dedication, hard work, and expertise, and their efforts have not gone unnoticed and thus {!Reward_And_Recognition__c.Recognization_By__c} has given this recognition.
+
+
+
+Please join us in extending our heartfelt congratulations and take pride in this shared success.! Let&apos;s continue working together to achieve more milestones and successes as a team.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

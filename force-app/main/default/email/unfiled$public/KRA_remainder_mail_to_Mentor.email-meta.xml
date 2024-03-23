@@ -5,14 +5,22 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>KRA remainder mail to Mentor</name>
     <style>freeForm</style>
-    <subject>Remainder Notification to review and submit the Reportee Ratings</subject>
+    <subject>Performance: Remainder notification to review and submit the reportee&apos;s rating</subject>
     <textOnly>Dear {!Goal__c.Check_In_By__c},
 
-We are pleased to inform you that you have not submitted the {!Goal__c.Resource__c} Ratings for the Current {!Goal__c.Goal_Name__c}, which is due.
 
-Please click here to review and submit the Reprotee Ratings on an immediate basis to avoid any strikes.
 
-Regards,
+This is a reminder that you have not submitted {!Goal__c.Resource__c}&apos;s ratings for the current {!Goal__c.Goal_Name__c}, which is due.
+
+
+
+Please click here to review and submit the reportee&apos;s ratings on an immediate basis to avoid any strikes.
+
+
+
+Best Regards,
+
+
 The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>

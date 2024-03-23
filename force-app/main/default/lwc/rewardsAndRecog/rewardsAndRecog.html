@@ -47,7 +47,7 @@
 					<template if:false={showTheAnnualAwards}>
 						<center>
 							<font size="4">
-								<b>  Annual Awards for the current year was not yet announced. Please check later</b>
+								<b>Annual Awards for the current year has not been announced yet. Please check later</b>
 							</font>
 						</center>
 					</template>
@@ -65,7 +65,13 @@
 		<br/>
 
 		<lightning-tabset>
-			<lightning-tab label="My Recognitions" value="1" onactive={handleActive}>
+         <lightning-tab label="Shout Outs Received" value="4" onactive={handleActive}>
+				<c-shoutoutreceived shoutrecived={shoutoutreceived} showtable={showrectable}> </c-shoutoutreceived>
+			</lightning-tab>
+         <lightning-tab label="Shout Outs Given" value="3" onactive={handleActive}>
+				<c-shoutoutgiven shouttable={shoutouttable} showtable={showrectable}> </c-shoutoutgiven>
+			</lightning-tab>	
+			<lightning-tab label="Recognitions Received" value="1" onactive={handleActive}>
 				<c-recrecieved rectable={recreceived} showthetable={showrectable}> </c-recrecieved>
 			</lightning-tab>
 			<template if:false={drecognise}>
@@ -75,13 +81,7 @@
 			</template>
 			<lightning-tab label="My Awards" value="2" onactive={handleActive}>
 				<c-myawards awardtable={myawards} showtable={showrectable}> </c-myawards>
-			</lightning-tab>
-			<lightning-tab label="Shout Outs Given" value="3" onactive={handleActive}>
-				<c-shoutoutgiven shouttable={shoutouttable} showtable={showrectable}> </c-shoutoutgiven>
-			</lightning-tab>
-			<lightning-tab label="Shout Outs Received" value="4" onactive={handleActive}>
-				<c-shoutoutreceived shoutrecived={shoutoutreceived} showtable={showrectable}> </c-shoutoutreceived>
-			</lightning-tab>
+			</lightning-tab>					
 			<template if:true={showNomstab}>
 				<lightning-tab label="My Nominations" value="5" onactive={handleActive}>
 					<c-mynominations nomstable={mynoms} showtable={showrectable}> </c-mynominations>
@@ -120,7 +120,7 @@
 							<p><i> Note: Once a shout-out is given, it can't be recalled or updated. </i></p>
 						</center> <br/>
 						<lightning-record-edit-form object-api-name="Reward_And_Recognition__c"
-							record-type-id={winnerrecordTypeId} onsuccess={handleSuccess} onsubmit={handleSubmit}>
+							record-type-id={winnerrecordTypeId} onsuccess={handleSuccess} onsubmit={handleShoutOutSubmit}>
 							<lightning-messages>
 							</lightning-messages>
 							<lightning-input-field field-name="Shout_Out_Heading__c" required>
@@ -128,8 +128,13 @@
 							<!-- @smaske : [UAT_022] : Adding onchange for Lookup Validation -->
 							<lightning-input-field field-name="Resource__c" onchange={handleShoutOutResourceSelection} class="SOResource" required>
 							</lightning-input-field>
-							<lightning-input-field field-name="Project__c">
-							</lightning-input-field>
+							
+							<!-- @smaske : [UAT_067] : Replacing Project with a picklist  -->
+							<!--<lightning-input-field field-name="Project__c">
+							</lightning-input-field>-->
+							<lightning-combobox name="Project" label="Project" placeholder="Select Project" options={projectAlloc}
+							variant="label-stacked" value={selectedProject} onchange={handleProjectSelectionChange}></lightning-combobox>
+
 							<lightning-input-field field-name="Type_of_Shout_Out__c" required>
 							</lightning-input-field>
 							<!-- @Mukesh for defect UAT_007 -->

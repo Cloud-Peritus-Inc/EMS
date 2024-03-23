@@ -6,7 +6,22 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Annual Award Submission Template</name>
     <style>freeForm</style>
-    <subject>Successful Submission of Annual Award Nominations</subject>
+    <subject>RnR: Successful submission of annual award nominations</subject>
+    <textOnly>Dear {!Reward_And_Recognition__c.Recognization_By__c},
+
+
+Congratulations! Your submission of annual award nominations for {!Reward_And_Recognition__c.Fiscal_Year__c} has been successfully submitted.
+
+
+You have nominated {!Reward_And_Recognition__c.Resource__c} for {!Reward_And_Recognition__c.Award_Type__c}
+
+
+Thanks for your participation!
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

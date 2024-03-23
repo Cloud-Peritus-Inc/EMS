@@ -156,7 +156,7 @@ winnerrecordTypeId;
             }); 
     }
 
-    handleSubmit(event) {
+    handleShoutOutSubmit(event) {
         event.preventDefault();
         const fields = event.detail.fields;
         //smaske : Preventing Self Recognize record creation for Loggedin User 
@@ -168,6 +168,8 @@ winnerrecordTypeId;
             fields.Type__c = 'ShoutOut';
             //@Mukesh for defect UAT_007 making required
             fields.Reason_for_award__c = this.myReasonVal;
+            //@smaske : [UAT_067] : Assigning Project Value
+            fields.Project__c = this.selectedProject;
             if(this.myReasonVal){
                 this.template.querySelector('lightning-record-edit-form').submit(fields);
             }else{
@@ -223,6 +225,20 @@ winnerrecordTypeId;
             });
             this.dispatchEvent(evt);
         }
+
+        //smaske : [UAT_067] : Fetching Project Allocated for selected resource(Contact)
+        getResourceProjectAllocations({ contactResource: selectedContactResource })
+            .then((result) => {
+                if (result) {
+                    this.projectAlloc = Object.keys(result).map(key => ({
+                        label: result[key],
+                        value: key
+                    }));
+                }
+            })
+            .catch((error) => {
+                console.log('Error Fetching Projects ' + error);
+            });
     }
 
     //smaske : [UAT_022] : Showing Error on selecting same contact as logged in users Contact.

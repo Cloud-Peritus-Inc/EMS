@@ -60,13 +60,12 @@
     </lightning-layout-item>
     <lightning-layout-item size="5">
       <div class="green">
+         <lightning-button label="Check In"  title="Check In" icon-name="utility:checkin" class="slds-m-left_x-small slds-float_right" onclick={showCheckInModalBox}></lightning-button>
          <template lwc:if={showGenPerKra}>
             <lightning-button label="Generate Performance KRA" title="Generate Performance KRA"
                icon-name="standard:historical_adherence" class="slds-m-left_x-small slds-float_right" onclick={generatePerformanceKRAHandler}>
             </lightning-button>
-         </template>
-        <lightning-button label="Check In"  title="Check In" icon-name="utility:checkin" class="slds-m-left_x-small slds-float_right" onclick={showCheckInModalBox}></lightning-button>
-              
+         </template>      
      </div>
     </lightning-layout-item>
 </lightning-layout>

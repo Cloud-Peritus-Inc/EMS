@@ -10,18 +10,18 @@
             <th class="slds-border_right tableheading" scope="col">
               <div class="" title="Recognized By">Recognized By</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
             </th>
-            <th class="slds-border_right tableheading" scope="col">
-              <div class="" title="Fiscal year">Fiscal year</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+           <!-- <th class="slds-border_right tableheading" scope="col">
+              <div class="" title="Fiscal year">Fiscal year</div> smaske : UAT_014 : removed class="slds-truncate"  -->
             </th>
-            <th class="slds-border_right tableheading" scope="col">
+            <th class="slds-border_right tableheading" scope="col" style="width: 35%;">
               <div class="slds-truncate" title="Comments">Comments</div>
             </th>
             <th class="slds-border_right tableheading" scope="col">
               <div class="slds-truncate" title="Given On">Given On</div>
             </th>
-            <th class="slds-border_right tableheading" scope="col">
+            <!-- <th class="slds-border_right tableheading" scope="col">
               <div class="slds-truncate" title="Status">Status</div>
-            </th>
+            </th> -->
           </tr>
         </thead>
   
@@ -42,9 +42,9 @@
                         {sout.resourceName}
                       </a> -->
                 </td>
-                <td>
+                <!-- <td>
                   <div class="slds-wrap">{sout.currentFYName}</div>
-                </td>
+                </td> -->
               
                 <td style="width:200px;word-wrap:break-word;">
                   <div class="slds-wrap"><lightning-formatted-rich-text
@@ -53,9 +53,9 @@
                 <td>
                   <div class="slds-wrap"><lightning-formatted-date-time value={sout.createdDate}></lightning-formatted-date-time></div>
                 </td>
-                  <td>
+                  <!-- <td>
                   <div class="slds-wrap">{sout.Title}</div>
-                 </td>
+                 </td> -->
                
               </tr>
             </template>
@@ -64,7 +64,7 @@
       </table>
          <template if:false={showtable}>
             <div class="slds-text-align_center slds-p-around_medium">
-              <center> <font size="2" color="purple">Annual award not a measurment for your hardwork its just a recognisation among the employee. Keep hardworking as you today. All the best for next annual awards.</font> </center>
+              <center> <font size="2" color="purple">Annual awards are a recognition among employees and not a measurement of one's hard work. Keep striving for excellence every day. All the best for the next awards.</font> </center>
             </div>
           </template>
     </div>

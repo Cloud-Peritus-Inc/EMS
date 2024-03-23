@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notification about KRA Creation</name>
     <style>freeForm</style>
-    <subject>Quarterly KRA for {!Goal__c.Resource__c} has been created.</subject>
+    <subject>Performance: Quarterly KRA for {!Goal__c.Resource__c} has been created.</subject>
     <textOnly>Dear {!Goal__c.Resource__c},
 
 
@@ -18,7 +18,6 @@ Please make sure to complete and submit your KRA to your mentor. Please check he
 
 
 For any further details on KRA please contact your mentor {!Goal__c.Check_In_By__c}
-
 
 
 Regards,

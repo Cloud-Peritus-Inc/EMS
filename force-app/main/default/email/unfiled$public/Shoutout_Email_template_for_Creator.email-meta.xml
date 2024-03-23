@@ -6,7 +6,19 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Shoutout Email template for Creator</name>
     <style>freeForm</style>
-    <subject>Successful Submission of Shoutout for {!Reward_And_Recognition__c.Resource__c}</subject>
+    <subject>RnR: Successful submission of shoutout for {!Reward_And_Recognition__c.Resource__c}</subject>
+    <textOnly>Dear {!Reward_And_Recognition__c.Recognization_By__c},
+
+
+Congratulations! Your Shoutout for {!Reward_And_Recognition__c.Resource__c} has been successfully submitted.
+
+
+Thanks for the appreciation!
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

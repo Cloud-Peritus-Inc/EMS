@@ -5,7 +5,19 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Email alert to Team Member on Kra Pulse Creation</name>
     <style>freeForm</style>
-    <subject>Pulse Request</subject>
+    <subject>Performance: Pulse Request</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+This is to notify you that {!Goal__c.Check_In_By__c} has requested a Pulse review from you.
+
+
+Please click here to submit the details.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

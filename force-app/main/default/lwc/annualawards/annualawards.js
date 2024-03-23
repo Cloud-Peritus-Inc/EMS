@@ -1144,8 +1144,8 @@ export default class Annualawards extends NavigationMixin(LightningElement) {
 
     commentsRequiredAlert = 'You must provide comments for the selected nominee';
     resourceDuplicateAlert = 'Please select different individuals for the Primary and Secondary Nominees';
-    recordSaved = 'Record Saved Successfully !';
-    recordSubmitted = 'Record Submitted Successfully !';
+    recordSaved = 'Nominations saved successfully';
+    recordSubmitted = 'Nominations submitted successfully';
     recordSaveError = 'Error saving records';
     recordSubmitError = 'Error submitting records';
     noRecordsError = 'Please ensure you select at least one nominee and provide comments before submitting';

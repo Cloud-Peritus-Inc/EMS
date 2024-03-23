@@ -217,16 +217,14 @@
 					<lightning-accordion-section name="IPR" label="PERFORMANCE REVIEW">
 						<div class="boxContiner">
 							<div class="leftBox">
-								<p class="subTitle">Due Date for Next Appraisal</p>
-								<lightning-input type="date" name="Next_Appraisal_Date__c"
+								<lightning-input label="Due Date for Next Appraisal" type="date" name="Next_Appraisal_Date__c"
 									value={Compensation.Next_Appraisal_Date__c} onchange={dataHandler}>
 								</lightning-input>
 							</div>
 							<!-- <div class="rightBox">
 							</div> -->
 							<div class="midBox">
-								<p class="subTitle">Reviewers</p>
-								<c-reusable-lookup label="" selected-icon-name="standard:contact" object-label="Contact"
+								<c-reusable-lookup label="Reviewers" selected-icon-name="standard:contact" object-label="Contact"
 									object-api-name="User" field-api-name="Name" other-field-api-name="User_Status__c"
 									other-field-api-name2="Hr_Access__c"
 									selected-record-id={Compensation.Reviewed_By__c}
@@ -235,12 +233,11 @@
 
 							<div class="midBox">
 								<!-- smaske : [PM_129] : Updated Label Value -->
-								<p class="subTitle">Overall Average Rating: {averageOverallRating}</p>
+								<p class="subTitle2">Overall Average Rating: {averageOverallRating}</p>
 							</div>
 
 							<div class="midBox">
-								<p class="subTitle">Comments</p>
-								<lightning-input-rich-text label-visible="false" type="text" label=" " name="Comments__c"
+								<lightning-input-rich-text label-visible="true" type="text" label="Comments" name="Comments__c"
 									value={Compensation.Comments__c} onchange={dataHandler}></lightning-input-rich-text>
 							</div>
 

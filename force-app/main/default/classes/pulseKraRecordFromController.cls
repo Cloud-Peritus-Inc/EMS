@@ -10,7 +10,7 @@
 
 public without sharing class pulseKraRecordFromController {
     public pulseKraRecordFromController() {
-
+    
     }
 
     /**
@@ -27,7 +27,7 @@ public without sharing class pulseKraRecordFromController {
         Goal__c pulseRecord = new Goal__c();
         try {
             if(recordId != null){
-                pulseRecord = [Select Id,Name,Status__c,Resource__r.Name from Goal__c WHERE Id =: recordId]; 
+                pulseRecord = [Select Id,Name,Status__c,Resource__r.Name,Check_In_By__r.Name from Goal__c WHERE Id =: recordId]; 
             }else {
                 return null;
             }

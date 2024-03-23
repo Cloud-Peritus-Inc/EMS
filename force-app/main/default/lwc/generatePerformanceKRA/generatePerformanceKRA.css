@@ -44,9 +44,16 @@
 
 
 .subTitle {
-    font-size: 13px !important;
-    font-weight: bold;
-    color: black !important;
+    font-size: 12px !important;
+    color: #5A5A5A !important;
+    font-variant: normal;
+    font-weight: 500;
+}
+
+.subTitle2{
+    font-size: 12px !important;
+    color: #5A5A5A !important;
+    font-weight: 500 !important;
 }
 
 .boxGeneral {

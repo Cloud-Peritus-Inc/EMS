@@ -6,7 +6,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Goal Created Template for Mentee</name>
     <style>freeForm</style>
-    <subject>Goal Creation Confirmation</subject>
+    <subject>Performance: Goal Creation Confirmation</subject>
     <textOnly>Dear {!Goal__c.Resource__c},
 
 

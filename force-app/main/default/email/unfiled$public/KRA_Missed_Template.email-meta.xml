@@ -6,7 +6,16 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>KRA Missed Template</name>
     <style>freeForm</style>
-    <subject>Important: KRA Update</subject>
+    <subject>Performance: KRA Update</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+We hope this message finds you well. We regret to inform you that the KRA for {!Goal__c.Goal_Name__c} was not submitted before the specified end date.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

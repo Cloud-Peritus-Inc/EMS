@@ -6,7 +6,19 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notification about KRA Submission</name>
     <style>freeForm</style>
-    <subject>KRA Submission Confirmation</subject>
+    <subject>Performance: KRA Submission Confirmation</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+We are pleased to inform you that your KRA has been successfully submitted for review to your mentor.
+
+
+Thank you for your proactive approach to setting and aligning your goals with the mentorship program. Your dedication contributes significantly to our shared success.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

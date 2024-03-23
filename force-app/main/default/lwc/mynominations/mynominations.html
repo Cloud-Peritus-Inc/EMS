@@ -16,7 +16,7 @@
           <th class="slds-border_right tableheading" scope="col"> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
             <div class="" title="# of Secondary Nominations"># of Secondary Nominations</div>
           </th>
-          <th class="slds-border_right tableheading" scope="col">
+          <th class="slds-border_right tableheading" scope="col" style="width:35%;" >
             <div class="slds-truncate" title="Comments">Comments</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
@@ -25,7 +25,7 @@
           <th class="slds-border_right tableheading" scope="col">
             <div class="" title="Type">Type</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
           </th>
-          <th class="slds-border_right tableheading" scope="col">
+          <th class="slds-border_right tableheading" scope="col"  style="padding-left:2px;">
             <div class="slds-truncate" title="Status">Status</div>
           </th>
         </tr>
@@ -79,9 +79,9 @@
         </template>
       </tbody>
     </table>
-       <template if:false={nomstable}>
+       <template if:false={hasData}>
           <div class="slds-text-align_center slds-p-around_medium">
-            <center>No records found for filter.</center>
+            <center>You have not given any nominations as of yet.</center>
           </div>
         </template>
   </div>

@@ -6,7 +6,30 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Compensation Created Template</name>
     <style>freeForm</style>
-    <subject>Compensation Created Successfully!</subject>
+    <subject>Performance: Compensation Created Successfully!</subject>
+    <textOnly>Dear {!Compensation__c.CreatedBy},
+
+
+This is to inform you that a new compensation record has been successfully created in the system.
+
+
+Compensation Details:
+
+Name
+
+Resource
+
+{!Compensation__c.Name}
+
+{!Compensation__c.Resource__c}
+
+
+For further details or any necessary actions, please log in to the GRID system.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

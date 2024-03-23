@@ -6,7 +6,24 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Prize Recognition Email template for Resource</name>
     <style>freeForm</style>
-    <subject>RnR - Celebrating Your Winning Achievement</subject>
+    <subject>RnR: Celebrating Your Winning Achievement</subject>
+    <textOnly>Dear {!Reward_And_Recognition__c.Resource__c},
+
+
+We hope this message finds you well. Congratulations! Your recent participation in {!Reward_And_Recognition__c.Project__c} and your outstanding performance have earned you a well-deserved prize.
+
+
+
+Your dedication and competitive spirit have not only made you a winner but also brought honor to our team. {!Reward_And_Recognition__c.Recognization_By__c} has nominated you for this prize and we are proud to recognize and celebrate your achievement.
+
+
+
+Congratulations on this remarkable achievement!
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

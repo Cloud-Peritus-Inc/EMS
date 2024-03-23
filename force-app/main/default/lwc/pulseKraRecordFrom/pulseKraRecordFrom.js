@@ -37,7 +37,7 @@ export default class PulseKraRecordFrom extends NavigationMixin(LightningElement
     disableSubmitBtn = false;
     showForm = false;
     showFormSubmittedMsg = false;
-    resourceName = '';
+    mentorName = '';
 
 
     @wire(fetchPulseRecord, { recordId: '$recordId' })
@@ -50,7 +50,7 @@ export default class PulseKraRecordFrom extends NavigationMixin(LightningElement
             if (data.Status__c == this.statusRequested) {
                 this.disableSubmitBtn = false;
                 this.showFormSubmittedMsg = false;
-                this.resourceName = data.Resource__r.Name;
+                this.mentorName = data.Check_In_By__r.Name;
                 this.showForm = true;
             }
             
@@ -60,8 +60,8 @@ export default class PulseKraRecordFrom extends NavigationMixin(LightningElement
     }
 
     @api
-    get getResourceName() {
-        return this.resourceName;
+    get getMentorName() {
+        return this.mentorName;
     }
 
     rating(event) {

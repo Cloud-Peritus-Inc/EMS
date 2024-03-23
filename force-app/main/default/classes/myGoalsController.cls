@@ -58,32 +58,26 @@ public without sharing class myGoalsController {
              gl.End_Date__c = enddate;
              gl.Description__c = descri;
              
-             List<Goal__c> findTheActiveGoal;
-             findTheActiveGoal = [SELECT Id FROM Goal__c WHERE Fulfillment__c=:fulfilmentId And RecordTypeId=:kraRecordTypeId And Status__c= 'Active' LIMIT 1];
-             System.debug('$findTheActiveGoal' + findTheActiveGoal);
-            
-             //smaske : made findTheActiveGoal as List
-             //checking is Active record is available , if yes then assigning id else searching for Inreview/Completed records
-             if (findTheActiveGoal != null && findTheActiveGoal.size() > 0) {
-              System.debug('$findTheActiveGoal' + findTheActiveGoal);
-              gl.Parent_Goal__c = findTheActiveGoal[0].Id;
-              } else {
-                findTheActiveGoal = [SELECT Id FROM Goal__c WHERE Fulfillment__c=:fulfilmentId And RecordTypeId=:kraRecordTypeId And (Status__c= 'KRA Inreview' OR Status__c= 'KRA Completed' ) LIMIT 1];
-                System.debug('$findTheActiveGoal' + findTheActiveGoal);
+             // Query for Active, KRA InReview, and KRA Completed records
+            List<Goal__c> findTheActiveGoal = [
+                SELECT Id 
+                FROM Goal__c 
+                WHERE Fulfillment__c = :fulfilmentId 
+                AND RecordTypeId = :kraRecordTypeId 
+                AND (Status__c = 'Active' OR Status__c = 'KRA Inreview' OR Status__c = 'KRA Completed') 
+                LIMIT 1
+            ];
+
+            if (!findTheActiveGoal.isEmpty()) {
                 gl.Parent_Goal__c = findTheActiveGoal[0].Id;
-              }
-            //gl.Parent_Goal__c = findTheActiveGoal.Id;
-            try{
-              insert gl;  
-            }catch(exception ex){
-             String errorMsg = ex.getMessage();
-             System.debug(errorMsg);
-            throw new AuraHandledException(ErrorMsg); 
+                insert gl;
+            } else {
+                throw new AuraHandledException('Goals cannot be created for missed and completed KRAs');
             } 
             
         }else{
             String errorMsg = 'No fulfilment record found.';
-            throw new AuraHandledException(ErrorMsg);  
+            throw new AuraHandledException(errorMsg);  
         }
     }
     

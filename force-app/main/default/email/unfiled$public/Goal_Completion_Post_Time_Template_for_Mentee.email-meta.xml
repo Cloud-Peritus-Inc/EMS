@@ -6,7 +6,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Goal Completion Post Time Template for Mentee</name>
     <style>freeForm</style>
-    <subject>Goal Completion Notification</subject>
+    <subject>Performance: Goal Completion Notification</subject>
     <textOnly>Dear {!Goal__c.Resource__c},
 
 

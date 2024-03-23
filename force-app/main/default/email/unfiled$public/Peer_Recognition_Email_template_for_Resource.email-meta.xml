@@ -6,7 +6,24 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Peer Recognition Email template for Resource</name>
     <style>freeForm</style>
-    <subject>RnR - Peer Recognition for Exceptional Contribution</subject>
+    <subject>RnR: Peer Recognition for Exceptional Contribution</subject>
+    <textOnly>Dear {!Reward_And_Recognition__c.Resource__c},
+
+
+We hope this message finds you well. We wanted to take a moment to highlight and appreciate the exceptional contribution you made as part of {!Reward_And_Recognition__c.Project__c}. Your dedication and collaborative spirit were truly outstanding.
+
+
+
+Your peer, {!Reward_And_Recognition__c.Recognization_By__c}, has recognized your efforts, and it is with great pleasure that we acknowledge your valuable contribution to our team&apos;s success. Well done!
+
+
+
+Congratulations on this peer recognition!
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
