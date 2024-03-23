@@ -8,7 +8,6 @@ global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
          Map<Id,Reward_And_Recognition__c> scoringUpdateMap = new Map<Id,Reward_And_Recognition__c>();
          List<Reward_And_Recognition__c> filtered = new List<Reward_And_Recognition__c>();
          Reward_And_Recognition__c rrawrd = RRList[0];
-         
           for(Reward_And_Recognition__c rr : [SELECT Id,Award_Type__c,Resource__c,Resource__r.Not_Eligible_For_Annual_Awards__c,Status__c,System_Predicted_Status__c FROM Reward_And_Recognition__c WHERE Award_Type__c =:rrawrd.Award_Type__c  and Status__c = 'Review In Progress']){
             resources.add(rr.Resource__c); 
              scoringUpdateMap.put(rr.Id,rr);

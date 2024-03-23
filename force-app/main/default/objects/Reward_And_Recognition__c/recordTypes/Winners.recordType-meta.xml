@@ -106,10 +106,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Incentives</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Kudos</fullName>
             <default>false</default>
         </values>
@@ -140,10 +136,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Types_of_Recognition__c</picklist>
-        <values>
-            <fullName>Monetary Rewards</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Peer Recognition</fullName>
             <default>false</default>

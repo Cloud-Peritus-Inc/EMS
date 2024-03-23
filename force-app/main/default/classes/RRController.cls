@@ -175,7 +175,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         return  dwrap;
     }
     
-     @AuraEnabled
+    @AuraEnabled
     public static List<winnerdetails> getShoutouts(String fyId){
          List<winnerdetails> currentList = new List<winnerdetails>();    
         system.debug('===fyId======'+fyId);
@@ -208,7 +208,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         return currentList;
     }
     
-    @AuraEnabled
+    @AuraEnabled 
     public static List<winnerdetails> getRecGiven(String fyId){
          List<winnerdetails> currentList = new List<winnerdetails>();    
         system.debug('===fyId======'+fyId);
@@ -322,7 +322,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
         return currentList;
     }
     
-    @AuraEnabled
+    @AuraEnabled 
     public static List<winnerdetails> getMyNomins(String fyId){
          List<winnerdetails> currentList = new List<winnerdetails>();   
          User loggedinUser = [SELECT Id,ContactId FROM User WHERE Id=:Userinfo.getUserId()];

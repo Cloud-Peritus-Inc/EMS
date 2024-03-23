@@ -103,7 +103,7 @@ global class BatchToCreateScoringForAwards implements Database.Batchable<sObject
             
         } 
                                 
-          system.debug('==scoringInsert===='+scoringInsert); 
+        system.debug('==scoringInsert===='+scoringInsert); 
         system.debug('==scoringUpdate===='+scoringUpdate); 
         
         try{

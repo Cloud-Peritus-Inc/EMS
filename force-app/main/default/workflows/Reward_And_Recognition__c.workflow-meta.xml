@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>Monetary_Recognition_Email_alert_for_Resource</fullName>
-        <description>Monetary Recognition_Email_alert_for_Resource</description>
+        <fullName>Recognition_Email_alert_for_Creator</fullName>
+        <description>Recognition Email alert for Creator</description>
         <protected>false</protected>
         <recipients>
-            <field>Resource__c</field>
-            <type>contactLookup</type>
+            <field>Recognization_By__c</field>
+            <type>userLookup</type>
         </recipients>
         <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Monetary_Recognition_Email_template_for_Resource</template>
+        <template>unfiled$public/Recognition_Email_template_for_Creator</template>
     </alerts>
 </Workflow>
