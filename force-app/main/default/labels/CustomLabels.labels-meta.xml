@@ -5,8 +5,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BestEntrepreneurDesc</shortDescription>
-<<<<<<< HEAD
-        <value>The Best Entrepreneur candidate should have consistently suggested and new/improved ideas  to help the firm&apos;s growth</value>
+        <<<<<<<>The Best Entrepreneur candidate should have consistently suggested and new/improved ideas  to help the firm&apos;s growth</<<<<<<>
     </labels>
     <labels>
         <fullName>Enable_Mentor_Feedback</fullName>
@@ -101,8 +100,6 @@ going the extra mile consistently on their project</value>
         <protected>false</protected>
         <shortDescription>Timesheet Record Navigation</shortDescription>
         <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-tm-timesheet-record/</value>
-=======
         <value>The Best Entrepreneur candidate should have consistently suggested new/improved ideas and kick start value initiatives with little or no help. Self starter with a motivation to innovate.</value>
->>>>>>> 23thMachUT-SITFINAL
-    </labels>
+=======&gt;&gt;&gt;&gt;&gt;&gt;&gt; 23thMachUT-SITFINAL    </labels>
 </CustomLabels>
