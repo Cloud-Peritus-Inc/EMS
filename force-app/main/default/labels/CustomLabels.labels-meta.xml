@@ -94,4 +94,11 @@ going the extra mile consistently on their project</value>
         <shortDescription>Timesheet Record Navigation</shortDescription>
         <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-tm-timesheet-record/</value>
     </labels>
+    <labels>
+        <fullName>Enable_Mentor_Feedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Enable Mentor Feedback</shortDescription>
+        <value>true</value>
+    </labels>
 </CustomLabels>
