@@ -12,4 +12,16 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Recognition_Email_template_for_Creator</template>
     </alerts>
+    <alerts>
+        <fullName>Shoutout_Email_alert_for_Creator</fullName>
+        <description>Shoutout_Email_alert_for_Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Recognization_By__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Shoutout_Email_template_for_Creator</template>
+    </alerts>
 </Workflow>
