@@ -8,13 +8,6 @@
         <<<<<<<>The Best Entrepreneur candidate should have consistently suggested and new/improved ideas  to help the firm&apos;s growth</<<<<<<>
     </labels>
     <labels>
-        <fullName>Enable_Mentor_Feedback</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Enable Mentor Feedback</shortDescription>
-        <value>true</value>
-    </labels>
-    <labels>
         <fullName>Enable_Nominations</fullName>
         <language>en_US</language>
         <protected>false</protected>
