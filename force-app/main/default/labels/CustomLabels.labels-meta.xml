@@ -8,13 +8,6 @@
         <value>The Best Entrepreneur candidate should have consistently suggested new/improved ideas and kick start value initiatives with little or no help. Self starter with a motivation to innovate.</value>
     </labels>
     <labels>
-        <fullName>Enable_Mentor_Feedback</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Enable Mentor Feedback</shortDescription>
-        <value>true</value>
-    </labels>
-    <labels>
         <fullName>Enable_Nominations</fullName>
         <language>en_US</language>
         <protected>false</protected>
