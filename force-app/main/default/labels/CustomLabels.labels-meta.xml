@@ -101,4 +101,12 @@ going the extra mile consistently on their project</value>
         <shortDescription>Enable Mentor Feedback</shortDescription>
         <value>true</value>
     </labels>
+    <labels>
+        <fullName>AwardOfExcellenceDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AwardOfExcellenceDesc</shortDescription>
+        <value>The Award of Excellence candidate should have been consistently dependable, 
+a significant contributor to the firm’s growth, consistently recognized by our clients &amp; colleagues and a true ambassador of the firm</value>
+    </labels>
 </CustomLabels>
