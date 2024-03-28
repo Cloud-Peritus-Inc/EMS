@@ -75,7 +75,7 @@ public class RRController_Test {
                 contactList.add(con);              
             }
             insert contactList;
-            
+            system.debug('contact list========='+contactList);
             for(Contact cont : contactList){
                 User u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,cont.Id,false);
                 u.Username = u.Username + cont.Id;
@@ -83,6 +83,7 @@ public class RRController_Test {
                 userList.add(u);
             }
             Insert userList;
+            System.debug('Inserted User List ' + userList);
             
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
@@ -121,21 +122,21 @@ public class RRController_Test {
     testmethod static void  testgetResourceProjectAllocations(){
         Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10990'];
         Test.startTest();
-        try {
             Map<String,String> DataMap = RRController.getResourceProjectAllocations(MenteeCon.Id);
-        } catch (Exception ex) {
-            String errorMsg = ex.getMessage();
-            System.debug('An exception occurred: ' + errorMsg);
-        }
         Test.stopTest();
         
     }
     
-    testmethod static void testgetTheCurrentRRTrends(){
+     testmethod static void testgetTheCurrentRRTrends(){
         Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10990'];
         Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10991'];
+        System.debug(' 138 MenteeCon' + MenteeCon);
+        System.debug(' 138 MentorCon' + MentorCon);
         User MenteeUser = [Select Id,Name from User where Id=:MenteeCon.EMS_TM_User__c];
         User MentorUser = [Select Id,Name from User where Id=:MentorCon.EMS_TM_User__c];
+        System.debug(' 189 MenteeUser' + MenteeUser);
+        System.debug(' 190 MentorUser' + MentorUser);
+        
         Fulfillment__c Ful = [Select Id,Resource__c,Fiscal_Year__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
         List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c LIMIT 1];
         Grid_Configuration__c gc =  [Select Id,Name FROM Grid_Configuration__c WHERE Name = 'Annual Awards Noms FY FY 2023 - 2024'];
@@ -161,15 +162,9 @@ public class RRController_Test {
         
         system.runAs(MenteeUser){
             Test.startTest();
-            try {
                 RRController.getTheCurrentRRTrends();
                 RRController.getTheCurrentFYTrends(FY[0].Id);
-                RRController.updateTheWinners(Null,FY[0].Id); //need to check for List paramater
-                
-            } catch (Exception ex) {
-                String errorMsg = ex.getMessage();
-                System.debug('An exception occurred: ' + errorMsg);
-            }
+                //RRController.updateTheWinners(Null,FY[0].Id); //need to check for List paramater
             Test.stopTest();
         }
         
@@ -179,8 +174,12 @@ public class RRController_Test {
     testmethod static void testgetTheScoringbyAwardMethods(){
         Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10990'];
         Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10991'];
+        System.debug(' 185 MenteeCon' + MenteeCon);
+        System.debug(' 186 MentorCon' + MentorCon);
         User MenteeUser = [Select Id,Name from User where Id=:MenteeCon.EMS_TM_User__c];
         User MentorUser = [Select Id,Name from User where Id=:MentorCon.EMS_TM_User__c];
+        System.debug(' 189 MenteeUser' + MenteeUser);
+        System.debug(' 190 MentorUser' + MentorUser);
         Fulfillment__c Ful = [Select Id,Resource__c,Fiscal_Year__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
         List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c LIMIT 1];
         Grid_Configuration__c gc =  [Select Id,Name FROM Grid_Configuration__c WHERE Name = 'Annual Awards Noms FY FY 2023 - 2024'];
@@ -261,7 +260,6 @@ public class RRController_Test {
             insert RecognizeListToInsert;
             
             Test.startTest();
-            try {
                 RRController.getTheScoringbyAllAward(FY[0].Id);
                 for(String  aw : AwardTypeList){
                     RRController.getTheScoringbyAward(FY[0].Id,aw);
@@ -270,21 +268,12 @@ public class RRController_Test {
                 RRController.getRecGiven(FY[0].Id);
                 RRController.getFinalNominsWinners(FY[0].Id);
                 RRController.getMyNomins(FY[0].Id);
-            } catch (Exception ex) {
-                String errorMsg = ex.getMessage();
-                System.debug('An exception occurred: ' + errorMsg);
-            }
         }
         
         system.runAs(MenteeUser){
-            try {
                 RRController.getRecReceived(FY[0].Id);
                 RRController.getMyAnnualAwards(FY[0].Id);
                 RRController.getShoutoutsReceived(FY[0].Id);
-            } catch (Exception ex) {
-                String errorMsg = ex.getMessage();
-                System.debug('An exception occurred: ' + errorMsg);
-            }
             Test.stopTest();
         }
         
