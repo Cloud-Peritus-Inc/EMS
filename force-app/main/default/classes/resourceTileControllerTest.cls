@@ -28,7 +28,8 @@ public class resourceTileControllerTest {
         insert gCon;
         gCon1.add(Testdatafactory.createGridConfig1('namevalue','test description','Resource Role Alert',role.id,false));
         insert gCon1;
-        gCon2.add(Testdatafactory.createGridConfig1('namevalue','test description','Videocast',role.id,false));
+        //smaske : Test Class failed for 'Videocast' value replacing with 'Resource Role Level Goal'
+        gCon2.add(Testdatafactory.createGridConfig1('namevalue','test description','Resource Role Level Goal',role.id,false));
         insert gCon2;
       
         Account acc = TestDataFactory.createAccount(true);
@@ -49,6 +50,8 @@ public class resourceTileControllerTest {
         Resource_Resource_Relationship__c resourceRelationship = new Resource_Resource_Relationship__c();
         resourceRelationship.Resource__c = con.Id;
         resourceRelationship.Resource_Reports_To__c=con.Id;
+        //smaske : adding Required Relationship_Type__c value
+        resourceRelationship.Relationship_Type__c = 'Mentor';
         insert resourceRelationship;
         
         

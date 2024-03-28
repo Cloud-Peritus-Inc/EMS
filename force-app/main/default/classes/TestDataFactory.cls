@@ -127,7 +127,9 @@ public class TestDataFactory {
     }
     
     public static User createCommunityUser2WithAccAndContact(Id accId,Id conId,Boolean doInsert){
-        Id p = [select id from profile where name='system Administrator'].id;
+        //smaske : System Admin was failing for creating community user
+        //Id p = [select id from profile where name='System Administrator'].id;
+        Id p = [select id from profile where name='Employee - Resource(Community)'].id;
         
         User user = new User(alias = 'test1234', email= 'testemail4@testclass.com.they',
                              emailencodingkey='UTF-8', lastname='Testing4', Firstname = 'User4', languagelocalekey='en_US',

@@ -71,7 +71,8 @@ public class BatchToCreateGoalsForRes_Test {
             EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
             EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
             EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
-            EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);           
+            EMS_LM_Leave__c wfhtype = TestDataFactory.createLeaveType('Work From Home',true);  
+            EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
             acc = TestDataFactory.createAccount(true);
             con=TestDataFactory.createResourceContact(acc.id, false);
             con.EMS_RM_Employee_Id__c = 'CP10234';
