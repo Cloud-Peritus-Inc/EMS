@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>KRA remainder mail to Mentor</name>
+    <style>freeForm</style>
+    <subject>Performance: Reminder notification to review and submit the reportee&apos;s rating</subject>
+    <textOnly>Dear {!Goal__c.Check_In_By__c},
+
+
+
+This is a reminder that you have not submitted {!Goal__c.Resource__c}&apos;s rating for the current {!Goal__c.Goal_Name__c}, which is due.
+
+
+
+Please click here to review and submit the reportee&apos;s rating on an immediate basis to avoid any strikes.
+
+
+
+Best Regards,
+
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

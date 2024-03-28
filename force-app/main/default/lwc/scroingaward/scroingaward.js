@@ -17,6 +17,7 @@ nomstable = [];
 disableconfirmbutton = false;
 showtable = false;
 alreadyAnnounced = false;
+@api isDisabled;
 connectedCallback() {
      this.getTheAllAward(); 
      

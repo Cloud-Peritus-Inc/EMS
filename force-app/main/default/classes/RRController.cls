@@ -46,7 +46,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
                  wd.currentFYName = rr.Fiscal_Year__r.Name;
                  wd.resourceName = rr.Resource__r.Name;
                  wd.resourcePhotoURL = rr.Resource__r.EMS_TM_User__r.FullPhotoUrl;
-                 wd.awardComments = rr.Reason_for_award__c;
+                 wd.awardComments = rr.Reason_for_award__c.stripHtmlTags();
                  wd.resourceId = rr.Resource__c;
                  winnerMap.put(uniqueKey,wd);
                 
@@ -83,6 +83,7 @@ public static final Id RR_SCORING_RECORDTYPEID = Schema.SObjectType.Reward_And_R
     @AuraEnabled
     public static String updateTheWinners(List<winnerdetails> winnerlist,String fyId){
         Savepoint sp = Database.setSavepoint(); 
+        system.debug('winnerlist' +winnerlist);
         List<Grid_Configuration__c> gAnnualCheck = new List<Grid_Configuration__c>();
        try{
         List<Reward_And_Recognition__c> updateListRR = new List<Reward_And_Recognition__c>();

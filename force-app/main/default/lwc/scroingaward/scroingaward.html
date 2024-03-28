@@ -16,11 +16,11 @@
             <div class="childtext">
                 <template if:true={showthecampare}>
                   <lightning-button-icon icon-name="utility:refresh"  size="medium" onclick={handleRefresh} alternative-text="Refresh" class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;
-                   <lightning-button variant="brand" label="Compare" onclick={handleCompareClick} title="Compare" ></lightning-button>
+                   <lightning-button variant="brand" label="Compare" onclick={handleCompareClick} disabled={isDisabled} title="Compare" ></lightning-button>
                     
                 </template>
                 <template if:true={announcebutton}>
-                 &nbsp;  <lightning-button variant="brand" label="Announce the results" onclick={handleAnnounceClick} title="Announce" ></lightning-button>
+                 &nbsp;  <lightning-button variant="brand" label="Announce the results" onclick={handleAnnounceClick} disabled={isDisabled} title="Announce" ></lightning-button>
                 </template>
                 
             </div></div>
