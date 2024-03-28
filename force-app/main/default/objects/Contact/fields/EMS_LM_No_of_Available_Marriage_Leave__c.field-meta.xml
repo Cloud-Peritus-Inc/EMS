@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_LM_No_of_Available_Marriage_Leave__c</fullName>
+    <externalId>false</externalId>
+    <formula>EMS_LM_No_of_Marriage_Leave_Credit__c - EMS_LM_No_of_Utilized_Marriage_Leave__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>No of Available Marriage Leave</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
