@@ -204,7 +204,7 @@ public class RRController_Test {
             //SCORING_RECORDTYPE records 
             for(String awardType : AwardTypeList ){
                 Reward_And_Recognition__c rec = new Reward_And_Recognition__c();
-                rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
+              //  rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
                 rec.Resource__c = MenteeCon.Id;
                 rec.Recognization_By__c = MentorCon.EMS_TM_User__c;
                 rec.RecordTypeId = RR_SCORING_RECORDTYPEID;
@@ -220,7 +220,7 @@ public class RRController_Test {
             List<Reward_And_Recognition__c> MyNominsToInsert = New List<Reward_And_Recognition__c>();
             for(String awardType : AwardTypeList ){
                 Reward_And_Recognition__c MyNomins = new Reward_And_Recognition__c();
-                MyNomins.Fiscal_Year__c = Ful.Fiscal_Year__c;
+            //    MyNomins.Fiscal_Year__c = Ful.Fiscal_Year__c;
                 MyNomins.Resource__c = MenteeCon.Id;
                 MyNomins.Recognization_By__c = MentorCon.EMS_TM_User__c;
                 MyNomins.RecordTypeId = RR_NOMINATION_RECORDTYPEID;
@@ -236,7 +236,7 @@ public class RRController_Test {
             //ShoutOutType records 
             for(String ShoutOutType : ShoutOutsTypeList ){
                 Reward_And_Recognition__c rec = new Reward_And_Recognition__c();
-                rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
+           //     rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
                 rec.Resource__c = MenteeCon.Id;
                 rec.Recognization_By__c = MentorCon.EMS_TM_User__c;
                 rec.RecordTypeId = RR_WINNER_RECORDTYPEID;
@@ -255,7 +255,7 @@ public class RRController_Test {
             //Recognize Type records 
             for(String RecognizeType : RecognizeTypeList ){
                 Reward_And_Recognition__c rec = new Reward_And_Recognition__c();
-                rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
+           //     rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
                 rec.Resource__c = MenteeCon.Id;
                 rec.Recognization_By__c = MentorCon.EMS_TM_User__c;
                 rec.RecordTypeId = RR_WINNER_RECORDTYPEID;
