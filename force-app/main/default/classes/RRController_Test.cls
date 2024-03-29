@@ -93,7 +93,15 @@ public class RRController_Test {
             
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
-            Fulfillment__c Ful = TestDataFactory.createFulfillment(contactList[0].Id, true);
+            Fiscal_Year__c FY = TestDataFactory.createFiscalYear(true);
+            Fulfillment__c Ful = TestDataFactory.createFulfillment(contactList[0].Id, false);
+            Ful.Fiscal_Year__c = FY.Id;
+            Insert Ful;
+            
+            Fulfillment__c Ful2 = TestDataFactory.createFulfillment(contactList[1].Id, false);
+            Ful2.Fiscal_Year__c = FY.Id;
+            Insert Ful2;
+            
             Grid_Configuration__c gc = new Grid_Configuration__c();
             gc.Name = 'Annual Awards Noms FY FY 2023 - 2024';
             gc.Fiscal_Year__c = Ful.Fiscal_Year__c;
@@ -187,7 +195,7 @@ public class RRController_Test {
         System.debug(' 189 MenteeUser' + MenteeUser);
         System.debug(' 190 MentorUser' + MentorUser);
         Fulfillment__c Ful = [Select Id,Resource__c,Fiscal_Year__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
-        List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c WHERE Id =: Ful.Fiscal_Year__c LIMIT 1];
+        List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c LIMIT 1];
         System.debug(' 191 Ful' + Ful);
         System.debug(' 192 FY' + FY);
         Grid_Configuration__c gc =  [Select Id,Name FROM Grid_Configuration__c WHERE Name = 'Annual Awards Noms FY FY 2023 - 2024'];
@@ -204,7 +212,7 @@ public class RRController_Test {
             //SCORING_RECORDTYPE records 
             for(String awardType : AwardTypeList ){
                 Reward_And_Recognition__c rec = new Reward_And_Recognition__c();
-              //  rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
+                rec.Fiscal_Year__c = FY[0].Id;
                 rec.Resource__c = MenteeCon.Id;
                 rec.Recognization_By__c = MentorCon.EMS_TM_User__c;
                 rec.RecordTypeId = RR_SCORING_RECORDTYPEID;
@@ -220,7 +228,7 @@ public class RRController_Test {
             List<Reward_And_Recognition__c> MyNominsToInsert = New List<Reward_And_Recognition__c>();
             for(String awardType : AwardTypeList ){
                 Reward_And_Recognition__c MyNomins = new Reward_And_Recognition__c();
-            //    MyNomins.Fiscal_Year__c = Ful.Fiscal_Year__c;
+                MyNomins.Fiscal_Year__c = FY[0].Id;
                 MyNomins.Resource__c = MenteeCon.Id;
                 MyNomins.Recognization_By__c = MentorCon.EMS_TM_User__c;
                 MyNomins.RecordTypeId = RR_NOMINATION_RECORDTYPEID;
@@ -236,7 +244,7 @@ public class RRController_Test {
             //ShoutOutType records 
             for(String ShoutOutType : ShoutOutsTypeList ){
                 Reward_And_Recognition__c rec = new Reward_And_Recognition__c();
-           //     rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
+                rec.Fiscal_Year__c = FY[0].Id;
                 rec.Resource__c = MenteeCon.Id;
                 rec.Recognization_By__c = MentorCon.EMS_TM_User__c;
                 rec.RecordTypeId = RR_WINNER_RECORDTYPEID;
@@ -255,7 +263,7 @@ public class RRController_Test {
             //Recognize Type records 
             for(String RecognizeType : RecognizeTypeList ){
                 Reward_And_Recognition__c rec = new Reward_And_Recognition__c();
-           //     rec.Fiscal_Year__c = Ful.Fiscal_Year__c;
+                rec.Fiscal_Year__c = FY[0].Id;
                 rec.Resource__c = MenteeCon.Id;
                 rec.Recognization_By__c = MentorCon.EMS_TM_User__c;
                 rec.RecordTypeId = RR_WINNER_RECORDTYPEID;
