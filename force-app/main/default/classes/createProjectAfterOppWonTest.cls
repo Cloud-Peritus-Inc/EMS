@@ -23,6 +23,7 @@ public class createProjectAfterOppWonTest {
         List<Opportunity> oppList =TestDataFactory.createOpportunity(acc.id,count,false);
         oppList[0].Project_Manager__c =con.Id;
         oppList[0].Contract_Start_Date__c = System.today();
+          oppList[0].ACV__c='No';
         INSERT oppList;
         
         test.startTest();
