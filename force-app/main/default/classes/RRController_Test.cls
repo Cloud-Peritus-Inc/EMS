@@ -187,7 +187,7 @@ public class RRController_Test {
         System.debug(' 189 MenteeUser' + MenteeUser);
         System.debug(' 190 MentorUser' + MentorUser);
         Fulfillment__c Ful = [Select Id,Resource__c,Fiscal_Year__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
-        List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c LIMIT 1];
+        List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c WHERE Id =: Ful.Fiscal_Year__c LIMIT 1];
         Grid_Configuration__c gc =  [Select Id,Name FROM Grid_Configuration__c WHERE Name = 'Annual Awards Noms FY FY 2023 - 2024'];
         List<String> AwardTypeList = new List<String>{'Best Entrepreneur', 'Most Professional', 'Rising Star', 'Rock Star', 'Shining Star', 'Going Above and Beyond', 'Award of Excellence'};
             
