@@ -93,7 +93,15 @@ public class RRController_Test {
             
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
-            Fulfillment__c Ful = TestDataFactory.createFulfillment(contactList[0].Id, true);
+            Fiscal_Year__c FY = TestDataFactory.createFiscalYear(true);
+            Fulfillment__c Ful = TestDataFactory.createFulfillment(contactList[0].Id, false);
+            Ful.Fiscal_Year__c = FY.Id;
+            Insert Ful;
+            
+            Fulfillment__c Ful2 = TestDataFactory.createFulfillment(contactList[1].Id, false);
+            Ful2.Fiscal_Year__c = FY.Id;
+            Insert Ful2;
+            
             Grid_Configuration__c gc = new Grid_Configuration__c();
             gc.Name = 'Annual Awards Noms FY FY 2023 - 2024';
             gc.Fiscal_Year__c = Ful.Fiscal_Year__c;
@@ -188,6 +196,8 @@ public class RRController_Test {
         System.debug(' 190 MentorUser' + MentorUser);
         Fulfillment__c Ful = [Select Id,Resource__c,Fiscal_Year__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
         List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c LIMIT 1];
+        System.debug(' 191 Ful' + Ful);
+        System.debug(' 192 FY' + FY);
         Grid_Configuration__c gc =  [Select Id,Name FROM Grid_Configuration__c WHERE Name = 'Annual Awards Noms FY FY 2023 - 2024'];
         List<String> AwardTypeList = new List<String>{'Best Entrepreneur', 'Most Professional', 'Rising Star', 'Rock Star', 'Shining Star', 'Going Above and Beyond', 'Award of Excellence'};
             
