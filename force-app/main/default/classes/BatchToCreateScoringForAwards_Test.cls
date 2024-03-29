@@ -80,6 +80,12 @@ public class BatchToCreateScoringForAwards_Test {
             }
             Insert userList;
             
+            for(Integer i=0; i<2; i++){
+                contactList[i].EMS_TM_User__c = userList[i].Id;
+            }
+            update contactList;
+            System.debug('Updated Contact List ' + contactList);
+            
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
             //Fiscal_Year__c FiscalYear = TestDataFactory.createFiscalYear(true);
@@ -111,8 +117,9 @@ public class BatchToCreateScoringForAwards_Test {
     
     testmethod static void  testingCreateScoringForAwards(){
         
-        Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10770'];
-        Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10771'];
+        Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c,EMS_RM_ApplicantStatus_Update__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10770' AND EMS_RM_ApplicantStatus_Update__c = 'Active'];
+        Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c,EMS_RM_ApplicantStatus_Update__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10771' AND EMS_RM_ApplicantStatus_Update__c = 'Active'];
+        System.debug('MenteeCon : '+ MenteeCon.EMS_RM_ApplicantStatus_Update__c);
         Fulfillment__c Ful = [Select Id,Resource__c,Fiscal_Year__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
         List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c LIMIT 1];
         system.debug('FY ' + FY);

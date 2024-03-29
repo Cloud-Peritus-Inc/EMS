@@ -71,6 +71,12 @@ public class UpdateTheScoresForWinner_Test {
             }
             Insert userList;
             
+            for(Integer i=0; i<2; i++){
+                contactList[i].EMS_TM_User__c = userList[i].Id;
+            }
+            update contactList;
+            System.debug('Updated Contact List ' + contactList);
+            
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
             Fulfillment__c Ful = TestDataFactory.createFulfillment(contactList[0].Id, true);
@@ -111,6 +117,12 @@ public class UpdateTheScoresForWinner_Test {
         Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10981'];
         User MenteeUser = [Select Id,Name from User where Id=:MenteeCon.EMS_TM_User__c];
         User MentorUser = [Select Id,Name from User where Id=:MentorCon.EMS_TM_User__c];
+       System.debug('MenteeCon 114 ' + MenteeCon);
+               System.debug('MenteeCon 115 ' + MenteeCon.EMS_TM_User__c);
+        System.debug('MenteeCon 110 ' + MentorCon);
+        System.debug('MenteeUser 117' + MenteeUser);
+        System.debug('MentorUser 118 ' + MentorUser);
+        
         List<String> AwardTypeList = new List<String>{'Best Entrepreneur', 'Most Professional', 'Rising Star', 'Rock Star', 'Shining Star', 'Going Above and Beyond', 'Award of Excellence'};
             List<Reward_And_Recognition__c> recoListToInsert = New List<Reward_And_Recognition__c>();
         List<Reward_And_Recognition__c> recoListToUpdate = New List<Reward_And_Recognition__c>();

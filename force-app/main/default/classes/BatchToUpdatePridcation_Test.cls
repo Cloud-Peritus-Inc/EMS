@@ -83,6 +83,12 @@ public class BatchToUpdatePridcation_Test {
             }
             Insert userList;
             
+            for(Integer i=0; i<2; i++){
+                contactList[i].EMS_TM_User__c = userList[i].Id;
+            }
+            update contactList;
+            System.debug('Updated Contact List ' + contactList);
+            
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
             //Fiscal_Year__c FiscalYear = TestDataFactory.createFiscalYear(true);

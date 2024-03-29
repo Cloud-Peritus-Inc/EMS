@@ -1,5 +1,5 @@
 /**
-* @author Mukesh Rawat
+* @author Mukesh Rawat/Shubham Maske 
 * @date 22/03/2024
 * @description  - Test class for RRController
 *
@@ -85,6 +85,12 @@ public class RRController_Test {
             Insert userList;
             System.debug('Inserted User List ' + userList);
             
+            for(Integer i=0; i<2; i++){
+                contactList[i].EMS_TM_User__c = userList[i].Id;
+            }
+            update contactList;
+            System.debug('Updated Contact List ' + contactList);
+            
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
             Fulfillment__c Ful = TestDataFactory.createFulfillment(contactList[0].Id, true);
@@ -130,8 +136,8 @@ public class RRController_Test {
      testmethod static void testgetTheCurrentRRTrends(){
         Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10990'];
         Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10991'];
-        System.debug(' 138 MenteeCon' + MenteeCon);
-        System.debug(' 138 MentorCon' + MentorCon);
+        System.debug(' 138 MenteeCon' + MenteeCon.EMS_TM_User__c);
+        System.debug(' 138 MentorCon' + MentorCon.EMS_TM_User__c);
         User MenteeUser = [Select Id,Name from User where Id=:MenteeCon.EMS_TM_User__c];
         User MentorUser = [Select Id,Name from User where Id=:MentorCon.EMS_TM_User__c];
         System.debug(' 189 MenteeUser' + MenteeUser);

@@ -77,6 +77,12 @@ public class ReusableLookupController_Test {
             }
             Insert userList;
             
+            for(Integer i=0; i<2; i++){
+                contactList[i].EMS_TM_User__c = userList[i].Id;
+            }
+            update contactList;
+            System.debug('Updated Contact List ' + contactList);
+            
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
             Fiscal_Year__c FiscalYear = TestDataFactory.createFiscalYear(true);
@@ -155,6 +161,8 @@ public class ReusableLookupController_Test {
     testmethod static void  fetcgLoggedinContactTest(){
         Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10350'];
         User u = [Select Id FROM User WHERE Id =:MentorCon.EMS_TM_User__c LIMIT 1];
+        System.debug('MentorCon 158 :' + MentorCon);
+        System.debug('User 159:' + u);
         Test.startTest();
         system.runAs(u){
             Contact returnedContact = ReusableLookupController.fetcgLoggedinContact();
