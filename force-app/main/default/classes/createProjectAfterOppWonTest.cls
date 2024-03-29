@@ -22,7 +22,7 @@ public class createProjectAfterOppWonTest {
         Integer count =1;
         List<Opportunity> oppList =TestDataFactory.createOpportunity(acc.id,count,false);
        Date newDate = System.today();
-       Date futureDate = myDate.addDays(5);
+       Date futureDate = newDate.addDays(5);
         oppList[0].Project_Manager__c =con.Id;
         oppList[0].Contract_Start_Date__c = System.today();
           oppList[0].ACV__c='Yes';
