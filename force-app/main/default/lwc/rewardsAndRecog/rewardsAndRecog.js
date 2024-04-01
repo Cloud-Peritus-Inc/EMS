@@ -15,6 +15,7 @@ import RR_OBJECT from '@salesforce/schema/Reward_And_Recognition__c';
 import USER_ID from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
+import checkTheAnnualAnn from '@salesforce/apex/RRController.checkTheAnnualAnn';
 export default class RewardsAndRecog extends LightningElement {
 imageUrl = landscape;
 dNominations = true;
@@ -32,6 +33,7 @@ shoutouttable = [];
 shoutoutreceived = [];
 showNomstab = false;
 activeTab = '1';
+isDisabled;
 @track selectedfy;
 showscroingTab = false;
 @track userId = USER_ID;
@@ -50,6 +52,7 @@ winnerrecordTypeId;
         this.showscroingTab = data.scroingtab;
         this.currentFY = data.currentName;
         this.currentdata = data.currentList;
+        console.log('currentdata'+ JSON.stringify(this.currentdata));
         console.log('====data.currentList.length===='+data.currentList.length);
         this.showTheAnnualAwards = data.showtheWinners;
          console.log('====this.showTheAnnualAwards===='+this.showTheAnnualAwards);
@@ -131,6 +134,14 @@ winnerrecordTypeId;
         console.log('==selectedfy===='+this.selectedfy);
         this.getThelatestAwards();
         this.checkActiveTabandgetInfo();
+        checkTheAnnualAnn({ 
+            fyId : this.selectedfy,        
+            }).then(result => {      
+                console.log('139');
+                console.log(JSON.parse(JSON.stringify(result)));  
+            this.isDisabled = JSON.parse(JSON.stringify(result));    
+            }).catch(error => {
+            });  
     }
     //@Mukesh for defect UAT_007
     @track myReasonVal;
@@ -144,13 +155,13 @@ winnerrecordTypeId;
     }
 
     getThelatestAwards(){
-
+        console.log(" selectedfy in 159 " + this.selectedfy);
     getTheCurrentFYTrends({ 
                 fyId : this.selectedfy   
             })
             .then(result => {
-                 this.currentdata = result.currentList;
-                 this.showTheAnnualAwards = result.showtheWinners;
+                this.currentdata = result.currentList;
+                this.showTheAnnualAwards = result.showtheWinners;
             })
             .catch(error => {
             }); 

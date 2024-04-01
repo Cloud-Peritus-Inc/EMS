@@ -13,6 +13,7 @@ public class LeaveRequestApexControllerTest {
         Resource_Resource_Relationship__c rrr;
         List<Resource_Role__c> resourceRoleList = new List<Resource_Role__c>();
         List<Contact> contactList = new List<Contact>();
+         List<User> userList = new List<User>();
         system.runAs(adminuser){
             
             resourceRoleList.add(techLead = TestDataFactory.createResourceRole('Software Engineer',false));
@@ -47,7 +48,8 @@ public class LeaveRequestApexControllerTest {
             System.debug('con'+ contactList);
             
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[2].Id); // Tech lead
-            rrr = TestDataFactory.createRRR(contactList[1].Id, true, contactList[0].Id); //EMP
+            rrr = TestDataFactory.createRRR(contactList[1].Id, true, contactList[2].Id); //EMP
+            rrr = TestDataFactory.createRRR(contactList[2].Id, true, contactList[0].Id); //EMP
         }
         User contactuser;
         User leaduser;
@@ -55,9 +57,16 @@ public class LeaveRequestApexControllerTest {
         //System.debug('### outside  in adminuser *(****' + adminuser.Id);
         system.runAs(adminuser){
             contactuser = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,contactList[0].Id,true); //tech
-            leaduser = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,contactList[2].Id,true); //pm
             empUser = Testdatafactory.createCommunityUser3WithAccAndContact(acc.id,contactList[1].Id,true); //emp
+            leaduser = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,contactList[2].Id,true); //pm
             System.debug('### leaduser'+ leaduser.Id);
+            
+            contactList[0].EMS_TM_User__c = contactuser.Id;
+            contactList[1].EMS_TM_User__c = empUser.Id;
+            contactList[2].EMS_TM_User__c = leaduser.Id;
+            UPDATE contactList;
+            
+            
         }
     }
     
@@ -118,5 +127,32 @@ System.assertEquals(LeaveRequestConstant.REJECTED, leaveVal1.EMS_LM_Status__c);
 System.assertEquals(System.today(), leaveVal1.EMS_LM_Approved_On__c);
 System.assertEquals('Rejected by PM', leaveVal1.Approver_1_Approved_Comments__c);*/
         }
+        Test.stopTest();
+    }
+    
+    
+    testmethod static void  getLeaveReqDataTest2(){
+        EMS_LM_Leave_History__c leaveVal1;
+        EMS_LM_Leave_History__c leaveVal2;
+        EMS_LM_Leave__c annualtypeId = [SELECT Id FROM EMS_LM_Leave__c WHERE Name = 'Annual Leave'];
+        User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they'];
+        User LeadUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail4@testclass.com.they'];
+        User empUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail5@testclass.com.they'];   
+        
+        Test.startTest();
+        system.runAs(resourceUser){
+            List<Id> leaveReqTabIdsList = new list<Id>();
+            List<EMS_LM_Leave_History__c> requests = new List<EMS_LM_Leave_History__c>();
+            requests.add(TestDataFactory.createLeaveRequest(resourceUser.ContactId, system.today(), system.today().adddays(1), annualtypeId.id, false, 'Approver 2 Pending'));
+            requests.add(TestDataFactory.createLeaveRequest(LeadUser.ContactId, system.today(), system.today().adddays(1), annualtypeId.id, false, 'Approver 2 Pending'));
+            requests[0].EMS_LM_2nd_Approver__c = resourceUser.Id;
+            requests[1].EMS_LM_2nd_Approver__c = resourceUser.Id;
+            insert requests;
+            for(EMS_LM_Leave_History__c leaveIds : requests) {
+                leaveReqTabIdsList.add(leaveIds.Id);
+            }
+            LeaveRequestApexController.LeaveRequestStatus result = LeaveRequestApexController.getLeaveReqData();
+        }
+        Test.stopTest();
     }
 }

@@ -4,6 +4,7 @@ import getTheScoringbyAllAward from '@salesforce/apex/RRController.getTheScoring
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import getFinalNominsWinners from '@salesforce/apex/RRController.getFinalNominsWinners';
 import updateTheWinners from '@salesforce/apex/RRController.updateTheWinners';
+import checkTheAnnualAnn from '@salesforce/apex/RRController.checkTheAnnualAnn';
 export default class Scroingaward extends LightningElement {
 @api selectedfy;
 @api awarddatalist = [];
@@ -16,8 +17,18 @@ nomstable = [];
 disableconfirmbutton = false;
 showtable = false;
 alreadyAnnounced = false;
+@api isDisabled;
 connectedCallback() {
-     this.getTheAllAward();    
+     this.getTheAllAward(); 
+     
+     checkTheAnnualAnn({ 
+        fyId : this.selectedfy,        
+        }).then(result => {      
+            console.log('28');
+            console.log(JSON.parse(JSON.stringify(result)));  
+        this.isDisabled = JSON.parse(JSON.stringify(result));    
+        }).catch(error => {
+        });    
 }
 
 handleChange(event) {
@@ -30,6 +41,8 @@ handleChange(event) {
             this.getTheAllAward();
             this.showthecampare = false;
             this.announcebutton = true; 
+            console.log('44');
+           
         }
        
 }
@@ -44,6 +57,7 @@ handleChange(event) {
             this.getThelInfoByAward();
         }else{
             console.log('47');
+             console.log(this.isDisabled);
             this.getTheAllAward();
             this.showthecampare = false;
             this.announcebutton = true; 
