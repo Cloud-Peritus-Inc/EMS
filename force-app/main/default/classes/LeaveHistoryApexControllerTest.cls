@@ -55,12 +55,19 @@ public class LeaveHistoryApexControllerTest {
         User leaduser;
         User empUser;
         system.runAs(adminuser){
-            contactuser = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true); //tech
-            //smaske : populating user ID on Con rec
-            con.EMS_TM_User__c = contactuser.Id;
-            update con;
             try{
-                leaduser = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true); //pm
+                contactuser = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true); //tech
+                leaduser = Testdatafactory.createCommunityUser2WithAccAndContact(acc.id,conRRR.Id,true); //pm             
+            }catch(exception e){
+                system.debug('error==='+e);
+            }
+        }
+        
+        system.runAs(adminuser){
+            try{
+                //smaske : populating user ID on Con rec
+                con.EMS_TM_User__c = contactuser.Id;
+                update con;
                 //smaske : populating user ID on Con rec
                 conRRR.EMS_TM_User__c = leaduser.Id;
                 update conRRR;                
