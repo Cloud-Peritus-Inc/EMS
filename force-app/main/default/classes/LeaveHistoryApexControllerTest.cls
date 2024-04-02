@@ -75,7 +75,8 @@ public class LeaveHistoryApexControllerTest {
                 system.debug('error==='+e);
             }
         }
-    }     
+    }   
+    
     static testMethod void userLevelOfApprovalTest() {
         User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they'];
         system.runAs(resourceUser){
@@ -97,10 +98,10 @@ public class LeaveHistoryApexControllerTest {
             EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, false);
             //EMS_LM_Leave_Credit__c patAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,paternitytype.id, true); 
             
-       //     LeaveHistoryApexController.IntBolleanWrapper result = LeaveHistoryApexController.userLevelOfApproval();
-          //  system.debug('-------Intbooleanwrapper-----'+result);
+            LeaveHistoryApexController.IntBolleanWrapper result = LeaveHistoryApexController.userLevelOfApproval();
+            system.debug('-------Intbooleanwrapper-----'+result);
             Test.startTest();
-         //   LeaveHistoryApexController.getLeaveTypesForUser(resourceUser.id);
+            LeaveHistoryApexController.getLeaveTypesForUser(resourceUser.id);
             Test.stopTest();
             /*System.assertEquals(1, result.levelOfApproval);
             system.assertEquals(con.Level_of_Approval__c, result.levelOfApproval);
