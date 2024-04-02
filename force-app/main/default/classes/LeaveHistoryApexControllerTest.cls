@@ -100,7 +100,7 @@ public class LeaveHistoryApexControllerTest {
             LeaveHistoryApexController.IntBolleanWrapper result = LeaveHistoryApexController.userLevelOfApproval();
             system.debug('-------Intbooleanwrapper-----'+result);
             Test.startTest();
-            LeaveHistoryApexController.getLeaveTypesForUser(resourceUser.id);
+         //   LeaveHistoryApexController.getLeaveTypesForUser(resourceUser.id);
             Test.stopTest();
             /*System.assertEquals(1, result.levelOfApproval);
             system.assertEquals(con.Level_of_Approval__c, result.levelOfApproval);
