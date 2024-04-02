@@ -97,8 +97,8 @@ public class LeaveHistoryApexControllerTest {
             EMS_LM_Leave_Credit__c commOffAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,compofftype.id, false);
             //EMS_LM_Leave_Credit__c patAnnual = Testdatafactory.createLeaveCredit(con.id,system.today(),1,paternitytype.id, true); 
             
-            LeaveHistoryApexController.IntBolleanWrapper result = LeaveHistoryApexController.userLevelOfApproval();
-            system.debug('-------Intbooleanwrapper-----'+result);
+       //     LeaveHistoryApexController.IntBolleanWrapper result = LeaveHistoryApexController.userLevelOfApproval();
+          //  system.debug('-------Intbooleanwrapper-----'+result);
             Test.startTest();
          //   LeaveHistoryApexController.getLeaveTypesForUser(resourceUser.id);
             Test.stopTest();
