@@ -75,8 +75,7 @@ public class LeaveHistoryApexControllerTest {
                 system.debug('error==='+e);
             }
         }
-    }   
-  /*  
+    }     
     static testMethod void userLevelOfApprovalTest() {
         User resourceUser = [SELECT Id,ContactId FROM User WHERE Email = 'testemail@testclass.com.they'];
         system.runAs(resourceUser){
@@ -112,7 +111,6 @@ public class LeaveHistoryApexControllerTest {
         }
         
     }
-*/
     static TestMethod void getLeaveTypesForUserTest(){
         User resourceUser = [SELECT Id,ContactId FROM User WHERE isActive=True limit 1];
          system.debug('84');
