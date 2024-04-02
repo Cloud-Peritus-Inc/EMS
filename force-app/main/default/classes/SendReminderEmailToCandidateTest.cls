@@ -37,19 +37,7 @@ public class SendReminderEmailToCandidateTest {
                                                              FROM EMS_EM_Onboarding_Request__c
                                                              WHERE Is_Confirm__c = false 
                                                              AND ContactId1__c =:conRec.Id];
-            
-            /*new EMS_EM_Onboarding_Request__c(
-EMS_EM_First_Name__c = 'Test',
-EMS_EM_Last_Name__c = 'Employee',
-EMS_EM_Gender__c = 'Male',
-Phone_Number__c = '0123456788',
-EMS_EM_Phone_Number__c = '9595959556',
-EMS_EM_DOB__c = Date.newInstance(1990, 1, 1),
-EMS_EM_Personal_Email__c = 'Test123885@gmail.com',
-ContactId1__c = conRec.Id,
-Date_of_Joining__c = System.today().addDays(3)
-);
-insert onboardingRecord;*/
+
             Test.setCreatedDate(onboardingRecord.Id, Date.today().addDays(-5));
             Test.startTest();
             SendReminderEmailToCandidate batchExecute = new SendReminderEmailToCandidate(); 
