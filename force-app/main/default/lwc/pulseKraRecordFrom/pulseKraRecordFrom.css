@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+
+.rate:not(:checked)>input {
+    position: absolute;
+    top: -9999px;
+}
+
+.rate:not(:checked)>label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+}
+
+.rate:not(:checked)>label:before {
+    content: '★ ';
+}
+
+.rate>input:checked~label {
+    color: #ffc700;
+}
+
+.rate:not(:checked)>label:hover,
+.rate:not(:checked)>label:hover~label {
+    color: #deb217;
+}
+
+.rate>input:checked+label:hover,
+.rate>input:checked+label:hover~label,
+.rate>input:checked~label:hover,
+.rate>input:checked~label:hover~label,
+.rate>label:hover~input:checked~label {
+    color: #c59b08;
+}
+
+.container{
+    padding: 0 30px 0 30px;
+}
+
+.container p{
+    margin-left: 10px;
+    color: rgb(18, 65, 235);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.textRichArea{
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.headerText{
+    margin-bottom: 10px;
+    padding: 5px;
+    width: -webkit-fill-available;
+    text-align: center;
+    justify-content: center;
+}
+
+.headerText h6{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.title{
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.BtnSubmit{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.BtnCancle{
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cards{
+    padding: 20px;
+    margin: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+    border: 2px solid gray;
+    border-radius: 5px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
