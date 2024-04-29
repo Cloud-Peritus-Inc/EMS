@@ -26,6 +26,16 @@
                 <default>false</default>
                 <label>KRA</label>
             </value>
+            <value>
+                <fullName>Org Level Goal</fullName>
+                <default>false</default>
+                <label>Org Level Goal</label>
+            </value>
+            <value>
+                <fullName>Resource Role Level Goal</fullName>
+                <default>false</default>
+                <label>Resource Role Level Goal</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

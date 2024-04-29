@@ -18,7 +18,7 @@ numberofcompletedTasks = 0;
 complaitionPercent = 0;
 
 connectedCallback() {
-  
+  console.log('MyActiveGoals connectedCallback');
 }
 
 

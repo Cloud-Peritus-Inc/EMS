@@ -106,7 +106,7 @@ public without sharing class onboardingTileController {
            Id goalRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('Goal').getRecordTypeId();
         List<Goal__c> goalList = new List<Goal__c>();
         goalList = [SELECT Id,Description__c,End_Date__c,Name,Goal_Name__c,is_Navigation_Required__c,Navigation_address__c,Notes__c,Resource__c,
-                        Start_Date__c,Status__c FROM Goal__c WHERE Status__c = 'Active' AND Resource__c=:urec.ContactId and RecordTypeId=:goalRecordTypeId ORDER BY End_Date__c DESC  ];
+                        Start_Date__c,Status__c,Type__c FROM Goal__c WHERE Status__c = 'Active' AND Type__c = 'Org Level Goal' AND Resource__c=:urec.ContactId and RecordTypeId=:goalRecordTypeId ORDER BY End_Date__c DESC  ];
         List<taskInfoWrap> taskInfoWrapper = new List<taskInfoWrap>();
           List<taskInfoWrap> taskInfoWrapper1 = new List<taskInfoWrap>();
           List<taskInfoWrap> taskInfoWrapper2 = new List<taskInfoWrap>();
