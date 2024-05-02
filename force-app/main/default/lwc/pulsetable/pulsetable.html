@@ -1,0 +1,109 @@
+<template>
+<lightning-card>
+     <div class="tableFixHead">
+    <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+      <thead>
+        <tr class="slds-line-height_reset" style="color:lightcoral">
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Pulse Id">Pulse Id</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Pulse Date">Pulse Date</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Career Development">Career Development</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Job Satisfaction">Job Satisfaction</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Work Environment">Work Environment</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Communication">Communication</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Work-Life Balance">Work-Life Balance</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Feedback and Recognition">Feedback and Recognition</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Leadership and Management">Leadership and Management</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Overall Rating">Overall Rating</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" style="width:100px;" title="Comments">Overall Comments</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" style="width:100px;" title="Status">Status</div>
+          </th>
+         
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <template if:true={pulseTableAvailble}>
+          <template for:each={tabledata} for:item="accWithContacts">
+            <tr key={accWithContacts.goalid}>
+              <td>
+                <div class="slds-wrap" style="width:100px;word-wrap:break-word;">
+                 <p>  <!-- <a href="javascript:void(0);" data-id={accWithContacts.goalid} onclick={handleNavClick}> </a> -->
+                      {accWithContacts.goalname}
+                   
+                  </p>
+                </div>
+              </td>
+              <td>
+                <div class="slds-wrap" style="width:100px;word-wrap:break-word;"><lightning-formatted-date-time value={accWithContacts.CheckinDate}></lightning-formatted-date-time></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.carrerRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.JobStatRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.WorkEnvRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.commRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.workLifeRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.FeedbackRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.LeadershipRating}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text  value={accWithContacts.overallPulseRating}></lightning-formatted-rich-text></div>
+              </td>
+
+              <td style="width:200px;word-wrap:break-word;">
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={accWithContacts.Comments}></lightning-formatted-rich-text></div>
+              </td>
+              <td>
+                <div class="slds-wrap">{accWithContacts.Status}</div>
+              </td>
+              
+            </tr>
+          </template>
+        </template>
+      </tbody>
+    </table>
+       <template if:false={pulseTableAvailble}>
+          <div class="slds-text-align_center slds-p-around_medium">
+            <center>No pulse records found for the selected fiscal year.</center>
+          </div>
+        </template>
+  </div>
+</lightning-card>
+
+</template>
