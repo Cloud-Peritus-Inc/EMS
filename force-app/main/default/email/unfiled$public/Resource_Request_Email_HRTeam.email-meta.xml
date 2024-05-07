@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When Project Manager raises a request for new resources, and the request email goes to HR</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Resource_Request_Email _HRTeam</name>
+    <style>freeForm</style>
+    <subject>Cloud Peritus: Request for a new resource</subject>
+    <textOnly>Dear HR Team,
+
+
+I hope this email finds you well. I request your assistance in hiring a new resource. As the {!Resource_Request__c.Requested_By__c}, I have evaluated our current workload and determined that additional support is necessary to meet project deadlines and ensure successful completion.
+
+
+The details regarding the required resource are as follows:
+
+Role: {!Resource_Request__c.Resource_Role1__c}
+
+Priority: {!Resource_Request__c.Request_Priority__c}
+
+Skills: {!Resource_Request__c.Resource_Skills__c}
+
+Optional Skill: {!Resource_Request__c.Skills__c}
+
+Status: {!Resource_Request__c.Status__c}
+
+Project: {!Resource_Request__c.Project__c}
+
+Expected StartDate:{!Resource_Request__c.Expected_Start_Date__c}
+
+Notes: {!Resource_Request__c.Notes__c}
+
+
+Thank you for your attention to this matter. Your support in this endeavor is vital to the success of the project.
+
+
+Regards
+
+{!Resource_Request__c.OwnerFullName}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
