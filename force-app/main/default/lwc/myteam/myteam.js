@@ -11,9 +11,13 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class Myteam extends LightningElement {
     @track selectedresource = '';
     @track secondarySelectedResource = '';
+    @track tertiarySelectedResource = ''; //Mukesh
+    @track quaternarySelectedResource = ''; //Mukesh
     resourceId;
     resourcemapdata = [];
-    reporteesmapdata = [];//smaske : [EN_13]
+    secondaryreporteesmapdata = [];//smaske : [EN_13]
+    tertiaryreporteesmapdata = []; //Mukesh
+    quaternaryreporteesmapdata = []; //Mukesh
     selectedfy;
     showtheFY = false;
     fymapdata = [];
@@ -29,7 +33,7 @@ export default class Myteam extends LightningElement {
     @wire(getMyResources)
     wiredRR({ error, data }) {
         if (data) {
-            console.log('-======---=getMyResources==--=-=-' + JSON.stringify(data));
+            //console.log('-======---=getMyResources==--=-=-' + JSON.stringify(data));
             var consts = data;
             var optionlist = [];
             for (var key in consts) {
@@ -45,7 +49,7 @@ export default class Myteam extends LightningElement {
     @wire(getTheCurrentFY)
     wiredFYS({ error, data }) {
         if (data) {
-            console.log('-======---=getTheCurrentFY==-data-=-=-' + JSON.stringify(data));
+            //console.log('-======---=getTheCurrentFY==-data-=-=-' + JSON.stringify(data));
             this.selectedfy = data.currentName;
             this.resourceId = data.currentResId;
             this.showGenPerKra = data.showGenPerKra;
@@ -66,20 +70,31 @@ export default class Myteam extends LightningElement {
 
     handleFYChange(event) {
         this.selectedfy = event.detail.value;
-        console.log('==selectedfy====' + this.selectedfy);
+        //console.log('==selectedfy====' + this.selectedfy);
         this.getTheKRA();
         this.getCheckInfo();
     }
     handleResourceChange(event) {
         this.showtheFY = true;
         this.selectedresource = event.detail.value;
-        console.log('==selectedresource====' + this.selectedresource);
-        this.myVal = '';        
+        //console.log('==selectedresource====' + this.selectedresource);
+        this.myVal = '';
         //smaske : [EN_13]: Reseting Values and fetching Reportees till root
         this.secondarySelectedResource = null;
+        this.tertiarySelectedResource = null;
+        this.quaternarySelectedResource = null;
         this.viewonlymode = false;
-        this.reporteesmapdata = null;
-        this.GetReporteesHierarchy();
+        this.secondaryreporteesmapdata = null;
+        this.tertiaryreporteesmapdata = null; //mukesh
+        this.quaternaryreporteesmapdata = null; // mukesh
+        this.GetReporteesHierarchy(this.selectedresource)
+            .then((optionlist) => {
+                // Assign optionlist to variable
+                this.secondaryreporteesmapdata = optionlist;
+            })
+            .catch((error) => {
+                console.error('Error occurred: ' + JSON.stringify(error));
+            });
 
         this.getTheKRA();
         //smaske : Calling getCheckInfo() method on resource change
@@ -88,15 +103,102 @@ export default class Myteam extends LightningElement {
     }
 
     //smaske : [EN_13]: New dropdown handler
+    /*  handleSecondaryResourceChange(event) {
+         this.secondarySelectedResource = event.detail.value;
+         console.log('==secondarySelectedResource====' + this.secondarySelectedResource);
+         if (this.secondarySelectedResource != null) {
+             this.viewonlymode = true;
+             this.myVal = '';
+             this.getTheKRA();
+             this.getCheckInfo();
+         }else{
+             this.viewonlymode = false;
+             this.myVal = '';
+             this.getTheKRA();
+             this.getCheckInfo();
+         }
+     } */
+    //mukesh: for new requirement New dropdown handler 
     handleSecondaryResourceChange(event) {
-        this.secondarySelectedResource = event.detail.value;
-        console.log('==secondarySelectedResource====' + this.secondarySelectedResource);
-        if (this.secondarySelectedResource != null) {
-            this.viewonlymode = true;
-            this.myVal = '';
-            this.getTheKRA();
-            this.getCheckInfo();
-        }else{
+        //Onchange based on Dropdown Name
+        let name = event.target.name;
+        let selectedresocure = event.detail.value;
+        if (name == 'secondary') {
+            if (selectedresocure != null) {
+                this.secondarySelectedResource = selectedresocure;
+                this.tertiaryreporteesmapdata = null; //mukesh
+                this.quaternaryreporteesmapdata = null; // mukesh
+                this.tertiarySelectedResource = null;
+                this.quaternarySelectedResource = null;
+                this.viewonlymode = true;
+                this.myVal = '';
+                this.getTheKRA();
+                this.getCheckInfo();
+                //geting reportees through selected resource id
+                this.GetReporteesHierarchy(this.secondarySelectedResource)
+                    .then((optionlist) => {
+                        // Assign optionlist to variable
+                        this.tertiaryreporteesmapdata = optionlist;
+                    })
+                    .catch((error) => {
+                        console.error('Error occurred: ' + JSON.stringify(error));
+                    });
+            } else {
+                this.tertiaryreporteesmapdata = [];
+                this.quaternaryreporteesmapdata = [];
+                this.secondarySelectedResource = null;
+                this.tertiarySelectedResource = null;
+                this.quaternarySelectedResource = null;
+                this.kratable = [];
+                this.cintable = [];
+                this.getTheKRA();
+                this.getCheckInfo();
+            }
+
+        } else if (name == 'tertiary') {
+            if (selectedresocure != null) {
+                this.tertiarySelectedResource = selectedresocure;
+                this.quaternaryreporteesmapdata = null; // mukesh
+                this.quaternarySelectedResource = null;
+                this.viewonlymode = true;
+                this.myVal = '';
+                this.getTheKRA();
+                this.getCheckInfo();
+                //geting reporees through selected resource id
+                this.GetReporteesHierarchy(this.tertiarySelectedResource)
+                    .then((optionlist) => {
+                        // Assign optionlist to variable
+                        this.quaternaryreporteesmapdata = optionlist;
+                    })
+                    .catch((error) => {
+                        console.error('Error occurred: ' + JSON.stringify(error));
+                    });
+            }else{
+                this.quaternaryreporteesmapdata = [];
+                this.tertiarySelectedResource = null;
+                this.quaternarySelectedResource = null;
+                this.kratable = [];
+                this.cintable = [];
+                this.getTheKRA();
+                this.getCheckInfo();
+            }
+
+        } else if (name == 'quaternary') {
+            if (selectedresocure != null) {
+                this.quaternarySelectedResource = selectedresocure;
+                this.viewonlymode = true;
+                this.myVal = '';
+                this.getTheKRA();
+                this.getCheckInfo();
+            }else{
+                this.quaternarySelectedResource = null;
+                this.kratable = [];
+                this.cintable = [];
+                this.getTheKRA();
+                this.getCheckInfo();
+            }
+
+        } else {
             this.viewonlymode = false;
             this.myVal = '';
             this.getTheKRA();
@@ -125,18 +227,25 @@ export default class Myteam extends LightningElement {
         console.log("IN GET KRA LWC");
         //smaske : [EN_13]: fetching records for selected records.
         let resourceId;
-        if (this.secondarySelectedResource) { 
-            resourceId = this.secondarySelectedResource;
-        } else {
+        if (this.selectedresource) {
             resourceId = this.selectedresource;
         }
+        if (this.secondarySelectedResource) {
+            resourceId = this.secondarySelectedResource;
+        }
+        if (this.tertiarySelectedResource) {
+            resourceId = this.tertiarySelectedResource;
+        }
+        if (this.quaternarySelectedResource) {
+            resourceId = this.quaternarySelectedResource;
+        } 
 
         getResourceKRAs({
             resourceId: resourceId,
             fyId: this.selectedfy
         })
             .then(result => {
-                console.log('====result getResourceKRAs =======' + JSON.stringify(result));
+                //console.log('====result getResourceKRAs =======' + JSON.stringify(result));
                 //smaske : [EN_13]: Disabling Edit KRA button when Indirect Reportee are selected
                 result.forEach(item => {
                     item.qualList.forEach(qualItem => {
@@ -148,10 +257,13 @@ export default class Myteam extends LightningElement {
                 });
 
                 //smaske : [EN_13]: Disabling CREATE GOAL button when Indirect Reportee are selected
-                if (this.viewonlymode == true) {
+                if(result.length > 0){
+                    if (this.viewonlymode == true) {
                     result[0].dontallowCreateGoals = true;
                 }
+                }
                 this.kratable = result;
+                
             })
             .catch(error => {
                 console.log('====Error=======' + JSON.stringify(error));
@@ -163,18 +275,25 @@ export default class Myteam extends LightningElement {
         console.log("IN getCheckInfo LWC");
         //smaske : [EN_13]: fetching records for selected records.
         let resourceId;
-        if (this.secondarySelectedResource) {
-            resourceId = this.secondarySelectedResource;
-        } else {
+        if (this.selectedresource) {
             resourceId = this.selectedresource;
         }
+        if (this.secondarySelectedResource) {
+            resourceId = this.secondarySelectedResource;
+        }
+        if (this.tertiarySelectedResource) {
+            resourceId = this.tertiarySelectedResource;
+        }
+        if (this.quaternarySelectedResource) {
+            resourceId = this.quaternarySelectedResource;
+        } 
 
         getTheCheckInInfo({
             resourceId: resourceId,
             fyId: this.selectedfy
         })
             .then(result => {
-                console.log('====cintable=======' + JSON.stringify(result));
+                //console.log('====cintable=======' + JSON.stringify(result));
                 this.cintable = result;
             })
             .catch(error => {
@@ -246,8 +365,8 @@ export default class Myteam extends LightningElement {
     }
 
     //smaske:[EN_13] New apex method call for fetching Reportees
-    GetReporteesHierarchy() {
-        getReporteesInHierarchy({ selectedResourceId: this.selectedresource })
+    /* GetReporteesHierarchy(resourceId) {
+        getReporteesInHierarchy({ selectedResourceId: resourceId })
             .then((result) => {
                 console.log('#IN GetReporteesInHierarchy Result LWC ' + JSON.stringify(result));
                 if (Object.keys(result).length > 0) {
@@ -256,24 +375,70 @@ export default class Myteam extends LightningElement {
                     for (var key in consts) {
                         optionlist.push({ label: key, value: consts[key] });
                     }
-                    optionlist.unshift({ label: '--None--', value: null});
-                    this.reporteesmapdata = optionlist;
+                    optionlist.unshift({ label: '--None--', value: null });
+                    this.secondaryreporteesmapdata = optionlist;
                 }
 
             })
             .catch((error) => {
                 console.log(JSON.stringify(error));
             });
+    } */
+
+    //Mukesh : New apex method call for fetching Reportees
+    GetReporteesHierarchy(resourceId) {
+        return new Promise((resolve, reject) => {
+            getReporteesInHierarchy({ selectedResourceId: resourceId })
+                .then((result) => {
+                    //console.log('#IN GetReporteesInHierarchy Result LWC ' + JSON.stringify(result));
+                    if (Object.keys(result).length > 0) {
+                        var consts = result;
+                        var optionlist = [];
+                        for (var key in consts) {
+                            optionlist.push({ label: key, value: consts[key] });
+                        }
+                        optionlist.unshift({ label: '--None--', value: null });
+                        resolve(optionlist);
+                    } else {
+                        resolve([]); // Return an empty array if no result
+                    }
+                })
+                .catch((error) => {
+                    console.log(JSON.stringify(error));
+                    reject(error);
+                });
+        });
     }
+
 
     //smaske : [EN_13]: Setting Visibility of DROPDOWN
     @api
     get setReporteesHierarchyVisibility() {
-        if (this.reporteesmapdata && this.reporteesmapdata.length > 0 && this.showGenPerKra == false) {
+        if (this.secondaryreporteesmapdata && this.secondaryreporteesmapdata.length > 0 && this.showGenPerKra == false) {
+            return true;
+        }
+        return false;
+    }
+    //Mukesh : []: Setting Visibility of DROPDOWN
+    get setReporteesHierarchyVisibility2() {
+        if (this.tertiaryreporteesmapdata && this.tertiaryreporteesmapdata.length > 0 && this.showGenPerKra == false) {
             return true;
         }
         return false;
     }
 
+    get setReporteesHierarchyVisibility3() {
+        if (this.quaternaryreporteesmapdata && this.quaternaryreporteesmapdata.length > 0 && this.showGenPerKra == false) {
+            return true;
+        }
+        return false;
+    }
+    //@Mukesh setting check-In Button Visibility
+    get setCheckInVisibility() {
+        if (this.secondarySelectedResource || this.tertiarySelectedResource || this.quaternarySelectedResource) {
+            return false;
+        }
+        return true;
+    }
 
 }

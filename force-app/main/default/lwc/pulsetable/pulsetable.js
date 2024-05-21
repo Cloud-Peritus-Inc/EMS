@@ -5,16 +5,15 @@ export default class Pulsetable extends LightningElement {
 @api resourceid;
 @api fyid;
 tbData;
-@track pulseTableAvailble=false;
+
+get pulseTableAvailble(){
+    if (this.tabledata && this.tabledata.length > 0){
+            return true;
+        }return false;
+}
 connectedCallback() {
     console.log('====tabledata======'+JSON.stringify(this.tabledata));
-    this.tbData= JSON.parse(JSON.stringify(this.tabledata))
-
-    if(this.tbData.length>0){
-        this.pulseTableAvailble=true;
-    }else{
-        this.pulseTableAvailble=false;
-    }
+    
 }
 
     handleNavClick(event){

@@ -11,9 +11,14 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     @track mode;
     @track iconName = "utility:chevrondown";
     @track iconParentName = "utility:chevronright";
-    @track kraTableAvailble = false;
     @track minDate;//smaske :[UAT_005]
 
+    
+    get kraTableAvailble() {
+        if (this.tabledata && this.tabledata.length > 0){
+            return true;
+        }return false;
+    }
 
     connectedCallback() {
         console.log('====resourceid===' + JSON.stringify(this.resourceid));
@@ -24,7 +29,6 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         if (this.tbData.length > 0) {
             console.log(this.tbData.nameid);
             console.log(this.tbData[0].nameid);           
-            this.kraTableAvailble = true;
             this.tbData.forEach(item => {
                 if (item.qualList && item.qualList.length > 0) {
                     this.qualListdata = true;
@@ -32,8 +36,6 @@ export default class Kratable extends NavigationMixin(LightningElement) {
                     this.qualListdata = false;
                 }
             });
-        } else {
-            this.kraTableAvailble = false;
         }
 
         //smaske :[UAT_005] : Setting the minimum date to tomorrow 

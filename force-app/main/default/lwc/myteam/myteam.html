@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 05-21-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
 <lightning-card >
         <div class="childparent">
@@ -14,7 +21,7 @@
 
          <div class="childparent2">
             <div class="childtext2">
-               <lightning-combobox name="" label="" value={selectedresource} placeholder="Select Resource"
+               <lightning-combobox name="primary" label="" value={selectedresource} placeholder="Select Resource"
                   options={resourcemapdata} onchange={handleResourceChange} required>
                </lightning-combobox>
          
@@ -32,12 +39,26 @@
       <template lwc:if={setReporteesHierarchyVisibility}>
          <div class="childparent2">
             <div class="childtext2">
-               <lightning-combobox name="" label="Indirect Reportees" value={secondarySelectedResource} placeholder="Select Resource"
-                  options={reporteesmapdata} onchange={handleSecondaryResourceChange}>
+         </div>
+      </template>
+      <!-- Mukesh : [ : New Dropdownes for Tree structure -->
+      <template lwc:if={setReporteesHierarchyVisibility2}>
+         <div class="childparent2">
+            <div class="childtext2">
+               <lightning-combobox name="tertiary" label="Ambigous" value={tertiarySelectedResource} placeholder="Select Resource"
+                  options={tertiaryreporteesmapdata} onchange={handleSecondaryResourceChange}>
                </lightning-combobox>
             </div>
          </div>
       </template>
+      <template lwc:if={setReporteesHierarchyVisibility3}>
+         <div class="childparent2">
+            <div class="childtext2">
+               <lightning-combobox name="quaternary" label="Ambigous" value={quaternarySelectedResource} placeholder="Select Resource"
+                  options={quaternaryreporteesmapdata} onchange={handleSecondaryResourceChange}>
+               </lightning-combobox>
+            </div>
+         </div>
       
     
       <hr class="new5">
@@ -60,16 +81,14 @@
     </lightning-layout-item>
     <lightning-layout-item size="5">
       <div class="green">
+         <template lwc:if={setCheckInVisibility}>
          <lightning-button label="Check In"  title="Check In" icon-name="utility:checkin" class="slds-m-left_x-small slds-float_right" onclick={showCheckInModalBox}></lightning-button>
+         </template>
          <template lwc:if={showGenPerKra}>
             <lightning-button label="Generate Performance KRA" title="Generate Performance KRA"
-               icon-name="standard:historical_adherence" class="slds-m-left_x-small slds-float_right" onclick={generatePerformanceKRAHandler}>
-            </lightning-button>
-         </template>      
      </div>
     </lightning-layout-item>
 </lightning-layout>
-</div>
 
     </lightning-card>
     

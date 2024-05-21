@@ -7,16 +7,16 @@ export default class Checkintable extends NavigationMixin(LightningElement) {
 @api fyid;
 selectedcheckinrec;
 wrapperdata;
-@track checkInsTableAvailble=false;
+
+get checkInsTableAvailble() {
+    if (this.tabledata && this.tabledata.length > 0) {
+        return true;
+    } return false;
+}
+
 connectedCallback() {
     console.log('====tabledata======'+JSON.stringify(this.tabledata));
-    this.tbData= JSON.parse(JSON.stringify(this.tabledata))
-
-    if(this.tbData.length>0){
-        this.checkInsTableAvailble=true;
-    }else{
-        this.checkInsTableAvailble=false;
-    }
+    
 }
 
     handleNavClick(event){
