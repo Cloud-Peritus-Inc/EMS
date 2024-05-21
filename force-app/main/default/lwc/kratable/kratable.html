@@ -1,0 +1,354 @@
+<template>
+<lightning-card>
+     <div class="tableFixHead">
+    <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+      <thead>
+        <tr class="slds-line-height_reset" style="color:purple">
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate"></div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Name">Name</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Fiscal Year">Fiscal Year</div>
+          </th>
+           <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Status">Status</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="" title="Rating">Rating</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+          </th>
+           <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Next Appraisal">Next Appraisal</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Last Modified">Last Modified</div>
+          </th>
+          <th class="tableheading" scope="col">
+            <div class="slds-truncate" title="Actions">Actions</div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <template if:true={kraTableAvailble}>
+          <template for:each={tabledata} for:item="accWithContacts">
+            <tr key={accWithContacts.nameid}>
+              <td data-label={accWithContacts.nameid}>
+                <template if:true={accWithContacts.qualList}>
+                  <div class="slds-truncate slds-p-left_large">
+                    <lightning-icon icon-name={iconParentName} data-id={accWithContacts.nameid} size="x-small"
+                      onclick={handleContactChild} class="slds-m-right_large"></lightning-icon>
+                  </div>
+                </template>
+              </td>
+              <td>
+                <div class="slds-wrap">
+                  <p> <a href="javascript:void(0);" data-id={accWithContacts.nameid} onclick={handleNavClick}>
+                      {accWithContacts.name}
+                    </a>
+                  </p>
+
+                </div>
+              </td>
+              <td>
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={accWithContacts.fyname}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap">{accWithContacts.status}</div>
+              </td>
+              <td style="width:100px;word-wrap:break-word;">
+                <div class="slds-wrap">{accWithContacts.rating}</div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-date-time value={accWithContacts.nextappdate}></lightning-formatted-date-time></div>
+              </td>
+              <td>
+                <div class="slds-wrap"><lightning-formatted-date-time value={accWithContacts.lastmodified}></lightning-formatted-date-time></div>
+              </td>
+
+              <td>
+                <lightning-button variant="brand" disabled={accWithContacts.dontallowCreateGoals} label="Create Goal" data-id={accWithContacts.nameid} onclick={handleGoalCreateClick}  title="Create Goal" icon-name="utility:new" class="slds-m-left_x-small"></lightning-button>
+              </td>
+            </tr>
+            <!--contacts table -starts-->
+            <template if:true={accWithContacts.qualList}>
+              <tr key={accWithContacts.nameid} data-parentid={accWithContacts.nameid} ><!--class="hideContent"-->
+                <template if:true={accWithContacts.qualList}>
+                  <td colspan="9">
+                    <div class="contacttableFixHead">
+                  <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header" style="display:table;">
+                    <thead>
+                      <tr class="slds-line-height_reset">
+                       
+                        <th class="slds-border_right tableheading"  scope="col">
+                          <div class="slds-truncate" title="Name">Name</div>
+                        </th>
+                        <th class="slds-border_right tableheading" scope="col">
+                          <div class="slds-truncate" title="Start Date">Start Date</div>
+                        </th>
+                        <th class="slds-border_right tableheading" scope="col" >
+                          <div class="slds-truncate" title="End Date">End Date</div>
+                        </th>
+                        <th class="slds-border_right tableheading" scope="col">
+                          <div class="slds-truncate" title="Status">Status</div>
+                        </th>
+
+                        <th class="slds-border_right tableheading" scope="col">
+                          <div class="" title="Type">Type</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+                        </th>
+                        <th class="slds-border_right tableheading" scope="col"  >
+                          <div class="" title="Rating">Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+                        </th>
+                        <th class="slds-border_right tableheading" scope="col"  >
+                          <div class="" title="Rating">Overall Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+                        </th>
+                        <th class="slds-border_right tableheading" scope="col"  >
+                          <div class="slds-truncate" title="Actions"> Actions</div>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <template for:each={accWithContacts.qualList} for:item="contactItem">
+                        <tr key={contactItem.nameid}>
+                          
+                          <td >
+                            <div class="slds-wrap"><a href="javascript:void(0);" data-id={contactItem.nameid} onclick={handleConNavClick}>
+                      {contactItem.name}
+                    </a></div>
+                          </td>
+                          <td>
+                            <div class="slds-wrap"> <lightning-formatted-date-time value={contactItem.qstartdate}></lightning-formatted-date-time></div>
+                          </td>
+                          <td style="word-wrap:break-word;" >
+                            <div class="slds-wrap" ><lightning-formatted-date-time value={contactItem.qendate}></lightning-formatted-date-time></div>
+                          </td>
+                          <td>
+                            <div class="slds-wrap">{contactItem.status}</div>
+                          </td>
+                          <td>
+                            <div class="slds-wrap">
+                               {contactItem.typeval}
+                              </div><!--response-->
+                          </td>
+                          <td >
+                            <div class="slds-wrap" >
+                               {contactItem.rating}
+                              </div><!--email-->
+                          </td>
+                          <td >
+                            <div class="slds-wrap" ><lightning-formatted-rich-text  value={contactItem.overallRating}></lightning-formatted-rich-text>
+                              </div>
+                          </td>
+                          <td >
+                            <div class="slds-wrap" >
+                             <lightning-button-icon icon-name="action:preview"  size="large"  variant="bare" alternative-text="View KRA" data-id={contactItem.nameid} onclick={handleConNavClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                             <template if:true={contactItem.allowedit}>
+                             <lightning-button-icon icon-name="action:edit"  size="large"     variant="bare" alternative-text="Edit KRA"  data-id={contactItem.nameid} onclick={handleConNavEditClick} class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;&nbsp;
+                             </template>
+                             <lightning-button-icon icon-name="action:goal"  size="large"     variant="bare" alternative-text="View Goals"  data-id={contactItem.nameid} onclick={handleGaolClick} class="slds-m-left_xx-small"></lightning-button-icon>
+                              </div><!--email-->
+                          </td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table> </div>
+                  </td>
+                </template>
+              </tr>
+            </template>
+            <!--contacts table -ends-->
+
+          </template>
+        </template>
+      </tbody>
+    </table>
+       <template if:false={kraTableAvailble}>
+          <div class="slds-text-align_center slds-p-around_medium">
+            <center>No KRA records found for the selected fiscal year.</center>
+          </div>
+        </template>
+  </div>
+
+
+</lightning-card>
+
+<!--Goal modal start -->      
+   <template if:true={showGoalModal}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideGoalModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Goals</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                <p><i></i></p> <br/>
+                <div class="c-container">
+                  <c-showkragoals receivedkraid={selectedKraQuaterly} tab={tab} viewonlymode={viewonlymode} > </c-showkragoals> 
+                </div>
+
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hideGoalModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
+ <!-- modal end -->
+
+
+<!--check In modal start -->      
+   <template if:true={showKRAViewModal}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideKRAViewModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Quarterly KRA View</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p><i></i></p> <br/>
+                <div class="c-container">
+                  <!-- VIEW MODE -->
+                  <c-quarterlykraedit mode={mode} receivedkraid={selectedKraQuaterly} selectedresource={resourceid}> </c-quarterlykraedit>
+                </div>
+
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hideKRAViewModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
+ <!-- modal end -->
+
+ <!--check In modal start -->      
+   <template if:true={showKRAEditModal}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideKRAEditModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Quarterly KRA Edit</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+            <!-- EDIT MODE -->
+            <c-quarterlykraedit mode={mode} receivedkraid={selectedKraQuaterly} selectedresource={resourceid} onclose={hideKRAEditModalBox}> </c-quarterlykraedit>
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hideKRAEditModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
+ <!-- modal end -->
+
+  <!--goal Creation modal start -->      
+   <template if:true={showGoalCreationModal}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideGoalCreateModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">New Goal</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+            <lightning-layout>
+             <lightning-layout-item flexibility="auto" padding="around-small">
+                 <lightning-input type="text" name="goalname" label="Name" placeholder="Type a goal..."  onchange={handleGoalNameChange} value={goalname} required></lightning-input>
+                  <lightning-input type="date" name="startdate" label="Start Date" value={goalstartdate} onchange={handleGoalStartChange} required min={minDate} ></lightning-input>
+                  <lightning-input type="date" name="enddate" label="End Date" value={goalenddate} onchange={handleGoalEndChange} required min={minDate}></lightning-input>
+             </lightning-layout-item>
+              <lightning-layout-item flexibility="auto" padding="around-small">
+                 <lightning-input-rich-text
+                     value={myVal}
+                     label = 'Description'
+                     label-visible = true
+                     onchange={handledescChange} 
+                     required >
+                  </lightning-input-rich-text>
+             </lightning-layout-item>
+         </lightning-layout>
+                 
+             <center>
+               <lightning-button variant="destructive" label="Cancel" title="Cancel" onclick={hideGoalCreateModalBox} class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
+                <lightning-button variant="brand" label="Create" title="Create" onclick={createTheGoal} class="slds-m-left_x-small"></lightning-button>
+               </center>  
+
+          </div>
+            
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hideGoalCreateModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
+ <!-- modal end -->
+
+</template>
