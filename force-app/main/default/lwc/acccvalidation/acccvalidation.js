@@ -602,6 +602,10 @@ map2
             this.disableRevise = true;
             this.retrieveAssignmentRecords();
             this.deletedRecordsList = [];
+            /* TS_005 -05-06-2024  -Vamsi
+            Enabling the Assginment for previous week if timesheet was not submitted
+            */
+            this.showProjectTask=false;
         }
         // console.log('week'+this.week);
     }

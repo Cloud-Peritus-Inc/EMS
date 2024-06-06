@@ -299,7 +299,6 @@
                             disabled={disableSubmited}>
                         </lightning-combobox> -->
                         <template if:false={showProjectTask}>
-                           
                         <!--<template if:true={it.value.projectAssignAvail}>-->
                               <lightning-combobox name="Project_Task__c"
                                 variant="label-hidden" placeholder="Choose"
@@ -325,7 +324,6 @@
                         <template if:true={showProjectTask}>
                           
                         <template if:true={it.value.projectAssignAvail}>
-                            
                             	<lightning-input name="Project_Task__c" variant="label-hidden" data-id={it.index}
 									value={it.value.Project_Task__c} disabled></lightning-input>
                          <!-- <lightning-combobox name="Project_Task__c"
@@ -339,7 +337,7 @@
                         
                         </template>
                         <template if:false={it.value.projectAssignAvail}>
-                            
+                         
                             <lightning-combobox name="Project_Task__c"
                                 variant="label-hidden" placeholder="Choose"
                                 data-id={it.index} value={it.value.Project_Task__c}
