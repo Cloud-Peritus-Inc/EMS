@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "499e18f0-9103-4361-8912-9679a3abbcba",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Onboarding_Request_Detail__c",
+  "id" : "2865acf6-dd2d-4aa7-85da-200c3c9cf737",
+  "label" : "Onboarding Request Detail",
+  "objectApiName" : "EMS_EM_Onboarding_Request__c",
+  "routeType" : "detail-a0J",
+  "type" : "route",
+  "urlPrefix" : "ems-em-onboarding-request"
+}

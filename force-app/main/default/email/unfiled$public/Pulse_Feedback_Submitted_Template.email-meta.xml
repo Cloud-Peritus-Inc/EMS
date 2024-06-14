@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When the CHECKIN user Submits the PLUSE (Feeback) Send a confirmation email</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Pulse Feedback Submitted Template</name>
+    <style>freeForm</style>
+    <subject>Performance: Feedback Submitted for {!Goal__c.Check_In_By__c}</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+
+Congratulations! You have successfully submitted your feedback for your reporting manager, {!Goal__c.Check_In_By__c}.
+
+
+Thank you for submitting the feedback!
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

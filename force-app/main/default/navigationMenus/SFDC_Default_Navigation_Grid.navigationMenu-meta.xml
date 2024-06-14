@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NavigationMenu xmlns="http://soap.sforce.com/2006/04/metadata">
+    <container>Grid</container>
+    <containerType>Network</containerType>
+    <label>Default Navigation</label>
+    <navigationMenuItem>
+        <defaultListViewId>All</defaultListViewId>
+        <label>My leave</label>
+        <position>1</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>EMS_LM_Leave_History__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <defaultListViewId>Resource</defaultListViewId>
+        <label>Employees</label>
+        <position>2</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Contact</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Project Assignees</label>
+        <position>3</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>EMS_TM_Assignment__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Performance Management</label>
+        <position>4</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <target>/performance-management</target>
+        <type>InternalLink</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <defaultListViewId>AllContacts</defaultListViewId>
+        <label>Contact</label>
+        <position>5</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <target>Contact</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Onboarding Requests</label>
+        <position>6</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>EMS_EM_Onboarding_Request__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Grid Configuration Settings</label>
+        <position>7</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Grid_Configuration__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <defaultListViewId>IT_Team_Task</defaultListViewId>
+        <label>Task</label>
+        <position>8</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <target>Task</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <defaultListViewId>MyCases</defaultListViewId>
+        <label>Service Request</label>
+        <position>9</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Case</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Timesheets</label>
+        <position>10</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>EMS_Timesheet__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Pending On Me</label>
+        <position>11</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>/pending-on-me</target>
+        <type>InternalLink</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Project Allocation</label>
+        <position>12</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <target>/projectallocation</target>
+        <type>InternalLink</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Project</label>
+        <position>13</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>EMS_TM_Project__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+</NavigationMenu>

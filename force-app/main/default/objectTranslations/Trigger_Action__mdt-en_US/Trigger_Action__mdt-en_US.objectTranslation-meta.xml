@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Trigger Action</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Trigger Actions</value>
+    </caseValues>
+    <layouts>
+        <layout>Trigger Action Layout</layout>
+        <sections>
+            <label></label>
+            <section>Context (Choose One)</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Trigger Action Information</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Description_is_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Flow_Name</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Must_Choose_A_Context</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Only_One_Context</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Recursion_Only_For_Flows</name>
+    </validationRules>
+</CustomObjectTranslation>

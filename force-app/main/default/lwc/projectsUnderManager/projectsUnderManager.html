@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="Projects under Manager">
+    <template if:true={data}>
+      <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th scope="col">
+              <div class="slds-truncate" title="Name">Name</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Record Type">Record Type</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Start Date">Start Date</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="End Date">End Date</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Status">Status</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <template for:each={data} for:item="project">
+            <tr key={project.Id}>
+              <td data-label="Name">
+                <div class="slds-truncate">{project.Name}</div>
+              </td>
+              <td data-label="Record Type">
+                <div class="slds-truncate">{project.RecordTypeId}</div>
+              </td>
+              <td data-label="Start Date">
+                <div class="slds-truncate">{project.EMS_TM_StartDate__c}</div>
+              </td>
+              <td data-label="End Date">
+                <div class="slds-truncate">{project.EMS_TM_EndDate__c}</div>
+              </td>
+              <td data-label="Status">
+                <div class="slds-truncate">{project.EMS_TM_Status__c}</div>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </template>
+    <!-- <template if:false={data}>
+      <div class="slds-align_absolute-center">No projects found under the manager.</div>
+    </template> -->
+  </lightning-card>
+</template>

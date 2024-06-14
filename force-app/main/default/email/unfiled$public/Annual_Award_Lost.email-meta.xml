@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send an Email alert to the Award Looser</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Annual Award Lost</name>
+    <style>freeForm</style>
+    <subject>RnR: Update on award nomination</subject>
+    <textOnly>Dear {!Reward_And_Recognition__c.Resource__c},
+
+
+We wanted to reach out and inform you of the status of your award nomination for {!Reward_And_Recognition__c.Award_Type__c} of {!Reward_And_Recognition__c.Fiscal_Year__c} has been updated to &quot;Lost&quot;.
+
+
+While you may not have won this time, your contributions and efforts were valued and appreciated. The nomination process is highly competitive, and your achievements have not gone unnoticed.
+
+
+We encourage you to continue your outstanding work, and we hope to see your continued success in future opportunities.
+
+
+Thank you for your participation, and we look forward to celebrating your achievements in the future.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

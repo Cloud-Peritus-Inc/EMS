@@ -1,0 +1,121 @@
+<template>
+	<lightning-card>
+        
+		<!-- <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large"> -->
+            
+			<!-- <div class="slds-modal__container"> -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closeAction}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                    size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                    </button>
+					<h2 class="slds-text-heading_medium slds-hyphenate">Employee Project Allocation</h2>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium slds-scrollable">
+					<div class="slds-p-around_large">
+						<table class="slds-table  slds-table_bordered fixed_header">
+							<thead>
+								<tr class="slds-line-height_reset">
+									<th class="" scope="col">
+										<div class="slds-truncate" title="Select Contact"></div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate slds-align_absolute-center" title="Employee Name">Employee Name</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate slds-align_absolute-center" title="Project Nam">Project Name</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate slds-align_absolute-center" title="Project Allocation">Project Allocation</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate slds-align_absolute-center" title="New Project">New Project</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate slds-align_absolute-center" title="New Project Allocation">New Project Allocation
+										</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate slds-align_absolute-center" title="Status">Status</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate slds-align_absolute-center" title="Start Date">Start Date</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate slds-align_absolute-center" title="Close Date">Close Date</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template for:each={resultRecords} for:item="items">
+									<tr key={items.Id}>
+										<td data-label="Select Project" >
+											<div class="slds-truncate" title="Select Project">
+												<lightning-input type="checkbox" name="input1"></lightning-input>
+											</div>
+										</td>
+										<td data-label="Project Name">
+											<div class="slds-truncate slds-align_absolute-center" title="Employee Name">{items.EmployeeName}</div>
+										</td>
+										<td data-label="Project Name">
+											<div class="slds-truncate slds-align_absolute-center" title="Project Name">{items.ProjectName}</div>
+										</td>
+										<td data-label="Project Allocation">
+											<div class="slds-truncate slds-align_absolute-center" title="Project Allocation">
+												{items.ProjectAllocation}</div>
+										</td>
+										<td data-label="Select New Project">
+											<div class="slds-truncate slds-align_absolute-center" title="Select New Project">
+												<lightning-combobox name="New Project List" options={projectsList}>
+												</lightning-combobox>
+											</div>
+										</td>
+										<td data-label="Select New Project Allocation">
+											<div class="slds-truncate slds-align_absolute-center" title="Select New Project Allocation">
+												<lightning-input type="number" name="new allocation" min="0" max="100"
+													formatter="percent-fixed"></lightning-input>
+											</div>
+										</td>
+										<td data-label="Select Status">
+											<div class="slds-truncate slds-align_absolute-center" title="Select Status">
+												<lightning-combobox name="New Project List" options={picklistValues}>
+												</lightning-combobox>
+											</div>
+										</td>
+										<td data-label="Select Start Date">
+											<div class="slds-truncate slds-align_absolute-center" title="Select Start Date">
+												<lightning-input type="date" name="start date"></lightning-input>
+											</div>
+										</td>
+										<td data-label="Select Close Date">
+											<div class="slds-truncate slds-align_absolute-center" title="Select Close Date">
+												<lightning-input type="date" name="close date"></lightning-input>
+											</div>
+										</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+                        <br>
+                       <!-- <div slot="footer" class="slds-align_absolute-center">
+                            <lightning-button name="Cancel" label="Cancel" class="slds-p-around_xx-small" variant="destructive" onclick={handleCancel}></lightning-button>
+                            <lightning-button name="Save Project" label="Save" class="slds-p-around_xx-small" variant="brand" onclick={saveData}></lightning-button>
+                        </div> -->
+						
+					</div>
+				</div>
+				<footer class="slds-modal__footer slds-align_absolute-center">
+							<lightning-button name="Cancel" label="Cancel" class="slds-p-around_xx-small" variant="destructive" onclick={handleCancel}></lightning-button>
+                            <lightning-button name="Save Project" label="Save" class="slds-p-around_xx-small" variant="brand" onclick={saveData}></lightning-button>
+						</footer>
+			<!-- </div> -->
+		<!-- </section> -->
+		
+        
+	</lightning-card>
+    
+</template>

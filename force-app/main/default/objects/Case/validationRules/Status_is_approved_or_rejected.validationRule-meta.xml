@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_is_approved_or_rejected</fullName>
+    <active>false</active>
+    <errorConditionFormula>OR(
+   TEXT(PRIORVALUE(Status)) = &apos;Closed&apos;,
+   TEXT(PRIORVALUE(Status)) = &apos;Resignation Approved&apos;,
+			TEXT(PRIORVALUE(Status)) = &apos;Resignation Rejected&apos;
+)</errorConditionFormula>
+    <errorMessage>Closed or Approved Requests not updated</errorMessage>
+</ValidationRule>

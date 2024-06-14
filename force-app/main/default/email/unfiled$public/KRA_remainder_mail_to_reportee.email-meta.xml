@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>KRA remainder mail to reportee</name>
+    <style>freeForm</style>
+    <subject>Performance: Reminder notification to submit the self rating</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+
+This is a reminder that you have not provided the self-rating for the current {!Goal__c.Goal_Name__c}, which is due.
+
+
+
+Please click here to provide the self-rating on an immediate basis to avoid any strikes.
+
+
+
+Best Regards,
+
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

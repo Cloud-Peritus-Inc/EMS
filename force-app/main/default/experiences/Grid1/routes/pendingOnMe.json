@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "3bf4ca7d-54da-433c-a31a-d78afb7b7893",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Pending_On_Me__c",
+  "id" : "b0344b3c-1166-47dc-99ef-5a1db5be10a4",
+  "label" : "Pending On Me",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-pending-on-me",
+  "type" : "route",
+  "urlPrefix" : "pending-on-me"
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Send Due Remainder to Employees</name>
+    <style>freeForm</style>
+    <subject>Timesheet: Reminder to fill your timesheet for this week</subject>
+    <textOnly>Dear Employees,
+
+
+This is a reminder that your weekly timesheet is due today. Please complete and submit your timesheet before the end of the day.
+
+If you have any questions about your timesheet, then please contact your supervisor.
+
+
+Access your timesheet here.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

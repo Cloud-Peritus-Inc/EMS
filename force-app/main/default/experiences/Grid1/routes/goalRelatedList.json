@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "dffe26b5-6e99-430a-8d00-da207f6f65e7",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Goal_Related_List__c",
+  "id" : "36373759-adcc-4483-8290-05922d1eb9a0",
+  "label" : "Goal Related List",
+  "objectApiName" : "Goal__c",
+  "routeType" : "relatedlist-a0f",
+  "type" : "route",
+  "urlPrefix" : "goal"
+}

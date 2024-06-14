@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "297a7769-8c2b-49a2-a9d6-3ec8da8b5961",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Timesheet_Line_Items_Detail__c",
+  "id" : "2834ba37-7bcd-469c-94d0-b9d661d11126",
+  "label" : "Timesheet Line Items Detail",
+  "objectApiName" : "EMS_TM_Timesheet_Record__c",
+  "routeType" : "detail-a06",
+  "type" : "route",
+  "urlPrefix" : "ems-tm-timesheet-record"
+}

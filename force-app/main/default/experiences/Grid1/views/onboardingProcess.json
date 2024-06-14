@@ -1,0 +1,68 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "21ec7046-3550-4aa3-bf62-0f1f36808100",
+  "label" : "Onboarding Process",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "0fd56460-346d-4bfa-bd52-81e8a68e4551",
+          "columns" : [ {
+            "UUID" : "f446509f-b72c-48d6-873a-f08e4ecad43c",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "0fd56460-346d-4bfa-bd52-81e8a68e4551",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : { },
+          "componentName" : "c:onboardingProcessForEmployee",
+          "id" : "fbbcafb7-42f0-4864-9d7a-846f2f43c13b",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "f446509f-b72c-48d6-873a-f08e4ecad43c",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "cd4c370a-7a5b-4917-9d07-649c04d26415",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Onboarding Process"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "834cca10-16a1-4926-a4b8-6f176597ef88",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "8ab1e0e0-911d-4f43-afa5-e48d9359c465",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-onboarding-process"
+}

@@ -1,0 +1,6 @@
+<div style="font-size: 0.875rem; font-family: 'Salesforce Sans',Arial,sans-serif;">Hello {{{Recipient.FirstName}}}...<br/>
+            <br/>
+            <p style="text-align: center;"><span><a href="[[SURVEY_INVITATION_URL]]" style="[[DISABLE_LINK]] vertical-align: middle; border: 1px solid rgb(221, 219, 218); transition: border .15s linear; background-color: rgb(0, 112, 210); border-color: rgb(0, 112, 210); color: rgb(255, 255, 255); display: inline-block; background-clip: border-box; border: 1px solid transparent; border-radius: .25rem; line-height: 1.875rem; text-decoration: none; -webkit-appearance: none; white-space: normal; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; padding: 0 1rem;" target="_blank">Open Survey</a></span></p>
+            <br/>
+            Thank you,<br/>
+            {{{Organization.Name}}}</div>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Surrender the Customer Laptop - if resou</label>
+    <protected>false</protected>
+    <values>
+        <field>Assigned_To__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Due_Date_Days__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>Navigation_Required__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Navigation_address__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Notification_Required_HR__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Owner_Type__c</field>
+        <value xsi:type="xsd:string">Reporting Manager</value>
+    </values>
+    <values>
+        <field>Task_Subject__c</field>
+        <value xsi:type="xsd:string">Surrender the Customer Laptop - if resource is billable</value>
+    </values>
+    <values>
+        <field>Unique_Identifier__c</field>
+        <value xsi:type="xsd:string">OFF00013</value>
+    </values>
+</CustomMetadata>

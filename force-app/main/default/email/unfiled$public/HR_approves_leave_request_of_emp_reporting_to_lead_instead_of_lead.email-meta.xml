@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>HR approves leave request of emp reporting to lead,instead of lead</name>
+    <style>freeForm</style>
+    <subject>Leave: {!EMS_LM_Leave_History__c.Leave_Type_Name__c} request is {!EMS_LM_Leave_History__c.EMS_LM_Status__c} by {!EMS_LM_Leave_History__c.EMS_LM_Current_Approver__c}</subject>
+    <textOnly>Dear Employee,
+
+
+The {!EMS_LM_Leave_History__c.Leave_Type_Name__c} request of {!Contact.Name} - {!Contact.EMS_RM_Employee_Id__c} for the following date(s) has been {!EMS_LM_Leave_History__c.EMS_LM_Status__c}.
+
+
+
+Leave Start Date
+
+Leave End Date
+
+Status
+
+Day
+
+{!EMS_LM_Leave_History__c.EMS_LM_Leave_Start_Date__c}
+
+{!EMS_LM_Leave_History__c.EMS_LM_Leave_End_Date__c}
+
+{!EMS_LM_Leave_History__c.EMS_LM_Status__c}
+
+{!EMS_LM_Leave_History__c.EMS_LM_Day__c}
+
+
+Remarks: {!EMS_LM_Leave_History__c.Approver_1_Approved_Comments__c}{!EMS_LM_Leave_History__c.EMS_LM_Remarks__c} Approver Name: {!EMS_LM_Leave_History__c.EMS_LM_Current_Approver__c}
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

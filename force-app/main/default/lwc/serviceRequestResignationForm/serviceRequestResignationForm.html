@@ -1,0 +1,105 @@
+<template>
+	<template if:false={openModal}>
+		<lightning-card variant="Narrow" size="large">
+			<div data-modal="custom-modal" class="modalclass">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" cd vf class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<lightning-button-icon icon-name="utility:close" class="slds-modal__close "
+								alternative-text="Close" title="Close" size="large" variant="bare-inverse"
+								onclick={handleCancel}>
+							</lightning-button-icon>
+							<font size="5">Offboarding Request</font>
+						</header>
+
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+							<div
+								class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+							
+							</div>
+
+							<!------------------------------------   TO SHOW OFFBOARDING DETAILS   --------------------------------------------->
+							<div class="row">
+								<div class="column">
+									<lightning-record-view-form
+											record-id={usercontactId}
+											object-api-name="Contact"
+									>
+								<!--	<lightning-layout>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+										<lightning-output-field field-name="Name">
+										</lightning-output-field>
+									</lightning-layout-item>
+									</lightning-layout> -->
+									<lightning-layout>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+										<lightning-output-field field-name="EMS_RM_Employee_Id__c">
+										</lightning-output-field>
+									</lightning-layout-item>
+									</lightning-layout>
+									<lightning-layout>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+										<lightning-output-field field-name="Department__c">
+										</lightning-output-field>
+									</lightning-layout-item>
+									</lightning-layout>
+									<!--<lightning-layout>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+										<lightning-output-field field-name="EMS_RM_Notice_Period__c">
+										</lightning-output-field>
+									</lightning-layout-item>
+									</lightning-layout> -->
+									</lightning-record-view-form>
+						
+								</div>
+								<div class="column1">
+							<lightning-record-edit-form object-api-name="Case" onsuccess={handleSuccess}
+								onerror={handleError} onsubmit={onSubmitHandler}>
+								<!--lightning-messages> </lightning-messages-->
+								
+                             <lightning-layout>
+									<lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+										<label for="fieldid"><span style="color:red">* </span> Reason for Filing for Resignation</label>
+										<lightning-input-field  id="fieldid" variant="label-hidden" field-name="Description" required>
+										</lightning-input-field>
+									</lightning-layout-item>
+									
+								</lightning-layout>
+
+								<lightning-layout>
+                                    <lightning-layout-item flexibility="auto" style="width:50%" padding="around-small">
+										    <label><span style="color:red">* </span>Desired Last Working Date</label>
+										<lightning-input-field  variant="label-hidden" field-name="Last_Working_Date__c"  value ={lastworkingDate} onchange={handleLastWorkdate}>
+										</lightning-input-field>
+									</lightning-layout-item>
+									</lightning-layout>
+
+							
+
+								<!--<center> -->
+									<br/>
+									<div class="slds-float_right slds-p-right_small">
+									<lightning-button label="Close" title="Close" icon-name="utility:close"
+										onclick={handleCancel}></lightning-button>
+									&nbsp;&nbsp; &nbsp;&nbsp; <lightning-button class="slds-m-top_small" variant="brand"
+										type="submit" name="update" label="Save">
+									</lightning-button>
+									</div>
+								<!--</center> -->
+							</lightning-record-edit-form>
+					
+
+								</div>
+							</div>
+							
+
+						</div>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+
+		</lightning-card>
+	</template>
+</template>

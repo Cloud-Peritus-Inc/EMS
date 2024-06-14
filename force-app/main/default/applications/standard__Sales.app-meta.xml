@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>standard-home</defaultLandingTab>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Lead</tabs>
+    <tabs>standard-Opportunity</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>standard-Dashboard</tabs>
+    <tabs>standard-Chatter</tabs>
+    <tabs>standard-File</tabs>
+    <tabs>standard-Product2</tabs>
+    <tabs>standard-Forecasting3</tabs>
+    <tabs>standard-Quote</tabs>
+    <tabs>Resource_Role__c</tabs>
+    <tabs>Resource_Resource_Relationship__c</tabs>
+    <tabs>Grid_Configuration__c</tabs>
+    <tabs>Resource_Request__c</tabs>
+    <tabs>Expense__c</tabs>
+    <tabs>Fiscal_Year__c</tabs>
+    <tabs>PayRoll__c</tabs>
+    <tabs>Off_boarding_Request__c</tabs>
+    <tabs>EMS_RM_Job_Application__c</tabs>
+    <tabs>EMS_Job_Opening__c</tabs>
+    <tabs>EMS_Job_Description__c</tabs>
+    <tabs>Schedule_And_Feedback__c</tabs>
+    <tabs>Office_Location__c</tabs>
+    <tabs>Project_Task__c</tabs>
+</CustomApplication>

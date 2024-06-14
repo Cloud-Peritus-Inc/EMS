@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "fae832d4-8312-45c0-adec-86a80452e66a",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "goal_KRA_View__c",
+  "id" : "21066416-cde4-40cd-bc67-0f9e1bb212f7",
+  "label" : "goal KRA View",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-goal-kra-view",
+  "type" : "route",
+  "urlPrefix" : "goal-kra-view"
+}

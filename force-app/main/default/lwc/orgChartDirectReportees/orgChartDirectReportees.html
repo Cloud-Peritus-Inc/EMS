@@ -1,0 +1,79 @@
+<template>
+	<li class="scrollable-container">
+		<ul>
+			<template if:true={hasReportsTo}>
+				<template for:each={employee.meReportsToList} for:item="report">
+					<li key={report.resourceUserId}>
+            <div class="node">
+              <div class="image slds-align_absolute-center">
+                <img src={report.resourcePhotoURL} alt={report.resourceName} />
+            </div>
+                <div class="info">
+                  <div class="slds-align_absolute-center">
+                    <h3><b>{report.resourceName}</b></h3>
+                  </div>
+                  <div class="slds-align_absolute-center">
+                    <p><i>{report.resourceRole}</i></p>
+                  </div>
+                </div>
+              </div>
+					</li>
+				</template>
+			</template>
+		</ul>
+		<template if:true={hasEmployeeURL}>
+			<div class="node">
+				<div class="image slds-align_absolute-center">
+					<img src={employee.resourcePhotoURL} alt={employee.resourceName} />
+      </div>
+					<div class="info">
+						<div class="slds-align_absolute-center">
+							<h3><b>{employee.resourceName}</b></h3>
+						</div>
+						<div class="slds-align_absolute-center">
+							<p><i>{employee.resourceRole}</i></p>
+						</div>
+					</div>
+				</div>
+		</template>
+		<template if:true={hasHierarchy}>
+			<br/>
+			<b> My Reportees </b>
+			<br>
+		</template>
+
+		<template if:true={hasHierarchy}>
+			<ul>
+				<template for:each={employee.directReportesUnderme} for:item="report">
+					<li key={report.resourceUserId}>
+            <div class="node">
+              <div class="image slds-align_absolute-center">
+                <img src={report.resourcePhotoURL} alt={report.resourceName} />
+            </div>
+                <div class="info">
+                  <div class="slds-align_absolute-center">
+                    <h3><b>{report.resourceName}</b></h3>
+                  </div>
+                  <div class="slds-align_absolute-center">
+                    <p><i>{report.resourceRole}</i></p>
+                  </div>
+                </div>
+              </div>
+              <lightning-icon icon-name="action:new" alternative-text={altText} size="xx-small" title={title}
+							onclick={handleButtonClick} data-resource-id={report.resourceUserId} style="display: block"></lightning-icon>
+              <div data-name={report.resourceUserId} id={report.resourceUserId} style="display: none">
+                <ul data-name={report.resourceUserId}>
+                  <c-Org-Chart-Reportees resource-id={report.resourceUserId}></c-Org-Chart-Reportees>
+                </ul>
+              </div>
+					</li>
+				</template>
+			</ul>
+		</template>
+		<template if:false={hasDirectReports}>
+			<div style="padding-top: 30px; color:red;">
+			<P>No reportees found!</p>
+		</div>
+		</template>
+	</li>
+</template>

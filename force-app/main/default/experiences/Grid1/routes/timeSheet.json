@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "63960632-1f14-4ea3-a017-c2c6957a387f",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "TimePage__c",
+  "id" : "f32fb0f6-7c2b-42c8-8ba8-ccffa0f4a4db",
+  "label" : "Time Sheet",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-timepage",
+  "type" : "route",
+  "urlPrefix" : "timepage"
+}

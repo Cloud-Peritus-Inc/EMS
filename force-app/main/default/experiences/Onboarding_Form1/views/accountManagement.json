@@ -1,0 +1,120 @@
+{
+  "appPageId" : "e4c932cf-f278-4a40-9eaf-d55d04e46398",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "37dd0aec-49b6-4850-8662-f455b56ac029",
+  "label" : "Account Management",
+  "regions" : [ {
+    "id" : "bd8c0071-8365-4f07-bfeb-4bd50d5a5667",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "tabsetConfig" : {
+          "UUID" : "6f6e215b-1e5b-4ff4-ad65-93cbb2c6af9d",
+          "activeTab" : "tab1",
+          "tabs" : [ {
+            "UUID" : "5dfa4989-b344-4072-9fa8-56819bcc945d",
+            "allowGuestUser" : false,
+            "locked" : false,
+            "seedComponents" : [ {
+              "attributes" : {
+                "customTitle" : "Members",
+                "parentRecordId" : "{!CurrentUser.accountId}",
+                "relatedListName" : "Users",
+                "showBreadCrumbs" : "false",
+                "showCustomTitle" : "true",
+                "showManualRefreshButton" : "false",
+                "showRowNumbers" : "false"
+              },
+              "fqn" : "forceCommunity:relatedList"
+            } ],
+            "tabKey" : "tab1",
+            "tabName" : "Members"
+          }, {
+            "UUID" : "f966bde7-ef2c-42df-8cfe-dd153a6abfde",
+            "allowGuestUser" : false,
+            "locked" : false,
+            "seedComponents" : [ {
+              "attributes" : {
+                "recordId" : "{!CurrentUser.accountId}"
+              },
+              "fqn" : "forceCommunity:accountBrandRecord"
+            } ],
+            "tabKey" : "tab2",
+            "tabName" : "Branding"
+          } ],
+          "useOverflowMenu" : false
+        }
+      },
+      "componentName" : "forceCommunity:tabset",
+      "id" : "6f6e215b-1e5b-4ff4-ad65-93cbb2c6af9d",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "customTitle" : "Members",
+            "parentRecordId" : "{!CurrentUser.accountId}",
+            "relatedListName" : "Users",
+            "showBreadCrumbs" : false,
+            "showCustomTitle" : true,
+            "showManualRefreshButton" : false,
+            "showRowNumbers" : false
+          },
+          "componentName" : "forceCommunity:relatedList",
+          "id" : "c743e11c-5fd5-4bba-b3a3-d257175c0b98",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "5dfa4989-b344-4072-9fa8-56819bcc945d",
+        "regionLabel" : "Members",
+        "regionName" : "tab1",
+        "renditionMap" : { },
+        "type" : "region"
+      }, {
+        "components" : [ {
+          "componentAttributes" : {
+            "recordId" : "{!CurrentUser.accountId}"
+          },
+          "componentName" : "forceCommunity:accountBrandRecord",
+          "id" : "a35b6c21-691f-45b4-adf3-3b1a8ca33725",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "f966bde7-ef2c-42df-8cfe-dd153a6abfde",
+        "regionLabel" : "Branding",
+        "regionName" : "tab2",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "2ba16924-72db-4ac4-8eae-0126fe72969f",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "24a795d6-98ed-41a2-8a4c-38f6d4e190ec",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Account Management"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "6ad60aa1-9105-4a76-a7ac-fedc38ff6ce9",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "8f94bb8b-068a-4958-b724-0def1d9c831a",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "account-management"
+}

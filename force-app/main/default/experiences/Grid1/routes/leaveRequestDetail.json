@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "4f513adf-0094-4ded-9910-7fa5053e6212",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Leave_Request_Detail__c",
+  "id" : "2c486223-392b-4a9a-9d44-e143b57dafff",
+  "label" : "Leave Request Detail",
+  "objectApiName" : "EMS_LM_Leave_History__c",
+  "routeType" : "detail-a0B",
+  "type" : "route",
+  "urlPrefix" : "ems-lm-leave-history"
+}

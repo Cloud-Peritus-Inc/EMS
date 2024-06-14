@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Expense Status is Submitted - Email to Resource</name>
+    <style>freeForm</style>
+    <subject>Expense Report is Submitted</subject>
+    <textOnly>Dear {!Expense__c.Resource__c},
+
+
+
+Your {!Expense__c.Expense_Type__c} expense reimbursement request with the {!Expense__c.Name} for the amount of {!Expense__c.Expense_Amount__c} {!Expense__c.Billing_Currency__c} incurred on
+
+{!Expense__c.Expense_Date__c} has been submitted successfully.
+
+
+
+You can review the status of your expense request here.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

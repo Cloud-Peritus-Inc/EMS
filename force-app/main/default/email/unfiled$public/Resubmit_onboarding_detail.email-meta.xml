@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Resubmit onboarding detail</name>
+    <style>freeForm</style>
+    <subject>Cloud Peritus :  Required changes for onboarding</subject>
+    <textOnly>Dear {!EMS_EM_Onboarding_Request__c.EMS_EM_First_Name__c},
+
+
+We have received the details filled by you in our onboarding portal. We require some changes from your end to successfully complete our pre-onboarding process. Please find below the comments provided by our HR executive:
+{!EMS_EM_Onboarding_Request__c.Comments__c}
+
+Please do the needful and reconfirm your submission by accessing the portal. You can navigate to the portal by clicking on the following link:
+https://cpprd--dev.sandbox.my.site.com/onboarding/s/?emailid={!EMS_EM_Onboarding_Request__c.EMS_EM_Personal_Email__c}
+
+
+Regards,
+HR Team ,
+Cloud Peritus.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

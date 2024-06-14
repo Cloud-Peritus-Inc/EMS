@@ -1,0 +1,1241 @@
+<template>
+    <!-- loader -->
+    <div if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading..." variant="brand" class="slds-is-fixed">
+        </lightning-spinner>
+    </div>
+    <!-- /loader -->
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </template>
+
+    <div class="slds-card slds-box slds-p-around_small">
+        <div class="slds-p-around_xx-small">
+            <div class="slds-grid slds-wrap">
+                <div style="padding-right: 15px" class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                    <!--Accordino Section Start-->
+                    <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
+                        active-section-name={activeSections}>
+                        <lightning-accordion-section name="Welcome aboard" label="Welcome aboard">
+                            <div>
+                                <div>
+                                    <div class="slds-nav-vertical__section slds-p-around_small">
+                                        <div>
+                                            <fieldset class="slds-nav-vertical slds-nav-vertical_compact">
+                                                <span class="slds-nav-vertical__item">
+                                                    <input type="radio" id="Welcome-aboard" name="details"
+                                                        checked={isWelcomeaboard} value="Welcome aboard"
+                                                        onchange={selectedDetails} />
+                                                    <label class="slds-nav-vertical__action" for="Welcome-aboard">
+                                                        <span class="slds-nav-vertical_radio-faux">Welcome aboard</span>
+                                                    </label>
+                                                </span>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="Profile" label="Profile">
+                            <div class="slds-nav-vertical__section slds-p-around_small">
+                                <div>
+                                    <fieldset class="slds-nav-vertical slds-nav-vertical_compact">
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Personal-Details" name="details"
+                                                value="Personal Details" onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Personal-Details">
+                                                <span class="slds-nav-vertical_radio-faux">Personal Details</span>
+                                            </label>
+                                        </span>
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Identity-Information" name="details"
+                                                value="Identity Information" onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Identity-Information">
+                                                <span class="slds-nav-vertical_radio-faux">Identity Information</span>
+                                            </label>
+                                        </span>
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Employment-Details" name="details"
+                                                value="Employment Details" onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Employment-Details">
+                                                <span class="slds-nav-vertical_radio-faux">Employment Details</span>
+                                            </label>
+                                        </span>
+
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Address-Details" name="details"
+                                                value="Address Details" onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Address-Details">
+                                                <span class="slds-nav-vertical_radio-faux">Address Details</span>
+                                            </label>
+                                        </span>
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Family-Information" name="details"
+                                                value="Family Information" onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Family-Information">
+                                                <span class="slds-nav-vertical_radio-faux">Family Information</span>
+                                            </label>
+                                        </span>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                        <lightning-accordion-section name="Forms" label="Forms">
+                            <div class="slds-nav-vertical__section slds-p-around_small">
+                                <div>
+                                    <fieldset class="slds-nav-vertical slds-nav-vertical_compact">
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Financial-Information" name="details"
+                                                value="Financial Information" onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Financial-Information">
+                                                <span class="slds-nav-vertical_radio-faux">Financial Information</span>
+                                            </label>
+                                        </span>
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Vehicle-Details" name="details"
+                                                value="Vehicle Details" onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Vehicle-Details">
+                                                <span class="slds-nav-vertical_radio-faux">Vehicle Details</span>
+                                            </label>
+                                        </span>
+
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="PF-Forms" name="details" value="PF Forms"
+                                                onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="PF-Forms">
+                                                <span class="slds-nav-vertical_radio-faux">PF Forms</span>
+                                            </label>
+                                        </span>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                        <lightning-accordion-section name="Documents & Policies" label="Documents & Policies">
+                            <div class="slds-nav-vertical__section slds-p-around_small">
+                                <div>
+                                    <fieldset class="slds-nav-vertical slds-nav-vertical_compact">
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Documents" name="details" value="Documents"
+                                                onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Documents">
+                                                <span class="slds-nav-vertical_radio-faux">Documents</span>
+                                            </label>
+                                        </span>
+                                        <span class="slds-nav-vertical__item">
+                                            <input type="radio" id="Company-Policies" name="details"
+                                                value="Company Policies" onchange={selectedDetails} />
+                                            <label class="slds-nav-vertical__action" for="Company-Policies">
+                                                <span class="slds-nav-vertical_radio-faux">Company Policies</span>
+                                            </label>
+                                        </span>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                        <lightning-accordion-section name="Company Information" label="Company Information">
+                            <div>
+                                <div>
+                                    <div class="slds-nav-vertical__section slds-p-around_small">
+                                        <div>
+                                            <fieldset class="slds-nav-vertical slds-nav-vertical_compact">
+                                                <span class="slds-nav-vertical__item">
+                                                    <input type="radio" id="Company-Information" name="details"
+                                                        value="Company Information" onchange={selectedDetails} />
+                                                    <label class="slds-nav-vertical__action" for="Company-Information">
+                                                        <span class="slds-nav-vertical_radio-faux">Company
+                                                            Information</span>
+                                                    </label>
+                                                </span>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                        <lightning-accordion-section name="Confirm" label="Confirm">
+                            <div>
+                                <div>
+                                    <div class="slds-nav-vertical__section slds-p-around_small">
+                                        <div>
+                                            <fieldset class="slds-nav-vertical slds-nav-vertical_compact">
+                                                <span class="slds-nav-vertical__item">
+                                                    <input type="radio" id="Confirm" name="details" value="Confirm"
+                                                        onchange={selectedDetails} />
+                                                    <label class="slds-nav-vertical__action" for="Confirm">
+                                                        <span class="slds-nav-vertical_radio-faux">Confirm</span>
+                                                    </label>
+                                                </span>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+                </div>
+                <div style="border-left: solid 1px #b9b9b9"
+                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                    <!-- Welcome aboard Page Start -->
+                    <template if:true={isShowWelcomeaboard}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <section role="log" class="slds-chat">
+                                <ul class="slds-chat-list">
+                                    <li class="slds-chat-listitem slds-chat-listitem_bookend">
+                                        <div class="slds-chat-bookend">
+                                            <span class="slds-icon_container slds-icon-utility-chat slds-chat-icon">
+                                                <svg class="slds-icon slds-icon_x-small slds-icon-text-default"
+                                                    aria-hidden="true">
+                                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chat">
+                                                    </use>
+                                                </svg>
+                                            </span>
+                                            <h1><b>Welcome aboard</b></h1>
+                                        </div>
+                                    </li>
+                                    <li class="slds-chat-listitem slds-chat-listitem_inbound">
+                                        <div class="slds-chat-message">
+                                            <span aria-hidden="true"
+                                                class="slds-avatar slds-avatar_circle slds-chat-avatar">
+                                                <abbr class="slds-avatar__initials slds-avatar__initials_inverse"
+                                                    title="HR Team">HR</abbr>
+                                            </span>
+                                            <div class="slds-chat-message__body">
+                                                <div class="slds-chat-message__text slds-chat-message__text_inbound">
+                                                    <span>Hi &nbsp;<strong
+                                                            style="color: #6666cc;">{UserName},</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="slds-chat-listitem slds-chat-listitem_inbound">
+                                        <div class="slds-chat-message slds-chat-message_faux-avatar">
+                                            <div class="slds-chat-message__body">
+                                                <div class="slds-chat-message__text slds-chat-message__text_inbound">
+                                                    <span><lightning-formatted-rich-text
+                                                            value={Description}></lightning-formatted-rich-text></span>
+                                                </div>
+                                                <div class="slds-chat-message__meta"
+                                                    aria-label="HR Team • {currenttime}">HR Team • {currenttime}</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <br><br><br><br><br> <br><br><br><br><br>
+                                    <li class="slds-chat-listitem slds-chat-listitem_bookend">
+                                        <div class="slds-chat-bookend slds-chat-bookend_stop">
+                                            <span class="slds-icon_container slds-icon-utility-end_chat slds-chat-icon">
+                                                <svg class="slds-icon slds-icon_x-small slds-icon-text-default"
+                                                    aria-hidden="true">
+                                                    <use
+                                                        xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#end_chat">
+                                                    </use>
+                                                </svg>
+                                            </span>
+                                            <p><b>Cloud Peritus</b></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                    </template>
+                    <!-- Welcome aboard Page End -->
+
+                    <!--Personal Details Page Start-->
+                    <template if:true={isShowPersonalDetails}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div>
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small"
+                                            title="Personal Details">Personal Details</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col" style="padding-left: 25px;">
+                                                <span>
+                                                    <lightning-input class="slds-p-top_small" value={firstName}
+                                                        message-when-pattern-mismatch="Invalid First name" required
+                                                        disabled={readonlyfield} onchange={FirstName} name="FirstName"
+                                                        onkeydown={handleFirstLastNameKeyDown}
+                                                        pattern="[A-Z a-z._-]{2,20}$" type="text"
+                                                        label="First Name"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={lastName}
+                                                        message-when-pattern-mismatch="Invalid Last Name" required
+                                                        disabled={readonlyfield} onchange={LastName} name="lastName"
+                                                        onkeydown={handleFirstLastNameKeyDown}
+                                                        pattern="[A-Z a-z._-]{1,20}$" type="text"
+                                                        label="Last Name"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={dob} required
+                                                        disabled={readonlyfield} onchange={dateOfBirth}
+                                                        name="EMS_EM_DOB__c" type="date"
+                                                        label="Date of Birth"></lightning-input>
+                                                    <lightning-combobox class="slds-p-top_small" required
+                                                        disabled={readonlyfield} name="EMS_EM_Gender__c" label="Gender"
+                                                        value={gen} placeholder="Select" options={Gendervalue}
+                                                        onchange={gender}></lightning-combobox>
+                                                </span>
+                                            </div>
+                                            <div class="slds-col ">
+                                                <span>
+
+
+                                                    <lightning-input class="slds-p-top_small" value={ph}
+                                                        message-when-pattern-mismatch="Invalid Contact number" required
+                                                        disabled={readonlyfield} onchange={phonenumber}
+                                                        name="EMS_Phone_Number__c" onkeydown={handleAadharNumberKeyDown}
+                                                        pattern="[0-9]{10}$" type="phone" maxlength="10"
+                                                        label="Contact Number"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={personalemail}
+                                                        message-when-pattern-mismatch="Invalid Email" required
+                                                        disabled={readonlyfield} onchange={personalemailchange}
+                                                        name="EMS_EM_Personal_Email__c" type="email"
+                                                        label="Personal Email Id"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={nation}
+                                                        disabled={readonlyfield} required
+                                                        message-when-pattern-mismatch="Invalid Nationality"
+                                                        onchange={Nationality} onkeydown={handleFirstLastNameKeyDown}
+                                                        name="EMS_EM_Nationality__c" type="text"
+                                                        label="Nationality "></lightning-input>
+                                                    <lightning-combobox class="slds-p-top_small" value={bg} dropdown-alignment="bottom-left"
+                                                        disabled={readonlyfield} required onchange={BloodGroup}
+                                                        options={BloodG} placeholder="Select" name="EMS_EM_BG__c"
+                                                        label="Blood Group "></lightning-combobox>
+
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br /><br />
+
+                                <div style="text-align:center">
+                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
+                                </div>
+                                <br><br>
+
+                            </div>
+                        </div>
+                        <br /><br />
+                    </template>
+                    <!--Personal Details Page Ends-->
+                    <!--Identify Details Page Start-->
+                    <template if:true={isIdentityDetails}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_xx-small">
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small"
+                                            title="Identity Information">Identity Information</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col" style="padding-left: 25px;">
+                                                <span>
+                                                    <lightning-input class="slds-p-top_small" value={aadhaarNo} required
+                                                        pattern="[0-9]{12}$" disabled
+                                                        message-when-pattern-mismatch="Invalid Aadhar Number"
+                                                        onchange={handleAadharNumberChange}
+                                                        onkeydown={handleAadharNumberKeyDown} name="EMS_EM_AadhaarNo__c"
+                                                        type="text" label="Aadhar Number"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={passport}
+                                                        disabled={readonlyfield}
+                                                        message-when-pattern-mismatch="Invalid Passport Number"
+                                                        onchange={handlepassportNumberChange}
+                                                        name="EMS_EM_PassportNo__c" type="text"
+                                                        label="Passport Number"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={DrivingLicense}
+                                                        disabled={readonlyfield}
+                                                        message-when-pattern-mismatch="Invalid Driving License No."
+                                                        onchange={handleDrivingLicenseNoChange}
+                                                        name="EMS_Driving_License_No__c" type="text"
+                                                        label="Driving License No."></lightning-input>
+                                                </span>
+                                            </div>
+                                            <div class="slds-col ">
+                                                <span>
+                                                    <lightning-input class="slds-p-top_small" value={panNo} required
+                                                        disabled onfocusin={handlePanNumberFocusIn} onchange={PANNumber}
+                                                        onfocusout={handlePanNumberFocusOut} name="EMS_EM_PanNo__c"
+                                                        type="text" message-when-pattern-mismatch="Invalid PAN Number"
+                                                        pattern="([A-Z]){5}([0-9]){4}([A-Z]){1}$"
+                                                        label="PAN"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={UANNo}
+                                                        disabled={readonlyfield} onchange={UanChange} maxlength="12"
+                                                        name="EMS_EM_PFno__c" type="text"
+                                                        onkeydown={handleAadharNumberKeyDown}
+                                                        message-when-pattern-mismatch="Invalid UAN Number"
+                                                        pattern="[0-9]{12}$" label="UAN"></lightning-input>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br /><br />
+
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small"
+                                            title="Upload Documents">Upload Documents</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col" style="padding-left: 25px;">
+                                                <span>
+                                                    <label class="slds-form-element__label" for="text-input-id-1">
+                                                        Passport
+                                                    </label>
+                                                    <lightning-helptext
+                                                        content="The maximum file size is 2MB and the supported file type is PDF"></lightning-helptext>
+                                                    <lightning-input type="file" name="Passport" onchange={onFileUpload}
+                                                        accept={accept} title="Passport"
+                                                        disabled={readonlyfield}></lightning-input>
+                                                    <p>{fileName}</p>
+                                                    <br>
+                                                </span>
+                                            </div>
+                                            <div class="slds-col">
+                                                <span>
+                                                    <label class="slds-form-element__label" for="text-input-id-1">
+                                                        Driving License
+                                                    </label>
+                                                    <lightning-helptext
+                                                        content="The maximum file size is 2MB and the supported file type is PDF"></lightning-helptext>
+                                                    <lightning-input type="file" onchange={onFileUpload1}
+                                                        name="DrivingLicense" title="Driving License"
+                                                        disabled={readonlyfield} accept={accept}></lightning-input>
+                                                    <p>{fileName1}</p>
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br /><br />
+                                <div style="text-align:center">
+                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <!--Identify Details Page Ends-->
+                    <!-- Employment Details Start -->
+                    <template if:true={isEmploymentDetails}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_xx-small">
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small"
+                                            title="Employment Details">Employment Details</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col" style="padding-left: 25px;">
+                                                <lightning-record-view-form record-id={contactID}
+                                                    object-api-name="Contact">
+                                                    <div class="slds-box slds-theme_default">
+                                                        <lightning-output-field 
+                                                            field-name="EMS_RM_Employee_Id__c"  ></lightning-output-field>
+                                                        <lightning-output-field style="pointer-events: none;"
+                                                            field-name="Email"></lightning-output-field>
+                                                        <lightning-output-field
+                                                            field-name="Resource_Manager__c" style="pointer-events: none; text-decoration: none;"></lightning-output-field>
+
+                                                        <lightning-output-field style="pointer-events: none;" 
+                                                            field-name="EMS_EM_HR_Assigned__c"></lightning-output-field>
+                                                    </div>
+                                                </lightning-record-view-form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br /><br />
+                                <br /><br />
+                            </div>
+                        </div>
+                    </template>
+                    <!-- Employment Details End -->
+                    <!--Address Details Page Start-->
+                    <template if:true={isAddressDetails}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_xx-small">
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small"
+                                            title="Address Details">Address Details</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col slds-size_1-of-2" style="padding-left: 25px;">
+                                                <span>
+                                                    <h3 class="slds-section__title slds-theme_shade">
+                                                        <p>Current Address</p>
+                                                    </h3>
+                                                    <lightning-input class="slds-p-top_small addressClass"
+                                                        value={cadrressline1} disabled={readonlyfield} required
+                                                        onchange={handleChange} name="EMS_EM_CAddress_Line_1__c"
+                                                        type="text" label="Address Line 1"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={cadrressline2}
+                                                        disabled={readonlyfield} onchange={handleChange}
+                                                        name="EMS_EM_CAddress_Line_2__c" type="text"
+                                                        label="Address Line 2"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small addressClass"
+                                                        value={castate} onkeydown={handleFirstLastNameKeyDown}
+                                                        message-when-pattern-mismatch="Invalid State"
+                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
+                                                        onchange={handleChange} name="EMS_EM_CA_State__c" type="text"
+                                                        label="State"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small addressClass"
+                                                        value={cacity} onkeydown={handleFirstLastNameKeyDown}
+                                                        message-when-pattern-mismatch="Invalid City"
+                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield} required
+                                                        onchange={handleChange} name="EMS_EM_CA_City__c" type="text"
+                                                        label="City"></lightning-input>
+                                                    <lightning-combobox class="slds-p-top_small" required
+                                                        disabled={readonlyfield} name="CA_Country__c" label="Country"
+                                                        value={countryval} placeholder="Select" options={picklistValues}
+                                                        onchange={handleChange}></lightning-combobox>
+                                                    <lightning-input class="slds-p-top_small addressClass" value={cazip}
+                                                        pattern="[0-9]{6}$" onkeydown={handleAadharNumberKeyDown}
+                                                        message-when-pattern-mismatch="Invalid Zip" maxlength="6"
+                                                        disabled={readonlyfield} required onchange={handleChange}
+                                                        name="EMS_EM_CA_Zip__c" type="text"
+                                                        label="Zip"></lightning-input>
+                                                    <br>
+                                                    <div class="slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-13 slds-p-right_x-small">
+                                                            Permanent Address same as Current Address?
+                                                        </div>
+                                                        <div class="slds-col slds-size_1-of-12">
+                                                            <lightning-input type="Checkbox" disabled={disableFlag}
+                                                                checked={paFlag}
+                                                                onchange={AddressCheckboxChange}></lightning-input>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <span>
+                                                    <h3 class="slds-section__title slds-theme_shade">
+                                                        <p>Permanent Address</p>
+                                                    </h3>
+                                                    <lightning-input class="slds-p-top_small" value={padrressline1}
+                                                        disabled={readonlyfield1} required onchange={handleChange}
+                                                        name="EMS_EM_PAddress_Line_1__c" type="text"
+                                                        label="Address Line 1"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={padrressline2}
+                                                        disabled={readonlyfield1} onchange={handleChange}
+                                                        name="EMS_EM_PAddress_Line_2__c" type="text"
+                                                        label="Address Line 2"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={pastate}
+                                                        onkeydown={handleFirstLastNameKeyDown}
+                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield1} required
+                                                        message-when-pattern-mismatch="Invalid State"
+                                                        onchange={handleChange} name="EMS_EM_PA_State__c" type="text"
+                                                        label="State"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={pacity}
+                                                        onkeydown={handleFirstLastNameKeyDown}
+                                                        pattern="[A-Z a-z._-]{2,20}$" disabled={readonlyfield1} required
+                                                        message-when-pattern-mismatch="Invalid City"
+                                                        onchange={handleChange} name="EMS_EM_PA_City__c" type="text"
+                                                        label="City"></lightning-input>
+                                                    <lightning-combobox class="slds-p-top_small" required
+                                                        disabled={readonlyfield1} name="PA_Country__c" label="Country"
+                                                        value={countryvalpa} placeholder="Select" options={picklistValues}
+                                                        onchange={handleChange}></lightning-combobox>
+                                                    <lightning-input class="slds-p-top_small" value={pazip}
+                                                        pattern="[0-9]{6}$" onkeydown={handleAadharNumberKeyDown}
+                                                        disabled={readonlyfield1} onchange={handleChange} maxlength="6"
+                                                        message-when-pattern-mismatch="Invalid Zip" required
+                                                        name="EMS_EM_PA_Zip__c" type="text"
+                                                        label="Zip"></lightning-input>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <br /><br />
+                                        <div style="text-align:center">
+                                            <lightning-button style="margin:5px;" label="Save" type="brand"
+                                                onclick={SaveSubmitcontact} disabled={readonlyfield} title="Save"
+                                                variant="brand"></lightning-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <!--Address Details Page Ends-->
+                    <!-- Family Information Start -->
+                    <template if:true={isFamilyInformation}>
+
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_xx-small">
+                                <h3 class="slds-section__title slds-theme_shade">
+                                    <span class="slds-truncate slds-p-horizontal_small">Family Information</span>
+                                </h3>
+                                <div style="padding-left: 25px; padding-right: 20px;">
+                                    <h6>
+                                        <p><strong>Instructions:</strong></p>
+                                        <p> 1. Details of parents are mandatory.</p>
+                                        <p> 2. If you have a spouse and children, indicate that they are dependents for
+                                            medical insurance purposes.</p>
+                                        <p> 3. Indicate your emergency contact.</p>
+                                    </h6>
+                                </div>
+                                <br>
+                                <lightning-record-edit-form object-api-name="Family_Information__c"
+                                    onsuccess={handlefamilySuccess} onsubmit={handlesubmitfamily}
+                                    onerror={handlefamilyerror}>
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_5-of-12" style="padding-left: 25px;">
+                                            <lightning-input-field field-name="Family_Member_Name__c" required
+                                                disabled={readonlyfield} onkeydown={handleFirstLastNameKeyDown}
+                                                variant="label-stacked">
+                                            </lightning-input-field>
+                                            <lightning-input-field field-name="Is_It_Emergency_Contact__c"
+                                                variant="label-stacked" disabled={readonlyfield}
+                                                onchange={Emergencycheckbox} class="inputValField"
+                                                style="margin-top:10px;">
+                                            </lightning-input-field>
+                                            <lightning-input-field field-name="Is_It_Dependent_Contact__c"
+                                                variant="label-stacked" disabled={readonlyfield}
+                                                onchange={Dependentcheckbox} class="inputValField"
+                                                style="margin-top:28px;">
+                                            </lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_5-of-12">
+                                            <lightning-input-field field-name="Relationships__c" required
+                                                variant="label-stacked" disabled={readonlyfield} class="inputValField">
+                                            </lightning-input-field>
+                                            <lightning-input-field onkeydown={handleAadharNumberKeyDown}
+                                                field-name="Contact_Phone_Number__c" variant="label-stacked"
+                                                disabled={readonlyfield} pattern="[0-9]{10}$" max-length="10"
+                                                message-when-pattern-mismatch="Invalid Contact Number"
+                                                required={contactPhone} class="inputValField">
+                                            </lightning-input-field>
+                                            <lightning-input-field field-name="Date_of_Birth__c"
+                                                required={memberDateOfBirth} variant="label-stacked"
+                                                disabled={readonlyfield} class="inputValField">
+                                            </lightning-input-field>
+
+                                        </div>
+                                    </div> &nbsp;&nbsp; &nbsp;&nbsp;
+                                    <div class="slds-align_absolute-center">
+                                        <lightning-button label="Save" type="submit" disabled={readonlyfield}
+                                            variant="brand"></lightning-button>
+                                    </div>
+                                </lightning-record-edit-form>
+                                <br><br>
+                                <div if:true={isLoaded} class="cstm-spinner">
+                                    <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+                                </div>
+
+
+                                <div class="slds-p-around_xx-small">
+                                    <h3 class="slds-section__title slds-theme_shade" style="padding-left: 15px;">
+                                        <span class="slds-truncate slds-p-horizontal_small">Existing Details</span>
+                                    </h3> <br>
+                                    <template for:each={dependenciesRecordsArray} for:item="eachDepencies">
+                                        <lightning-record-edit-form object-api-name="Family_Information__c"
+                                            record-id={eachDepencies.Id} onsuccess={handleSuccess}
+                                            onerror={Handlererror} key={eachDepencies.Id} onsubmit={handleSubmit}
+                                            density="comfy" class="updateExsisiingRecords">
+                                            <div class="slds-grid slds-gutters" style="padding-left: 25px;">
+                                                <div class="slds-col slds-size_3-of-12">
+                                                    <lightning-input-field field-name="Family_Member_Name__c" disabled
+                                                        class="inputValField">
+                                                    </lightning-input-field>
+                                                </div>
+                                                <div class="slds-col slds-size_3-of-12">
+                                                    <lightning-input-field field-name="Relationships__c" disabled
+                                                        class="inputValField">
+                                                    </lightning-input-field>
+                                                </div>
+
+                                                <div class="slds-col slds-size_3-of-12">
+                                                    <lightning-input-field field-name="Contact_Phone_Number__c"
+                                                        variant="label-stacked" disabled class="inputValField">
+                                                    </lightning-input-field>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-12">
+                                                    <lightning-input-field field-name="Date_of_Birth__c"
+                                                        class="inputValField" disabled></lightning-input-field>
+
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-12" style="margin-top:23px;">
+                                                    <lightning-button-icon data-recordid={eachDepencies.Id}
+                                                        icon-name="action:delete" disabled={readonlyfield}
+                                                        onclick={deleteDependencyRecord} size="small"
+                                                        class="slds-icon-text-error">
+                                                    </lightning-button-icon>
+                                                </div>
+                                            </div>
+                                        </lightning-record-edit-form>
+                                    </template>
+                                </div>
+                                <br><br>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- Family Information End -->
+                    <!--Finacial From Page Start-->
+                    <template if:true={isShowFinacialFrom}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div>
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small"
+                                            title="Financial Details From">Financial Details From</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters ">
+                                            <div class="slds-col" style="padding-left: 25px;">
+                                                <span>
+
+                                                    <lightning-combobox class="slds-p-top_small" required
+                                                        disabled={readonlyfield} name="Bank_Name__c" label="Bank Name"
+                                                        value={bankNameval} placeholder="Select" options={BankNamevalue}
+                                                        onchange={BankName}></lightning-combobox>
+                                                    <lightning-input class="slds-p-top_small" value={branchname}
+                                                        message-when-pattern-mismatch="Invalid Branch name" required
+                                                        disabled={readonlyfield} onchange={Branchname} name="Branch__c"
+                                                        onkeydown={handleFirstLastNameKeyDown}
+                                                        pattern="[A-Z a-z._-]{2,20}$" type="text"
+                                                        label="Branch"></lightning-input>
+                                                    <lightning-input class="slds-p-top_small"
+                                                        onkeydown={handleAadharNumberKeyDown} value={accountNumber}
+                                                        type="text" name="Beneficiary_Account_Number__c"
+                                                        pattern="[0-9]{5,20}$" required disabled={readonlyfield}
+                                                        message-when-pattern-mismatch="Invalid Account Number"
+                                                        label="Account Number"
+                                                        onchange={AccountNumberChnage}></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={iFSCRoutingNumber}
+                                                        type="text" name="IFSC_Routing_Number__c" label="IFSC Code"
+                                                        pattern="[A-Za-z]{4}[a-zA-Z0-9]{7}$" disabled={readonlyfield}
+                                                        message-when-pattern-mismatch="Invalid IFSC Code" required
+                                                        onchange={ifscCodeChange}></lightning-input>
+                                                    <lightning-input class="slds-p-top_small" value={beneficiaryName}
+                                                        message-when-pattern-mismatch="Invalid name" required
+                                                        disabled={readonlyfield} onchange={BeneficiaryNamechange}
+                                                        name="Beneficiary_Name__c"
+                                                        onkeydown={handleFirstLastNameKeyDown}
+                                                        pattern="[A-Z a-z._-]{2,20}$" type="text"
+                                                        label="Employee Name in Bank Account"></lightning-input>
+                                                    <lightning-combobox class="slds-p-top_small" required
+                                                        field-level-help="Suggested to Opt-In for the employees whose CTC is above 7 LPA"
+                                                        disabled={readonlyfield} name="Sodexo_Card_Option__c"
+                                                        label="Sodexo Card Option" value={SodexoCardoption}
+                                                        placeholder="Select" options={sodexooptions}
+                                                        onchange={sodexoCardonchange}></lightning-combobox>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div style="text-align:center">
+                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
+                                </div>
+                                <br><br>
+
+                            </div>
+                        </div>
+                    </template>
+                    <!--Finacial From Page End-->
+                    <!--Vehicle From Page Start-->
+                    <template if:true={isShowVehicleFrom}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div>
+                                <div class="slds-section slds-is-open" style="padding-left: 15px;">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small"
+                                            title="Vehicle Details From">Vehicle Details</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters "
+                                            style="padding-left: 25px; padding-right: 140px;">
+                                            <div class="slds-col" style="padding-left: 25px;">
+                                                <span>
+                                                    <lightning-input type="checkbox" name="Do_you_have_a_vehicle__c"
+                                                        disabled={readonlyfield} label="Do you have a vehicle?"
+                                                        checked={checkboxValue}
+                                                        onchange={doyouhaveavehicle}></lightning-input>
+                                                    <br><br>
+
+                                                    <template if:true={showvehicle}>
+                                                        <lightning-combobox name="Vehicle_Type__c" label="Vehicle Type"
+                                                            value={Vehicletypeval} placeholder="Select"
+                                                            options={VehicleType} disabled={readonlyfield} required
+                                                            onchange={Vehicletypechange}></lightning-combobox>
+                                                        <lightning-input type="text" name="Vehicle_Number__c"
+                                                            message-when-pattern-mismatch="Invalid Vehicle Number"
+                                                            pattern="[a-z A-Z 0-9]{0,10}$" label="Vehicle Number"
+                                                            onchange={VehicleNumberChange} disabled={readonlyfield}
+                                                            required value={VehicleNumber}></lightning-input>
+                                                    </template>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br /><br />
+                                <div style="text-align:center">
+                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
+                                </div>
+                                <br><br>
+
+                            </div>
+                        </div>
+                        <br /><br />
+                    </template>
+                    <!--Vehicle From Page End-->
+                    <!--PF Forms Page Starts-->
+                    <template if:true={isPFForms}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_xx-small">
+                                <div style="padding-left: 25px; padding-right: 25px;">
+                                    <br>
+                                    <strong>
+                                        <h1>{PFName}</h1>
+                                    </strong>
+                                    <br>
+                                    <lightning-formatted-rich-text
+                                        value={PFDescription}></lightning-formatted-rich-text>
+                                    <lightning-card>
+                                        <template if:true={documents}>
+                                            <template for:each={documents} for:item="document">
+                                                <div class="slds-box slds-m-vertical_x-small" key={document.Id}>
+                                                    <template for:each={document.files} for:item="file">
+                                                        <div class="slds-grid slds-wrap" key={file.id}>
+                                                            <div
+                                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                <p><strong>File Name - {file.name} -
+                                                                        {file.fileExtension}</strong></p>
+                                                            </div>
+                                                            <div>
+                                                                <a href="javascript:void(0);" data-id={file.id}
+                                                                    onclick={handleDownloadFile}>Download</a>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </lightning-card>
+                                </div>
+                                <div class="slds-section slds-is-open" style="padding-left: 13px;">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small">Upload Forms</span>
+                                    </h3>
+                                    <div style="padding-left: 13px;">
+                                        <lightning-input type="file" name="PF" label="Attachment: You can upload multiple files in PDF or Zip file format up to a total of 20 MB." required accept=".pdf, .zip"
+                                            disabled={readonlyfield} onchange={handleFileUploaded} multiple>
+                                        </lightning-input>
+                                        <template if:true={filesData}>
+                                            <template for:each={filesData} for:item="imgName" for:index="index">
+                                                {imgName.fileName}
+                                                <span key={imgName.fileName} data-id={index}
+                                                    onclick={removeReceiptImage} class="removeImage">x</span> &nbsp;
+                                            </template>
+                                        </template>
+                                    </div>
+                                </div>
+                                <br />
+                                <div style="padding-left: 25px; padding-right: 25px;">
+                                    <h1>Uploaded Forms:</h1>
+                                    <lightning-card>
+                                        <template if:true={dataPFList}>
+                                            <div class="slds-box slds-m-vertical_x-small">
+                                                <template for:each={dataPFList} for:item="file">
+                                                    <div key={file.Id}>
+                                                        <div class="slds-grid slds-wrap">
+                                                            <p><strong>File Name </strong>- {file.title}</p>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </lightning-card>
+                                </div>
+
+                                <br /><br />
+                                <div style="text-align:center">
+                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
+                                </div>
+                                <br><br>
+                            </div>
+                        </div>
+                    </template>
+                    <!--PF Forms Page Ends-->
+                    <!--Documents Page Starts-->
+                    <template if:true={isDocuments}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_xx-small">
+                                <div style="padding-left: 25px; padding-right: 25px;">
+                                    <br>
+                                    <strong>
+                                        <h1>{docName}</h1>
+                                    </strong>
+                                    <br>
+                                    <lightning-formatted-rich-text
+                                        value={docDescription}></lightning-formatted-rich-text>
+                                    <lightning-card>
+                                        <template if:true={docs}>
+                                            <template for:each={docs} for:item="docs">
+                                                <div class="slds-box slds-m-vertical_x-small" key={docs.Id}>
+                                                    <template for:each={docs.files} for:item="file">
+                                                        <div class="slds-grid slds-wrap" key={file.id}>
+                                                            <div
+                                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                <p><strong>File Name </strong>- {file.name} -
+                                                                    {file.fileExtension}</p>
+                                                            </div>
+                                                            <div>
+                                                                <a href="javascript:void(0);" data-id={file.id}
+                                                                    onclick={handleDownloadFile}>Download</a>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </template>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </lightning-card>
+                                </div>
+                                <div class="slds-section slds-is-open" style="padding-left: 13px;">
+                                    <h3 class="slds-section__title slds-theme_shade">
+                                        <span class="slds-truncate slds-p-horizontal_small">Upload Documents</span>
+                                    </h3>
+                                    <div style="padding-left: 13px;">
+                                        <lightning-input type="file" name="Doc" label="Attachment: You can upload multiple files in PDF or Zip file format up to a total of 20 MB." required accept=".pdf, .zip"
+                                            disabled={readonlyfield} onchange={handleDocFileUploaded} multiple>
+                                        </lightning-input>
+                                        <template if:true={filesDocData}>
+                                            <template for:each={filesDocData} for:item="imgName" for:index="index">
+                                                {imgName.fileName}
+                                                <span key={imgName.fileName} data-id={index}
+                                                    onclick={removedocReceiptImage} class="removeImage">x</span> &nbsp;
+                                            </template>
+                                        </template>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div style="padding-left: 25px; padding-right: 25px;">
+                                    <h1>Uploaded Documents:</h1>
+                                    <lightning-card>
+                                        <template if:true={dataDocList}>
+                                            <div class="slds-box slds-m-vertical_x-small">
+                                                <template for:each={dataDocList} for:item="file">
+                                                    <div key={file.Id}>
+                                                        <div class="slds-grid slds-wrap">
+                                                            <p><strong>File Name </strong>- {file.title}</p>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </lightning-card>
+                                </div>
+
+                                <br /><br />
+                                <div style="text-align:center">
+                                    <lightning-button style="margin:5px;" label="Save" type="brand"
+                                        onclick={SaveSubmitcontact} disabled={readonlyfield}
+                                        variant="brand"></lightning-button>
+                                </div>
+                                <br><br>
+                            </div>
+                        </div>
+                    </template>
+                    <!--Documents Page Ends-->
+                    <!--Company Policies Page Starts-->
+                    <template if:true={isCompanyPolicies}>
+                        <div class="slds-modal__content slds-p-around_medium">
+
+                            <div class="slds-p-around_xx-small">
+                                <div style="padding-left: 25px; padding-right: 25px;">
+                                    <br>
+                                    <strong>
+                                        <h1>{policiesName}</h1>
+                                    </strong>
+                                    <br>
+                                    <lightning-formatted-rich-text
+                                        value={policiesDescription}></lightning-formatted-rich-text>
+                                    <lightning-card>
+                                        <template if:true={cpPolicies}>
+                                            <template for:each={cpPolicies} for:item="cpPolicies">
+                                                <div class="slds-box slds-m-vertical_x-small" key={cpPolicies.Id}>
+                                                    <template for:each={cpPolicies.files} for:item="file">
+                                                        <div class="slds-grid slds-wrap" key={file.id}>
+                                                            <div
+                                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                                <p><strong>File Name - {file.name} -
+                                                                        {file.fileExtension}</strong></p>
+                                                            </div>
+                                                            <div>
+                                                                <a href="javascript:void(0);" data-id={file.id}
+                                                                    onclick={handleDownloadFile}>Download</a>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </template>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </lightning-card>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <!--Company Policies Page Ends-->
+                    <!--Company Information Page Starts-->
+                    <template if:true={isCompanyInformation}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_xx-small">
+                                <div style="padding-left: 25px;">
+                                    <br>
+                                    <strong>
+                                        <h1>{CPName}</h1>
+                                    </strong>
+                                    <lightning-formatted-rich-text
+                                        value={CPDescription}></lightning-formatted-rich-text>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <!--Company Information Page Ends-->
+                    <!-- Confirm Page Start-->
+                    <template if:true={isConfirm}>
+                        <div class="slds-p-around_medium">
+                            <div class="slds-p-around_xx-small">
+                                <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
+                                    active-section-name={activeSectionsConfirm}>
+                                    <lightning-accordion-section name="Welcome aboard" label="Welcome aboard">
+                                        <div>
+                                            <div class="slds-grid slds-wrap slds-box"
+                                                style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Welcome aboard</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isWelcomeaboardValueChecked}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isWelcomeaboardValueChecked}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning-accordion-section>
+                                    <lightning-accordion-section name="Profile" label="Profile">
+                                        <div>
+                                            <div class="slds-grid slds-wrap slds-box"
+                                                style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Personal Details</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isPersonalUpdateCheckbox}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isPersonalUpdateCheckbox}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Identity Information</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isIdentifyDetailsCheckbox}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isIdentifyDetailsCheckbox}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Employment Details</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isEmploymentDetailsCheckbox}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isEmploymentDetailsCheckbox}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Address Details</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isAddressDetailsCheckbox}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isAddressDetailsCheckbox}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Family Information</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isFamilyInformationCheckbox}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isFamilyInformationCheckbox}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning-accordion-section>
+                                    <lightning-accordion-section name="Forms" label="Forms">
+                                        <div>
+                                            <div class="slds-grid slds-wrap slds-box"
+                                                style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Financial Information</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isFinancialInformationCheckbox}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isFinancialInformationCheckbox}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Vehicle Details</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isVehicleDetailsCheckbox}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isVehicleDetailsCheckbox}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>PF Forms</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isPFFormsCheckbox}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isPFFormsCheckbox}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning-accordion-section>
+                                    <lightning-accordion-section name="Documents & Policies"
+                                        label="Documents & Policies">
+                                        <div>
+                                            <div class="slds-grid slds-wrap slds-box"
+                                                style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Documents</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isDocumentsValueChecked}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isDocumentsValueChecked}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Company Policies</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isCompanyPoliciesValueChecked}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isCompanyPoliciesValueChecked}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning-accordion-section>
+                                    <lightning-accordion-section name="Company Information" label="Company Information">
+                                        <div>
+                                            <div class="slds-grid slds-wrap slds-box"
+                                                style="margin-right: 300px;margin-right: 300px;margin-left: 300px;font-size: 14px;line-height: 30px;padding:20px">
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                                                    <p>Company Information</p>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                                    <template if:true={isCompanyInformationValueChecked}>
+                                                        <img src={correctImages} alt="correct" width="22" height="21">
+                                                    </template>
+                                                    <template if:false={isCompanyInformationValueChecked}>
+                                                        <img src={wrongImages} alt="correct" width="19" height="19">
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning-accordion-section>
+                                </lightning-accordion>
+                                <br><br>
+                                <div style="text-align:center;margin-bottom:10px">
+                                    <template lwc:if={expression1}>
+                                        <lightning-icon icon-name='utility:success' alternative-text='success'
+                                            variant='success' size='large' title='success'></lightning-icon>
+                                        <h1>
+                                            <div class="slds-align_absolute-center">Thank You</div>
+                                        </h1>
+                                        <div class="slds-align_absolute-center">The form has been submitted
+                                            successfully.</div>
+                                    </template>
+                                    <template lwc:else>
+                                        <lightning-button style="margin:5px;" label="Submit" type="brand"
+                                            disabled={buttonDisable} onclick={confirmSubmit}
+                                            variant="brand"></lightning-button>
+                                    </template>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

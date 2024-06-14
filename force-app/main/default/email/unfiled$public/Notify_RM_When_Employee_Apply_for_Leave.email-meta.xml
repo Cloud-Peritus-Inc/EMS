@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When an employee is reporting to that manager/ if the manager is assigned with duties to look after the leave management of an employee, when these employees raises any leave request( be it any type) then the manager has to recieve an email with the details of the leave request.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notify RM When Employee Apply for Leave</name>
+    <style>freeForm</style>
+    <subject>Requesting for {!EMS_LM_Leave_History__c.Leave_Type_Name__c} approval.</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

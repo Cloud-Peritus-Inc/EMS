@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>EMS_Leave_Cancelled</name>
+    <style>none</style>
+    <subject>Leave Request Canceled</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

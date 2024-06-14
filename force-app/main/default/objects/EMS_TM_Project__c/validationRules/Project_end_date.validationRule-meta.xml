@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Project_end_date</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    OR(ISNEW(), ISCHANGED(EMS_TM_StartDate__c), ISCHANGED(EMS_TM_EndDate__c)),
+    EMS_TM_EndDate__c &lt; EMS_TM_StartDate__c
+)</errorConditionFormula>
+    <errorMessage>End date should be greater than  start date</errorMessage>
+</ValidationRule>

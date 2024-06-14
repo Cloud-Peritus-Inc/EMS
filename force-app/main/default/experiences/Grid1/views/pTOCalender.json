@@ -1,0 +1,46 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "6f2cab14-38c2-472c-a195-1b050b75d0d4",
+  "label" : "PTO Calender",
+  "regions" : [ {
+    "id" : "3e0dc25c-5209-4ab9-ba9c-4dfadd05a394",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:calenderView",
+      "id" : "375826c8-5052-43e1-bb69-2294c16538bc",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "c434bc5b-9c4c-43ee-9d6a-47b9946fc906",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "7aab7bf7-af4e-46f0-ac2b-92c9bccba61f",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "PTO Calender"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "7a15a994-ee0c-4ad4-a673-ec0d74545376",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "efbdccb7-c533-45dc-a97e-a4c5992b37b6",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-pto-calender"
+}

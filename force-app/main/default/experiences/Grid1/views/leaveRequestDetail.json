@@ -1,0 +1,73 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsTwoCol84Layout",
+  "dataProviders" : [ ],
+  "id" : "4f513adf-0094-4ded-9910-7fa5053e6212",
+  "label" : "Leave Request Detail",
+  "regions" : [ {
+    "id" : "167d7241-cc2f-4c2c-97b7-3210e4f042a8",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:leaveReqViewForm",
+      "id" : "a6a30d40-c4ad-4261-ba13-9f898940583c",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "ac83265d-606e-4f8c-b0e1-4ac9964df0ce",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "c59d4d26-b917-418f-829e-0709d4911a22",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "{!Record._Object}: {!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "9756d3b2-674c-4cd3-bbf4-069fefacb95f",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "f2be2f61-4c61-4268-9d09-c586545f0eb4",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "relatedListApiName" : "Histories",
+        "relatedListComponentOverride" : "GRID",
+        "width" : "MEDIUM"
+      },
+      "componentName" : "forceCommunity:responsiveRelatedListSingle",
+      "id" : "b794c7f0-b7d3-427e-b9e5-ad5e0bb7e908",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "relatedListApiName" : "AttachedContentDocuments",
+        "relatedListComponentOverride" : "GRID",
+        "width" : "MEDIUM"
+      },
+      "componentName" : "forceCommunity:responsiveRelatedListSingle",
+      "id" : "09236f73-e8ee-49e3-a5a9-d731e655575e",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "49eb444c-bc8e-4cb2-b3df-eaeb560b2c05",
+    "regionName" : "sidebar",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "detail-a0B"
+}

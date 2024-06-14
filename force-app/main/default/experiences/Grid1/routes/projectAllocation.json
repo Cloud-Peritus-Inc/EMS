@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "98edec66-f58c-4184-abe8-d30894d370cd",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "ProjectAllocation__c",
+  "id" : "3d14cd12-369d-4032-aa2b-aa8203cb5b30",
+  "label" : "ProjectAllocation",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-projectallocation",
+  "type" : "route",
+  "urlPrefix" : "projectallocation"
+}

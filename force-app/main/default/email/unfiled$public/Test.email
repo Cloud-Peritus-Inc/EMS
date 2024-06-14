@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="testing" recipientType="Contact" relatedToType="Contact">
+<messaging:plainTextEmailBody >
+Congratulations!
+This is your new Visualforce Email Template.
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,18 @@
+.dummy{
+	color : black;
+}
+.wrapper1 {
+    width: 300px;
+    word-wrap: break-word;
+}
+.outputFont {
+        font-size: 13px;
+        font-weight:bold;
+}
+.outputFont1 {
+        font-size: 13px;
+        font-weight:normal;
+}
+.lwcInputApplId {
+    width: 33%;
+}

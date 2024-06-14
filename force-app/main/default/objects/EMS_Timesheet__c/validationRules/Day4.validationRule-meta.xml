@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Day4</fullName>
+    <active>false</active>
+    <errorConditionFormula>OR(
+    EMS_TM_Wed__c  &gt; 24.00,
+    EMS_TM_Wed__c  &lt; 8.00,
+    ISBLANK( EMS_TM_Wed__c ) 
+)</errorConditionFormula>
+    <errorDisplayField>EMS_TM_Wed__c</errorDisplayField>
+    <errorMessage>Working hours should be in between 1 to 10 and not Blank</errorMessage>
+</ValidationRule>

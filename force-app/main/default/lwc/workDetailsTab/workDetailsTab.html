@@ -1,0 +1,26 @@
+<template>
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+    <div class="acc-container">
+        <lightning-record-Edit-form record-id={recordId} object-api-name="Contact"
+        onsuccess={handleSuccess}>
+            <lightning-accordion-section name="workDetail" class="slds-form-element_compound slds-truncate" label="Work Experience Details" style="font-weight:bold;">
+			<div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="EMS_EM_Job_Title__c"></lightning-input-field></strong>
+					<strong><lightning-input-field field-name="From_Date__c"></lightning-input-field></strong>
+					<label for="fieldid3">Previous Company Name</label>
+					<strong><lightning-input-field id="fieldid3" field-name="EMS_RM_Previous_Company_Name__c" variant="label-hidden" class="inputWidth"></lightning-input-field></strong>
+				</div>
+                <div class="slds-col slds-size_1-of-2">
+					<strong><lightning-input-field field-name="To_Date__c"></lightning-input-field></strong>
+				</div>
+            </div>
+			</lightning-accordion-section>
+			<div class="slds-align_absolute-center">
+            <span><lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="btn_name "></lightning-button></span>
+            <span><lightning-button class="slds-m-top_small" variant="brand" type="submit" label="Save"></lightning-button></span>
+            </div>
+		</lightning-record-Edit-form>
+	</div>	
+	</lightning-accordion>
+</template>

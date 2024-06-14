@@ -1,0 +1,68 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "be678c5b-2f4c-4a2b-b115-0ee2ab76b0b2",
+  "label" : "Timesheet2",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "6b389c95-12dd-4e9e-8e40-469b782014e6",
+          "columns" : [ {
+            "UUID" : "fa3449b3-8394-45f7-b47f-4281c379fbc4",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "6b389c95-12dd-4e9e-8e40-469b782014e6",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : { },
+          "componentName" : "c:timesheetComponent2",
+          "id" : "d34c5e11-bcad-489b-a594-a304310b10ff",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "fa3449b3-8394-45f7-b47f-4281c379fbc4",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "3863c166-ad5f-4d95-8c6b-66d8d06ebee2",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Timesheet2"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "792df3af-00ae-4d67-9125-83ac73425bb1",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "174a9dc8-9234-4de2-912f-71bce1d9e1a9",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-timesheet2"
+}

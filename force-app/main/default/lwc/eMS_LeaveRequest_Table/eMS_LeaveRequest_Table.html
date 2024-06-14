@@ -1,0 +1,149 @@
+<!--
+  @description       : Generic Table Componet used to display the leave request records
+  @author            : Pavan
+  @group             : 
+  @last modified on  : 12-01-2023
+  @last modified by  : 
+-->
+
+<template>
+	<div class="homeCard" style="">
+		<lightning-card variant="Narrow">
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr>
+							<th scope="col">
+								<div class="slds-truncate" title="Name">Name</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Leave Dates">Date</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="No of Date">No of Days</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Actions"> Actions</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<template for:each={leaveReq} for:item="leave">
+							<tr key={leave.Id}>
+								<td>{leave.EMS_LM_Contact__r.LastName}</td>
+								<td key={leave.Id}>
+									<lightning-formatted-date-time value={leave.EMS_LM_Leave_Start_Date__c}
+										month="numeric" day="numeric" year="numeric"></lightning-formatted-date-time> -
+									<lightning-formatted-date-time value={leave.EMS_LM_Leave_End_Date__c}
+										month="numeric" day="numeric" year="numeric"></lightning-formatted-date-time>
+								</td>
+								<td>{leave.EMS_LM_Leave_Duration__c}</td>
+								<td>
+										<lightning-button-icon icon-name='action:approval' variant="brand"
+											alternative-text='approval' size='x-small' title='approval'
+											data-key={leave.Id} onclick={showModalApprovalBox}></lightning-button-icon>
+										&nbsp;
+										<lightning-button-icon icon-name='action:close' alternative-text='close'
+											variant="brand" size='x-small' title='close' data-key={leave.Id}
+											onclick={showModalRejectBox}>
+										</lightning-button-icon>
+								</td>
+
+								<!-- APPROVE POP-UP-->
+								<template if:true={isShowModalApprove}>
+									<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+										aria-modal="true" aria-describedby="modal-content-id-1"
+										class="slds-modal slds-fade-in-open">
+										<div class="slds-modal__container">
+											<!-- modal header start -->
+											<header class="slds-modal__header">
+												<h2 id="modal-heading-01"
+													class="slds-text-heading_medium slds-hyphenate">
+													Confirmation</h2>
+											</header>
+
+											<!-- modal body start -->
+											<div class="slds-modal__content slds-p-around_medium"
+												id="modal-content-id-1">
+												<p style="font-size:20px;">Please Enter the Approve Comments</p><br>
+												<lightning-textarea name="input" required value=""
+													placeholder="Type comments here..." label="Comments" maxlength="140"
+													message-when-too-long="A maximum of 140 characters are allowed."
+													message-when-value-missing="Please add comments."
+													onchange={handleApproveComments}></lightning-textarea>
+											</div>
+
+											<!-- modal footer start-->
+											<footer class="slds-modal__footer">
+
+												<button class="slds-button slds-button_neutral" onclick={handleClose}
+										data-id={leave.Id}>Cancel</button>
+												<button class="slds-button slds-button_neutral" onclick={handleApproveSave}
+										data-id={leave.Id}>Save</button>
+											</footer>
+
+										</div>
+									</section>
+									<div key={leave.Id} class="slds-backdrop slds-backdrop_open"></div>
+								</template>
+
+								<!-- REJECT POP-UP-->
+								<template if:true={isShowModalReject}>
+									<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02"
+										aria-modal="true" aria-describedby="modal-content-id-1"
+										class="slds-modal slds-fade-in-open">
+										<div class="slds-modal__container">
+											<!-- modal header start -->
+											<header class="slds-modal__header">
+												<h2 id="modal-heading-02"
+													class="slds-text-heading_medium slds-hyphenate">
+													Confirmation</h2>
+											</header>
+
+											<!-- modal body start -->
+											<div class="slds-modal__content slds-p-around_medium"
+												id="modal-content-id-2">
+												<p style="font-size:20px;">Please Enter the Reject Comments</p><br>
+												<lightning-textarea name="input" required value={rejectComments}
+													placeholder="Type comments here..." label="Comments" maxlength="140"
+													message-when-too-long="A maximum of 140 characters are allowed."
+													message-when-value-missing="Please add comments."
+													onchange={handleRejectComments} class="isRequired"
+													data-id="validateValue">
+												</lightning-textarea>
+											</div>
+
+											<!-- modal footer start-->
+											<footer class="slds-modal__footer">
+
+												<button class="slds-button slds-button_neutral" onclick={handleClose}
+										data-id={leave.Id}>Cancel</button>
+												<button class="slds-button slds-button_neutral" onclick={handleRejectSave}
+										data-id={leave.Id}>Save</button>
+											</footer>
+										</div>
+									</section>
+									<div key={leave.Id} class="slds-backdrop slds-backdrop_open"></div>
+								</template>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+			<template if:true={nodata}>
+				<div class="textAlign">
+					<center>No requests found </center>
+				</div>
+			</template>
+			<div style="padding-left:5px;">
+			<footer class="slds-modal__footer" style="width:95%;">
+				<template if:false={isViewAll}>
+				<center>
+					<a href="#"  ><font class="uiOutputText" onclick={handlebulkNavigation}>View All Pending Requests</font></a> 
+				</center>
+				</template>
+			</footer>
+			</div>
+		</lightning-card>
+	</div>
+</template>

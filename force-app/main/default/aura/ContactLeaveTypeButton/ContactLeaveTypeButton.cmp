@@ -1,0 +1,3 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<c:leaveTypeButton></c:leaveTypeButton>
+</aura:component>

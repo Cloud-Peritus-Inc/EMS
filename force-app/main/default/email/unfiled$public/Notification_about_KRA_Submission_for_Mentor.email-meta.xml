@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send an Email to Mentor when Mentee Submits his KRA record for his mentor</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notification about KRA Submission for Mentor</name>
+    <style>freeForm</style>
+    <subject>Performance: KRA Submission Confirmation</subject>
+    <textOnly>Dear {!Goal__c.Check_In_By__c},
+
+
+We are pleased to inform you that the KRA (Key Result Area) record by your mentee {!Goal__c.Resource__c} has been successfully submitted.
+
+
+For further details or any necessary actions, please click here to log in to the GRID system.
+
+
+Best Regards,
+
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

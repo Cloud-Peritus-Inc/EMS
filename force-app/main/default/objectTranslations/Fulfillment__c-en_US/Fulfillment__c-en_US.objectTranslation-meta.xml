@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Fulfillment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Fulfillments</value>
+    </caseValues>
+    <layouts>
+        <layout>Fulfillment Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Fulfillment Layout - HR</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label></label>
+        <name>Appraisal</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Recognization</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

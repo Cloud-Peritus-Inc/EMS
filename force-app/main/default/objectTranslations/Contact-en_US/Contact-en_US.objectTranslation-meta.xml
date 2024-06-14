@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>Applicant</layout>
+        <sections>
+            <label></label>
+            <section>Applicant Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Professional Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Contact Layout</layout>
+        <sections>
+            <label></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Applicant Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Resource</layout>
+        <sections>
+            <label></label>
+            <section>Current Address Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Employment Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Leave Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Permanent Address Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Personal Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Vehicle Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Resource-HR</layout>
+        <sections>
+            <label></label>
+            <section>Current Address Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Employment Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Identity Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Leave Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Permanent Address Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Personal Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Vehicle Details</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label></label>
+        <name>Change_Project</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Convert</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Leave_Type</name>
+    </quickActions>
+    <recordTypes>
+        <label></label>
+        <name>Applicant</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Client</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Resource</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Sales_Contact</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Date_of_joining_validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Level_Approval_Must_Be_Less_Than_3</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Level_Of_Approval_Is_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Tentative_Date_of_Joining_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Test_phone_validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Utilized_leave_cannot_less_than_5</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Validate_Alternative_Contact_Number</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Validate_Contact_Number</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Work_location_Required_for_Resource</name>
+    </validationRules>
+    <webLinks>
+        <label></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+</CustomObjectTranslation>

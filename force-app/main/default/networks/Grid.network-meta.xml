@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Network xmlns="http://soap.sforce.com/2006/04/metadata">
+    <allowInternalUserLogin>true</allowInternalUserLogin>
+    <allowMembersToFlag>false</allowMembersToFlag>
+    <changePasswordTemplate>unfiled$public/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
+    <communityRoles/>
+    <disableReputationRecordConversations>false</disableReputationRecordConversations>
+    <emailSenderAddress>no-reply.grid@cloudperitus.com</emailSenderAddress>
+    <emailSenderName>Grid</emailSenderName>
+    <enableApexCDNCaching>false</enableApexCDNCaching>
+    <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>
+    <enableDirectMessages>true</enableDirectMessages>
+    <enableExperienceBundleBasedSnaOverrideEnabled>false</enableExperienceBundleBasedSnaOverrideEnabled>
+    <enableGuestChatter>false</enableGuestChatter>
+    <enableGuestFileAccess>true</enableGuestFileAccess>
+    <enableGuestMemberVisibility>false</enableGuestMemberVisibility>
+    <enableImageOptimizationCDN>true</enableImageOptimizationCDN>
+    <enableInvitation>false</enableInvitation>
+    <enableKnowledgeable>false</enableKnowledgeable>
+    <enableLWRExperienceConnectedApp>false</enableLWRExperienceConnectedApp>
+    <enableMemberVisibility>false</enableMemberVisibility>
+    <enableNicknameDisplay>true</enableNicknameDisplay>
+    <enablePrivateMessages>false</enablePrivateMessages>
+    <enableReputation>false</enableReputation>
+    <enableShowAllNetworkSettings>false</enableShowAllNetworkSettings>
+    <enableSiteAsContainer>true</enableSiteAsContainer>
+    <enableTalkingAboutStats>true</enableTalkingAboutStats>
+    <enableTopicAssignmentRules>true</enableTopicAssignmentRules>
+    <enableTopicSuggestions>false</enableTopicSuggestions>
+    <enableUpDownVote>false</enableUpDownVote>
+    <forgotPasswordTemplate>unfiled$public/CommunityForgotPasswordEmailTemplate</forgotPasswordTemplate>
+    <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
+    <headlessForgotPasswordTemplate>unfiled$public/CommunityHeadlessForgotPasswordTemplate</headlessForgotPasswordTemplate>
+    <networkAuthApiSettings>
+        <doesForgotPasswordRequireAuth>false</doesForgotPasswordRequireAuth>
+        <doesPwdlessLoginRequireAuth>false</doesPwdlessLoginRequireAuth>
+        <doesRegistrationRequireAuth>false</doesRegistrationRequireAuth>
+        <isForgotPwdAllowed>false</isForgotPwdAllowed>
+        <isForgotPwdEmailTemplateAllowlistingEnabled>false</isForgotPwdEmailTemplateAllowlistingEnabled>
+        <isHeadlessUserRegistrationAllowed>false</isHeadlessUserRegistrationAllowed>
+        <isPwdlessLoginAllowed>false</isPwdlessLoginAllowed>
+        <isRecaptchaRequiredForgotPwd>false</isRecaptchaRequiredForgotPwd>
+        <isRecaptchaRequiredPwdlessLogin>false</isRecaptchaRequiredPwdlessLogin>
+        <isRecaptchaRequiredRgstr>false</isRecaptchaRequiredRgstr>
+        <isUniversalClientRgstrAllowed>false</isUniversalClientRgstrAllowed>
+        <maxPasswordResetAttempts>5</maxPasswordResetAttempts>
+        <recaptchaScoreThreshold>0.0</recaptchaScoreThreshold>
+    </networkAuthApiSettings>
+    <networkMemberGroups>
+        <profile>Admin</profile>
+        <profile>Employee</profile>
+        <profile>CP Sales Internal Customer community</profile>
+        <profile>Employee - HR%28Community%29</profile>
+        <profile>Employee - Resource%28Community%29</profile>
+        <profile>Employee - Operations%28Community%29</profile>
+    </networkMemberGroups>
+    <networkPageOverrides>
+        <changePasswordPageOverrideSetting>Standard</changePasswordPageOverrideSetting>
+        <forgotPasswordPageOverrideSetting>Standard</forgotPasswordPageOverrideSetting>
+        <homePageOverrideSetting>Standard</homePageOverrideSetting>
+        <loginPageOverrideSetting>Standard</loginPageOverrideSetting>
+        <selfRegProfilePageOverrideSetting>Designer</selfRegProfilePageOverrideSetting>
+    </networkPageOverrides>
+    <picassoSite>Grid1</picassoSite>
+    <selfRegistration>false</selfRegistration>
+    <sendWelcomeEmail>false</sendWelcomeEmail>
+    <site>Grid</site>
+    <siteArchiveStatus>NotArchived</siteArchiveStatus>
+    <status>Live</status>
+    <tabs>
+        <defaultTab>home</defaultTab>
+        <standardTab>Chatter</standardTab>
+    </tabs>
+    <urlPathPrefix>Grid</urlPathPrefix>
+    <welcomeTemplate>unfiled$public/CommunityWelcomeEmailTemplate</welcomeTemplate>
+</Network>

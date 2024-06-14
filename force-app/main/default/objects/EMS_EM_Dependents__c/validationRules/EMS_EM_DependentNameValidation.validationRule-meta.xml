@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_EM_DependentNameValidation</fullName>
+    <active>false</active>
+    <description>Name should allow only alphabets</description>
+    <errorConditionFormula>NOT(REGEX(Name,&quot;^[a-z  A-Z]*$&quot;))</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>Please enter a valid name for Dependent</errorMessage>
+</ValidationRule>

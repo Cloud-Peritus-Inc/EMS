@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Project Assignee</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Project Assignees</value>
+    </caseValues>
+    <layouts>
+        <layout>Assignment - HR Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Assignment Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Assignment_date_between_project_dates</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>End_date_validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Project_0_to_100_only</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Start_date_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>assignment_based_on_project_dates</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>status_is_active_then_validate_fire</name>
+    </validationRules>
+</CustomObjectTranslation>

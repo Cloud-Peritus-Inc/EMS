@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Approver Email Template</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>When lead approves/ rejects leave request of employees reporting to Lead</name>
+    <style>none</style>
+    <subject>Leave Request is approved by {!EMS_LM_Leave_History__c.EMS_LM_Approver__c}</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

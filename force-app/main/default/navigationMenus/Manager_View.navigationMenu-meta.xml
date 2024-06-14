@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NavigationMenu xmlns="http://soap.sforce.com/2006/04/metadata">
+    <container>Grid</container>
+    <containerType>Network</containerType>
+    <label>Manager View</label>
+    <navigationMenuItem>
+        <label>Projects</label>
+        <position>1</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>EMS_TM_Project__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>TimeSheet</label>
+        <position>2</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>/timesheet</target>
+        <type>InternalLink</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Assignments</label>
+        <position>3</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>EMS_TM_Assignment__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Employee</label>
+        <position>4</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Contact</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Pending On Me</label>
+        <position>5</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>/pending-on-me</target>
+        <type>InternalLink</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Project Allocation</label>
+        <position>6</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <target>/projectallocation</target>
+        <type>InternalLink</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Performance Management</label>
+        <position>7</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>/performance-management</target>
+        <type>InternalLink</type>
+    </navigationMenuItem>
+</NavigationMenu>

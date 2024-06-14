@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "3bb8cf07-ecb2-4346-b498-6cae1db1d037",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Project_Related_List__c",
+  "id" : "601af018-a458-4637-a7dc-24d1ad5fda5c",
+  "label" : "Project Related List",
+  "objectApiName" : "EMS_TM_Project__c",
+  "routeType" : "relatedlist-a02",
+  "type" : "route",
+  "urlPrefix" : "ems-tm-project"
+}

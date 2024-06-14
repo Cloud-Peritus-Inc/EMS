@@ -1,0 +1,68 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "0c61135a-9c64-49cd-b35a-069ed14fe797",
+  "label" : "ChangeProject",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "50009c0a-9577-4c30-80f5-85aa7544ca40",
+          "columns" : [ {
+            "UUID" : "8377728c-0423-4459-a49a-9e3fcfc848cb",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "50009c0a-9577-4c30-80f5-85aa7544ca40",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : { },
+          "componentName" : "c:changeProjectActionButton",
+          "id" : "45f0a384-5dfc-43c1-ae75-a44aca1008bf",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "8377728c-0423-4459-a49a-9e3fcfc848cb",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "769eb8c9-6ad5-42cd-a06f-f3fbba58938a",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "ChangeProject"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "f817bcad-58fb-4dbe-aa1c-88a4209f9608",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "bee4e132-30a2-4c27-a568-24965b9d36d5",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-changeproject"
+}

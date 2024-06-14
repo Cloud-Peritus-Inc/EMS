@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Flow is Used for Sending Email Alerts to Respective Approver once the Timesheet record is Submitted.
+For Client Type Projects, an email alert is sent to Project Manager based on the Contacts working location.
+For Global Type Projects, an email is sent to the Resource Reporting Manager.</description>
+    <masterLabel>Timesheet Line Items Submission Alert</masterLabel>
+</FlowDefinition>

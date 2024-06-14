@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notification about KRA Submission for Review</name>
+    <style>freeForm</style>
+    <subject>Performance: Completion of performance KRA for the current quarter is pending</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+This is a reminder that the completion of the Quarterly KRA for this evaluation period is still pending to submit for mentor review.
+
+
+
+Please make sure to complete and submit your KRA to your mentor before 2 weeks to {!Goal__c.Quarter_End_Date__c}.
+
+Please check here to access your KRA.
+
+
+
+If you already submitted the KRA, please ignore this email.
+
+
+
+For any further details on KRA please contact your mentor {!Goal__c.Check_In_By__c}.
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

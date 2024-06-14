@@ -1,0 +1,106 @@
+<template>
+	<lightning-card>
+		<div class="slds-p-around_large">
+			
+<!-- 			<table class="tblColPad" border="1" cellpadding="5" cellspacing="5" style="border-collapse:collapse;"> -->
+				<table class="slds-table  slds-table_bordered fixed_header">
+				
+				<thead>
+					<tr class="slds-line-height_reset">
+                        <th style="text-align: center;">Timesheet Record</th>
+						<th style="text-align: center;">Project Name</th>
+						<th style="text-align: center;">Assignment</th>
+						<!-- <th style="text-align: center;">Week Start Date</th> -->
+						<th style="text-align: center;">
+						<lightning-formatted-date-time value={monVal}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time>
+						</th>
+                        <th style="text-align: center;"><lightning-formatted-date-time value={tueVal}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time></th>
+                        <th style="text-align: center;"><lightning-formatted-date-time value={wedVal}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time></th>
+                        <th style="text-align: center;"><lightning-formatted-date-time value={thursdayVal}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time></th>
+                        <th style="text-align: center;"><lightning-formatted-date-time value={fridayVal}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time></th>
+						<template if:true={saturdayVal1}>
+                        <th style="text-align: center;"><lightning-formatted-date-time value={saturdayVal}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time></th>
+						</template>
+						<template if:true={sundayVal1}>
+                        <th style="text-align: center;"><lightning-formatted-date-time value={sundayVal}
+                            weekday="short" month="numeric" day="numeric" time-zone="UTC">
+                        </lightning-formatted-date-time></th>
+						</template>
+						<th style="text-align: center;">Remarks</th>
+						<!-- <th>Total Hours</th> -->
+                        
+					</tr>
+					
+				</thead>
+				<tbody>
+					
+					<template for:each={resultRecords} for:item="items">
+						<tr key={items.Id}>
+                            <td style="text-align: center;">
+								<a data-id={items.Id} onclick={handleTimesheetClick}>{items.TimesheetRecordName}</a>
+							</td>
+							<td style="text-align: center;">
+								<a data-id={items.ProjectId} onclick={handleProjectClick}>{items.ProjectName}</a>
+							</td>
+							<td style="text-align: center;">
+								{items.Assignment}
+							</td>
+							<!-- <td style="text-align: center;">
+								{items.Week}
+							</td> -->
+							<td style="text-align: center;">
+								{items.Monday}
+							</td>
+                            <td style="text-align: center;">
+								{items.Tuesday}
+							</td>
+                            <td style="text-align: center;">
+								{items.Wednesday}
+							</td>
+                            <td style="text-align: center;">
+								{items.Thursday}
+							</td>
+                            <td style="text-align: center;">
+								{items.Friday}
+							</td>
+							<template if:true={saturdayVal1}>
+                            <td style="text-align: center;">
+								{items.Saturday}
+							</td>
+							</template>
+							<template if:true={sundayVal1}>
+                            <td style="text-align: center;">
+								{items.Sunday}
+							</td>
+							</template>
+							<td class="wrap-text" style="white-space: normal;">
+								{items.Remarks}
+							</td>
+                            <!-- <td></td> -->
+						</tr>
+						
+					</template>
+					<tr style="height: 18px;">
+							<td  colspan="11"><p style="text-align: center; background-color: #6904c8; color: #FFFFFF;"><b>Total Hours: </b> {totalHoursVal}</p></td>
+							
+						</tr>
+                            
+				</tbody>
+				
+			</table>
+
+		</div>
+	</lightning-card>
+</template>

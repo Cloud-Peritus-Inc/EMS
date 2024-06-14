@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>When HR rejects Leave request(Email To Employee) Copy1</name>
+    <style>freeForm</style>
+    <subject>Leave: Your {!EMS_LM_Leave_History__c.EMS_LM_Leave_Type_Name__c} request is rejected by {!EMS_LM_Leave_History__c.EMS_LM_Current_Approver__c}</subject>
+    <textOnly>Dear {!Contact.FirstName} {!Contact.LastName},
+
+Your Leave request type {!EMS_LM_Leave_History__c.EMS_LM_Leave_Type_Name__c} for the following date(s) has been rejected by {!EMS_LM_Leave_History__c.EMS_LM_Approver__c}.
+
+
+
+Leave Start Date
+
+
+Leave End Date
+
+
+Status
+
+Day
+
+{!EMS_LM_Leave_History__c.EMS_LM_Leave_Start_Date__c}
+
+{!EMS_LM_Leave_History__c.EMS_LM_Leave_End_Date__c}
+
+
+{!EMS_LM_Leave_History__c.EMS_LM_Status__c}
+
+{!EMS_LM_Leave_History__c.EMS_LM_Day__c}
+
+
+Remarks:
+Approve- Rejected by :{!EMS_LM_Leave_History__c.EMS_LM_Approver__c}
+
+Regards,
+Cloud Peritus India Pvt. Ltd.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

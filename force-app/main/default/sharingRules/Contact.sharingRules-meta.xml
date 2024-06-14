@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Testsharing</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Testsharing</label>
+        <sharedTo>
+            <group>Recordschecking</group>
+        </sharedTo>
+        <booleanFilter>1</booleanFilter>
+        <criteriaItems>
+            <field>EMS_RM_ApplicantStatus_Update__c</field>
+            <operation>equals</operation>
+            <value>Inactive</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

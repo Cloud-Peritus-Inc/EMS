@@ -1,0 +1,13 @@
+{
+  "componentVariants" : [ {
+    "id" : "9646d2f1-52c0-4ba9-8b3c-16c01384439f",
+    "propertyOverrides" : {
+      "isVisible" : true
+    },
+    "targetId" : "5c7e4ceb-933e-44e3-af6a-efb9554cca26",
+    "type" : "componentVariant"
+  } ],
+  "developerName" : "Contact_Detail_tasksChecklist_Component",
+  "id" : "f0547096-2efe-4762-895c-439e326e173e",
+  "type" : "experienceVariation"
+}

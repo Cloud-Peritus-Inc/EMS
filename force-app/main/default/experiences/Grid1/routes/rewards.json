@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "cd85d847-b6c1-44fb-8b21-ef88416c9a9f",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "rewards__c",
+  "id" : "97d69fb1-816d-4b2c-a38c-5183d0258bcc",
+  "label" : "Rewards",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-rewards",
+  "type" : "route",
+  "urlPrefix" : "rewards"
+}

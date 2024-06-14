@@ -1,0 +1,66 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "4da0e809-d601-4045-8325-bd2dfab9671a",
+  "label" : "Skills  Certification Detail",
+  "regions" : [ {
+    "id" : "60e40f10-75ec-4839-ba76-d6cb65efca4b",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "forceCommunity:recordHeadline",
+      "id" : "ca077d6c-0025-43e2-9498-5ed70cf53424",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "detailsTabLabel" : "Details",
+        "discussionsTabLabel" : "Feed",
+        "recordId" : "{!recordId}",
+        "relatedTabLabel" : "Related",
+        "showLegacyActivityComposer" : false,
+        "tab1Type" : "details",
+        "tab2Type" : "related",
+        "tab3Type" : "chatter",
+        "tab4Type" : "none",
+        "timelineTabLabel" : "Activity"
+      },
+      "componentName" : "forceCommunity:recordHomeTabs",
+      "id" : "3abd75b9-6310-4f2a-9944-1a5f642c044a",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "9f66b881-7a0e-4c8f-b13c-cce95937a9da",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "fe61d330-0707-4b90-8f27-7927caa28023",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "{!Record._Object}: {!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "1cc824d5-11cb-4c4a-b618-00282ad7ea29",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "8113b4a8-14e9-4127-a415-5d04328ac5a1",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "detail-a0d"
+}

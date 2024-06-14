@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notification about KRA Creation</name>
+    <style>freeForm</style>
+    <subject>Performance: Quarterly KRA for {!Goal__c.Resource__c} has been created.</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+The KRA request for the current quarter ({!Goal__c.Quarter_Start_Date__c} - {!Goal__c.Quarter_End_Date__c}) has been created and is available to update.
+
+
+
+Please make sure to complete and submit your KRA to your mentor. Please check here to access your KRA
+
+
+
+For any further details on KRA please contact your mentor {!Goal__c.Check_In_By__c}
+
+
+Regards,
+
+HR Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+ td {
+  padding: 5px;
+  text-align: left;
+}
+</style>
+</head>
+<body>
+
+<p> Dear {!EMS_LM_Leave_History__c.EMS_LM_Approver__c},
+</p>
+<p>The Leave request type {!EMS_LM_Leave_History__c.Leave_Type_Name__c} of the   {!Contact.FirstName} {!Contact.LastName}- {!Contact.EMS_RM_Employee_Id__c} for the following date(s) has been {!EMS_LM_Leave_History__c.EMS_LM_Status__c}.
+.</p>
+
+<br>
+<table style="width:100%">
+  
+  <tr>
+    <td>Leave Start Date(s)</td>
+   <td>Leave End Date(s)</td>
+    <td>Duration</td>
+    <td>Status</td>
+    <td>Day</td>
+  </tr>
+  <tr>
+    <td>{!EMS_LM_Leave_History__c.EMS_LM_Leave_Start_Date__c}</td>
+    <td>{!EMS_LM_Leave_History__c.EMS_LM_Leave_End_Date__c}</td>
+    <td>{!EMS_LM_Leave_History__c.EMS_LM_Leave_Duration__c}</td>
+    <td>{!EMS_LM_Leave_History__c.EMS_LM_Status__c}</td>
+    <td>{!EMS_LM_Leave_History__c.EMS_LM_Day__c}</td>
+  </tr>
+ 
+</table>
+<br>
+<p>Remarks :</p>
+<br/>
+<p>Regards,</p>
+<p>Cloud Peritus India Pvt. Ltd.</p>
+
+</body>
+</html>

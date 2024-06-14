@@ -1,0 +1,24 @@
+<template>
+	<template if:true={reportees}>
+	<template for:each={reportees} for:item="report">
+		<li key={report.resourceUserId}>
+			<div class="slds-var-p-horizontal_small bear-tile-body rcorners2 node">
+				<div class="slds-media">
+					<div class="slds-media__figure image">
+						<img src={report.resourcePhotoURL}  class="bear-silhouette"/>
+										</div>
+						<div class="slds-media__body">
+							<h3 class="small-text"><b>{report.resourceName}</b></h3>
+							<p class="small-text1"><i>{report.resourceRole}</i></p>
+						</div>
+					</div>
+				</div>
+		</li>
+	</template>
+	</template>
+	<template if:false={reportees}>
+		<div style="padding-top: 30px; color:red;">
+			<P>No reportees found!</p>
+		</div>
+	</template>
+</template>

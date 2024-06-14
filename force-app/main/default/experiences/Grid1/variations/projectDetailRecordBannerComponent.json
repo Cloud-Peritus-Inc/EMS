@@ -1,0 +1,13 @@
+{
+  "componentVariants" : [ {
+    "id" : "3ea79da7-6fa1-4f17-883d-48750954c48e",
+    "propertyOverrides" : {
+      "isVisible" : true
+    },
+    "targetId" : "866ec99c-2908-4855-baa7-6a0bc812a490",
+    "type" : "componentVariant"
+  } ],
+  "developerName" : "Project_Detail_Record_Banner_Component",
+  "id" : "c4f91170-9901-4135-a7bd-a9d8d7c30573",
+  "type" : "experienceVariation"
+}

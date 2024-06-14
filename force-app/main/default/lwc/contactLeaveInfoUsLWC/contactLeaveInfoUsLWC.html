@@ -1,0 +1,18 @@
+<template>
+ <lightning-card title="Leave Information">
+     <div class="container">
+        <div class="column">
+            <p><b>Number of Paid Time Off leaves credited:</b> {contactData.EMS_LM_No_Of_Leaves_Credit__c}</p>
+            <p><b>Number of Paid Time Off leaves utilised:</b> {contactData.EMS_LM_No_Of_Utilized_Leaves__c}</p>
+            <p><b>Number of Paid Time Off leaves available:</b> {contactData.EMS_LM_No_Of_Availble_Leaves__c}</p>
+            <p><b>Number of Unpaid time Off leaves utilised:</b> {contactData.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c}</p>
+        </div>
+        <div class="column">
+            <p><b>Number of Floating Holiday leaves credited:</b> {contactData.No_of_Avilable_floatLeave_credits__c}</p>
+            <p><b>Number of Floating Holiday leaves utilised:</b> {contactData.UtlizedFloatLeaves__c}</p>
+            
+            <p><b>Number of Utilized Work from Home:</b> {contactData.No_OF_Utilized_Work_from_Home__c}</p>
+        </div>
+    </div>
+ </lightning-card>
+</template>

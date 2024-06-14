@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "458d0537-4e13-48f0-afae-559b73e46b64",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "TimeSheetApproval__c",
+  "id" : "831ad7e7-c6f1-4d9f-a993-6611ca490558",
+  "label" : "TimeSheetApproval",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-timesheetapproval",
+  "type" : "route",
+  "urlPrefix" : "timesheetapproval"
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Welcome Email</name>
+    <style>freeForm</style>
+    <subject>Onboarding: Welcome Aboard!</subject>
+    <textOnly>Dear {!Contact.Name},
+
+
+We welcome you to the family and are so excited to have you on board. We value your association with us and would like to ensure that you have an enriching and enduring tenure with us. Wish you great success and a rewarding career with Cloud Peritus.
+
+
+As an employee of Cloud Peritus, you will now have access to the company&apos;s employee portal: Grid. Click here to log in to the portal.
+
+
+Also, we need you to complete the rest of the onboarding formalities in the portal. Please follow the instructions below:
+
+
+Instructions:
+
+1. Click on the URL and you will be directed to the login page of Grid.
+
+2. Click on the Google icon to log in with your official Gmail credentials.
+
+3. On the Homepage of Grid, you will find a tile named ‘Onboarding Journey’. Click on the button on the tile.
+
+4. You will navigate to a page with various steps in the onboarding process that need to be completed.
+
+5. We would need you to complete your profile, Medical Insurance form, and Bank details form today. For other sections, you may take one more day to complete them.
+
+6. Once you fill in all the details, we will cross-check and verify the details provided at our end and will update you if we require any further information.
+
+
+Regards,
+
+HR Team
+
+Cloud Peritus</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

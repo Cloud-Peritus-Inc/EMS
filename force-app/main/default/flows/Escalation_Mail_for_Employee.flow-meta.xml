@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>escalation_mail</name>
+        <label>escalation mail</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <actionName>EMS_Timesheet__c.Escalation_mail_send_to_employee_when_timesheet_is_not_submitted</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>EMS_Timesheet__c.Escalation_mail_send_to_employee_when_timesheet_is_not_submitted</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <environments>Default</environments>
+    <interviewLabel>Escalation Mail for Employee {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Escalation Mail for Employee</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>escalation_mail</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EMS_TM_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Submitted</stringValue>
+            </value>
+        </filters>
+        <object>EMS_Timesheet__c</object>
+        <schedule>
+            <frequency>Weekly</frequency>
+            <startDate>2022-09-16</startDate>
+            <startTime>22:45:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <name>ThisWeek</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgba(32, 33, 36, 0.04); font-size: 14px; font-family: Roboto, sans-serif; color: rgb(32, 33, 36);&quot;&gt;THIS_WEEK&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+</Flow>

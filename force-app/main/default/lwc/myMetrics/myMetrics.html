@@ -1,0 +1,74 @@
+<template>
+<lightning-card>
+        <div class="childparent">
+          <div class="childtext" style="padding-left:20px;">
+               <div style="padding-left:5px;"> 
+          <lightning-icon icon-name="standard:performance" size="large" alternative-text="In Progress" ></lightning-icon>
+           <font size="4"  > &nbsp;&nbsp;<b> My Metrics </b> </font> <br/>
+            </div> 
+          </div>
+           <div class="childimage">
+             <lightning-combobox
+                name=""
+                label=""
+                value={selectedfy}
+                placeholder="Fiscal Year"
+                options={fymapdata}
+                onchange={handleFYChange} >
+            </lightning-combobox>
+           </div>
+        </div>
+
+
+      <hr class="new5">
+
+<!-- <div class="flex-parent-element"> -->
+<div>
+  <lightning-layout multiple-rows>
+    <lightning-layout-item size="7">
+      <div class="magenta">
+        <lightning-input data-id="toggle1" type="toggle" label="Show All Check Ins" onchange={checkInToggle}
+             message-toggle-active="" message-toggle-inactive=""></lightning-input>
+              <lightning-input data-id="toggle2" type="toggle" label="Show All Pulse" onchange={pulseToggle}
+             message-toggle-active="" message-toggle-inactive="" disabled={disableButton}></lightning-input>
+              <lightning-input data-id="toggle3" type="toggle" label="Show All KRA's" onchange={kraToggle}
+             message-toggle-active="" message-toggle-inactive=""></lightning-input>
+       </div>
+    </lightning-layout-item>
+    <lightning-layout-item size="5">
+      <div class="green" style="text-align:right;text-color:white;">
+      <!--  <lightning-button label="Check In"  title="Check-in" icon-name="utility:checkin" class="slds-m-left_x-small"></lightning-button>
+               <lightning-button  label="Get Pulse"  title="Get Pulse" icon-name="standard:feed" class="slds-m-left_x-small"></lightning-button> 
+                <lightning-button  label="Generate Performance KRA"   title="Generate Performance" icon-name="standard:historical_adherence" class="slds-m-left_x-small"></lightning-button>-->
+                <lightning-button variant="destructive" disabled={dontshowThePulse} onclick={getPulseBtnHandler} label="Get Feedback"  title="Get Feedback" icon-name="standard:feed" class="slds-m-left_x-small"></lightning-button>
+     </div>
+    </lightning-layout-item>
+</lightning-layout>
+</div>
+
+    </lightning-card>
+    
+<br/>
+<br/>
+
+<template if:true={showcheckin}>
+  <br/>
+ <c-checkintable tabledata={cintable}></c-checkintable>
+</template>
+
+<template if:true={showpulse}>
+  <br/>
+ <c-pulsetable tabledata={ptable}></c-pulsetable>
+</template>
+
+<template if:true={showkras}>
+  <br/>
+ <c-kratable tabledata={kratable} onkradata={getallKrafromserver} tab="My Metric" ></c-kratable>
+</template>
+
+
+
+
+
+
+</template>

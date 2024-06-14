@@ -1,0 +1,41 @@
+.node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.image img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 0;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    position: relative;
+}
+
+svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.line {
+  stroke: #999;
+  stroke-width: 1;
+  position: absolute;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Employee cancels leave request and email gets triggered to Lead</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Email sent to lead when Employee cancels leave request</name>
+    <style>none</style>
+    <subject>Leave Cancellation Notification</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

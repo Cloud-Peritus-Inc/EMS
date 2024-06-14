@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Acknowledgement_email</fullName>
+        <description>Acknowledgement email</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_EM_Personal_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Pre_onboarding_Completed</template>
+    </alerts>
+    <alerts>
+        <fullName>HR_reopens_the_portal</fullName>
+        <description>HR reopens the portal</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_EM_Personal_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/HR_reopens_the_portal</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_HR_After_PreOnboarding_Completion</fullName>
+        <description>Notify HR After PreOnboarding Completion</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Notify_HR_After_PreOnboarding_Completion</template>
+    </alerts>
+    <alerts>
+        <fullName>Reminder_Email_To_Candidate</fullName>
+        <description>Reminder Email To Candidate</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMS_EM_Personal_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Reminder_Email_To_Candidate</template>
+    </alerts>
+</Workflow>

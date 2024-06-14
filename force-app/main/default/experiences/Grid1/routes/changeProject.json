@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "0c61135a-9c64-49cd-b35a-069ed14fe797",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "ChangeProject__c",
+  "id" : "728db587-c0c1-45ed-877e-899e1fb4390c",
+  "label" : "ChangeProject",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-changeproject",
+  "type" : "route",
+  "urlPrefix" : "changeproject"
+}

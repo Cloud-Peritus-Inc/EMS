@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Boilerplate content for when you embed a link to a survey in an email. You can&apos;t embed a survey question if you edit the merge fields or delete this template.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Embed_a_Survey_Question</name>
+    <relatedEntityType>SurveyQuestion</relatedEntityType>
+    <style>none</style>
+    <subject>Your feedback is important. Help us to improve by taking this survey.</subject>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Whenever a &quot;Annual Award Nomination&quot; is submitted send an email to nomination Creator</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Annual Award Submission Template</name>
+    <style>freeForm</style>
+    <subject>RnR: Successful submission of annual award nominations</subject>
+    <textOnly>Dear {!Reward_And_Recognition__c.Recognization_By__c},
+
+
+Congratulations! Your submission of annual award nominations for {!Reward_And_Recognition__c.Fiscal_Year__c} has been successfully submitted.
+
+
+You have nominated {!Reward_And_Recognition__c.Resource__c} for {!Reward_And_Recognition__c.Award_Type__c}
+
+
+Thanks for your participation!
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

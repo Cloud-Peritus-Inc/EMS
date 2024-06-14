@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send an email alert to update the user that feedback has been sent.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Pulse Review Template for Feedback Receiver</name>
+    <style>freeForm</style>
+    <subject>Performance: Feedback Requested</subject>
+    <textOnly>Dear {!Goal__c.Check_In_By__c},
+
+
+Congratulations! Your feedback request has been successfully sent to your team member, {!Goal__c.Resource__c}.
+
+
+
+Thank you for initiating the feedback request!
+
+
+
+Best Regards,
+
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

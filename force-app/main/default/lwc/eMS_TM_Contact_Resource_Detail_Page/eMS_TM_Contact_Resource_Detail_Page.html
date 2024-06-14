@@ -1,0 +1,88 @@
+<template>
+    <lightning-card>
+        <lightning-record-view-form
+                    record-id={recordId}
+                    object-api-name="Contact">
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                          <span class="slds-truncate slds-p-horizontal_small" title="Employee Details">Employee Details</span>
+                        </h3>
+                        <div aria-hidden="false" class="slds-section__content">
+                            <div class="slds-grid slds-gutters ">
+                                <div class="slds-col">
+                                <span>
+                                    <lightning-output-field field-name="EMS_RM_Employee_Id__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">Name</label>                    
+                                        <div class="slds-form-element__control">                    
+                                            <span class="slds-form-element__static">                       
+                                                <lightning-output-field field-name="Name" variant="label-hidden"><hr style="margin-top:2px"></lightning-output-field>               
+                                            </span>                    
+                                        </div>                    
+                                    </div>
+                                    <lightning-output-field field-name="EMS_RM_Certifications__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">Account Name</label>                    
+                                        <div class="slds-form-element__control">                    
+                                            <span class="slds-form-element__static">                       
+                                                <lightning-output-field field-name="AccountId" variant="label-hidden"><hr style="margin-top:2px"></lightning-output-field>               
+                                            </span>                    
+                                        </div>                    
+                                    </div>                                    
+                                    <lightning-output-field field-name="Official_Mail__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <lightning-output-field field-name="EMS_Employee_type__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <lightning-output-field field-name="EMS_RM_ApplicantStatus_Update__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <lightning-output-field field-name="Current_Active_Assignments__c"><hr style="margin-top:2px"></lightning-output-field>                                    
+                                </span>
+                                </div>
+                                <div class="slds-col">
+                                <span>
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label"></label>                    
+                                        <div class="slds-form-element__control">                    
+                                            <span class="slds-form-element__static">  
+                                            </span>                    
+                                        </div>                    
+                                    </div>   
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label"></label>                    
+                                        <div class="slds-form-element__control">                    
+                                            <span class="slds-form-element__static">  
+                                            </span>                    
+                                        </div>                    
+                                    </div>                                     
+                                    <lightning-output-field field-name="EMS_RM_Industry__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <lightning-output-field field-name="EMS_Domain_Technology__c"><hr style="margin-top:2px"></lightning-output-field>                                    
+                                    <lightning-output-field field-name="EMS_RM_Current_Job_Role__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <lightning-output-field field-name="EMS_RM_Current_Location__c"><hr style="margin-top:2px"></lightning-output-field>
+                                    <lightning-output-field field-name="Location__c"><hr style="margin-top:2px"></lightning-output-field>                                    
+                                    <lightning-output-field field-name="EMS_TM_Billable__c"><hr style="margin-top:2px"></lightning-output-field>                                    
+                                    <lightning-output-field field-name="EMS_TM_In_Billing__c"><hr style="margin-top:2px"></lightning-output-field>                                     
+                                </span>
+                                </div>
+                                </div>                                                
+                        </div>
+                      </div>
+         <div class="slds-section slds-is-open">
+            <h3 class="slds-section__title slds-theme_shade">
+              <span class="slds-truncate slds-p-horizontal_small" title="Employee Contact Details">Employee Contact Details</span>
+            </h3>
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid slds-gutters ">
+                <div class="slds-col">
+                    <span>
+                        <lightning-output-field field-name="EMS_Phone_Number__c"><hr style="margin-top:2px"></lightning-output-field>
+                        <lightning-output-field field-name="EMS_RM_Resource_Email_id__c"><hr style="margin-top:2px"></lightning-output-field>  
+                    </span>
+                    </div>
+                    <div class="slds-col">
+                    <span>
+                        <lightning-output-field field-name="EMS_RM_Permanent_Address__c"><hr style="margin-top:2px"></lightning-output-field>
+                    </span>
+                    </div>
+                    </div>
+                    </div>
+         </div>
+        </lightning-record-view-form>
+     </lightning-card>
+</template>

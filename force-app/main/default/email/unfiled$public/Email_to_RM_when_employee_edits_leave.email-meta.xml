@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Email to RM when employee edits leave</name>
+    <style>freeForm</style>
+    <subject>{!EMS_LM_Leave_History__c.EMS_LM_Leave_Type_Name__c} Request Edited by {!Contact.FirstName} {!Contact.LastName}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

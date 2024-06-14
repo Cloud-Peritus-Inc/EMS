@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Employee submits work from home request to Lead/PM</name>
+    <style>freeForm</style>
+    <subject>Requesting for {!EMS_LM_Leave_History__c.Leave_Type_Name__c} Approval</subject>
+    <textOnly>Dear Employee,
+
+
+
+This is to notify you that {!Contact.LastName} -{!Contact.EMS_RM_Employee_Id__c}  has raised a {!EMS_LM_Leave_History__c.Leave_Type_Name__c}  request for the following date(s).
+
+
+
+Leave Start Date
+
+Leave End Date
+
+Status
+
+Day
+
+{!EMS_LM_Leave_History__c.EMS_LM_Leave_Start_Date__c}
+
+{!EMS_LM_Leave_History__c.EMS_LM_Leave_End_Date__c}
+
+{!EMS_LM_Leave_History__c.EMS_LM_Status__c}
+
+{!EMS_LM_Leave_History__c.EMS_LM_Day__c}
+
+
+
+Reason: {!EMS_LM_Leave_History__c.EMS_LM_Reason__c}
+
+Please click here to approve or reject the request
+
+
+
+Regards,
+
+
+Cloud Peritus India Pvt. Ltd.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

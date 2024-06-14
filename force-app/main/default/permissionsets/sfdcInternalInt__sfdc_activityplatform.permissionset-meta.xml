@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permset for the &apos;sfdc.activityplatform&apos; C2C integration</description>
+    <hasActivationRequired>true</hasActivationRequired>
+    <label>sfdc.activityplatform</label>
+    <license>Cloud Integration User</license>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>SalesforceIQInternal</name>
+    </userPermissions>
+</PermissionSet>

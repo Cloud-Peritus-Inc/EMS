@@ -1,0 +1,13 @@
+{
+  "componentVariants" : [ {
+    "id" : "a7674f4a-c3e9-450f-9459-46b0b50d8a8e",
+    "propertyOverrides" : {
+      "isVisible" : true
+    },
+    "targetId" : "47fa835d-6487-4e54-891f-2dae4685de1c",
+    "type" : "componentVariant"
+  } ],
+  "developerName" : "Onboarding_Request_Detail_progressBarApplicant_Component",
+  "id" : "0af50216-cb24-4a99-a49b-5c8973da8878",
+  "type" : "experienceVariation"
+}

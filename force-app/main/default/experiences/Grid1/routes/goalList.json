@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "381fd94b-fd80-4313-bbe5-5bfd9151856a",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Goal_List__c",
+  "id" : "4f6ee7a7-cf82-47f7-942c-c83a64bef563",
+  "label" : "Goal List",
+  "objectApiName" : "Goal__c",
+  "routeType" : "list-a0f",
+  "type" : "route",
+  "urlPrefix" : "goal"
+}

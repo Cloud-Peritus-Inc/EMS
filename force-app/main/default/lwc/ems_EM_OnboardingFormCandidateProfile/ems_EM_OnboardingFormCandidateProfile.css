@@ -1,0 +1,25 @@
+.masked  .slds-input {
+    -webkit-text-security: disc;
+}
+.dummy{
+	color : black;
+}
+.stylingForAdd {
+        font-weight: bold;
+    margin-left: 21px;
+    margin-top: 3px;
+    font-size: 14px;
+}
+
+.removeImage {
+    border-radius: 50%;
+    padding: 0px 4px;
+    margin: 8px 2px 8px 8px;
+    color: #fff;
+    background-color: #9f201b;
+    cursor: pointer;
+}
+
+.file-container {
+    width: 400px; /* Adjust the width as per your requirement */
+  }

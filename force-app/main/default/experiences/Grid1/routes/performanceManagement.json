@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "6cb90afe-1d37-454b-9af6-cbcea1a54cb9",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "performance_management__c",
+  "id" : "9f867ead-f5b1-4511-9e9c-0b49bee80c6f",
+  "label" : "Performance Management",
+  "pageAccess" : "Public",
+  "routeType" : "custom-performance-management",
+  "type" : "route",
+  "urlPrefix" : "performance-management"
+}

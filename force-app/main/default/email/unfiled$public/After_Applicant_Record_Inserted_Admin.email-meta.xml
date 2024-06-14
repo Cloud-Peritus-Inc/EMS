@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send email to Admin when Applicant Record is created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>After Applicant Record Inserted Admin</name>
+    <style>freeForm</style>
+    <subject>Cloud Peritus: Upcoming employee onboarding</subject>
+    <textOnly>Dear Admin Team,
+
+
+The following candidate will join our company on {!Contact.EMS_EM_JD__c}:
+
+Name: {!Contact.Name}
+
+Designation: {!Contact.Resource_Role__c}
+
+Please make sure to keep the joining kit ready for the employee by the date of joining.
+
+
+Contact the HR Department for more details.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

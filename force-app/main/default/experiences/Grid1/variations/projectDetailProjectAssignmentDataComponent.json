@@ -1,0 +1,13 @@
+{
+  "componentVariants" : [ {
+    "id" : "d58be02f-546c-446a-8687-e5ea1a5902d7",
+    "propertyOverrides" : {
+      "isVisible" : true
+    },
+    "targetId" : "60af1081-3102-49f8-9f7c-d4a4620f18b9",
+    "type" : "componentVariant"
+  } ],
+  "developerName" : "Project_Detail_projectAssignmentData_Component",
+  "id" : "9e5080b9-8c60-4c6c-9772-9aa95dfb0927",
+  "type" : "experienceVariation"
+}

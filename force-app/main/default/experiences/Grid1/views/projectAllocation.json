@@ -1,0 +1,68 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "98edec66-f58c-4184-abe8-d30894d370cd",
+  "label" : "ProjectAllocation",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "dc6cb1e6-4c05-4e3c-99d7-58be95bde246",
+          "columns" : [ {
+            "UUID" : "2a487e1b-d71f-4978-b25e-12fe42ddc229",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "dc6cb1e6-4c05-4e3c-99d7-58be95bde246",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : { },
+          "componentName" : "c:projectAllocationTab",
+          "id" : "ba4760d2-d698-4459-9f55-496a02e58c6d",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "2a487e1b-d71f-4978-b25e-12fe42ddc229",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "6210aaa3-efd7-48c3-b7ea-32506a264353",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "ProjectAllocation"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "59d1167d-195a-4581-9832-882fabf4f5fa",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "a3bbb8d9-0b7e-4d10-91b4-f27df337befd",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-projectallocation"
+}

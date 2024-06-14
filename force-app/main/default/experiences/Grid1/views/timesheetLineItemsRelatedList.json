@@ -1,0 +1,39 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "80c46b1c-6fc8-43f0-b4fc-0bcf1d2d9842",
+  "label" : "Timesheet Line Items Related List",
+  "regions" : [ {
+    "id" : "506d3171-574d-44ce-820b-53bad0dc480d",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customTitle" : "",
+        "parentRecordId" : "{!recordId}",
+        "relatedListName" : "{!relationshipApiName}",
+        "showBreadCrumbs" : true,
+        "showCustomTitle" : false,
+        "showManualRefreshButton" : true,
+        "showRowNumbers" : true
+      },
+      "componentName" : "forceCommunity:relatedList",
+      "id" : "bccf3c14-035a-4202-82f4-20a2ab0fef01",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "35a223bc-f517-4d5c-b72e-40b1b0a52372",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "8c2b037d-648a-4197-8816-a5ad8b74e707",
+    "regionName" : "footer",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "relatedlist-a06"
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_of_Paid_Time_Off_leaves_credited__c</fullName>
+    <externalId>false</externalId>
+    <formula>EMS_LM_No_Of_Leaves_Credit__c</formula>
+    <label>No of Paid Time Off Leaves Credited</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_EM_Validation_DOW</fullName>
+    <active>true</active>
+    <description>DOW should not be greater than Current date</description>
+    <errorConditionFormula>IF( ISPICKVAL(EMS_EM_Mstatus__c, &quot;Married&quot;), (EMS_EM_DOW__c &gt; TODAY())  ,  
+
+false)</errorConditionFormula>
+    <errorDisplayField>EMS_EM_DOW__c</errorDisplayField>
+    <errorMessage>DOW should not be greater than Current date</errorMessage>
+</ValidationRule>

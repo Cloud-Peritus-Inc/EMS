@@ -1,0 +1,63 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Org Wide PTO's" icon-name="standard:account">
+    
+    <template if:true={showThetable}>
+    <c-calender events={events} oneventclicked={handleEvent}></c-calender>
+    </template>
+    <!-- Open a modal with event data  -->
+   <template if:true={openModal}>
+       <div data-modal="custom-modal" class="modalclass">
+            <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" 
+                                            class="slds-modal__close " 
+                                            alternative-text="Close" 
+                                            title="Close"
+                                            size="large"
+                                            variant="bare-inverse"
+                                            onclick={handleCancel} >
+ 
+                    </lightning-button-icon>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium"
+                    id="modal-content-id-1">
+                    {recorddata}
+                    <lightning-record-view-form record-id={recordvalue} object-api-name="EMS_LM_Leave_History__c" >
+                         <div class="slds-box slds-theme_default">
+                            <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Name"> </lightning-output-field>
+                        <lightning-output-field field-name="EMS_LM_Contact__c"> </lightning-output-field>
+                        <lightning-output-field field-name="Leave_Type_Name__c"> </lightning-output-field>
+                         <lightning-output-field field-name="EMS_LM_Status__c"> </lightning-output-field>
+                         </div>
+                         <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="EMS_LM_Leave_Start_Date__c"> </lightning-output-field>
+                        <lightning-output-field field-name="EMS_LM_Leave_End_Date__c"> </lightning-output-field>
+                         <lightning-output-field field-name="EMS_LM_Leave_Duration__c"> </lightning-output-field>
+                         </div>
+                        </div>
+                        </div>
+                    </lightning-record-view-form>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button-group>
+                        <lightning-button label="Close" title="Close" icon-name="utility:close" onclick={handleCancel}></lightning-button>
+                     </lightning-button-group>
+                     
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+       </div>
+    </template>
+       
+    </lightning-card>
+</template>

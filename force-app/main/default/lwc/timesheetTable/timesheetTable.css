@@ -1,0 +1,58 @@
+.homeCard{
+    background-color: rgb(247 246 246) !important;
+    //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 4px 8px 0 #CBC3E3, 0 6px 20px 0 #CBC3E3;
+    margin-top: 05px;
+    margin-bottom: 10px;
+}
+.styled-table {
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 0.9em;
+    font-family: "SalesforceSans-Regular";
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+  /*  background-color: #009879;*/
+    color: #130707;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 10px 10px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+.secondBox{
+    text-align: center;
+    cursor: pointer;
+    color:DodgerBlue;
+    
+}
+.fontsize{
+
+  font-size: 34px;
+}
+.circularProgress{
+    --lwc-squareIconUtilityLarge: 10rem;
+    --lwc-progressRingWidth:1.7rem;
+    --lwc-colorBackgroundSuccessDark:rgb(13, 228, 48);
+}

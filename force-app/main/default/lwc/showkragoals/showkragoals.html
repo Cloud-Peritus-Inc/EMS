@@ -1,0 +1,216 @@
+<template>
+  <lightning-card>
+     <div class="tableFixHead">
+    <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header" >
+      <thead>
+        <tr class="slds-line-height_reset" style="color:lightcoral">
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Goal Name">Goal</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Start Date">Start Date</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="End Date">End Date</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Description">Description</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Final Comments">Final Comments</div>
+          </th>
+           <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Status">Status</div>
+          </th>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Goal Completed Date">Goal Completed Date</div>
+          </th>
+          <th class="tableheading" scope="col">
+            <div class="slds-truncate" title="Actions">Actions</div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <template if:true={showGoalRecords}>
+          <template for:each={goaltable} for:item="goalwrap">
+            <tr key={goalwrap.nameid}>
+              <td>
+                <div class="slds-wrap" style="width:100px;word-wrap:break-word;">
+                  <!-- @Mukesh Rawat
+                  Defect - PM_112 Removed Hyperlink to the Goal Name -->
+                  <!-- <p> <a href="javascript:void(0);" data-id={goalwrap.nameid} onclick={handleNavClick}>
+                      {goalwrap.name}
+                    </a>
+                  </p> -->
+                  <p>{goalwrap.name}</p>
+                </div>
+              </td>
+              <td>
+                <div class="slds-wrap"><lightning-formatted-date-time value={goalwrap.qstartdate}></lightning-formatted-date-time></div>
+              </td>
+               <td>
+                <div class="slds-wrap"><lightning-formatted-date-time value={goalwrap.qendate}></lightning-formatted-date-time></div>
+              </td>
+              <td style="width:200px;word-wrap:break-word;">
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={goalwrap.Description}></lightning-formatted-rich-text></div>
+              </td>
+              <td style="width:200px;word-wrap:break-word;">
+                <div class="slds-wrap"><lightning-formatted-rich-text
+                    value={goalwrap.comments}></lightning-formatted-rich-text></div>
+              </td>
+               <td>
+                <div class="slds-wrap">{goalwrap.status}</div>
+              </td>
+              <td>
+                <div class="slds-wrap"><lightning-formatted-date-time value={goalwrap.goalCompletedDate}></lightning-formatted-date-time></div>
+              </td>
+              <td>
+                <lightning-button-icon icon-name="action:preview"  size="large" variant="bare" alternative-text="View Goal" data-id={goalwrap.nameid} onclick={handleViewClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                <template if:true={goalwrap.showedit}>
+                <lightning-button-icon icon-name="action:edit"  size="large"  variant="bare" alternative-text="Edit Goal"  data-id={goalwrap.nameid} data-status={goalwrap.status} onclick={handleeditClick} class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;&nbsp;
+                </template>
+              </td>
+            </tr>
+          </template>
+        </template>
+      </tbody>
+    </table>
+       <template if:false={showGoalRecords}>
+          <div class="slds-text-align_center slds-p-around_medium">
+            <center>No goals found.</center>
+          </div>
+        </template>
+  </div>
+</lightning-card>
+
+    <template if:true={showEditGoal}>
+     <lightning-card>
+        <div class="spinner">
+        <template if:true={isLoading}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+        </template>
+    </div>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideGoalEditModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Edit Goal</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+             <lightning-layout>
+             <lightning-layout-item flexibility="auto" padding="around-small">
+                 <lightning-input type="text" name="goalname" label="Name" placeholder="type goal..."  onchange={handleGoalNameChange} value={goalname} disabled></lightning-input>
+                  <lightning-input type="date" name="startdate" label="Start Date" value={goalstartdate} onchange={handleGoalStartChange} disabled></lightning-input>
+                  <lightning-input type="date" name="enddate" label="End Date" value={goalenddate} onchange={handleGoalEndChange} disabled></lightning-input>
+             </lightning-layout-item>
+              <lightning-layout-item flexibility="auto" padding="around-small">
+                  <lightning-input-rich-text
+                     value={myVal}
+                     label = 'Description'
+                     label-visible = true
+                     disabled >
+                  </lightning-input-rich-text>
+                
+                   <lightning-input-rich-text
+                     value={mycomments}
+                     label = 'Final Comments'
+                     label-visible = true
+                     onchange={handledescChange} 
+                     required >
+                  </lightning-input-rich-text>
+             </lightning-layout-item>
+         </lightning-layout>
+    
+              
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+               <lightning-button variant="destructive" label="Cancel" title="Cancel" onclick={hideGoalEditModalBox} class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
+               <template if:true={showinprogress}>
+                <lightning-button variant="brand" label="In Progress" title="In-Progress" onclick={updatetheGoaltoInprogress} class="slds-m-left_x-small"></lightning-button> &nbsp;&nbsp;&nbsp;
+                </template>
+                <lightning-button variant="brand" label="Save and Complete" title="Save and Complete" onclick={saveTheGoal} class="slds-m-left_x-small"></lightning-button>
+               
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
+
+ <template if:true={showViewGoal}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideGoalViewModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">View Goal</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+             <lightning-layout>
+             <lightning-layout-item flexibility="auto" padding="around-small">
+                 <lightning-input type="text" name="goalname" label="Name" placeholder="type goal..."  onchange={handleGoalNameChange} value={goalname} disabled></lightning-input>
+                  <lightning-input type="date" name="startdate" label="Start Date" value={goalstartdate} onchange={handleGoalStartChange} disabled></lightning-input>
+                  <lightning-input type="date" name="enddate" label="End Date" value={goalenddate} onchange={handleGoalEndChange} disabled></lightning-input>
+                   <lightning-input type="date" name="enddate" label="Goal Completed Date" value={goalCompdate} disabled></lightning-input>
+             </lightning-layout-item>
+              <lightning-layout-item flexibility="auto" padding="around-small">
+                  <lightning-input-rich-text
+                     value={myVal}
+                     label = 'Description'
+                     label-visible = true
+                     disabled >
+                  </lightning-input-rich-text>
+                
+                   <lightning-input-rich-text
+                     value={mycomments}
+                     label = 'Final Comments'
+                     label-visible = true
+                     onchange={handledescChange} 
+                     disabled >
+                  </lightning-input-rich-text>
+             </lightning-layout-item>
+         </lightning-layout>
+           </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hideGoalViewModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
+
+
+ 
+
+</template>

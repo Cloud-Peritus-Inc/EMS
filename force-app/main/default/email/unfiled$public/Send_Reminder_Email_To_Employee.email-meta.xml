@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Send Reminder Email To Employee</name>
+    <style>freeForm</style>
+    <subject>Onboarding: Gentle reminder to complete onboarding process</subject>
+    <textOnly>Dear {!Contact.Name},
+
+
+This is a gentle reminder to complete your onboarding formalities by the end of day. If you are unable to provide any of the documents or details please contact the HR executive.
+
+
+Thanks for your cooperation!
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Expense_Approved</fullName>
+        <description>Expense Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Resource__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Expense_Approved_Email_To_Resource</template>
+    </alerts>
+    <alerts>
+        <fullName>Expense_Approved_Email_to_Finance_Team</fullName>
+        <description>Expense Approved - Email to Finance Team</description>
+        <protected>false</protected>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Expense_is_Approved_Email_to_Finance_Team</template>
+    </alerts>
+    <alerts>
+        <fullName>Expense_Rejected_Emp</fullName>
+        <description>Expense Rejected - Emp</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Resource__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Expense_Rejected_Email_to_Resource</template>
+    </alerts>
+    <alerts>
+        <fullName>Expense_Submitted_Emp</fullName>
+        <description>Expense Submitted - Emp</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Resource__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Expense_Status_is_Submitted_Email_to_Resource</template>
+    </alerts>
+    <alerts>
+        <fullName>Expense_Submitted_Resource_Manager</fullName>
+        <description>Expense Submitted - Resource Manager</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Approval_Manager__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Expense_is_Submitted_Email_to_Reporting_Manager</template>
+    </alerts>
+</Workflow>

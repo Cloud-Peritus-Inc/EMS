@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>status_is_active_then_validate_fire</fullName>
+    <active>true</active>
+    <description>On a Project assigne record level if status = Active, Project allocation should always be greater than zero.</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL( EMS_TM_Status_Asgn__c , &quot;Active&quot;),
+    Project_Allocation__c &lt;= 0
+)</errorConditionFormula>
+    <errorMessage>On a Project assigne record level if status = Active, Project allocation should always be greater than zero.</errorMessage>
+</ValidationRule>

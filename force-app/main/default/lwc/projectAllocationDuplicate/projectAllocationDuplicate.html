@@ -1,0 +1,336 @@
+<template>
+	<lightning-card variant="Narrow" icon-name="standard:timesheet_entry" title="Project Allocation">
+		<lightning-layout multiple-rows>
+			<lightning-layout-item size="12" padding="around-small">
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+					<thead>
+						<tr class="slds-line-height_reset">
+							<td colspan="4">
+								<lightning-input type="search" variant="standard" name="allfieldSearch"
+									label="Search Employee Name" placeholder="Type text..." min-length="3"
+									message-when-range-underflow="Type min 3 chars" onchange={handleSearchTermChange}>
+								</lightning-input>
+							</td>
+							<td colspan="3">
+								<lightning-combobox name="status" label="Search Project Name"
+									placeholder="Select Project" options={projectOptions} value={searchProject}
+									onchange={handleProjectSearchTermChange}>
+								</lightning-combobox>
+								<template if:true={searchProject}>
+									<lightning-icon
+										class=" custom-clear-button slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+										onclick={clearProjectSelection} icon-name="utility:clear"
+										alternative-text="Clear"></lightning-icon>
+								</template>
+							</td>
+
+							<td colspan="5">
+								<lightning-button class="slds-float_right" style="padding-right: 8px;" variant="brand"
+									label="Change Project" title="Change Project" onclick={handleChangeprojectForAll}>
+								</lightning-button>
+							</td>
+						</tr>
+						<tr class="slds-line-height_reset">
+							<th scope="col">
+								<lightning-input onchange={handleAllSelected} type="checkbox" data-key="allCheckbox">
+								</lightning-input>
+							</th>
+							<th scope="col">S. No</th>
+							<th scope="col">Employee ID</th>
+							<th scope="col">Employee Name</th>
+							<th scope="col">Email ID</th>
+							<th scope="col">Project Name</th>
+							<th scope="col">Project Allocation</th>
+							<th scope="col">Billable</th>
+							<th scope="col">Start Date</th>
+							<th scope="col">Close Date</th>
+							<th style="text-align: center;" scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody class="scrollable-tbody">
+						<template for:each={assignments} for:item="assignment">
+							<tr key={assignment.assignmentId}>
+								<td data-label="Select Project">
+									<div class="slds-truncate" title="Select Project">
+										<lightning-input type="checkbox" data-id={assignment.assignmentId}
+											data-key="firstColumnCheckbox" onchange={handleCheckboxSelect}
+											name={assignment.assignmentId}></lightning-input>
+									</div>
+								</td>
+								<td style="text-align: center;">{assignment.serialNumber}</td>
+								<td>{assignment.employeeId}</td>
+								<td>{assignment.employeeName}</td>
+								<td>{assignment.employeeEmail}</td>
+								<td>{assignment.projectName}</td>
+								<td style="text-align: center;">{assignment.projectAllocation}%</td>
+								<td style="text-align: center;">
+									<lightning-input disabled type="checkbox" variant="label-hidden"
+										name="EMS_TM_Billable__c" checked={assignment.Billable}></lightning-input>
+								</td>
+								<td>{assignment.startDate}</td>
+								<td>{assignment.endDate}</td>
+								<td style="text-align: center;">
+									<lightning-button variant="brand" label="Change Project" title="Change Project"
+										data-id={assignment.assignmentId} data-employeename={assignment.contactId} data-projectallocation={assignment.projectAllocation} data-oldprojectname = {assignment.projectName} onclick={handleClickChangeproject}>
+									</lightning-button>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</lightning-layout-item>
+		</lightning-layout>
+		<template if:true={changeprojectpopup}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                			<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+							Employee Project Allocation</h2>
+					</header>
+					<!-- modal body start -->
+
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<lightning-record-edit-form object-api-name='EMS_TM_Assignment__c' record-id={assignmentId} onsubmit={handleSubmit}
+							> 
+							<lightning-input-field label="Employee Name" field-name='EMS_TM_EmployeeName__c' disabled>
+							</lightning-input-field>
+						</lightning-record-edit-form>
+						<hr>
+						<h3 style="background-color: lightgrey; text-align: center;"
+							class="slds-section__title slds-section__title-action">
+							<strong>Current Project Details</strong></h3>
+						<br>
+						<!-- <lightning-record-edit-form object-api-name='EMS_TM_Assignment__c' record-id={assignmentId} data-id="currentForm"
+						
+                                    onerror={handleAssignmenterror}>
+							<div class="slds-grid">
+								<div class="slds-col">
+									<span>
+                    					<lightning-input-field label="Current Project Name" field-name='EMS_TM_ProjectName_Asgn__c' disabled></lightning-input-field>   
+                					</span>
+								</div>
+								<div class="slds-col">
+									<span>
+										<lightning-input-field label="Project Allocation" field-name='Project_Allocation__c' data-id="oldProjectAllocation" ></lightning-input-field>
+                					</span>
+								</div>
+							</div>
+						</lightning-record-edit-form> -->
+
+						<div class="slds-grid">
+							<div class="slds-col">
+								<span>
+									<lightning-input type="text" variant="standard" name="Old Project Name" label="Project Name" value={selectOldProjectName} disabled></lightning-input>
+								</span>
+							</div>
+							<div class="slds-col">
+								<span>
+									<lightning-input type="number" variant="standard" name="Old Project Allocation" label="Project Allocation" value={selectedAssignmentProjectAllocation} disabled data-id="oldProjectAllocation"></lightning-input>
+								</span>
+							</div>
+						</div>
+
+						<hr>
+						<div style="text-align: center;">
+							<h3 style="background-color: lightgrey; "
+								class="slds-section__title slds-section__title-action">
+								<strong>New Project Details</strong></h3>
+						</div>
+						<br>
+						<lightning-record-edit-form object-api-name='EMS_TM_Assignment__c' data-id="newForm"
+						onsuccess={handleAssignmentSuccess} 
+                                    onerror={handleAssignmenterror}>
+							<div class="slds-grid">
+								<div class="slds-col">
+									<span>
+                    					<lightning-input-field label="Project Name" field-name='EMS_TM_ProjectName_Asgn__c'></lightning-input-field>
+										<lightning-input-field label="Assigned As" field-name='EMS_TM_AssignedAs__c'></lightning-input-field>
+										<lightning-input-field label="Start Date" field-name='EMS_TM_StartDate_Asgn__c'></lightning-input-field>
+										<lightning-input-field field-name="EMS_TM_Billable__c"></lightning-input-field>
+											                   
+                					</span>
+								</div>
+								<div class="slds-col">
+									<span>
+										<lightning-input-field label="Project Allocation" field-name='Project_Allocation__c' value={newProjectAllocation} onchange={newProjectAllocationFuncion}></lightning-input-field>
+										<lightning-input-field label="Project Status" field-name='EMS_TM_Status_Asgn__c'></lightning-input-field>
+										<lightning-input-field label="End Date" field-name='EMS_TM_EndDate_Asgn__c'></lightning-input-field>
+										<lightning-input-field style=" display: none;" label="Employee Name" value={employeeName}  field-name='EMS_TM_EmployeeName__c'></lightning-input-field>
+               						</span>
+								</div>
+							</div>
+						</lightning-record-edit-form>
+
+					</div>
+					<!-- modal body end-->
+					<!-- modal footer start-->
+					<footer class="slds-modal__footer">
+						<button class="slds-button slds-button_destructive" onclick={hideModalBox}>Cancel</button>
+						<button class="slds-button  slds-button_brand" type="submit" onclick={handleSubmit}
+										variant="brand">Save</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+		<!-- For Select Checkbox and do chnage project action -->
+
+		<template if:true={changeAllproject}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-modal_large slds-fade-in-open">
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModal}>
+                			<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+						<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">
+							Employee Project Allocation</h2>
+					</header>
+					<!-- modal body start -->
+
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+						<div class="slds-p-around_large">
+							<table class="slds-table  slds-table_bordered fixed_header">
+								<thead>
+									<tr class="slds-line-height_reset">
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Select Contact"></div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate " title="Employee Name">
+												Employee Name</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate slds-align_absolute-center" title="Project Nam">
+												Project Name</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate "
+												title="Project Allocation">Project Allocation</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate slds-align_absolute-center" title="New Project">
+												New Project</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate slds-align_absolute-center"
+												title="New Project Allocation">New Project Allocation
+											</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate slds-align_absolute-center"
+												title="Assigned as">Assigned as
+											</div>
+										</th>
+										<th scope="col">
+											<div class="slds-truncate slds-align_absolute-center"
+												title="Billable">Billable
+											</div></th>
+										<th class="" scope="col">
+											<div class="slds-truncate slds-align_absolute-center" title="Status">Status
+											</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate slds-align_absolute-center" title="Start Date">
+												Start Date</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate slds-align_absolute-center" title="Close Date">
+												Close Date</div>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<template for:each={resultRecords} for:item="items">
+										<tr key={items.Id}>
+											<td data-label="Select Project">
+												<div class="slds-truncate" title="Select Project">
+													<lightning-input type="checkbox" checked= "true" name="input1" data-id={items.Id} onchange={handleCheckboxInnerCmp}></lightning-input>
+												</div>
+											</td>
+											<td data-label="Project Name">
+												<div class="slds-truncate" title="Employee Name">{items.EmployeeName}
+												</div>
+											</td>
+											<td data-label="Project Name">
+												<div class="slds-truncate" title="Project Name">{items.ProjectName}
+												</div>
+											</td>
+											<td data-label="Project Allocation">
+												<div class="slds-truncate slds-align_absolute-center">
+													<lightning-input value ={items.ProjectAllocation} type="number" name="new allocation" min="0"
+														max="100" formatter="percent-fixed"></lightning-input></div>
+											</td>
+											<td data-label="Select New Project">
+												<div class="slds-truncate" title="Select New Project">
+													<lightning-combobox placeholder="Select Project" name="New Project List" options={projectsList}>
+													</lightning-combobox>
+												</div>
+											</td>
+											<td data-label="Select New Project Allocation">
+												<div class="slds-truncate slds-align_absolute-center"
+													title="Select New Project Allocation">
+													<lightning-input type="number" name="new allocation" min="0"
+														max="100" formatter="percent-fixed"></lightning-input>
+												</div>
+											</td>
+											<td data-label="Assigned as">
+												<div class="slds-truncate" title=" Select Assigned as">
+													<lightning-combobox name="Assigned as" placeholder="Select Assigned as" options={projectsList}>
+													</lightning-combobox>
+												</div>
+											</td>
+											<td data-label="Billable">
+												<div class="slds-truncate slds-align_absolute-center"
+													title="Billable">
+													<lightning-input type="checkbox" name="Billable"></lightning-input>
+												</div>
+											</td>
+											<td data-label="Select Status">
+												<div class="slds-truncate slds-align_absolute-center"
+													title="Select Status">
+													<lightning-combobox name="New Project List"
+														options={picklistValues}>
+													</lightning-combobox>
+												</div>
+											</td>
+											<td data-label="Select Start Date">
+												<div class="slds-truncate slds-align_absolute-center"
+													title="Select Start Date">
+													<lightning-input type="date" name="start date"></lightning-input>
+												</div>
+											</td>
+											<td data-label="Select Close Date">
+												<div class="slds-truncate slds-align_absolute-center"
+													title="Select Close Date">
+													<lightning-input type="date" name="close date"></lightning-input>
+												</div>
+											</td>
+										</tr>
+									</template>
+								</tbody>
+							</table>
+							<br>
+					</div>
+
+						</div>
+						<!-- modal body end-->
+						<!-- modal footer start-->
+						<footer class="slds-modal__footer">
+							<button class="slds-button slds-button_destructive" type="submit" onclick={hideModal}>Cancel</button>
+							<button class="slds-button  slds-button_brand" onclick={handleCancelSave} variant="brand">Save</button>
+						</footer>
+					</div>
+			</section>
+			<div key={Req.Id} class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+	</lightning-card>
+</template>

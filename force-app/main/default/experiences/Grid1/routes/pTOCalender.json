@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "6f2cab14-38c2-472c-a195-1b050b75d0d4",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "pto_calender__c",
+  "id" : "eaa6b36f-105e-41e1-8faf-c7faed580327",
+  "label" : "PTO Calender",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-pto-calender",
+  "type" : "route",
+  "urlPrefix" : "pto-calender"
+}

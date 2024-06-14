@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>when employee get the  leave approval from Lead(approver1)</description>
+        <name>approve_by_Lead_Approver_1</name>
+        <label>approve by Lead (Approver 1)</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <actionName>EMS_LM_Leave_History__c.Leave_Approve_by_the_Lead_Approver_1_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>EMS_LM_Leave_History__c.Leave_Approve_by_the_Lead_Approver_1_Alert</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <environments>Default</environments>
+    <interviewLabel>Leave Request Approved by Lead (approver1) Email notification for Emplyoee {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Leave Request Approved by Lead (approver1) Email notification for Employee</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>approve_by_Lead_Approver_1</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EMS_LM_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approver 2 Pending</stringValue>
+            </value>
+        </filters>
+        <object>EMS_LM_Leave_History__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

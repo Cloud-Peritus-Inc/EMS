@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "21ec7046-3550-4aa3-bf62-0f1f36808100",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Onboarding_Process__c",
+  "id" : "ff543a72-60fa-4448-9951-f6d02da0925d",
+  "label" : "Onboarding Process",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-onboarding-process",
+  "type" : "route",
+  "urlPrefix" : "onboardingprocess"
+}

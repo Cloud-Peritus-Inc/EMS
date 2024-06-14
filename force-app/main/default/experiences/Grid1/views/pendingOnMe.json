@@ -1,0 +1,46 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "3bf4ca7d-54da-433c-a31a-d78afb7b7893",
+  "label" : "Pending On Me",
+  "regions" : [ {
+    "id" : "ecf342dc-3c6a-4ceb-b2f5-7dec64b08910",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:my_servicRequest_PendingonMe",
+      "id" : "e4d2bba1-2d2f-41de-8860-af5afa664ea6",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "42b144dc-6af1-4505-996a-e3e4a26365b8",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "59669110-0a6d-44e2-b5b9-50f8ae772b3e",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Pending On Me"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "3f39c8f9-0c5c-4f54-a283-d2ca2fe68670",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "9a597fc3-5e0d-41f4-a29b-83b2ceac0f51",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-pending-on-me"
+}

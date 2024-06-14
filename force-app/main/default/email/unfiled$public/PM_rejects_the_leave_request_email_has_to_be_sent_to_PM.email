@@ -1,0 +1,25 @@
+<p>Dear Employee,</p>
+<p>The Leave request type {!EMS_LM_Leave_History__c.Leave_Type_Name__c} of {!Contact.FirstName} {!Contact.LastName}-{!Contact.EMS_RM_Employee_Id__c} for the following date(s) has been rejected  by {!EMS_LM_Leave_History__c.EMS_LM_2nd_Approver__c}
+
+<table style="border-collapse: collapse; width: 80.4918%; height: 107px;" border="1">
+<tbody>
+<tr style="height: 56px;">
+<td style="width: 26.68085%; height: 56px;">&nbsp;Leave Start Date</td>
+<td style="width: 26.68085%; height: 56px;">&nbsp;Leave End Date</td>
+<td style="width: 26.6812%; height: 56px;">&nbsp;Status</td>
+<td style="width: 28.4206%; height: 56px;">&nbsp;Day</td>
+</tr>
+<tr style="height: 51px;">
+<td style="width: 28.8085%; height: 51px;">{!EMS_LM_Leave_History__c.EMS_LM_Leave_Start_Date__c}</td>
+<td style="width: 28.8085%; height: 51px;"> {!EMS_LM_Leave_History__c.EMS_LM_Leave_End_Date__c}</td>
+<td style="width: 26.6812%; height: 51px;">{!EMS_LM_Leave_History__c.EMS_LM_Status__c}</td>
+<td style="width: 28.4206%; height: 51px;">
+{!EMS_LM_Leave_History__c.EMS_LM_Day__c}</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+Approver Name : {!EMS_LM_Leave_History__c.EMS_LM_2nd_Approver__c}
+<p>&nbsp;</p>
+<p>Regards,</p>
+<p>Cloud Peritus India Pvt. Ltd.</p>

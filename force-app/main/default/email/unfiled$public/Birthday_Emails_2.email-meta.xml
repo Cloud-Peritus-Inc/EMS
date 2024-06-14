@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Birthday Emails - 2</name>
+    <style>freeForm</style>
+    <subject>Wishing you a very Happy Birthday {!Contact.Name}</subject>
+    <textOnly>Dear {!Contact.Name},
+
+On your special day, we wanted to take a moment to appreciate all your hard work, dedication, and positive energy that you bring to our team. You make a difference every day, and we are grateful to have you as a part of our team. So, let&apos;s put work aside for a while and enjoy your birthday with some crazy dance moves, laughter, and endless joy.
+
+
+Happy birthday from all of us at Cloud Peritus. May this year be filled with success, happiness, and new opportunities.
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

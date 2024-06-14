@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="">
+            <lightning-input type="Date" label="Start Date" size="6" padding="around-small" onchange={assignStartDate} required></lightning-input>
+            <lightning-input type="Date" label="End Date" size="6" padding="around-small" onchange={assignendDate}></lightning-input> 
+             <lightning-layout-item size="6" padding="around-small" aria-required>
+                Select Resources: {selectedOppsIds}
+                <c-multiple-resources-assign if:true={showOppLookup} options={opps} place-holder="Select Contacts..." 
+                				onoptionchange={handleOppsChange}></c-multiple-resources-assign>
+            </lightning-layout-item>
+      <!--  <lightning-layout vertical-align="center">
+
+            <lightning-layout-item size="6" padding="around-small">
+                Select Resources: {selectedOppsIds}
+                <c-multiple-resources-assign if:true={showOppLookup} options={opps} place-holder="Select Contacts..." 
+                				onoptionchange={handleOppsChange}></c-multiple-resources-assign>
+            </lightning-layout-item>
+        </lightning-layout> -->
+        <div class="slds-box">
+            <lightning-combobox name="progress" label="Assigned As" 
+                options={assignedvalues} onchange={handleChange}>
+            </lightning-combobox>
+    </div><br/>
+
+        <lightning-button label="Save" variant="brand" name="Saved" 
+                icon-name="utility:save" class="slds-p-right_large" onclick={handleValidation}></lightning-button>
+
+    </lightning-card>
+</template>

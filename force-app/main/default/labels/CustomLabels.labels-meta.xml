@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AwardOfExcellenceDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AwardOfExcellenceDesc</shortDescription>
+        <value>The Award of Excellence candidate should have been consistently dependable, 
+a significant contributor to the firm’s growth, consistently recognized by our clients &amp; colleagues and a true ambassador of the firm</value>
+    </labels>
+    <labels>
+        <fullName>BestEntrepreneurDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BestEntrepreneurDesc</shortDescription>
+        <value>The Best Entrepreneur candidate should have consistently suggested new/improved ideas and kick start value initiatives with little or no help. Self starter with a motivation to innovate.</value>
+    </labels>
+    <labels>
+        <fullName>CP_Logo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CP Logo</shortDescription>
+        <value>https://cpprd--dev.sandbox.file.force.com/servlet/servlet.ImageServer?id=015520000010Wtm&amp;oid=00D52000000L5oZ&amp;lastMod=1675396590000</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Record_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Record URL</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/detail/</value>
+    </labels>
+    <labels>
+        <fullName>Days_Consider_for_Missed_Goal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Days Consider for Missed Goal</shortDescription>
+        <value>15</value>
+    </labels>
+    <labels>
+        <fullName>Days_Consider_for_Onboarding_Taks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Days Consider for Onboarding Taks</shortDescription>
+        <value>0</value>
+    </labels>
+    <labels>
+        <fullName>Days_to_Consider_For_Offboarding_Creation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Days to Consider For Offboarding Creation</shortDescription>
+        <value>10</value>
+    </labels>
+    <labels>
+        <fullName>Default_Conversion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Conversion</shortDescription>
+        <value>80</value>
+    </labels>
+    <labels>
+        <fullName>Default_Grid_Support_Request_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Grid Support Request Owner</shortDescription>
+        <value>hrdirectortesting01@gmail.com</value>
+    </labels>
+    <labels>
+        <fullName>Default_HR_Support_Request_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default HR Support Request Owner</shortDescription>
+        <value>hrmanagertestinguser@gmail.com</value>
+    </labels>
+    <labels>
+        <fullName>Enable_Mentor_Feedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Enable Mentor Feedback</shortDescription>
+        <value>true</value>
+    </labels>
+    <labels>
+        <fullName>Enable_Nominations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Enable Nominations</shortDescription>
+        <value>true</value>
+    </labels>
+    <labels>
+        <fullName>Error_Message_For_Assignment_Restriction</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Message For Assignment Restriction</shortDescription>
+        <value>No Assignments are allowed for completed Projects</value>
+    </labels>
+    <labels>
+        <fullName>Expense_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Expense URL</shortDescription>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/expense</value>
+    </labels>
+    <labels>
+        <fullName>Finance_team_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Finance team Email</shortDescription>
+        <value>sangharshkamble12@gmail.com</value>
+    </labels>
+    <labels>
+        <fullName>GoingAboveBeyondDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GoingAboveBeyondDesc</shortDescription>
+        <value>The Going Above and Beyond candidate should have lead multiple 
+firm initiatives and he/she added significant value to client delivery</value>
+    </labels>
+    <labels>
+        <fullName>Grid_Header</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Grid Header</shortDescription>
+        <value>https://cpprd--dev.sandbox.file.force.com/servlet/servlet.ImageServer?id=015520000010UjQ&amp;oid=00D52000000L5oZ&amp;lastMod=1675337347000</value>
+    </labels>
+    <labels>
+        <fullName>Grid_Logo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Grid Logo</shortDescription>
+        <value>https://cpprd--qa.sandbox.file.force.com/servlet/servlet.ImageServer?id=015Wr0000001BOj&amp;oid=00DWr0000002pKz&amp;lastMod=1707924337000</value>
+    </labels>
+    <labels>
+        <fullName>Grid_Portal_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Grid Portal Link</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid</value>
+    </labels>
+    <labels>
+        <fullName>HR_team_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HR_team_Email</shortDescription>
+        <value>sangharsh.kamble@cloudperitus.com</value>
+    </labels>
+    <labels>
+        <fullName>Leave_Record_Navigation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Leave Record Navigation</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-lm-leave-history/</value>
+    </labels>
+    <labels>
+        <fullName>Leave_Request_site_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Leave Request site Link</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/leave-management</value>
+    </labels>
+    <labels>
+        <fullName>MostProfessionalDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MostProfessionalDesc</shortDescription>
+        <value>The Most Professional candidate should have a track record for always showing the upmost professionalism when representing Cloud Peritus</value>
+    </labels>
+    <labels>
+        <fullName>Onboarding_Request_Record_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding Request Record URL</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-em-onboarding-request/</value>
+    </labels>
+    <labels>
+        <fullName>Past_Days_Consider_For_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Past Days Consider For Notification</shortDescription>
+        <value>3</value>
+    </labels>
+    <labels>
+        <fullName>Post_Onboarding_Task_Creation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Post Onboarding Task Creation</shortDescription>
+        <value>0</value>
+    </labels>
+    <labels>
+        <fullName>Pre_Onboarding_Form_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pre Onboarding Form URL</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/onboarding/s/?</value>
+    </labels>
+    <labels>
+        <fullName>Project_label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Project label</shortDescription>
+        <value>https://cpprd--uat.sandbox.my.site.com/Grid/s/detail/</value>
+    </labels>
+    <labels>
+        <fullName>Pulse_Review_Page_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pulse Review Page Link</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/pulse-review</value>
+    </labels>
+    <labels>
+        <fullName>Resource_Recordtype_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Resource Recordtype Id</shortDescription>
+        <value>0125e000000qrLTAAY</value>
+    </labels>
+    <labels>
+        <fullName>Retry_Exception</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Retry Exception</shortDescription>
+        <value>10</value>
+    </labels>
+    <labels>
+        <fullName>RisingStarDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RisingStarDesc</shortDescription>
+        <value>The Rising star candidate should be someone who is a fresher who has has less 
+than 3 years of experience but have shown the willingness to learn and go the extra mile. (Must be with CP for at least 6 months)</value>
+    </labels>
+    <labels>
+        <fullName>RockStarDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RockStarDesc</shortDescription>
+        <value>Project Focused: The Rock Star candidate should have demonstrated 
+going the extra mile consistently on their project</value>
+    </labels>
+    <labels>
+        <fullName>Service_Request_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Request Label</shortDescription>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/case/</value>
+    </labels>
+    <labels>
+        <fullName>Service_Request_Resignation_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Request Resignation Label</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/pending-on-me</value>
+    </labels>
+    <labels>
+        <fullName>Service_Request_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Request URL</shortDescription>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/case/</value>
+    </labels>
+    <labels>
+        <fullName>ShiningStarDesc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ShiningStarDesc</shortDescription>
+        <value>Project + Firm initiatives Focused: The Shining Star candidate should have demonstrated going the extra mile consistently on their project and firm initiatives</value>
+    </labels>
+    <labels>
+        <fullName>TimeSheet_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TimeSheet Label</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/timesheet</value>
+    </labels>
+    <labels>
+        <fullName>Timesheet_Approval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Timesheet Approval</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/detail/</value>
+    </labels>
+    <labels>
+        <fullName>Timesheet_Line_Item</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Timesheet_Line_Item</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-tm-timesheet-record/</value>
+    </labels>
+    <labels>
+        <fullName>Timesheet_Record_Navigation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Timesheet Record Navigation</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/ems-tm-timesheet-record/</value>
+    </labels>
+    <labels>
+        <fullName>exampleHelpText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>exampleHelpText</shortDescription>
+        <value>Please provide a brief description.</value>
+    </labels>
+    <labels>
+        <fullName>leaveCreditUS1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>leaveCreditforUSJoining</shortDescription>
+        <value>0.5</value>
+    </labels>
+    <labels>
+        <fullName>leaveforbelowtwoyear</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>leaveforbelowtwoyear</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>leavegreater2years</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>leavegreater2years</shortDescription>
+        <value>1.25</value>
+    </labels>
+</CustomLabels>

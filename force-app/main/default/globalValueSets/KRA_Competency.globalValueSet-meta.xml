@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Development</fullName>
+        <default>false</default>
+        <label>Development</label>
+    </customValue>
+    <customValue>
+        <fullName>Testing</fullName>
+        <default>false</default>
+        <label>Testing</label>
+    </customValue>
+    <customValue>
+        <fullName>Understanding Code</fullName>
+        <default>false</default>
+        <label>Understanding Code</label>
+    </customValue>
+    <customValue>
+        <fullName>Platform Knowledge</fullName>
+        <default>false</default>
+        <label>Platform Knowledge</label>
+    </customValue>
+    <customValue>
+        <fullName>Design and Architecture</fullName>
+        <default>false</default>
+        <label>Design and Architecture</label>
+    </customValue>
+    <customValue>
+        <fullName>Documentation</fullName>
+        <default>false</default>
+        <label>Documentation</label>
+    </customValue>
+    <customValue>
+        <fullName>Continuous Improvement</fullName>
+        <default>false</default>
+        <label>Continuous Improvement</label>
+    </customValue>
+    <customValue>
+        <fullName>Delivery Accountability</fullName>
+        <default>false</default>
+        <label>Delivery Accountability</label>
+    </customValue>
+    <customValue>
+        <fullName>Effective Communication</fullName>
+        <default>false</default>
+        <label>Effective Communication</label>
+    </customValue>
+    <customValue>
+        <fullName>Knowledge Sharing</fullName>
+        <default>false</default>
+        <label>Knowledge Sharing</label>
+    </customValue>
+    <customValue>
+        <fullName>Teamwork</fullName>
+        <default>false</default>
+        <label>Teamwork</label>
+    </customValue>
+    <customValue>
+        <fullName>Attitude and Behavior</fullName>
+        <default>false</default>
+        <label>Attitude and Behavior</label>
+    </customValue>
+    <customValue>
+        <fullName>Business Development</fullName>
+        <default>false</default>
+        <label>Business Development</label>
+    </customValue>
+    <customValue>
+        <fullName>Strategic Work</fullName>
+        <default>false</default>
+        <label>Strategic Work</label>
+    </customValue>
+    <customValue>
+        <fullName>Company Growth</fullName>
+        <default>false</default>
+        <label>Company Growth</label>
+    </customValue>
+    <customValue>
+        <fullName>Requirement Gathering</fullName>
+        <default>false</default>
+        <label>Requirement Gathering</label>
+    </customValue>
+    <customValue>
+        <fullName>POV Creation &amp; Demos</fullName>
+        <default>false</default>
+        <label>POV Creation &amp; Demos</label>
+    </customValue>
+    <customValue>
+        <fullName>Project Planning and Scheduling Management</fullName>
+        <default>false</default>
+        <label>Project Planning and Scheduling Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Task Management</fullName>
+        <default>false</default>
+        <label>Task Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Risk Management</fullName>
+        <default>false</default>
+        <label>Risk Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Resource Management</fullName>
+        <default>false</default>
+        <label>Resource Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Stakeholder Management</fullName>
+        <default>false</default>
+        <label>Stakeholder Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Communication Management</fullName>
+        <default>false</default>
+        <label>Communication Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Documentation &amp; Reporting Management</fullName>
+        <default>false</default>
+        <label>Documentation &amp; Reporting Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Estimations</fullName>
+        <default>false</default>
+        <label>Estimations</label>
+    </customValue>
+    <customValue>
+        <fullName>Test Case Design and Execution</fullName>
+        <default>false</default>
+        <label>Test Case Design and Execution</label>
+    </customValue>
+    <customValue>
+        <fullName>Defect Management</fullName>
+        <default>false</default>
+        <label>Defect Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Technical Troubleshooting &amp; Test Environment Prep</fullName>
+        <default>false</default>
+        <label>Technical Troubleshooting &amp; Test Environment Prep</label>
+    </customValue>
+    <customValue>
+        <fullName>Goal Achievement</fullName>
+        <default>false</default>
+        <label>Goal Achievement</label>
+    </customValue>
+    <customValue>
+        <fullName>Stakeholder Satisfaction</fullName>
+        <default>false</default>
+        <label>Stakeholder Satisfaction</label>
+    </customValue>
+    <customValue>
+        <fullName>Project Success</fullName>
+        <default>false</default>
+        <label>Project Success</label>
+    </customValue>
+    <customValue>
+        <fullName>Continuous Learning and Skill Development</fullName>
+        <default>false</default>
+        <label>Continuous Learning and Skill Development</label>
+    </customValue>
+    <masterLabel>KRA Competency</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

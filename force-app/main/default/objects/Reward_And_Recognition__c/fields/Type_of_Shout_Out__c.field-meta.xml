@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Shout_Out__c</fullName>
+    <externalId>false</externalId>
+    <label>Type of Shout Outs</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Recognition</fullName>
+                <default>false</default>
+                <label>Recognition</label>
+            </value>
+            <value>
+                <fullName>Personalized Thank You</fullName>
+                <default>false</default>
+                <label>Personalized Thank You</label>
+            </value>
+            <value>
+                <fullName>Make a Difference</fullName>
+                <default>false</default>
+                <label>Make a Difference</label>
+            </value>
+            <value>
+                <fullName>Great Job</fullName>
+                <default>false</default>
+                <label>Great Job</label>
+            </value>
+            <value>
+                <fullName>Kudos</fullName>
+                <default>false</default>
+                <label>Kudos</label>
+            </value>
+            <value>
+                <fullName>Star Performer</fullName>
+                <default>false</default>
+                <label>Star Performer</label>
+            </value>
+            <value>
+                <fullName>Pat on the back!</fullName>
+                <default>false</default>
+                <label>Pat on the back!</label>
+            </value>
+            <value>
+                <fullName>Chief Fun Officer</fullName>
+                <default>false</default>
+                <label>Chief Fun Officer</label>
+            </value>
+            <value>
+                <fullName>The Innovation Ninja</fullName>
+                <default>false</default>
+                <label>The Innovation Ninja</label>
+            </value>
+            <value>
+                <fullName>Incentives</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Incentives</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

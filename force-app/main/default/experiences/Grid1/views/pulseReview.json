@@ -1,0 +1,70 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "4b9a0365-0405-4716-ae99-ce329d2f5116",
+  "label" : "pulse review",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "128ae8aa-9859-4768-b8de-e52ad601054e",
+          "columns" : [ {
+            "UUID" : "e520603d-0095-4b2d-93f9-14e22294fded",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "128ae8aa-9859-4768-b8de-e52ad601054e",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "recordId" : "{!recordId}"
+          },
+          "componentName" : "c:pulseKraRecordFrom",
+          "id" : "26746c30-3267-4b49-b494-b6877b85ae2e",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "e520603d-0095-4b2d-93f9-14e22294fded",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "236a4344-212a-485c-af52-79fec592e451",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Pulse Review"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "b4f99c59-1fe2-4a4a-8f42-026e7e2733f1",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "b3b62ab9-978d-4861-b9ac-a6606810b5c3",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-pulse-review"
+}

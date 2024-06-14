@@ -1,0 +1,88 @@
+.childparent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+	padding-top: 5px;
+}
+
+.childimage {
+    width: 30%;
+	padding:0px;
+	border-right: 1px black;
+}
+
+hr .new5 {
+  border: 1px solid black;
+}
+
+.previous {
+  float: left;
+  padding-left: 10px;
+}
+
+.next {
+  float: right;
+  padding-right: 10px;
+}
+
+/*font stylings*/
+.fontCls{
+  
+}
+.fontWt700{
+    font-weight: 700;
+}
+.fontWt400{
+    font-weight: 400;
+}
+.font18{
+    font-size: 18px;
+}
+.font13{
+    font-size: 13px;
+}
+.font14{
+    font-size: 14px;
+}
+.boldText{
+    color: #080707;
+}
+.toggleSection{
+    /* display: flex; */
+    float: right;
+    margin-top: 2%;
+}
+.toggleSection lightning-input{
+    margin-left: auto;
+    margin-right: 0;
+}
+.toggleSection{
+    /* display: flex; */
+
+    margin-top: 2%;
+}
+.toggleSection lightning-input{
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.flex-parent-element {
+  display: flex;
+  width: 100%;
+}
+
+.flex-child-element {
+  flex: 1;
+  margin: 10px;
+   float: left;
+}
+
+.flex-child-element:first-child {
+  margin-right: 20px;
+  float: right;
+}
+
+.magenta lightning-input,.green lightning-input{
+    display: inline-block;
+    margin-right: 5%;
+}

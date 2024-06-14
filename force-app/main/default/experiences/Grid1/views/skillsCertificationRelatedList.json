@@ -1,0 +1,39 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "1b30e851-ae11-45ae-948d-3acaecffbbc4",
+  "label" : "Skills  Certification Related List",
+  "regions" : [ {
+    "id" : "d401f722-a520-46be-aac6-21328f675689",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customTitle" : "",
+        "parentRecordId" : "{!recordId}",
+        "relatedListName" : "{!relationshipApiName}",
+        "showBreadCrumbs" : true,
+        "showCustomTitle" : false,
+        "showManualRefreshButton" : true,
+        "showRowNumbers" : true
+      },
+      "componentName" : "forceCommunity:relatedList",
+      "id" : "ccf39fd9-775f-41cd-976b-fbe3d5fafa36",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "3d0f42b7-5265-4dbb-ab96-25fba5e5d72e",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "c06ff985-4ae2-4ddc-8d79-11eab8b6eb68",
+    "regionName" : "footer",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "relatedlist-a0d"
+}

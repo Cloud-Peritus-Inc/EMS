@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Requests</value>
+    </caseValues>
+    <layouts>
+        <layout>Request Layout</layout>
+        <sections>
+            <label></label>
+            <section>Bank Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Certificate</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Changes Requested</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Contact Info</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Current Address</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Degree</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Education Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Emergency Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Marital Status</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Permanent Address</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Vehicle Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Account_Number_Enforce_Numeric</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Bank_Details_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Certification_Details_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_CA_City</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_CA_State</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_CA_Zip</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_DOW</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_ED_Name</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_ED_Phone</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_ED_Relationship</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_For_ACCHolderName</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_For_Degree</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_For_Degree_Name</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_Grad_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_PA_City</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_PA_State</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_PA_Zip</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_Personal_Phone</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_Spouse_Name</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_Validation_VehicleNumber</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>EMS_EM_ZIP_Enforce_Numeric</name>
+    </validationRules>
+</CustomObjectTranslation>

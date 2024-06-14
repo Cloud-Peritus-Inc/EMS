@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "1b30e851-ae11-45ae-948d-3acaecffbbc4",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Skills_Certification_Related_List__c",
+  "id" : "6a3fa12a-9839-4cc1-838c-a21cdfc446b6",
+  "label" : "Skills  Certification Related List",
+  "objectApiName" : "Certifications__c",
+  "routeType" : "relatedlist-a0d",
+  "type" : "route",
+  "urlPrefix" : "certifications"
+}

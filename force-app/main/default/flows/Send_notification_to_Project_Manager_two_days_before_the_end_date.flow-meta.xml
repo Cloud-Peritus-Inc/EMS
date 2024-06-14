@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>before_2_days_of_endate_send_mail</name>
+        <label>before 2 days of enddate send mail</label>
+        <locationX>50</locationX>
+        <locationY>396</locationY>
+        <actionName>EMS_TM_Project__c.Send_mail_to_Project_is_completed_before_2_Days</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>EMS_TM_Project__c.Send_mail_to_Project_is_completed_before_2_Days</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>Check_EndDate</name>
+        <label>Check EndDate</label>
+        <locationX>182</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Project_enddate_before_two_days_send_mail</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EMS_TM_EndDate__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>duedatefromenddate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>before_2_days_of_endate_send_mail</targetReference>
+            </connector>
+            <label>Project enddate before two days send mail</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>duedatefromenddate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()+2</expression>
+    </formulas>
+    <interviewLabel>Send notification to Project Manager two days before the end date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send notification to Project Manager two days before the end date</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_EndDate</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EMS_TM_EndDate__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>EMS_TM_Project__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2023-02-15</startDate>
+            <startTime>09:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

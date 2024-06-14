@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CreditedMonthYear__c</fullName>
+    <externalId>false</externalId>
+    <formula>TEXT(MONTH(EMS_LM_Leave_Credited_Date__c))+TEXT(YEAR(EMS_LM_Leave_Credited_Date__c))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>CreditedMonthYear</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

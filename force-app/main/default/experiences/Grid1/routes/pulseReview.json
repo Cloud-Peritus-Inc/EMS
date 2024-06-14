@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "4b9a0365-0405-4716-ae99-ce329d2f5116",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "pulse_review__c",
+  "id" : "a307e47e-9e92-48d9-b2e1-b892edb70ac3",
+  "label" : "Pulse Review",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-pulse-review",
+  "type" : "route",
+  "urlPrefix" : "pulse-review"
+}

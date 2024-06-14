@@ -1,0 +1,30 @@
+<template>
+    <lightning-card>
+        <header class="slds-modal__header">
+            <h2 class="slds-text-heading_medium">Reopening comments</h2>
+        </header>
+        <!-- <div class="slds-modal__container slds-p-around_medium" id="modal-content-id-1"> -->
+            
+            <div class="slds-p-around_large">
+                <lightning-textarea id="textarea-id-01" class = "slds-c-textarea-sizing-min-height" name="input2" label="Comments" required  onchange={handleChangeRichText}></lightning-textarea>
+            
+            </div>
+        <!-- </div> -->
+
+        <!-- <footer class="slds-modal__footer"> -->
+            <div slot="footer" class="slds-grid">
+            <div class="slds-col slds-text-align_center">
+            <lightning-button variant="Destructive"
+                                          label="Cancel"
+                                          title="cancel"
+                                          onclick={handleCancel} ></lightning-button>
+                                          &nbsp;&nbsp;
+            <lightning-button variant="brand" 
+                                label="Send"  
+                                title="Send" 
+                                onclick={handleAddComments}></lightning-button>
+        <!-- </footer> -->
+            </div>
+            </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Expense Rejected - Email to Resource</name>
+    <style>freeForm</style>
+    <subject>Expense is Rejected</subject>
+    <textOnly>Dear {!Expense__c.Resource__c},
+
+
+
+We are sorry to inform that your Expense for {!Expense__c.Expense_Type__c} for the amount of {!Expense__c.Expense_Amount__c} {!Expense__c.Billing_Currency__c} is not eligible for reimbursement.
+
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

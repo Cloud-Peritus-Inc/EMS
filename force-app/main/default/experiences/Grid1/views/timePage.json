@@ -1,0 +1,46 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "63960632-1f14-4ea3-a017-c2c6957a387f",
+  "label" : "TimePage",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:acccvalidation",
+      "id" : "e2f02206-aa85-48f0-87b3-fedde977fb23",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "815d0a4b-f1c9-404f-8249-e46e09b61282",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "id" : "0cc9b6d8-6a08-4a66-81ad-821fd6ca5834",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "250c9e4a-446d-40ac-84d2-0f37f23a9b47",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Time Sheet"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "6271e316-06e7-40fc-8031-f8e16cd74266",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "fbeb3a40-16da-49ae-afa8-21c5083f6ce1",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-timepage"
+}

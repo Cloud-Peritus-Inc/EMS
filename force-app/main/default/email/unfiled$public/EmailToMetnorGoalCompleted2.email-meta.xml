@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>EmailToMetnorGoalCompleted2</name>
+    <style>freeForm</style>
+    <subject>Performance: Goal Completed</subject>
+    <textOnly>Dear {!Goal__c.OwnerFullName},
+
+
+We&apos;re pleased to notify you that your Reportee {!Goal__c.Resource__c} has successfully completed the Goal.
+
+
+
+Please find the details below:
+
+Goal Name
+
+Start Date
+
+End Date
+
+{!Goal__c.Goal_Name__c}
+
+{!Goal__c.Start_Date__c}
+
+{!Goal__c.End_Date__c}
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

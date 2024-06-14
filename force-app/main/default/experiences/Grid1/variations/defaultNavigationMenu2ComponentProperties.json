@@ -1,0 +1,15 @@
+{
+  "componentVariants" : [ {
+    "id" : "ec4121fc-26d7-4411-a5c3-93535ab4d65a",
+    "propertyOverrides" : {
+      "componentAttributes" : {
+        "NavigationMenuEditorRefresh" : "HR_View"
+      }
+    },
+    "targetId" : "40b8acb2-fe30-472d-938a-53d3f6c18ca0",
+    "type" : "componentVariant"
+  } ],
+  "developerName" : "Default_Navigation_Menu_2_Component_Properties",
+  "id" : "17e34052-5fd1-4c76-8482-31defd87ae5c",
+  "type" : "experienceVariation"
+}

@@ -1,0 +1,39 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "6a124cb4-56d8-4732-8953-f07e503aed47",
+  "label" : "Timesheet Related List",
+  "regions" : [ {
+    "id" : "1aabfbce-9c9b-4e14-98fe-5441a66cdef8",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customTitle" : "",
+        "parentRecordId" : "{!recordId}",
+        "relatedListName" : "{!relationshipApiName}",
+        "showBreadCrumbs" : true,
+        "showCustomTitle" : false,
+        "showManualRefreshButton" : true,
+        "showRowNumbers" : true
+      },
+      "componentName" : "forceCommunity:relatedList",
+      "id" : "b1b411fa-b4ed-4500-b500-0e2d6c265d0e",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "df2f2dfa-5797-41cb-a966-3955dd07a79e",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "1e2b16c0-5100-454c-a0cd-1874c4343da6",
+    "regionName" : "footer",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "relatedlist-a05"
+}

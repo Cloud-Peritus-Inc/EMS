@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>HR receives a email when any employee in the US region raises a leave request</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notify HR when Employee raises a leave request</name>
+    <style>freeForm</style>
+    <subject>{!EMS_LM_Leave_History__c.EMS_LM_Contact__c} has raised a {!EMS_LM_Leave_History__c.EMS_LM_Leave_Type__c}  request.</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

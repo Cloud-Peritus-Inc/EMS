@@ -1,0 +1,53 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "fae832d4-8312-45c0-adec-86a80452e66a",
+  "label" : "goal KRA View",
+  "regions" : [ {
+    "id" : "58bf9ab6-f042-414c-a8d5-eaf8106fcb6b",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:goalKRAViewAura",
+      "id" : "8bfdf8dd-c655-4090-91c9-1086e1a52492",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : { },
+      "componentName" : "c:goalKRAView",
+      "id" : "ee31b22b-6c01-476a-a3d2-09c7ea7b44c6",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "1d632ea6-c2c4-409e-a4d4-35f8b73cc428",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "2f941e00-a4bf-4b88-a4c7-b7b768d1a15f",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "goal KRA View"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "df2782c1-72c1-49fd-8e66-c9251476809c",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "1e1a6116-fe1b-467c-b3d5-d624076fa4b8",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-goal-kra-view"
+}

@@ -1,0 +1,181 @@
+/**
+* @author Pavan
+* @date 01/02/2023
+* @description  Getting the Leave Types availabe, auto-approval, level of approval and reports to information of logged in user.
+*            
+*
+*               Test code coverage provided by the following test class:
+*               - LeaveHistoryApexControllerTest
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
+
+public without Sharing class LeaveHistoryApexController {
+                /**
+*   {Purpose} - Method used to get Leave Types based on the LoggedIn user.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
+    @AuraEnabled(Cacheable=true)
+    public static List<String> getLeaveTypesForUser(Id userId) {
+        System.debug('### userId' + userId);
+        List<String> leaveTypes = new List<String>();
+        if(userId != null) {
+            User user = [SELECT Id,
+                         ContactId, 
+                         Email,contact.Work_Location__c 
+                         FROM User 
+                         WHERE Id = :userId];
+            try {
+                if(user.ContactId != null) {
+                    Set<String> uniqueLeaveTypes = new Set<String>();
+                    for(EMS_LM_Leave_Credit__c credit : [SELECT Id,
+                                                         	    EMS_LM_Leave_Type__c,
+                                                                Leave_Type_Name__c
+                                                         FROM EMS_LM_Leave_Credit__c 
+                                                         WHERE EMS_LM_Employee__c = :user.ContactId 
+                                                         ORDER BY Leave_Type_Name__c ASC]) {
+                                                             uniqueLeaveTypes.add(credit.Leave_Type_Name__c);
+                                                         }
+                    for(String leaveType : uniqueLeaveTypes) {
+                        leaveTypes.add(leaveType);
+                    }
+                    Id WORKLOCATION_USA_ID =[select Id, Name From Office_Location__c WHERE Name='California - USA' LIMIT 1].Id;
+                    
+                    if(user.contact.Work_Location__c == WORKLOCATION_USA_ID){
+                        leaveTypes.add('UnPaid time off');
+                    }
+                    System.debug('### leaveTypes ' + leaveTypes);
+                }
+                else {
+                    Set<String> uniqueLeaveTypes = new Set<String>();
+                    Contact contact = [SELECT Id 
+                                       FROM Contact 
+                                       WHERE Official_Mail__c = :user.Email 
+                                       AND EMS_TM_User__c = :userId];
+                    
+                    for(EMS_LM_Leave_Credit__c credit : [SELECT Id,
+                                                         		EMS_LM_Leave_Type__c,
+                                                         		Leave_Type_Name__c 
+                                                         FROM EMS_LM_Leave_Credit__c 
+                                                         WHERE EMS_LM_Employee__c = :contact.Id 
+                                                         ORDER BY Leave_Type_Name__c ASC]) {
+                                                             uniqueLeaveTypes.add(credit.Leave_Type_Name__c);
+                                                         }
+                    for(String leaveType : uniqueLeaveTypes) {
+                        leaveTypes.add(leaveType);
+                    }
+                }
+            }
+            catch(Exception e) {
+                System.debug(e.getMessage());
+            }
+        }
+        return leaveTypes;
+    }
+    
+                /**
+*   {Purpose} - Method used to get the Level of approval,Auto-Approval and Overriden Approval Level data to show the leave status based on the level of approval.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
+    @AuraEnabled(Cacheable=true)
+    public static IntBolleanWrapper userLevelOfApproval(){
+        IntBolleanWrapper returnValues = new IntBolleanWrapper();
+         User usr = [SELECT Id, Contact.timesheet_NoNeed__c,
+						   contactId__c,contactId
+                    FROM User
+                    WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
+        
+        Contact con = [SELECT Id, 
+                              Resource_Role__c, 
+                              Resource_Role__r.Level_of_Approval__c, 
+                              Resource_Role__r.Auto_Approve__c, 
+                              Override_the_standard_level_of_approval__c,
+                       		  Level_of_Approval__c,
+                              EMS_TM_User__c 
+                       FROM Contact 
+                       WHERE Id =: usr.contactId];
+        System.debug('### con '  + con);
+        System.debug('### con '  + con.Resource_Role__r.Level_of_Approval__c);
+        System.debug('### con '  + con.Resource_Role__r.Auto_Approve__c);
+        System.debug('### Overriden check '  + con.Override_the_standard_level_of_approval__c);
+        System.debug('### Overriden Level '  + con.Level_of_Approval__c);
+        returnValues.levelOfApproval = con.Resource_Role__r.Level_of_Approval__c;
+        returnValues.autoApproval = con.Resource_Role__r.Auto_Approve__c;
+        returnValues.overridelevelOfApproval = con.Level_of_Approval__c;
+        returnValues.overRideCheck = con.Override_the_standard_level_of_approval__c;
+        System.debug('### returnValues ' + returnValues);
+        return returnValues;        
+    }
+    
+    public class IntBolleanWrapper {
+        @AuraEnabled
+        Public  Decimal levelOfApproval {get; set;}
+        @AuraEnabled
+        public  Boolean autoApproval {get; set;}
+        @AuraEnabled
+        Public  Decimal overridelevelOfApproval {get; set;}
+        @AuraEnabled
+        public  Boolean overRideCheck {get; set;}
+    }
+
+    
+                /**
+*   {Purpose} - Method used to get information regarding whether any one is reporting to the loggedIn user to hide the pending on me tab and recent request tile in home page.
+*
+*   CHANGE HISTORY
+*   ====================================================================================================
+*   Date        Name                    Description
+*   N/A         N/A                     N/A
+*   ====================================================================================================
+**/
+    @AuraEnabled(Cacheable=true)
+    public static userAccessWrapper getLoggedInUserResReportsSize () {
+        User usr = [SELECT Id, Contact.timesheet_NoNeed__c,
+						   contactId
+                    FROM User
+                    WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
+        
+        List <Resource_Resource_Relationship__c> rrrList = [ SELECT Id, 
+            														Resource__c, 
+            														Resource_Reports_To__c,
+            														Resource_Reports_To_User__c, 
+            														Reports_To_Role__c
+            												 FROM Resource_Resource_Relationship__c 
+                                                             WHERE Resource_Reports_To_User__c != null 
+                                                             AND  Resource_Reports_To__c =: usr.contactId 
+                                             				];
+        List<EMS_TM_Project__c> Project=[select Id,Name,Project_Manager__c,Offshore_Project_Manager__c	from EMS_TM_Project__c where Project_Manager__c= :usr.contactId OR Offshore_Project_Manager__c = :usr.contactId];
+            userAccessWrapper wrapperData = new userAccessWrapper();
+            wrapperData.relationAcess = rrrList.size();
+            wrapperData.relationAcessPM=Project.size();
+            if(usr.Contact.timesheet_NoNeed__c == true){
+                wrapperData.hraccess = true;
+            }
+        Integer intList = rrrList.size(); 
+        Integer PMaccess=Project.Size();
+		return wrapperData;
+        }
+        public class userAccessWrapper {
+        @AuraEnabled
+        Public  Integer relationAcess {get; set;}
+        @AuraEnabled
+        public  Boolean hraccess {get; set;}
+         @AuraEnabled
+        public  Integer relationAcessPM {get; set;}
+       
+    }
+}

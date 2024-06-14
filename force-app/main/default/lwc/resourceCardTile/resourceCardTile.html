@@ -1,0 +1,81 @@
+<template>
+ <div class="parent" >
+        <div class="child1">
+            <div class="homeCard" style="border-top : 3px solid #9602c7;">
+                <div class="childparent" >
+                    <div class="childimage">
+                      <div class="profile-picture">
+                            <img src={userImageUrl} class="round" alt="Profile picture" />
+                        </div>
+                    </div>
+                    <div class="childtext">
+                       <font size="4" color="#9602c7" ><b>{resourceName}</b></font> </br>
+                       {resourcerole} <br/>
+                       {resourceId} 
+                       <br/>
+                       <!-- for hiding the medical insurance to US Employee-->
+                       <template if:true={isMedical}>
+                       <div style="font-color:grey;font-size:12px;" > Medical Insurance: <b> <lightning-formatted-number value={resourceinsurence} format-style="currency" currency-code={rescodecurrency} currency-display-as="code"></lightning-formatted-number> </b> </div>
+                        </template>                   
+                    </div>
+                </div> 
+              
+                    <footer class="slds-modal__footer">
+                       <center> <a href="#" onclick={handleClick}> Update Details </a> </center> 
+                    </footer>
+                       
+            </div>  
+                
+         </div>
+         
+        <div class="child2">
+        	<div class="homeCard" style="border-top :  3px solid #9602c7">
+                <div class="childparent">
+                    <div class="childimage">
+                      <div class="profile-picture">
+                           <img src={paydateimage} alt="" /> 
+                        </div>
+                    </div>
+                    <div class="childtext" style="padding-top: 20px;">
+                       <font size="4" ><b>Next Pay Date</b></font> </br>
+                       <font size="2"> <lightning-formatted-date-time value={nextpaydate}></lightning-formatted-date-time></font><br/>
+                       
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                       <center> <a  onclick={showModal}> View Payslips </a> </center> 
+                    </footer>   
+            </div> 
+        </div>
+        <div class="child3">
+            <div class="homeCard" style="border-top :  3px solid #9602c7">
+           <c-calenderpto></c-calenderpto>
+            </div>
+        </div>
+       
+    </div>
+
+    <template if:true={openModal}>
+        <section aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container ">
+                <header class="slds-modal__header">
+                   <strong> <h1 class="slds-text-heading_small">Work in Progress, this feature will come soon in future.</h1></strong>
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close" size="large"
+						variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
+					</lightning-button-icon>
+                </header>
+                <div class="slds-modal__content">
+                    <div class="slds-p-around_small slds-align_absolute-center">
+                        <img style="max-width:70%; max-height:70%;" src={imageUrl} />
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeModal} class="slds-p-around_x-small"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+
+</template>

@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "b391c8c7-0c58-423c-84e7-f794b7a8cf2d",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Leave_Management__c",
+  "id" : "b9833d95-35ca-4bae-94f6-b74848302587",
+  "label" : "Leave Management",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-leave-management",
+  "type" : "route",
+  "urlPrefix" : "leave-management"
+}

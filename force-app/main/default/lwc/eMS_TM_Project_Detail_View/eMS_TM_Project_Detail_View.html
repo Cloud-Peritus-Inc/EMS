@@ -1,0 +1,48 @@
+<template>
+    <lightning-card  title="">
+        <lightning-record-view-form
+                    record-id={recordId}
+                    object-api-name="EMS_TM_Project__c">
+        <div class="slds-grid slds-gutters" >
+        <div class="slds-col slds-size_1-of-2 ">
+           <span>
+                <lightning-output-field field-name="Name"><hr style="margin-top:2px"></lightning-output-field>
+                <div class="slds-form-element slds-form-element_horizontal">
+                    <label class="slds-form-element__label">Record Type</label>                    
+                    <div class="slds-form-element__control">                    
+                        <span class="slds-form-element__static">                       
+                            <lightning-output-field field-name="RecordTypeId" variant="label-hidden"><hr style="margin-top:2px"></lightning-output-field>               
+                        </span>                    
+                    </div>                    
+                </div>
+                <div class="slds-form-element slds-form-element_horizontal">
+                    <label class="slds-form-element__label">Start Date</label>                    
+                    <div class="slds-form-element__control">                    
+                        <span class="slds-form-element__static">                       
+                            <lightning-output-field field-name="EMS_TM_StartDate__c" variant="label-hidden"><hr style="margin-top:2px"></lightning-output-field>               
+                        </span>                    
+                    </div>                    
+                </div>
+                <lightning-output-field field-name="EMS_TM_Billable__c"><hr style="margin-top:2px"></lightning-output-field>
+                <lightning-output-field field-name="EMS_TM_Budget__cc"><hr style="margin-top:2px"></lightning-output-field>
+            </span>
+        </div>
+        <div class="slds-col slds-size_1-of-2 ">
+           <span>
+                <lightning-output-field field-name="EMS_TM_ClientName__c"><hr style="margin-top:2px"></lightning-output-field>
+                <lightning-output-field field-name="EMS_TM_Industry__c"><hr style="margin-top:2px"></lightning-output-field>
+                <div class="slds-form-element slds-form-element_horizontal">
+                    <label class="slds-form-element__label">End Date</label>                    
+                    <div class="slds-form-element__control">                    
+                        <span class="slds-form-element__static">                       
+                            <lightning-output-field field-name="EMS_TM_EndDate__c" variant="label-hidden"><hr style="margin-top:2px"></lightning-output-field>               
+                        </span>                    
+                    </div>                    
+                </div>
+                <lightning-output-field field-name="EMS_TM_Status__c"><hr style="margin-top:2px"></lightning-output-field> 
+            </span>
+         </div>
+         </div>         
+        </lightning-record-view-form>
+     </lightning-card>
+</template>

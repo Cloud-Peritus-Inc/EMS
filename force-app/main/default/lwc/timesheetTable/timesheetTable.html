@@ -1,0 +1,81 @@
+<!--
+  @description       : Table Componet used to display the TimeSheet records
+  @author            : RamaKrishna
+  @group             : 
+  @last modified on  : 12-01-2023
+  @last modified by  : 
+-->
+
+<template>
+    <div class="homeCard">
+  <div class="slds-progress-ring">
+        <div
+            class="slds-progress-ring__progress"
+            role="progressbar"
+            aria-valuemin=0
+            aria-valuemax=100
+            aria-valuenow={ringPercentage}
+        >
+            <svg viewBox="-1 -1 2 2">
+                <path
+                    class="slds-progress-ring__path"
+                    d={d}
+                ></path>
+            </svg>
+        </div>
+        <div class="slds-progress-ring__content">
+            {timesheetRecentRec}               
+        </div>
+    </div>
+
+        <lightning-progress-ring value={ringPercentage} size="large" class ="slds-progress-ring_large"> 
+	
+			<div class="slds-progress-ring__content">{timesheetRecentRec}</div>
+			
+    </lightning-progress-ring> 
+				<div class="slds-text-title_bold  slds-p-around_x-small slds-align_absolute-center slds-text-heading_large fontsize">
+					<!--<lightning-progress-ring value="75" size="large" class ="slds-progress-ring slds-progress-ring_large"> {timesheetRecentRec}
+    </lightning-progress-ring> -->
+				{timesheetRecentRec}
+			</div>             
+              <!--  <div class="slds-p-around_x-small " onclick={handleLMNavigation}>
+                    <lightning-icon icon-name='action:defer' alternative-text="Time" size="medium" title="Time"></lightning-icon>
+                </div> -->
+				
+                <div class="slds-p-around_x-small thirdBox">
+                    <strong>Previously enterd time </strong>
+                </div>
+
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th class="" scope="col">
+					<div class="slds-truncate" title="No of Date">Week EndDate</div>
+				</th>
+				<th class="" scope="col">
+					<div class="slds-truncate" title="Actions">Total Working Hours</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<template for:each={leaveReq} for:item="leave">
+				<tr key={leave.Id}>
+                   
+					<td key={leave.Id}>
+						<lightning-formatted-date-time value={leave.enddate__c} month="numeric"
+							day="numeric" year="numeric"></lightning-formatted-date-time>					
+					</td>
+                     <td> {leave.EMS_TM_Total__c}</td>
+	
+				</tr>
+			</template>
+		</tbody>
+	</table>
+      <div class="slds-p-around_x-small secondBox">
+       <div class="slds-text-title_bold  slds-p-around_x-small" onclick={handleLMNavigation}>
+					View Timesheet
+				</div> 
+                </div>
+    </div>
+  
+</template>

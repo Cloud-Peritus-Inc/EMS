@@ -1,0 +1,29 @@
+.slds-dropdown{
+    margin-top: 0 !important;
+}
+.slds-listbox_vertical .slds-listbox__option_has-meta .slds-media__figure{
+    margin-top: 0;
+}
+.slds-listbox_selection-group {
+    padding-right: .75rem !important;
+    overflow: unset !important;
+}
+.slds-pill{
+    padding-left: .5rem !important;
+}
+.vk-scrollbar::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+.vk-scrollbar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #bfbfbf;
+    -webkit-box-shadow: inset 0 0 6px #bfbfbf;
+    border-radius: .25rem;
+}
+.vk-scrollbar::-webkit-scrollbar-thumb {
+    background: #95989d;
+    border-radius: .25rem;
+}
+.vk-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #313235; 
+}

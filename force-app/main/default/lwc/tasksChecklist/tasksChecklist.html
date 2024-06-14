@@ -1,0 +1,17 @@
+<template>
+     <template if:true={showChecklist}> 
+    <lightning-card  variant="Narrow"  title="Employee Onboarding Checklist" >
+        <lightning-record-view-form record-id={recordId} object-api-name="Contact">
+            <div class="slds-box slds-theme_default">
+                <lightning-output-field field-name="Asset_Received_Assigned_to_IT_Team__c"></lightning-output-field>
+                <lightning-output-field field-name="Official_Email_ID_Created_Assigned__c"></lightning-output-field>
+                <lightning-output-field field-name="Added_to_WhatsApp_Group_Assigned__c"></lightning-output-field>
+                <lightning-output-field field-name="Added_to_company_email_groups_Assigned__c"></lightning-output-field>
+                <lightning-output-field field-name="Received_Joining_Kit_Assigned_to_HR__c"></lightning-output-field>
+                <lightning-output-field field-name="Conducted_HR_Orientation_Assigned__c"></lightning-output-field>
+                <lightning-output-field field-name="Conducted_One_to_One_Onboarding_session__c"></lightning-output-field>
+            </div>
+    </lightning-record-view-form>
+    </lightning-card>
+     </template> 
+</template>

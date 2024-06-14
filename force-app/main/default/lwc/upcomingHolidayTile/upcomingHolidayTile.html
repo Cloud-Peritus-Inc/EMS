@@ -1,0 +1,54 @@
+<template>
+
+    <div class="homeCard" style="border-top :  3px solid #9602c7">
+    <lightning-card>
+        <div class="childparent" >
+           <div class="childtext">
+      <div style="padding-left:5px;"> 
+          <lightning-icon icon-name="action:map" size="small">  </lightning-icon>
+           <font size="4"  > &nbsp;&nbsp;<b>Upcoming Holidays </b> </font> <br/><br/>
+            </div>
+           </div>
+            <div class="childimage">
+            <template if:true={loaded}>
+            <lightning-combobox
+                    name=""
+                    label=""
+                    value={value}
+                    placeholder="Location"
+                    options={mapdata}
+                    onchange={handleChange} >
+            </lightning-combobox>
+            </template>
+            </div>
+             
+        </div>
+  <center><div class="table-container"><table>
+    <thead>
+      <tr>
+        <th>Holiday</th>
+        <th>Date</th>
+        <th>Day</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template if:true={showtable}>
+      <template for:each={holidaydata} for:item="row">
+        <tr key={row.id} tabindex="0"  onclick={handleRowClick} onkeydown={handleRowKeyDown}>
+          <td>{row.holidayType}</td>
+          <td><lightning-formatted-date-time value={row.holidayDate}> </lightning-formatted-date-time></td>
+          <td>{row.status}</td>
+        </tr>
+      </template>
+      </template>
+      
+    </tbody>
+  </table>
+  <template if:false={showtable}>
+        
+       <center> No upcoming holidays for this year </center>
+      </template>
+      </div> </center> <br/>
+    </lightning-card>
+    </div>
+</template>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Grid_Configuration_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Grid Configuration Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Welcome aboard</fullName>
+                <default>false</default>
+                <label>Welcome aboard</label>
+            </value>
+            <value>
+                <fullName>PF Forms</fullName>
+                <default>false</default>
+                <label>PF Forms</label>
+            </value>
+            <value>
+                <fullName>Documents</fullName>
+                <default>false</default>
+                <label>Documents</label>
+            </value>
+            <value>
+                <fullName>Company Policies</fullName>
+                <default>false</default>
+                <label>Company Policies</label>
+            </value>
+            <value>
+                <fullName>Company Information - EMP- Onboarding</fullName>
+                <default>false</default>
+                <label>Company Information - EMP- Onboarding</label>
+            </value>
+            <value>
+                <fullName>Company Information - Pre-Onboarding</fullName>
+                <default>false</default>
+                <label>Company Information - Pre-Onboarding</label>
+            </value>
+            <value>
+                <fullName>Org Level Goal</fullName>
+                <default>false</default>
+                <label>Org Level Goal</label>
+            </value>
+            <value>
+                <fullName>Resource Role Level Goal</fullName>
+                <default>false</default>
+                <label>Resource Role Level Goal</label>
+            </value>
+            <value>
+                <fullName>Org Level Alert</fullName>
+                <default>false</default>
+                <label>Org Level Alert</label>
+            </value>
+            <value>
+                <fullName>Resource Role Alert</fullName>
+                <default>false</default>
+                <label>Resource Role Alert</label>
+            </value>
+            <value>
+                <fullName>KRA</fullName>
+                <default>false</default>
+                <label>KRA</label>
+            </value>
+            <value>
+                <fullName>Annual Award</fullName>
+                <default>false</default>
+                <label>Annual Award</label>
+            </value>
+            <value>
+                <fullName>Annual Award Result</fullName>
+                <default>false</default>
+                <label>Annual Award Result</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

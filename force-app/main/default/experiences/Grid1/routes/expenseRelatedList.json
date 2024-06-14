@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "caba8ba5-bb0d-4eb8-b538-289b8dacef36",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Expense_Related_List__c",
+  "id" : "ecfdb3d5-728a-462d-badc-9cfb46674425",
+  "label" : "Expense Related List",
+  "objectApiName" : "Expense__c",
+  "routeType" : "relatedlist-a0S",
+  "type" : "route",
+  "urlPrefix" : "expense"
+}

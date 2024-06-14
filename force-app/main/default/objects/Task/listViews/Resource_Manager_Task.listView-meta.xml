@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resource_Manager_Task</fullName>
+    <filterScope>Queue</filterScope>
+    <label>Resource Manager</label>
+    <queue>Resource_Manager</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

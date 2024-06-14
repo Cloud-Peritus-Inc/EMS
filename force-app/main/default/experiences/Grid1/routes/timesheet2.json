@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "be678c5b-2f4c-4a2b-b115-0ee2ab76b0b2",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Timesheet2__c",
+  "id" : "4a48815a-b523-4de9-981a-dd6d69cfc630",
+  "label" : "Timesheet2",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-timesheet2",
+  "type" : "route",
+  "urlPrefix" : "timesheet2"
+}

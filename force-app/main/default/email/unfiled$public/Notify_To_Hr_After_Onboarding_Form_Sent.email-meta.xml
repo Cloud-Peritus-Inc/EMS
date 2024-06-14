@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notify To Hr After Onboarding Form Sent</name>
+    <style>freeForm</style>
+    <subject>Onboarding: Candidate portal link sent</subject>
+    <textOnly>Dear HR Team,
+
+
+The candidate portal link has been sent to the following candidate:
+
+Name: {!Contact.Name}
+
+Designation: {!Contact.Resource_Role__c}
+
+Link: Applicant Record
+
+
+Regards,
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

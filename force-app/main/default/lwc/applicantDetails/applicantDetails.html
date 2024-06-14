@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="Profile Overview" icon-name="standard:contact">
+        <div class="slds-p-around_x-small">
+            <div class="slds-box">
+                <lightning-layout>
+                    <lightning-layout-item size="12" padding="around-small">
+                        <div class="slds-form-element__label lwcInputApplId"><strong>Name:</strong></div>
+                        <lightning-formatted-text value={name} ></lightning-formatted-text><br/>
+                        <div class="slds-form-element__label lwcInputApplId"><strong>Designation:</strong></div>
+                        <lightning-formatted-text value={designation} ></lightning-formatted-text><br/>
+                        <div class="slds-form-element__label lwcInputApplId"><strong>Phone Number:</strong></div>
+                        <lightning-formatted-phone value={phone}></lightning-formatted-phone><br/>
+                        <div class="slds-form-element__label lwcInputApplId"><strong>Email:</strong></div>
+                        <lightning-formatted-email value={email}></lightning-formatted-email><br/>
+                        <div class="slds-form-element__label lwcInputApplId"><strong>Department:</strong></div>
+                        <lightning-formatted-phone value={department}></lightning-formatted-phone><br/>
+                        <div class="slds-form-element__label lwcInputApplId"><strong>Age:</strong></div>
+                        <lightning-formatted-phone value={age}></lightning-formatted-phone><br/>
+                        <!--<div class="slds-form-element__label"><strong>EmployeeId:</strong></div>
+                        <lightning-formatted-text value={empId} ></lightning-formatted-text><br/>
+                        <div class="slds-form-element__label"><strong>Employee Status:</strong></div>
+                        <lightning-formatted-text value={empStatus} ></lightning-formatted-text><br/>-->
+                        <!--<div class="slds-form-element__label"><strong>Start Date:</strong></div>
+                        <lightning-formatted-phone value={phone}></lightning-formatted-phone><br/>--->
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </div>
+    </lightning-card>   
+</template>

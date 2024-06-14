@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMS_EM_BG__c</fullName>
+    <externalId>false</externalId>
+    <label>Blood Group</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>A RhD positive (A+)</fullName>
+                <default>false</default>
+                <label>A RhD positive (A+)</label>
+            </value>
+            <value>
+                <fullName>A RhD negative (A-)</fullName>
+                <default>false</default>
+                <label>A RhD negative (A-)</label>
+            </value>
+            <value>
+                <fullName>B RhD positive (B+)</fullName>
+                <default>false</default>
+                <label>B RhD positive (B+)</label>
+            </value>
+            <value>
+                <fullName>B RhD negative (B-)</fullName>
+                <default>false</default>
+                <label>B RhD negative (B-)</label>
+            </value>
+            <value>
+                <fullName>O RhD positive (O+)</fullName>
+                <default>false</default>
+                <label>O RhD positive (O+)</label>
+            </value>
+            <value>
+                <fullName>O RhD negative (O-)</fullName>
+                <default>false</default>
+                <label>O RhD negative (O-)</label>
+            </value>
+            <value>
+                <fullName>AB RhD positive (AB+)</fullName>
+                <default>false</default>
+                <label>AB RhD positive (AB+)</label>
+            </value>
+            <value>
+                <fullName>AB RhD negative (AB-)</fullName>
+                <default>false</default>
+                <label>AB RhD negative (AB-)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

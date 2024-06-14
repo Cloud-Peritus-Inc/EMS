@@ -1,0 +1,46 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "458d0537-4e13-48f0-afae-559b73e46b64",
+  "label" : "TimeSheetApproval",
+  "regions" : [ {
+    "id" : "d3c3f46f-3514-4113-bf78-8d49f91f167d",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:viewTimesheet",
+      "id" : "3e1340d9-fd33-4782-b22c-2f6c8d0883c3",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "fdc74e9e-d85a-43f9-a3fd-b25cc7061248",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "f7e39d2e-f2f8-4c7c-9604-34a956f94aec",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "TimeSheetApproval"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "9725ff57-fe80-4d33-a8e5-25276154b117",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "79b08001-95c9-419d-855f-7ded8c599d9a",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-timesheetapproval"
+}

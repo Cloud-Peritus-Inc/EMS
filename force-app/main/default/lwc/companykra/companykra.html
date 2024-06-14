@@ -1,0 +1,30 @@
+<template>
+<lightning-card>
+     Please select the role which you want to view the KRA 
+     <lightning-combobox
+                name=""
+                label=""
+                value={selectedrole}
+                placeholder = "Select Role"
+                options={roledata}
+                onchange={handleFYChange} >
+            </lightning-combobox>
+
+<template if:true={tablekradata}>
+    <div>
+      <lightning-accordion active-section-name="A">
+    <template for:each={tablekradata} for:item="section">
+        <lightning-accordion-section name={section.name} label={section.name} key={section.name}>
+             <template for:each={section.qualList} for:item="qa">
+                 <div key={qa.name} style="padding:5px;"><b> {qa.name} </b>  </div>  <div  key={qa.name} class="slds-wrap">
+                    <lightning-formatted-rich-text  key={qa.name}
+                    value={qa.typeval}></lightning-formatted-rich-text></div>
+             </template>
+        </lightning-accordion-section>  
+    </template>
+      </lightning-accordion>
+    </div>
+</template>
+
+</lightning-card>
+</template>

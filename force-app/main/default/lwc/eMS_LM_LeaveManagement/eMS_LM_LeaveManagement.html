@@ -1,0 +1,38 @@
+<!--
+  @description       : This component is used to show the Leave Management tile.
+  @author            : Pavan
+  @group             : 
+  @last modified on  : 02-02-2023
+  @last modified by  : 
+-->
+
+<template>
+	<img style="max-height: 900px" alt="Image on T.O." src={torontoImage}/>
+
+	<div class="right-aligned">
+		<c-e-m-s-_-l-m-_-apply-new></c-e-m-s-_-l-m-_-apply-new>  
+	</div>
+	<div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+
+		<c-e-m-s-_-l-m-_-leave-balance></c-e-m-s-_-l-m-_-leave-balance>
+	 	<lightning-tabset active-tab-value={activeTabValue}>
+			<lightning-tab label="My Requests" value="one">
+				<c-e-m-s-_-l-m-_-all-leave-history></c-e-m-s-_-l-m-_-all-leave-history>
+			</lightning-tab>
+
+			<template if:true={hidePendingTab}>
+				<lightning-tab label="Pending On Me" value="two">
+					<c-e-m-s-_-l-m-_-leave-history-_-pending-on-me></c-e-m-s-_-l-m-_-leave-history-_-pending-on-me>
+				</lightning-tab>
+			</template>
+
+			<template if:true={showTabAdmin}>
+				<lightning-tab label="Admin View" value="three">
+					<c-e-m-s-_-l-m-_-leave-history-_-admin-view></c-e-m-s-_-l-m-_-leave-history-_-admin-view>
+				</lightning-tab>
+			</template>
+
+		</lightning-tabset>
+
+	</div>
+</template>

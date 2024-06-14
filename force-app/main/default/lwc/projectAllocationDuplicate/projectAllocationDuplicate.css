@@ -1,0 +1,14 @@
+.custom-clear-button {
+    position: absolute;
+    top: 1.675rem;
+    right: 1.775rem;
+    transform: scale(0.44); /* Adjusted scale */
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+.scrollable-tbody{
+    overflow-y: auto;
+    max-height: 400px;
+}

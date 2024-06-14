@@ -1,0 +1,46 @@
+{
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "b391c8c7-0c58-423c-84e7-f794b7a8cf2d",
+  "label" : "Leave Management",
+  "regions" : [ {
+    "id" : "8aecd9ca-a48f-4279-84a6-2125ae381df4",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:eMS_LM_LeaveManagement",
+      "id" : "10e82416-0ebb-4b7d-a57e-158fe7fb9043",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "acc7a39f-aad1-4e54-a505-b5d65d2998e5",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "0ce0cdbf-54f1-467f-9569-67e0b6383120",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Leave Management"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "f305ea99-6a29-4b8b-ae03-d561da7b88bf",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "2df52222-4795-4271-9a84-36f5d3df67c2",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-leave-management"
+}

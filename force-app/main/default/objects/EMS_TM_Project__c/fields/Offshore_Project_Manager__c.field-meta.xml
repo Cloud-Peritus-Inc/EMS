@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Offshore_Project_Manager__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Offshore Project Manager</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <filterItems>
+            <field>Contact.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Resource</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.Resource_Role__r.Name</field>
+            <operation>equals</operation>
+            <value>Sr Project Manager</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.Resource_Role__r.Name</field>
+            <operation>equals</operation>
+            <value>Project Manager</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Projects (Offshore Project Manager)</relationshipLabel>
+    <relationshipName>Projects1</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "21fe36a8-116e-4c4a-b23d-7f2b9e23efd5",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "Expense_Detail__c",
+  "id" : "53ae17e2-afab-4a3e-9daa-0765011e2966",
+  "label" : "Expense Detail",
+  "objectApiName" : "Expense__c",
+  "routeType" : "detail-a0S",
+  "type" : "route",
+  "urlPrefix" : "expense"
+}

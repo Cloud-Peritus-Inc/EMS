@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "066d22a6-7452-49dc-b08d-d157165a4fca",
+  "appPageId" : "b987d200-3a99-4628-b2b6-6c6746dd9ae1",
+  "configurationTags" : [ ],
+  "devName" : "All_Approvals__c",
+  "id" : "3fd034f4-8a33-4b34-bd7c-ede58bd79989",
+  "label" : "All Approvals",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-all-approvals",
+  "type" : "route",
+  "urlPrefix" : "all-approvals"
+}

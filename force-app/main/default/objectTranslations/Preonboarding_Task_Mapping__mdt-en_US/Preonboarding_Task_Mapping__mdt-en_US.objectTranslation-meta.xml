@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Onboarding Task Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Onboarding Task Mappings</value>
+    </caseValues>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Navigation_Address_is_Requried</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>When_Type_is_Queue_or_User</name>
+    </validationRules>
+</CustomObjectTranslation>

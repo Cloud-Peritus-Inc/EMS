@@ -1,0 +1,32 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-around_medium">
+            <h3 class="slds-text-heading_medium"><lightning-icon icon-name="custom:custom86" size="small"></lightning-icon> <strong style="color:#270086; font-size:13px; margin-right:5px;"> My Info</strong></h3>
+            <br/><br/>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="First Name" value = {firstname} readonly='true'></lightning-input> <br>            
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Last Name" value = {lastname} readonly='true'></lightning-input> <br>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Employee Id"  value = {employeeid} readonly='true'></lightning-input><br>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Job Role"  value = {employeejobrole} readonly='true'></lightning-input><br>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Phone Number"  value = {phonenumber} readonly='true'></lightning-input><br>
+                    </div>
+
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Email"  value = {employeemail} readonly='true'></lightning-input><br>
+                    </div>
+                    
+                </div>  
+           
+            <br/>
+        </div>
+    </lightning-card> 
+</template>
