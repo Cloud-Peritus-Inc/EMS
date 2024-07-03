@@ -20,6 +20,8 @@ import getAssignmentProject from '@salesforce/apex/EMS_TM_TimesheetClass.getAssi
 import getAssignmentProjectWire from '@salesforce/apex/EMS_TM_TimesheetClass.getAssignmentProjectWire';
 import getTimeSheetData from '@salesforce/apex/EMS_TM_TimesheetClass.getTimeSheetData';
 import getPreWeekData from '@salesforce/apex/EMS_TM_TimesheetClass.getPreWeekData';
+//smaske : [TS_007] created a new method to fetch Project and Project Task for current user 
+import getUserProjectAndProjectTask from '@salesforce/apex/EMS_TM_TimesheetClass.getUserProjectAndProjectTask';
 import reviseTimesheet from '@salesforce/apex/EMS_TM_TimesheetClass.reviseTimesheet';
 import resourcerole from '@salesforce/apex/EMS_TM_TimesheetClass.resourcerole';
 import IMAGES from '@salesforce/resourceUrl/Time_Managment';
@@ -99,6 +101,26 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             console.log('Error ', error);
         }
     }
+
+    /*
+        @author     : Sahubham Maske
+        function    : wiredMapData
+        Description : Fetch loggedin user Project and Task based on his project assignments
+        Parameters  : null 
+        Defect/Ticket : TS_007
+    */
+    projectAndProjectTaskMapData;
+    @wire(getUserProjectAndProjectTask)
+    wiredMapData({ error, data }) {
+        if (data) {
+            console.log( 'getUserProjectAndProjectTask RESULT ::' +  JSON.stringify(data));
+            this.projectAndProjectTaskMapData = data;
+            console.log('Map Data:', this.projectAndProjectTaskMapData);
+        } else if (error) {
+            console.error('Error:', error);
+        }
+    }
+
 
     @wire(getAssignmentProjectWire, { week: new Date(), wireMethod: true, userId: '$userId' })
     assignmentProject({ error, data }) {
@@ -342,7 +364,25 @@ map2
                                 this.template.querySelector('[data-id="remarkToggle"]').checked = true;
                                 this.template.querySelector('[data-id="weekendToggle"]').checked = true;
                              this.showOtherTask = true;
-                                                         }
+                            }
+
+                            /* START : Smaske [TS_007] : checking if Project Name of TimesheetLineItem maetches with Map Key and 
+                                        Iterating through values to populate as Piclist Values when Record is copied to a new row.*/
+                                        let tempTaskPicklist = [];
+                                            Object.keys(this.projectAndProjectTaskMapData).forEach(key => {
+                                                const values = this.projectAndProjectTaskMapData[key];
+                                                if (record.EMS_TM_Project__c == key) {
+                                                    for (const value of values) {
+                                                        tempTaskPicklist.push({ value: value, label: value });
+                                                    }
+                                                }
+                                            }); 
+                                            if (tempTaskPicklist.length > 0 && tempTaskPicklist != null) {
+                                                element.newTaskOptionList =  tempTaskPicklist;
+                                                console.log("tempTaskPicklist Values 382:" + JSON.stringify(tempTaskPicklist) );
+                                                console.log("element.newTaskOptionList Values 383:" + JSON.stringify(element.newTaskOptionList) );
+                                            }
+                                            /* END : Smaske [TS_007] */
 
                             this.records.push(element);
                             
@@ -577,14 +617,6 @@ map2
         Parameters  : event 
     */
     handleNextPreWeek(event) {
-
-        //smaske [TS_008 ]: Resetting Values on Next & PREV week change.
-        this.template.querySelector('[data-id="remarkToggle"]').checked = false;
-        this.template.querySelector('[data-id="weekendToggle"]').checked = false;
-        this.showWeekend = false;
-        this.showRemarks = false;
-        //smaske [TS_008 ]: Resetting Values on Next & PREV week change.
-
         let value = event.target.dataset.id;
         let presentWeek = new Date(this.timeSheetRecord.EMS_TM_Week__c);
         // console.log('presentWeek'+presentWeek);
@@ -757,82 +789,82 @@ map2
         Description : Retrieves time sheet values from previous week
         Parameters  : null 
     */
-    copyPreviousWeek() {
-        this.hideSpinner = false;
-        console.log('Timesheet => ' + JSON.stringify(this.timeSheetRecord));
-        getPreWeekData({ timesheet: this.timeSheetRecord })
-            .then(result => {
-                console.log('result copy pre', JSON.stringify(result));
-                let timeSheetRecords = result.timeSheetRecords;
-                
-                //Smaske [HY_P034 / TS_005] : projectAndProjectTaskMap from Apex Wrapper data
-                let projectAndProjectTaskMapData = result.projectAndProjectTaskMap;
-                //console.log('projectAndProjectTaskMapData :: ', JSON.stringify(projectAndProjectTaskMapData));
-
-                if (timeSheetRecords) {
-                    let existingProjectIds = this.records.map(record => record.EMS_TM_Project__c);
-                    timeSheetRecords.forEach(record => {
-                        if (existingProjectIds.includes(record.EMS_TM_Project__c)) {
-                            let existingRecord = this.records.find(item => item.EMS_TM_Project__c === record.EMS_TM_Project__c);
-                            for (let key in record) {
-                                existingRecord[key] = record[key];
-                            }
-                        } else {
-                            let element = {};
-                            element.projectTaskOptions = [];
-                            element.projectAssignAvail = false;
-                            if (this.projectRecords) {
-                                element.projectAssignAvail = record.EMS_TM_ProjectTask__c ? true : false;
-                                let project = this.projectRecords.find(item => item.Id === record.EMS_TM_Project__c);
-                                if (project && project.EMS_TM_Project_Type__c !== 'OOO') {
-                                    element.EMS_TM_Project__c = record.EMS_TM_Project__c;
-                                    if (project.EMS_TM_Project_Type__c === 'OOO') {
-                                        element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
-                                    } else if (project.EMS_TM_Project_Type__c === 'Bench') {
-                                        element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
-                                    } else if (project.EMS_TM_Project_Type__c === 'Other') {
-                                        element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
-                                    }
-                                    element.projectValueAvailable = true;
-                                    for (let key in record) {
-                                        element[key] = record[key];
-                                    }
-
-                                    /* START : Smaske [HY_P034 / TS_005] : checking if Project Name of TimesheetLineItem maetches with Map Key and 
-                                    Iterating through values to populate as Piclist Values when Record is copied to a new row.*/
-                                    let tempTaskPicklist = [];
-                                        Object.keys(projectAndProjectTaskMapData).forEach(key => {
-                                            const values = projectAndProjectTaskMapData[key];
-                                            if (record.EMS_TM_Project__c == key) {
-                                                for (const value of values) {
-                                                    tempTaskPicklist.push({ value: value, label: value });
-                                                }
-                                            }
-                                        }); 
-                                        if (tempTaskPicklist.length > 0 && tempTaskPicklist != null) {
-                                            element.newTaskOptionList =  tempTaskPicklist; 
-                                            //console.log("tempTaskPicklist Values :" + JSON.stringify(tempTaskPicklist) );
-                                            //console.log("element.newTaskOptionList Values :" + JSON.stringify(element.newTaskOptionList) );
+        copyPreviousWeek() {
+            this.hideSpinner = false;
+            console.log('Timesheet => ' + JSON.stringify(this.timeSheetRecord));
+            getPreWeekData({ timesheet: this.timeSheetRecord })
+                .then(result => {
+                    console.log('result copy pre', JSON.stringify(result));
+                    let timeSheetRecords = result.timeSheetRecords;
+                    
+                    //Smaske [HY_P034 / TS_005] : projectAndProjectTaskMap from Apex Wrapper data
+                    let projectAndProjectTaskMapData = result.projectAndProjectTaskMap;
+                    //console.log('projectAndProjectTaskMapData :: ', JSON.stringify(projectAndProjectTaskMapData));
+    
+                    if (timeSheetRecords) {
+                        let existingProjectIds = this.records.map(record => record.EMS_TM_Project__c);
+                        timeSheetRecords.forEach(record => {
+                            if (existingProjectIds.includes(record.EMS_TM_Project__c)) {
+                                let existingRecord = this.records.find(item => item.EMS_TM_Project__c === record.EMS_TM_Project__c);
+                                for (let key in record) {
+                                    existingRecord[key] = record[key];
+                                }
+                            } else {
+                                let element = {};
+                                element.projectTaskOptions = [];
+                                element.projectAssignAvail = false;
+                                if (this.projectRecords) {
+                                    element.projectAssignAvail = record.EMS_TM_ProjectTask__c ? true : false;
+                                    let project = this.projectRecords.find(item => item.Id === record.EMS_TM_Project__c);
+                                    if (project && project.EMS_TM_Project_Type__c !== 'OOO') {
+                                        element.EMS_TM_Project__c = record.EMS_TM_Project__c;
+                                        if (project.EMS_TM_Project_Type__c === 'OOO') {
+                                            element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
+                                        } else if (project.EMS_TM_Project_Type__c === 'Bench') {
+                                            element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
+                                        } else if (project.EMS_TM_Project_Type__c === 'Other') {
+                                            element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.otherPicklist));
                                         }
-                                        /* END : Smaske [HY_P034 / TS_005] */
-
-                                    delete element.Id;
-                                    delete element.EMS_Timesheet__c;
-                                    this.records.push(element);
+                                        element.projectValueAvailable = true;
+                                        for (let key in record) {
+                                            element[key] = record[key];
+                                        }
+    
+                                        /* START : Smaske [HY_P034 / TS_005] : checking if Project Name of TimesheetLineItem maetches with Map Key and 
+                                        Iterating through values to populate as Piclist Values when Record is copied to a new row.*/
+                                        let tempTaskPicklist = [];
+                                            Object.keys(projectAndProjectTaskMapData).forEach(key => {
+                                                const values = projectAndProjectTaskMapData[key];
+                                                if (record.EMS_TM_Project__c == key) {
+                                                    for (const value of values) {
+                                                        tempTaskPicklist.push({ value: value, label: value });
+                                                    }
+                                                }
+                                            }); 
+                                            if (tempTaskPicklist.length > 0 && tempTaskPicklist != null) {
+                                                element.newTaskOptionList =  tempTaskPicklist; 
+                                                //console.log("tempTaskPicklist Values :" + JSON.stringify(tempTaskPicklist) );
+                                                //console.log("element.newTaskOptionList Values :" + JSON.stringify(element.newTaskOptionList) );
+                                            }
+                                            /* END : Smaske [HY_P034 / TS_005] */
+    
+                                        delete element.Id;
+                                        delete element.EMS_Timesheet__c;
+                                        this.records.push(element);
+                                    }
                                 }
                             }
-                        }
-                    })
-                }
-                this.calculateTotalHours('copyPreviousWeek'); //smaske [TS_008 ]: Passing param value to update toggle value
-                this.displayItemList = JSON.parse(JSON.stringify(this.records));
-                console.log('displayItemList => '+ JSON.stringify(this.records));
-                this.hideSpinner = true;
-            })
-            .catch(error => {
-                console.log('error => ', error)
-            });
-    }
+                        })
+                    }
+                    this.calculateTotalHours('copyPreviousWeek'); //smaske [TS_008 ]: Passing param value to update toggle value
+                    this.displayItemList = JSON.parse(JSON.stringify(this.records));
+                    console.log('displayItemList => '+ JSON.stringify(this.records));
+                    this.hideSpinner = true;
+                })
+                .catch(error => {
+                    console.log('error => ', error)
+                });
+        }
 
 
 
@@ -1268,85 +1300,81 @@ map2
         Description : Calculates total hours for values entered
         Parameters  : null 
     */
-    calculateTotalHours( calledFrom = 'All' ) {
-        console.log(" calledFrom value :: " + calledFrom);
-        let letTotalHours = 0;
-        let weekendHours = 0;
-        this.totalDayHours = { EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, };
-
-        this.records.forEach(element => {
-        //     console.log(' this.records====================', this.records);
-            let totalWeekEntered = 0;
-            for (let key in element) {
-               // console.log('key====================',key);
-                if (key.length === 13 && element[key] && key!='Assignment__c') {
-                    let x = parseFloat(element[key]);
-                    this.totalDayHours[key] = this.totalDayHours[key] + x;
-                  //  console.log(' this.totalDayHours123 ========================'+ this.totalDayHours[key] );
-                    totalWeekEntered = totalWeekEntered + x;
-                  //  console.log('datatype---1135'+typeof totalWeekEntered);
-                   // console.log('totalWeekEntered=============='+totalWeekEntered);
-                    element.remarkRequired = false;
-                    if ((key === 'EMS_TM_Sat__c' || key === 'EMS_TM_Sun__c') && parseFloat(element[key]) > 0) {
-                        element.remarkRequired = true;
+        calculateTotalHours( calledFrom = 'All' ) {
+            console.log(" calledFrom value :: " + calledFrom);
+            let letTotalHours = 0;
+            let weekendHours = 0;
+            this.totalDayHours = { EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, };
+    
+            this.records.forEach(element => {
+            //     console.log(' this.records====================', this.records);
+                let totalWeekEntered = 0;
+                for (let key in element) {
+                   // console.log('key====================',key);
+                    if (key.length === 13 && element[key] && key!='Assignment__c') {
+                        let x = parseFloat(element[key]);
+                        this.totalDayHours[key] = this.totalDayHours[key] + x;
+                      //  console.log(' this.totalDayHours123 ========================'+ this.totalDayHours[key] );
+                        totalWeekEntered = totalWeekEntered + x;
+                      //  console.log('datatype---1135'+typeof totalWeekEntered);
+                       // console.log('totalWeekEntered=============='+totalWeekEntered);
+                        element.remarkRequired = false;
+                        if ((key === 'EMS_TM_Sat__c' || key === 'EMS_TM_Sun__c') && parseFloat(element[key]) > 0) {
+                            element.remarkRequired = true;
+                        }
                     }
                 }
-            }
-            console.log('total my hours================',element.Total_Hours__c);
-            element.Total_Hours__c = totalWeekEntered;
-        });
-
-        for (let key in this.totalDayHours) {
-            if (this.totalDayHours[key] && key.length === 13 && (key != 'EMS_TM_Sat__c' && key != 'EMS_TM_Sun__c')) {
-                let error = 'error' + key;
-                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 8) {
-                    this.totalDayHours[error] = true;
-                } else {
-                    this.totalDayHours[error] = false;
+                console.log('total my hours================',element.Total_Hours__c);
+                element.Total_Hours__c = totalWeekEntered;
+            });
+    
+            for (let key in this.totalDayHours) {
+                if (this.totalDayHours[key] && key.length === 13 && (key != 'EMS_TM_Sat__c' && key != 'EMS_TM_Sun__c')) {
+                    let error = 'error' + key;
+                    if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 8) {
+                        this.totalDayHours[error] = true;
+                    } else {
+                        this.totalDayHours[error] = false;
+                    }
+                    letTotalHours = letTotalHours + this.totalDayHours[key];
+                } else if (this.totalDayHours[key] && key.length === 13 && (key === 'EMS_TM_Sat__c' || key === 'EMS_TM_Sun__c')) {
+                    let error = 'error' + key;
+                    if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 0) {
+                        this.totalDayHours[error] = true;
+                    } else {
+                        this.totalDayHours[error] = false;
+                    }
+                    letTotalHours = letTotalHours + this.totalDayHours[key];
+                    weekendHours = weekendHours + this.totalDayHours[key];
                 }
-                letTotalHours = letTotalHours + this.totalDayHours[key];
-            } else if (this.totalDayHours[key] && key.length === 13 && (key === 'EMS_TM_Sat__c' || key === 'EMS_TM_Sun__c')) {
-                let error = 'error' + key;
-                if (this.totalDayHours[key] > 24 || this.totalDayHours[key] < 0) {
-                    this.totalDayHours[error] = true;
-                } else {
-                    this.totalDayHours[error] = false;
-                }
-                letTotalHours = letTotalHours + this.totalDayHours[key];
-                weekendHours = weekendHours + this.totalDayHours[key];
             }
-        }
-        this.totalHours.value = letTotalHours;
-        this.weekendEnteredValue = weekendHours;
-        if (this.weekendEnteredValue == 0) {
-            this.disableRemarks = false;
-            this.disableWeekend = false;
-        } else if (this.weekendEnteredValue > 0) {
-
-            /*smaske [TS_008 ]: checking if Calculate method is called from copyPreviousWeek then not disabling the toggles as requested by QA.
-            Keeping the toggle toggled as true for Weekend and Remarks by defualt if weekend hours are greater than 0
-            else keeping the functionality as it is */
-            
-            if (calledFrom == 'copyPreviousWeek') {
-                console.log(1323);
+            this.totalHours.value = letTotalHours;
+            this.weekendEnteredValue = weekendHours;
+            if (this.weekendEnteredValue == 0) {
                 this.disableRemarks = false;
                 this.disableWeekend = false;
-                this.template.querySelector('[data-id="remarkToggle"]').checked = true;
-                this.template.querySelector('[data-id="weekendToggle"]').checked = true;
-                this.showWeekend = true;
-                this.showRemarks = true;
-
-            } else {
+            } else if (this.weekendEnteredValue > 0) {
+    
+                /*smaske [TS_008 ]: checking if Calculate method is called from copyPreviousWeek then not disabling the toggles as requested by QA.
+                Keeping the toggle toggled as true for Weekend and Remarks by defualt if weekend hours are greater than 0
+                else keeping the functionality as it is */
+                
+                if (calledFrom == 'copyPreviousWeek') {
+                    console.log(1323);
+                    this.template.querySelector('[data-id="remarkToggle"]').checked = true;
+                    this.template.querySelector('[data-id="weekendToggle"]').checked = true;
+                    this.showWeekend = true;
+                    this.showRemarks = true;
+                }
                 this.disableRemarks = true;
                 this.disableWeekend = true;
             }
+            if (this.totalHours.value > 168) {
+                this.totalHours.error = true;
+            } else {
+                this.totalHours.error = false;
+            }
         }
-        if (this.totalHours.value > 168) {
-            this.totalHours.error = true;
-        } else {
-            this.totalHours.error = false;
-        }
-    }
 
     /*
         @author     : Suneel Kumar
