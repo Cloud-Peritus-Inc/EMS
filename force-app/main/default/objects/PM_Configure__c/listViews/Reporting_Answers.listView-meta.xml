@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reporting_Answers</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>PM_Configure__c.Answer</value>
+    </filters>
+    <filters>
+        <field>Reporting_Contact__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <label>Reporting Answers</label>
+</ListView>
