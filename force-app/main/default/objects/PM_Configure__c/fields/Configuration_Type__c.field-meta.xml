@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Configuration_Type__c</fullName>
+    <label>Configuration Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>KRA</fullName>
+                <default>true</default>
+                <label>KRA</label>
+            </value>
+            <value>
+                <fullName>Annual Award Result</fullName>
+                <default>false</default>
+                <label>Annual Award Result</label>
+            </value>
+            <value>
+                <fullName>Annual Award</fullName>
+                <default>false</default>
+                <label>Annual Award</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
