@@ -3,6 +3,7 @@ import getTheCurrentFY from '@salesforce/apex/myMetricsController.getTheCurrentF
 import getAllKRAs from '@salesforce/apex/myMetricsController.getAllKRAs';
 import getTheCheckInInfo from '@salesforce/apex/checkInController.getTheCheckInInfo';
 import getThePulseInfo from '@salesforce/apex/checkInController.getThePulseInfo';
+import Id from '@salesforce/user/Id';
 
 //smaske: imports for Get Pulse 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -19,11 +20,25 @@ export default class MyMetrics extends LightningElement {
     @track kratable = [];
     @track cintable = [];
     @track ptable = [];
+    @track menteerecords = [];
     disableButton;
+    @track employeeName ;
+    @track managerName ;
+    @track startDate ;
+    @track endDate;
+    @track projectName ;
+    @track showcombobox = false; //sangharsh
+
 
     //current contact resourceId
     resourceId;
     pulseKraRecord = [];
+
+    @track columns = [{label: 'Project Name',fieldName: 'projectName', type: 'text',sortable: true,typeAttributes :{ label :{fieldName: 'projectName'},target :'_blank'}},
+                     {label: 'Contact Name ',fieldName: 'empName', type: 'text',sortable: true},
+                     {label: 'Project Start Date',fieldName: 'startDate', type: 'Date',sortable: true},
+                     {label: 'Project End Date',fieldName: 'endDate', type: 'Date',sortable: true},
+                      {label: 'Project Manager',fieldName: 'managerName', type: 'text',sortable: true}];
 
     connectedCallback() {
         this.getallKrafromserver();
@@ -46,7 +61,7 @@ export default class MyMetrics extends LightningElement {
             });
 
         /*smaske [UAT_062] : calling Pulse method / Checkin method for toggle issue*/
-        this.getCheckInfo(); 
+        this.getCheckInfo();
     }
 
 
@@ -202,6 +217,16 @@ export default class MyMetrics extends LightningElement {
         this.dispatchEvent(evt);
     }
 
+      //@sangharsh Show Project Assignment
+    ProjectAssignToggle(event) {
+        //this.selectedresource
+        if (event.target.checked) {
+            this.showcombobox = true;
+            console.log('====Is checked=======');
+        }else{
+                this.showcombobox = false;
+        }
+    }
 
-
+    
 }

@@ -1,0 +1,123 @@
+<template>
+	<lightning-card>
+		<div style="width:200px; padding:0.5rem;">
+				<template if:true={isLoaded} class="slds-is-relative">
+					<lightning-spinner alternative-text="Loading..." variant="brand">
+					</lightning-spinner>
+				</template>
+			</div>
+		<div class="tableFixHead">
+			<table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+				<thead>
+					<tr class="slds-line-height_reset" style="color:lightcoral">
+						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
+							<div class="slds-truncate" title="Project Name">Project Name</div>
+						</th>
+						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
+							<div class="" title="Contact Name">Contact Name</div>
+						</th>
+						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
+							<div class="slds-truncate" title="Project Start Date">Project Start Date</div>
+						</th>
+						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
+							<div class="slds-truncate" title="Project End Date">Project End Date</div>
+						</th>
+						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
+							<div class="slds-truncate" title="Project Manager">Project Manager</div>
+						</th>
+						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
+							<div class="slds-truncate" title="Action">Action</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template if:true={showDataTable}>
+						<template for:each={menteeList} for:item="mentee">
+							<tr key={mentee.projectid}>
+								<td style=";word-wrap:break-word; width: 15%;">
+									<div class="slds-wrap">{mentee.projectName}</div>
+								</td>
+								<td style=";word-wrap:break-word; width: 15%;">
+									<div class="slds-wrap">{mentee.empName}</div>
+								</td>
+								<td style="width: 15%;">
+									<div class="slds-wrap">
+										<lightning-formatted-date-time value={mentee.startDate}>
+										</lightning-formatted-date-time>
+									</div>
+								</td>
+								<td style="width: 15%;">
+									<div class="slds-wrap">
+										<lightning-formatted-date-time value={mentee.endDate}>
+										</lightning-formatted-date-time>
+									</div>
+								</td>
+								<td style=";word-wrap:break-word; width: 15%;" class="overflowModal">
+
+									<lightning-combobox class="overflowModal" placeholder="Choose PM"
+										value={mentee.value} data-projectid={mentee.projectid}
+										onchange={handleChangeCombobox} options={mentee.managerOptions}>
+									</lightning-combobox>
+
+								</td>
+								<td>
+									<lightning-button variant="brand" icon-name="utility:adduser"
+										disabled={mentee.disableKRAbutton} label="Send KRA Request"
+										title="Send KRA Request" onclick={HandlementeeRowAction}
+										data-projectid={mentee.projectid}
+										data-projectassigmentid={mentee.projectAssigmentId}
+										data-managerid={mentee.value} class="slds-m-left_x-small">
+									</lightning-button> &nbsp;&nbsp;
+								</td>
+							</tr>
+						</template>
+					</template>
+				</tbody>
+			</table>
+
+			<template if:false={showDataTable}>
+				<div class="slds-text-align_center slds-p-around_medium">
+					<center>No records found.</center>
+				</div>
+			</template>
+			<br/><br/><br/><br/><br/><br/><br/><br/>
+			</div>
+
+			<template if:true={isShowModal}>
+				<div class="slds-box">
+					<div class="slds-modal slds-fade-in-open slds-backdrop">
+						<div class="slds-modal__container">
+							<div class="slds-modal__header">
+								<lightning-button-icon icon-name="utility:close" alternative-text="Close" size="large"
+									variant="bare-inverse" onclick={hideModalBox} class="slds-modal__close">
+								</lightning-button-icon>
+								<br/><br/>
+								<center>
+									<h2 class="slds-modal__title slds-hyphenate">Select Resource to send a KRA Request
+									</h2>
+									<br/>
+									<c-reusable-lookup label="" selected-icon-name="standard:contact"
+										object-label="Contact" object-api-name="Contact" field-api-name="Name"
+										other-field-api-name="EMS_RM_ApplicantStatus_Update__c"
+										other-field-api-name2="EMS_TM_User__r.IsActive"
+										selected-record-id={BE_PR_RR.Resource__c}
+										onvalueselected={handleValueSelectedOnAccount}
+										onvalueremoved={handleValueRemovedOnAccount}>
+									</c-reusable-lookup>
+									<br/><br/>
+									<lightning-button variant="brand-outline" label="Cancel" title="Cancel"
+										onclick={hideModalBox} icon-name="utility:back">
+									</lightning-button>&nbsp;&nbsp;
+									<lightning-button variant="brand-outline" label="Confirm" title="Confirm"
+										onclick={handleConformModalBox} icon-name="utility:save">
+									</lightning-button>
+								</center> <br/>
+								<div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
+	</lightning-card>
+</template>

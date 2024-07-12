@@ -155,7 +155,8 @@ public without sharing class onboardingTileController {
     public static dataWrapper updateTheGoal(Id goalid){
         try{
             Goal__c goalrec = [SELECT Id,Status__c,End_Date__c FROM Goal__c WHERE Id=:goalid];
-            goalrec.Status__c = goalrec.End_Date__c >=System.today() ? 'Completed - OnTime' : 'Completed - PostTime';
+            //goalrec.Status__c = goalrec.End_Date__c >=System.today() ? 'Completed - OnTime' : 'Completed - PostTime';
+            goalrec.Status__c = goalrec.End_Date__c >=System.today() ? 'Completed' : 'Missed';  //@sangharsh UAT_051 deactiving 'Completed - OnTime' 'Completed - PostTime'values
             update goalrec;
             return getMyActiveGoals();
         }catch(exception ex){
@@ -182,7 +183,7 @@ public without sharing class onboardingTileController {
         for(Goal__c gl : goalList){
             if(gl.Status__c == 'In Progress'){//'Active'){
                 numberofInprogress = numberofInprogress +1;
-            }else if(gl.Status__c == 'Completed - OnTime' || gl.Status__c == 'Completed - PostTime'){
+            }else if(gl.Status__c == 'Completed' ){ //@sangharsh UAT_051 deactiving else if(gl.Status__c == 'Completed - OnTime' || gl.Status__c == 'Completed - PostTime'){ 
                 numberofCompleted = numberofCompleted +1;
             }else if(gl.Status__c == 'Missed'){
                 numberofMissed = numberofMissed +1;
