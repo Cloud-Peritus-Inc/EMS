@@ -13,7 +13,7 @@ global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
              scoringUpdateMap.put(rr.Id,rr);
              if(rr.Resource__r.Not_Eligible_For_Annual_Awards__c){
               scoringUpdateMap.get(rr.Id).Status__c = 'Not Qualified';  
-              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Potential Winner';
+              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Potential Winner'; //smaske : can be "Less likely to win"
               scoringUpdateMap.get(rr.Id).Lost_Reason__c = 'Resource is not eligiable for annual awards.';               
             }
           }
@@ -34,7 +34,7 @@ global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
             if(rr.of_Total_Nominations__c > totalNoms){
                 totalNoms = rr.of_Total_Nominations__c;
                 winner = rr.id;
-              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Might Winner';
+              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Might Winner'; //smaske:[03-July-2024]: Changing "Might Winner" with "Less likely to win" for PM_102
               scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got more nomiation when compared to other Contenders.'; 
             }else{
               scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Most Likely Winner';
