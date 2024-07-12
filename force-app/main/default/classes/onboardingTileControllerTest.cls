@@ -35,7 +35,7 @@ public class onboardingTileControllerTest {
         insert goalRec;
         
         Goal__c goalRec1 = new Goal__c();
-        goalRec1.Status__c = 'Completed - OnTime';
+        goalRec1.Status__c = 'Completed';
         goalRec1.Resource__c = urec.ContactId;
         goalRec1.RecordTypeId = Goal_Recordtype_Id;
         goalRec1.Description__c = 'Test Description1';
