@@ -23,7 +23,7 @@ public without sharing class ReusableLookupController {
 
                 //New Filter Criteria for : [UAT_012]
                 String filterCriteria = inputWrapper.fieldApiName + ' LIKE \'%' + String.escapeSingleQuotes(inputWrapper.searchString.trim()) + '%\'';
-                filterCriteria += ' AND ' + inputWrapper.otherFieldApiName + ' = \'Active\'';
+                filterCriteria += ' AND ' + inputWrapper.otherFieldApiName + ' != \'Inactive\'';            
                 filterCriteria += ' AND ' + inputWrapper.otherFieldApiName2 + ' = true LIMIT 10'; // Assuming otherFieldApiName2 is a checkbox field
 					
 
