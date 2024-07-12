@@ -24,6 +24,7 @@ global class BatchToCreateKRAforQuaterly implements Database.Batchable<sObject> 
         List<Fulfillment__c> fulinserts = new List<Fulfillment__c>();
         Map<Id,Id> contactWithFul = new Map<Id,Id>();
         Map<Id,String> resourcewithMentor = new Map<Id,String>();
+        //Set<Id> kraSet = new Set<Id>();
         for(Contact con : conList){
             if(!con.Resource_Resource_Relationships__r.isEmpty()){
                 resourcewithMentor.put(con.Id,con.Resource_Resource_Relationships__r[0].Resource_Reports_To__c);
@@ -84,10 +85,14 @@ global class BatchToCreateKRAforQuaterly implements Database.Batchable<sObject> 
                 if(resourcewithMentor.containsKey(fis.Resource__c)){
                     gol.Check_In_By__c = resourcewithMentor.get(fis.Resource__c);
                 }
-                gol.Status__c = 'Active';
+                //smaske : [10-July-2024] : Changing default statyus from "Active" to "In Progress" as discussed with subba on 09-July-2024
+                gol.Status__c = 'In Progress';
                 gol.Fulfillment__c = fis.Id;
                 gol.RecordTypeId = kraRecordTypeId;
+                //kraSet.add(gol.Id);
+                //system.debug('KraIDs >>>>>  '+kraSet);
                 goalsInsert.add(gol);
+                
                 system.debug('goalsInsert >>>>> '+goalsInsert);
             } 
         }  
