@@ -109,4 +109,11 @@ going the extra mile consistently on their project</value>
         <value>The Award of Excellence candidate should have been consistently dependable, 
 a significant contributor to the firm’s growth, consistently recognized by our clients &amp; colleagues and a true ambassador of the firm</value>
     </labels>
+    <labels>
+        <fullName>performance_management_site_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Performance management site link</shortDescription>
+        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/performance-management</value>
+    </labels>
 </CustomLabels>

@@ -10,6 +10,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class Myteam extends LightningElement {
     @track selectedresource = '';
+    @track showcombobox = false; //sangharsh
     @track secondarySelectedResource = '';
     @track tertiarySelectedResource = ''; //Mukesh
     @track quaternarySelectedResource = ''; //Mukesh
@@ -204,6 +205,7 @@ export default class Myteam extends LightningElement {
             this.getTheKRA();
             this.getCheckInfo();
         }
+
     }
 
     checkInToggle(event) {
@@ -349,7 +351,7 @@ export default class Myteam extends LightningElement {
     @track isShowGeneratePerformaneKraModal = false;
     generatePerformanceKRAHandler() {
         this.isShowGeneratePerformaneKraModal = true;
-        console.log("IN @ generatePerformanceKRAHandler");
+        console.log("vfv",this.isShowGeneratePerformaneKraModal);
         console.log("Current User Id :" + this.resourceId);
         console.log("Selected Team Member Id :" + this.selectedresource);
 
@@ -439,6 +441,18 @@ export default class Myteam extends LightningElement {
             return false;
         }
         return true;
+    }
+
+
+    //@sangharsh Show Project Assignment
+    ProjectAssignToggle(event) {
+        //this.selectedresource
+        if (event.target.checked) {
+            this.showcombobox = true;
+            console.log('====Is checked=======');
+        }else{
+                this.showcombobox = false;
+        }
     }
 
 }
