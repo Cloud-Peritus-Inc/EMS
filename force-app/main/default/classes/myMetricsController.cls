@@ -64,10 +64,14 @@ public without sharing class myMetricsController {
                   
             }
         }
+
+        Period currentFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel FROM Period WHERE Type = 'Quarter' AND StartDate = THIS_FISCAL_QUARTER LIMIT 1];
+        Period lastFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel 
+                FROM Period  WHERE Type = 'Quarter'  AND EndDate < :currentFiscalQuarter.StartDate ORDER BY EndDate DESC  LIMIT 1];
+
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
-        
-          returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                         (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Rating__c,Status__c,Type__c, Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
+        returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
+                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c  FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
             for(Goal__c gl : ful.Goals__r){
@@ -86,6 +90,17 @@ public without sharing class myMetricsController {
                 if(gl.Status__c == 'Active'){
                   qw.allowedit = true;  
                 }
+
+                //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
+                qw.allowCopy = true;
+                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate  ){
+                    qw.allowCopy = false;
+                }
+
+                //smaske : [UAT_066] : [15-July-2024] : passing Mentee/Mentor Submitted var values to disable button based on tabs
+                qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
+                qw.mentorSubmitted = gl.Mentor_KRA_submitted__c;
+
                 qlist.add(qw);
             }
             perfWrapper pw = new perfWrapper();
@@ -418,6 +433,12 @@ public without sharing class myMetricsController {
         public String overallRating;
         @AuraEnabled
         public boolean allowedit;
+        @AuraEnabled
+        public boolean menteeSubmitted;
+        @AuraEnabled
+        public boolean mentorSubmitted;
+        @AuraEnabled
+        public boolean allowCopy;
         
     }
     
