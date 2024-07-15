@@ -41,8 +41,6 @@ handleChange(event) {
             this.getTheAllAward();
             this.showthecampare = false;
             this.announcebutton = true; 
-            console.log('44');
-           
         }
        
 }
@@ -57,7 +55,6 @@ handleChange(event) {
             this.getThelInfoByAward();
         }else{
             console.log('47');
-             console.log(this.isDisabled);
             this.getTheAllAward();
             this.showthecampare = false;
             this.announcebutton = true; 
@@ -208,4 +205,15 @@ handleChange(event) {
             this.dispatchEvent(evt);
              this.showcomparepop = false;
         }
+
+    handleCustomUpdateAll() {
+        // Select all forms using the DOM
+        const forms = this.template.querySelectorAll('lightning-record-edit-form');
+        forms.forEach(form => {
+            if (form) {
+                form.submit();
+            }
+        });
     }
+    
+}
