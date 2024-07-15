@@ -253,24 +253,36 @@
                        <!-- <lightning-output-field field-name="Reason_for_award__c">
                       </lightning-output-field> -->
                       <div style="color:red;padding:10px;"><b><i>
-                       Predicted Status: {rrcurrent.Title} </i></b></div>
+                       Prediction Status: {rrcurrent.Title} </i></b></div>
                        <!-- <lightning-output-field field-name="Lost_Reason__c">
                       </lightning-output-field> -->
                       <lightning-input-field field-name="Status__c">
                       </lightning-input-field>
                       <lightning-input-field field-name="Comments__c">
                       </lightning-input-field>
+
+                      <!-- Smaske [PM_102] : Commented below button as created new buttons below -->
+                      <!--
                       <center>
                         <button class="slds-button slds-button_neutral" onclick={hideKCompareModalBox}>Close</button>
                         &nbsp;&nbsp;  
                       <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update">
                       </lightning-button>
                       </center>
+                      -->
                   </lightning-record-edit-form>
                       </lightning-card>
                     </lightning-layout-item>
                 </template>
      </lightning-layout>
+
+     <!-- Smaske [PM_102] : Replacing above button as a single button to update and close the Compare PopUp Widnow -->
+    <lightning-layout vertical-align='center' horizontal-align='center' multiple-rows="false" class="x-large">
+      <button class="slds-button slds-button_neutral" onclick={hideKCompareModalBox}>Close</button>
+      &nbsp;&nbsp;
+      <lightning-button variant="success" label="Update" onclick={handleCustomUpdateAll}></lightning-button>
+    </lightning-layout>
+
            
                  
           </div>
