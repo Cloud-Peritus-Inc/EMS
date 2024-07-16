@@ -51,6 +51,10 @@
                 <behavior>Edit</behavior>
                 <field>Resource_Role__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Rejection_Cancellation_Reason__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
