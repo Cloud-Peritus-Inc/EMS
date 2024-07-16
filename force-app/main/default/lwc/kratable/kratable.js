@@ -1,9 +1,11 @@
 import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import LightningConfirm from 'lightning/confirm';
 import createTheGoals from '@salesforce/apex/myGoalsController.createTheGoals';
 export default class Kratable extends NavigationMixin(LightningElement) {
     @api tab;
+    @api copy = false;
     @api viewonlymode = false;
     @api tabledata = [];
     @api resourceid = '';
@@ -21,6 +23,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
+        console.log('RECEIVED tabledata  ::: ' + JSON.stringify(this.tabledata));
         console.log('====resourceid===' + JSON.stringify(this.resourceid));
         console.log('====tab===' + this.tab);
         console.log('====viewonlymode===' + this.viewonlymode);
@@ -35,7 +38,21 @@ export default class Kratable extends NavigationMixin(LightningElement) {
                 } else {
                     this.qualListdata = false;
                 }
+
+                //smaske : [EN_23/UAT_066] : Disabling the EDIT button based on tab and submit status for mentee and mentor
+                let tableRecordsData = item.qualList;
+                console.log('tableRecordsData Length ' + tableRecordsData.length);
+                tableRecordsData.forEach(qualItem => {
+                    if (qualItem.menteeSubmitted && this.tab == 'My Team') {
+                        qualItem.allowedit = false;
+                    }else if(qualItem.mentorSubmitted && this.tab == 'My Metric') {
+                        qualItem.allowedit = false;
+                    }/* else if(qualItem.){
+                        qualItem.allowedit = true;
+                    } */
+                });
             });
+
         }
 
         //smaske :[UAT_005] : Setting the minimum date to tomorrow 
@@ -60,8 +77,26 @@ export default class Kratable extends NavigationMixin(LightningElement) {
 
     }
 
+
+
     showKRAViewModalBox() {
-        this.showKRAViewModal = true;
+        this.showKRAViewModal = false;
+        console.log('=====kraview====='+this.selectedKraQuaterly);
+        console.log('Navigating to FlexiPage...');
+        window.open('https://cpprd--dev.sandbox.my.site.com/Grid/s/kra-view?c__kraid='+this.selectedKraQuaterly,'_blank');
+       /* this[NavigationMixin.Navigate]({
+            type: 'standard__navItemPage',
+            attributes: {
+                apiName: 'leave-management'
+            },
+            state: {
+                c__kraid : this.selectedKraQuaterly
+            }
+        }).then((result) => {
+            console.log('Navigation result:', result);
+        }).catch((error) => {
+            console.error('Navigation error:', error);
+        }); */
     }
 
     hideKRAEditModalBox() {
@@ -157,6 +192,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     handleConNavEditClick(event) {
         let node = event.currentTarget.dataset.id;
         this.selectedKraQuaterly = node;
+        console.log('selectedKraQuaterly'+this.selectedKraQuaterly);
         this.mode = 'Edit';
         console.log('==node====' + node);
         this.showKRAEditModalBox();
@@ -304,6 +340,25 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         }
 
 
+    }
+
+    async handleCopyPreviousQuaterKRA(event) {
+        let node = event.currentTarget.dataset.id;
+        this.selectedKraQuaterly = node;
+        console.log('selectedKraQuaterly' + this.selectedKraQuaterly);
+            this.mode = 'Edit';
+            console.log('==node====' + node);
+        console.log('Copy Clicked');
+        const result = await LightningConfirm.open({
+            message: 'Would you like to carry over the previous quater KRA inputs?',
+            variant: 'headerless',
+            label: 'this is the aria-label value',
+            // setting theme would have no effect
+        });
+        if (result === true) {
+            this.copy = true;
+            this.showKRAEditModalBox();
+        }
     }
 
 }

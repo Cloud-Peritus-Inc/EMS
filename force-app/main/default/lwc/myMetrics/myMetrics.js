@@ -10,6 +10,7 @@ import createKraPulseRecords from '@salesforce/apex/myMetricsController.createKr
 import getKraPulseRecords from '@salesforce/apex/myMetricsController.getKraPulseRecords';
 
 export default class MyMetrics extends LightningElement {
+    tab = 'My Metric';
     selectedfy;
     fymapdata = [];
     showcheckin = false;
@@ -104,8 +105,18 @@ export default class MyMetrics extends LightningElement {
             fyId: this.selectedfy
         })
             .then(result => {
-                console.log('====result=======' + JSON.stringify(result));
-                this.kratable = result;
+                console.log('====My Metric JS result=======' + JSON.stringify(result));
+                //this.kratable = result;
+                // Process the result to modify allowCopy
+            this.kratable = result.map(item => {
+                // Check if qualList has only one element
+                if (item.qualList && item.qualList.length === 1) {
+                    item.qualList[0].allowCopy = false;
+                }
+                return item;
+            });
+
+            console.log('Modified KRA Table: ', JSON.stringify(this.kratable));
             })
             .catch(error => {
                 console.log('====Error=======' + JSON.stringify(error));
