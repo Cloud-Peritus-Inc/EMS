@@ -126,6 +126,7 @@ selectedLabel
         const selectedLookupValue = event.detail;
         console.log(" selectedLookupValue " + JSON.stringify(selectedLookupValue));
         this.otherManagerIds = selectedLookupValue.id;
+
         console.log(" this.otherManagerIds " + this.otherManagerIds);
     }
 
@@ -135,6 +136,7 @@ selectedLabel
         const value = selectedLookupValue.id;
         const label = selectedLookupValue.label;
         let currentStep = this.selectedStep;
+        this.otherManagerIds = null;
     }
 
     handleConformModalBox(event) {
@@ -143,14 +145,14 @@ selectedLabel
             this.menteeList = this.menteeList.map(mentee => {
                 if (mentee.projectid === mentee.value) {
                     return {
-                        ...mentee,
+                        ...mentee,                                              
                         value: this.otherManagerIds
                     };
                 }
                 return mentee;
             });
         } else {
-            this.ShowToast(' ', 'Please select an Resource!', 'error', 'dismissable');
+            this.ShowToast(' ', 'Please select a resource', 'error', 'dismissable');
         }
     }
 
@@ -159,6 +161,7 @@ selectedLabel
         this.menteeList = this.menteeList.map(mentee => {
             return {
                 ...mentee,
+                value:'',
                 disableKRAbutton: true
             };
         });

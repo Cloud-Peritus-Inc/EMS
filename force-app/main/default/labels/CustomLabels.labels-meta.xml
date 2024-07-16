@@ -114,6 +114,6 @@ a significant contributor to the firm’s growth, consistently recognized by our
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Performance management site link</shortDescription>
-        <value>https://cpprd--dev.sandbox.my.site.com/Grid/s/performance-management</value>
+        <value>https://cpprd--qa.sandbox.my.site.com/Grid/s/performance-management</value>
     </labels>
 </CustomLabels>

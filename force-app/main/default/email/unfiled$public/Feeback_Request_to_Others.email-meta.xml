@@ -6,7 +6,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>KRA Feeback Request to Others</name>
     <style>freeForm</style>
-    <subject>Request for Performance Feedback for {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c}</subject>
+    <subject>Performance: Request for Performance Feedback for {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c}</subject>
     <textOnly>Dear {!Goal__c.Resource__c},
 
 
