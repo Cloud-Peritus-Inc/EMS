@@ -35,10 +35,10 @@ global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
                 totalNoms = rr.of_Total_Nominations__c;
                 winner = rr.id;
               scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Might Winner'; //smaske:[03-July-2024]: Changing "Might Winner" with "Less likely to win" for PM_102
-              scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got more nomiation when compared to other Contenders.'; 
+              scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got more nomination when compared to other Contenders.'; 
             }else{
               scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Most Likely Winner';
-              scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got less nomiation when compared to other Contenders.';  
+              scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got less nomination when compared to other Contenders.';  
             }     
             
          }
