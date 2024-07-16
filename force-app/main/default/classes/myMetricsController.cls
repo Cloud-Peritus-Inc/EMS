@@ -616,6 +616,9 @@ return menteeRecords;
                                      FROM Contact 
                                      WHERE Id = :contactId];
         
+        list<Resource_Resource_Relationship__c> mentorlst =[Select id,Relationship_Type__c,Resource__c from Resource_Resource_Relationship__c 
+                                                         where Relationship_Type__c='Mentor' AND Resource__c=:contactId];
+        
         if (contactList.isEmpty()) {
             throw new AuraHandledException('Contact not found.');
         }
@@ -645,6 +648,7 @@ return menteeRecords;
                                            pmAnswer.Project_Name__c = projectId;
                                            pmAnswer.Fiscal_Year__c = goalList[0].Fulfillment__r.Fiscal_Year__c;
                                            pmAnswer.KRA__c = goalList[0].Id;
+                                           pmAnswer.Mentor__c=mentorlst[0].Id;
                                            pmAnswer.RecordTypeId = answerRecordTypeId;
                                            pmAnswerList.add(pmAnswer);
                                        }
