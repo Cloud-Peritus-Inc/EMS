@@ -77,7 +77,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     connectedCallback() {
         console.log(' **** connectedCallback selectedresource****  ' + this.selectedresource);
-        console.log('COPY VALUE ' + this.copy);
+        //console.log('COPY VALUE ' + this.copy);
     }
 
     //getCurrentUserResourceRole
@@ -89,8 +89,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             this.CurrentUserConDetails = data;
             this.currentContactName = data.Name;
             this.currentContactResourceRole = data.Resource_Role__r.Name;
-
-            console.log('getCurrentUserConDetails DATA :  ' + JSON.stringify(this.CurrentUserConDetails));
+            //console.log('getCurrentUserConDetails DATA :  ' + JSON.stringify(this.CurrentUserConDetails));
             this.profileName = data.EMS_TM_User__r.Profile.Name;
             this.CurrentUserResourceRoleTechAcc = data.Resource_Role__r.technical_acumen__c;
             this.CurrentUserResourceRoleProfSkillAcc = data.Resource_Role__r.professional_skills__c;
@@ -108,7 +107,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     wiredSelectedUserResourceRole({ error, data }) {
         if (data) {
             this.SelectedResourceConDetails = data;
-            console.log('getSelectedResourceConDetails DATA :  ' + JSON.stringify(this.SelectedResourceConDetails));
+            //console.log('getSelectedResourceConDetails DATA :  ' + JSON.stringify(this.SelectedResourceConDetails));
             //smaske : PM_066 :  Setting value to '0' if not declared 
             // previously was setting as 'undefined'
             this.SelectedResourceResourceRoleTechAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.technical_acumen__c : 0;
@@ -191,9 +190,9 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         console.log('Received this.kraRecord : ' + JSON.stringify(kraRecord));   
         getPMConfigKRAData({ krarecordId: kraRecord, tab: this.tab, copy : this.copy })
             .then(result => {
-                console.log('-======---= getPMConfigKRAData DATA==--=-=-' + JSON.stringify(result.areaAndQueAnsMapData));
-                console.log('-======---= pmAnsRecordsIdData DATA==--=-=-' + JSON.stringify(result.pmAnsRecordsIdData));
-                console.log('-======---= pmAnsRecordsIdData COPY ==--=-=-' + JSON.stringify(this.copy));
+                //console.log('-======---= getPMConfigKRAData DATA==--=-=-' + JSON.stringify(result.areaAndQueAnsMapData));
+                //console.log('-======---= pmAnsRecordsIdData DATA==--=-=-' + JSON.stringify(result.pmAnsRecordsIdData));
+                //console.log('-======---= pmAnsRecordsIdData COPY ==--=-=-' + JSON.stringify(this.copy));
 
                 this.viewwrap2 = result;
 
@@ -215,15 +214,16 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                     ...value
                 }));
 
-                console.log('techSkillsMap ' + JSON.stringify(this.techSkillsMap));
+                /* console.log('techSkillsMap ' + JSON.stringify(this.techSkillsMap));
                 console.log('profSkillsMap ' + JSON.stringify(this.profSkillsMap));
                 console.log('stratImpactSkillsMap ' + JSON.stringify(this.stratImpactSkillsMap));
-                console.log('goalsResultsSkillsMap ' + JSON.stringify(this.goalsResultsSkillsMap));
-                console.log('THIS KRA b4 calculateAverageRatingForKRAHandler' + JSON.stringify(this.kraRecord));
+                console.log('goalsResultsSkillsMap ' + JSON.stringify(this.goalsResultsSkillsMap)); */
+                console.log('THIS KRA b4 calculateAverageRatingForKRAHandler');
                 this.calculateAverageRatingForKRAHandler(JSON.stringify(result.pmAnsRecordsIdData));
             })
             .catch(error => {
-                this.showToast('Error Fetching PM Config Answer Records: ' + error.body.message, this.errorVariant, this.toastMode);
+                //this.showToast('Error Fetching PM Config Answer Records: ' + error.body.message, this.errorVariant, this.toastMode);
+                console.log('Error Fetching PM Config Answer Records: ' + error.body.message);
             });
     }
 
@@ -250,13 +250,15 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
         if (step === 'overAllRating') {
             this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData);
+        }else if(step != 'reviewerDetails' && step != 'overAllRating'){
+            console.log('Calling from stepSelectionHanler');
+            this.getPMConfigKRADataHandler(this.kraRecord);
         }
 
     }
 
     handleNextAction() {
         console.log('handleNextAction ' + this.selectedStep);
-
         var moveToNextStep = this.selectedStep;
         switch (moveToNextStep) {
             case 'reviewerDetails':
@@ -311,7 +313,6 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     handlePreviousAction() {
         console.log('handlePreviousAction ' + this.selectedStep);
-
         // Set all show properties to false
         this.showReviewerDetails = false;
         this.showTechnicalAcumen = false;
@@ -344,8 +345,11 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 break;
         }
 
+        if(this.selectedStep != 'reviewerDetails' && this.selectedStep != 'overAllRating'){
+            console.log('Calling from Previous Handler');
+            this.getPMConfigKRADataHandler(this.kraRecord);
+        }
         console.log('HandlePrevious ' + this.selectedStep);
-
     }
 
     //smaske : [UAT_008] : Changed the validation code for restricting user from entering invalid values.
@@ -354,7 +358,6 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleChange(event) {
         const fieldName = event.target.name;
         const fieldType = event.target.type;
-
 
         this.inputValue = event.target.value;
         // this.inputValue = this.removeDecimalPoint(this.inputValue);
@@ -430,15 +433,15 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleSaveSubmitActionDuplicateOverAll(event) {
         this.clickedBtnLabel = event.target.label;
         console.log('SUBMIT BUTTON IS CLICKED');
-        console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData.length);
-        console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData);
+        //console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData.length);
+        //console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData);
         this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData,this.clickedBtnLabel);
     }
 
     handleSaveActionDuplicate(event) {
         console.log(" handleSaveActionDuplicate Invoked");
         this.clickedBtnLabel = event.target.label;
-        console.log(" clickedBtnLabel & selectedStep  :" + this.clickedBtnLabel + ' ---- ' + this.selectedStep);
+        //console.log(" clickedBtnLabel & selectedStep  :" + this.clickedBtnLabel + ' ---- ' + this.selectedStep);
         let isFormValid = true;
         const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
         recordEditForms.forEach(form => {
@@ -463,7 +466,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         }
     }
 
-    handleRatingChange(event) {
+    /* handleRatingChange(event) {
         const ratingValue = parseFloat(event.currentTarget.value);
         console.log('ratingValue ' + ratingValue);
         if (ratingValue < 1 || ratingValue > 5 || ratingValue == '') {
@@ -474,7 +477,22 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             event.target.setCustomValidity(''); // Clear the error message
         }
         event.target.reportValidity();
+    } */
+
+    handleRatingChange(event) {
+        const ratingValue = parseFloat(event.currentTarget.value);
+        console.log('ratingValue ' + ratingValue);
+
+        if (ratingValue < 1 || ratingValue > 5 || isNaN(ratingValue) || (ratingValue * 10) % 5 !== 0) {
+            event.currentTarget.value = '';
+            this.showToast('Rating must be between 1 and 5, and in increments of 0.5.', this.errorVariant, this.toastMode);
+            event.target.setCustomValidity('Rating must be between 1 and 5, and in increments of 0.5.');
+        } else {
+            event.target.setCustomValidity(''); // Clear the error message
+        }
+        event.target.reportValidity();
     }
+        
 
 
     //Smaske : [05-july-2024] : Success method on record-edit-form successfully submitted
@@ -501,30 +519,32 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 this.calculateAverageRatingForKRAHandler(this.recordIds);
                 if (status == 'Submit') {
                     this.submitKraRecordHandler();
-                    this.showToast('Data Submitted successfully.', this.successVariant, this.toastMode);
+                    this.showToast('KRA details submitted successfully.', this.successVariant, this.toastMode);
                 }else {
-                    this.showToast('Data saved successfully.', this.successVariant, this.toastMode);
+                    this.showToast('KRA details saved successfully.', this.successVariant, this.toastMode);
                 }
                 
             })
             .catch(error => {
-                console.log('updatePMAnswerRecordsStatus error : ' + JSON.stringify(error.body.message));
-                this.showToast('Error submitting records: ' + error.body.message, this.errorVariant, this.toastMode);
+                console.log('518 updatePMAnswerRecordsStatus error : ' + JSON.stringify(error.body.message));
+                //this.showToast('Error submitting records: ' + error.body.message, this.errorVariant, this.toastMode);
             });
     }
 
     @track wrapData;
     calculateAverageRatingForKRAHandler(recordIds) {
-        console.log('Received recordIds : ' + recordIds);
+        console.log('calculateAverageRatingForKRAHandler Invoked');
+        /* console.log('Received recordIds : ' + recordIds);
         console.log('Received this.kraRecord : ' + JSON.stringify(this.kraRecord));
-        console.log('Received this.tab : ' + this.tab);
+        console.log('Received this.tab : ' + this.tab); */
         calculateAverageRatingForKRA({ PMAnswerRecordsId: recordIds, kraRecord: this.kraRecord, tab: this.tab })
             .then(result => {
                 console.log("calculateAverageRatingForKRA result ::" + JSON.stringify(result));
                 this.wrapData = result;
             })
             .catch(error => {
-                this.showToast('Error updating record calculateAverageRatingForKRAHandler: ' + error.body.message, this.errorVariant, this.toastMode);
+                //this.showToast('Error updating record calculateAverageRatingForKRAHandler: ' + error.body.message, this.errorVariant, this.toastMode);
+                console.log('Error calculating average values for submitted records : ' + error.body.message);
             });
     }
 
@@ -550,15 +570,17 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                         this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_INREVIEW === true ? true : false;
                         this.isFieldsDisabled = this.kraRecord.Status__c === this.STATUS_KRA_INREVIEW === true ? true : false;
                     }
-                    console.log('going to close');
-                    this.dispatchEvent(new CustomEvent('close'));
-                    console.log('closed$$$$$$$$$');
                     
-                    console.log(" After Save ::" + JSON.stringify(this.kraRecord));
+                    //console.log('going to close');
+                    this.dispatchEvent(new CustomEvent('close'));
+                    //console.log('closed$$$$$$$$$');
+                    
+                    //console.log(" After Save ::" + JSON.stringify(this.kraRecord));
                     return refreshApex(this.wiredKraRecordResult);
                 })
                 .catch(error => {
-                    this.showToast('Error updating KRA record: ' + error.body.message, this.errorVariant, this.toastMode);
+                    console.log('Error updating KRA record: ' + error.body.message);
+                    //this.showToast('Error updating KRA record: ' + error.body.message, this.errorVariant, this.toastMode);
                 });
     }
 
@@ -600,7 +622,6 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleErrors(event) {
         console.log('No errors'); 
         console.log('FORM ERROR : '+ JSON.stringify(event.detail));
-
     }
     
 
