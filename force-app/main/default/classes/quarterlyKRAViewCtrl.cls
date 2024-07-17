@@ -193,7 +193,7 @@ public without sharing class quarterlyKRAViewCtrl {
     }
     
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static KraVisiableWrapper getPMConfigKRAData(Goal__c krarecordId, String tab,Boolean copy) {
 
         System.debug('Received TAB :: ' + tab);
@@ -331,7 +331,7 @@ public without sharing class quarterlyKRAViewCtrl {
         return returnWrap;
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static KraVisiableWrapper calculateAverageRatingForKRA(List<String> PMAnswerRecordsId, Goal__c kraRecord, String tab ){
         try {
 
