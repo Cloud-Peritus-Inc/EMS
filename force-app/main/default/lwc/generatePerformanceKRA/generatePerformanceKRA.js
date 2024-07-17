@@ -249,6 +249,8 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             RR[name] = dataValue;
         } else if (name == 'Finalized_Hike__c') {
             RR[name] = dataValue;
+        } else if (name == 'HR_Rating__c') {
+            RR[name] = dataValue;
         }
         this.Compensation = RR;
 
