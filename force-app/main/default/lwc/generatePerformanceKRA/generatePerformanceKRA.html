@@ -232,8 +232,13 @@
 							</div>
 
 							<div class="midBox">
-								<!-- smaske : [PM_129] : Updated Label Value -->
 								<p class="subTitle2">Overall Average Rating: {averageOverallRating}</p>
+							</div>
+
+							<div class="leftBox">
+								<lightning-input label="HR Rating" type="Number" name="HR_Rating__c"
+									value={Compensation.HR_Rating__c} onchange={dataHandler}>
+								</lightning-input>
 							</div>
 
 							<div class="midBox">
