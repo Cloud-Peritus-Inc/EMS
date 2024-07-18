@@ -183,11 +183,17 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
     @AuraEnabled
     public static List<perfWrapper> getResourceKRAs(String resourceId,String fyId){
         Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
+
+        Period currentFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel FROM Period WHERE Type = 'Quarter' AND StartDate = THIS_FISCAL_QUARTER LIMIT 1];
+        Period lastFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel 
+                FROM Period  WHERE Type = 'Quarter'  AND EndDate < :currentFiscalQuarter.StartDate ORDER BY EndDate DESC  LIMIT 1];
+
+
         List<Fulfillment__c> returnList = new List<Fulfillment__c>();
         List<perfWrapper> returnval = new List<perfWrapper>();
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
+                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
         
         
         for(Fulfillment__c ful : returnList){
@@ -208,6 +214,18 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
                 if(gl.Status__c == 'In Progress'){
                     qw.allowedit = true;  
                 }
+
+                //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
+                qw.allowCopy = true;
+                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate  ){
+                    qw.allowCopy = false;
+                }
+
+                //smaske : [UAT_066] : [15-July-2024] : passing Mentee/Mentor Submitted var values to disable button based on tabs
+                qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
+                qw.mentorSubmitted = gl.Mentor_KRA_submitted__c;
+
+
                 qlist.add(qw);
             }
             perfWrapper pw = new perfWrapper();
@@ -529,7 +547,7 @@ return menteeRecords;
             SELECT Assignment__c, SUM(Number_of_Hours__c) totalHours
             FROM EMS_TM_Timesheet_Record__c 
             WHERE EMS_Timesheet__r.Resource__c = :contactId AND 
-            (EMS_Timesheet__r.Week_Start_Date__c = THIS_QUARTER OR EMS_Timesheet__r.Week_End_Date__c = THIS_QUARTER) 
+            (EMS_Timesheet__r.Week_Start_Date__c = THIS_QUARTER OR EMS_Timesheet__r.Week_End_Date__c = THIS_QUARTER) and Status__c != 'Rejected'  
             GROUP BY Assignment__c];
         system.debug('timesheetAggregate'+timesheetAggregate);
         
@@ -650,6 +668,8 @@ return menteeRecords;
                                            pmAnswer.KRA__c = goalList[0].Id;
                                            pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
                                            pmAnswer.RecordTypeId = answerRecordTypeId;
+                                          // pmAnswer.OwnerId = 
+                                        //add reportingManager as the owner of the record
                                            pmAnswerList.add(pmAnswer);
                                        }
             
