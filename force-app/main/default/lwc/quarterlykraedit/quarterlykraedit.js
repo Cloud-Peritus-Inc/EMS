@@ -148,16 +148,53 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     }
 
 
-    @track viewwrap;
-    @wire(getGridConfigurationKRAData, { krarecordId: "$receivedkraid" })
-    wiredRR({ error, data }) {
-        if (data) {
-            console.log('-======---= GridConfiguration DATA==--=-=-' + JSON.stringify(data));
-            this.viewwrap = data;
-        }
-        if (error) {
-            console.log('-======---= GridConfiguration ERROR==--=-=-' + JSON.stringify(error));
-        }
+    //smaske :[03-July-2024]: New method to fetch the data for PM CONFIG Questions and Answers
+    // Define maps to store area-specific data
+    techSkillsMap = {};
+    profSkillsMap = {};
+    stratImpactSkillsMap = {};
+    goalsResultsSkillsMap = {};
+
+    @track viewwrap2;
+    getPMConfigKRADataHandler(kraRecord) {
+        console.log('Received this.kraRecord : ' + JSON.stringify(kraRecord));   
+        getPMConfigKRAData({ krarecordId: kraRecord, tab: this.tab, copy : this.copy })
+            .then(result => {
+                //console.log('-======---= getPMConfigKRAData DATA==--=-=-' + JSON.stringify(result.areaAndQueAnsMapData));
+                //console.log('-======---= pmAnsRecordsIdData DATA==--=-=-' + JSON.stringify(result.pmAnsRecordsIdData));
+                //console.log('-======---= pmAnsRecordsIdData COPY ==--=-=-' + JSON.stringify(this.copy));
+
+                this.viewwrap2 = result;
+
+                this.techSkillsMap = Object.entries(result.areaAndQueAnsMapData['TECHNICAL SKILLS']).map(([key, value]) => ({
+                    key,
+                    ...value
+                }));
+
+                this.profSkillsMap = Object.entries(result.areaAndQueAnsMapData['PROFESSIONAL SKILLS']).map(([key, value]) => ({
+                    key,
+                    ...value
+                }));
+                this.stratImpactSkillsMap = Object.entries(result.areaAndQueAnsMapData['STRATEGIC IMPACT']).map(([key, value]) => ({
+                    key,
+                    ...value
+                }));
+                this.goalsResultsSkillsMap = Object.entries(result.areaAndQueAnsMapData['GOALS AND RESULTS']).map(([key, value]) => ({
+                    key,
+                    ...value
+                }));
+
+                /* console.log('techSkillsMap ' + JSON.stringify(this.techSkillsMap));
+                console.log('profSkillsMap ' + JSON.stringify(this.profSkillsMap));
+                console.log('stratImpactSkillsMap ' + JSON.stringify(this.stratImpactSkillsMap));
+                console.log('goalsResultsSkillsMap ' + JSON.stringify(this.goalsResultsSkillsMap)); */
+                console.log('THIS KRA b4 calculateAverageRatingForKRAHandler');
+                this.calculateAverageRatingForKRAHandler(JSON.stringify(result.pmAnsRecordsIdData));
+            })
+            .catch(error => {
+                //this.showToast('Error Fetching PM Config Answer Records: ' + error.body.message, this.errorVariant, this.toastMode);
+                console.log('Error Fetching PM Config Answer Records: ' + JSON.stringify(error));
+            });
     }
 
 
@@ -580,9 +617,76 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c', 'Average_Goals_Results_Rating__c');
         }
 
-        if (isValid) {
-            console.log(" kraRecord B4 SAVE " + this.kraRecord);
-            saveKraRecord({ kraRecord: this.kraRecord })
+
+    handleRatingChange(event) {
+        const ratingValue = parseFloat(event.currentTarget.value);
+        console.log('ratingValue ' + ratingValue);
+        if (ratingValue === 0 || ratingValue < 1 || ratingValue > 5 || isNaN(ratingValue) || (ratingValue * 2) % 1 !== 0) {
+            event.currentTarget.value = NaN;
+            this.showToast('Rating must be between 1 and 5, and in increments of 0.5.', this.errorVariant, this.toastMode);
+            event.target.setCustomValidity('Rating must be between 1 and 5, and in increments of 0.5.');
+        } else {
+            event.target.setCustomValidity(''); // Clear the error message
+        }
+        event.target.reportValidity();
+    }     
+
+
+    //Smaske : [05-july-2024] : Success method on record-edit-form successfully submitted
+    @track recordIds = [];
+    handleSuccessForPMAnswers(event) {
+        console.log('IN handleSuccessForPMAnswers');
+        // Get the record ID from the event
+        const recordId = event.detail.id;
+        // Add the record ID to the list
+        this.recordIds.push(recordId);
+        // Log the record ID
+        console.log('recordIds ID:', JSON.stringify(this.recordIds));
+
+        if (this.clickedBtnLabel == 'Save') {
+            this.updatePMAnswerRecordsStatusHandler(this.recordIds, 'Save');
+        }
+    }
+
+    updatePMAnswerRecordsStatusHandler(recordIds, status) {
+        console.log("CALLED updatePMAnswerRecordsStatusHandler " + recordIds);
+        updatePMAnswerRecordsStatus({ PMAnswerRecordsId: recordIds, newStatus: status })
+            .then(result => {
+                console.log("updatePMAnswerRecordsStatus result ::" + JSON.stringify(result));
+                this.calculateAverageRatingForKRAHandler(this.recordIds);
+                if (status == 'Submit') {
+                    this.submitKraRecordHandler();
+                    this.showToast('KRA details submitted successfully.', this.successVariant, this.toastMode);
+                }else {
+                    this.showToast('KRA details saved successfully.', this.successVariant, this.toastMode);
+                }
+                
+            })
+            .catch(error => {
+                console.log('518 updatePMAnswerRecordsStatus error : ' + JSON.stringify(error.body.message));
+                //this.showToast('Error submitting records: ' + error.body.message, this.errorVariant, this.toastMode);
+            });
+    }
+
+    @track wrapData;
+    calculateAverageRatingForKRAHandler(recordIds) {
+        console.log('calculateAverageRatingForKRAHandler Invoked');
+        /* console.log('Received recordIds : ' + recordIds);
+        console.log('Received this.kraRecord : ' + JSON.stringify(this.kraRecord));
+        console.log('Received this.tab : ' + this.tab); */
+        calculateAverageRatingForKRA({ PMAnswerRecordsId: recordIds, kraRecord: this.kraRecord, tab: this.tab })
+            .then(result => {
+                console.log("calculateAverageRatingForKRA result ::" + JSON.stringify(result));
+                this.wrapData = result;
+            })
+            .catch(error => {
+                //this.showToast('Error updating record calculateAverageRatingForKRAHandler: ' + error.body.message, this.errorVariant, this.toastMode);
+                console.log('Error calculating average values for submitted records : ' + error.body.message);
+            });
+    }
+
+    submitKraRecordHandler(){
+        submitKraRecord({ kraRecord: this.kraRecord })
                 .then(result => {
                     console.log(" result ::" + JSON.stringify(result));
                     this.kraRecord = result;

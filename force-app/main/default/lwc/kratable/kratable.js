@@ -13,29 +13,45 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     @track iconParentName = "utility:chevronright";
     @track minDate;//smaske :[UAT_005]
 
-    
+
     get kraTableAvailble() {
-        if (this.tabledata && this.tabledata.length > 0){
+        if (this.tabledata && this.tabledata.length > 0) {
             return true;
-        }return false;
+        } return false;
     }
 
     connectedCallback() {
+        //console.log('RECEIVED tabledata  ::: ' + JSON.stringify(this.tabledata));
         console.log('====resourceid===' + JSON.stringify(this.resourceid));
         console.log('====tab===' + this.tab);
         console.log('====viewonlymode===' + this.viewonlymode);
         this.tbData = JSON.parse(JSON.stringify(this.tabledata))
-        
+
         if (this.tbData.length > 0) {
             console.log(this.tbData.nameid);
-            console.log(this.tbData[0].nameid);           
+            console.log(this.tbData[0].nameid);
             this.tbData.forEach(item => {
                 if (item.qualList && item.qualList.length > 0) {
                     this.qualListdata = true;
                 } else {
                     this.qualListdata = false;
                 }
+
+                //smaske : [EN_23/UAT_066] : Disabling the EDIT button based on tab and submit status for mentee and mentor
+                let tableRecordsData = item.qualList;
+                console.log('tableRecordsData Length ' + tableRecordsData.length);
+                tableRecordsData.forEach(qualItem => {
+                    if (qualItem.mentorSubmitted && this.tab == 'My Team') {
+                        qualItem.allowedit = false;
+                    } else if (qualItem.menteeSubmitted && this.tab == 'My Metric') {
+                        qualItem.allowedit = false;
+                    }/* else if(qualItem.){
+                        qualItem.allowedit = true;
+                    } */
+                });
             });
+
+            console.log('tableRecordsData modified ' + JSON.stringify(this.tabledata));
         }
 
         //smaske :[UAT_005] : Setting the minimum date to tomorrow 
@@ -47,6 +63,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         var day = tomorrow.getDate().toString().padStart(2, '0');
         this.minDate = `${tomorrow.getFullYear()}-${month}-${day}`;
 
+        this.orgDomainId = window.location.origin;
         //this.enableDisableCreateGoalButton();
     }
     @track showKRAViewModal = false;
@@ -60,8 +77,33 @@ export default class Kratable extends NavigationMixin(LightningElement) {
 
     }
 
+    handleConNavViewClick(event) {
+        let node = event.currentTarget.dataset.id;
+        this.selectedKraQuaterly = node;
+        this.mode = 'View';
+        console.log('==node====' + node);
+        const url = `${this.orgDomainId}/Grid/s/kra-view?c__kraid=${this.selectedKraQuaterly}&tab=${this.tab}`;
+        window.open(url, '_blank');
+        // window.open('https://cpprd--dev.sandbox.my.site.com/Grid/s/kra-view?c__kraid='+this.selectedKraQuaterly+ '&tab='+this.tab, '_blank');
+    }
+
     showKRAViewModalBox() {
-        this.showKRAViewModal = true;
+        this.showKRAViewModal = false;
+        console.log('=====kraview=====' + this.selectedKraQuaterly);
+        console.log('Navigating to FlexiPage...');
+        this[NavigationMixin.Navigate]({
+            type: 'standard__navItemPage',
+            attributes: {
+                apiName: 'leave-management'
+            },
+            state: {
+                c__kraid: this.selectedKraQuaterly
+            }
+        }).then((result) => {
+            console.log('Navigation result:', result);
+        }).catch((error) => {
+            console.error('Navigation error:', error);
+        });
     }
 
     hideKRAEditModalBox() {
@@ -98,22 +140,22 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     }
 
 
-//   displayChildRecords(nodeID){
-//         let node = nodeID;
-//         console.log(nodeID);
-//         let childNode = this.template.querySelector(`tr[data-parentid="${node}"]`);
-//         console.log('Child node');
-//          console.log(childNode);
-//         if (childNode.classList.contains('hideContent')) {
-//             childNode.classList.remove('hideContent');
-//             this.template.querySelector(`lightning-icon[data-id="${node}"]`).iconName = this.iconName;
+    //   displayChildRecords(nodeID){
+    //         let node = nodeID;
+    //         console.log(nodeID);
+    //         let childNode = this.template.querySelector(`tr[data-parentid="${node}"]`);
+    //         console.log('Child node');
+    //          console.log(childNode);
+    //         if (childNode.classList.contains('hideContent')) {
+    //             childNode.classList.remove('hideContent');
+    //             this.template.querySelector(`lightning-icon[data-id="${node}"]`).iconName = this.iconName;
 
-//         } else {
-//             childNode.classList.add('hideContent');
-//             this.template.querySelector(`lightning-icon[data-id="${node}"]`).iconName = this.iconParentName;
-//         }
+    //         } else {
+    //             childNode.classList.add('hideContent');
+    //             this.template.querySelector(`lightning-icon[data-id="${node}"]`).iconName = this.iconParentName;
+    //         }
 
-//   }
+    //   }
 
     // display/hide the nested content
     handleContactChild(event) {
@@ -122,7 +164,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         console.log(node);
         let childNode = this.template.querySelector(`tr[data-parentid="${node}"]`);
         console.log('Child node');
-         console.log(childNode);
+        console.log(childNode);
         if (childNode.classList.contains('hideContent')) {
             childNode.classList.remove('hideContent');
             this.template.querySelector(`lightning-icon[data-id="${node}"]`).iconName = this.iconName;
@@ -157,6 +199,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     handleConNavEditClick(event) {
         let node = event.currentTarget.dataset.id;
         this.selectedKraQuaterly = node;
+        console.log('selectedKraQuaterly' + this.selectedKraQuaterly);
         this.mode = 'Edit';
         console.log('==node====' + node);
         this.showKRAEditModalBox();
@@ -304,6 +347,27 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         }
 
 
+    }
+
+    async handleCopyPreviousQuaterKRA(event) {
+        let node = event.currentTarget.dataset.id;
+        this.selectedKraQuaterly = node;
+        console.log('selectedKraQuaterly' + this.selectedKraQuaterly);
+        this.mode = 'Edit';
+        console.log('==node====' + node);
+        console.log('Copy Clicked');
+        const result = await LightningConfirm.open({
+            message: 'Would you like to carry over the previous quarter KRA inputs?',
+            variant: 'header',
+            label: 'Confirm Copy KRA',
+            style: 'text-align:center;',
+            theme: 'info',
+            // setting theme would have no effect
+        });
+        if (result === true) {
+            this.copy = true;
+            this.showKRAEditModalBox();
+        }
     }
 
 }
