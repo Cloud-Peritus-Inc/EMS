@@ -255,6 +255,10 @@ export default class Myteam extends LightningElement {
                             console.log("videmode is true");
                             qualItem.allowedit = false;
                         }
+                        if (qualItem.mentorSubmitted == true) {
+                            console.log("Set value of  allowedit");
+                            qualItem.allowedit = false;
+                        }
                     });
                 });
 

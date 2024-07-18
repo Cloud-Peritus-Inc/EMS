@@ -223,7 +223,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             })
             .catch(error => {
                 //this.showToast('Error Fetching PM Config Answer Records: ' + error.body.message, this.errorVariant, this.toastMode);
-                console.log('Error Fetching PM Config Answer Records: ' + error.body.message);
+                console.log('Error Fetching PM Config Answer Records: ' + JSON.stringify(error));
             });
     }
 
@@ -466,33 +466,19 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         }
     }
 
-    /* handleRatingChange(event) {
-        const ratingValue = parseFloat(event.currentTarget.value);
-        console.log('ratingValue ' + ratingValue);
-        if (ratingValue < 1 || ratingValue > 5 || ratingValue == '') {
-            event.currentTarget.value = NaN;
-            this.showToast('Rating must be between 1 and 5.', this.errorVariant, this.toastMode);
-            event.target.setCustomValidity('Rating must be between 1 and 5.');
-        } else {
-            event.target.setCustomValidity(''); // Clear the error message
-        }
-        event.target.reportValidity();
-    } */
 
     handleRatingChange(event) {
         const ratingValue = parseFloat(event.currentTarget.value);
         console.log('ratingValue ' + ratingValue);
-
-        if (ratingValue < 1 || ratingValue > 5 || isNaN(ratingValue) || (ratingValue * 10) % 5 !== 0) {
-            event.currentTarget.value = '';
+        if (ratingValue === 0 || ratingValue < 1 || ratingValue > 5 || isNaN(ratingValue) || (ratingValue * 2) % 1 !== 0) {
+            event.currentTarget.value = NaN;
             this.showToast('Rating must be between 1 and 5, and in increments of 0.5.', this.errorVariant, this.toastMode);
             event.target.setCustomValidity('Rating must be between 1 and 5, and in increments of 0.5.');
         } else {
             event.target.setCustomValidity(''); // Clear the error message
         }
         event.target.reportValidity();
-    }
-        
+    }     
 
 
     //Smaske : [05-july-2024] : Success method on record-edit-form successfully submitted

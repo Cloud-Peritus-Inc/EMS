@@ -432,6 +432,11 @@ public without sharing class quarterlyKRAViewCtrl {
         
         System.debug( 'avgGoalResultRating : ' + avgGoalResultRating );
         
+        //smaske : Adding validation to check if value is NULL if yes then setting default value to 25
+        kraContactResourceRole.technical_acumen__c = kraContactResourceRole.technical_acumen__c != null ? kraContactResourceRole.technical_acumen__c : 25;
+        kraContactResourceRole.professional_skills__c = kraContactResourceRole.professional_skills__c != null ? kraContactResourceRole.professional_skills__c : 25;
+        kraContactResourceRole.strategic_impact__c = kraContactResourceRole.strategic_impact__c != null ? kraContactResourceRole.strategic_impact__c : 25;
+        kraContactResourceRole.goals_and_results__c = kraContactResourceRole.goals_and_results__c != null ? kraContactResourceRole.goals_and_results__c : 25;
 
         Decimal AvgTechSkillForResource = avgTechSkillRating * (kraContactResourceRole.technical_acumen__c/100);
         Decimal AvgProfSkillForResource = avgProfSkillRating * (kraContactResourceRole.professional_skills__c/100);
@@ -472,6 +477,8 @@ public without sharing class quarterlyKRAViewCtrl {
         return wrap;
 
         }catch (Exception e) {
+            System.debug('Error Line No :::: ' + e.getLineNumber());
+            System.debug('Error Message:::: ' + e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }
