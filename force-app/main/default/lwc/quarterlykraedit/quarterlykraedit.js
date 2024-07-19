@@ -73,19 +73,23 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     connectedCallback() {
         console.log(' **** connectedCallback selectedresource****  ' + this.selectedresource);
+        console.log('COPY VALUE ' + this.receivedkraid);
     }
 
     //getCurrentUserResourceRole
     @wire(getCurrentUserConDetails)
     wiredUserResourceRole({ error, data }) {
         if (data) {
+            console.log('getCurrentUserConDetailsdata :  ' + JSON.stringify(data));
             this.CurrentUserConDetails = data;
             console.log('getCurrentUserConDetails DATA :  ' + JSON.stringify(this.CurrentUserConDetails));
             this.profileName = data.EMS_TM_User__r.Profile.Name;
-            this.CurrentUserResourceRoleTechAcc = data.Resource_Role__r.technical_acumen__c;
-            this.CurrentUserResourceRoleProfSkillAcc = data.Resource_Role__r.professional_skills__c;
-            this.CurrentUserResourceRoleStrategicAcc = data.Resource_Role__r.strategic_impact__c;
-            this.CurrentUserResourceRoleGoalRewAcc = data.Resource_Role__r.goals_and_results__c;
+
+            this.CurrentUserResourceRoleTechAcc = data.Resource_Role__r.technical_acumen__c ? data.Resource_Role__r.technical_acumen__c : 0;
+            this.CurrentUserResourceRoleProfSkillAcc = data.Resource_Role__r.professional_skills__c ? data.Resource_Role__r.professional_skills__c : 0;
+            this.CurrentUserResourceRoleStrategicAcc = data.Resource_Role__r.strategic_impact__c ? data.Resource_Role__r.strategic_impact__c : 0;
+            this.CurrentUserResourceRoleGoalRewAcc = data.Resource_Role__r.goals_and_results__c ? data.Resource_Role__r.goals_and_results__c : 0;
+
         } else if (error) {
             console.log('getCurrentUserConDetails error :  ' + JSON.stringify(error));
             this.CurrentUserConDetails = undefined;
@@ -96,7 +100,9 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     //getSelectedResourceConDetails
     @wire(getSelectedResourceConDetails, { selectedResourceId: "$selectedresource" })
     wiredSelectedUserResourceRole({ error, data }) {
+        console.log('getSelectedResourceConDetails ');
         if (data) {
+            console.log('checkdata '+data);
             this.SelectedResourceConDetails = data;
             console.log('getSelectedResourceConDetails DATA :  ' + JSON.stringify(this.SelectedResourceConDetails));
             //smaske : PM_066 :  Setting value to '0' if not declared 
