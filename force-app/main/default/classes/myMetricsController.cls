@@ -583,16 +583,16 @@ return menteeRecords;
             wrp.managerOptions = new List<ManagerOption>();
             //wrp.managerOptions.add(new ManagerOption(' ' + 'None', 'None'));
             if(wrp.offshoremanagerid == wrp.onshoremanagerid && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c){
-                wrp.managerOptions.add(new ManagerOption('Onshore & Offshore: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
+                wrp.managerOptions.add(new ManagerOption('Onshore & Offshore Manager: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
             }else{
                 if (wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c) {
-                    wrp.managerOptions.add(new ManagerOption('Offshore: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
+                    wrp.managerOptions.add(new ManagerOption('Offshore Manager: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
                 }
                 if (wrp.onshoremanagerid != null && !assgn.Onshore_PM_Configure__c) {
-                    wrp.managerOptions.add(new ManagerOption('Onshore: ' + wrp.onshoremanagerName, wrp.onshoremanagerid));
+                    wrp.managerOptions.add(new ManagerOption('Onshore Manager: ' + wrp.onshoremanagerName, wrp.onshoremanagerid));
                 }
                 if (wrp.onshoremanagerid != null && wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c) {
-                    wrp.managerOptions.add(new ManagerOption('Both ' + '', wrp.onshoremanagerid +','+ wrp.offshoremanagerid));
+                    wrp.managerOptions.add(new ManagerOption('Both Managers ' + '', wrp.onshoremanagerid +','+ wrp.offshoremanagerid));
                 }
             }  
             if(!assgn.Other_PM_Configure__c){
@@ -611,6 +611,7 @@ return menteeRecords;
         Set<Id> managerContactSet = new Set<Id>(managerContactList);
         System.debug('managerContactList: ' + managerContactList);
         
+       /* List<Contact> conRecList =[Select Id,name,EMS_TM_User__c from Contact where Id IN :managerContactSet ];*/
         // Get Record Type IDs
         Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
         Id questionRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Question').getRecordTypeId();
@@ -668,6 +669,10 @@ return menteeRecords;
                                            pmAnswer.KRA__c = goalList[0].Id;
                                            pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
                                            pmAnswer.RecordTypeId = answerRecordTypeId;
+                                          /* if(!conRecList.isEmpty() && conRecList[0].Id == reportingManager){
+                                               pmAnswer.OwnerId = conRecList[0].EMS_TM_User__c;
+
+                                           }*/
                                           // pmAnswer.OwnerId = 
                                         //add reportingManager as the owner of the record
                                            pmAnswerList.add(pmAnswer);

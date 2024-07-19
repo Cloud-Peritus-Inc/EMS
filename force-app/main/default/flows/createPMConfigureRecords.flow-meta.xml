@@ -55,6 +55,20 @@
                 <elementReference>$Record.Fulfillment__r.Fiscal_Year__r.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PM_Ans_Confg_Mentor_Var.Mentor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>loop_flitered_rr.Resource_Reports_To__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PM_Ans_Confg_Mentor_Var.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>loop_flitered_rr.Resource_Reports_To__r.EMS_TM_User__r.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_PM_configure_record_for_mentor_to_ListVar</targetReference>
         </connector>
@@ -111,6 +125,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.Fulfillment__r.Fiscal_Year__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PM_Ans_Config_Records_Var.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Resource__r.EMS_TM_User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
