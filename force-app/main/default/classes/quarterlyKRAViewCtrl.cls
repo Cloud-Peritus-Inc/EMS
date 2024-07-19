@@ -18,9 +18,11 @@ public without sharing class quarterlyKRAViewCtrl {
                 Resource_Role__r.technical_acumen__c,Resource_Role__r.goals_and_results__c,Resource_Role__r.professional_skills__c,Resource_Role__r.strategic_impact__c  
                 FROM Contact 
                 WHERE EMS_TM_User__c = :UserInfo.getUserId() LIMIT 1];
-
+				System.debug('con '+con);
             if (con != null && con.Resource_Role__r != null) {
+                System.debug('con.Resource_Role__r  '+con.Resource_Role__r );
                 resourceRole = con.Resource_Role__r.Name;
+                System.debug('resourceRole  '+resourceRole );
             }
         } catch (QueryException qe) {
             // Log the exception or handle it appropriately
@@ -35,16 +37,18 @@ public without sharing class quarterlyKRAViewCtrl {
 
     @AuraEnabled(cacheable = true)
     public static Contact getSelectedResourceConDetails(String selectedResourceId) {
+        System.debug('getSelectedResourceConDetails ');
         Contact con = new Contact();
         try {
             if (!String.isBlank(selectedResourceId)) {
                 User loggedinUser = [SELECT Id,ContactId FROM User WHERE ContactId=:selectedResourceId];
-            
+            	System.debug('loggedinUser '+loggedinUser);
                 con = [SELECT Id, EMS_TM_User__c, EMS_TM_User__r.Profile.Name , Resource_Role__c, Resource_Role__r.Name,
                 Resource_Role__r.technical_acumen__c,Resource_Role__r.goals_and_results__c,Resource_Role__r.professional_skills__c,Resource_Role__r.strategic_impact__c  
                 FROM Contact 
                 WHERE EMS_TM_User__c = :loggedinUser.Id LIMIT 1];
             }
+            System.debug('con '+con);
         } catch (QueryException qe) {
             // Log the exception or handle it appropriately
             throw new AuraHandledException('Error querying Contact: ' + qe.getMessage());
@@ -433,10 +437,10 @@ public without sharing class quarterlyKRAViewCtrl {
         System.debug( 'avgGoalResultRating : ' + avgGoalResultRating );
         
         //smaske : Adding validation to check if value is NULL if yes then setting default value to 25
-        kraContactResourceRole.technical_acumen__c = kraContactResourceRole.technical_acumen__c != null ? kraContactResourceRole.technical_acumen__c : 25;
-        kraContactResourceRole.professional_skills__c = kraContactResourceRole.professional_skills__c != null ? kraContactResourceRole.professional_skills__c : 25;
-        kraContactResourceRole.strategic_impact__c = kraContactResourceRole.strategic_impact__c != null ? kraContactResourceRole.strategic_impact__c : 25;
-        kraContactResourceRole.goals_and_results__c = kraContactResourceRole.goals_and_results__c != null ? kraContactResourceRole.goals_and_results__c : 25;
+        kraContactResourceRole.technical_acumen__c = kraContactResourceRole.technical_acumen__c != null ? kraContactResourceRole.technical_acumen__c : 0;
+        kraContactResourceRole.professional_skills__c = kraContactResourceRole.professional_skills__c != null ? kraContactResourceRole.professional_skills__c : 0;
+        kraContactResourceRole.strategic_impact__c = kraContactResourceRole.strategic_impact__c != null ? kraContactResourceRole.strategic_impact__c : 0;
+        kraContactResourceRole.goals_and_results__c = kraContactResourceRole.goals_and_results__c != null ? kraContactResourceRole.goals_and_results__c : 0;
 
         Decimal AvgTechSkillForResource = avgTechSkillRating * (kraContactResourceRole.technical_acumen__c/100);
         Decimal AvgProfSkillForResource = avgProfSkillRating * (kraContactResourceRole.professional_skills__c/100);
