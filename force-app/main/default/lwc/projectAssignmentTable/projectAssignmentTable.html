@@ -14,16 +14,16 @@
 							<div class="slds-truncate" title="Project Name">Project Name</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
-							<div class="" title="Contact Name">Contact Name</div>
+							<div class="" title="Resource Name">Resource Name</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
-							<div class="slds-truncate" title="Project Start Date">Project Start Date</div>
+							<div class="slds-truncate" title="Project Onboarding Date">Project Onboarding Date</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
-							<div class="slds-truncate" title="Project End Date">Project End Date</div>
+							<div class="slds-truncate" title="Project Offboarding Date">Project Offboarding Date</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
-							<div class="slds-truncate" title="Project Manager">Project Manager</div>
+							<div class="slds-truncate" title="Request To">Request To</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
 							<div class="slds-truncate" title="Action">Action</div>
@@ -55,15 +55,16 @@
 								<td style=";word-wrap:break-word; width: 15%;padding-bottom:24px;" class="overflowModal">
 
 									<lightning-combobox class="overflowModal" placeholder="-Please Select-"
-										value={mentee.value} data-projectid={mentee.projectid}
+										value={mentee.value} data-projectid={mentee.projectid} 
+										data-projectassigmentid={mentee.projectAssigmentId}
 										onchange={handleChangeCombobox} options={mentee.managerOptions}>
 									</lightning-combobox>
                                
 								</td>
 								<td>
 									<lightning-button variant="brand" icon-name="utility:adduser"
-										disabled={mentee.disableKRAbutton} label="Send KRA Request"
-										title="Send KRA Request" onclick={HandlementeeRowAction}
+										disabled={mentee.disableKRAbutton} label="Send KRA request"
+										title="Send KRA request" onclick={HandlementeeRowAction}
 										data-projectid={mentee.projectid}
 										data-projectassigmentid={mentee.projectAssigmentId}
 										data-managerid={mentee.value} class="slds-m-left_x-small">
@@ -93,7 +94,7 @@
 								</lightning-button-icon>
 								<br/><br/>
 								<center>
-									<h2 class="slds-modal__title slds-hyphenate">Select Resource to send a KRA Request
+									<h2 class="slds-modal__title slds-hyphenate">Select a resource to send KRA request
 									</h2>
 									<br/>
 									<c-reusable-lookup label="" selected-icon-name="standard:contact"
@@ -108,7 +109,7 @@
 									<lightning-button variant="destructive" label="Cancel" title="Cancel"
 										onclick={hideModalBox} class="slds-m-left_x-small">
 									</lightning-button>&nbsp;&nbsp;
-									<lightning-button variant="brand" label="Select" title="Select"
+									<lightning-button variant="brand" label="Send KRA request" title="Send KRA request"
 										onclick={handleConformModalBox} class="slds-m-top_small">
 									</lightning-button>
 								</center> <br/>

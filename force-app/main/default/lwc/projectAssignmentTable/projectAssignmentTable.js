@@ -18,6 +18,9 @@ export default class ProjectAssignmentTable extends LightningElement {
     value;
     isShowModal = false;
     otherManagerIds;
+    otherProjectId;
+    otherProjectAssgnId;
+
     BE_PR_RR = {
         Resource__c: null,
     };
@@ -87,10 +90,15 @@ selectedLabel
     handleChangeCombobox(event) {
         const projectId = event.currentTarget.dataset.projectid;
         const selectedManagerId = event.detail.value;
+        const projectassgnId = event.currentTarget.dataset.projectassigmentid;
+       console.log('Project assgn Id-----'+projectassgnId);
         console.log(`Project ID: ${projectId}, Selected Manager ID: ${selectedManagerId}`);
         console.log('OUTPUT : ', JSON.parse(JSON.stringify(this.menteeList)));
         if (selectedManagerId == 'Other') {
             this.isShowModal = true;
+            this.otherProjectId = projectId;
+            this.otherProjectAssgnId = projectassgnId;
+            console.log('Project assgn Id 2-----'+this.otherProjectAssgnId);
         }
         
        /*  for (const mentee of this.menteeList) {
@@ -142,7 +150,7 @@ selectedLabel
     handleConformModalBox(event) {
         if (this.otherManagerIds != null) {
             this.isShowModal = false;
-            this.menteeList = this.menteeList.map(mentee => {
+            /*this.menteeList = this.menteeList.map(mentee => {
                 if (mentee.projectid === mentee.value) {
                     return {
                         ...mentee,                                              
@@ -150,7 +158,25 @@ selectedLabel
                     };
                 }
                 return mentee;
-            });
+            });*/
+            console.log('otherProjectId----'+this.otherProjectId);
+            console.log('projectassigmentid----'+this.otherProjectAssgnId);
+            console.log('Conatct Id---'+this.optionarray);
+            console.log('manager Id---'+this.otherManagerIds);
+            this.isLoaded = true;
+            createPMAnswerConfigureForManager({ contactId: this.optionarray, managerContact: this.otherManagerIds, projectId: this.otherProjectId, projectassigmentid: this.otherProjectAssgnId })
+                .then((result) => {
+                    
+                    refreshApex(this.wiregetTmenteeproject);
+                    this.ShowToast(' ', 'KRA request sent successfully', 'success', 'dismissable');
+                    this.isLoaded = false;
+                })
+                .catch((error) => {
+                    console.log('error-->', error);
+                    this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
+                    this.isLoaded = false;
+                });
+
         } else {
             this.ShowToast(' ', 'Please select a resource', 'error', 'dismissable');
         }
@@ -178,13 +204,14 @@ selectedLabel
         console.log('projectId-->', projectId);
         console.log('this.optionarray-->', this.optionarray);
 
-        const result = await LightningConfirm.open({
+        /*const result = await LightningConfirm.open({
             message: 'Click on OK to Confirm Send KRA Request.',
-            variant: 'headerless',
-            label: 'this is the aria-label value',
+            variant: 'header',
+            label: 'Confirm KRA Submission',
+            theme:'info'
             // setting theme would have no effect
-        });
-        if (result === true) {
+        });*/
+       // if (result === true) {
             this.isLoaded = true;
             console.log('managerId-->', managerId);
             console.log('projectId-->', projectId);
@@ -192,7 +219,7 @@ selectedLabel
             createPMAnswerConfigureForManager({ contactId: this.optionarray, managerContact: managerId, projectId: projectId, projectassigmentid: projectassigmentid })
                 .then((result) => {
                     refreshApex(this.wiregetTmenteeproject);
-                    this.ShowToast(' ', 'Record(s) created Successfully!', 'success', 'dismissable');
+                    this.ShowToast(' ', 'KRA request sent successfully', 'success', 'dismissable');
                     this.isLoaded = false;
                 })
                 .catch((error) => {
@@ -200,7 +227,7 @@ selectedLabel
                     this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
                     this.isLoaded = false;
                 });
-        }
+       // }
     }
 
     ShowToast(title, message, variant, mode) {
