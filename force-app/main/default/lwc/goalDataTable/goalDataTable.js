@@ -1,6 +1,5 @@
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { refreshApex } from '@salesforce/apex';
 import getKRARecordsOfContact from '@salesforce/apex/myPendingFeedbackRequest.getKRARecordsOfContact';
 import updatePMConfigureRecord from '@salesforce/apex/myPendingFeedbackRequest.updatePMConfigureRecord';
 
@@ -13,16 +12,21 @@ export default class GoalDataTable extends LightningElement {
     selectedGoalId = '';
     wiredGoalsResult;
 
-    @wire(getKRARecordsOfContact)
-    wiredGoals(result) {
-        this.wiredGoalsResult = result;
-        if (result.data) {
-            this.data = result.data;
-            this.hasData = true;
-        } else if (result.error) {
-            console.error('Error:', result.error);
-            this.hasData = false;
-        }
+    connectedCallback() {
+        this.fetchKRARecords();
+    }
+
+    fetchKRARecords() {
+        getKRARecordsOfContact()
+            .then(result => {
+                this.data = result;
+                if(result.length > 0){
+                    this.hasData = !!this.data;
+                }
+            })
+            .catch(error => {
+                this.hasData = false;
+            });
     }
 
     showModalPopUp(event) {
@@ -32,10 +36,6 @@ export default class GoalDataTable extends LightningElement {
 
     hideModalBox(){
         this.isShowPopUp = false;
-    }
-
-    checkisshowKRAEditModal(){
-        this.showKRAEditModal = true;
     }
 
     hideKRAEditModalBox(){
@@ -49,27 +49,31 @@ export default class GoalDataTable extends LightningElement {
         this.checkisshowKRAEditModal();
     }
 
+    checkisshowKRAEditModal(){
+        this.showKRAEditModal = true;
+    }
+
     acceptOrRejectRequest(goalId, actionType) {
-    updatePMConfigureRecord({ 
-        goalId: goalId, 
-        actionType: actionType,
-        rejectionReason: actionType === 'reject' ? this.rejectionReason : null 
-    })
-    .then(() => {
-        if (actionType === 'accept') {
-            this.showToast('Success', 'Accepted Successfully', 'success');
-        } else if (actionType === 'reject') {
-            this.showToast('Success', 'Rejected Successfully', 'success');
-        }
-        this.hideModalBox();
-        
-        return refreshApex(this.wiredGoalsResult);
-    })
-    .catch(error => {
-        console.error('Error updating PM Configure records: ', error);
-        this.showToast('Error', 'Failed to update', 'error');
-    });
-}
+        updatePMConfigureRecord({
+            goalId: goalId,
+            actionType: actionType,
+            rejectionReason: actionType === 'reject' ? this.rejectionReason : null
+        })
+            .then(() => {
+                if (actionType === 'accept') {
+                    this.showToast('Success', 'Accepted Successfully', 'success');
+                } else if (actionType === 'reject') {
+                    this.showToast('Success', 'Rejected Successfully', 'success');
+                }
+                
+                this.fetchKRARecords();
+                this.hideModalBox();
+            })
+            .catch(error => {
+                console.error('Error updating PM Configure records: ', error);
+                this.showToast('Error', 'Failed to update', 'error');
+            });
+    }   
 
     handleCommentChange(event){
         this.rejectionReason = event.target.value;
@@ -82,6 +86,7 @@ export default class GoalDataTable extends LightningElement {
     acceptRequestHandler(event) {
         const goalId = event.currentTarget.dataset.id;
         this.acceptOrRejectRequest(goalId, 'accept');
+        
     }
 
     showToast(title, message, variant) {

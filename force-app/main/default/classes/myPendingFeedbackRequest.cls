@@ -19,8 +19,9 @@ public without sharing class myPendingFeedbackRequest {
     public static final String PM_ANSWER_ACCEPTED = 'Accepted';
     public static final Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<goalWrapper> getKRARecordsOfContact() {
+
         try {
             User us = [SELECT Id, Name, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
             Id contactId = us.ContactId;
@@ -35,38 +36,39 @@ public without sharing class myPendingFeedbackRequest {
                 AND KRA__c != NULL 
                 AND Reporting_Contact__c != NULL
                 AND Reporting_Contact__c = :contactId
+                AND (status__c = :PM_ANSWER_AWAITING OR status__c = :PM_ANSWER_ACCEPTED)
             ];
 
             if (!pmConfigAnswerList.isEmpty()) {
+                
                 for (PM_Configure__c pmConfig : pmConfigAnswerList) {
                     kraIdSet.add(pmConfig.KRA__c);
                 }
             }
-
+             
             List<Goal__c> glList = [
                 SELECT Id, Name, Goal_Name__c, Start_Date__c, End_Date__c, Resource__c, Resource__r.Name,
-                (Select Id, Name, status__c, CreatedById, CreatedBy.CommunityNickname from PM_Answer_Configure__r where RecordTypeId = :AnswerRecordTypeId AND (status__c = :PM_ANSWER_AWAITING OR status__c = :PM_ANSWER_ACCEPTED))
+                (Select Id, Name, status__c, CreatedById, CreatedBy.CommunityNickname from PM_Answer_Configure__r where RecordTypeId = :AnswerRecordTypeId )
                 FROM Goal__c 
                 WHERE Id IN :kraIdSet
             ];
-
+    
             for (Goal__c glwarp : glList) {
+                 
                 goalWrapper glwp = new goalWrapper();
-                glwp.hideRejectBtn = true;
-                glwp.hideEditBtn = true;
-                glwp.hideAcceptBtn = true;
                 for (PM_Configure__c goalAnswer : glwarp.PM_Answer_Configure__r) {
                     if (goalAnswer.Status__c == PM_ANSWER_AWAITING) {
+                        glwp.hideEditBtn = true;
                         glwp.hideAcceptBtn = false;
                         glwp.hideRejectBtn = false;
                         glwp.requestedBy = goalAnswer.CreatedById;
                         glwp.requestedByName = goalAnswer.CreatedBy.CommunityNickname;
-                        break;
                     } else if (goalAnswer.Status__c == PM_ANSWER_ACCEPTED) {
                         glwp.hideEditBtn = false;
+                        glwp.hideAcceptBtn = true;
+                        glwp.hideRejectBtn = true;
                         glwp.requestedBy = goalAnswer.CreatedById;
                         glwp.requestedByName = goalAnswer.CreatedBy.CommunityNickname;
-                        break;
                     }
                 }
                 glwp.goalName = glwarp.Goal_Name__c;
@@ -77,8 +79,8 @@ public without sharing class myPendingFeedbackRequest {
                 glwp.Id = glwarp.Id;
                 goalWrapperList.add(glwp);
             }
-
             return goalWrapperList;
+             
         } catch (Exception e) {
             throw new AuraHandledException('An error occurred while fetching KRA records: ' + e.getMessage());
         }
@@ -143,9 +145,9 @@ public without sharing class myPendingFeedbackRequest {
         public Boolean hideEditBtn;
 
         @AuraEnabled
-        public Boolean hideRejectBtn;
+        public Boolean hideRejectBtn ;
 
         @AuraEnabled
-        public Boolean hideAcceptBtn;
+        public Boolean hideAcceptBtn ;
     }
 }
