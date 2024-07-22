@@ -104,8 +104,28 @@ export default class MyMetrics extends LightningElement {
             fyId: this.selectedfy
         })
             .then(result => {
-                console.log('====result=======' + JSON.stringify(result));
-                this.kratable = result;
+                //console.log('====My Metric JS result=======' + JSON.stringify(result));
+                //this.kratable = result;
+                // Process the result to modify allowCopy
+            this.kratable = result.map(item => {
+
+                //copied from kratablejs
+                let tableRecordsData = item.qualList;
+                console.log('tableRecordsData Length ' + tableRecordsData.length);
+                tableRecordsData.forEach(qualItem => {
+                    if (qualItem.mentorSubmitted && this.tab == 'My Team') {
+                        qualItem.allowedit = false;
+                        qualItem.allowCopy = false;
+                    } else if (qualItem.menteeSubmitted && this.tab == 'My Metric') {
+                        qualItem.allowedit = false;
+                        qualItem.allowCopy = false;
+                    }
+                });
+                
+                return item;
+            });
+
+            console.log('Modified KRA Table: ', JSON.stringify(this.kratable));
             })
             .catch(error => {
                 console.log('====Error=======' + JSON.stringify(error));

@@ -35,6 +35,19 @@ export default class Kratable extends NavigationMixin(LightningElement) {
                 } else {
                     this.qualListdata = false;
                 }
+
+                //smaske : [EN_23/UAT_066] : Disabling the EDIT button based on tab and submit status for mentee and mentor
+                let tableRecordsData = item.qualList;
+                console.log('tableRecordsData Length ' + tableRecordsData.length);
+                tableRecordsData.forEach(qualItem => {
+                    if (qualItem.mentorSubmitted && this.tab == 'My Team') {
+                        qualItem.allowedit = false;
+                        qualItem.allowCopy = false;
+                    } else if (qualItem.menteeSubmitted && this.tab == 'My Metric') {
+                        console.log('51');
+                        qualItem.allowedit = false;
+                    }
+                });
             });
         }
 
