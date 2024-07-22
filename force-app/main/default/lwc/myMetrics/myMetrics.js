@@ -131,16 +131,13 @@ export default class MyMetrics extends LightningElement {
                 tableRecordsData.forEach(qualItem => {
                     if (qualItem.mentorSubmitted && this.tab == 'My Team') {
                         qualItem.allowedit = false;
+                        qualItem.allowCopy = false;
                     } else if (qualItem.menteeSubmitted && this.tab == 'My Metric') {
                         qualItem.allowedit = false;
+                        qualItem.allowCopy = false;
                     }
                 });
-
-
-                // Check if qualList has only one element
-                if (item.qualList && item.qualList.length === 1) {
-                    item.qualList[0].allowCopy = false;
-                }
+                
                 return item;
             });
 
