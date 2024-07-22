@@ -1,0 +1,522 @@
+<template>
+	<lightning-card>
+		<template if:true={showKraEditButton}>
+			<lightning-button label="Edit KRA" slot="actions" onclick={handleEditKra}></lightning-button>
+		</template>
+		<div style="font-size: large;" class="slds-align_absolute-center">Quarterly KRA View</div>
+		<br/><br/>
+		<template if:true={isLoading}>
+			<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+		</template>
+
+		<lightning-progress-indicator current-step={selectedStep} type="path" variant="base">
+			<template for:each={steps} for:item="step">
+				<lightning-progress-step id={step.value} label={step.label} value={step.value} key={step.label}
+					onclick={stepSelectionHanler}></lightning-progress-step>
+			</template>
+		</lightning-progress-indicator>
+
+		<!-- REVIEWER DETAILS SECTION-->
+		<template lwc:if={showReviewerDetails}>
+			<br/><br/>
+			<div class="pointerTableContainer">
+				<div class="section1" data-reviewer-details>
+					<lightning-layout multiple-rows class="slds-theme_shade">
+						<lightning-layout-item padding="around-small" size="8">
+
+							<lightning-layout multiple-rows>
+
+								<lightning-layout-item padding="around-small" size="6">
+									<div>
+										<p>Review Type</p>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item padding="around-small" size="6">
+									<div>
+										<lightning-input type="text" variant="label-hidden" label="Review Type"
+											name="Review_Type__c" value="KRA Review" disabled='true'></lightning-input>
+									</div>
+								</lightning-layout-item>
+
+								<lightning-layout-item padding="around-small" size="6">
+									<div>
+										<p>Reviewer Name</p>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item padding="around-small" size="6">
+									<div>
+										<lightning-input type="text" variant="label-hidden" label="Reviewer Name"
+											name="Reviewer_Name__c" value={currentContactName} disabled='true'>
+										</lightning-input>
+									</div>
+								</lightning-layout-item>
+
+								<lightning-layout-item padding="around-small" size="6">
+									<div>
+										<p>Reviewer Title</p>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item padding="around-small" size="6">
+									<div>
+										<lightning-input type="text" variant="label-hidden" label="Reviewer Title"
+											name="Reviewer_Title__c" value={currentContactResourceRole} disabled='true'>
+										</lightning-input>
+									</div>
+								</lightning-layout-item>
+							</lightning-layout>
+
+						</lightning-layout-item>
+					</lightning-layout>
+				</div>
+
+				<div class="section2">
+					<lightning-layout multiple-rows class="slds-theme_shade">
+						<lightning-layout-item size="12">
+							<h6>Measures of performance</h6>
+						</lightning-layout-item>
+					</lightning-layout>
+					<lightning-layout multiple-rows class="slds-theme_shade">
+						<lightning-layout-item padding="around-small" size="12">
+							<table
+								class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+								aria-labelledby="element-with-table-label other-element-with-table-label">
+								<thead>
+									<tr class="slds-line-height_reset">
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Rating Score">Rating Score</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Description">Description</div>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="slds-hint-parent">
+										<th data-label="Rating Score" scope="row">
+											<div class="slds-truncate" title="1">
+												<a href="javascript:void(0)">1</a>
+											</div>
+										</th>
+										<td data-label="Unacceptable">
+											<div class="slds-truncate">Unacceptable</div>
+										</td>
+									</tr>
+									<tr class="slds-hint-parent">
+										<th data-label="2" scope="row">
+											<div class="slds-truncate" title="2">
+												<a href="javascript:void(0)">2</a>
+											</div>
+										</th>
+										<td data-label="Needs Improvement">
+											<div class="slds-truncate">Needs Improvement</div>
+										</td>
+									</tr>
+									<tr class="slds-hint-parent">
+										<th data-label="3" scope="row">
+											<div class="slds-truncate" title="3">
+												<a href="javascript:void(0)">3</a>
+											</div>
+										</th>
+										<td data-label="Meets Expectations">
+											<div class="slds-truncate">Meets Expectations</div>
+										</td>
+									</tr>
+									<tr class="slds-hint-parent">
+										<th data-label="4" scope="row">
+											<div class="slds-truncate" title="4">
+												<a href="javascript:void(0)">4</a>
+											</div>
+										</th>
+										<td data-label="Exceeds Expectations">
+											<div class="slds-truncate">Exceeds Expectations</div>
+										</td>
+									</tr>
+
+									<tr class="slds-hint-parent">
+										<th data-label="5" scope="row">
+											<div class="slds-truncate" title="5">
+												<a href="javascript:void(0)">5</a>
+											</div>
+										</th>
+										<td data-label="Far Exceeds">
+											<div class="slds-truncate">Far Exceeds</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</lightning-layout-item>
+					</lightning-layout>
+				</div>
+			</div>
+			<br/><br/>
+			<footer class="slds-align_absolute-center">
+				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+					class="slds-var-m-left_x-small">
+				</lightning-button>
+			</footer>
+		</template>
+
+		<template lwc:if={showTechnicalAcumen}>
+			<div class="slds-grid slds-wrap">
+				<template lwc:if={questionstechicalskill}>
+					<template for:each={questionstechicalskill} for:item="questionWrapper">
+						<div key={questionWrapper.questionId} class="slds-col slds-size_1-of-1 slds-p-around_medium">
+							<div class="main-section">
+								<div class="questionanswer-sections">
+									<!-- Question Column -->
+									<div class="answer-column">
+										<p class="question">{questionWrapper.questionName}</p>
+									</div>
+
+									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
+									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
+										<div key={contactAnswer.contact.id} class="answer-column">
+											<h3>{contactAnswer.contact.name}</h3>
+											<!-- Render each answer for the contact -->
+											<template for:each={contactAnswer.answers} for:item="answer">
+												<div class="fieldsRow" key={answer.answerId}>
+													<lightning-helptext content={answer.ratingoverview}
+														key={answer.answerId}></lightning-helptext>
+													<lightning-input type="text" variant="standard"
+														key={answer.answerId} required name="Rating" label="Rating"
+														value={answer.rating} disabled>
+													</lightning-input>
+												</div>
+												<div class="fieldsRow" key={answer.answerId}>
+													<lightning-helptext content={answer.descriptionoverview}
+														key={answer.answerId}></lightning-helptext>
+													<lightning-input-rich-text label-visible label="Description"
+														required key={answer.answerId} name="Description"
+														value={answer.answerValue} disabled
+														disabled-categories="INSERT_CONTENT">
+													</lightning-input-rich-text>
+												</div>
+
+											</template>
+										</div>
+									</template>
+								</div>
+							</div>
+						</div>
+					</template>
+				</template>
+				<template lwc:else>
+					No data found
+				</template>
+			</div>
+			<footer class="slds-align_absolute-center">
+				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				</lightning-button>
+				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+					class="slds-var-m-left_x-small">
+				</lightning-button>
+			</footer>
+		</template>
+		<template lwc:if={showProfessionalSkills}>
+			<div class="slds-grid slds-wrap">
+				<template lwc:if={questionsProfessionalskill}>
+					<template for:each={questionsProfessionalskill} for:item="questionWrapper">
+						<div key={questionWrapper.questionId} class="slds-col slds-size_1-of-1 slds-p-around_medium">
+							<div class="main-section">
+								<div class="questionanswer-sections">
+									<!-- Question Column -->
+									<div class="answer-column">
+										<p class="question">{questionWrapper.questionName}</p>
+									</div>
+
+									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
+									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
+										<div key={contactAnswer.contact.id} class="answer-column">
+											<h3>{contactAnswer.contact.name}</h3>
+											<!-- Render each answer for the contact -->
+											<template for:each={contactAnswer.answers} for:item="answer">
+												<div class="fieldsRow" key={answer.answerId}>
+													<lightning-helptext content={answer.ratingoverview}
+														key={answer.answerId}></lightning-helptext>
+													<lightning-input type="text" variant="standard"
+														key={answer.answerId} required name="Rating" label="Rating"
+														value={answer.rating} disabled>
+													</lightning-input>
+												</div>
+												<div class="fieldsRow" key={answer.answerId}>
+													<lightning-helptext content={answer.descriptionoverview}
+														key={answer.answerId}></lightning-helptext>
+													<lightning-input-rich-text label-visible label="Description"
+														required key={answer.answerId} name="Description"
+														value={answer.answerValue} disabled
+														disabled-categories="INSERT_CONTENT">
+													</lightning-input-rich-text>
+												</div>
+
+											</template>
+										</div>
+									</template>
+								</div>
+							</div>
+						</div>
+					</template>
+				</template>
+				<template lwc:else>
+					No data found
+				</template>
+			</div>
+			<footer class="slds-align_absolute-center">
+				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				</lightning-button>
+				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+					class="slds-var-m-left_x-small">
+				</lightning-button>
+			</footer>
+		</template>
+		<template lwc:if={showStrategicImpact}>
+			<div class="slds-grid slds-wrap">
+				<template lwc:if={questionsStrategicskill}>
+					<template for:each={questionsStrategicskill} for:item="questionWrapper">
+						<div key={questionWrapper.questionId} class="slds-col slds-size_1-of-1 slds-p-around_medium">
+							<div class="main-section">
+								<div class="questionanswer-sections">
+									<!-- Question Column -->
+									<div class="answer-column">
+										<p class="question">{questionWrapper.questionName}</p>
+									</div>
+
+									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
+									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
+										<div key={contactAnswer.contact.id} class="answer-column">
+											<h3>{contactAnswer.contact.name}</h3>
+											<!-- Render each answer for the contact -->
+											<template for:each={contactAnswer.answers} for:item="answer">
+												<div class="fieldsRow" key={answer.answerId}>
+													<lightning-helptext content={answer.ratingoverview}
+														key={answer.answerId}></lightning-helptext>
+													<lightning-input type="text" variant="standard"
+														key={answer.answerId} required name="Rating" label="Rating"
+														value={answer.rating} disabled>
+													</lightning-input>
+												</div>
+												<div class="fieldsRow" key={answer.answerId}>
+													<lightning-helptext content={answer.descriptionoverview}
+														key={answer.answerId}></lightning-helptext>
+													<lightning-input-rich-text label-visible label="Description"
+														required key={answer.answerId} name="Description"
+														value={answer.answerValue} disabled
+														disabled-categories="INSERT_CONTENT">
+													</lightning-input-rich-text>
+												</div>
+
+											</template>
+										</div>
+									</template>
+								</div>
+							</div>
+						</div>
+					</template>
+				</template>
+				<template lwc:else>
+					No data found
+				</template>
+			</div>
+			<footer class="slds-align_absolute-center">
+				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				</lightning-button>
+				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+					class="slds-var-m-left_x-small">
+				</lightning-button>
+			</footer>
+		</template>
+		<template lwc:if={showGoalsResults}>
+			<div class="slds-grid slds-wrap">
+				<template lwc:if={questionsGoalskill}>
+					<template for:each={questionsGoalskill} for:item="questionWrapper">
+						<div key={questionWrapper.questionId} class="slds-col slds-size_1-of-1 slds-p-around_medium">
+							<div class="main-section">
+								<div class="questionanswer-sections">
+									<!-- Question Column -->
+									<div class="answer-column">
+										<p class="question">{questionWrapper.questionName}</p>
+									</div>
+
+									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
+									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
+										<div key={contactAnswer.contact.id} class="answer-column">
+											<h3>{contactAnswer.contact.name}</h3>
+											<!-- Render each answer for the contact -->
+											<template for:each={contactAnswer.answers} for:item="answer">
+												<div class="fieldsRow" key={answer.answerId}>
+													<lightning-helptext content={answer.ratingoverview}
+														key={answer.answerId}></lightning-helptext>
+													<lightning-input type="text" variant="standard"
+														key={answer.answerId} required name="Rating" label="Rating"
+														value={answer.rating} disabled>
+													</lightning-input>
+												</div>
+												<div class="fieldsRow" key={answer.answerId}>
+													<lightning-helptext content={answer.descriptionoverview}
+														key={answer.answerId}></lightning-helptext>
+													<lightning-input-rich-text label-visible label="Description"
+														required key={answer.answerId} name="Description"
+														value={answer.answerValue} disabled
+														disabled-categories="INSERT_CONTENT">
+													</lightning-input-rich-text>
+												</div>
+
+											</template>
+										</div>
+									</template>
+								</div>
+							</div>
+						</div>
+					</template>
+				</template>
+				<template lwc:else>
+					No data found
+				</template>
+			</div>
+			<footer class="slds-align_absolute-center">
+				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				</lightning-button>
+				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+					class="slds-var-m-left_x-small">
+				</lightning-button>
+			</footer>
+		</template>
+		<template lwc:if={showOverAllRating}>
+			<div class="pointerTableContainer2">
+
+				<div class="ratingSection">
+					<lightning-layout multiple-rows class="slds-theme_shade">
+						<lightning-layout-item padding="around-small" size="12">
+							<table
+								class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+								aria-labelledby="element-with-table-label other-element-with-table-label">
+								<thead>
+									<tr class="slds-line-height_reset">
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Rating Score">Section Name</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Description">Average Rating</div>
+										</th>
+									</tr>
+								</thead>
+
+								<template lwc:if={CurrentUserConDetails}>
+									<tbody>
+										<tr class="slds-hint-parent">
+											<th data-label="Rating Score" scope="row">
+												<div class="slds-truncate" title="Technical Acumen">
+													<a href="javascript:void(0)">Technical Acumen
+														[{CurrentUserResourceRoleTechAcc}%]</a>
+												</div>
+											</th>
+											<td data-label="Technical Acumen">
+												<div class="slds-truncate">{wrapData.TechSkillData}
+													({wrapData.AvgTechSkillData})</div>
+											</td>
+										</tr>
+										<tr class="slds-hint-parent">
+											<th data-label="2" scope="row">
+												<div class="slds-truncate" title="Professional Skills">
+													<a href="javascript:void(0)">Professional Skills
+														[{CurrentUserResourceRoleProfSkillAcc}%]</a>
+												</div>
+											</th>
+											<td data-label="Professional Skills">
+												<div class="slds-truncate">{wrapData.ProfSkillData}
+													({wrapData.AvgProfSkillData})</div>
+											</td>
+										</tr>
+										<tr class="slds-hint-parent">
+											<th data-label="3" scope="row">
+												<div class="slds-truncate" title="Strategic Impact">
+													<a href="javascript:void(0)">Strategic Impact
+														[{CurrentUserResourceRoleStrategicAcc}%]</a>
+												</div>
+											</th>
+											<td data-label="Strategic Impact">
+												<div class="slds-truncate">{wrapData.StrategicData}
+													({wrapData.AvgStrategicData})</div>
+											</td>
+										</tr>
+										<tr class="slds-hint-parent">
+											<th data-label="4" scope="row">
+												<div class="slds-truncate" title="Goals & Results">
+													<a href="javascript:void(0)">Goals & Results
+														[{CurrentUserResourceRoleGoalRewAcc}%]</a>
+												</div>
+											</th>
+											<td data-label="Goals & Results">
+												<div class="slds-truncate">{wrapData.GoalResultData}
+													({wrapData.AvgGoalResultData})</div>
+											</td>
+										</tr>
+										<tr class="slds-hint-parent">
+											<th data-label="5" scope="row">
+												<div class="slds-truncate" title="Overall Rating">
+													<a href="javascript:void(0)">Overall Rating</a>
+												</div>
+											</th>
+											<td data-label="Overall Average Rating">
+												<div class="slds-truncate">{wrapData.AreaWiseAvgRating}</div>
+											</td>
+										</tr>
+									</tbody>
+								</template>
+							</table>
+						</lightning-layout-item>
+					</lightning-layout>
+				</div>
+			</div>
+			<br/><br/>
+			<footer class="slds-align_absolute-center">
+				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				</lightning-button>
+				<template if:true={submittedKRAbutton}>
+				<lightning-button variant="" icon-name="utility:save" label="Complete KRA" onclick={handleCompleteKRA}
+					class="slds-var-m-left_x-small"></lightning-button>
+				</template>
+				<lightning-button variant="" icon-name="utility:close" label="Close" onclick={handleCloseFullView}
+					class="slds-var-m-left_x-small"></lightning-button>
+			</footer>
+		</template>
+
+		<!--check In modal start -->
+		<template if:true={showKRAEditModal}>
+			<lightning-card>
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<!-- modal header start -->
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideKRAEditModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+							<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Quarterly KRA Edit
+							</h2>
+						</header>
+
+						<!-- modal body start -->
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+							<!-- EDIT MODE -->
+							<c-quarterlykraedit mode={mode} receivedkraid={receivedKRAId} selectedresource={resourceid}
+								onclose={hideKRAEditModalBox} tab={tab}>
+							</c-quarterlykraedit>
+						</div>
+
+						<!-- modal footer start-->
+						<footer class="slds-modal__footer">
+							<button class="slds-button slds-button_neutral" onclick={hideKRAEditModalBox}>Close</button>
+						</footer>
+
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</lightning-card>
+		</template>
+		<!-- modal end -->
+	</lightning-card>
+</template>
