@@ -11,6 +11,7 @@ import updatePMAnswerRecordsStatus from '@salesforce/apex/quarterlyKRAViewCtrl.u
 
 //other imports
 import exampleHelpText from "@salesforce/label/c.exampleHelpText";
+import LightningConfirm from 'lightning/confirm';
 
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -134,30 +135,24 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         const { data, error } = value;
         if (data) {
             console.log("wiredKraRecordResult DATA :: " + JSON.stringify(data));
-            this.kraRecord = data;
-            this.getPMConfigKRADataHandler(this.kraRecord);
+            //smaske : calling this below function to fetch the PM Answer records
+            this.getPMConfigKRADataHandler(data);
             
-            //Check if status is COMPLETE/INREVIEW : Disable SUBMIT/SAVE btn
-            //smaske : updating Btn Mode for [Defect : PM_040]
-            // If status is "KRA COMPLETE" then DISABLE SUBMIT btn, else ENABLE SUBMIT Btn
-            //this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
-            //this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
-
             if (this.tab == 'My Metric') {
                 console.log('IN MYMETRIC CONDITION');
-                this.isSubmitBtnDisabled = this.kraRecord.Mentee_KRA_submitted__c == true ? true : false;
-                this.isSaveBtnDisabled = this.kraRecord.Mentee_KRA_submitted__c === true ? true : false;
-                this.isFieldsDisabled = this.kraRecord.Mentee_KRA_submitted__c === true ? true : false;
+                this.isSubmitBtnDisabled = data.Mentee_KRA_submitted__c == true ? true : false;
+                this.isSaveBtnDisabled = data.Mentee_KRA_submitted__c === true ? true : false;
+                this.isFieldsDisabled = data.Mentee_KRA_submitted__c === true ? true : false;
             }
             if (this.tab == 'My Team') {
-                this.isSubmitBtnDisabled = this.kraRecord.Mentor_KRA_submitted__c == true ? true : false;
-                this.isSaveBtnDisabled = this.kraRecord.Mentor_KRA_submitted__c === true ? true : false;
-                this.isFieldsDisabled = this.kraRecord.Mentor_KRA_submitted__c === true ? true : false;
+                this.isSubmitBtnDisabled = data.Mentor_KRA_submitted__c == true ? true : false;
+                this.isSaveBtnDisabled = data.Mentor_KRA_submitted__c === true ? true : false;
+                this.isFieldsDisabled = data.Mentor_KRA_submitted__c === true ? true : false;
             }
             if (this.tab == 'Pending Feedback Request') {
-                this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_INREVIEW ? true : false;
-                this.isSaveBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_INREVIEW === true ? true : false;
-                this.isFieldsDisabled = this.kraRecord.Status__c === this.STATUS_KRA_INREVIEW === true ? true : false;
+                this.isSubmitBtnDisabled = data.Status__c === this.STATUS_KRA_INREVIEW ? true : false;
+                this.isSaveBtnDisabled = data.Status__c === this.STATUS_KRA_INREVIEW === true ? true : false;
+                this.isFieldsDisabled = data.Status__c === this.STATUS_KRA_INREVIEW === true ? true : false;
             }
 
 
@@ -173,6 +168,12 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 this.isSaveBtnDisabled = true;
                 this.isSubmitBtnDisabled = true;
             }
+
+            setTimeout(() => {
+                this.kraRecord = data; //smaske :[22-July-2024] : PM_Def_039 assigning data to kraRecord once other method are called
+              },2500);
+              
+
             
         } else if (error) {
             console.log("IF ERROR :: " + JSON.stringify(error));
@@ -224,7 +225,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 console.log('stratImpactSkillsMap ' + JSON.stringify(this.stratImpactSkillsMap));
                 console.log('goalsResultsSkillsMap ' + JSON.stringify(this.goalsResultsSkillsMap)); */
                 console.log('THIS KRA b4 calculateAverageRatingForKRAHandler');
-                this.calculateAverageRatingForKRAHandler(JSON.stringify(result.pmAnsRecordsIdData));
+                this.calculateAverageRatingForKRAHandler(JSON.stringify(result.pmAnsRecordsIdData),kraRecord);
             })
             .catch(error => {
                 //this.showToast('Error Fetching PM Config Answer Records: ' + error.body.message, this.errorVariant, this.toastMode);
@@ -254,7 +255,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         });
 
         if (step === 'overAllRating') {
-            this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData);
+            this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData,this.kraRecord);
         }else if(step != 'reviewerDetails' && step != 'overAllRating'){
             console.log('Calling from stepSelectionHanler');
             this.getPMConfigKRADataHandler(this.kraRecord);
@@ -308,7 +309,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 this.showProfessionalSkills = false;
                 this.showStrategicImpact = false;
                 this.showGoalsResults = false;
-                this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData);
+                this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData,this.kraRecord);
                 this.showOverAllRating = true;
                 this.selectedStep = 'overAllRating';
                 break;
@@ -433,20 +434,61 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     }
 
 
-    // ***DUPLICATE SAVE BUTTON CODE *** 
+    // ***SAVE/SUBMIT BUTTON CODE *** 
     @track clickedBtnLabel;
-    handleSaveSubmitActionDuplicateOverAll(event) {
+    async handleSaveSubmitActionDuplicateOverAll(event) {
         this.clickedBtnLabel = event.target.label;
         console.log('SUBMIT BUTTON IS CLICKED');
         //console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData.length);
         //console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData);
-        this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData,this.clickedBtnLabel);
+        
+        const result = await LightningConfirm.open({
+            message: 'Feedback response once submitted, cannot be reverted. Would you like to proceed?',
+            variant: 'header',
+            label: 'Confirm KRA Submition',
+            style: 'text-align:center;',
+            theme: 'info',
+        });
+
+        if (result === true) {
+            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData,this.clickedBtnLabel);
+        }
     }
 
+    // ***SAVE BUTTON CODE WIHOUT VALIDATION *** 
     handleSaveActionDuplicate(event) {
         console.log(" handleSaveActionDuplicate Invoked");
         this.clickedBtnLabel = event.target.label;
         //console.log(" clickedBtnLabel & selectedStep  :" + this.clickedBtnLabel + ' ---- ' + this.selectedStep);
+        let isFormValid = true;
+        const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
+        /* recordEditForms.forEach(form => {
+            const inputFields = form.querySelectorAll('lightning-input-field');
+            inputFields.forEach(inputField => {
+                if (!inputField.value) {
+                    isFormValid = false;
+                    inputField.reportValidity();
+                }
+            });
+        }); */
+        console.log(" recordEditForms size 583 " + recordEditForms.length);
+
+        if (isFormValid) {
+            console.log("Form is Valid");
+            recordEditForms.forEach(form => {
+                form.submit();
+            });
+        } /* else {
+            var msg = 'Please make sure to fill all the marked fields.';
+            this.showToast(msg, this.errorVariant, this.toastMode);
+        } */
+    }
+
+
+
+    // ***SAVE BUTTON CODE WItH VALIDATION *** 
+    handleSaveActionDuplicateWithValidation(event) {
+        console.log(" handleSaveActionDuplicateWithValidation Invoked");
         let isFormValid = true;
         const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
         recordEditForms.forEach(form => {
@@ -459,16 +501,16 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             });
         });
         console.log(" recordEditForms size 583 " + recordEditForms.length);
-
         if (isFormValid) {
             console.log("Form is Valid");
             recordEditForms.forEach(form => {
                 form.submit();
             });
-        } else {
+        }else {
             var msg = 'Please make sure to fill all the marked fields.';
             this.showToast(msg, this.errorVariant, this.toastMode);
         }
+        return isFormValid;
     }
 
 
@@ -507,7 +549,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         updatePMAnswerRecordsStatus({ PMAnswerRecordsId: recordIds, newStatus: status })
             .then(result => {
                 console.log("updatePMAnswerRecordsStatus result ::" + JSON.stringify(result));
-                this.calculateAverageRatingForKRAHandler(this.recordIds);
+                this.calculateAverageRatingForKRAHandler(this.recordIds,this.kraRecord);
                 if (status == 'Submit') {
                     this.submitKraRecordHandler();
                     this.showToast('KRA details submitted successfully.', this.successVariant, this.toastMode);
@@ -523,12 +565,12 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     }
 
     @track wrapData;
-    calculateAverageRatingForKRAHandler(recordIds) {
+    calculateAverageRatingForKRAHandler(recordIds,kraData) {
         console.log('calculateAverageRatingForKRAHandler Invoked');
         /* console.log('Received recordIds : ' + recordIds);
         console.log('Received this.kraRecord : ' + JSON.stringify(this.kraRecord));
         console.log('Received this.tab : ' + this.tab); */
-        calculateAverageRatingForKRA({ PMAnswerRecordsId: recordIds, kraRecord: this.kraRecord, tab: this.tab })
+        calculateAverageRatingForKRA({ PMAnswerRecordsId: recordIds, kraRecord: kraData, tab: this.tab })
             .then(result => {
                 console.log("calculateAverageRatingForKRA result ::" + JSON.stringify(result));
                 this.wrapData = result;
@@ -575,17 +617,6 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 });
     }
 
-
-    showToast(message, variant, mode) {
-        const event = new ShowToastEvent({
-            message: message,
-            variant: variant,
-            mode: mode
-        });
-        this.dispatchEvent(event);
-    }
-
-
     //smaske :[EN_002] : Updated code for setting Class instead of hiding whole layout-item
     @api
     get showSaveSubmitButtonsVisibility() {
@@ -613,6 +644,15 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleErrors(event) {
         console.log('No errors'); 
         console.log('FORM ERROR : '+ JSON.stringify(event.detail));
+    }
+
+    showToast(message, variant, mode) {
+        const event = new ShowToastEvent({
+            message: message,
+            variant: variant,
+            mode: mode
+        });
+        this.dispatchEvent(event);
     }
     
 
