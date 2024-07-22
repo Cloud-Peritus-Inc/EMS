@@ -46,11 +46,11 @@ export default class Kratable extends NavigationMixin(LightningElement) {
                 tableRecordsData.forEach(qualItem => {
                     if (qualItem.mentorSubmitted && this.tab == 'My Team') {
                         qualItem.allowedit = false;
+                        qualItem.allowCopy = false;
                     } else if (qualItem.menteeSubmitted && this.tab == 'My Metric') {
+                        console.log('51');
                         qualItem.allowedit = false;
-                    }/* else if(qualItem.){
-                        qualItem.allowedit = true;
-                    } */
+                    }
                 });
             });
 
