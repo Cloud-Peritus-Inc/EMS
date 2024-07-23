@@ -50,6 +50,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
                     } else if (qualItem.menteeSubmitted && this.tab == 'My Metric') {
                         console.log('51');
                         qualItem.allowedit = false;
+                        qualItem.allowCopy = false;
                     }
                 });
             });
