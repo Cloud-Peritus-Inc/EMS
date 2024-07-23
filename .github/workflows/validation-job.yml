@@ -12,7 +12,7 @@ on:
         description: Select Org
         options:
         - Dev
-        - Qa
+        - QA
         - Uat
         - Prod
         - PMS
