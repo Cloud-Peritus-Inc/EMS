@@ -162,29 +162,69 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
 
     stepSelectionHanler(event) {
+        console.log('Current Section we are at : ' + this.selectedStep);
+        console.log('Next Section we moving to : ' + event.target.value);
 
-        const step = event.target.value;
-        this.selectedStep = step;
-        // Map each step to its corresponding visibility property
-        const stepToVisibility = {
-            'reviewerDetails': 'showReviewerDetails',
-            'technicalAcumen': 'showTechnicalAcumen',
-            'professionalSkills': 'showProfessionalSkills',
-            'strategicImpact': 'showStrategicImpact',
-            'goalsResults': 'showGoalsResults',
-            'overAllRating': 'showOverAllRating',
-        };
+        /*smaske : [PM_Def_027] : Adding validaion before moving to next section. 
+        handleSaveActionDuplicateWithValidation will do validation and pass result to changeSection
+        if changeSection is true we are moving to next section */
+        let changeSection = false;
+        const currentSection = this.selectedStep;
 
-        // Set visibility based on the selected step
-        Object.keys(stepToVisibility).forEach(key => {
-            this[stepToVisibility[key]] = key === step;
-        });
+        if (currentSection == 'reviewerDetails' || currentSection == 'overAllRating') {
+            console.log('if');
+            changeSection = true;
+        } else {
+            console.log('else');
+            changeSection = this.handleSaveActionDuplicateWithValidation();
+        }
+
+        if (changeSection) {
+            const step = event.target.value;
+            this.selectedStep = step;
+            // Map each step to its corresponding visibility property
+            const stepToVisibility = {
+                'reviewerDetails': 'showReviewerDetails',
+                'technicalAcumen': 'showTechnicalAcumen',
+                'professionalSkills': 'showProfessionalSkills',
+                'strategicImpact': 'showStrategicImpact',
+                'goalsResults': 'showGoalsResults',
+                'overAllRating': 'showOverAllRating',
+            };
+
+            // Set visibility based on the selected step
+            Object.keys(stepToVisibility).forEach(key => {
+                this[stepToVisibility[key]] = key === step;
+            });
+
+            if (step === 'overAllRating') {
+                //this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData, this.kraRecord);
+                setTimeout(() => {
+                    this.getPMConfigKRADataHandler(this.kraRecord);
+                  },2200);
+            } else if (step != 'reviewerDetails' && step != 'overAllRating') {
+                console.log('Calling getPMConfigKRADataHandler');
+                setTimeout(() => {
+                    this.getPMConfigKRADataHandler(this.kraRecord);
+                  },100);
+            }
+        }
+
     }
 
     handleNextAction() {
         console.log('handleNextAction ' + this.selectedStep);
 
         var moveToNextStep = this.selectedStep;
+        /*smaske : [PM_Def_027] : Adding validaion before moving to next section. 
+        handleSaveActionDuplicateWithValidation will do validation and pass result to changeSection
+        if changeSection is true we are moving to next section */
+        let changeSection = true;
+        if (moveToNextStep != 'reviewerDetails') {
+            changeSection = this.handleSaveActionDuplicateWithValidation();
+        }
+        
+        if (changeSection) {
             switch (moveToNextStep) {
                 case 'reviewerDetails':
                     this.showReviewerDetails = false;
@@ -232,62 +272,6 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                     this.selectedStep = 'overAllRating';
                     break;
             }
-
-        /*smaske: [UAT_018] : Commenting Below Next button field validation code as per new requirement we dont need validation.
-        Keeping the code commneted for Future Reference.
-        Only keeping the navigation code above for switching between tabs on NEXT button.*/
-
-        
-        /*let isValid = true;
-        let divToValidate;
-        let inputFields = null;
-
-        if (this.mode == 'Edit') {
-            var moveToNextStep = this.selectedStep;
-            if (moveToNextStep == 'reviewerDetails') {
-                divToValidate = this.template.querySelector('[data-reviewer-details]');
-                inputFields = divToValidate.querySelectorAll('lightning-input');
-            } else if (moveToNextStep == 'technicalAcumen') {
-                divToValidate = this.template.querySelector('[data-technical-acumen]');
-                inputFields = [
-                    ...divToValidate.querySelectorAll('lightning-input'),
-                    divToValidate.querySelector('lightning-textarea')
-                ];
-            } else if (moveToNextStep == 'professionalSkills') {
-                console.log(' in professionalSkills');
-                divToValidate = this.template.querySelector('[data-professional-skills]');
-                console.log(' data-professional-skills ' + divToValidate);
-                inputFields = [
-                    ...divToValidate.querySelectorAll('lightning-input'),
-                    divToValidate.querySelector('lightning-textarea')
-                ];
-            } else if (moveToNextStep == 'strategicImpact') {
-                console.log(' in strategicImpact');
-                divToValidate = this.template.querySelector('[data-strategic-impact]');
-                inputFields = [
-                    ...divToValidate.querySelectorAll('lightning-input'),
-                    divToValidate.querySelector('lightning-textarea')
-                ];
-            } else if (moveToNextStep == 'goalsResults') {
-                console.log(' in goalsResults');
-                divToValidate = this.template.querySelector('[data-goals-results]');
-                //inputFields = divToValidate.querySelectorAll('lightning-input');
-                inputFields = [
-                    ...divToValidate.querySelectorAll('lightning-input'),
-                    divToValidate.querySelector('lightning-textarea')
-                ];
-            }
-            console.log("ALL INP FIELDS : " + JSON.stringify(inputFields));
-            if (Array.isArray(inputFields) && inputFields.length > 0 && inputFields.every(field => field !== null)) {
-                inputFields.forEach(inputField => {
-                    const fieldName = inputField.name;
-                    const value = this.kraRecord[fieldName];
-                    if (!value) {
-                        isValid = false;
-                    }
-                });
-            }
-
         }
 
         if (isValid) {
@@ -466,7 +450,21 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleSaveAction() {
         console.log(" handleSaveAction ");
 
-        //console.log(JSON.stringify(this.kraRecord));
+    // ***SAVE/SUBMIT BUTTON CODE *** 
+    @track clickedBtnLabel = 'Save';
+    async handleSaveSubmitActionDuplicateOverAll(event) {
+        this.clickedBtnLabel = event.target.label;
+        console.log('SUBMIT BUTTON IS CLICKED');
+        //console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData.length);
+        //console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData);
+        
+        const result = await LightningConfirm.open({
+            message: 'Feedback response once submitted, cannot be reverted. Would you like to proceed?',
+            variant: 'header',
+            label: 'Confirm KRA Submition',
+            style: 'text-align:center;',
+            theme: 'info',
+        });
 
         let isValid = true;
         let allPositiveTechFieldsList = [];
@@ -475,109 +473,50 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         let allPositiveGoalResultFieldsList = [];
         let inputFields = null;
 
-        if (this.viewwrap) {
-            // Define relationships between viewwrap properties and associated fields
-            const propertyFieldMap = this.getAllPropertyFieldMap();
-            /*{
-                showDevelopment: ['Development_Rating__c', 'Development_Example__c'],
-                showTesting: ['Testing_Rating__c', 'Testing_Example__c'],
-                showUnderstandingCode: ['Understanding_Code_Rating__c', 'Understanding_Code_Example__c'],
-                showPlatformKnowledge: ['Platform_Knowledge_Rating__c', 'Platform_Knowledge_Example__c'],
-                showDesignArchitecture: ['Design_and_Architecture_Rating__c', 'Design_and_Architecture_Example__c'],
-                showDocumentation: ['Documentation_Rating__c', 'Documentation_Example__c'],
-                showContinuousImprovement: ['Continuous_Improvement_Rating__c', 'Continuous_Improvement_Example__c'],
-                showProjectPlanningSchedulingManagement: ['Project_Planning_Scheduling_Rating__c', 'Project_Planning_Scheduling_Example__c'],
-                showDocumentationReportingManagement: ['Documentation_Reporting_Mgmt_Rating__c', 'Documentation_Reporting_Mgmt_Example__c'],
-                showTaskManagement: ['Task_Management_Rating__c', 'Task_Management_Example__c'],
-                showRiskManagement: ['Risk_Management_Rating__c', 'Risk_Management_Example__c'],
-                showResourceManagement: ['Resource_Management_Rating__c', 'Resource_Management_Example__c'],
-                showStakeholderManagement: ['Stakeholder_Management_Rating__c', 'Stakeholder_Management_Example__c'],
-                showCommunicationManagement: ['Communication_Management_Rating__c', 'Communication_Management_Example__c'],
-                showLearningAndSkillDevelopment: ['Learning_and_Skill_Development_Rating__c', 'Learning_and_Skill_Development_Example__c'],
-                showEstimations: ['Estimations_Rating__c', 'Estimations_Example__c'],
-                showTestCaseDesignExecution: ['Test_Case_Design_Execution_Rating__c', 'Test_Case_Design_Execution_Example__c'],
-                showDefectManagement: ['Defect_Management_Rating__c', 'Defect_Management_Example__c'],
-                showTroubleshootingAndEnvironmentPrep: ['Troubleshooting_Environment_Prep_Rating__c', 'Troubleshooting_Environment_Prep_Example__c'],
-                showRequirementGathering: ['Requirement_Gathering_Rating__c', 'Requirement_Gathering_Example__c'],
-                showPOVCreationDemos: ['POV_Creation_Client_Demos_Rating__c', 'POV_Creation_Client_Demos_Example__c'],
-                showDeliveryAccountability: ['Delivery_Accountability_Rating__c', 'Delivery_Accountability_Example__c'],
-                showEffectiveCommunication: ['Effective_Communication_Rating__c', 'Effective_Communication_Example__c'],
-                showKnowledgeSharing: ['Knowledge_Sharing_Rating__c', 'Knowledge_Sharing_Example__c'],
-                showTeamwork: ['Teamwork_Rating__c', 'Teamwork_Example__c'],
-                showAttitudeBehavior: ['Attitude_and_Behavior_Rating__c', 'Attitude_and_Behavior_Example__c'],
-                showBusinessDevelopment: ['Business_Development_Rating__c', 'Business_Development_Example__c'],
-                showStrategicWork: ['Strategic_Work_Rating__c', 'Strategic_Work_Example__c'],
-                showCompanyGrowth: ['Company_Growth_Rating__c', 'Company_Growth_Example__c'],
-                showGoalAchievement: ['Goal_Achievement_Rating__c', 'Goal_Achievement_Example__c'],
-                showStakeholderSatisfaction: ['Stakeholder_Satisfaction_Rating__c', 'Stakeholder_Satisfaction_Example__c'],
-                showProjectSuccess: ['Project_Success_Rating__c', 'Project_Success_Example__c']
-            };*/
-            //console.log("#getAllPropertyFieldMap 363 : " + JSON.stringify(this.getAllPropertyFieldMap()));
+    // ***SAVE BUTTON CODE WIHOUT VALIDATION *** 
+    /*smaske : [PM_Def_033] : As part fo this defect not validating the record-edit-form data and drectly saving record changes.*/
+    handleSaveActionDuplicate(event) {
+        console.log(" handleSaveActionDuplicate Invoked");
+        this.clickedBtnLabel = event.target.label;
+        //console.log(" clickedBtnLabel & selectedStep  :" + this.clickedBtnLabel + ' ---- ' + this.selectedStep);
+        let isFormValid = true;
+        const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
+        console.log(" recordEditForms size 583 " + recordEditForms.length);
+        if (isFormValid) {
+            console.log("Form is Valid");
+            recordEditForms.forEach(form => {
+                form.submit();
+            });
+        }
+    }
 
-            
-            //smaske :[EN_002] : Disabling Field Validation on SAVE as per Feedback
-            // Validate fields based on viewwrap properties
-            /*Object.entries(propertyFieldMap).forEach(([property, fields]) => {
-                if (this.viewwrap[property]) {
-                    if (fields.some(field => !this.kraRecord[field])) {
-                        console.error(`${property} fields are blank in the kraRecord object`);
-                        isValid = false;
-                    }
+
+    // ***SAVE BUTTON CODE WItH VALIDATION *** 
+    /*smaske : [PM_Def_027] : Adding validaion before moving to next section.
+        handleSaveActionDuplicateWithValidation will do validation and pass result to changeSection
+        if changeSection is true we are moving to next section */
+    handleSaveActionDuplicateWithValidation() {
+        console.log(" handleSaveActionDuplicateWithValidation Invoked");
+        let isFormValid = true;
+        const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
+        recordEditForms.forEach(form => {
+            const inputFields = form.querySelectorAll('lightning-input-field');
+            inputFields.forEach(inputField => {
+                if (!inputField.value) {
+                    isFormValid = false;
+                    inputField.reportValidity();
                 }
-            });*/
-
-            /*
-            //Calculate Overall_Tech_Rating_2__c based on Visibile Tech Rating Fields for User Resource Role.
-            let techPropertyFieldMap = this.getTechPropertyFieldMap();
-            allPositiveTechFieldsList = this.updateAllPositiveFieldsList(techPropertyFieldMap,this.viewwrap,allPositiveTechFieldsList);
-            let techSum = this.getTotalSum(this.kraRecord,allPositiveTechFieldsList);
-            let averageOfTechSkillsRating = allPositiveTechFieldsList.length > 0 ? techSum / allPositiveTechFieldsList.length : 0;
-            if(this.SelectedResourceResourceRoleTechAcc){
-                this.kraRecord.Overall_Tech_Rating_2__c = averageOfTechSkillsRating * (this.SelectedResourceResourceRoleTechAcc/100);
-            }else{
-                this.kraRecord.Overall_Tech_Rating_2__c = averageOfTechSkillsRating * (this.CurrentUserResourceRoleTechAcc/100);
-            }
-
-
-            //Calculate Overall_Professional_Rating_2__c based on Visibile Professional Rating Fields for User Resource Role.
-            let profPropertyFieldMap = this.getProfSkillsPropertyFieldMap();
-            allPositiveProfessionalFieldsList = this.updateAllPositiveFieldsList(profPropertyFieldMap,this.viewwrap,allPositiveProfessionalFieldsList);
-            let profSum = this.getTotalSum(this.kraRecord,allPositiveProfessionalFieldsList);
-            let averageOfProfSkillsRating = allPositiveProfessionalFieldsList.length > 0 ? profSum / allPositiveProfessionalFieldsList.length : 0;
-            if(this.SelectedResourceResourceRoleProfSkillAcc){
-                this.kraRecord.Overall_Professional_Rating_2__c = averageOfProfSkillsRating * (this.SelectedResourceResourceRoleProfSkillAcc/100);
-            }else{
-                this.kraRecord.Overall_Professional_Rating_2__c = averageOfProfSkillsRating * (this.CurrentUserResourceRoleProfSkillAcc/100);
-            }
-
-            //Calculate Overall_Strategic_Rating_2__c based on Visibile Strategic Skills Rating Fields for User Resource Role.
-            let strategicPropertyFieldMap = this.getStrategicImpactPropertyFieldMap();
-            allPositiveStrategicFieldsList = this.updateAllPositiveFieldsList(strategicPropertyFieldMap, this.viewwrap, allPositiveStrategicFieldsList);
-            let strategicSum = this.getTotalSum(this.kraRecord, allPositiveStrategicFieldsList);
-            let averageOfStrategicSkillsRating = allPositiveStrategicFieldsList.length > 0 ? strategicSum / allPositiveStrategicFieldsList.length : 0;
-            if (this.SelectedResourceResourceRoleStrategicAcc) {
-                this.kraRecord.Overall_Strategic_Rating_2__c = averageOfStrategicSkillsRating * (this.SelectedResourceResourceRoleStrategicAcc / 100);
-            } else {
-                this.kraRecord.Overall_Strategic_Rating_2__c = averageOfStrategicSkillsRating * (this.CurrentUserResourceRoleStrategicAcc / 100);
-            }
-
-            //Calculate Overall_Goals_Results_Rating_2__c based on Visibile Goal & Result Rating Fields for User Resource Role.
-            let goalResultPropertyFieldMap = this.getGoalResultPropertyFieldMap();
-            allPositiveGoalResultFieldsList = this.updateAllPositiveFieldsList(goalResultPropertyFieldMap, this.viewwrap, allPositiveGoalResultFieldsList);
-            let goalResultSum = this.getTotalSum(this.kraRecord, allPositiveGoalResultFieldsList);
-            let averageOfGoalResultRating = allPositiveGoalResultFieldsList.length > 0 ? goalResultSum / allPositiveGoalResultFieldsList.length : 0;
-            if (this.SelectedResourceResourceRoleGoalRewAcc) {
-                this.kraRecord.Overall_Goals_Results_Rating_2__c = averageOfGoalResultRating * (this.SelectedResourceResourceRoleGoalRewAcc / 100);
-            } else {
-                this.kraRecord.Overall_Goals_Results_Rating_2__c = averageOfGoalResultRating * (this.CurrentUserResourceRoleGoalRewAcc / 100);
-            }
-            */
-
-            // Call the function for each skill category
-            this.processSkillCategory(this.getTechPropertyFieldMap(), allPositiveTechFieldsList, this.SelectedResourceResourceRoleTechAcc, this.CurrentUserResourceRoleTechAcc, "Overall_Tech_Rating_2__c", 'Average_Tech_Rating__c');
-            this.processSkillCategory(this.getProfSkillsPropertyFieldMap(), allPositiveProfessionalFieldsList, this.SelectedResourceResourceRoleProfSkillAcc, this.CurrentUserResourceRoleProfSkillAcc, 'Overall_Professional_Rating_2__c', 'Average_Professional_Rating__c');
-            this.processSkillCategory(this.getStrategicImpactPropertyFieldMap(), allPositiveStrategicFieldsList, this.SelectedResourceResourceRoleStrategicAcc, this.CurrentUserResourceRoleStrategicAcc, 'Overall_Strategic_Rating_2__c', 'Average_Strategic_Rating__c');
-            this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c', 'Average_Goals_Results_Rating__c');
+            });
+        });
+        console.log(" recordEditForms size 511 " + recordEditForms.length);
+        if (isFormValid) {
+            console.log("Form is Valid");
+            recordEditForms.forEach(form => {
+                form.submit();
+            });
+        } else {
+            var msg = 'Please make sure to fill all the marked fields.';
+            this.showToast(msg, this.errorVariant, this.toastMode);
         }
 
         if (isValid) {
