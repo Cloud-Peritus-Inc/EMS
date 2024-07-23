@@ -86,6 +86,25 @@ public without sharing class myMetricsController {
                 if(gl.Status__c == 'Active'){
                   qw.allowedit = true;  
                 }
+
+                qw.allowCopy = true;
+
+                if (prevQuarterGoals.size() > 0) {
+                    qw.allowCopy = true;
+                }else {
+                    qw.allowCopy = false;
+                }
+                
+                //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
+                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Status__c == 'HR KRA Completed' || gl.Status__c == 'Missed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate   ){
+                    qw.allowCopy = false;
+                }
+
+
+                //smaske : [UAT_066] : [15-July-2024] : passing Mentee/Mentor Submitted var values to disable button based on tabs
+                qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
+                qw.mentorSubmitted = gl.Mentor_KRA_submitted__c;
+
                 qlist.add(qw);
             }
             perfWrapper pw = new perfWrapper();
