@@ -84,6 +84,9 @@
 												</header>
 												<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 													<lightning-textarea variant="label-stacked" required label="Enter rejection reason" value={comment} onchange={handleCommentChange} field-level-help="Rejection reason for declining the KRA request"></lightning-textarea>
+													<template if:true={showError}>
+														<div class="slds-text-color_error" style="margin-top: 0.5rem;">Please Enter a Rejection Reason.</div>
+													</template>
 												</div>
 												<footer class="slds-modal__footer">
 													<button class="slds-button slds-button_neutral" onclick={handleRejectionSubmission}>Submit</button>

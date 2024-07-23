@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notifying Mentor On Project Manager Declining The Feedback Request</name>
     <style>freeForm</style>
-    <subject>Decline of Requested Feedback Submission</subject>
+    <subject>Decline of Requested Feedback Submission for {!PM_Configure__c.Mentor_Mentee__c}</subject>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

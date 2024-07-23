@@ -75,7 +75,7 @@ public without sharing class myMetricsController {
 
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c  FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
+                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c  FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
             for(Goal__c gl : ful.Goals__r){
@@ -87,7 +87,7 @@ public without sharing class myMetricsController {
                 qw.status = gl.Status__c;
                 qw.typeval = gl.Type__c;
                 //qw.rating = String.valueOf(gl.Rating__c);
-                //qw.overallRating = gl.Overall_Rating__c;
+                qw.overallRating = gl.Overall_Rating__c; //Ravitheja
                 qw.allowedit = false;
                 //smaske : PM_061 : updating conditon to only allow edit when status is "Active" in MY METRIC TAB
                 //Previously it was : gl.Status__c != 'KRA Complete'
@@ -95,15 +95,16 @@ public without sharing class myMetricsController {
                     qw.allowedit = true;  
                 }
 
-                //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
                 qw.allowCopy = true;
-                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate  ){
-                    qw.allowCopy = false;
-                }
-
                 if (prevQuarterGoals.size() > 0) {
                     qw.allowCopy = true;
                 }
+                //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
+                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Status__c == 'HR KRA Completed' || gl.Status__c == 'Missed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate  ){
+                    qw.allowCopy = false;
+                }
+
+                
 
                 //smaske : [UAT_066] : [15-July-2024] : passing Mentee/Mentor Submitted var values to disable button based on tabs
                 qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
@@ -201,7 +202,7 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         List<perfWrapper> returnval = new List<perfWrapper>();
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
+                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
         
         
         for(Fulfillment__c ful : returnList){
@@ -215,7 +216,7 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
                 qw.status = gl.Status__c;
                 qw.typeval = gl.Type__c;
                 //qw.rating = String.valueOf(gl.Rating__c);
-                //qw.overallRating = gl.Overall_Rating__c;
+                qw.overallRating = gl.Overall_Rating__c; //Ravitheja
                 qw.allowedit = false;
                 //smaske : PM_061 : updating conditon to only allow edit when status is "KRA Inreview" in MY TEAM TAB for selected Reportee's KRA
                 //Previously it was : gl.Status__c != 'KRA Completed'
@@ -456,7 +457,7 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         @AuraEnabled
         public String rating;
         @AuraEnabled
-        public String overallRating;
+        public Decimal overallRating; //Ravitheja
         @AuraEnabled
         public boolean allowedit;
         @AuraEnabled
@@ -658,10 +659,10 @@ return menteeRecords;
         
         
         List<PM_Configure__c> pmAnswerList = new List<PM_Configure__c>();    
-       // Contact conRecList1 =[Select Id,EMS_TM_User__c from Contact where Id =:managerContactSet limit 1].EMS_TM_User__c;
+        
         for (Id reportingManager : managerContactSet) {
             System.debug('reportingManager: ' + reportingManager);
-            Id gettingownerID =[Select Id, EMS_TM_User__c from Contact where Id =:reportingManager limit 1].EMS_TM_User__c;
+            
             for (PM_Configure__c pm : [SELECT Id, Configuration_Type__c, Resource_Role__c,Name__c, Area__c,Question__c
                                        FROM PM_Configure__c 
                                        WHERE Configuration_Type__c = 'KRA' 
@@ -677,10 +678,10 @@ return menteeRecords;
                                            pmAnswer.KRA__c = goalList[0].Id;
                                            pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
                                            pmAnswer.RecordTypeId = answerRecordTypeId;
-                                           if(gettingownerID!=null){
-                                               pmAnswer.OwnerId = gettingownerID;
+                                          /* if(!conRecList.isEmpty() && conRecList[0].Id == reportingManager){
+                                               pmAnswer.OwnerId = conRecList[0].EMS_TM_User__c;
 
-                                           }
+                                           }*/
                                           // pmAnswer.OwnerId = 
                                         //add reportingManager as the owner of the record
                                            pmAnswerList.add(pmAnswer);

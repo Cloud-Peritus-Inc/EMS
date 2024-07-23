@@ -11,6 +11,8 @@ export default class GoalDataTable extends LightningElement {
     rejectionReason = '';
     selectedGoalId = '';
     wiredGoalsResult;
+    @track comment = '';
+    @track showError = false;
 
     connectedCallback() {
         this.fetchKRARecords();
@@ -43,6 +45,7 @@ export default class GoalDataTable extends LightningElement {
     }
 
     editKRAModalPopUp(event){
+        console.log('checkresource '+event.target.id);
         let node = event.currentTarget.dataset.id;
         this.selectedKraQuaterly = node;
         this.mode = 'Edit';
@@ -77,10 +80,17 @@ export default class GoalDataTable extends LightningElement {
 
     handleCommentChange(event){
         this.rejectionReason = event.target.value;
+        this.comment = event.target.value;
+        this.showError = false;
     }
 
     handleRejectionSubmission() {
-        this.acceptOrRejectRequest(this.selectedGoalId, 'reject');
+        if (!this.comment) {
+            this.showError = true;
+        } else {
+            this.showError = false;
+            this.acceptOrRejectRequest(this.selectedGoalId, 'reject');
+        }
     }
 
     acceptRequestHandler(event) {
