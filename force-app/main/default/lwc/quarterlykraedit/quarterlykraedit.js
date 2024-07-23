@@ -236,29 +236,52 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     //STEP SELECTION HANDLER METHOD
     stepSelectionHanler(event) {
+        console.log('Current Section we are at : ' + this.selectedStep);
+        console.log('Next Section we moving to : ' + event.target.value);
 
-        const step = event.target.value;
-        this.selectedStep = step;
-        // Map each step to its corresponding visibility property
-        const stepToVisibility = {
-            'reviewerDetails': 'showReviewerDetails',
-            'technicalAcumen': 'showTechnicalAcumen',
-            'professionalSkills': 'showProfessionalSkills',
-            'strategicImpact': 'showStrategicImpact',
-            'goalsResults': 'showGoalsResults',
-            'overAllRating': 'showOverAllRating',
-        };
+        /*smaske : [PM_Def_027] : Adding validaion before moving to next section. 
+        handleSaveActionDuplicateWithValidation will do validation and pass result to changeSection
+        if changeSection is true we are moving to next section */
+        let changeSection = false;
+        const currentSection = this.selectedStep;
 
-        // Set visibility based on the selected step
-        Object.keys(stepToVisibility).forEach(key => {
-            this[stepToVisibility[key]] = key === step;
-        });
+        if (currentSection == 'reviewerDetails' || currentSection == 'overAllRating') {
+            console.log('if');
+            changeSection = true;
+        } else {
+            console.log('else');
+            changeSection = this.handleSaveActionDuplicateWithValidation();
+        }
 
-        if (step === 'overAllRating') {
-            this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData,this.kraRecord);
-        }else if(step != 'reviewerDetails' && step != 'overAllRating'){
-            console.log('Calling from stepSelectionHanler');
-            this.getPMConfigKRADataHandler(this.kraRecord);
+        if (changeSection) {
+            const step = event.target.value;
+            this.selectedStep = step;
+            // Map each step to its corresponding visibility property
+            const stepToVisibility = {
+                'reviewerDetails': 'showReviewerDetails',
+                'technicalAcumen': 'showTechnicalAcumen',
+                'professionalSkills': 'showProfessionalSkills',
+                'strategicImpact': 'showStrategicImpact',
+                'goalsResults': 'showGoalsResults',
+                'overAllRating': 'showOverAllRating',
+            };
+
+            // Set visibility based on the selected step
+            Object.keys(stepToVisibility).forEach(key => {
+                this[stepToVisibility[key]] = key === step;
+            });
+
+            if (step === 'overAllRating') {
+                //this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData, this.kraRecord);
+                setTimeout(() => {
+                    this.getPMConfigKRADataHandler(this.kraRecord);
+                  },2200);
+            } else if (step != 'reviewerDetails' && step != 'overAllRating') {
+                console.log('Calling getPMConfigKRADataHandler');
+                setTimeout(() => {
+                    this.getPMConfigKRADataHandler(this.kraRecord);
+                  },100);
+            }
         }
 
     }
@@ -266,53 +289,62 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleNextAction() {
         console.log('handleNextAction ' + this.selectedStep);
         var moveToNextStep = this.selectedStep;
-        switch (moveToNextStep) {
-            case 'reviewerDetails':
-                this.showReviewerDetails = false;
-                this.showTechnicalAcumen = true;
-                this.showProfessionalSkills = false;
-                this.showStrategicImpact = false;
-                this.showGoalsResults = false;
-                this.showOverAllRating = false;
-                this.selectedStep = 'technicalAcumen';
-                break;
-            case 'technicalAcumen':
-                this.showReviewerDetails = false;
-                this.showTechnicalAcumen = false;
-                this.showProfessionalSkills = true;
-                this.showStrategicImpact = false;
-                this.showGoalsResults = false;
-                this.showOverAllRating = false;
-                this.selectedStep = 'professionalSkills';
-                break;
-            case 'professionalSkills':
-                this.showReviewerDetails = false;
-                this.showTechnicalAcumen = false;
-                this.showProfessionalSkills = false;
-                this.showStrategicImpact = true;
-                this.showGoalsResults = false;
-                this.showOverAllRating = false;
-                this.selectedStep = 'strategicImpact';
-                break;
-            case 'strategicImpact':
-                this.showReviewerDetails = false;
-                this.showTechnicalAcumen = false;
-                this.showProfessionalSkills = false;
-                this.showStrategicImpact = false;
-                this.showGoalsResults = true;
-                this.showOverAllRating = false;
-                this.selectedStep = 'goalsResults';
-                break;
-            case 'goalsResults':
-                this.showReviewerDetails = false;
-                this.showTechnicalAcumen = false;
-                this.showProfessionalSkills = false;
-                this.showStrategicImpact = false;
-                this.showGoalsResults = false;
-                this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData,this.kraRecord);
-                this.showOverAllRating = true;
-                this.selectedStep = 'overAllRating';
-                break;
+        /*smaske : [PM_Def_027] : Adding validaion before moving to next section. 
+        handleSaveActionDuplicateWithValidation will do validation and pass result to changeSection
+        if changeSection is true we are moving to next section */
+        let changeSection = true;
+        if (moveToNextStep != 'reviewerDetails') {
+            changeSection = this.handleSaveActionDuplicateWithValidation();
+        }
+        
+        if (changeSection) {
+            switch (moveToNextStep) {
+                case 'reviewerDetails':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = true;
+                    this.showProfessionalSkills = false;
+                    this.showStrategicImpact = false;
+                    this.showGoalsResults = false;
+                    this.showOverAllRating = false;
+                    this.selectedStep = 'technicalAcumen';
+                    break;
+                case 'technicalAcumen':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = false;
+                    this.showProfessionalSkills = true;
+                    this.showStrategicImpact = false;
+                    this.showGoalsResults = false;
+                    this.showOverAllRating = false;
+                    this.selectedStep = 'professionalSkills';
+                    break;
+                case 'professionalSkills':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = false;
+                    this.showProfessionalSkills = false;
+                    this.showStrategicImpact = true;
+                    this.showGoalsResults = false;
+                    this.showOverAllRating = false;
+                    this.selectedStep = 'strategicImpact';
+                    break;
+                case 'strategicImpact':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = false;
+                    this.showProfessionalSkills = false;
+                    this.showStrategicImpact = false;
+                    this.showGoalsResults = true;
+                    this.showOverAllRating = false;
+                    this.selectedStep = 'goalsResults';
+                    break;
+                case 'goalsResults':
+                    this.showReviewerDetails = false;
+                    this.showTechnicalAcumen = false;
+                    this.showProfessionalSkills = false;
+                    this.showStrategicImpact = false;
+                    this.showGoalsResults = false;
+                    this.showOverAllRating = true;
+                    this.selectedStep = 'overAllRating';
+                    break;
+            }
         }
 
     }
@@ -435,7 +467,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
 
     // ***SAVE/SUBMIT BUTTON CODE *** 
-    @track clickedBtnLabel;
+    @track clickedBtnLabel = 'Save';
     async handleSaveSubmitActionDuplicateOverAll(event) {
         this.clickedBtnLabel = event.target.label;
         console.log('SUBMIT BUTTON IS CLICKED');
@@ -456,38 +488,28 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     }
 
     // ***SAVE BUTTON CODE WIHOUT VALIDATION *** 
+    /*smaske : [PM_Def_033] : As part fo this defect not validating the record-edit-form data and drectly saving record changes.*/
     handleSaveActionDuplicate(event) {
         console.log(" handleSaveActionDuplicate Invoked");
         this.clickedBtnLabel = event.target.label;
         //console.log(" clickedBtnLabel & selectedStep  :" + this.clickedBtnLabel + ' ---- ' + this.selectedStep);
         let isFormValid = true;
         const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
-        /* recordEditForms.forEach(form => {
-            const inputFields = form.querySelectorAll('lightning-input-field');
-            inputFields.forEach(inputField => {
-                if (!inputField.value) {
-                    isFormValid = false;
-                    inputField.reportValidity();
-                }
-            });
-        }); */
         console.log(" recordEditForms size 583 " + recordEditForms.length);
-
         if (isFormValid) {
             console.log("Form is Valid");
             recordEditForms.forEach(form => {
                 form.submit();
             });
-        } /* else {
-            var msg = 'Please make sure to fill all the marked fields.';
-            this.showToast(msg, this.errorVariant, this.toastMode);
-        } */
+        }
     }
 
 
-
     // ***SAVE BUTTON CODE WItH VALIDATION *** 
-    handleSaveActionDuplicateWithValidation(event) {
+    /*smaske : [PM_Def_027] : Adding validaion before moving to next section.
+        handleSaveActionDuplicateWithValidation will do validation and pass result to changeSection
+        if changeSection is true we are moving to next section */
+    handleSaveActionDuplicateWithValidation() {
         console.log(" handleSaveActionDuplicateWithValidation Invoked");
         let isFormValid = true;
         const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
@@ -500,13 +522,13 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 }
             });
         });
-        console.log(" recordEditForms size 583 " + recordEditForms.length);
+        console.log(" recordEditForms size 511 " + recordEditForms.length);
         if (isFormValid) {
             console.log("Form is Valid");
             recordEditForms.forEach(form => {
                 form.submit();
             });
-        }else {
+        } else {
             var msg = 'Please make sure to fill all the marked fields.';
             this.showToast(msg, this.errorVariant, this.toastMode);
         }
