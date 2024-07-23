@@ -13,6 +13,7 @@ export default class GoalDataTable extends LightningElement {
     wiredGoalsResult;
     @track comment = '';
     @track showError = false;
+    @track selectedResourceId = '';
 
     connectedCallback() {
         this.fetchKRARecords();
@@ -42,6 +43,7 @@ export default class GoalDataTable extends LightningElement {
 
     hideKRAEditModalBox(){
         this.showKRAEditModal = false;
+        this.fetchKRARecords();
     }
 
     editKRAModalPopUp(event){
@@ -49,6 +51,11 @@ export default class GoalDataTable extends LightningElement {
         let node = event.currentTarget.dataset.id;
         this.selectedKraQuaterly = node;
         this.mode = 'Edit';
+        const selectedGoal = this.data.find(goal => goal.Id === node);
+        if (selectedGoal) {
+            this.selectedResourceId = selectedGoal.resource;
+        }
+        console.log('resource '+ this.selectedResourceId);
         this.checkisshowKRAEditModal();
     }
 
