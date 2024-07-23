@@ -11,11 +11,11 @@ on:
         type: choice
         description: Select Org
         options:
-        - EMS-Dev
-        - EMS-Qa
-        - EMS-Uat
-        - EMS-Prod
-        - EMS-PMS
+        - Dev
+        - QA
+        - Uat
+        - Prod
+        - PMS
      
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
