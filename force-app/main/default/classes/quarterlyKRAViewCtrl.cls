@@ -460,21 +460,21 @@ public without sharing class quarterlyKRAViewCtrl {
 
         //Avg Rating values without Resource role % allocation
         // Set the scale to 1 decimal place
-        wrap.TechSkillData = avgTechSkillRating.setScale(1, RoundingMode.HALF_UP);
-        wrap.ProfSkillData = avgProfSkillRating.setScale(1, RoundingMode.HALF_UP);
-        wrap.StrategicData = avgStrategicRating.setScale(1, RoundingMode.HALF_UP);
-        wrap.GoalResultData = avgGoalResultRating.setScale(1, RoundingMode.HALF_UP);
+        wrap.TechSkillData = avgTechSkillRating.setScale(2, RoundingMode.FLOOR);
+        wrap.ProfSkillData = avgProfSkillRating.setScale(2, RoundingMode.FLOOR);
+        wrap.StrategicData = avgStrategicRating.setScale(2, RoundingMode.FLOOR);
+        wrap.GoalResultData = avgGoalResultRating.setScale(2, RoundingMode.FLOOR);
 
 
         //Avg Rating values based on Resource Role % allocated to AREA
-        wrap.AvgTechSkillData = AvgTechSkillForResource.setScale(1, RoundingMode.HALF_UP);
-        wrap.AvgProfSkillData = AvgProfSkillForResource.setScale(1, RoundingMode.HALF_UP);
-        wrap.AvgStrategicData = AvgStrategicForResource.setScale(1, RoundingMode.HALF_UP);
-        wrap.AvgGoalResultData = AvgGoalResultForResource.setScale(1, RoundingMode.HALF_UP);
+        wrap.AvgTechSkillData = AvgTechSkillForResource.setScale(2, RoundingMode.FLOOR);
+        wrap.AvgProfSkillData = AvgProfSkillForResource.setScale(2, RoundingMode.FLOOR);
+        wrap.AvgStrategicData = AvgStrategicForResource.setScale(2, RoundingMode.FLOOR);
+        wrap.AvgGoalResultData = AvgGoalResultForResource.setScale(2, RoundingMode.FLOOR);
 
 
         //Avg rating of ALL AREA'S  based on Resource Role % allocated
-        wrap.AreaWiseAvgRating = totalAreaWiseAvgRating.setScale(1, RoundingMode.HALF_UP);
+        wrap.AreaWiseAvgRating = totalAreaWiseAvgRating.setScale(2, RoundingMode.FLOOR);
 
         wrap.kraRecordData = kraRecord;
 
