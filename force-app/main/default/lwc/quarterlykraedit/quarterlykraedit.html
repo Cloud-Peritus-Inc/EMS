@@ -503,7 +503,62 @@
                                     </tr>
                                 </thead>
 
-                                <template lwc:if={CurrentUserConDetails}>
+                                <template lwc:if={SelectedResourceConDetails}>
+                                    <tbody>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="Rating Score" scope="row">
+                                                <div class="slds-truncate" title="Technical Acumen">
+                                                    <a href="javascript:void(0)">Technical Acumen [{SelectedResourceResourceRoleTechAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Technical Acumen">
+                                                <div class="slds-truncate">{wrapData.TechSkillData} ({wrapData.AvgTechSkillData})</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="2" scope="row">
+                                                <div class="slds-truncate" title="Professional Skills">
+                                                    <a href="javascript:void(0)">Professional Skills [{SelectedResourceResourceRoleProfSkillAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Professional Skills">
+                                                <div class="slds-truncate">{wrapData.ProfSkillData} ({wrapData.AvgProfSkillData})</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="3" scope="row">
+                                                <div class="slds-truncate" title="Strategic Impact">
+                                                    <a href="javascript:void(0)">Strategic Impact [{SelectedResourceResourceRoleStrategicAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Strategic Impact">
+                                                <div class="slds-truncate">{wrapData.StrategicData} ({wrapData.AvgStrategicData})</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="4" scope="row">
+                                                <div class="slds-truncate" title="Goals & Results">
+                                                    <a href="javascript:void(0)">Goals & Results [{SelectedResourceResourceRoleGoalRewAcc}%]</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Goals & Results">
+                                                <div class="slds-truncate">{wrapData.GoalResultData} ({wrapData.AvgGoalResultData})</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="5" scope="row">
+                                                <div class="slds-truncate" title="Overall Rating">
+                                                    <a href="javascript:void(0)">Overall Rating</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Overall Average Rating">
+                                                <div class="slds-truncate">{wrapData.AreaWiseAvgRating}</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </template>
+
+                                <template lwc:elseif={CurrentUserConDetails}>
                                     <tbody>
                                         <tr class="slds-hint-parent">
                                             <th data-label="Rating Score" scope="row">
@@ -557,9 +612,6 @@
                                         </tr>
                                     </tbody>
                                 </template>
-
-
-
 
                             </table>
                         </lightning-layout-item>
