@@ -31,7 +31,7 @@ export default class MyMetrics extends LightningElement {
     @track showcombobox = false; //sangharsh
 
 
-    //current contact resourceId
+    //current contact resourceId.
     resourceId;
     pulseKraRecord = [];
 

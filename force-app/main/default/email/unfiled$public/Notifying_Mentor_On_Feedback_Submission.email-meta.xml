@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notifying Mentor On Feedback Submission</name>
     <style>freeForm</style>
-    <subject>Performance Feedback for Submitted</subject>
+    <subject>Performance Feedback for {!PM_Configure__c.Mentee__c} Submitted</subject>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
