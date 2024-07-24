@@ -71,9 +71,9 @@ export default class GoalDataTable extends LightningElement {
         })
             .then(() => {
                 if (actionType === 'accept') {
-                    this.showToast('Success', 'Accepted Successfully', 'success');
+                    this.showToast('Success', 'Feedback request accepted successfully', 'success');
                 } else if (actionType === 'reject') {
-                    this.showToast('Success', 'Rejected Successfully', 'success');
+                    this.showToast('Success', 'Feedback request rejected successfully', 'success');
                 }
                 
                 this.fetchKRARecords();
