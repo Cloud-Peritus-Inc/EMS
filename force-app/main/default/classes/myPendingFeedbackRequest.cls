@@ -47,7 +47,7 @@ public without sharing class myPendingFeedbackRequest {
             }
              
             List<Goal__c> glList = [
-                SELECT Id, Name, Goal_Name__c, Start_Date__c, End_Date__c, Resource__c, Resource__r.Name,
+                SELECT Id, Name, Goal_Name__c, Start_Date__c, End_Date__c, Resource__c, Resource__r.EMS_TM_User__r.CommunityNickname,
                 (Select Id, Name, status__c, CreatedById, CreatedBy.CommunityNickname from PM_Answer_Configure__r where RecordTypeId = :AnswerRecordTypeId )
                 FROM Goal__c 
                 WHERE Id IN :kraIdSet
@@ -75,7 +75,7 @@ public without sharing class myPendingFeedbackRequest {
                 glwp.startDate = glwarp.Start_Date__c;
                 glwp.endDate = glwarp.End_Date__c;
                 glwp.resource = glwarp.Resource__c;
-                glwp.resourceName = glwarp.Resource__r.Name;
+                glwp.resourceName = glwarp.Resource__r.CreatedBy.CommunityNickname;
                 glwp.Id = glwarp.Id;
                 goalWrapperList.add(glwp);
             }
