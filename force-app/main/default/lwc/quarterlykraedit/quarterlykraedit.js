@@ -5,7 +5,10 @@ import saveKraRecord from '@salesforce/apex/quarterlyKRAViewCtrl.saveKraRecord';
 import submitKraRecord from '@salesforce/apex/quarterlyKRAViewCtrl.submitKraRecord';
 import getCurrentUserConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getCurrentUserConDetails';
 import getSelectedResourceConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getSelectedResourceConDetails';
-import getGridConfigurationKRAData from '@salesforce/apex/quarterlyKRAViewCtrl.getGridConfigurationKRAData';
+import getPMConfigKRAData from '@salesforce/apex/quarterlyKRAViewCtrl.getPMConfigKRAData';
+import calculateAverageRatingForKRA from '@salesforce/apex/quarterlyKRAViewCtrl.calculateAverageRatingForKRA';
+import updatePMAnswerRecordsStatus from '@salesforce/apex/quarterlyKRAViewCtrl.updatePMAnswerRecordsStatus';
+ 
 //other imports
 import exampleHelpText from "@salesforce/label/c.exampleHelpText";
 
