@@ -75,7 +75,7 @@ public without sharing class myPendingFeedbackRequest {
                 glwp.startDate = glwarp.Start_Date__c;
                 glwp.endDate = glwarp.End_Date__c;
                 glwp.resource = glwarp.Resource__c;
-                glwp.resourceName = glwarp.Resource__r.CreatedBy.CommunityNickname;
+                glwp.resourceName = glwarp.Resource__r.EMS_TM_User__r.CommunityNickname;
                 glwp.Id = glwarp.Id;
                 goalWrapperList.add(glwp);
             }
