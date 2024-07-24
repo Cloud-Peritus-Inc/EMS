@@ -104,7 +104,7 @@ public without sharing class myMetricsController {
                 }
                 
                 //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
-                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Status__c == 'HR KRA Completed' || gl.Status__c == 'Missed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate   ){
+                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Status__c == 'HR KRA Completed' || gl.Status__c == 'Missed'    ){ //|| gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate
                     qw.allowCopy = false;
                 }
 
@@ -681,6 +681,7 @@ return menteeRecords;
                                            pmAnswer.KRA__c = goalList[0].Id;
                                            pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
                                            pmAnswer.RecordTypeId = answerRecordTypeId;
+                                           pmAnswer.Mentee__c=goalList[0].Resource__c;	
                                           /* if(!conRecList.isEmpty() && conRecList[0].Id == reportingManager){
                                                pmAnswer.OwnerId = conRecList[0].EMS_TM_User__c;
 
