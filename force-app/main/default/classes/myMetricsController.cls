@@ -65,7 +65,7 @@ public without sharing class myMetricsController {
             }
         }
 
-        //Smaske : Current Fiscal quarter // April - June Q1 KRA
+        //Smaske : Current Fiscal quarter // April - June Q1 KRA data
         Period currentFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel FROM Period WHERE Type = 'Quarter' AND StartDate = THIS_FISCAL_QUARTER LIMIT 1];
         //Smaske : fetching records which are older than current quarter     
         List<Goal__c> prevQuarterGoals = [SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c  
@@ -579,7 +579,7 @@ return menteeRecords;
                                                             EMS_TM_ProjectName_Asgn__r.name,EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name,
                                                             EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,EMS_TM_ProjectName_Asgn__r.Project_Manager__c,
                                                             EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name,EMS_TM_StartDate_Asgn__c,EMS_TM_EndDate_Asgn__c 
-                                                            from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId   and Id =:assignmentIds ];
+                                                            from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId  and EMS_TM_Status_Asgn__c = 'Active' and Id =:assignmentIds ];
         system.debug('projectAssigneeidList-->'+projectAssigneeidList);
         List<projectAssgnWrapper> wrapperlist = new List<projectAssgnWrapper>();
         for(EMS_TM_Assignment__c assgn : projectAssigneeidList){
