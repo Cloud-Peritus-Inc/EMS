@@ -253,9 +253,9 @@ public without sharing class quarterlyKRAViewCtrl {
             // Query the current fiscal quarter
             Period currentFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel FROM Period WHERE Type = 'Quarter' AND StartDate = THIS_FISCAL_QUARTER LIMIT 1];
             
-            // Query the previous fiscal quarter using the current fiscal quarter's start date
+            /* Query the previous fiscal quarter using the current fiscal quarter's start date
             Period lastFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel 
-                FROM Period  WHERE Type = 'Quarter'  AND EndDate < :currentFiscalQuarter.StartDate ORDER BY EndDate DESC  LIMIT 1];
+                FROM Period  WHERE Type = 'Quarter'  AND EndDate < :currentFiscalQuarter.StartDate ORDER BY EndDate DESC  LIMIT 1]; */
             
             if (tab == 'My Metric' || tab == 'My Team') {
                 System.debug('INSIDE IF FOR TAB :' + tab);
@@ -264,14 +264,16 @@ public without sharing class quarterlyKRAViewCtrl {
                                             WHERE RecordTypeId =: AnswerRecordTypeId
                                             AND Related_Question__r.Resource_Role__c =: resourceRoleId
                                             AND Mentor_Mentee__c =: loggedInUser.ContactId
-                                            AND KRA__r.Quarter_Start_Date__c =: lastFiscalQuarter.StartDate AND KRA__r.Quarter_End_Date__c =: lastFiscalQuarter.EndDate ];
+                                            AND KRA__r.Quarter_End_Date__c < :currentFiscalQuarter.StartDate
+                                            ORDER BY KRA__r.Quarter_End_Date__c DESC, CreatedDate DESC ];
             } else {
                 pmAnswerConfigRecordsOld = [SELECT Id,name,Question__c,Rating__c, Description__c,Status__c,Related_Question__r.Question__c,Related_Question__r.Resource_Role__c, Related_Question__r.Area__c, KRA__c,KRA__r.Quarter_Start_Date__c,KRA__r.Quarter_End_Date__c,Related_Question__r.Question_overview__c,Related_Question__r.Rating_overview__c,Related_Question__r.Description__c,Mentor_Mentee__c,Reporting_Contact__c
                                             FROM PM_Configure__c 
                                             WHERE RecordTypeId =: AnswerRecordTypeId
                                             AND Related_Question__r.Resource_Role__c =: resourceRoleId
                                             AND Reporting_Contact__c =: loggedInUser.ContactId
-                                            AND KRA__r.Quarter_Start_Date__c =: lastFiscalQuarter.StartDate AND KRA__r.Quarter_End_Date__c =: lastFiscalQuarter.EndDate ];
+                                            AND KRA__r.Quarter_End_Date__c < :currentFiscalQuarter.StartDate
+                                            ORDER BY KRA__r.Quarter_End_Date__c DESC, CreatedDate DESC ];
             }
             
             if(pmAnswerConfigRecordsOld.size()>0){
