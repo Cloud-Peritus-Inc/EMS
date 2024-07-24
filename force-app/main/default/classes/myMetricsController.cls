@@ -556,7 +556,7 @@ return menteeRecords;
                                                             EMS_TM_ProjectName_Asgn__r.name,EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name,
                                                             EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,EMS_TM_ProjectName_Asgn__r.Project_Manager__c,
                                                             EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name,EMS_TM_StartDate_Asgn__c,EMS_TM_EndDate_Asgn__c 
-                                                            from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId  and EMS_TM_Status_Asgn__c = 'Active' and Id =:assignmentIds ];
+                                                            from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId   and Id =:assignmentIds ];
         system.debug('projectAssigneeidList-->'+projectAssigneeidList);
         List<projectAssgnWrapper> wrapperlist = new List<projectAssgnWrapper>();
         for(EMS_TM_Assignment__c assgn : projectAssigneeidList){
