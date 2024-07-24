@@ -122,6 +122,9 @@ export default class Myteam extends LightningElement {
     handleSecondaryResourceChange(event) {
         //Onchange based on Dropdown Name
         let name = event.target.name;
+        console.log('Name clciked lable :: ' + name);
+        console.log('Name clciked lable :: ' + event.detail.value);
+
         let selectedresocure = event.detail.value;
         if (name == 'secondary') {
             if (selectedresocure != null) {
@@ -144,6 +147,7 @@ export default class Myteam extends LightningElement {
                         console.error('Error occurred: ' + JSON.stringify(error));
                     });
             } else {
+                this.viewonlymode = false;//smaske [PM_Def_081] [24/july/2024] : Enabling the CreateGoal button when secondary is null
                 this.tertiaryreporteesmapdata = [];
                 this.quaternaryreporteesmapdata = [];
                 this.secondarySelectedResource = null;
@@ -239,13 +243,13 @@ export default class Myteam extends LightningElement {
         if (this.quaternarySelectedResource) {
             resourceId = this.quaternarySelectedResource;
         } 
-
+        console.log('249 resourceId ' + resourceId);
         getResourceKRAs({
             resourceId: resourceId,
             fyId: this.selectedfy
         })
             .then(result => {
-                //console.log('====result getResourceKRAs =======' + JSON.stringify(result));
+                console.log('====result getResourceKRAs =======' + JSON.stringify(result));
                 //smaske : [EN_13]: Disabling Edit KRA button when Indirect Reportee are selected
                 result.forEach(item => {
                     item.qualList.forEach(qualItem => {
