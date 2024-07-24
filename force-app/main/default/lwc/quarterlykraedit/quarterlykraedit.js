@@ -8,7 +8,7 @@ import getSelectedResourceConDetails from '@salesforce/apex/quarterlyKRAViewCtrl
 import getPMConfigKRAData from '@salesforce/apex/quarterlyKRAViewCtrl.getPMConfigKRAData';
 import calculateAverageRatingForKRA from '@salesforce/apex/quarterlyKRAViewCtrl.calculateAverageRatingForKRA';
 import updatePMAnswerRecordsStatus from '@salesforce/apex/quarterlyKRAViewCtrl.updatePMAnswerRecordsStatus';
-
+ 
 //other imports
 import exampleHelpText from "@salesforce/label/c.exampleHelpText";
 import LightningConfirm from 'lightning/confirm';

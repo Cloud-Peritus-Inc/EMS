@@ -65,13 +65,16 @@ public without sharing class myMetricsController {
             }
         }
 
-        //Smaske : Current Fiscal quarter
+        //Smaske : Current Fiscal quarter // April - June Q1 KRA data
         Period currentFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel FROM Period WHERE Type = 'Quarter' AND StartDate = THIS_FISCAL_QUARTER LIMIT 1];
-        //Smaske : Last Fiscal quarter [ quarter before Current Fiscal quarter ]
-        Period lastFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel 
-                FROM Period  WHERE Type = 'Quarter'  AND EndDate < :currentFiscalQuarter.StartDate ORDER BY EndDate DESC  LIMIT 1];
+        //Smaske : fetching records which are older than current quarter     
+        List<Goal__c> prevQuarterGoals = [SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c  
+        FROM Goal__c 
+        WHERE RecordTypeId =:kraRecordTypeId 
+        AND Quarter_End_Date__c < :currentFiscalQuarter.StartDate
+        ORDER BY Quarter_End_Date__c DESC, CreatedDate DESC LIMIT 1 ];
 
-        List<Goal__c> prevQuarterGoals = [SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c  FROM Goal__c WHERE RecordTypeId =:kraRecordTypeId AND Quarter_Start_Date__c =: lastFiscalQuarter.startDate AND Quarter_End_Date__c =: lastFiscalQuarter.EndDate ];
+        System.debug(' prevQuarterGoals ' + prevQuarterGoals);
 
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
@@ -89,13 +92,13 @@ public without sharing class myMetricsController {
                 //qw.rating = String.valueOf(gl.Rating__c);
                 qw.overallRating = gl.Overall_Rating__c; //Ravitheja
                 qw.allowedit = false;
+                qw.allowCopy = false;
                 //smaske : PM_061 : updating conditon to only allow edit when status is "Active" in MY METRIC TAB
                 //Previously it was : gl.Status__c != 'KRA Complete'
                 if(gl.Status__c == 'In Progress'){
-                    qw.allowedit = true;  
+                    qw.allowedit = true; 
+                    qw.allowCopy = true; 
                 }
-
-                qw.allowCopy = true;
 
                 if (prevQuarterGoals.size() > 0) {
                     qw.allowCopy = true;

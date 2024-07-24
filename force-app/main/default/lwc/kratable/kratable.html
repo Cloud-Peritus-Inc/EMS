@@ -39,7 +39,7 @@
               <td data-label={accWithContacts.nameid}>
                 <template if:true={accWithContacts.qualList}>
                   <div class="slds-truncate slds-p-left_large">
-                    <lightning-icon icon-name={iconParentName} data-id={accWithContacts.nameid} size="x-small"
+                    <lightning-icon id={accWithContacts.nameid} icon-name={iconName} data-id={accWithContacts.nameid} size="x-small"
                       onclick={handleContactChild} class="slds-m-right_large"></lightning-icon>
                   </div>
                 </template>
