@@ -23,6 +23,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         } return false;
     }
 
+
     connectedCallback() {
         //console.log('RECEIVED tabledata  ::: ' + JSON.stringify(this.tabledata));
         console.log('====resourceid===' + JSON.stringify(this.resourceid));
@@ -31,8 +32,8 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         this.tbData = JSON.parse(JSON.stringify(this.tabledata))
 
         if (this.tbData.length > 0) {
-            console.log(this.tbData.nameid);
             console.log(this.tbData[0].nameid);
+
             this.tbData.forEach(item => {
                 if (item.qualList && item.qualList.length > 0) {
                     this.qualListdata = true;
@@ -70,6 +71,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         this.orgDomainId = window.location.origin;
         //this.enableDisableCreateGoalButton();
     }
+    
     @track showKRAViewModal = false;
     @track showKRAEditModal = false;
     @track showGoalModal = false;
