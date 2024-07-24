@@ -60,7 +60,6 @@ public without sharing class quarterlyKRAViewCtrl {
         return con;
     }
 
-
     /**
      * This method returns the Goal__c record for displaying record values on the KRArecord edit/view action
      *

@@ -31,7 +31,7 @@ export default class MyMetrics extends LightningElement {
     @track showcombobox = false; //sangharsh
 
 
-    //current contact resourceId
+    //current contact resourceId.
     resourceId;
     pulseKraRecord = [];
 
@@ -129,7 +129,6 @@ export default class MyMetrics extends LightningElement {
                 let tableRecordsData = item.qualList;
                 console.log('tableRecordsData Length ' + tableRecordsData.length);
                 tableRecordsData.forEach(qualItem => {
-                    console.log('oldQuarterGoals ' + qualItem.oldQuarterGoals);
                     if (qualItem.mentorSubmitted && this.tab == 'My Team') {
                         qualItem.allowedit = false;
                         qualItem.allowCopy = false;
