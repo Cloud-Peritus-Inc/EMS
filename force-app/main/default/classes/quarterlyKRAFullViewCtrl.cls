@@ -62,10 +62,10 @@ public without sharing class quarterlyKRAFullViewCtrl {
                     aw.submittedRecords=true;
                 }
             }
-            if(tab =='My Metric'){
+        }
+        if(tab =='My Metric'){
                 aw.submittedRecords=false;
             }
-        }
         return aw;
     }
     
@@ -77,7 +77,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
     }
     
     @AuraEnabled(cacheable=true)
-    public static List<QuestionWrapper> getPMConfigKRAFullDetails(String kraid, String selectedarea, String tab) {
+    public static List<QuestionWrapper> getPMConfigKRAFullDetails(String kraid, String tab) {
         List<QuestionWrapper> questionWrappers = new List<QuestionWrapper>();
         
         //get recordtypeId
@@ -97,27 +97,29 @@ public without sharing class quarterlyKRAFullViewCtrl {
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,Reporting_Contact__r.Name
                          FROM PM_Configure__r Where KRA__c =:kraid AND ((Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))
-                                                     OR Mentor_Mentee__c =: loggedInUser.ContactId))
+                                                                        OR Mentor_Mentee__c =: loggedInUser.ContactId))
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c]; 
             //OR Reporting_Contact__c=: loggedInUser.ContactId
         }
         if(tab=='My Metric'){
-            questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
+            System.debug('goalRecord.Mentor_KRA_submitted__c'+goalRecord.Mentor_KRA_submitted__c);
+            if(goalRecord.Mentor_KRA_submitted__c==true){
+             questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,Reporting_Contact__r.Name
                          FROM PM_Configure__r Where KRA__c =:kraid AND ( Mentor_Mentee__c =: loggedInUser.ContactId OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))))
                         FROM PM_Configure__c 
+                        Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];   
+            }else{
+                questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
+                        (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
+                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,Reporting_Contact__r.Name
+                         FROM PM_Configure__r Where KRA__c =:kraid AND Mentor_Mentee__c =: loggedInUser.ContactId)
+                        FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];
+            }
         }
-        
-        /*questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
-(SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,
-Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name
-FROM PM_Configure__r Where KRA__c =:kraid)
-FROM PM_Configure__c 
-Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c ];*/
-        
         
         // Loop through questions to construct the wrapper
         for (PM_Configure__c question : questions) {                                  
@@ -137,7 +139,7 @@ Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Re
                 awn.answerValue = (answer.Description__c!=null ||answer.Description__c!='')?answer.Description__c:' ';
                 awn.Ratingoverview = answer.Related_Question__r.Rating_overview__c;
                 awn.Descriptionoverview = answer.Related_Question__r.Question_overview__c;
-                awn.rating = answer.Rating__c!=null?answer.Rating__c:0;
+                awn.rating = answer.Rating__c!=null?answer.Rating__c:null;
                 awn.contactId = contactKey;
                 awn.contactName = answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__r.Name:answer.Reporting_Contact__r.Name;
                 
@@ -191,6 +193,10 @@ Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Re
         public Id contactId;
         @AuraEnabled
         public String contactName;
+        @AuraEnabled
+        public Decimal averageRating;
+        @AuraEnabled
+    	public Integer ratingCount;
         
         public AnswerWrapper() {}
         
@@ -200,6 +206,8 @@ Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Re
             this.rating = rating;
             this.contactId = contactId;
             this.contactName = contactName;
+            this.averageRating = averageRating;
+        	this.ratingCount = ratingCount;
         }
     }
 }
