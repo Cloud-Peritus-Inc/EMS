@@ -64,6 +64,18 @@ public without sharing class myMetricsController {
                   
             }
         }
+
+        //Smaske : Current Fiscal quarter // April - June Q1 KRA
+        Period currentFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel FROM Period WHERE Type = 'Quarter' AND StartDate = THIS_FISCAL_QUARTER LIMIT 1];
+        //Smaske : fetching records which are older than current quarter     
+        List<Goal__c> prevQuarterGoals = [SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c  
+        FROM Goal__c 
+        WHERE RecordTypeId =:kraRecordTypeId 
+        AND Quarter_End_Date__c < :currentFiscalQuarter.StartDate
+        ORDER BY Quarter_End_Date__c DESC, CreatedDate DESC LIMIT 1 ];
+
+        System.debug(' prevQuarterGoals ' + prevQuarterGoals);
+
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         
           returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
@@ -71,21 +83,40 @@ public without sharing class myMetricsController {
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
             for(Goal__c gl : ful.Goals__r){
-               quatWrapper qw = new quatWrapper();
-               qw.name = gl.Goal_Name__c;
-               qw.nameid = gl.Id;
-               qw.qstartdate = gl.Quarter_Start_Date__c;
-               qw.qendate = gl.Quarter_End_Date__c;
-               qw.status = gl.Status__c;
-               qw.typeval = gl.Type__c;
-               qw.rating = String.valueOf(gl.Rating__c);
-               qw.overallRating = gl.Overall_Rating__c;
-               qw.allowedit = false;
-               //smaske : PM_061 : updating conditon to only allow edit when status is "Active" in MY METRIC TAB
-               //Previously it was : gl.Status__c != 'KRA Complete'
-                if(gl.Status__c == 'Active'){
-                  qw.allowedit = true;  
+                quatWrapper qw = new quatWrapper();
+                qw.name = gl.Goal_Name__c;
+                qw.nameid = gl.Id;
+                qw.qstartdate = gl.Quarter_Start_Date__c;
+                qw.qendate = gl.Quarter_End_Date__c;
+                qw.status = gl.Status__c;
+                qw.typeval = gl.Type__c;
+                //qw.rating = String.valueOf(gl.Rating__c);
+                qw.overallRating = gl.Overall_Rating__c; //Ravitheja
+                qw.allowedit = false;
+                qw.allowCopy = false;
+                //smaske : PM_061 : updating conditon to only allow edit when status is "Active" in MY METRIC TAB
+                //Previously it was : gl.Status__c != 'KRA Complete'
+                if(gl.Status__c == 'In Progress'){
+                    qw.allowedit = true; 
+                    qw.allowCopy = true; 
                 }
+
+                if (prevQuarterGoals.size() > 0) {
+                    qw.allowCopy = true;
+                }else {
+                    qw.allowCopy = false;
+                }
+                
+                //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
+                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Status__c == 'HR KRA Completed' || gl.Status__c == 'Missed'    ){ //|| gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate
+                    qw.allowCopy = false;
+                }
+
+
+                //smaske : [UAT_066] : [15-July-2024] : passing Mentee/Mentor Submitted var values to disable button based on tabs
+                qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
+                qw.mentorSubmitted = gl.Mentor_KRA_submitted__c;
+
                 qlist.add(qw);
             }
             perfWrapper pw = new perfWrapper();
@@ -438,4 +469,242 @@ public without sharing class myMetricsController {
         @AuraEnabled
         public Boolean showGenPerKra;
     }
+    
+    
+    /* @AuraEnabled
+public static List<Resource_Resource_Relationship__c> getProjectAssigneebyContactId(Id userId) {
+//Id loggedInUser = Userinfo.getUserId();
+// Ensure accountId is not null or empty
+if (String.isEmpty(userId)) {
+throw new AuraHandledException('loggedInUser ID cannot be null or empty.');
+}
+system.debug('Entered controller');
+User u = [SELECT Id,name,ContactId from User where Id =:userId];
+List<Resource_Resource_Relationship__c> menteeRecords = new List<Resource_Resource_Relationship__c>();
+if(u.ContactId != null){
+menteeRecords= [select id,name,Resource_Reports_To__r.name,Resource_Reports_To__r.Id,Resource__r.name from Resource_Resource_Relationship__c where  Resource_Reports_To__r.Id =:u.ContactId];
+system.debug('Inside controller');
+}
+system.debug('menteeRecords'+menteeRecords);
+return menteeRecords;
+
+}*/
+    
+    public class projectAssgnWrapper {
+        
+        @AuraEnabled
+        public String empName{get;set;}
+        @AuraEnabled
+        public String projectAssigmentId{get;set;}
+        @AuraEnabled
+        public String offshoremanagerid{get;set;}
+        @AuraEnabled
+        public String offshoremanagerName{get;set;}
+        @AuraEnabled
+        public String onshoremanagerid{get;set;}
+        @AuraEnabled
+        public String onshoremanagerName{get;set;}
+        @AuraEnabled
+        public Date startDate{get;set;}
+        @AuraEnabled
+        public Date endDate{get;set;}
+        @AuraEnabled
+        public String projectName{get;set;}
+        @AuraEnabled
+        public String projectid{get;set;}
+        @AuraEnabled
+        public List<ManagerOption> managerOptions { get; set; }      
+    }
+    
+    public class ManagerOption {
+        @AuraEnabled
+        public String label { get; set; }
+        @AuraEnabled
+        public String value { get; set; }
+        
+        public ManagerOption(String label, String value) {
+            this.label = label;
+            this.value = value;
+        }
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<projectAssgnWrapper> getMenteeProjectAssigne(Id contactId) {
+        
+        if (String.isEmpty(contactId)) {
+            throw new AuraHandledException('loggedInUser ID cannot be null or empty.');
+        }
+        
+        List<AggregateResult> timesheetAggregate = [
+            SELECT Assignment__c, SUM(Number_of_Hours__c) totalHours
+            FROM EMS_TM_Timesheet_Record__c 
+            WHERE EMS_Timesheet__r.Resource__c = :contactId AND 
+            (EMS_Timesheet__r.Week_Start_Date__c = THIS_QUARTER OR EMS_Timesheet__r.Week_End_Date__c = THIS_QUARTER) and Status__c != 'Rejected'  
+            GROUP BY Assignment__c];
+        system.debug('timesheetAggregate'+timesheetAggregate);
+        
+        Set<Id> assignmentIds = new Set<Id>();
+        for (AggregateResult ar : timesheetAggregate) {
+            Decimal totalHours = (Decimal)ar.get('totalHours');
+            if (totalHours >= 80) {
+                assignmentIds.add((Id)ar.get('Assignment__c'));
+            }
+        }
+        
+        List<EMS_TM_Assignment__c> projectAssigneeidList = [SELECT Id,name,EMS_TM_EmployeeName__r.name,EMS_TM_EmployeeName__r.Work_Location_Country__c,EMS_TM_Status_Asgn__c,
+                                                            Offshore_PM_Configure__c,Onshore_PM_Configure__c,Other_PM_Configure__c,
+                                                            EMS_TM_ProjectName_Asgn__r.name,EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name,
+                                                            EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,EMS_TM_ProjectName_Asgn__r.Project_Manager__c,
+                                                            EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name,EMS_TM_StartDate_Asgn__c,EMS_TM_EndDate_Asgn__c 
+                                                            from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId   and Id =:assignmentIds ];
+        system.debug('projectAssigneeidList-->'+projectAssigneeidList);
+        List<projectAssgnWrapper> wrapperlist = new List<projectAssgnWrapper>();
+        for(EMS_TM_Assignment__c assgn : projectAssigneeidList){
+            projectAssgnWrapper wrp = new projectAssgnWrapper();
+            wrp.empName =  assgn.EMS_TM_EmployeeName__r.name;
+            wrp.projectAssigmentId = assgn.Id;
+            wrp.offshoremanagerName = assgn.EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name;
+            wrp.offshoremanagerid=assgn.EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c;
+            wrp.onshoremanagerName = assgn.EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name;
+            wrp.onshoremanagerid=assgn.EMS_TM_ProjectName_Asgn__r.Project_Manager__c; 
+            wrp.startDate = assgn.EMS_TM_StartDate_Asgn__c;
+            wrp.endDate = assgn.EMS_TM_EndDate_Asgn__c;
+            wrp.projectName = assgn.EMS_TM_ProjectName_Asgn__r.name;
+            wrp.projectid = assgn.EMS_TM_ProjectName_Asgn__c;
+            
+            wrp.managerOptions = new List<ManagerOption>();
+            //wrp.managerOptions.add(new ManagerOption(' ' + 'None', 'None'));
+            if(wrp.offshoremanagerid == wrp.onshoremanagerid && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c){
+                wrp.managerOptions.add(new ManagerOption('Onshore & Offshore Manager: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
+            }else{
+                if (wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c) {
+                    wrp.managerOptions.add(new ManagerOption('Offshore Manager: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
+                }
+                if (wrp.onshoremanagerid != null && !assgn.Onshore_PM_Configure__c) {
+                    wrp.managerOptions.add(new ManagerOption('Onshore Manager: ' + wrp.onshoremanagerName, wrp.onshoremanagerid));
+                }
+                if (wrp.onshoremanagerid != null && wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c) {
+                    wrp.managerOptions.add(new ManagerOption('Both Managers ' + '', wrp.onshoremanagerid +','+ wrp.offshoremanagerid));
+                }
+            }  
+            if(!assgn.Other_PM_Configure__c){
+                wrp.managerOptions.add(new ManagerOption('Other ' + '', 'Other'));
+            }   
+            wrapperlist.add(wrp);
+        }
+        
+        return wrapperlist;
+    }
+    
+    //Sangharsh :   :Creating Reporting Manager Answer Record, Refering in projectAssignmentTable LWC
+    @AuraEnabled
+    public static String createPMAnswerConfigureForManager(String contactId, String managerContact, String projectId, String projectassigmentid) {
+        List<Id> managerContactList = managerContact.split(',');
+        Set<Id> managerContactSet = new Set<Id>(managerContactList);
+        System.debug('managerContactList: ' + managerContactList);
+        
+       /* List<Contact> conRecList =[Select Id,name,EMS_TM_User__c from Contact where Id IN :managerContactSet ];*/
+        // Get Record Type IDs
+        Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
+        Id questionRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Question').getRecordTypeId();
+        Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+        
+        // Query for goals
+        List<Goal__c> goalList = [SELECT Id, Type__c, RecordTypeId, Status__c, Fulfillment__r.Fiscal_Year__c,Resource__r.ContactName__c  
+                                  FROM Goal__c 
+                                  WHERE Type__c = 'KRA' 
+                                  AND Status__c = 'In Progress' 
+                                  AND Resource__c = :contactId 
+                                  AND RecordTypeId = :kraRecordTypeId 
+                                  AND CreatedDate = THIS_QUARTER];
+        
+        if (goalList.isEmpty()) {
+            throw new AuraHandledException('No KRA goals found for the specified contact in the current quarter.');
+        }
+        
+        // Query for contact
+        List<Contact> contactList = [SELECT Id, Resource_Role__c 
+                                     FROM Contact 
+                                     WHERE Id = :contactId];
+        
+        list<Resource_Resource_Relationship__c> mentorlst =[Select id,Relationship_Type__c,Resource__c,Resource_Reports_To__c from Resource_Resource_Relationship__c 
+                                                         where Relationship_Type__c='Mentor' AND Resource__c=:contactId];
+        
+        if (contactList.isEmpty()) {
+            throw new AuraHandledException('Contact not found.');
+        }
+        
+        // Query for project assignments
+        List<EMS_TM_Assignment__c> projectAssignmentList = [SELECT Id, EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,
+                                                            EMS_TM_ProjectName_Asgn__r.Project_Manager__c, Other_Resource_PM_Configure__c 
+                                                            FROM EMS_TM_Assignment__c 
+                                                            WHERE Id = :projectassigmentid];
+        
+        
+        List<PM_Configure__c> pmAnswerList = new List<PM_Configure__c>();    
+        
+        for (Id reportingManager : managerContactSet) {
+            System.debug('reportingManager: ' + reportingManager);
+            
+            for (PM_Configure__c pm : [SELECT Id, Configuration_Type__c, Resource_Role__c,Name__c, Area__c,Question__c
+                                       FROM PM_Configure__c 
+                                       WHERE Configuration_Type__c = 'KRA' 
+                                       AND Resource_Role__c = :contactList[0].Resource_Role__c 
+                                       AND RecordTypeId = :questionRecordTypeId]) {
+                                           PM_Configure__c pmAnswer = new PM_Configure__c();
+                                           pmAnswer.Related_Question__c = pm.Id;
+                                           pmAnswer.Name__c = goalList[0].Resource__r.ContactName__c + ' '+pm.Area__c +' '+pm.Question__c;
+                                           pmAnswer.Status__c = 'Awaiting Response';
+                                           pmAnswer.Reporting_Contact__c = reportingManager;
+                                           pmAnswer.Project_Name__c = projectId;
+                                           pmAnswer.Fiscal_Year__c = goalList[0].Fulfillment__r.Fiscal_Year__c;
+                                           pmAnswer.KRA__c = goalList[0].Id;
+                                           pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
+                                           pmAnswer.RecordTypeId = answerRecordTypeId;
+                                           pmAnswer.Mentee__c=goalList[0].Resource__c;	
+                                          /* if(!conRecList.isEmpty() && conRecList[0].Id == reportingManager){
+                                               pmAnswer.OwnerId = conRecList[0].EMS_TM_User__c;
+
+                                           }*/
+                                          // pmAnswer.OwnerId = 
+                                        //add reportingManager as the owner of the record
+                                           pmAnswerList.add(pmAnswer);
+                                       }
+            
+            EMS_TM_Assignment__c projectAssignment = new EMS_TM_Assignment__c();
+            projectAssignment.Id = projectAssignmentList[0].Id;
+            
+            Boolean isOffshorePM = reportingManager == projectAssignmentList[0].EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c;
+            Boolean isOnshorePM = reportingManager == projectAssignmentList[0].EMS_TM_ProjectName_Asgn__r.Project_Manager__c;
+            
+            if (isOffshorePM) {
+                projectAssignment.Offshore_PM_Configure__c = true;  
+            }
+            
+            if (isOnshorePM) {
+                projectAssignment.Onshore_PM_Configure__c = true;  
+            }
+            
+            if (isOffshorePM && isOnshorePM) {
+                projectAssignment.Offshore_PM_Configure__c = true;
+                projectAssignment.Onshore_PM_Configure__c = true;
+            }
+            
+            if (!isOffshorePM && !isOnshorePM) {
+                projectAssignment.Other_PM_Configure__c = true; 
+                projectAssignment.Other_Resource_PM_Configure__c = reportingManager;
+            }
+            update projectAssignment;
+        }
+        
+        try {
+            if (!pmAnswerList.isEmpty()) {
+                insert pmAnswerList;
+            }
+            return 'success'; 
+        } catch (Exception ex) {
+            throw new AuraHandledException('An error occurred while processing the request: ' + ex.getMessage());
+        }
+    }
+    
 }
