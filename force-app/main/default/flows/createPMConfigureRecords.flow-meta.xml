@@ -134,6 +134,13 @@
                 <elementReference>$Record.Resource__r.EMS_TM_User__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PM_Ans_Config_Records_Var.Mentee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Resource__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_PM_Ans_Config_records_to_List_Var</targetReference>
         </connector>
