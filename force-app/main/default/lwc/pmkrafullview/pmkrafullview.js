@@ -106,7 +106,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         }
     }
 
-    @wire(getKRAFullDetails, { kraid: '$receivedKRAId', selectedarea: '$selectedStep', tab: '$tab' })
+    @wire(getKRAFullDetails, { kraid: '$receivedKRAId', tab: '$tab' })
     wiredData({ error, data }) {
         if (data) {
             this.isLoading = true;
@@ -151,10 +151,11 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     answerIdList: q.answerIdList,
                     goalRecord: q.goalRecord
                 };
+                console.log('questionWrapper-->'+JSON.stringify(questionWrapper));
                 this.allAnswerIdList = data.flatMap(q => q.answersId);
                 this.kraRecord = data[0].goalRecord;
-                console.log('this.kraRecord-->' + this.kraRecord);
-                console.log('this.allAnswerIdList-->' + this.allAnswerIdList);
+               // console.log('this.kraRecord-->' + this.kraRecord);
+               // console.log('this.allAnswerIdList-->' + this.allAnswerIdList);
 
                 // Store based on area
                 if (q.area === 'TECHNICAL SKILLS') {
@@ -187,7 +188,6 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     }
 
     @track wrapData;
-    AreaWiseAvgRating = 0;
     calculateAverageRatingForKRAHandler() {
         console.log('Received this.kraRecord : ' + JSON.stringify(this.kraRecord));
         console.log('Received this.tab : ' + this.tab);
@@ -201,7 +201,6 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             .then(result => {
                 console.log("calculateAverageRatingForKRA result ::" + JSON.stringify(result));
                 this.wrapData = result;
-                this.AreaWiseAvgRating = this.wrapData.AreaWiseAvgRating
             })
             .catch(error => {
                 console.log("error ::" + JSON.stringify(error));
