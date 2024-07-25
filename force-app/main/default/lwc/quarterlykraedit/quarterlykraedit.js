@@ -113,7 +113,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         if (data) {
             console.log('checkdata '+data);
             this.SelectedResourceConDetails = data;
-            //console.log('getSelectedResourceConDetails DATA :  ' + JSON.stringify(this.SelectedResourceConDetails));
+            console.log('getSelectedResourceConDetails DATA :  ' + JSON.stringify(this.SelectedResourceConDetails));
             //smaske : PM_066 :  Setting value to '0' if not declared 
             // previously was setting as 'undefined'
             this.SelectedResourceResourceRoleTechAcc = this.SelectedResourceConDetails.Id ? data.Resource_Role__r.technical_acumen__c : 0;
@@ -158,7 +158,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
             if (this.profileName == 'Employee - HR(Community)') {
                 this.isSubmitBtnDisabled = true;
-                 this.isSaveBtnDisabled = true;
+                this.isSaveBtnDisabled = true;
             }
             //Check if status is COMPLETE : Disable Submit btn
             this.error = undefined;
