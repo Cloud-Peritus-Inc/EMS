@@ -64,6 +64,21 @@ public without sharing class myMetricsController {
                   
             }
         }
+
+        //Smaske : Current Fiscal quarter // April - June Q1 KRA data
+        Period currentFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel FROM Period WHERE Type = 'Quarter' AND StartDate = THIS_FISCAL_QUARTER LIMIT 1];
+        //Smaske [PM_Def_072]: fetching records which are older than current quarter for logged in contact user  
+        Contact currentContact = [Select Id,EMS_TM_User__c from Contact where EMS_TM_User__c=:Userinfo.getUserId()];
+
+        List<Goal__c> prevQuarterGoals = [SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c  
+        FROM Goal__c 
+        WHERE RecordTypeId =:kraRecordTypeId 
+        AND Resource__c =:currentContact.Id
+        AND Quarter_End_Date__c < :currentFiscalQuarter.StartDate
+        ORDER BY Quarter_End_Date__c DESC, CreatedDate DESC LIMIT 1 ];
+
+        System.debug(' prevQuarterGoals ' + prevQuarterGoals);
+
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         
           returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
