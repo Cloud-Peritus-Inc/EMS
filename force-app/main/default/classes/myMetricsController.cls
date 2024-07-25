@@ -668,7 +668,7 @@ return menteeRecords;
         
         for (Id reportingManager : managerContactSet) {
             System.debug('reportingManager: ' + reportingManager);
-            
+            Id gettingownerID =[Select Id, EMS_TM_User__c from Contact where Id =:reportingManager limit 1].EMS_TM_User__c;
             for (PM_Configure__c pm : [SELECT Id, Configuration_Type__c, Resource_Role__c,Name__c, Area__c,Question__c
                                        FROM PM_Configure__c 
                                        WHERE Configuration_Type__c = 'KRA' 
@@ -685,10 +685,9 @@ return menteeRecords;
                                            pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
                                            pmAnswer.RecordTypeId = answerRecordTypeId;
                                            pmAnswer.Mentee__c=goalList[0].Resource__c;	
-                                          /* if(!conRecList.isEmpty() && conRecList[0].Id == reportingManager){
-                                               pmAnswer.OwnerId = conRecList[0].EMS_TM_User__c;
-
-                                           }*/
+                                          if(gettingownerID!=null){
+                                               pmAnswer.OwnerId = gettingownerID;
+                                           }
                                           // pmAnswer.OwnerId = 
                                         //add reportingManager as the owner of the record
                                            pmAnswerList.add(pmAnswer);
