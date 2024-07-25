@@ -42,8 +42,8 @@ export default class GoalDataTable extends LightningElement {
     }
 
     hideKRAEditModalBox(){
+        console.log('close button click ' + this.showKRAEditModal);
         this.showKRAEditModal = false;
-        this.fetchKRARecords();
     }
 
     editKRAModalPopUp(event){
