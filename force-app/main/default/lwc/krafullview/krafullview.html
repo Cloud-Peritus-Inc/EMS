@@ -1,0 +1,74 @@
+<template>
+    <lightning-card>
+    <!--template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template-->
+   
+   
+        full view here {receivedKRAId} <br/>
+    
+    <lightning-progress-indicator current-step={selectedStep} type="path" variant="base">
+            <template for:each={steps} for:item="step">
+                <lightning-progress-step id={step.value} label={step.label} value={step.value} key={step.label}
+                    onclick={stepSelectionHanler}></lightning-progress-step>
+            </template>
+        </lightning-progress-indicator>
+
+
+  <template lwc:if={showReviewerDetails}>
+      
+      showReviewerDetails
+  </template>.
+   <template lwc:if={showTechnicalAcumen}>
+       showTechnicalAcumen
+  </template>
+   <template lwc:if={showProfessionalSkills}>
+       showProfessionalSkills
+  </template>
+   <template lwc:if={showStrategicImpact}>
+       showStrategicImpact
+  </template>
+   <template lwc:if={showGoalsResults}>
+       showGoalsResults
+  </template>
+  <template lwc:if={showOverAllRating}>
+     <div class="slds-m-around_medium">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr>
+                        <th>Section Name</th>
+                        <template for:each={contacts} for:item="contact">
+                            <th key={contact.contactId}>{contact.contactname}</th>
+                        </template>
+                        <th>Average Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={processedData} for:item="areaData">
+                        <tr key={areaData.area}>
+                            <td>{areaData.area}</td>
+                            <template for:each={areaData.ratings} for:item="rating">
+                                <td key={rating.contactId}>
+                                    {rating.averageRating} ({rating.AvgRatingSkillForResource})
+                                </td>
+                            </template>
+                            <td>{areaData.overallAverage}</td>
+                        </tr>
+                    </template>
+                    <tr>
+                        <td><strong>Total Average</strong></td>
+                        <template for:each={contacts} for:item="contact">
+                            <td key={contact.contactId}></td>
+                        </template>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+  </template>
+
+
+
+    </lightning-card>
+
+</template>

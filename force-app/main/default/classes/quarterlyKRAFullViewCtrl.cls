@@ -45,8 +45,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
                               Resource__r.ContactName__c ,Resource__r.Resource_Role__c 
                               FROM Goal__c 
                               WHERE Id=:kraid Limit 1];
-        if(goalRecord.Status__c == 'KRA Completed' && tab =='My Team'){
-            aw.submittedKRAbutton=false;
+        if(goalRecord.Mentor_KRA_submitted__c == true && tab =='My Team'){
+            aw.submittedKRAbutton=true; // by making it true will show Complete KRA button on UI
         }
         if(tab =='My Metric'){
             aw.submittedKRAbutton=false;
@@ -84,7 +84,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
         @AuraEnabled 
         public Boolean submittedRecords=true;
         @AuraEnabled 
-        public Boolean submittedKRAbutton=true;
+        public Boolean submittedKRAbutton=false;
     }
     
     @AuraEnabled(cacheable=true)
