@@ -124,8 +124,8 @@ export default class Myteam extends LightningElement {
     handleSecondaryResourceChange(event) {
         //Onchange based on Dropdown Name
         let name = event.target.name;
-        console.log('Name clciked lable :: ' + name);
-        console.log('Name clciked lable :: ' + event.detail.value);
+        //console.log('Name clciked lable :: ' + name);
+        //console.log('Name clciked lable :: ' + event.detail.value);
 
         let selectedresocure = event.detail.value;
         if (name == 'secondary') {
@@ -245,14 +245,14 @@ export default class Myteam extends LightningElement {
         }
         if (this.quaternarySelectedResource) {
             resourceId = this.quaternarySelectedResource;
-        } 
-        console.log('249 resourceId ' + resourceId);
+        }
+
         getResourceKRAs({
             resourceId: resourceId,
             fyId: this.selectedfy
         })
             .then(result => {
-                console.log('====result getResourceKRAs =======' + JSON.stringify(result));
+                //console.log('====result getResourceKRAs =======' + JSON.stringify(result));
                 //smaske : [EN_13]: Disabling Edit KRA button when Indirect Reportee are selected
                 result.forEach(item => {
                     item.qualList.forEach(qualItem => {
