@@ -4,7 +4,7 @@
         <description>Send an Email to Mentor(Check In By) when Mentee Submits his KRA record for his mentor</description>
         <name>Email_Mentor</name>
         <label>Email Mentor</label>
-        <locationX>50</locationX>
+        <locationX>842</locationX>
         <locationY>539</locationY>
         <actionName>Goal__c.KRA_Submission_Alert_for_Mentor</actionName>
         <actionType>emailAlert</actionType>
@@ -15,12 +15,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.KRA_Submission_Alert_for_Mentor</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Email to Mentor stating they have successfully submitted KRA of mentee</description>
         <name>Email_Mentor2</name>
         <label>Email Mentor</label>
-        <locationX>578</locationX>
+        <locationX>50</locationX>
         <locationY>539</locationY>
         <actionName>Goal__c.KRA_Submission_Alert_by_Mentor</actionName>
         <actionType>emailAlert</actionType>
@@ -31,11 +33,13 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.KRA_Submission_Alert_by_Mentor</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>KRA_Complete_Alert</name>
         <label>KRA Complete Alert</label>
-        <locationX>578</locationX>
+        <locationX>50</locationX>
         <locationY>431</locationY>
         <actionName>Goal__c.KRA_Submission_Alert_2</actionName>
         <actionType>emailAlert</actionType>
@@ -49,6 +53,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.KRA_Submission_Alert_2</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>KRA_Email_Alert</name>
@@ -64,12 +70,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.KRA_Creation_Alert</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Send an Email to Resource when he Submits his KRA record for Review to  his mentor</description>
         <name>KRA_Inreview_Alert</name>
         <label>KRA Inreview Alert</label>
-        <locationX>50</locationX>
+        <locationX>842</locationX>
         <locationY>431</locationY>
         <actionName>Goal__c.KRA_Submission_Alert</actionName>
         <actionType>emailAlert</actionType>
@@ -83,16 +91,18 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.KRA_Submission_Alert</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <decisions>
         <name>Check_Record</name>
         <label>Check Record</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>KRAInreview</name>
+            <name>Mentor_KRA_Submitted</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record__Prior</leftValueReference>
@@ -136,10 +146,24 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Mentor_KRA_submitted__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentor_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>KRA_Inreview_Alert</targetReference>
+                <targetReference>KRA_Complete_Alert</targetReference>
             </connector>
-            <label>KRA Inreview</label>
+            <label>Mentor KRA Submitted</label>
         </rules>
         <rules>
             <name>New</name>
@@ -215,10 +239,57 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>KRA_Complete_Alert</targetReference>
-            </connector>
             <label>KRA Complete</label>
+        </rules>
+        <rules>
+            <name>Mentee_KRA_Submitted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Mentee_KRA_submitted__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentee_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Resource__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Check_In_By__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>KRA_Inreview_Alert</targetReference>
+            </connector>
+            <label>Mentee KRA Submitted</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -244,7 +315,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>320</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Record</targetReference>
