@@ -12,6 +12,8 @@ import updatePMAnswerRecordsStatus from '@salesforce/apex/quarterlyKRAViewCtrl.u
 //other imports
 import exampleHelpText from "@salesforce/label/c.exampleHelpText";
 import LightningConfirm from 'lightning/confirm';
+import Genericmodal from 'c/genericmodal';
+
 
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -471,19 +473,21 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     async handleSaveSubmitActionDuplicateOverAll(event) {
         this.clickedBtnLabel = event.target.label;
         console.log('SUBMIT BUTTON IS CLICKED');
-        //console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData.length);
-        //console.log('RECORD ID AVAILABLE : ' + this.viewwrap2.pmAnsRecordsIdData);
-        
-        const result = await LightningConfirm.open({
-            message: 'Feedback response once submitted, cannot be reverted. Would you like to proceed?',
-            variant: 'header',
-            label: 'Confirm KRA Submition',
-            style: 'text-align:center;',
-            theme: 'info',
+        const result = await Genericmodal.open({
+            // `label` is not included here in this example.
+            // it is set on lightning-modal-header instead
+            style: {
+                '--slds-c-modal-color-border': 'black'
+            },
+            btnLable1: 'No',
+            btnLable2: 'Yes',
+            headerLable: 'Confirm KRA Submition',
+            bodyLable: 'Feedback response once submitted, cannot be reverted. Would you like to proceed?',
+            size: 'small',
         });
 
-        if (result === true) {
-            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData,this.clickedBtnLabel);
+        if (result === 'okay') {
+            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel);
         }
     }
 
