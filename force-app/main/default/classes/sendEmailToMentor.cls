@@ -1,8 +1,8 @@
 /**
 * @author Ravitheja
 * @date 15/07/2024
-* @description Send the email to mentor if the KRA has been rejected by Project Manager
-*
+* @description Send the email to mentor if the KRA has been Rejected or Submitted by Project Manager
+* 
 * CHANGE HISTORY
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION
@@ -23,14 +23,31 @@ public class sendEmailToMentor implements TriggerAction.AfterUpdate {
         
         Set<Id> resourceId = new Set<Id>();
         Set<Id> reporteeId = new Set<Id>();
+        Set<Id> contactIdSet = new Set<Id>();
         List<PM_Configure__c> rejectedVsSubmittedPMConfigs = new List<PM_Configure__c>();
         Map<Id, PM_Configure__c> kraToPmConfigMap = new Map<Id, PM_Configure__c>();
         
         for (PM_Configure__c pmConfig : newlist) {
+            contactIdSet.add(pmConfig.Mentee__c);
+            contactIdSet.add(pmConfig.Mentor__c);
+        }
+        
+        Map<Id, Contact> contactMap = new Map<Id, Contact>([
+            SELECT Id, EMS_TM_User__c 
+            FROM Contact 
+            WHERE Id IN :contactIdSet
+        ]);
+        
+        for (PM_Configure__c pmConfig : newlist) {
+            
+            Id menteeUserId = contactMap.get(pmConfig.Mentee__c).EMS_TM_User__c;
+            Id mentorUserId = contactMap.get(pmConfig.Mentor__c).EMS_TM_User__c;
             
             if ((pmConfig.Status__c == 'Rejected' || pmConfig.Status__c == 'Submitted') 
                 && pmConfig.Status__c != oldMap.get(pmConfig.Id).Status__c 
-                && pmConfig.KRA__c != null) {
+                && pmConfig.KRA__c != null
+               	&& pmConfig.LastModifiedById != menteeUserId  
+               	&& pmConfig.LastModifiedById != mentorUserId) {
                     
                 if (!kraToPmConfigMap.containsKey(pmConfig.KRA__c)) {
                      kraToPmConfigMap.put(pmConfig.KRA__c, pmConfig);
