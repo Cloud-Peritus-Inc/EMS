@@ -117,10 +117,11 @@
                         <tr key={contactItem.nameid}>
                           
                           <td >
-                            <div class="slds-wrap"><a href="javascript:void(0);" data-id={contactItem.nameid} onclick={handleConNavViewClick}><!-- sangharsh : PM_Def_075 : add hanndle to navigate to kra view screen  -->
-                              <!--onclick={handleConNavClick}--->
-                      {contactItem.name}1
-                    </a></div>
+                            <div class="slds-wrap"><a href="javascript:void(0);" data-id={contactItem.nameid} onclick={handleConNavViewClick}>
+                                <!-- sangharsh : PM_Def_075 : add hanndle to navigate to kra view screen  -->
+                                <!--onclick={handleConNavClick}-->
+                                {contactItem.name}
+                              </a></div>
                           </td>
                           <td>
                             <div class="slds-wrap"> <lightning-formatted-date-time value={contactItem.qstartdate}></lightning-formatted-date-time></div>
