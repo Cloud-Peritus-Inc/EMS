@@ -6,6 +6,17 @@
     <name>Notifying Mentor On Feedback Submission</name>
     <style>freeForm</style>
     <subject>Performance Feedback for {!PM_Configure__c.Mentee__c} Submitted</subject>
+    <textOnly>Dear {!PM_Configure__c.Mentor__c}
+
+
+
+We hope this message finds you well. This is  to inform you that the performance feedback for {!PM_Configure__c.Mentee__c} under the Project {!PM_Configure__c.Project_Name__c} is submitted as requested.
+
+
+
+Best Regards,
+
+The Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
