@@ -1,7 +1,7 @@
 <template>
 	<lightning-card>
 		<template if:true={showKraEditButton}>
-			<lightning-button label="Edit KRA" slot="actions" onclick={handleEditKra}></lightning-button>
+			<lightning-button label="Edit KRA" variant="brand" slot="actions" onclick={handleEditKra}></lightning-button>
 		</template>
 		<div style="font-size: large;" class="slds-align_absolute-center">Quarterly KRA View</div>
 		<br/><br/>
@@ -150,7 +150,7 @@
 			</div>
 			<br/><br/>
 			<footer class="slds-align_absolute-center">
-				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+				<lightning-button variant="" label="Next" onclick={handleNextAction}
 					class="slds-var-m-left_x-small">
 				</lightning-button>
 			</footer>
@@ -205,11 +205,12 @@
 				</template>
 			</div>
 			<footer class="slds-align_absolute-center">
-				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+				<lightning-button variant=""  label="Next" onclick={handleNextAction}
 					class="slds-var-m-left_x-small">
 				</lightning-button>
+				<!-----   icon-name="utility:back"   icon-name="utility:chevronright"                ----->
 			</footer>
 		</template>
 		<template lwc:if={showProfessionalSkills}>
@@ -261,9 +262,9 @@
 				</template>
 			</div>
 			<footer class="slds-align_absolute-center">
-				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+				<lightning-button variant="" label="Next" onclick={handleNextAction}
 					class="slds-var-m-left_x-small">
 				</lightning-button>
 			</footer>
@@ -317,9 +318,9 @@
 				</template>
 			</div>
 			<footer class="slds-align_absolute-center">
-				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+				<lightning-button variant="" label="Next" onclick={handleNextAction}
 					class="slds-var-m-left_x-small">
 				</lightning-button>
 			</footer>
@@ -373,9 +374,9 @@
 				</template>
 			</div>
 			<footer class="slds-align_absolute-center">
-				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<lightning-button variant="" icon-name="utility:chevronright" label="Next" onclick={handleNextAction}
+				<lightning-button variant="" label="Next" onclick={handleNextAction}
 					class="slds-var-m-left_x-small">
 				</lightning-button>
 			</footer>
@@ -469,13 +470,13 @@
 			</div>
 			<br/><br/>
 			<footer class="slds-align_absolute-center">
-				<lightning-button variant="" icon-name="utility:back" label="Previous" onclick={handlePreviousAction}>
+				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
 				<template if:true={submittedKRAbutton}>
-				<lightning-button variant="" icon-name="utility:save" label="Complete KRA" onclick={handleCompleteKRA}
+				<lightning-button variant="brand" label="Complete KRA" onclick={handleCompleteKRA}
 					class="slds-var-m-left_x-small"></lightning-button>
 				</template>
-				<lightning-button variant="" icon-name="utility:close" label="Close" onclick={handleCloseFullView}
+				<lightning-button variant="" label="Close" onclick={handleCloseFullView}
 					class="slds-var-m-left_x-small"></lightning-button>
 			</footer>
 		</template>
