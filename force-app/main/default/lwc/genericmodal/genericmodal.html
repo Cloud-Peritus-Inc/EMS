@@ -1,0 +1,8 @@
+<template>
+    <lightning-modal-header label={headerLable}></lightning-modal-header>
+    <lightning-modal-body class={body}>{bodyLable}</lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label={btnLable1} variant="neutral" onclick={handleClose} class="slds-var-p-right_x-small"></lightning-button>
+        <lightning-button label={btnLable2} variant="brand" onclick={handleSave} ></lightning-button>
+    </lightning-modal-footer>
+</template>
