@@ -163,17 +163,51 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     stepSelectionHanler(event) {
 
-        const step = event.target.value;
-        this.selectedStep = step;
-        // Map each step to its corresponding visibility property
-        const stepToVisibility = {
-            'reviewerDetails': 'showReviewerDetails',
-            'technicalAcumen': 'showTechnicalAcumen',
-            'professionalSkills': 'showProfessionalSkills',
-            'strategicImpact': 'showStrategicImpact',
-            'goalsResults': 'showGoalsResults',
-            'overAllRating': 'showOverAllRating',
-        };
+        /*smaske : [PM_Def_027] : Adding validaion before moving to next section. 
+        handleSaveActionDuplicateWithValidation will do validation and pass result to changeSection
+        if changeSection is true we are moving to next section */
+        let changeSection = false;
+        const currentSection = this.selectedStep;
+
+        if (currentSection == 'reviewerDetails' || currentSection == 'overAllRating') {
+            console.log('if');
+            changeSection = true;
+        } else {
+            console.log('else');
+            changeSection = this.handleSaveActionDuplicateWithValidation();
+        }
+
+        if (changeSection) {
+            const step = event.target.value;
+            this.selectedStep = step;
+            // Map each step to its corresponding visibility property
+            const stepToVisibility = {
+                'reviewerDetails': 'showReviewerDetails',
+                'technicalAcumen': 'showTechnicalAcumen',
+                'professionalSkills': 'showProfessionalSkills',
+                'strategicImpact': 'showStrategicImpact',
+                'goalsResults': 'showGoalsResults',
+                'overAllRating': 'showOverAllRating',
+            };
+
+            // Set visibility based on the selected step
+            Object.keys(stepToVisibility).forEach(key => {
+                this[stepToVisibility[key]] = key === step;
+            });
+
+            if (step === 'overAllRating') {
+                setTimeout(() => {
+                    //this.getPMConfigKRADataHandler(this.kraRecord);
+                    //smaske : PM_Def_104
+                    this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData, this.kraRecord);
+                  },3000);
+            } else if (step != 'reviewerDetails' && step != 'overAllRating') {
+                console.log('Calling getPMConfigKRADataHandler');
+                setTimeout(() => {
+                    this.getPMConfigKRADataHandler(this.kraRecord);
+                  },100);
+            }
+        }
 
         // Set visibility based on the selected step
         Object.keys(stepToVisibility).forEach(key => {
