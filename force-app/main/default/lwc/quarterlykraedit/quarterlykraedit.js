@@ -578,6 +578,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 this.calculateAverageRatingForKRAHandler(this.recordIds,this.kraRecord);
                 if (status == 'Submit') {
                     this.submitKraRecordHandler();
+                    this.handleChangeChildEvent();
                     this.showToast('KRA details submitted successfully.', this.successVariant, this.toastMode);
                 }else {
                     this.showToast('KRA details saved successfully.', this.successVariant, this.toastMode);
@@ -585,7 +586,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 
             })
             .catch(error => {
-                console.log('518 updatePMAnswerRecordsStatus error : ' + JSON.stringify(error.body.message));
+                console.log('518 updatePMAnswerRecordsStatus error : ' + JSON.stringify(error));
                 //this.showToast('Error submitting records: ' + error.body.message, this.errorVariant, this.toastMode);
             });
     }
@@ -681,7 +682,13 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         this.dispatchEvent(event);
     }
     
-
-
-
+    handleChangeChildEvent() {
+        const selectEvent = new CustomEvent('mycustomevent', {
+            detail: {
+                recordId: this.receivedkraid,  
+                status: 'Success'  
+            }
+        });
+        this.dispatchEvent(selectEvent);
+    }
 }
