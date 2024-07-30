@@ -274,10 +274,11 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             });
 
             if (step === 'overAllRating') {
-                //this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData, this.kraRecord);
                 setTimeout(() => {
-                    this.getPMConfigKRADataHandler(this.kraRecord);
-                  },2200);
+                    //this.getPMConfigKRADataHandler(this.kraRecord);
+                    //smaske : PM_Def_104
+                    this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData, this.kraRecord);
+                  },3000);
             } else if (step != 'reviewerDetails' && step != 'overAllRating') {
                 console.log('Calling getPMConfigKRADataHandler');
                 setTimeout(() => {
