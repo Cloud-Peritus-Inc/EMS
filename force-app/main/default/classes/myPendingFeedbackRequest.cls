@@ -21,44 +21,69 @@ public without sharing class myPendingFeedbackRequest {
 
     @AuraEnabled
     public static List<goalWrapper> getKRARecordsOfContact() {
-
+        
         try {
             User us = [SELECT Id, Name, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
             Id contactId = us.ContactId;
 
             List<goalWrapper> goalWrapperList = new List<goalWrapper>();
             Set<Id> kraIdSet = new Set<Id>();
-
-            List<PM_Configure__c> pmConfigAnswerList = [
-                SELECT Id, KRA__c, Reporting_Contact__c 
-                FROM PM_Configure__c
-                WHERE RecordTypeId = :AnswerRecordTypeId 
-                AND KRA__c != NULL 
-                AND Reporting_Contact__c != NULL
-                AND Reporting_Contact__c = :contactId
-                AND (status__c = :PM_ANSWER_AWAITING OR status__c = :PM_ANSWER_ACCEPTED)
+            Map<Id, String> kraToProjectNameMap = new Map<Id, String>();
+            Map<String, EMS_TM_Assignment__c> projectVsResourceMap = new Map<String, EMS_TM_Assignment__c>();
+            Map<Id, Id> kraVsProjectNameMap = new Map<Id, Id>();
+            
+            List<PM_Configure__c> pmConfigAnswerList = [SELECT Id
+                                                                , KRA__c
+                                                                , Reporting_Contact__c
+                                                                ,Project_Name__r.Name
+                                                                ,Mentee__c
+                                                                ,Project_Name__c
+                                                        FROM PM_Configure__c
+                                                        WHERE RecordTypeId = :AnswerRecordTypeId 
+                                                        AND KRA__c != NULL 
+                                                        AND Reporting_Contact__c != NULL
+                                                        AND Reporting_Contact__c = :contactId
+                                                        AND (status__c = :PM_ANSWER_AWAITING OR status__c = :PM_ANSWER_ACCEPTED)                
             ];
-
+           
             if (!pmConfigAnswerList.isEmpty()) {
                 
                 for (PM_Configure__c pmConfig : pmConfigAnswerList) {
                     kraIdSet.add(pmConfig.KRA__c);
+                    kraToProjectNameMap.put(pmConfig.KRA__c,pmConfig.Project_Name__r.Name);
+                    kraVsProjectNameMap.put(pmConfig.KRA__c,pmConfig.Project_Name__c);
                 }
             }
              
-            List<Goal__c> glList = [
-                SELECT Id, Name, Goal_Name__c, Start_Date__c, End_Date__c, Resource__c, Resource__r.EMS_TM_User__r.CommunityNickname,
-                (Select Id, Name, status__c, CreatedById, CreatedBy.CommunityNickname from PM_Answer_Configure__r where RecordTypeId = :AnswerRecordTypeId )
+            List<Goal__c> glList = [SELECT Id, Name, Goal_Name__c,Start_Date__c,End_Date__c, Resource__c, Resource__r.EMS_TM_User__r.CommunityNickname,
+                (Select Id, Name, status__c, CreatedById, CreatedBy.CommunityNickname from PM_Answer_Configure__r where RecordTypeId = :AnswerRecordTypeId AND OwnerId =: us.Id)
                 FROM Goal__c 
                 WHERE Id IN :kraIdSet
             ];
-    
-            for (Goal__c glwarp : glList) {
-                 
+            
+            List<EMS_TM_Assignment__c> projectassignmentList = [SELECT Id
+                                                            		   ,EMS_TM_ProjectName_Asgn__c
+                                                                       ,EMS_TM_EmployeeName__c
+                                                                       ,EMS_TM_StartDate_Asgn__c
+                                                                       ,EMS_TM_EndDate_Asgn__c
+                                                                FROM EMS_TM_Assignment__c                                                       
+            ];
+            
+            if(!projectassignmentList.isEmpty()){
+                for (EMS_TM_Assignment__c assignment : projectassignmentList) {
+                    projectVsResourceMap.put(assignment.EMS_TM_ProjectName_Asgn__c + '|' + assignment.EMS_TM_EmployeeName__c, assignment);
+                }
+            }
+            
+
+            for (Goal__c glwarp : glList) {  
                 goalWrapper glwp = new goalWrapper();
-                for (PM_Configure__c goalAnswer : glwarp.PM_Answer_Configure__r) {
+                glwp.hideEditBtn = true; 
+                glwp.hideAcceptBtn = true;
+                glwp.hideRejectBtn = true;
+                
+                for (PM_Configure__c goalAnswer : glwarp.PM_Answer_Configure__r) {  
                     if (goalAnswer.Status__c == PM_ANSWER_AWAITING) {
-                        glwp.hideEditBtn = true;
                         glwp.hideAcceptBtn = false;
                         glwp.hideRejectBtn = false;
                         glwp.requestedBy = goalAnswer.CreatedById;
@@ -71,13 +96,22 @@ public without sharing class myPendingFeedbackRequest {
                         glwp.requestedByName = goalAnswer.CreatedBy.CommunityNickname;
                     }
                 }
+                
+                glwp.ProjectName = kraToProjectNameMap.get(glwarp.Id);
                 glwp.goalName = glwarp.Goal_Name__c;
-                glwp.startDate = glwarp.Start_Date__c;
-                glwp.endDate = glwarp.End_Date__c;
                 glwp.resource = glwarp.Resource__c;
+                
+                String assignmentKey = kraVsProjectNameMap.get(glwarp.Id) + '|' + glwp.resource;
+                if (projectVsResourceMap.containsKey(assignmentKey)) {
+                    EMS_TM_Assignment__c assignment = projectVsResourceMap.get(assignmentKey);
+                    glwp.startDate = assignment.EMS_TM_StartDate_Asgn__c;
+                    glwp.endDate = assignment.EMS_TM_EndDate_Asgn__c;
+                }
+                
                 glwp.resourceName = glwarp.Resource__r.EMS_TM_User__r.CommunityNickname;
                 glwp.Id = glwarp.Id;
                 goalWrapperList.add(glwp);
+                
             }
             return goalWrapperList;
              
@@ -87,7 +121,7 @@ public without sharing class myPendingFeedbackRequest {
     }  
     
     @AuraEnabled
-    public static void updatePMConfigureRecord(Id goalId, String actionType, String rejectionReason) {
+    public static List<goalWrapper> updatePMConfigureRecord(Id goalId, String actionType, String rejectionReason) {
         try {
             User us = [SELECT Id, Name, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
             Id contactId = us.ContactId;
@@ -111,6 +145,7 @@ public without sharing class myPendingFeedbackRequest {
             }
             
             update pmConfigureRecords;
+            return myPendingFeedbackRequest.getKRARecordsOfContact();
         } catch (Exception e) {
             throw new AuraHandledException('Failed to Update PM Configure records ' + e.getMessage());
         }
@@ -140,6 +175,9 @@ public without sharing class myPendingFeedbackRequest {
 
         @AuraEnabled
         public String Id;
+
+        @AuraEnabled
+        public String ProjectName;
 
         @AuraEnabled
         public Boolean hideEditBtn;
