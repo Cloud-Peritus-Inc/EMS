@@ -582,7 +582,7 @@ return menteeRecords;
                                                             EMS_TM_ProjectName_Asgn__r.name,EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name,
                                                             EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,EMS_TM_ProjectName_Asgn__r.Project_Manager__c,
                                                             EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name,EMS_TM_StartDate_Asgn__c,EMS_TM_EndDate_Asgn__c 
-                                                            from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId   and Id =:assignmentIds ];
+                                                            from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId and EMS_TM_Status_Asgn__c !='Scheduled'  and Id =:assignmentIds ];
         system.debug('projectAssigneeidList-->'+projectAssigneeidList);
         List<projectAssgnWrapper> wrapperlist = new List<projectAssgnWrapper>();
         for(EMS_TM_Assignment__c assgn : projectAssigneeidList){
@@ -654,7 +654,7 @@ return menteeRecords;
                                      WHERE Id = :contactId];
         
         list<Resource_Resource_Relationship__c> mentorlst =[Select id,Relationship_Type__c,Resource__c,Resource_Reports_To__c from Resource_Resource_Relationship__c 
-                                                         where Relationship_Type__c='Mentor' AND Resource__c=:contactId];
+                                                         where Relationship_Type__c Includes('Mentor') AND Resource__c=:contactId];
         
         if (contactList.isEmpty()) {
             throw new AuraHandledException('Contact not found.');
@@ -685,7 +685,9 @@ return menteeRecords;
                                            pmAnswer.Project_Name__c = projectId;
                                            pmAnswer.Fiscal_Year__c = goalList[0].Fulfillment__r.Fiscal_Year__c;
                                            pmAnswer.KRA__c = goalList[0].Id;
+                                           if(!mentorlst.isEmpty()){  
                                            pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
+                                           }
                                            pmAnswer.RecordTypeId = answerRecordTypeId;
                                            pmAnswer.Mentee__c=goalList[0].Resource__c;	
                                           if(gettingownerID!=null){
