@@ -39,39 +39,6 @@
 	border: 2px solid rgb(190, 190, 190);
 	border-radius: 7px;
 }
-
-.pointerTableContainer2{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-
-	border: 2px solid rgb(190, 190, 190);
-	border-radius: 7px;
-}
-
-.pointerTableContainer2 .section3{
-	/*margin-left: 20%;*/
-}
-.ratingSection{
-	padding: 10px;
-	width:50%;
-	height:auto;
-	text-align: center;
-}
-
-.ratingSection a{
-	text-decoration: none;
-	color: black;
-	font-size: 14px;
-}
-
-.ratingSection div{
-	text-decoration: none;
-	color: black;
-	font-size: 14px;
-	text-align: center;
-}
 .fieldsRow{
 	display: flex;
 	flex-direction: row;
@@ -79,4 +46,11 @@
 .slds-modal__container {
     max-width: 80rem !important;
     width: 80% !important;
+}
+.custom-vertical-align {
+    vertical-align: middle;
+}
+.slds-table-container {
+    border-left: 1px solid #d8dde6;
+    border-right: 1px solid #d8dde6;
 }

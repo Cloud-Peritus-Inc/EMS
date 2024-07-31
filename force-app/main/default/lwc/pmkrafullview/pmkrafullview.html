@@ -1,9 +1,10 @@
 <template>
 	<lightning-card>
 		<template if:true={showKraEditButton}>
-			<lightning-button label="Edit KRA" variant="brand" slot="actions" onclick={handleEditKra}></lightning-button>
+			<lightning-button label="Edit KRA" variant="brand" slot="actions" onclick={handleEditKra}>
+			</lightning-button>
 		</template>
-		<div style="font-size: large;" class="slds-align_absolute-center">Quarterly KRA View</div>
+		<div style="font-size: large;" class="slds-align_absolute-center"><b>Quarterly KRA View</b></div>
 		<br/><br/>
 		<template if:true={isLoading}>
 			<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
@@ -28,7 +29,7 @@
 
 								<lightning-layout-item padding="around-small" size="6">
 									<div>
-										<p>Review Type</p>
+										<p><b>Review Type</b></p>
 									</div>
 								</lightning-layout-item>
 								<lightning-layout-item padding="around-small" size="6">
@@ -40,7 +41,7 @@
 
 								<lightning-layout-item padding="around-small" size="6">
 									<div>
-										<p>Reviewer Name</p>
+										<p><b>Reviewer Name</b></p>
 									</div>
 								</lightning-layout-item>
 								<lightning-layout-item padding="around-small" size="6">
@@ -53,7 +54,7 @@
 
 								<lightning-layout-item padding="around-small" size="6">
 									<div>
-										<p>Reviewer Title</p>
+										<p><b>Reviewer Title</b></p>
 									</div>
 								</lightning-layout-item>
 								<lightning-layout-item padding="around-small" size="6">
@@ -72,13 +73,12 @@
 				<div class="section2">
 					<lightning-layout multiple-rows class="slds-theme_shade">
 						<lightning-layout-item size="12">
-							<h6>Measures of performance</h6>
+							<h6><strong> Measures of performance</strong></h6>
 						</lightning-layout-item>
 					</lightning-layout>
 					<lightning-layout multiple-rows class="slds-theme_shade">
 						<lightning-layout-item padding="around-small" size="12">
-							<table
-								class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+							<table class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table-container"
 								aria-labelledby="element-with-table-label other-element-with-table-label">
 								<thead>
 									<tr class="slds-line-height_reset">
@@ -93,9 +93,7 @@
 								<tbody>
 									<tr class="slds-hint-parent">
 										<th data-label="Rating Score" scope="row">
-											<div class="slds-truncate" title="1">
-												<a href="javascript:void(0)">1</a>
-											</div>
+											<div class="slds-truncate" title="1">1</div>
 										</th>
 										<td data-label="Unacceptable">
 											<div class="slds-truncate">Unacceptable</div>
@@ -103,9 +101,7 @@
 									</tr>
 									<tr class="slds-hint-parent">
 										<th data-label="2" scope="row">
-											<div class="slds-truncate" title="2">
-												<a href="javascript:void(0)">2</a>
-											</div>
+											<div class="slds-truncate" title="2">2</div>
 										</th>
 										<td data-label="Needs Improvement">
 											<div class="slds-truncate">Needs Improvement</div>
@@ -113,9 +109,7 @@
 									</tr>
 									<tr class="slds-hint-parent">
 										<th data-label="3" scope="row">
-											<div class="slds-truncate" title="3">
-												<a href="javascript:void(0)">3</a>
-											</div>
+											<div class="slds-truncate" title="3">3</div>
 										</th>
 										<td data-label="Meets Expectations">
 											<div class="slds-truncate">Meets Expectations</div>
@@ -123,9 +117,7 @@
 									</tr>
 									<tr class="slds-hint-parent">
 										<th data-label="4" scope="row">
-											<div class="slds-truncate" title="4">
-												<a href="javascript:void(0)">4</a>
-											</div>
+											<div class="slds-truncate" title="4">4</div>
 										</th>
 										<td data-label="Exceeds Expectations">
 											<div class="slds-truncate">Exceeds Expectations</div>
@@ -134,9 +126,7 @@
 
 									<tr class="slds-hint-parent">
 										<th data-label="5" scope="row">
-											<div class="slds-truncate" title="5">
-												<a href="javascript:void(0)">5</a>
-											</div>
+											<div class="slds-truncate" title="5">5</div>
 										</th>
 										<td data-label="Far Exceeds">
 											<div class="slds-truncate">Far Exceeds</div>
@@ -150,8 +140,7 @@
 			</div>
 			<br/><br/>
 			<footer class="slds-align_absolute-center">
-				<lightning-button variant="" label="Next" onclick={handleNextAction}
-					class="slds-var-m-left_x-small">
+				<lightning-button variant="" label="Next" onclick={handleNextAction} class="slds-var-m-left_x-small">
 				</lightning-button>
 			</footer>
 		</template>
@@ -207,8 +196,7 @@
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<lightning-button variant=""  label="Next" onclick={handleNextAction}
-					class="slds-var-m-left_x-small">
+				<lightning-button variant="" label="Next" onclick={handleNextAction} class="slds-var-m-left_x-small">
 				</lightning-button>
 				<!-----   icon-name="utility:back"   icon-name="utility:chevronright"                ----->
 			</footer>
@@ -264,8 +252,7 @@
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<lightning-button variant="" label="Next" onclick={handleNextAction}
-					class="slds-var-m-left_x-small">
+				<lightning-button variant="" label="Next" onclick={handleNextAction} class="slds-var-m-left_x-small">
 				</lightning-button>
 			</footer>
 		</template>
@@ -320,8 +307,7 @@
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<lightning-button variant="" label="Next" onclick={handleNextAction}
-					class="slds-var-m-left_x-small">
+				<lightning-button variant="" label="Next" onclick={handleNextAction} class="slds-var-m-left_x-small">
 				</lightning-button>
 			</footer>
 		</template>
@@ -376,105 +362,58 @@
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<lightning-button variant="" label="Next" onclick={handleNextAction}
-					class="slds-var-m-left_x-small">
+				<lightning-button variant="" label="Next" onclick={handleNextAction} class="slds-var-m-left_x-small">
 				</lightning-button>
 			</footer>
 		</template>
 		<template lwc:if={showOverAllRating}>
-			<div class="pointerTableContainer2">
-
-				<div class="ratingSection">
-					<lightning-layout multiple-rows class="slds-theme_shade">
-						<lightning-layout-item padding="around-small" size="12">
-							<table
-								class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
-								aria-labelledby="element-with-table-label other-element-with-table-label">
-								<thead>
-									<tr class="slds-line-height_reset">
-										<th class="" scope="col">
-											<div class="slds-truncate" title="Rating Score">Section Name</div>
-										</th>
-										<th class="" scope="col">
-											<div class="slds-truncate" title="Description">Average Rating</div>
-										</th>
-									</tr>
-								</thead>
-
-								<template lwc:if={CurrentUserConDetails}>
-									<tbody>
-										<tr class="slds-hint-parent">
-											<th data-label="Rating Score" scope="row">
-												<div class="slds-truncate" title="Technical Acumen">
-													<a href="javascript:void(0)">Technical Acumen
-														[{CurrentUserResourceRoleTechAcc}%]</a>
-												</div>
-											</th>
-											<td data-label="Technical Acumen">
-												<div class="slds-truncate">{wrapData.TechSkillData}
-													({wrapData.AvgTechSkillData})</div>
-											</td>
-										</tr>
-										<tr class="slds-hint-parent">
-											<th data-label="2" scope="row">
-												<div class="slds-truncate" title="Professional Skills">
-													<a href="javascript:void(0)">Professional Skills
-														[{CurrentUserResourceRoleProfSkillAcc}%]</a>
-												</div>
-											</th>
-											<td data-label="Professional Skills">
-												<div class="slds-truncate">{wrapData.ProfSkillData}
-													({wrapData.AvgProfSkillData})</div>
-											</td>
-										</tr>
-										<tr class="slds-hint-parent">
-											<th data-label="3" scope="row">
-												<div class="slds-truncate" title="Strategic Impact">
-													<a href="javascript:void(0)">Strategic Impact
-														[{CurrentUserResourceRoleStrategicAcc}%]</a>
-												</div>
-											</th>
-											<td data-label="Strategic Impact">
-												<div class="slds-truncate">{wrapData.StrategicData}
-													({wrapData.AvgStrategicData})</div>
-											</td>
-										</tr>
-										<tr class="slds-hint-parent">
-											<th data-label="4" scope="row">
-												<div class="slds-truncate" title="Goals & Results">
-													<a href="javascript:void(0)">Goals & Results
-														[{CurrentUserResourceRoleGoalRewAcc}%]</a>
-												</div>
-											</th>
-											<td data-label="Goals & Results">
-												<div class="slds-truncate">{wrapData.GoalResultData}
-													({wrapData.AvgGoalResultData})</div>
-											</td>
-										</tr>
-										<tr class="slds-hint-parent">
-											<th data-label="5" scope="row">
-												<div class="slds-truncate" title="Overall Rating">
-													<a href="javascript:void(0)">Overall Rating</a>
-												</div>
-											</th>
-											<td data-label="Overall Average Rating">
-												<div class="slds-truncate">{wrapData.AreaWiseAvgRating}</div>
-											</td>
-										</tr>
-									</tbody>
+			<div class="slds-m-around_medium">
+				<div class="pointerTableContainer">
+				<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+					<thead>
+						<tr>
+							<th><strong>Section Name</strong></th>				
+							<th colspan={contacts.length} style="text-align:center;"><b>Average Rating</b></th>
+						</tr>
+					</thead>
+					<thead>
+						<tr>
+							<th></th>
+							<template for:each={contacts} for:item="contact">
+								<th key={contact.contactId}><strong>{contact.contactname}</strong></th>
+							</template>
+						</tr>
+					</thead>
+					<tbody>
+						<template for:each={processedData} for:item="areaData">
+							<tr key={areaData.area}>
+								<td>{areaData.area} [{areaData.areapercentage} %]</td>
+								<template for:each={areaData.ratings} for:item="rating">
+									<td key={rating.contactId}>
+										{rating.averageRating} ({rating.AvgRatingSkillForResource})
+									</td>
 								</template>
-							</table>
-						</lightning-layout-item>
-					</lightning-layout>
+								<!--td>{areaData.overallAverage}</td-->
+							</tr>
+						</template>
+						<tr>
+							<td><strong>Overall Rating</strong></td>
+							<template for:each={overallRatings} for:item="overallRating">
+								<td key={overallRating.contactId}>{overallRating.overallRating}</td>
+							</template>
+						</tr>
+					</tbody>
+				</table>
 				</div>
+				
 			</div>
 			<br/><br/>
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
 				<template if:true={submittedKRAbutton}>
-				<lightning-button variant="brand" label="Complete KRA" onclick={handleCompleteKRA}
-					class="slds-var-m-left_x-small"></lightning-button>
+					<lightning-button variant="brand" label="Complete KRA" onclick={handleCompleteKRA}
+						class="slds-var-m-left_x-small"></lightning-button>
 				</template>
 				<lightning-button variant="" label="Close" onclick={handleCloseFullView}
 					class="slds-var-m-left_x-small"></lightning-button>

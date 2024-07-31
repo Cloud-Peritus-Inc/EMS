@@ -6,7 +6,7 @@ import getKRAFullDetails from '@salesforce/apex/quarterlyKRAFullViewCtrl.getPMCo
 import completekraMethod from '@salesforce/apex/quarterlyKRAFullViewCtrl.completekraMethod';
 import getLoginAnswerdata from '@salesforce/apex/quarterlyKRAFullViewCtrl.getLoginAnswerdata';
 import getCurrentUserConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getCurrentUserConDetails';
-import calculateAverageRatingForKRA from '@salesforce/apex/quarterlyKRAViewCtrl.calculateAverageRatingForKRA';
+import calculateAverageRatingForKRA from '@salesforce/apex/CalculateFullQuarterlyKRA.calculateAverageRatingForKRA';
 
 export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     @track questions = [];
@@ -40,17 +40,13 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     questionsGoalskill = [];
     questionsSpecificArea = [];
 
-    //getCurrentUserResourceRole
     CurrentUserConDetails
     currentContactName;
     currentContactResourceRole;
-    CurrentUserResourceRoleTechAcc;
-    CurrentUserResourceRoleProfSkillAcc;
-    CurrentUserResourceRoleStrategicAcc;
     resourceid;
     orgDomainId;
     showKraEditButton = false;
-    submittedKRAbutton=false;
+    submittedKRAbutton = false;
 
     connectedCallback() {
         this.orgDomainId = window.location.origin;
@@ -67,11 +63,6 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             this.currentContactResourceRole = data.Resource_Role__r.Name;
 
             console.log('getCurrentUserConDetails DATA :  ' + JSON.stringify(this.CurrentUserConDetails));
-            //   this.profileName = data.EMS_TM_User__r.Profile.Name;
-            this.CurrentUserResourceRoleTechAcc = data.Resource_Role__r.technical_acumen__c;
-            this.CurrentUserResourceRoleProfSkillAcc = data.Resource_Role__r.professional_skills__c;
-            this.CurrentUserResourceRoleStrategicAcc = data.Resource_Role__r.strategic_impact__c;
-            this.CurrentUserResourceRoleGoalRewAcc = data.Resource_Role__r.goals_and_results__c;
             this.isLoading = false;
         } else if (error) {
             this.isLoading = false;
@@ -96,7 +87,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         if (data) {
             console.log(' getLoginAnswerdata data-->' + JSON.stringify(data));
             this.showKraEditButton = data.submittedRecords;
-            this.submittedKRAbutton =data.submittedKRAbutton;
+            this.submittedKRAbutton = data.submittedKRAbutton;
             this.isLoading = false;
         }
         else if (error) {
@@ -109,6 +100,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     @wire(getKRAFullDetails, { kraid: '$receivedKRAId', tab: '$tab' })
     wiredData({ error, data }) {
         if (data) {
+            console.log('data' + JSON.stringify(data));
             this.isLoading = true;
 
             this.questionstechicalskill = [];
@@ -151,11 +143,11 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     answerIdList: q.answerIdList,
                     goalRecord: q.goalRecord
                 };
-                console.log('questionWrapper-->'+JSON.stringify(questionWrapper));
+                console.log('questionWrapper-->' + JSON.stringify(questionWrapper));
                 this.allAnswerIdList = data.flatMap(q => q.answersId);
                 this.kraRecord = data[0].goalRecord;
-               // console.log('this.kraRecord-->' + this.kraRecord);
-               // console.log('this.allAnswerIdList-->' + this.allAnswerIdList);
+                // console.log('this.kraRecord-->' + this.kraRecord);
+                // console.log('this.allAnswerIdList-->' + this.allAnswerIdList);
 
                 // Store based on area
                 if (q.area === 'TECHNICAL SKILLS') {
@@ -178,7 +170,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     }
                 }
             });
-            this.calculateAverageRatingForKRAHandler();
+            // this.calculateAverageRatingForKRAHandler();
             this.isLoading = false;
         } else if (error) {
             this.error = error;
@@ -187,28 +179,87 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         }
     }
 
-    @track wrapData;
-    calculateAverageRatingForKRAHandler() {
-        console.log('Received this.kraRecord : ' + JSON.stringify(this.kraRecord));
-        console.log('Received this.tab : ' + this.tab);
-        console.log('Received this.allAnswerIdList : ' + this.allAnswerIdList);
-        if (!this.kraRecord || !this.kraRecord.Id) {
-            console.error('kraRecord is not properly populated.');
-            return;
-        }
+    @track areaWrapperList = [];
+    @track contacts = [];
+    @track processedData = [];
+    overallRatings;
 
-        calculateAverageRatingForKRA({ PMAnswerRecordsId: this.allAnswerIdList, kraRecord: this.kraRecord, tab: this.tab })
-            .then(result => {
-                console.log("calculateAverageRatingForKRA result ::" + JSON.stringify(result));
-                this.wrapData = result;
-            })
-            .catch(error => {
-                console.log("error ::" + JSON.stringify(error));
-            });
+    @wire(calculateAverageRatingForKRA, { kraid: '$receivedKRAId', tab: '$tab' })
+    wiredcalculateData({ error, data }) {
+        if (data) {
+            console.log('receivedKRAId-->' + this.receivedKRAId);
+            console.log('tab-->' + this.tab);
+            console.log('data-->' + JSON.stringify(data));
+            this.areaWrapperList = data;
+            this.processData();
+        } else if (error) {
+            this.error = error;
+            console.log('nw this.error -->' + JSON.stringify(this.error));
+        }
+    }
+
+    processData() {
+        let contactMap = new Map();
+        let contactOverallRatingMap = new Map();
+        // Define the custom order for the areas
+    const areaOrder = ['TECHNICAL SKILLS', 'PROFESSIONAL SKILLS', 'STRATEGIC IMPACT', 'GOALS AND RESULTS'];
+    console.log('areaOrder-->'+areaOrder);
+    // Sort the areaWrapperList based on the custom order
+    let sortedAreaWrapperList = areaOrder.map(area => 
+        this.areaWrapperList.find(wrapper => wrapper.area === area)
+    ).filter(wrapper => wrapper !== undefined); 
+
+        this.processedData = sortedAreaWrapperList.map(areaWrapper => {
+            let ratingsArray = [];
+            let totalRating = 0;
+            let totalSkillRating = 0;
+            let totalCount = 0;
+
+            for (let contactId in areaWrapper.answerscalculation) {
+                let answer = areaWrapper.answerscalculation[contactId][0];
+                let averageRating = parseFloat(answer.averageRating).toFixed(2);
+                let AvgRatingSkillForResource = parseFloat(answer.AvgRatingSkillForResource).toFixed(2);
+
+                ratingsArray.push({
+                    contactId: contactId,
+                    averageRating: averageRating,
+                    AvgRatingSkillForResource: AvgRatingSkillForResource
+                });
+
+                totalRating += parseFloat(answer.averageRating);
+                totalSkillRating += parseFloat(answer.AvgRatingSkillForResource);
+                totalCount++;
+
+                if (!contactMap.has(contactId)) {
+                    contactMap.set(contactId, { contactId: answer.contactId, contactname: answer.contactname });
+                }
+                if (!contactOverallRatingMap.has(contactId)) {
+                    contactOverallRatingMap.set(contactId, 0);
+                }
+                contactOverallRatingMap.set(contactId, contactOverallRatingMap.get(contactId) + parseFloat(answer.AvgRatingSkillForResource));
+
+            }
+
+            let overallAverage = (totalCount > 0) ? (totalRating / totalCount).toFixed(2) : 'N/A';
+            let overallSkillAverage = (totalCount > 0) ? (totalSkillRating / totalCount).toFixed(2) : 'N/A';
+
+            return {
+                area: areaWrapper.area,
+                areapercentage: areaWrapper.areapercentage,
+                ratings: ratingsArray,
+                overallAverage: `${overallAverage} (${overallSkillAverage})`
+            };
+        });
+        // Convert contactOverallRatingMap to an array for template rendering
+        this.overallRatings = Array.from(contactOverallRatingMap.entries()).map(([contactId, rating]) => ({
+            contactId: contactId,
+            overallRating: rating.toFixed(2)
+        }));
+        this.contacts = Array.from(contactMap.values());
     }
 
     stepSelectionHanler(event) {
-        this.isLoading=true;
+        this.isLoading = true;
         const step = event.target.value;
         this.selectedStep = step;
         const stepToVisibility = {
@@ -220,16 +271,11 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             'overAllRating': 'showOverAllRating',
         };
 
-        console.log('selectedStep' + this.selectedStep);
-        if (this.selectedStep == 'showOverAllRating') {
-            this.calculateAverageRatingForKRAHandler();
-        }
-
         Object.keys(stepToVisibility).forEach(key => {
             console.log('key-->' + key + ' step-->' + step);
             this[stepToVisibility[key]] = key === step;
         });
-        this.isLoading=false;
+        this.isLoading = false;
     }
 
     handleNextAction() {
@@ -241,33 +287,32 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         this.showStrategicImpact = false;
         this.showGoalsResults = false;
         this.showOverAllRating = false;
-        this.isLoading=true;
+        this.isLoading = true;
         switch (this.selectedStep) {
             case 'reviewerDetails':
                 this.showTechnicalAcumen = true;
                 this.selectedStep = 'technicalAcumen';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
             case 'technicalAcumen':
                 this.showProfessionalSkills = true;
                 this.selectedStep = 'professionalSkills';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
             case 'professionalSkills':
                 this.showStrategicImpact = true;
                 this.selectedStep = 'strategicImpact';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
             case 'strategicImpact':
                 this.showGoalsResults = true;
                 this.selectedStep = 'goalsResults';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
             case 'goalsResults':
                 this.showOverAllRating = true;
                 this.selectedStep = 'overAllRating';
-                this.calculateAverageRatingForKRAHandler();
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
         }
 
@@ -282,34 +327,34 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         this.showStrategicImpact = false;
         this.showGoalsResults = false;
         this.showOverAllRating = false;
-        this.isLoading=true;
+        this.isLoading = true;
 
         // Set the specific show property to true based on the selected step
         switch (this.selectedStep) {
             case 'technicalAcumen':
                 this.showReviewerDetails = true;
                 this.selectedStep = 'reviewerDetails';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
             case 'professionalSkills':
                 this.showTechnicalAcumen = true;
                 this.selectedStep = 'technicalAcumen';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
             case 'strategicImpact':
                 this.showProfessionalSkills = true;
                 this.selectedStep = 'professionalSkills';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
             case 'goalsResults':
                 this.showStrategicImpact = true;
                 this.selectedStep = 'strategicImpact';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
             case 'overAllRating':
                 this.showGoalsResults = true;
                 this.selectedStep = 'goalsResults';
-                this.isLoading=false;
+                this.isLoading = false;
                 break;
         }
         console.log('HandlePrevious ' + this.selectedStep);
@@ -335,7 +380,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             }
         });
     }
-
+//Feedback response once submitted, cannot be reverted. Would you like to proceed?
     async handleCompleteKRA() {
         const result = await LightningConfirm.open({
             message: '',
