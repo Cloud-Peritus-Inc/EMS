@@ -142,7 +142,7 @@
 
 														<td>
 															<div class="slds-wrap">
-																{kra.Overall_Average_Section_Rating__c}
+																{kra.Overall_Rating__c}<!-- Ravitheja -- added overall rating from goal-->
 															</div>
 														</td>
 
@@ -237,7 +237,7 @@
 
 							<div class="leftBox">
 								<lightning-input label="HR Rating" type="Number" name="HR_Rating__c"
-									value={Compensation.HR_Rating__c} onchange={dataHandler}>
+									value= {averageOverallRating} onchange={dataHandler}>
 								</lightning-input>
 							</div>
 
