@@ -15,12 +15,14 @@ export default class GoalDataTable extends LightningElement {
     @track selectedResourceId = '';
 
     connectedCallback() {
+        console.log('check1 ');
         this.fetchKRARecords();
     }
 
     fetchKRARecords() {
         getKRARecordsOfContact()
             .then(result => {
+                console.log('result ' + result);
                 this.data = result;
                 console.log('data '+JSON.stringify(this.data));
                 if(result.length > 0){

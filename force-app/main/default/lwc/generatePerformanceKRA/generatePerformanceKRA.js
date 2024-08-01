@@ -134,7 +134,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                         this.totalkraRecords = data.length;
                         let sumOverallRating = 0;
                         this.kraRecords.forEach(record => {
-                            sumOverallRating += record.Overall_Average_Section_Rating__c || 0; // Ensure numeric values
+                            sumOverallRating += record.Overall_Rating__c || 0; // Ravitheja --> replacing Overall_Average_Section_Rating__c with Overall_Rating__c from Goal object 
                         });
                         this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(1) : 0;
                     }
@@ -247,11 +247,15 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             RR[name] = dataValue;
         } else if (name == 'Comments__c') {
             RR[name] = dataValue;
-        } else if (name == 'Finalized_Hike__c') {
+        } else if (name == 'Overall_Average_Section_Rating__c') { //Ravitheja --> replacing Finalized_Hike__c with Overall_Average_Section_Rating__c from compensation object 
             RR[name] = dataValue;
         } else if (name == 'HR_Rating__c') {
-            RR[name] = dataValue;
+            const rating = parseFloat(dataValue);
+            if (!isNaN(rating) && rating >= 1 && rating <= 5) {//Ravitheja --> added validatio to check the value
+                RR[name] = dataValue;
+            }
         }
+        
         this.Compensation = RR;
 
     }
@@ -309,10 +313,11 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             return;
         }
         //smaske : PM_079/PM_078 : Updating Submit functionality to avoid duplicate record creation and Field Validation.
-        this.Compensation.Overall_KRA_Average_Rating__c = this.averageOverallRating;
+        this.Compensation.Overall_KRA_Average_Rating__c = this.averageOverallRating; //
         let isValid = true;
         //smaske :[EN_05] : Removed "Finalized_Hike__c" from API Array as field is commented
-        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Overall_KRA_Average_Rating__c']; // Replace with your actual field names
+        //Ravitheja --> Added HR_Rating__c field
+        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Overall_KRA_Average_Rating__c','HR_Rating__c']; // Replace with your actual field names 
         // Iterate through the list of API field names
         for (const fieldName of apiFieldNames) {
             if (!this.Compensation[fieldName]) {
