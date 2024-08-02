@@ -5,7 +5,7 @@
         <name>Check_Quarter</name>
         <label>Check Quarter</label>
         <locationX>578</locationX>
-        <locationY>647</locationY>
+        <locationY>539</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>IF_Q1</name>
@@ -92,7 +92,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>UpdateTheRatingField</targetReference>
+                <targetReference>Check_Quarter</targetReference>
             </connector>
             <label>If KRA Status is KRA Completed</label>
         </rules>
@@ -173,7 +173,7 @@
         <name>Update_Q1_Rating</name>
         <label>Update Q1 Rating</label>
         <locationX>50</locationX>
-        <locationY>755</locationY>
+        <locationY>647</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -194,7 +194,7 @@
         <name>Update_Q2_Rating</name>
         <label>Update Q2 Rating</label>
         <locationX>314</locationX>
-        <locationY>755</locationY>
+        <locationY>647</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -215,7 +215,7 @@
         <name>Update_Q3_Rating</name>
         <label>Update Q3 Rating</label>
         <locationX>578</locationX>
-        <locationY>755</locationY>
+        <locationY>647</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -236,7 +236,7 @@
         <name>Update_Q4_Rating</name>
         <label>Update Q4 Rating</label>
         <locationX>842</locationX>
-        <locationY>755</locationY>
+        <locationY>647</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -252,22 +252,6 @@
             </value>
         </inputAssignments>
         <object>Fulfillment__c</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>UpdateTheRatingField</name>
-        <label>UpdateTheRatingField</label>
-        <locationX>578</locationX>
-        <locationY>539</locationY>
-        <connector>
-            <targetReference>Check_Quarter</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Rating__c</field>
-            <value>
-                <elementReference>$Record.Overall_Rating__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
         <locationX>980</locationX>
