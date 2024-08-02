@@ -15,8 +15,9 @@ public without sharing class myPendingFeedbackRequest {
 
     public static final String PM_ANSWER_REJECTED = 'Rejected';
     public static final String PM_ANSWER_AWAITING = 'Awaiting Response';
-    public static final String PM_ANSWER_SUBMITTED = 'Submitted'; 
     public static final String PM_ANSWER_ACCEPTED = 'Accepted';
+    public static final String PM_ANSWER_SAVED = 'Saved';
+    
     public static final Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
 
     @AuraEnabled
@@ -43,15 +44,16 @@ public without sharing class myPendingFeedbackRequest {
                                                         AND KRA__c != NULL 
                                                         AND Reporting_Contact__c != NULL
                                                         AND Reporting_Contact__c = :contactId
-                                                        AND (status__c = :PM_ANSWER_AWAITING OR status__c = :PM_ANSWER_ACCEPTED)                
+                                                        AND (status__c = :PM_ANSWER_AWAITING OR status__c = :PM_ANSWER_ACCEPTED OR status__c =: PM_ANSWER_SAVED)                
             ];
-           
+            System.debug('pmConfigAnswerList '+pmConfigAnswerList);
             if (!pmConfigAnswerList.isEmpty()) {
                 
                 for (PM_Configure__c pmConfig : pmConfigAnswerList) {
                     kraIdSet.add(pmConfig.KRA__c);
                     kraToProjectNameMap.put(pmConfig.KRA__c,pmConfig.Project_Name__r.Name);
                     kraVsProjectNameMap.put(pmConfig.KRA__c,pmConfig.Project_Name__c);
+                     System.debug('kraIdSet '+kraIdSet);
                 }
             }
              
@@ -60,7 +62,7 @@ public without sharing class myPendingFeedbackRequest {
                 FROM Goal__c 
                 WHERE Id IN :kraIdSet
             ];
-            
+            System.debug('glList '+glList);
             List<EMS_TM_Assignment__c> projectassignmentList = [SELECT Id
                                                             		   ,EMS_TM_ProjectName_Asgn__c
                                                                        ,EMS_TM_EmployeeName__c
@@ -68,30 +70,38 @@ public without sharing class myPendingFeedbackRequest {
                                                                        ,EMS_TM_EndDate_Asgn__c
                                                                 FROM EMS_TM_Assignment__c                                                       
             ];
-            
+            System.debug('projectassignmentList '+projectassignmentList);
             if(!projectassignmentList.isEmpty()){
                 for (EMS_TM_Assignment__c assignment : projectassignmentList) {
                     projectVsResourceMap.put(assignment.EMS_TM_ProjectName_Asgn__c + '|' + assignment.EMS_TM_EmployeeName__c, assignment);
                 }
             }
             
-
+ 			System.debug('projectVsResourceMap '+projectVsResourceMap);
             for (Goal__c glwarp : glList) {  
                 goalWrapper glwp = new goalWrapper();
                 glwp.hideEditBtn = true; 
                 glwp.hideAcceptBtn = true;
                 glwp.hideRejectBtn = true;
-                
+                System.debug('hideEditBtn '+glwp.hideEditBtn);
+                System.debug('hideAcceptBtn '+glwp.hideAcceptBtn);
+                System.debug('hideRejectBtn '+glwp.hideRejectBtn);
                 for (PM_Configure__c goalAnswer : glwarp.PM_Answer_Configure__r) {  
                     if (goalAnswer.Status__c == PM_ANSWER_AWAITING) {
                         glwp.hideAcceptBtn = false;
                         glwp.hideRejectBtn = false;
                         glwp.requestedBy = goalAnswer.CreatedById;
                         glwp.requestedByName = goalAnswer.CreatedBy.CommunityNickname;
-                    } else if (goalAnswer.Status__c == PM_ANSWER_ACCEPTED) {
+                       
+                System.debug('hideAcceptBtn2 '+glwp.hideAcceptBtn);
+                System.debug('hideRejectBtn3 '+glwp.hideRejectBtn);
+                    } else if (goalAnswer.Status__c == PM_ANSWER_ACCEPTED || goalAnswer.Status__c == PM_ANSWER_SAVED) {
                         glwp.hideEditBtn = false;
                         glwp.hideAcceptBtn = true;
                         glwp.hideRejectBtn = true;
+                        System.debug('hideEditBtn '+glwp.hideEditBtn);
+                System.debug('hideAcceptBtn3 '+glwp.hideAcceptBtn);
+                System.debug('hideRejectBtn4 '+glwp.hideRejectBtn);
                         glwp.requestedBy = goalAnswer.CreatedById;
                         glwp.requestedByName = goalAnswer.CreatedBy.CommunityNickname;
                     }
@@ -113,6 +123,7 @@ public without sharing class myPendingFeedbackRequest {
                 goalWrapperList.add(glwp);
                 
             }
+                System.debug('goalWrapperList '+goalWrapperList);
             return goalWrapperList;
              
         } catch (Exception e) {

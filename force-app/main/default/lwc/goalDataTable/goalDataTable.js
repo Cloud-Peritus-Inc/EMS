@@ -36,7 +36,8 @@ export default class GoalDataTable extends LightningElement {
 
     showModalPopUp(event) {
         this.isShowPopUp = true;
-        this.selectedGoalId = event.currentTarget.dataset.id; 
+        this.selectedGoalId = event.currentTarget.dataset.id;
+        console.log('selectedGoalId '+this.selectedGoalId); 
     }
 
     hideModalBox(){
@@ -68,17 +69,17 @@ export default class GoalDataTable extends LightningElement {
     acceptOrRejectRequest(goalId, actionType) {
         updatePMConfigureRecord({
             goalId: goalId,
+            
             actionType: actionType,
             rejectionReason: actionType === 'reject' ? this.rejectionReason : null
         })
+        
         .then(result => {
                 this.data = result;
                 if (actionType === 'accept') {
-                this.showToast('Success', 'Feedback request accepted successfully', 'success');
+                this.showToast('Feedback request accepted successfully', 'success');
                 } else if (actionType === 'reject') {
-                    this.showToast('Success', 'Feedback request rejected successfully', 'success');
-                    //this.data = this.data.filter(record => record.Id !== goalId); 
-                    //this.fetchKRARecords();
+                    this.showToast('Feedback request rejected successfully', 'success');
                     this.hasData = this.data.length > 0;                
                 }
                 this.hideModalBox();
@@ -86,8 +87,9 @@ export default class GoalDataTable extends LightningElement {
             })
             .catch(error => {
                 console.error('Error updating PM Configure records: ', error);
-                this.showToast('Error', 'Failed to update', 'error');
+                this.showToast('Failed to update', 'error');
             });
+            console.log('goalId2 '+goalId);
     }   
 
     handleCommentChange(event){
@@ -106,7 +108,9 @@ export default class GoalDataTable extends LightningElement {
     }
 
     acceptRequestHandler(event) {
+
         const goalId = event.currentTarget.dataset.id;
+        console.log('goalId '+goalId);
         this.acceptOrRejectRequest(goalId, 'accept');
     }
     
@@ -121,9 +125,9 @@ export default class GoalDataTable extends LightningElement {
         }
     }
 
-    showToast(title, message, variant) {
+    showToast(message, variant = 'success') {
         const event = new ShowToastEvent({
-            title,
+            title: variant === 'success' ? '' : 'Notification',
             message,
             variant,
         });
