@@ -4,8 +4,8 @@
     <decisions>
         <name>Check_Quarter</name>
         <label>Check Quarter</label>
-        <locationX>911</locationX>
-        <locationY>549</locationY>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>IF_Q1</name>
@@ -174,8 +174,8 @@
     <recordUpdates>
         <name>Update_Q1_Rating</name>
         <label>Update Q1 Rating</label>
-        <locationX>478</locationX>
-        <locationY>825</locationY>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -195,8 +195,8 @@
     <recordUpdates>
         <name>Update_Q2_Rating</name>
         <label>Update Q2 Rating</label>
-        <locationX>762</locationX>
-        <locationY>802</locationY>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -216,8 +216,8 @@
     <recordUpdates>
         <name>Update_Q3_Rating</name>
         <label>Update Q3 Rating</label>
-        <locationX>1113</locationX>
-        <locationY>804</locationY>
+        <locationX>578</locationX>
+        <locationY>647</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -237,8 +237,8 @@
     <recordUpdates>
         <name>Update_Q4_Rating</name>
         <label>Update Q4 Rating</label>
-        <locationX>1343</locationX>
-        <locationY>703</locationY>
+        <locationX>842</locationX>
+        <locationY>647</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -254,19 +254,6 @@
             </value>
         </inputAssignments>
         <object>Fulfillment__c</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>UpdateTheRatingField</name>
-        <label>UpdateTheRatingField</label>
-        <locationX>474</locationX>
-        <locationY>589</locationY>
-        <inputAssignments>
-            <field>Rating__c</field>
-            <value>
-                <elementReference>$Record.Overall_Average_Section_Rating__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
         <locationX>458</locationX>
