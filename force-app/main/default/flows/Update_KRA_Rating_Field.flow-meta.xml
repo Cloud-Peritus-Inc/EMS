@@ -4,8 +4,8 @@
     <decisions>
         <name>Check_Quarter</name>
         <label>Check Quarter</label>
-        <locationX>911</locationX>
-        <locationY>549</locationY>
+        <locationX>578</locationX>
+        <locationY>647</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>IF_Q1</name>
@@ -71,8 +71,8 @@
     <decisions>
         <name>CheckKRAStatus</name>
         <label>CheckKRAStatus</label>
-        <locationX>596</locationX>
-        <locationY>480</locationY>
+        <locationX>1106</locationX>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_KRA_Status_is_KRA_Completed</name>
@@ -92,7 +92,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Quarter</targetReference>
+                <targetReference>UpdateTheRatingField</targetReference>
             </connector>
             <label>If KRA Status is KRA Completed</label>
         </rules>
@@ -113,12 +113,10 @@
                     <elementReference>varRecordTypeId</elementReference>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>UpdateTheRatingField</targetReference>
-            </connector>
             <label>If KRA Status is InReview</label>
         </rules>
     </decisions>
+    <description>Shubham: Update KRA Rating Field modified to use new Overall Rating field based on Phase 2 requirements</description>
     <environments>Default</environments>
     <interviewLabel>Update KRA Rating Field {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update KRA Rating Field</label>
@@ -131,7 +129,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -144,8 +142,8 @@
     <recordLookups>
         <name>GetRecordTypeID</name>
         <label>GetRecordTypeID</label>
-        <locationX>584</locationX>
-        <locationY>371</locationY>
+        <locationX>1106</locationX>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CheckKRAStatus</targetReference>
@@ -174,8 +172,8 @@
     <recordUpdates>
         <name>Update_Q1_Rating</name>
         <label>Update Q1 Rating</label>
-        <locationX>478</locationX>
-        <locationY>825</locationY>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -187,7 +185,7 @@
         <inputAssignments>
             <field>Q1_Rating__c</field>
             <value>
-                <elementReference>$Record.Rating__c</elementReference>
+                <elementReference>$Record.Overall_Rating__c</elementReference>
             </value>
         </inputAssignments>
         <object>Fulfillment__c</object>
@@ -195,8 +193,8 @@
     <recordUpdates>
         <name>Update_Q2_Rating</name>
         <label>Update Q2 Rating</label>
-        <locationX>762</locationX>
-        <locationY>802</locationY>
+        <locationX>314</locationX>
+        <locationY>755</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -208,7 +206,7 @@
         <inputAssignments>
             <field>Q2_Rating__c</field>
             <value>
-                <elementReference>$Record.Rating__c</elementReference>
+                <elementReference>$Record.Overall_Rating__c</elementReference>
             </value>
         </inputAssignments>
         <object>Fulfillment__c</object>
@@ -216,8 +214,8 @@
     <recordUpdates>
         <name>Update_Q3_Rating</name>
         <label>Update Q3 Rating</label>
-        <locationX>1113</locationX>
-        <locationY>804</locationY>
+        <locationX>578</locationX>
+        <locationY>755</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -229,7 +227,7 @@
         <inputAssignments>
             <field>Q3_Rating__c</field>
             <value>
-                <elementReference>$Record.Rating__c</elementReference>
+                <elementReference>$Record.Overall_Rating__c</elementReference>
             </value>
         </inputAssignments>
         <object>Fulfillment__c</object>
@@ -237,8 +235,8 @@
     <recordUpdates>
         <name>Update_Q4_Rating</name>
         <label>Update Q4 Rating</label>
-        <locationX>1343</locationX>
-        <locationY>703</locationY>
+        <locationX>842</locationX>
+        <locationY>755</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -250,7 +248,7 @@
         <inputAssignments>
             <field>Q4_Rating__c</field>
             <value>
-                <elementReference>$Record.Rating__c</elementReference>
+                <elementReference>$Record.Overall_Rating__c</elementReference>
             </value>
         </inputAssignments>
         <object>Fulfillment__c</object>
@@ -258,19 +256,22 @@
     <recordUpdates>
         <name>UpdateTheRatingField</name>
         <label>UpdateTheRatingField</label>
-        <locationX>474</locationX>
-        <locationY>589</locationY>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Check_Quarter</targetReference>
+        </connector>
         <inputAssignments>
             <field>Rating__c</field>
             <value>
-                <elementReference>$Record.Overall_Average_Section_Rating__c</elementReference>
+                <elementReference>$Record.Overall_Rating__c</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
+        <locationX>980</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>GetRecordTypeID</targetReference>
         </connector>
