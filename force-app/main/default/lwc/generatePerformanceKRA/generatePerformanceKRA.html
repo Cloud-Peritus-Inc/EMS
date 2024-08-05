@@ -236,6 +236,17 @@
 								<p class="subTitle2">Overall Average Rating: {averageOverallRating}</p>
 							</div>
 
+							<div class="leftBox">
+								<lightning-input label="HR Rating" type="Number" name="HR_Rating__c"
+									value= {averageOverallRating} onchange={dataHandler} step="any">
+								</lightning-input>
+								<template if:true={errorMessage}>
+									<div class="slds-text-color_error slds-m-top_small">
+										{errorMessage}
+									</div>
+								</template>
+							</div>
+
 							<div class="midBox">
 								<lightning-input-rich-text label-visible="true" type="text" label="Comments" name="Comments__c"
 									value={Compensation.Comments__c} onchange={dataHandler}></lightning-input-rich-text>
