@@ -21,7 +21,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
         
         list<PM_Configure__c> pmAnswer =[Select Id,Status__c,KRA__c 
                                          from PM_Configure__c 
-                                         WHERE KRA__c=:kraid AND Status__c='Awaiting Response'];
+                                         WHERE KRA__c=:kraid AND (Status__c='Awaiting Response' OR Status__c='Accepted' OR Status__c='Saved')];
         for(PM_Configure__c pm:pmAnswer){
             pm.Status__c='Cancelled';   
         }    
@@ -130,7 +130,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];
             }
-        }
+        } 
         
         // Loop through questions to construct the wrapper
         for (PM_Configure__c question : questions) {                                  
