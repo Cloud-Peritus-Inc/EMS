@@ -42,7 +42,7 @@ public without sharing class generatePerformanceKRAController {
         try {
             if (member != Null && member.Id != Null) {
                     kraGoalRecords = [Select Id,Name,Resource__c, Goal_Name__c, Status__c,Fulfillment__c,
-                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
+                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,Overall_Rating__c,
                     Fulfillment__r.Fiscal_Year__c
                     FROM  Goal__c 
                     WHERE Resource__c =: member.Id 
