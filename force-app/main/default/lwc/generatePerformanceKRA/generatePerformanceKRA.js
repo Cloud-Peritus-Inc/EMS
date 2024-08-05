@@ -32,6 +32,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     @track dataLoaded = false;
     //smaske : PM_079/PM_078
     @track submitButtonDisabled = false;
+    @track errorMessage = '';
 
     errorVariant = 'error';
     successVariant = 'success';
@@ -135,8 +136,10 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                         let sumOverallRating = 0;
                         this.kraRecords.forEach(record => {
                             sumOverallRating += record.Overall_Rating__c || 0; // Ravitheja --> replacing Overall_Average_Section_Rating__c with Overall_Rating__c from Goal object 
+                            console.log('sumOverallRating '+sumOverallRating);
                         });
                         this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(1) : 0;
+                        console.log('averageOverallRating '+this.averageOverallRating);
                     }
                     this.dataLoaded = true;
                     console.log('member :' + this.member);
@@ -250,12 +253,16 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         } else if (name == 'Overall_Average_Section_Rating__c') { //Ravitheja --> replacing Finalized_Hike__c with Overall_Average_Section_Rating__c from compensation object 
             RR[name] = dataValue;
         } else if (name == 'HR_Rating__c') {
+            console.log('name '+name);
             const rating = parseFloat(dataValue);
-            if (!isNaN(rating) && rating >= 1 && rating <= 5) {//Ravitheja --> added validatio to check the value
+            if (!isNaN(rating) && rating >= 1 && rating <= 5) {//Ravitheja --> added validation to check the value
                 RR[name] = dataValue;
+                this.errorMessage = '';
+                console.log('dataValue '+dataValue);
+            }else{
+                this.errorMessage = 'HR Rating must be between 1 and 5.';
             }
         }
-        
         this.Compensation = RR;
 
     }
@@ -318,6 +325,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         //smaske :[EN_05] : Removed "Finalized_Hike__c" from API Array as field is commented
         //Ravitheja --> Added HR_Rating__c field
         const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Overall_KRA_Average_Rating__c','HR_Rating__c']; // Replace with your actual field names 
+        console.log('apiFieldNames '+apiFieldNames);
         // Iterate through the list of API field names
         for (const fieldName of apiFieldNames) {
             if (!this.Compensation[fieldName]) {
