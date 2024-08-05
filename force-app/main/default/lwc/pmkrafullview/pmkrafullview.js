@@ -7,6 +7,7 @@ import completekraMethod from '@salesforce/apex/quarterlyKRAFullViewCtrl.complet
 import getLoginAnswerdata from '@salesforce/apex/quarterlyKRAFullViewCtrl.getLoginAnswerdata';
 import getCurrentUserConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getCurrentUserConDetails';
 import calculateAverageRatingForKRA from '@salesforce/apex/CalculateFullQuarterlyKRA.calculateAverageRatingForKRA';
+import Genericmodal from 'c/genericmodal';
 
 export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     @track questions = [];
@@ -382,13 +383,24 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     }
 //Feedback response once submitted, cannot be reverted. Would you like to proceed?
     async handleCompleteKRA() {
-        const result = await LightningConfirm.open({
+       /* const result = await LightningConfirm.open({
             message: '',
             variant: 'header',
             label: 'Are you sure you want to complete the KRA?',
             // setting theme would have no effect
+        });*/
+         const result = await Genericmodal.open({
+            style: {
+                '--slds-c-modal-color-border': 'black'
+            },
+            btnLable1: 'No',
+            btnLable2: 'Yes',
+            headerLable: 'KRA process, once completed, cannot be reverted. Do you want to proceed?',
+            bodyLable: 'Note: If the respective mentees or project managers are unable to submit their KRA comments following the completion of the KRA process, their records will be cancelled.',
+            size: 'small',
         });
-        if (result === true) {
+
+        if (result === 'okay') {
             this.isLoading = true;
             completekraMethod({ kraid: this.receivedKRAId })
                 .then((result) => {
