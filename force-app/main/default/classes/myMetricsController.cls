@@ -539,7 +539,9 @@ return menteeRecords;
         @AuraEnabled
         public String projectid{get;set;}
         @AuraEnabled
-        public List<ManagerOption> managerOptions { get; set; }      
+        public List<ManagerOption> managerOptions { get; set; }
+        @AuraEnabled
+        public boolean disableCombobox{get;set;}
     }
     
     public class ManagerOption {
@@ -577,6 +579,10 @@ return menteeRecords;
             }
         }
         
+         
+      List<Contact> conGoalList = [SELECT Id,name,(Select Id,Quarter_Start_Date__c,Quarter_End_Date__c,Status__c from Goals__r where (Quarter_Start_Date__c =THIS_QUARTER OR Quarter_End_Date__c = THIS_QUARTER) AND Status__c Not IN('KRA Completed','HR KRA Completed','Active','Missed','KRA Inreview') ) from contact Where Id =:contactId];
+        
+
         List<EMS_TM_Assignment__c> projectAssigneeidList = [SELECT Id,name,EMS_TM_EmployeeName__r.name,EMS_TM_EmployeeName__r.Work_Location_Country__c,EMS_TM_Status_Asgn__c,
                                                             Offshore_PM_Configure__c,Onshore_PM_Configure__c,Other_PM_Configure__c,
                                                             EMS_TM_ProjectName_Asgn__r.name,EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name,
@@ -598,6 +604,12 @@ return menteeRecords;
             wrp.projectName = assgn.EMS_TM_ProjectName_Asgn__r.name;
             wrp.projectid = assgn.EMS_TM_ProjectName_Asgn__c;
             
+            if(!conGoalList.IsEmpty() && conGoalList[0].Goals__r.size() == 0){
+               wrp.disableCombobox =true;
+             }
+            else {
+              wrp.disableCombobox = false;
+               }
             wrp.managerOptions = new List<ManagerOption>();
             //wrp.managerOptions.add(new ManagerOption(' ' + 'None', 'None'));
             if(wrp.offshoremanagerid == wrp.onshoremanagerid && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c){
