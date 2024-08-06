@@ -468,12 +468,10 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
         //console.log(JSON.stringify(this.kraRecord));
 
-        let isValid = true;
-        let allPositiveTechFieldsList = [];
-        let allPositiveProfessionalFieldsList = [];
-        let allPositiveStrategicFieldsList = [];
-        let allPositiveGoalResultFieldsList = [];
-        let inputFields = null;
+        if (result === 'okay') {
+            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel);
+            //this.dispatchEvent(new CustomEvent('closemodal'));
+        }
 
         if (this.viewwrap) {
             // Define relationships between viewwrap properties and associated fields
