@@ -498,6 +498,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
         if (result === 'okay') {
             this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel);
+            //this.dispatchEvent(new CustomEvent('closemodal'));
         }
 
     }
