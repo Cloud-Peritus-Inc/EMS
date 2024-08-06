@@ -252,25 +252,39 @@ export default class Myteam extends LightningElement {
             fyId: this.selectedfy
         })
             .then(result => {
-                //console.log('====result getResourceKRAs =======' + JSON.stringify(result));
+                console.log('====My Team result getResourceKRAs =======' + JSON.stringify(result));
                 //smaske : [EN_13]: Disabling Edit KRA button when Indirect Reportee are selected
                 result.forEach(item => {
                     item.qualList.forEach(qualItem => {
-                        if (this.viewonlymode == true) {
-                            console.log("videmode is true");
-                            qualItem.allowedit = false;
-                        }
-                        if (qualItem.mentorSubmitted == true) {
-                            console.log("Set value of  allowedit");
-                            qualItem.allowedit = false;
-                        }
                         //smaske : [PM_Def_047] : Copy button should not be visible in MY TEAM section.
                         if (this.tab == 'My Team') {
                             qualItem.allowCopy = false;
                         }
+
+                        if (this.viewonlymode == true) {
+                            console.log("videmode is true");
+                            qualItem.allowedit = false;
+                        }else{
+                            //smaske : PM_Def_123 : 06/Aug/2024
+                            if (qualItem.status == 'KRA Inreview' || qualItem.status == 'In Progress') {
+                                console.log("Set value of  allowedit");
+                                qualItem.allowedit = true;
+                            }else if (qualItem.status == 'HR KRA Completed' || qualItem.status == 'KRA Completed') {
+                                console.log("Set value of  allowedit");
+                                qualItem.allowedit = false;
+                            }
+                        }
+                        /*if (qualItem.mentorSubmitted == true) {
+                            console.log("Set value of  allowedit");
+                            qualItem.allowedit = false;
+                        }*/ 
+                        
+                        
+                        
                     });
                 });
-
+                console.log('====My Team result getResourceKRAs Modified=======' + JSON.stringify(result));
+                
                 //smaske : [EN_13]: Disabling CREATE GOAL button when Indirect Reportee are selected
                 if(result.length > 0){
                     if (this.viewonlymode == true) {
