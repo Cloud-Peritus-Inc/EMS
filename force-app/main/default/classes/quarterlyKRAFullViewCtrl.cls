@@ -53,27 +53,26 @@ public without sharing class quarterlyKRAFullViewCtrl {
         }
         
         
-        User loggedInUser = [SELECT Id,ContactId,Contact.Resource_Role__c From User WHERE Id=:Userinfo.getUserId()];
+      /*  User loggedInUser = [SELECT Id,ContactId,Contact.Resource_Role__c From User WHERE Id=:Userinfo.getUserId()];
         
-        List<PM_Configure__c> answersrecord = new List<PM_Configure__c>();
-        
-        
+        List<PM_Configure__c> answersrecord = new List<PM_Configure__c>();      
         answersrecord= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,
                         Related_Question__c,Status__c,KRA__c
                         FROM PM_Configure__c 
-                        Where RecordTypeId = :AnswerRecordTypeId AND KRA__c =:kraid AND Mentor_Mentee__c =:loggedInUser.ContactId];  
+                        Where RecordTypeId = :AnswerRecordTypeId AND KRA__c =:kraid AND Mentor_Mentee__c =:loggedInUser.ContactId];*/  
         
-        for(PM_Configure__c answer: answersrecord){
+       // for(PM_Configure__c answer: answersrecord){
+       // sangharsh[def:PM_Def_123] as per KRA status which is 'KRA Completed' and 'HR KRA Completed' showing edit button
             if(tab =='My Team'){
-                if(answer.Status__c == 'Submitted'){
+                /*if(answer.Status__c == 'Submitted'){
                     aw.submittedRecords=false;
-                }else if(goalRecord.Status__c == 'KRA Completed'){
+                }else */if(goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c =='HR KRA Completed'){
                     aw.submittedRecords=false;
                 }else{
                     aw.submittedRecords=true;
                 }
             }
-        }
+       // }
         if(tab =='My Metric'){
                 aw.submittedRecords=false;
             }

@@ -26,7 +26,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
 
 
     connectedCallback() {
-        //console.log('RECEIVED tabledata  ::: ' + JSON.stringify(this.tabledata));
+        console.log('RECEIVED tabledata  ::: ' + JSON.stringify(this.tabledata));
         console.log('====resourceid===' + JSON.stringify(this.resourceid));
         console.log('====tab===' + this.tab);
         console.log('====viewonlymode===' + this.viewonlymode);
@@ -35,7 +35,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         if (this.tbData.length > 0) {
             console.log(this.tbData[0].nameid);
 
-            this.tbData.forEach(item => {
+            /*this.tbData.forEach(item => {
                 if (item.qualList && item.qualList.length > 0) {
                     this.qualListdata = true;
                 } else {
@@ -54,11 +54,13 @@ export default class Kratable extends NavigationMixin(LightningElement) {
                         qualItem.allowedit = false;
                         qualItem.allowCopy = false;
                     }
+                    console.log('qualItem :' + JSON.stringify(qualItem));
+                    
                 });
             });
 
-            console.log('tableRecordsData modified ' + JSON.stringify(this.tabledata));
-        }
+            console.log('tableRecordsData modified ' + JSON.stringify(this.tabledata));*/
+        } 
 
         //smaske :[UAT_005] : Setting the minimum date to tomorrow 
         var d = new Date();
