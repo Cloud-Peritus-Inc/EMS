@@ -5,11 +5,14 @@ import updatePMConfigureRecord from '@salesforce/apex/myPendingFeedbackRequest.u
 
 export default class GoalDataTable extends LightningElement {
     data;
+    tab="Pending Feedback Requests";
     hasData = false;
     isShowPopUp = false;
     showKRAEditModal = false;
     rejectionReason = '';
+    selectedProjectId = '';//selectedProjectId
     selectedGoalId = '';
+    resourceId = '';
     @track comment = '';
     @track showError = false;
     @track selectedResourceId = '';
@@ -34,10 +37,34 @@ export default class GoalDataTable extends LightningElement {
             });
     }
 
-    showModalPopUp(event) {
+    acceptRequestHandler(event) {
+        const itemIndex = event.currentTarget.dataset.index;
+        const rowData = this.data[itemIndex]; 
+        this.selectedProjectId = rowData.projectId;
+        this.selectedGoalId = rowData.goalId;
+        this.selectedResourceId = rowData.resource;
+        this.acceptOrRejectRequest('accept');
+    }
+
+    rejectRequestHandler(event) {
+        const itemIndex = event.currentTarget.dataset.index;
+        const rowData = this.data[itemIndex];
         this.isShowPopUp = true;
-        this.selectedGoalId = event.currentTarget.dataset.id;
-        console.log('selectedGoalId '+this.selectedGoalId); 
+        this.selectedProjectId = rowData.projectId;
+        this.selectedGoalId = rowData.goalId;
+        this.selectedResourceId = rowData.resource;
+        console.log('selectedProjectId '+this.selectedProjectId); 
+    }
+
+    editKRAModalPopUp(event){
+        const itemIndex = event.currentTarget.dataset.index;
+        const rowData = this.data[itemIndex];
+        let node = rowData.goalId;
+        this.selectedProjectId = rowData.projectId;
+        this.selectedKraQuaterly = node;
+        this.selectedResourceId = rowData.resource;
+        this.mode = 'Edit';
+        this.checkisshowKRAEditModal();
     }
 
     hideModalBox(){
@@ -49,27 +76,15 @@ export default class GoalDataTable extends LightningElement {
         this.showKRAEditModal = false;
     }
 
-    editKRAModalPopUp(event){
-       
-        let node = event.currentTarget.dataset.id;
-        this.selectedKraQuaterly = node;
-        this.mode = 'Edit';
-        const selectedGoal = this.data.find(goal => goal.Id === node);
-        if (selectedGoal) {
-            this.selectedResourceId = selectedGoal.resource;
-        }
-        
-        this.checkisshowKRAEditModal();
-    }
-
     checkisshowKRAEditModal(){
         this.showKRAEditModal = true;
     }
 
-    acceptOrRejectRequest(goalId, actionType) {
+    acceptOrRejectRequest(actionType) {
         updatePMConfigureRecord({
-            goalId: goalId,
-            
+            projectId: this.selectedProjectId,
+            goalId: this.selectedGoalId,
+            resourceId: this.selectedResourceId,
             actionType: actionType,
             rejectionReason: actionType === 'reject' ? this.rejectionReason : null
         })
@@ -103,27 +118,22 @@ export default class GoalDataTable extends LightningElement {
             this.showError = true;
         } else {
             this.showError = false;
-            this.acceptOrRejectRequest(this.selectedGoalId, 'reject');
+            this.acceptOrRejectRequest('reject');
         }
     }
-
-    acceptRequestHandler(event) {
-
-        const goalId = event.currentTarget.dataset.id;
-        console.log('goalId '+goalId);
-        this.acceptOrRejectRequest(goalId, 'accept');
-    }
-    
     
     handleCustomEvent(event) {
-        console.log('event:: ', event.detail);
-        const { recordId, status } = event.detail;
+    console.log('event:: ', event.detail);
+    const { recordId, status, selectedResource } = event.detail;
 
-        if (status === 'Success') {
-            this.data = this.data.filter(record => record.Id !== recordId);
-            this.hasData = this.data.length > 0;
-        }
+    if (status === 'Success') {
+        this.data = this.data.filter(record => 
+            !(record.projectId === recordId && record.resource === selectedResource)
+        );
+        console.log('datalenght ', this.data.length);
+        this.hasData = this.data.length > 0;
     }
+}
 
     showToast(message, variant = 'success') {
         const event = new ShowToastEvent({

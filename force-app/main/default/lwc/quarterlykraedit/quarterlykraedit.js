@@ -8,6 +8,7 @@ import getSelectedResourceConDetails from '@salesforce/apex/quarterlyKRAViewCtrl
 import getPMConfigKRAData from '@salesforce/apex/quarterlyKRAViewCtrl.getPMConfigKRAData';
 import calculateAverageRatingForKRA from '@salesforce/apex/quarterlyKRAViewCtrl.calculateAverageRatingForKRA';
 import updatePMAnswerRecordsStatus from '@salesforce/apex/quarterlyKRAViewCtrl.updatePMAnswerRecordsStatus';
+
  
 //other imports
 import exampleHelpText from "@salesforce/label/c.exampleHelpText";
@@ -26,6 +27,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     @api mode;
     @track kraRecord;
     wiredKraRecordResult;
+    @api selectedProjectId = '';
     @track CurrentUserConDetails;
     CurrentUserResourceRoleTechAcc = 0;
     CurrentUserResourceRoleProfSkillAcc = 0;
@@ -54,6 +56,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     STATUS_KRA_INREVIEW = 'KRA Inreview';
     STATUS_KRA_COMPLETE = 'KRA Completed';
+    STATUS_KRA_HRCOMPLETE = 'HR KRA Completed';
     @track isSubmitBtnDisabled = true;
     @track isSaveBtnDisabled = false;
 
@@ -147,11 +150,18 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 this.isFieldsDisabled = data.Mentee_KRA_submitted__c === true ? true : false;
             }
             if (this.tab == 'My Team') {
-                this.isSubmitBtnDisabled = data.Mentor_KRA_submitted__c == true ? true : false;
-                this.isSaveBtnDisabled = data.Mentor_KRA_submitted__c === true ? true : false;
-                this.isFieldsDisabled = data.Mentor_KRA_submitted__c === true ? true : false;
+                console.log(' IN MYTEAM : ');
+                
+                //smaske : PM_Def_123 : disabling Save/Submit/fields for Mentor only when KRA 'HR KRA COMPLETED'/'KRA COMPLETED';
+                this.isSubmitBtnDisabled = data.Status__c === this.STATUS_KRA_HRCOMPLETE || data.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
+                this.isSaveBtnDisabled = data.Status__c === this.STATUS_KRA_HRCOMPLETE || data.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
+                this.isFieldsDisabled = data.Status__c === this.STATUS_KRA_HRCOMPLETE || data.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
+                console.log( 'isSubmitBtnDisabled : ' + this.isSubmitBtnDisabled );
+                console.log( 'isSaveBtnDisabled : ' + this.isSaveBtnDisabled );
+                console.log( 'isFieldsDisabled : ' + this.isFieldsDisabled );
+                
             }
-            if (this.tab == 'Pending Feedback Request') {
+            if (this.tab == 'Pending Feedback Requests') {
                 this.isSubmitBtnDisabled = data.Status__c === this.STATUS_KRA_INREVIEW ? true : false;
                 this.isSaveBtnDisabled = data.Status__c === this.STATUS_KRA_INREVIEW === true ? true : false;
                 this.isFieldsDisabled = data.Status__c === this.STATUS_KRA_INREVIEW === true ? true : false;
@@ -162,7 +172,6 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 this.isSubmitBtnDisabled = true;
                 this.isSaveBtnDisabled = true;
             }
-            //Check if status is COMPLETE : Disable Submit btn
             this.error = undefined;
             //Set Button visibilty based on mode value
             if (this.mode == 'View') {
@@ -196,7 +205,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     @track viewwrap2;
     getPMConfigKRADataHandler(kraRecord) {
         console.log('Received this.kraRecord : ' + JSON.stringify(kraRecord));   
-        getPMConfigKRAData({ krarecordId: kraRecord, tab: this.tab, copy : this.copy })
+        getPMConfigKRAData({ krarecordId: kraRecord, tab: this.tab, copy : this.copy, selectedProjectId : this.selectedProjectId, selectedresource : this.selectedresource })
             .then(result => {
                 //console.log('-======---= getPMConfigKRAData DATA==--=-=-' + JSON.stringify(result.areaAndQueAnsMapData));
                 //console.log('-======---= pmAnsRecordsIdData DATA==--=-=-' + JSON.stringify(result.pmAnsRecordsIdData));
@@ -490,6 +499,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         if (result === 'okay') {
             this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel);
         }
+
     }
 
     // ***SAVE BUTTON CODE WIHOUT VALIDATION *** 
@@ -622,9 +632,15 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                         this.isFieldsDisabled = this.kraRecord.Mentee_KRA_submitted__c === true ? true : false;
                     }
                     if (this.tab == 'My Team') {
-                        this.isSubmitBtnDisabled = this.kraRecord.Mentor_KRA_submitted__c == true ? true : false;
-                        this.isSaveBtnDisabled = this.kraRecord.Mentor_KRA_submitted__c === true ? true : false;
-                        this.isFieldsDisabled = this.kraRecord.Mentor_KRA_submitted__c === true ? true : false;
+                        console.log(' IN MYTEAM : ');
+
+                        //smaske : PM_Def_123 : disabling Save/Submit/fields for Mentor only when KRA 'HR KRA COMPLETED'/'KRA COMPLETED';
+                        this.isSubmitBtnDisabled = data.Status__c === this.STATUS_KRA_HRCOMPLETE || data.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
+                        this.isSaveBtnDisabled = data.Status__c === this.STATUS_KRA_HRCOMPLETE || data.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
+                        this.isFieldsDisabled = data.Status__c === this.STATUS_KRA_HRCOMPLETE || data.Status__c === this.STATUS_KRA_COMPLETE ? true : false;
+                        console.log('isSubmitBtnDisabled : ' + this.isSubmitBtnDisabled);
+                        console.log('isSaveBtnDisabled : ' + this.isSaveBtnDisabled);
+                        console.log('isFieldsDisabled : ' + this.isFieldsDisabled);
                     }
                     if (this.tab == 'Pending Feedback Request') {
                         this.isSubmitBtnDisabled = this.kraRecord.Status__c === this.STATUS_KRA_INREVIEW ? true : false;
@@ -686,8 +702,9 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleChangeChildEvent() {
         const selectEvent = new CustomEvent('mycustomevent', {
             detail: {
-                recordId: this.receivedkraid,  
-                status: 'Success'  
+                recordId: this.selectedProjectId,  
+                status: 'Success',
+                selectedResource: this.selectedresource   
             }
         });
         this.dispatchEvent(selectEvent);
