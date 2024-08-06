@@ -10,11 +10,10 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
         for (Goal__c gl : newList) {
             if (gl.Status__c != oldMap.get(gl.Id).Status__c && gl.Status__c == 'KRA Completed' ) {
                 completedKRAIds.add(gl.Id);
+                List<PM_Configure__c> filteredPmConfigList = getFilteredPMConfigList(completedKRAIds);
+        		calculateAndSetAverageRatings(newList, filteredPmConfigList);
             }
         }
-        
-        List<PM_Configure__c> filteredPmConfigList = getFilteredPMConfigList(completedKRAIds);
-        calculateAndSetAverageRatings(newList, filteredPmConfigList);
     }
     
     private List<PM_Configure__c> getFilteredPMConfigList(Set<Id> completedKRAIds) {
