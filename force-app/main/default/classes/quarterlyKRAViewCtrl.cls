@@ -198,7 +198,7 @@ public without sharing class quarterlyKRAViewCtrl {
     
 
     @AuraEnabled
-    public static KraVisiableWrapper getPMConfigKRAData(Goal__c krarecordId, String tab,Boolean copy) {
+    public static KraVisiableWrapper getPMConfigKRAData(Goal__c krarecordId, String tab,Boolean copy, String selectedProjectId, String selectedresource) {
 
         System.debug('Received TAB :: ' + tab);
 
@@ -238,12 +238,14 @@ public without sharing class quarterlyKRAViewCtrl {
             AND Mentor_Mentee__c =: loggedInUser.ContactId
             AND KRA__c =:krarecordId.Id ];
         } else {
-            pmAnswerConfigRecords = [SELECT Id,name,Question__c,Rating__c, Description__c,Status__c,Related_Question__r.Question__c,Related_Question__r.Resource_Role__c, Related_Question__r.Area__c, KRA__c, Related_Question__r.Question_overview__c,Related_Question__r.Rating_overview__c,Related_Question__r.Description__c,Mentor_Mentee__c,Reporting_Contact__c
+            pmAnswerConfigRecords = [SELECT Id,name,Question__c,Rating__c, Description__c,Status__c,Related_Question__r.Question__c,Related_Question__r.Resource_Role__c, Related_Question__r.Area__c, KRA__c, Related_Question__r.Question_overview__c,Related_Question__r.Rating_overview__c,Related_Question__r.Description__c,Mentor_Mentee__c,Reporting_Contact__c,Project_Name__c,KRA__r.Resource__c
             FROM PM_Configure__c 
             WHERE RecordTypeId =: AnswerRecordTypeId
             AND Related_Question__r.Resource_Role__c =: resourceRoleId
             AND Reporting_Contact__c =: loggedInUser.ContactId
-            AND KRA__c =:krarecordId.Id ];
+            AND KRA__c =:krarecordId.Id
+            AND Project_Name__c =: selectedProjectId
+            AND KRA__r.Resource__c =: selectedresource];
         }
         System.debug('pmAnswerConfigRecords records found  :' + pmAnswerConfigRecords);
 		
@@ -518,7 +520,6 @@ public without sharing class quarterlyKRAViewCtrl {
             throw new AuraHandledException(e.getMessage());
         }
     }
-
 
     //KraWrapper
     public class KraVisiableWrapper {
