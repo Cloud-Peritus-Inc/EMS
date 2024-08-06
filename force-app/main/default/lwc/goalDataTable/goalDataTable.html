@@ -30,7 +30,7 @@
 
 				<tbody>
 					<template if:true={hasData}>
-						<template for:each={data} for:item="goal">
+						<template for:each={data} for:item="goal" for:index="index">
 							<tr key={goal.Id}>
 								<td style="word-wrap:break-word; width: 10%;">
 									<div class="slds-wrap">{goal.goalName}</div>
@@ -66,13 +66,13 @@
 								</td>
 								<td class="slds-text-align_center slds-p-around_medium">
 									<template if:false={goal.hideEditBtn}>
-										<lightning-button-icon icon-name="action:edit" size="large" variant="bare" alternative-text="Edit KRA" data-id={goal.Id} onclick={editKRAModalPopUp} class="slds-m-left_xx-small"></lightning-button-icon>
+										<lightning-button-icon icon-name="action:edit" size="large" variant="bare" alternative-text="Edit KRA" data-index={index} onclick={editKRAModalPopUp} class="slds-m-left_xx-small"></lightning-button-icon>
 									</template>		
 									<template if:false={goal.hideRejectBtn}>						
-										<lightning-button variant="destructive" label="Reject" data-id={goal.Id} onclick={showModalPopUp}></lightning-button>
+										<lightning-button variant="destructive" label="Reject" data-id={goal.Id} data-index={index} onclick={rejectRequestHandler}></lightning-button>
 									</template>
 									<template if:false={goal.hideAcceptBtn}>
-										<lightning-button variant="success" label="Accept" data-id={goal.Id} onclick={acceptRequestHandler}></lightning-button>
+										<lightning-button variant="success" label="Accept" data-id={goal.Id} data-index={index} onclick={acceptRequestHandler}></lightning-button>
 									</template>
 									<template if:true={isShowPopUp}>
 										<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
@@ -121,11 +121,11 @@
 													</header>																					
 													<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
 														<!-- onclose={hideKRAEditModalBox} -->														
-														<c-quarterlykraedit mode={mode} receivedkraid={selectedKraQuaterly} selectedresource={selectedResourceId} tab="Pending Feedback Request" onmycustomevent={handleCustomEvent}> </c-quarterlykraedit>
+														<c-quarterlykraedit mode={mode} selected-project-id ={selectedProjectId} receivedkraid={selectedKraQuaterly} selectedresource={selectedResourceId} tab={tab} onmycustomevent={handleCustomEvent}> </c-quarterlykraedit>
 													</div>																					
 													<footer class="slds-modal__footer">									
 														<button class="slds-button slds-button_neutral" title="Close" onclick={hideKRAEditModalBox}>Close</button>
-													</footer>									
+													</footer>							
 												</div>
 											</section>
 											<div class="slds-backdrop slds-backdrop_open"></div>
