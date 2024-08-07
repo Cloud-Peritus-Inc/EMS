@@ -404,7 +404,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             this.isLoading = true;
             completekraMethod({ kraid: this.receivedKRAId })
                 .then((result) => {
-                    this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable');
+                    this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable'); 
                     var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
                     this[NavigationMixin.Navigate]({
                         type: 'standard__webPage',
