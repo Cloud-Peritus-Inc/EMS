@@ -1,4 +1,5 @@
 global class BatchToCreateScoringForAwards implements Database.Batchable<sObject> {
+    Map<String,Reward_And_Recognition__c> recordHistoryMap = new  Map<String,Reward_And_Recognition__c>();
     global Database.QueryLocator start(Database.BatchableContext BC) {
          Id nomRecordTypeId = Schema.SObjectType.Reward_And_Recognition__c.getRecordTypeInfosByName().get('Nominations').getRecordTypeId();
          return Database.getQueryLocator([SELECT Id,Status__c,Award_Type__c,Resource__c,Primary_Nomination__c,
@@ -39,9 +40,11 @@ global class BatchToCreateScoringForAwards implements Database.Batchable<sObject
          system.debug(awardresourceWithNomnMap.size()+'===awardresourceWithNomnMap===='+awardresourceWithNomnMap);
         
         Id scoringRecordTypeId = Schema.SObjectType.Reward_And_Recognition__c.getRecordTypeInfosByName().get('Scoring').getRecordTypeId();
-        for(Reward_And_Recognition__c score : [SELECT Id,Award_Type__c,Resource__c FROM Reward_And_Recognition__c WHERE Resource__c IN:contactIds and  RecordTypeId=:scoringRecordTypeId and Status__c = 'Review In Progress' ] ){
+        //fetch scoring records only for current fiscal year via lookup : currentFY
+        for(Reward_And_Recognition__c score : [SELECT Id,Award_Type__c,Resource__c,Fiscal_Year__c FROM Reward_And_Recognition__c WHERE Resource__c IN:contactIds and  RecordTypeId=:scoringRecordTypeId and Status__c = 'Review In Progress' and Fiscal_Year__c =: currentFY.Id ] ){
            String uniqueKey = score.Resource__c+';'+score.Award_Type__c;
            scoringWithNomnMap.put(uniqueKey,score);
+            recordHistoryMap.put(uniqueKey,score);
         }
         system.debug(scoringWithNomnMap.size()+'===scoringWithNomnMap===='+scoringWithNomnMap);
         
@@ -76,14 +79,15 @@ global class BatchToCreateScoringForAwards implements Database.Batchable<sObject
                     }
                 }
                  String uniqueKey = resource+';'+award; 
-                  if(scoringWithNomnMap.containsKey(uniqueKey)){
-                      Reward_And_Recognition__c scrr = new Reward_And_Recognition__c();
-                      scrr.Id = scoringWithNomnMap.get(uniqueKey).Id;
+                  if(recordHistoryMap.containsKey(uniqueKey)){
+                      Reward_And_Recognition__c scrr = recordHistoryMap.get(uniqueKey);
+                      //scrr.Id = scoringWithNomnMap.get(uniqueKey).Id;
                       scrr.of_Primary_Nominations__c = noOfPrimary;
                       scrr.of_Secondary_Nominations__c = noOfSecondary;
                       scrr.Reason_for_award__c = amendComments;
                       scrr.Recognization_By_Text__c = amendRec;
-                      scoringUpdate.add(scrr); 
+                      //scoringUpdate.add(scrr); 
+                      recordHistoryMap.put(uniqueKey,scrr);
                   }else{
                      Reward_And_Recognition__c scrr = new Reward_And_Recognition__c();
                       scrr.RecordTypeId = scoringRecordTypeId;
@@ -95,7 +99,8 @@ global class BatchToCreateScoringForAwards implements Database.Batchable<sObject
                       scrr.Reason_for_award__c = amendComments;
                       scrr.Fiscal_Year__c = CurrentFY.Id;
                       scrr.Recognization_By_Text__c = amendRec;
-                      scoringInsert.add(scrr);
+                      //scoringInsert.add(scrr);
+                      recordHistoryMap.put(uniqueKey,scrr);
                       system.debug('==scrr===='+scrr); 
                   }
  
@@ -106,16 +111,21 @@ global class BatchToCreateScoringForAwards implements Database.Batchable<sObject
         system.debug('==scoringInsert===='+scoringInsert); 
         system.debug('==scoringUpdate===='+scoringUpdate); 
         
-        try{
+        /*try{
             update scoringUpdate;
             insert scoringInsert;
           
         }catch(exception ex){
            LogException.logHandledException(ex, 'BatchToCreateKRAforQuaterly', 'execute');  
-        }
+        }*/
     }
     
     global void finish(Database.BatchableContext BC) {
+        try{
+            upsert recordHistoryMap.values();
+        }catch(exception ex){
+           LogException.logHandledException(ex, 'BatchToCreateKRAforQuaterly', 'execute');  
+        }
         
     }
 }
