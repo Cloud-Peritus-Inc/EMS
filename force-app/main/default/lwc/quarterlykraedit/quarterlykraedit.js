@@ -580,9 +580,83 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             this.processSkillCategory(this.getGoalResultPropertyFieldMap(), allPositiveGoalResultFieldsList, this.SelectedResourceResourceRoleGoalRewAcc, this.CurrentUserResourceRoleGoalRewAcc, 'Overall_Goals_Results_Rating_2__c', 'Average_Goals_Results_Rating__c');
         }
 
-        if (isValid) {
-            console.log(" kraRecord B4 SAVE " + this.kraRecord);
-            saveKraRecord({ kraRecord: this.kraRecord })
+
+    handleRatingChange(event) {
+        const ratingValue = parseFloat(event.currentTarget.value);
+        console.log('ratingValue ' + ratingValue);
+        if (ratingValue === 0 || ratingValue < 1 || ratingValue > 5 || isNaN(ratingValue) || (ratingValue * 2) % 1 !== 0) {
+            event.currentTarget.value = NaN;
+            this.showToast('Rating must be between 1 and 5, and in increments of 0.5.', this.errorVariant, this.toastMode);
+            event.target.setCustomValidity('Rating must be between 1 and 5, and in increments of 0.5.');
+        } else {
+            event.target.setCustomValidity(''); // Clear the error message
+        }
+        event.target.reportValidity();
+    }     
+
+
+    //Smaske : [05-july-2024] : Success method on record-edit-form successfully submitted
+    @track recordIds = [];
+    handleSuccessForPMAnswers(event) {
+        console.log('IN handleSuccessForPMAnswers');
+        // Get the record ID from the event
+        const recordId = event.detail.id;
+        // Add the record ID to the list
+        this.recordIds.push(recordId);
+        // Log the record ID
+        console.log('recordIds ID:', JSON.stringify(this.recordIds));
+
+        if (this.clickedBtnLabel == 'Save') {
+            this.updatePMAnswerRecordsStatusHandler(this.recordIds, 'Save');
+        }
+    }
+
+    updatePMAnswerRecordsStatusHandler(recordIds, status) {
+        console.log("CALLED updatePMAnswerRecordsStatusHandler " + recordIds);
+        updatePMAnswerRecordsStatus({ PMAnswerRecordsId: recordIds, newStatus: status })
+            .then(result => {
+                console.log("updatePMAnswerRecordsStatus result ::" + JSON.stringify(result));
+                this.calculateAverageRatingForKRAHandler(this.recordIds,this.kraRecord);
+                if (status == 'Submit') {
+                    this.submitKraRecordHandler();
+                    this.handleChangeChildEvent();
+                    this.showToast('KRA details submitted successfully.', this.successVariant, this.toastMode);
+                }else {
+                    this.showToast('KRA details saved successfully.', this.successVariant, this.toastMode);
+                }
+                
+            })
+            .catch(error => {
+                console.log('518 updatePMAnswerRecordsStatus error : ' + JSON.stringify(error));
+                //this.showToast('Error submitting records: ' + error.body.message, this.errorVariant, this.toastMode);
+            });
+    }
+
+    @track wrapData;
+    calculateAverageRatingForKRAHandler(recordIds,kraData) {
+        console.log('calculateAverageRatingForKRAHandler Invoked');
+        /* console.log('Received recordIds : ' + recordIds);
+        console.log('Received this.kraRecord : ' + JSON.stringify(this.kraRecord));
+        console.log('Received this.tab : ' + this.tab); */
+        calculateAverageRatingForKRA({ PMAnswerRecordsId: recordIds, kraRecord: kraData, tab: this.tab })
+            .then(result => {
+                console.log("calculateAverageRatingForKRA result ::" + JSON.stringify(result));
+                this.wrapData = result;
+                //smaske :[08/Aug/2024] : As suggested by subba disabling the SUBMIT button if any of the section rating avg value is 0.This will stop enduser for submitting record.
+                if(this.wrapData.TechSkillData == 0 || this.wrapData.ProfSkillData == 0 || this.wrapData.StrategicData == 0 || this.wrapData.GoalResultData == 0){
+                    this.isSubmitBtnDisabled = true;
+                }else{
+                    this.isSubmitBtnDisabled = false;
+                }
+            })
+            .catch(error => {
+                console.log('Error calculating average values for submitted records : ' + error.body.message);
+            });
+    }
+
+    submitKraRecordHandler(){
+        console.log(' insideHandler');
+        submitKraRecord({ kraRecord: this.kraRecord })
                 .then(result => {
                     console.log(" result ::" + JSON.stringify(result));
                     this.kraRecord = result;
