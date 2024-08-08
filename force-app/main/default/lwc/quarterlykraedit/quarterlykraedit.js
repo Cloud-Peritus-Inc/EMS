@@ -616,6 +616,8 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                 //smaske :[08/Aug/2024] : As suggested by subba disabling the SUBMIT button if any of the section rating avg value is 0.This will stop enduser for submitting record.
                 if(this.wrapData.TechSkillData == 0 || this.wrapData.ProfSkillData == 0 || this.wrapData.StrategicData == 0 || this.wrapData.GoalResultData == 0){
                     this.isSubmitBtnDisabled = true;
+                }else{
+                    this.isSubmitBtnDisabled = false;
                 }
             })
             .catch(error => {

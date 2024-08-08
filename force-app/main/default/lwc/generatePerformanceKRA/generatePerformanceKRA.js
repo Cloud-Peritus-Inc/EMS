@@ -138,7 +138,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                             sumOverallRating += record.Overall_Rating__c || 0; // Ravitheja --> replacing Overall_Average_Section_Rating__c with Overall_Rating__c from Goal object 
                             console.log('sumOverallRating '+sumOverallRating);
                         });
-                        this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(1) : 0;
+                        this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(2) : 0;
                         console.log('averageOverallRating '+this.averageOverallRating);
                         let CompensationMod = { ...this.Compensation };
                         
