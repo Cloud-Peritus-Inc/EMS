@@ -247,8 +247,26 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             RR[name] = dataValue;
         } else if (name == 'Comments__c') {
             RR[name] = dataValue;
-        } else if (name == 'Finalized_Hike__c') {
+        } else if (name == 'Overall_Average_Section_Rating__c') { //Ravitheja --> replacing Finalized_Hike__c with Overall_Average_Section_Rating__c from compensation object 
             RR[name] = dataValue;
+        } else if (name == 'HR_Rating__c') {
+            console.log('name ' + name);
+            const rating = parseFloat(dataValue);
+            if(dataValue === ''){
+                RR[name] = '';
+            }else if (isNaN(rating) || rating < 1 || rating > 5) { // Ravitheja --> Adjusted the logic to throw error message
+                console.log('rating ' + rating);
+                event.target.value = '';
+                const evt = new ShowToastEvent({
+                    message: 'HR Rating must be between 1 and 5.',
+                    variant: 'error',
+                    mode: 'dismissable'
+                });
+                this.dispatchEvent(evt);
+                
+            }else{
+                RR[name] = dataValue;
+            }
         }
         this.Compensation = RR;
 
@@ -317,7 +335,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                 console.log(`${fieldName} is blank.`);
                 isValid = false;
             } else {
-                console.log(`${fieldName} is not blank. Value: ${this.Compensation[fieldName]}`);
+                console.log(`${fieldName} is not blank. Value: ${CompensationMod[fieldName]}`);
             }
         }
 
