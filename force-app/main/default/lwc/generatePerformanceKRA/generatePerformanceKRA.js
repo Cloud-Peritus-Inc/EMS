@@ -259,20 +259,23 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         } else if (name == 'Overall_Average_Section_Rating__c') { //Ravitheja --> replacing Finalized_Hike__c with Overall_Average_Section_Rating__c from compensation object 
             RR[name] = dataValue;
         } else if (name == 'HR_Rating__c') {
-            console.log('name '+name);
+            console.log('name ' + name);
             const rating = parseFloat(dataValue);
-            if (!isNaN(rating) || rating < 1 || rating > 5) {//Ravitheja --> added validation to check the value
-                
-                console.log('dataValue '+dataValue);
-            }else{
+            if(dataValue === ''){
+                RR[name] = '';
+            }else if (isNaN(rating) || rating < 1 || rating > 5) { // Ravitheja --> Adjusted the logic to throw error message
+                console.log('rating ' + rating);
+                event.target.value = '';
                 const evt = new ShowToastEvent({
                     message: 'HR Rating must be between 1 and 5.',
                     variant: 'error',
                     mode: 'dismissable'
                 });
                 this.dispatchEvent(evt);
+                
+            }else{
+                RR[name] = dataValue;
             }
-            RR[name] = dataValue;
         }
         this.Compensation = RR;
 
@@ -351,22 +354,6 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                 isValid = false;
             } else {
                 console.log(`${fieldName} is not blank. Value: ${CompensationMod[fieldName]}`);
-            }
-        }
-
-        if (CompensationMod['HR_Rating__c'] != null && CompensationMod['HR_Rating__c'] !== '') { // Ravitheja --> added if condition to check the HR rating value.
-            console.log('checkfieldName ', fieldName);
-            const hrRating = parseFloat(CompensationMod['HR_Rating__c']);
-            console.log('hrRating ', hrRating);
-            if (!isNaN(rating) || hrRating < 1 || hrRating > 5) {
-                console.log('ifCondition ');
-                const evt = new ShowToastEvent({
-                    message: 'HR Rating must be between 1 and 5.',
-                    variant: 'error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(evt);
-                isValid = false;
             }
         }
 

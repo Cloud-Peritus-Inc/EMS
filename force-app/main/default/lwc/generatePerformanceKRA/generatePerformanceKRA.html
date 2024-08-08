@@ -237,7 +237,7 @@
 
 							<div class="leftBox">
 								<lightning-input label="HR Rating" type="Number" name="HR_Rating__c"
-									value= {averageOverallRating} onchange={dataHandler} step="any">
+									value= {averageOverallRating} onchange={dataHandler} step="any" min="1" max="5">
 								</lightning-input>
 								<template if:true={errorMessage}>
 									<div class="slds-text-color_error slds-m-top_small">
