@@ -30,7 +30,8 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
                                                , KRA__r.Resource__c
                                                , Rating__c 
             									FROM PM_Configure__c 
-            									WHERE RecordTypeId = :answerRecordTypeId AND KRA__c IN :completedKRAIds
+            									WHERE RecordTypeId = :answerRecordTypeId 
+                                                AND KRA__c IN :completedKRAIds
                                                 AND Related_Question__c != NULL 
                                                 AND Related_Question__r.Area__c != NULL
                                                 ];
@@ -89,10 +90,10 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
         Decimal avgStrategicRating = strategicNo > 0 ? strategicSum / strategicNo : 0;
         Decimal avgGoalResultRating = goalResultNo > 0 ? goalResultSum / goalResultNo : 0;
         
-        avgTechSkillRating = avgTechSkillRating.setScale(2);
-        avgProfSkillRating = avgProfSkillRating.setScale(2);
-        avgStrategicRating = avgStrategicRating.setScale(2);
-        avgGoalResultRating = avgGoalResultRating.setScale(2);
+        avgTechSkillRating = avgTechSkillRating.setScale(2, RoundingMode.FLOOR);
+        avgProfSkillRating = avgProfSkillRating.setScale(2, RoundingMode.FLOOR);
+        avgStrategicRating = avgStrategicRating.setScale(2, RoundingMode.FLOOR);
+        avgGoalResultRating = avgGoalResultRating.setScale(2, RoundingMode.FLOOR);
         
         if(!goalList.isEmpty()){
             
@@ -136,10 +137,10 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
                 Resource_Role__c role = resourceRoleList[0];
                 if (role != null) {
                     
-                    goal.Average_Technical_Skills_Rating__c = (avgTechSkillRating * (role.technical_acumen__c / 100)).setScale(2);
-                    goal.Average_Professional_Skills_Rating__c = (avgProfSkillRating * (role.professional_skills__c / 100)).setScale(2);
-                    goal.Average_Strategic_Impact_Rating__c = (avgStrategicRating * (role.strategic_impact__c / 100)).setScale(2);
-                    goal.Average_Goals_And_Result_Rating__c = (avgGoalResultRating * (role.goals_and_results__c / 100)).setScale(2);
+                    goal.Average_Technical_Skills_Rating__c = ((avgTechSkillRating * role.technical_acumen__c) / 100).setScale(2, RoundingMode.FLOOR);
+                    goal.Average_Professional_Skills_Rating__c = ((avgProfSkillRating * role.professional_skills__c) / 100).setScale(2, RoundingMode.FLOOR);
+                    goal.Average_Strategic_Impact_Rating__c = ((avgStrategicRating * role.strategic_impact__c) / 100).setScale(2, RoundingMode.FLOOR);
+                    goal.Average_Goals_And_Result_Rating__c = ((avgGoalResultRating * role.goals_and_results__c) / 100).setScale(2, RoundingMode.FLOOR);
                     
                 } else {
                     System.debug('Role is null');
