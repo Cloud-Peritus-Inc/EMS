@@ -26,6 +26,8 @@ public class sendEmailToMentor implements TriggerAction.AfterUpdate {
         Set<Id> contactIdSet = new Set<Id>();
         List<PM_Configure__c> rejectedVsSubmittedPMConfigs = new List<PM_Configure__c>();
         Map<Id, PM_Configure__c> kraToPmConfigMap = new Map<Id, PM_Configure__c>();
+        Id menteeUserId = null;
+        Id mentorUserId = null;
         
         for (PM_Configure__c pmConfig : newlist) {
             contactIdSet.add(pmConfig.Mentee__c);
@@ -40,12 +42,20 @@ public class sendEmailToMentor implements TriggerAction.AfterUpdate {
         
         for (PM_Configure__c pmConfig : newlist) {
             
-            Id menteeUserId = contactMap.get(pmConfig.Mentee__c).EMS_TM_User__c;
-            Id mentorUserId = contactMap.get(pmConfig.Mentor__c).EMS_TM_User__c;
+            if (contactMap.containsKey(pmConfig.Mentee__c)) {
+                menteeUserId = contactMap.get(pmConfig.Mentee__c).EMS_TM_User__c;
+            }
+            if (contactMap.containsKey(pmConfig.Mentor__c)) {
+                mentorUserId = contactMap.get(pmConfig.Mentor__c).EMS_TM_User__c;
+            }
+            
+          
             
             if ((pmConfig.Status__c == 'Rejected' || pmConfig.Status__c == 'Submitted') 
                 && pmConfig.Status__c != oldMap.get(pmConfig.Id).Status__c 
                 && pmConfig.KRA__c != null
+                && menteeUserId != null
+                && mentorUserId != null
                	&& pmConfig.LastModifiedById != menteeUserId  
                	&& pmConfig.LastModifiedById != mentorUserId) {
                     
