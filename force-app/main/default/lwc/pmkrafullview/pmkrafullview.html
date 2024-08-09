@@ -78,7 +78,8 @@
 					</lightning-layout>
 					<lightning-layout multiple-rows class="slds-theme_shade">
 						<lightning-layout-item padding="around-small" size="12">
-							<table class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table-container"
+							<table
+								class="pointerTable slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table-container"
 								aria-labelledby="element-with-table-label other-element-with-table-label">
 								<thead>
 									<tr class="slds-line-height_reset">
@@ -160,7 +161,8 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name}</h3>
+											<h3>{contactAnswer.contact.name} <!--{contactAnswer.contact.projectname}--></h3>
+
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div class="fieldsRow" key={answer.answerId}>
@@ -216,7 +218,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name}</h3>
+											<h3>{contactAnswer.contact.name} <!--{contactAnswer.contact.projectname} --></h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div class="fieldsRow" key={answer.answerId}>
@@ -271,7 +273,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name}</h3>
+											<h3>{contactAnswer.contact.name} <!--{contactAnswer.contact.projectname} --></h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div class="fieldsRow" key={answer.answerId}>
@@ -326,7 +328,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name}</h3>
+											<h3>{contactAnswer.contact.name} <!--{contactAnswer.contact.projectname} --></h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div class="fieldsRow" key={answer.answerId}>
@@ -367,20 +369,20 @@
 			</footer>
 		</template>
 		<template lwc:if={showOverAllRating}>
-			<div class="slds-m-around_medium">
-				<div class="pointerTableContainer">
-				<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+			<br/><br/>
+			<div class="pointerTableContainer">
+				<!---class="slds-table  slds-table_cell-buffer slds-table_col-bordered"--->
+				<table class="slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
 					<thead>
+						<th><strong>Section Name</strong></th>
+						<th colspan={contacts.length} style="text-align:center;"><b>Average Rating (Weightage)</b></th>
 						<tr>
-							<th><strong>Section Name</strong></th>				
-							<th colspan={contacts.length} style="text-align:center;"><b>Average Rating</b></th>
 						</tr>
-					</thead>
-					<thead>
 						<tr>
 							<th></th>
 							<template for:each={contacts} for:item="contact">
-								<th key={contact.contactId}><strong>{contact.contactname}</strong></th>
+								<th key={contact.contactId}><strong>{contact.contactname} <!--{contact.projectname} --></strong>
+								</th>
 							</template>
 						</tr>
 					</thead>
@@ -399,14 +401,13 @@
 						<tr>
 							<td><strong>Overall Rating</strong></td>
 							<template for:each={overallRatings} for:item="overallRating">
-								<td key={overallRating.contactId}>{overallRating.overallRating}</td>
+								<td key={overallRating.contactId}><b>{overallRating.overallRating}</b></td>
 							</template>
 						</tr>
 					</tbody>
 				</table>
-				</div>
-				
 			</div>
+
 			<br/><br/>
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
