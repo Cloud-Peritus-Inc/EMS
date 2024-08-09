@@ -14,7 +14,6 @@ export default class GoalDataTable extends LightningElement {
     selectedGoalId = '';
     resourceId = '';
     @track comment = '';
-    @track showError = false;
     @track selectedResourceId = '';
 
     connectedCallback() {
@@ -110,14 +109,13 @@ export default class GoalDataTable extends LightningElement {
     handleCommentChange(event){
         this.rejectionReason = event.target.value;
         this.comment = event.target.value;
-        this.showError = false;
     }
 
     handleRejectionSubmission() {
         if (!this.comment) {
-            this.showError = true;
+            //smaske : PM_Def_098 : showing toast msg if rejection reason is not filled
+            this.showToast2('Please Enter a Rejection Reason.', 'error', 'dismissible');
         } else {
-            this.showError = false;
             this.acceptOrRejectRequest('reject');
         }
     }
@@ -143,4 +141,14 @@ export default class GoalDataTable extends LightningElement {
         });
         this.dispatchEvent(event);
     }
+
+    showToast2(message, variant, mode) {
+        const event = new ShowToastEvent({
+            message: message,
+            variant: variant,
+            mode: mode
+        });
+        this.dispatchEvent(event);
+    }
+
 }

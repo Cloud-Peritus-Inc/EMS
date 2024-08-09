@@ -92,9 +92,7 @@
 												</header>
 												<div class="slds-modal__content slds-p-around_medium"  id="modal-content-id-1">
 													<lightning-textarea class="rreason" variant="label-stacked" required label="Enter rejection reason" value={comment} onchange={handleCommentChange}></lightning-textarea>
-													<template if:true={showError}>
-														<div class="slds-text-color_error" style="margin-top: 0.5rem;">Please Enter a Rejection Reason.</div>
-													</template>
+													<!-- smaske : PM_Def_098 : Removed the error msg paragraph from as showing toast msg -->
 												</div>
 												<footer class="slds-modal__footer">
 													<!-- smaske : PM_Def_098 : Replacing html button with lwc button -->
