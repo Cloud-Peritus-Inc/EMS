@@ -390,7 +390,7 @@ public without sharing class quarterlyKRAViewCtrl {
             }
 
             System.debug(' SIZE OF pmAnswerRecords  ' +  pmAnswerRecords);
-
+            //smaske : PM_Def_151 : Updated logic to consider null rating fields as default to 0
             for (PM_Configure__c pmAns : pmAnswerRecords) {
                 if (pmAns.Related_Question__r.Area__c == 'TECHNICAL SKILLS') {
                     pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;                    
