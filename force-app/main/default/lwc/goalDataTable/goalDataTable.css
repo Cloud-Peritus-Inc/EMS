@@ -106,3 +106,8 @@
   max-width: 80rem !important;
   width: 80% !important;
 }
+
+/*smaske : PM_Def_098 :CSS for rejection reason field */
+.rreason{
+  text-align: start;
+}

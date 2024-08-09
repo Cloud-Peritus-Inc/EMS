@@ -17,10 +17,10 @@
 							<div class="slds-truncate" title="Requested By">Requested By</div>
 						</th>
 						<th class="slds-border_right tableheading" scope="col" style="width: 5% !important;">
-							<div class="slds-truncate" title="Project Onboarding Date">Project Onboarding Date</div>
+							<div class="slds-truncate" title="Assignment Start Date">Assignment Start Date</div>
 						</th>
 						<th class="slds-border_right tableheading" scope="col" style="width: 5% !important;">
-							<div class="slds-truncate" title="Project Offboarding Date">Project Offboarding Date</div>
+							<div class="slds-truncate" title="Assignment End Date">Assignment End Date</div>
 						</th>
 						<th class="slds-border_right tableheading" scope="col" style="width: 15%;">
 							<div class="slds-truncate" title="Actions"> Actions </div>
@@ -69,7 +69,7 @@
 										<lightning-button-icon icon-name="action:edit" size="large" variant="bare" alternative-text="Edit KRA" data-index={index} onclick={editKRAModalPopUp} class="slds-m-left_xx-small"></lightning-button-icon>
 									</template>		
 									<template if:false={goal.hideRejectBtn}>						
-										<lightning-button variant="destructive" label="Reject" data-id={goal.Id} data-index={index} onclick={rejectRequestHandler}></lightning-button>
+										<lightning-button style="margin-right: 10px;" variant="destructive" label="Reject" data-id={goal.Id} data-index={index} onclick={rejectRequestHandler}></lightning-button>
 									</template>
 									<template if:false={goal.hideAcceptBtn}>
 										<lightning-button variant="success" label="Accept" data-id={goal.Id} data-index={index} onclick={acceptRequestHandler}></lightning-button>
@@ -90,14 +90,15 @@
 													<h2 id="modal-heading-01"
 														class="slds-text-heading_medium slds-hyphenate">Rejection Reason</h2>
 												</header>
-												<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-													<lightning-textarea variant="label-stacked" required label="Enter rejection reason" value={comment} onchange={handleCommentChange} field-level-help="Rejection reason for declining the KRA request"></lightning-textarea>
+												<div class="slds-modal__content slds-p-around_medium"  id="modal-content-id-1">
+													<lightning-textarea class="rreason" variant="label-stacked" required label="Enter rejection reason" value={comment} onchange={handleCommentChange}></lightning-textarea>
 													<template if:true={showError}>
 														<div class="slds-text-color_error" style="margin-top: 0.5rem;">Please Enter a Rejection Reason.</div>
 													</template>
 												</div>
 												<footer class="slds-modal__footer">
-													<button class="slds-button slds-button_neutral" onclick={handleRejectionSubmission}>Submit</button>
+													<!-- smaske : PM_Def_098 : Replacing html button with lwc button -->
+													<lightning-button variant="brand" label="Submit" title="Submit" onclick={handleRejectionSubmission} ></lightning-button>
 												</footer>
 											</div>
 										</section>
