@@ -16,11 +16,13 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
         }
     }
     
+    public static final String PM_ANSWER_SUBMITTED = 'Submitted';
+    
     private List<PM_Configure__c> getFilteredPMConfigList(Set<Id> completedKRAIds) {
         
         List<PM_Configure__c> filteredPmConfigList = new List<PM_Configure__c>();
         Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
-        
+        //public static final String PM_ANSWER_SUBMITTED = 'Saved';
        
          List<PM_Configure__c> pmConfigList = [SELECT Id
                                                , Name
@@ -34,6 +36,7 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
                                                 AND KRA__c IN :completedKRAIds
                                                 AND Related_Question__c != NULL 
                                                 AND Related_Question__r.Area__c != NULL
+                                                AND Status__c =: PM_ANSWER_SUBMITTED
                                                 ];
         
         if(!pmConfigList.isEmpty()){
@@ -63,21 +66,25 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
             
             for (PM_Configure__c pmAns : filteredPmConfigList) {
                 
-                if (pmAns.Related_Question__r != null && pmAns.Related_Question__r.Area__c != null && pmAns.Rating__c != null) {
+                if (pmAns.Related_Question__r != null && pmAns.Related_Question__r.Area__c != null) {
                     
                     if (pmAns.Related_Question__r.Area__c == 'TECHNICAL SKILLS') {
+                        pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;
                         techSkillSum += pmAns.Rating__c;
                         techSkillNo++;
                          
                     } else if (pmAns.Related_Question__r.Area__c == 'PROFESSIONAL SKILLS') {
+                        pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;
                         profSkillSum += pmAns.Rating__c;
                         profSkillNo++;
                         
                     } else if (pmAns.Related_Question__r.Area__c == 'STRATEGIC IMPACT') {
+                        pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;
                         strategicSum += pmAns.Rating__c;
                         strategicNo++;
                         
                     } else if (pmAns.Related_Question__r.Area__c == 'GOALS AND RESULTS') {
+                        pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;
                         goalResultSum += pmAns.Rating__c;
                         goalResultNo++;
                     }
