@@ -497,7 +497,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         });
 
         if (result === 'okay') {
-            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel);
+            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel, this.tab);
             //this.dispatchEvent(new CustomEvent('closemodal'));
         }
 
@@ -578,13 +578,13 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         console.log('recordIds ID:', JSON.stringify(this.recordIds));
 
         if (this.clickedBtnLabel == 'Save') {
-            this.updatePMAnswerRecordsStatusHandler(this.recordIds, 'Save');
+            this.updatePMAnswerRecordsStatusHandler(this.recordIds, 'Save', this.tab);
         }
     }
 
-    updatePMAnswerRecordsStatusHandler(recordIds, status) {
+    updatePMAnswerRecordsStatusHandler(recordIds, status, tab) {
         console.log("CALLED updatePMAnswerRecordsStatusHandler " + recordIds);
-        updatePMAnswerRecordsStatus({ PMAnswerRecordsId: recordIds, newStatus: status })
+        updatePMAnswerRecordsStatus({ PMAnswerRecordsId: recordIds, newStatus: status, tab : tab })
             .then(result => {
                 console.log("updatePMAnswerRecordsStatus result ::" + JSON.stringify(result));
                 this.calculateAverageRatingForKRAHandler(this.recordIds,this.kraRecord);
