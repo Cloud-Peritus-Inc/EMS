@@ -13,12 +13,40 @@ public without sharing class quarterlyKRAFullViewCtrl {
     
     @AuraEnabled
     public static String completekraMethod(String kraid) {
-        Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c 
+        
+        //updating status as KRA Completed
+        Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Resource__c
                               FROM Goal__c 
                               WHERE Id=:kraid AND Status__c!='KRA Completed' Limit 1]; 
         goalRecord.Status__c='KRA Completed';
         update goalRecord;
         
+        //unchecking project assignement 
+        List<EMS_TM_Assignment__c> projectAssignmentList = [SELECT Id, EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,
+                                                            EMS_TM_EmployeeName__c,Offshore_PM_Configure__c, Other_Resource_PM_Configure__c,
+                                                            Onshore_PM_Configure__c,Other_PM_Configure__c
+                                                            FROM EMS_TM_Assignment__c 
+                                                            WHERE EMS_TM_EmployeeName__c = :goalRecord.Resource__c];
+        for(EMS_TM_Assignment__c projectass:projectAssignmentList){
+            if (projectass.Offshore_PM_Configure__c ==true) {
+                projectass.Offshore_PM_Configure__c = false;  
+            }
+            
+            if (projectass.Onshore_PM_Configure__c == true) {
+                projectass.Onshore_PM_Configure__c = false;  
+            }
+            
+            if (projectass.Other_PM_Configure__c ==true ) {
+                projectass.Other_PM_Configure__c = false; 
+                projectass.Other_Resource_PM_Configure__c = null;
+            }
+        }
+        
+        if(!projectAssignmentList.isEmpty()){
+            update projectAssignmentList;
+        }
+        
+        // updating status as Cancelled all Pm comfigure answers who still status Awaiting Response, Accepeted and Saved
         list<PM_Configure__c> pmAnswer =[Select Id,Status__c,KRA__c 
                                          from PM_Configure__c 
                                          WHERE KRA__c=:kraid AND (Status__c='Awaiting Response' OR Status__c='Accepted' OR Status__c='Saved')];
@@ -129,22 +157,13 @@ public without sharing class quarterlyKRAFullViewCtrl {
             Map<String, List<AnswerWrapper>> roleToAnswersMap = new Map<String, List<AnswerWrapper>>();
             List<String> answerIdlst =New List<String>();
             
-            for (PM_Configure__c answer : question.PM_Configure__r) {               
-                String contactKey = answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__c:answer.Reporting_Contact__c;
-                /*String contactKey;
-                Boolean keyExists = false;
-                
-                for (String existingKey : roleToAnswersMap.keySet()) {
-                    if (answer.Reporting_Contact__c!=null && existingKey!=null && existingKey.startsWith(answer.Reporting_Contact__c) ) {
-                        keyExists = true;
-                        break;
-                    }
+            for (PM_Configure__c answer : question.PM_Configure__r) {  
+                String contactKey;
+                if(answer.Mentor_Mentee__c!=null){
+                    contactKey = answer.Mentor_Mentee__c;
+                }else{
+                    contactKey =answer.Reporting_Contact__c+'&'+answer.Project_Name__c;
                 }
-                if (keyExists) {
-                    contactKey = answer.Project_Name__c != null ? answer.Project_Name__c : '';
-                } else {
-                    contactKey = answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__c:answer.Reporting_Contact__c;
-                }*/
                 
                 if (!roleToAnswersMap.containsKey(contactKey)) {
                     roleToAnswersMap.put(contactKey, new List<AnswerWrapper>());
@@ -158,7 +177,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                 awn.Descriptionoverview = answer.Related_Question__r.Question_overview__c;
                 awn.rating = answer.Rating__c!=null?answer.Rating__c:null;
                 awn.contactId = contactKey;
-                //awn.ProjectName =answer.Project_Name__c!=null? '('+answer.Project_Name__r.Name+')':' ';
+                awn.ProjectName =answer.Project_Name__c!=null? '('+answer.Project_Name__r.Name+')':' ';
                 awn.contactName = answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__r.Name:answer.Reporting_Contact__r.Name;
                 
                 roleToAnswersMap.get(contactKey).add(awn);
@@ -208,7 +227,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
         @AuraEnabled
         public Decimal rating;
         @AuraEnabled
-        public Id contactId;
+        public String contactId;
         @AuraEnabled
         public String contactName;
         @AuraEnabled

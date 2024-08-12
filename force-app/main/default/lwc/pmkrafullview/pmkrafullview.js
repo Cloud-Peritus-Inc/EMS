@@ -121,7 +121,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                             if (answer.contactId) {
                                 if (!contactAnswers[answer.contactId]) {
                                     contactAnswers[answer.contactId] = {
-                                        contact: { id: answer.contactId, name: answer.contactName }, //, projectname:answer.ProjectName
+                                        contact: { id: answer.contactId, name: answer.contactName , projectname:answer.ProjectName}, // sangharsh adding projectname
                                         answers: []
                                     };
                                 }
@@ -233,7 +233,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                 totalCount++;
 
                 if (!contactMap.has(contactId)) {
-                    contactMap.set(contactId, { contactId: answer.contactId, contactname: answer.contactname }); //, projectname:answer.ProjectName
+                    contactMap.set(contactId, { contactId: answer.contactId, contactname: answer.contactname , projectname:answer.ProjectName}); 
                 }
                 if (!contactOverallRatingMap.has(contactId)) {
                     contactOverallRatingMap.set(contactId, 0);

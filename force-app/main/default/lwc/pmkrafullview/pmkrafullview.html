@@ -161,7 +161,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} <!--{contactAnswer.contact.projectname}--></h3>
+											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname}</h3>
 
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
@@ -218,7 +218,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} <!--{contactAnswer.contact.projectname} --></h3>
+											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} </h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div class="fieldsRow" key={answer.answerId}>
@@ -273,7 +273,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} <!--{contactAnswer.contact.projectname} --></h3>
+											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} </h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div class="fieldsRow" key={answer.answerId}>
@@ -328,7 +328,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} <!--{contactAnswer.contact.projectname} --></h3>
+											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} </h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div class="fieldsRow" key={answer.answerId}>
@@ -381,7 +381,7 @@
 						<tr>
 							<th></th>
 							<template for:each={contacts} for:item="contact">
-								<th key={contact.contactId}><strong>{contact.contactname} <!--{contact.projectname} --></strong>
+								<th key={contact.contactId}><strong>{contact.contactname} {contact.projectname} </strong>
 								</th>
 							</template>
 						</tr>
