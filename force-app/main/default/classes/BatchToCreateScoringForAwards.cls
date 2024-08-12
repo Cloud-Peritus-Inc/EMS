@@ -5,7 +5,7 @@ global class BatchToCreateScoringForAwards implements Database.Batchable<sObject
          return Database.getQueryLocator([SELECT Id,Status__c,Award_Type__c,Resource__c,Primary_Nomination__c,
                                           Secondary_Nomination__c,Recognization_By__c,Recognization_By__r.Name,Reason_for_award__c 
                                           FROM Reward_And_Recognition__c WHERE Status__c = 'Nominated'
-                                          and Processed__c = false
+                                          and Processed__c = false and Nomination_Submitted__c = true
                                           and RecordTypeId=:nomRecordTypeId and Type__c = 'Annual Award']);
     }
     global void execute(Database.BatchableContext BC, List<Reward_And_Recognition__c> rrList) {
