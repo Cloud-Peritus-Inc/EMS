@@ -81,13 +81,12 @@ public without sharing class CalculateFullQuarterlyKRA {
             answerWrapper.contactId = contactKey;
             answerWrapper.contactname = pmAns.Mentor_Mentee__c != null ? pmAns.Mentor_Mentee__r.Name : pmAns.Reporting_Contact__r.Name;
             answerWrapper.ProjectName =pmAns.Project_Name__c!=null? '('+pmAns.Project_Name__r.Name+')':' ';
-            if (pmAns.Rating__c != null) {
+         
                 System.debug('area1-->'+area);
-                answerWrapper.averageRating += pmAns.Rating__c;
+                answerWrapper.averageRating += pmAns.Rating__c != null?pmAns.Rating__c:0;
                 system.debug('before answerWrapper.ratingCount'+answerWrapper.ratingCount);
                 answerWrapper.ratingCount += 1;
                 system.debug('After answerWrapper.ratingCount'+answerWrapper.ratingCount);
-            }
         }
         
         // Calculate average ratings
