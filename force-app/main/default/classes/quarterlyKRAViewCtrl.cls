@@ -443,10 +443,10 @@ public without sharing class quarterlyKRAViewCtrl {
         kraContactResourceRole.strategic_impact__c = kraContactResourceRole.strategic_impact__c != null ? kraContactResourceRole.strategic_impact__c : 0;
         kraContactResourceRole.goals_and_results__c = kraContactResourceRole.goals_and_results__c != null ? kraContactResourceRole.goals_and_results__c : 0;
 
-        Decimal AvgTechSkillForResource = avgTechSkillRating * (kraContactResourceRole.technical_acumen__c/100);
-        Decimal AvgProfSkillForResource = avgProfSkillRating * (kraContactResourceRole.professional_skills__c/100);
-        Decimal AvgStrategicForResource = avgStrategicRating * (kraContactResourceRole.strategic_impact__c/100);
-        Decimal AvgGoalResultForResource = avgGoalResultRating * (kraContactResourceRole.goals_and_results__c/100);
+        Decimal AvgTechSkillForResource = ( avgTechSkillRating * (kraContactResourceRole.technical_acumen__c/100) ).setScale(2, RoundingMode.FLOOR);
+        Decimal AvgProfSkillForResource = ( avgProfSkillRating * (kraContactResourceRole.professional_skills__c/100) ).setScale(2, RoundingMode.FLOOR);
+        Decimal AvgStrategicForResource = ( avgStrategicRating * (kraContactResourceRole.strategic_impact__c/100) ).setScale(2, RoundingMode.FLOOR);
+        Decimal AvgGoalResultForResource = ( avgGoalResultRating * (kraContactResourceRole.goals_and_results__c/100) ).setScale(2, RoundingMode.FLOOR);
 
         System.debug( 'AvgTechSkillForResource : ' + AvgTechSkillForResource );
 
@@ -457,7 +457,7 @@ public without sharing class quarterlyKRAViewCtrl {
         System.debug( 'AvgGoalResultForResource : ' + AvgGoalResultForResource );
 
 
-        Decimal totalAreaWiseAvgRating = (AvgTechSkillForResource + AvgProfSkillForResource + AvgStrategicForResource + AvgGoalResultForResource);
+        Decimal totalAreaWiseAvgRating = (AvgTechSkillForResource + AvgProfSkillForResource + AvgStrategicForResource + AvgGoalResultForResource).setScale(2, RoundingMode.FLOOR);
 
         //Avg Rating values without Resource role % allocation
         // Set the scale to 1 decimal place
