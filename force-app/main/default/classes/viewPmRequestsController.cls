@@ -22,6 +22,8 @@ public without sharing class viewPmRequestsController {
         public String kraId{get;set;}
         @AuraEnabled
         public boolean hideRecallButton{get;set;}
+        @AuraEnabled
+        public String recall_Reason{get;set;}
     }
     
     @AuraEnabled(cacheable=true)
@@ -38,6 +40,7 @@ public without sharing class viewPmRequestsController {
                                               Status__c,
                                               KRA__c,KRA__r.Resource__c,
                                               Project_Name__r.name,
+                                              Recall_FeedBack_Comments__c,
                                               Project_Name__c From PM_Configure__c
                                               where recordtypeId =: answerRecordTypeId and Kra__c =:KraId  and Reporting_Contact__c != null
                                               and Status__c IN('Awaiting Response','Accepted','Rejected','Submitted','Cancelled')];
@@ -118,6 +121,7 @@ public without sharing class viewPmRequestsController {
                          vpt.projectManagerId = pmConfigRecs[0].Reporting_Contact__c;
                          vpt.projectId = pmConfigRecs[0].Project_Name__c;
                          vpt.kraId = pmConfigRecs[0].KRA__c;
+                         vpt.recall_Reason = pmConfigRecs[0].Recall_FeedBack_Comments__c;
 
                          updatedPMConfigList.add(vpt);
                     

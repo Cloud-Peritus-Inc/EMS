@@ -14,14 +14,19 @@
             <div class="slds-truncate" title="Project">Project</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Project Manage">Project Manager</div>
+            <div class="slds-truncate" title="Project Manager/Other">Project Manager/Other</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
             <div class="slds-truncate" title="KRA Status">KRA Status</div>
           </th>
           <template if:true={disablecolumn}>
+          <th class="slds-border_right tableheading" scope="col">
+            <div class="slds-truncate" title="Recall Reason">Recall Reason</div>
+          </th>
+          </template>
+          <template if:true={disablecolumn}>
            <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Actions">Actions</div>
+            <div class="slds-truncate" title="Action">Action</div>
           </th>
           </template>
         
@@ -51,7 +56,11 @@
                <td>
                 <div class="slds-wrap">{goalwrap.kraStatus}</div>
               </td>
-             <template if:true={disablecolumn}> 
+               <template if:true={disablecolumn}> 
+              <td>
+                <div class="slds-wrap">{goalwrap.recall_Reason}</div>
+              </td>
+            
              <td>               
               <lightning-button variant="brand-outline" label="Recall" title="Recall" onclick={HandlerecallRowAction} disabled ={goalwrap.hideRecallButton}
                data-projectid ={goalwrap.projectId} data-managerid ={goalwrap.projectManagerId}
@@ -65,7 +74,7 @@
     </table>
        <template if:false={showPMRequestRecords}>
           <div class="slds-text-align_center slds-p-around_medium">
-            <center>No KRA requests found.</center>
+            <center>No KRA feedback requests found.</center>
           </div>
         </template>
 
@@ -86,11 +95,15 @@
 														class="slds-text-heading_medium slds-hyphenate">Recall Reason</h2>
 												</header>
 												<div class="slds-modal__content slds-p-around_medium"  id="modal-content-id-1">
-													<lightning-textarea class="rreason" variant="label-stacked" required label="Enter rejection reason" value={comment} onchange={handleCommentChange}></lightning-textarea>
+													<lightning-textarea class="rreason" variant="label-stacked" required label="Enter Recall Reason" value={comment} onchange={handleCommentChange}></lightning-textarea>
+                          
+                          <p><b>Note:</b> Submitting a recall for a feedback request will result in the cancellation of the request.</p>
+
 													<!-- smaske : PM_Def_098 : Removed the error msg paragraph from as showing toast msg -->
 												</div>
 												<footer class="slds-modal__footer">
 													<!-- smaske : PM_Def_098 : Replacing html button with lwc button -->
+                          <lightning-button label="Close" title="Close" onclick={hideModalBox} class="slds-m-left_x-medium"></lightning-button>&nbsp;&nbsp;
 													<lightning-button variant="brand" label="Submit" title="Submit" onclick={handleRejectionSubmission} ></lightning-button>
 												</footer>
 											</div>

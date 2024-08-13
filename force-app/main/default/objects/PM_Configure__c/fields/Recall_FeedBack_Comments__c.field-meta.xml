@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recall_FeedBack_Comments__c</fullName>
     <externalId>false</externalId>
-    <label>Recall FeedBack Comments</label>
+    <label>Recall Reason</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>TextArea</type>
