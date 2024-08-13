@@ -1,3 +1,4 @@
+/* Smaske : this batch should be run with batch size as 1 only as confirmed by subba on 09/Aug/2024 */
 global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
     global Database.QueryLocator start(Database.BatchableContext BC) {
          Id scoringRecordTypeId = Schema.SObjectType.Reward_And_Recognition__c.getRecordTypeInfosByName().get('Scoring').getRecordTypeId();

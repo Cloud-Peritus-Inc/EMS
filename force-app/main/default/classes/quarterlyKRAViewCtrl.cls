@@ -390,32 +390,29 @@ public without sharing class quarterlyKRAViewCtrl {
             }
 
             System.debug(' SIZE OF pmAnswerRecords  ' +  pmAnswerRecords);
-
+            //smaske : PM_Def_151 : Updated logic to consider null rating fields as default to 0
             for (PM_Configure__c pmAns : pmAnswerRecords) {
                 if (pmAns.Related_Question__r.Area__c == 'TECHNICAL SKILLS') {
-                    if (pmAns.Rating__c != null) {
+                    pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;                    
                         TechSkillSum = TechSkillSum + pmAns.Rating__c;
                         TechSkillNo ++;
-                    }
                     
                 } else if (pmAns.Related_Question__r.Area__c == 'PROFESSIONAL SKILLS') {
-
-                    if (pmAns.Rating__c != null) {
-                        ProfSkillSum = ProfSkillSum + pmAns.Rating__c;
-                        ProfSkillNo ++;
-                    }
+                    pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;    
+                    ProfSkillSum = ProfSkillSum + pmAns.Rating__c;
+                    ProfSkillNo ++;
+                    
                     
                 } else if (pmAns.Related_Question__r.Area__c == 'STRATEGIC IMPACT') {
-                    if (pmAns.Rating__c != null) {
+                    pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;    
                         StrategicSum = StrategicSum + pmAns.Rating__c;
                         StrategicNo ++;
-                    }
                     
                 } else if (pmAns.Related_Question__r.Area__c == 'GOALS AND RESULTS') {
-                    if (pmAns.Rating__c != null) {
+                    pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;    
                         GoalResultSum = GoalResultSum + pmAns.Rating__c;
                         GoalResultNo ++;
-                    }
+                    
                 }                 
             }
 
@@ -492,20 +489,34 @@ public without sharing class quarterlyKRAViewCtrl {
     }
 
     @AuraEnabled
-    public static List<PM_Configure__c> updatePMAnswerRecordsStatus(List<String> PMAnswerRecordsId, String newStatus){
+    public static List<PM_Configure__c> updatePMAnswerRecordsStatus(List<String> PMAnswerRecordsId, String newStatus, String tab){
         try {
             System.debug('APEX updatePMAnswerRecordsStatus List' + PMAnswerRecordsId);
             System.debug('APEX updatePMAnswerRecordsStatus size' + PMAnswerRecordsId.size());
             System.debug('APEX updatePMAnswerRecordsStatus newStatus' + newStatus);
             List<PM_Configure__c> PMAnswerListToUpdate = New List<PM_Configure__c>();
-            List<PM_Configure__c> PMAnswerList = [SELECT Id, Status__c FROM PM_Configure__c WHERE Id IN :PMAnswerRecordsId];
+            List<PM_Configure__c> PMAnswerList = [SELECT Id, Status__c, KRA__c, KRA__r.Mentor_KRA_submitted__c FROM PM_Configure__c WHERE Id IN :PMAnswerRecordsId];
             if (PMAnswerList.size() > 0) {
                 for(PM_Configure__c PMRA :PMAnswerList){
-                    if (newStatus == 'Save') {
-                        PMRA.Status__c = 'Saved';
-                    } else if (newStatus == 'Submit') {
-                        PMRA.Status__c = 'Submitted';
+                    //smaske : added tab wise status change as the mentor can reedit the records even after submitting kra. which was affecting the record status value change.
+                    if (tab == 'My Team') {
+                        if (PMRA.KRA__r.Mentor_KRA_submitted__c == false) {
+                            if (newStatus == 'Save') {
+                                PMRA.Status__c = 'Saved';
+                            } else if (newStatus == 'Submit') {
+                                PMRA.Status__c = 'Submitted';
+                            }
+                        }else{
+                            PMRA.Status__c = 'Submitted';
+                        }
+                    }else{
+                        if (newStatus == 'Save') {
+                            PMRA.Status__c = 'Saved';
+                        } else if (newStatus == 'Submit') {
+                            PMRA.Status__c = 'Submitted';
+                        }
                     }
+                    
                     PMAnswerListToUpdate.add(PMRA);
                 }
             }

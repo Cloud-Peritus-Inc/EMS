@@ -1,6 +1,6 @@
 .tableFixHead {
-  max-height: 600px; 
-  overflow: auto; 
+  max-height: 400px; /* set maximum height */
+  overflow: auto; /* enable vertical scrollbar */
   padding:5px;
 }
 
@@ -15,6 +15,7 @@
 }
 
 .tableFixHead::-webkit-scrollbar-thumb {
+  /*background: #888;*/
   background : blue;
   border-radius: 4px;
 }
@@ -28,16 +29,20 @@
 .tableFixHead table {
     border-collapse: collapse;
     width: 100%;
+   
 }
 .tableFixHead thead {
    padding:0px;
 }
 
 .tableFixHead th {
+  /*  position: sticky;
+    top: 0;
+    z-index: 0;*/
 	color: white; font-size:9pt;
   font-weight: 2px;
 	padding-top: 0px;
-  background: #7F8DE1;
+    background: #7F8DE1;
  }
 
 .contacttableFixHead {
@@ -58,7 +63,7 @@
 
 .contacttableFixHead::-webkit-scrollbar-thumb {
   /*background: #888;*/
-  background : lightcoral;
+  background : blue;
   border-radius: 4px;
 }
 
@@ -98,16 +103,7 @@
 .tableFixHead th, .tableFixHead td{
   padding: 0.5%;
 }
-.overflowModal{
-   overflow: visible;
-}
-
 .slds-modal__container {
-  max-width: 80rem !important;
-  width: 80% !important;
-}
-
-/*smaske : PM_Def_098 :CSS for rejection reason field */
-.rreason{
-  text-align: start;
+    max-width: 80rem !important;
+    width: 80% !important;
 }

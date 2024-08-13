@@ -12,7 +12,6 @@ import updatePMAnswerRecordsStatus from '@salesforce/apex/quarterlyKRAViewCtrl.u
  
 //other imports
 import exampleHelpText from "@salesforce/label/c.exampleHelpText";
-import LightningConfirm from 'lightning/confirm';
 import Genericmodal from 'c/genericmodal';
 
 
@@ -483,6 +482,11 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     async handleSaveSubmitActionDuplicateOverAll(event) {
         this.clickedBtnLabel = event.target.label;
         console.log('SUBMIT BUTTON IS CLICKED');
+        //smaske : 12/Aug/2024 : PM_Def_141 : fixing spelling mistake and setting body lable for mentor/mentee
+        let bodyLableText = 'Feedback response once submitted, cannot be reverted. Would you like to proceed?'
+        if (this.tab == 'My Team') {
+            bodyLableText = 'You are about to submit your feedback. Would you like to proceed?';
+        }
         const result = await Genericmodal.open({
             // `label` is not included here in this example.
             // it is set on lightning-modal-header instead
@@ -491,13 +495,13 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             },
             btnLable1: 'No',
             btnLable2: 'Yes',
-            headerLable: 'Confirm KRA Submition',
-            bodyLable: 'Feedback response once submitted, cannot be reverted. Would you like to proceed?',
+            headerLable: 'Confirm KRA Submission', 
+            bodyLable: bodyLableText,
             size: 'small',
         });
 
         if (result === 'okay') {
-            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel);
+            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel, this.tab);
             //this.dispatchEvent(new CustomEvent('closemodal'));
         }
 
@@ -578,13 +582,13 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         console.log('recordIds ID:', JSON.stringify(this.recordIds));
 
         if (this.clickedBtnLabel == 'Save') {
-            this.updatePMAnswerRecordsStatusHandler(this.recordIds, 'Save');
+            this.updatePMAnswerRecordsStatusHandler(this.recordIds, 'Save', this.tab);
         }
     }
 
-    updatePMAnswerRecordsStatusHandler(recordIds, status) {
+    updatePMAnswerRecordsStatusHandler(recordIds, status, tab) {
         console.log("CALLED updatePMAnswerRecordsStatusHandler " + recordIds);
-        updatePMAnswerRecordsStatus({ PMAnswerRecordsId: recordIds, newStatus: status })
+        updatePMAnswerRecordsStatus({ PMAnswerRecordsId: recordIds, newStatus: status, tab : tab })
             .then(result => {
                 console.log("updatePMAnswerRecordsStatus result ::" + JSON.stringify(result));
                 this.calculateAverageRatingForKRAHandler(this.recordIds,this.kraRecord);

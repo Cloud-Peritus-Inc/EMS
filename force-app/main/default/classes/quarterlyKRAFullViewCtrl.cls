@@ -13,12 +13,40 @@ public without sharing class quarterlyKRAFullViewCtrl {
     
     @AuraEnabled
     public static String completekraMethod(String kraid) {
-        Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c 
+        
+        //updating status as KRA Completed
+        Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Resource__c
                               FROM Goal__c 
                               WHERE Id=:kraid AND Status__c!='KRA Completed' Limit 1]; 
         goalRecord.Status__c='KRA Completed';
         update goalRecord;
         
+        //unchecking project assignement 
+        List<EMS_TM_Assignment__c> projectAssignmentList = [SELECT Id, EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,
+                                                            EMS_TM_EmployeeName__c,Offshore_PM_Configure__c, Other_Resource_PM_Configure__c,
+                                                            Onshore_PM_Configure__c,Other_PM_Configure__c
+                                                            FROM EMS_TM_Assignment__c 
+                                                            WHERE EMS_TM_EmployeeName__c = :goalRecord.Resource__c];
+        for(EMS_TM_Assignment__c projectass:projectAssignmentList){
+            if (projectass.Offshore_PM_Configure__c ==true) {
+                projectass.Offshore_PM_Configure__c = false;  
+            }
+            
+            if (projectass.Onshore_PM_Configure__c == true) {
+                projectass.Onshore_PM_Configure__c = false;  
+            }
+            
+            if (projectass.Other_PM_Configure__c ==true ) {
+                projectass.Other_PM_Configure__c = false; 
+                projectass.Other_Resource_PM_Configure__c = null;
+            }
+        }
+        
+        if(!projectAssignmentList.isEmpty()){
+            update projectAssignmentList;
+        }
+        
+        // updating status as Cancelled all Pm comfigure answers who still status Awaiting Response, Accepeted and Saved
         list<PM_Configure__c> pmAnswer =[Select Id,Status__c,KRA__c 
                                          from PM_Configure__c 
                                          WHERE KRA__c=:kraid AND (Status__c='Awaiting Response' OR Status__c='Accepted' OR Status__c='Saved')];
@@ -42,7 +70,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
         
         viewAnswerWrapper aw =new viewAnswerWrapper();
         Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,
-                              Resource__r.ContactName__c ,Resource__r.Resource_Role__c 
+                              Resource__r.ContactName__c ,Resource__r.Resource_Role__c,Resource__c 
                               FROM Goal__c 
                               WHERE Id=:kraid Limit 1];
         if(goalRecord.Mentor_KRA_submitted__c == true && tab =='My Team' && goalRecord.Status__c == 'KRA Inreview'){
@@ -50,32 +78,19 @@ public without sharing class quarterlyKRAFullViewCtrl {
         }
         if(tab =='My Metric'){
             aw.submittedKRAbutton=false;
-        }
+        }       
         
-        
-      /*  User loggedInUser = [SELECT Id,ContactId,Contact.Resource_Role__c From User WHERE Id=:Userinfo.getUserId()];
-        
-        List<PM_Configure__c> answersrecord = new List<PM_Configure__c>();      
-        answersrecord= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,
-                        Related_Question__c,Status__c,KRA__c
-                        FROM PM_Configure__c 
-                        Where RecordTypeId = :AnswerRecordTypeId AND KRA__c =:kraid AND Mentor_Mentee__c =:loggedInUser.ContactId];*/  
-        
-       // for(PM_Configure__c answer: answersrecord){
-       // sangharsh[def:PM_Def_123] as per KRA status which is 'KRA Completed' and 'HR KRA Completed' showing edit button
             if(tab =='My Team'){
-                /*if(answer.Status__c == 'Submitted'){
-                    aw.submittedRecords=false;
-                }else */if(goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c =='HR KRA Completed'){
+                if(goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c =='HR KRA Completed'){
                     aw.submittedRecords=false;
                 }else{
                     aw.submittedRecords=true;
                 }
             }
-       // }
         if(tab =='My Metric'){
                 aw.submittedRecords=false;
             }
+        aw.kraResourceId=goalRecord.Resource__c;
         return aw;
     }
     
@@ -84,6 +99,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
         public Boolean submittedRecords=true;
         @AuraEnabled 
         public Boolean submittedKRAbutton=false;
+        @AuraEnabled 
+        public string kraResourceId;
     }
     
     @AuraEnabled(cacheable=true)
@@ -105,8 +122,10 @@ public without sharing class quarterlyKRAFullViewCtrl {
         if(tab=='My Team'){
             questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
-                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,Reporting_Contact__r.Name
-                         FROM PM_Configure__r Where KRA__c =:kraid AND ((Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))
+                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c
+                         FROM PM_Configure__r 
+                         Where KRA__c =:kraid AND ((Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))
                                                                         OR Mentor_Mentee__c =: loggedInUser.ContactId))
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c]; 
@@ -117,14 +136,16 @@ public without sharing class quarterlyKRAFullViewCtrl {
             if(goalRecord.Mentor_KRA_submitted__c==true){
              questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
-                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,Reporting_Contact__r.Name
+                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c
                          FROM PM_Configure__r Where KRA__c =:kraid AND ( Mentor_Mentee__c =: loggedInUser.ContactId OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))))
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];   
             }else{
                 questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
-                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,Reporting_Contact__r.Name
+                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c
                          FROM PM_Configure__r Where KRA__c =:kraid AND Mentor_Mentee__c =: loggedInUser.ContactId)
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];
@@ -136,8 +157,13 @@ public without sharing class quarterlyKRAFullViewCtrl {
             Map<String, List<AnswerWrapper>> roleToAnswersMap = new Map<String, List<AnswerWrapper>>();
             List<String> answerIdlst =New List<String>();
             
-            for (PM_Configure__c answer : question.PM_Configure__r) {
-                String contactKey = answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__c:answer.Reporting_Contact__c;
+            for (PM_Configure__c answer : question.PM_Configure__r) {  
+                String contactKey;
+                if(answer.Mentor_Mentee__c!=null){
+                    contactKey = answer.Mentor_Mentee__c;
+                }else{
+                    contactKey =answer.Reporting_Contact__c+'&'+answer.Project_Name__c;
+                }
                 
                 if (!roleToAnswersMap.containsKey(contactKey)) {
                     roleToAnswersMap.put(contactKey, new List<AnswerWrapper>());
@@ -151,6 +177,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                 awn.Descriptionoverview = answer.Related_Question__r.Question_overview__c;
                 awn.rating = answer.Rating__c!=null?answer.Rating__c:null;
                 awn.contactId = contactKey;
+                awn.ProjectName =answer.Project_Name__c!=null? '('+answer.Project_Name__r.Name+')':' ';
                 awn.contactName = answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__r.Name:answer.Reporting_Contact__r.Name;
                 
                 roleToAnswersMap.get(contactKey).add(awn);
@@ -200,9 +227,11 @@ public without sharing class quarterlyKRAFullViewCtrl {
         @AuraEnabled
         public Decimal rating;
         @AuraEnabled
-        public Id contactId;
+        public String contactId;
         @AuraEnabled
         public String contactName;
+        @AuraEnabled
+        public String ProjectName;
         @AuraEnabled
         public Decimal averageRating;
         @AuraEnabled

@@ -1,7 +1,6 @@
 import { LightningElement, wire, track, api } from 'lwc';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import LightningConfirm from 'lightning/confirm';
 import getKRAFullDetails from '@salesforce/apex/quarterlyKRAFullViewCtrl.getPMConfigKRAFullDetails';
 import completekraMethod from '@salesforce/apex/quarterlyKRAFullViewCtrl.completekraMethod';
 import getLoginAnswerdata from '@salesforce/apex/quarterlyKRAFullViewCtrl.getLoginAnswerdata';
@@ -59,7 +58,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         if (data) {
             this.isLoading = true;
             this.CurrentUserConDetails = data;
-            this.resourceid = data.Id;
+           // this.resourceid = data.Id;
             this.currentContactName = data.Name;
             this.currentContactResourceRole = data.Resource_Role__r.Name;
 
@@ -89,6 +88,8 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             console.log(' getLoginAnswerdata data-->' + JSON.stringify(data));
             this.showKraEditButton = data.submittedRecords;
             this.submittedKRAbutton = data.submittedKRAbutton;
+            this.resourceid=data.kraResourceId;
+            console.log('this.resourceid-->'+this.resourceid);
             this.isLoading = false;
         }
         else if (error) {
@@ -120,7 +121,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                             if (answer.contactId) {
                                 if (!contactAnswers[answer.contactId]) {
                                     contactAnswers[answer.contactId] = {
-                                        contact: { id: answer.contactId, name: answer.contactName },
+                                        contact: { id: answer.contactId, name: answer.contactName , projectname:answer.ProjectName}, // sangharsh adding projectname
                                         answers: []
                                     };
                                 }
@@ -232,7 +233,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                 totalCount++;
 
                 if (!contactMap.has(contactId)) {
-                    contactMap.set(contactId, { contactId: answer.contactId, contactname: answer.contactname });
+                    contactMap.set(contactId, { contactId: answer.contactId, contactname: answer.contactname , projectname:answer.ProjectName}); 
                 }
                 if (!contactOverallRatingMap.has(contactId)) {
                     contactOverallRatingMap.set(contactId, 0);
@@ -257,6 +258,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             overallRating: rating.toFixed(2)
         }));
         this.contacts = Array.from(contactMap.values());
+        console.log('this.contacts'+JSON.stringify(this.contacts));
     }
 
     stepSelectionHanler(event) {
@@ -395,7 +397,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             },
             btnLable1: 'No',
             btnLable2: 'Yes',
-            headerLable: 'KRA process, once completed, cannot be reverted. Do you want to proceed?',
+            headerLable: 'KRA process once completed, cannot be reverted. Do you want to proceed?',
             bodyLable: 'Note: If the respective mentees or project managers are unable to submit their KRA comments following the completion of the KRA process, their records will be cancelled.',
             size: 'small',
         });

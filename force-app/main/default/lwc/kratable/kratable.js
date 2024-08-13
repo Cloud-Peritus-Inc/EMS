@@ -78,6 +78,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     @track showKRAViewModal = false;
     @track showKRAEditModal = false;
     @track showGoalModal = false;
+    @track showPMRequestModalBox = false;
     @track showGoalCreationModal = false;
     myVal = '';
 
@@ -116,7 +117,10 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     }
 
     hideKRAEditModalBox() {
+        console.log('checkClose');
+        console.log('showKRAEditModal '+ this.showKRAEditModal);
         this.showKRAEditModal = false;
+        console.log('showKRAEditModal '+ this.showKRAEditModal);
         this.dispatchEvent(new CustomEvent('kradata'));
 
     }
@@ -132,6 +136,16 @@ export default class Kratable extends NavigationMixin(LightningElement) {
 
     showGoalModalBox() {
         this.showGoalModal = true;
+    }
+
+    showPMRequestModal(){
+
+        this.showPMRequestModalBox =true;
+        console.log('this.showPMRequestModalBox-----'+this.showPMRequestModalBox);
+    }
+
+    hidePMRequestsModalBox(){
+     this.showPMRequestModalBox =false;
     }
 
     hideGoalCreateModalBox() {
@@ -189,6 +203,13 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         this.selectedKraQuaterly = node;
         console.log('==node====' + node);
         this.showGoalModalBox();
+    }
+
+    handlePmRequest(event) {
+        let node = event.currentTarget.dataset.id;
+        this.selectedKraQuaterly = node;
+        console.log('==node====' + node);
+        this.showPMRequestModal();
     }
     selectedFulfilment = '';
     handleGoalCreateClick(event) {

@@ -104,7 +104,7 @@
                           <div class="" title="Rating">Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
                         <th class="slds-border_right tableheading" scope="col"  >
-                          <div class="" title="Rating">Overall Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+                          <div class="" title="Overall Rating">Overall Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
                         <th class="slds-border_right tableheading" scope="col"  >
                           <div class="slds-truncate" title="Actions"> Actions</div>
@@ -153,8 +153,10 @@
                              <lightning-button-icon icon-name="action:edit"  size="large"     variant="bare" alternative-text="Edit KRA"  data-id={contactItem.nameid} onclick={handleConNavEditClick} class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;&nbsp;
                              </template>
                              <lightning-button-icon icon-name="action:goal"  size="large"     variant="bare" alternative-text="View Goals"  data-id={contactItem.nameid} onclick={handleGaolClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                             <lightning-button-icon icon-name="utility:save"  size="large"     variant="bare" alternative-text="View Requests"  data-id={contactItem.nameid} onclick={handlePmRequest} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
                               <template if:true={contactItem.allowCopy}>
                               <lightning-button-icon icon-name='utility:copy' alternative-text='copy' data-id={contactItem.nameid} size='large' title='Copy Previous Quarter KRA inputs' onclick={handleCopyPreviousQuaterKRA} variant="bare"  class="slds-m-left_xx-small"></lightning-button-icon>
+                              
                               </template>
                               </div><!--email-->
                           </td>
@@ -221,6 +223,43 @@
  </template>
  <!-- modal end -->
 
+<!--Goal modal start -->      
+   <template if:true={showPMRequestModalBox}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hidePMRequestsModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-8" class="slds-text-heading_medium slds-hyphenate">View KRA Feedback Requests</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-8">
+                <p><i></i></p> <br/>
+                <div class="c-container">
+                  <c-view-p-m-requests receivedkraid={selectedKraQuaterly} tab={tab}  > </c-view-p-m-requests> 
+                </div>
+
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hidePMRequestsModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
 
 <!--check In modal start -->      
    <template if:true={showKRAViewModal}>
@@ -261,6 +300,8 @@
      </lightning-card>
  </template>
  <!-- modal end -->
+
+ 
 
  <!--check In modal start -->      
    <template if:true={showKRAEditModal}>

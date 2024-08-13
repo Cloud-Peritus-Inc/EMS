@@ -41,13 +41,13 @@ public without sharing class CalculateFullQuarterlyKRA {
         }
         if(tab=='My Metric'){
             if(goalRecord.Mentor_KRA_submitted__c==true){
-            answers= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
-                      Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                      Reporting_Contact__r.Name,Related_Question__r.Area__c,Project_Name__c,Project_Name__r.Name
-                      FROM PM_Configure__c Where KRA__c =:kraid AND RecordTypeId  = :AnswerRecordTypeId 
-                      AND Related_Question__r.Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c 
-                      AND ( Mentor_Mentee__c =: loggedInUser.ContactId
-                           OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))) ];
+                answers= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
+                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
+                          Reporting_Contact__r.Name,Related_Question__r.Area__c,Project_Name__c,Project_Name__r.Name
+                          FROM PM_Configure__c Where KRA__c =:kraid AND RecordTypeId  = :AnswerRecordTypeId 
+                          AND Related_Question__r.Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c 
+                          AND ( Mentor_Mentee__c =: loggedInUser.ContactId
+                               OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))) ];
             }else{
                 answers= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                           Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
@@ -62,7 +62,12 @@ public without sharing class CalculateFullQuarterlyKRA {
         Map<String, Map<String, AnswerWrapper>> areaToContactMap = new Map<String, Map<String, AnswerWrapper>>();
         
         for (PM_Configure__c pmAns : answers) {
-            String contactKey = pmAns.Mentor_Mentee__c != null ? pmAns.Mentor_Mentee__c : pmAns.Reporting_Contact__c;
+            String contactKey;
+            if(pmAns.Mentor_Mentee__c!=null){
+                contactKey = pmAns.Mentor_Mentee__c;
+            }else{
+                contactKey =pmAns.Reporting_Contact__c+'&'+pmAns.Project_Name__c;
+            }
             String area = pmAns.Related_Question__r.Area__c;
             System.debug('area-->'+area);
             if (!areaToContactMap.containsKey(area)) {
@@ -75,6 +80,7 @@ public without sharing class CalculateFullQuarterlyKRA {
             AnswerWrapper answerWrapper = areaToContactMap.get(area).get(contactKey);
             answerWrapper.contactId = contactKey;
             answerWrapper.contactname = pmAns.Mentor_Mentee__c != null ? pmAns.Mentor_Mentee__r.Name : pmAns.Reporting_Contact__r.Name;
+            answerWrapper.ProjectName =pmAns.Project_Name__c!=null? '('+pmAns.Project_Name__r.Name+')':' ';
             if (pmAns.Rating__c != null) {
                 System.debug('area1-->'+area);
                 answerWrapper.averageRating += pmAns.Rating__c;
@@ -96,21 +102,21 @@ public without sharing class CalculateFullQuarterlyKRA {
                 }else{
                     answerWrapper.averageRating= answerWrapper.averageRating.setScale(2, RoundingMode.FLOOR);
                 }
-                    if(area=='TECHNICAL SKILLS'){
-                        areapercentage = kraResourceRole.technical_acumen__c;
-                        system.debug('kraResourceRole.technical_acumen__c'+kraResourceRole.technical_acumen__c);
-                        answerWrapper.AvgRatingSkillForResource=  ((answerWrapper.averageRating * kraResourceRole.technical_acumen__c)/100).setScale(2, RoundingMode.FLOOR);
-                    } else if (area == 'PROFESSIONAL SKILLS') {
-                        areapercentage = kraResourceRole.professional_skills__c;
-                        system.debug('kraResourceRole.professional_skills__c'+kraResourceRole.professional_skills__c);
-                        answerWrapper.AvgRatingSkillForResource=  ((answerWrapper.averageRating * kraResourceRole.professional_skills__c)/100).setScale(2, RoundingMode.FLOOR);           
-                    } else if (area == 'STRATEGIC IMPACT') {
-                        areapercentage = kraResourceRole.strategic_impact__c;
-                        answerWrapper.AvgRatingSkillForResource=  ((answerWrapper.averageRating * kraResourceRole.strategic_impact__c)/100).setScale(2, RoundingMode.FLOOR);
-                    } else if (area == 'GOALS AND RESULTS') {
-                        areapercentage = kraResourceRole.goals_and_results__c;
-                     answerWrapper.AvgRatingSkillForResource=  ((answerWrapper.averageRating *  kraResourceRole.goals_and_results__c)/100).setScale(2, RoundingMode.FLOOR);   
-                    }
+                if(area=='TECHNICAL SKILLS'){
+                    areapercentage = kraResourceRole.technical_acumen__c;
+                    system.debug('kraResourceRole.technical_acumen__c'+kraResourceRole.technical_acumen__c);
+                    answerWrapper.AvgRatingSkillForResource=  ((answerWrapper.averageRating * kraResourceRole.technical_acumen__c)/100).setScale(2, RoundingMode.FLOOR);
+                } else if (area == 'PROFESSIONAL SKILLS') {
+                    areapercentage = kraResourceRole.professional_skills__c;
+                    system.debug('kraResourceRole.professional_skills__c'+kraResourceRole.professional_skills__c);
+                    answerWrapper.AvgRatingSkillForResource=  ((answerWrapper.averageRating * kraResourceRole.professional_skills__c)/100).setScale(2, RoundingMode.FLOOR);           
+                } else if (area == 'STRATEGIC IMPACT') {
+                    areapercentage = kraResourceRole.strategic_impact__c;
+                    answerWrapper.AvgRatingSkillForResource=  ((answerWrapper.averageRating * kraResourceRole.strategic_impact__c)/100).setScale(2, RoundingMode.FLOOR);
+                } else if (area == 'GOALS AND RESULTS') {
+                    areapercentage = kraResourceRole.goals_and_results__c;
+                    answerWrapper.AvgRatingSkillForResource=  ((answerWrapper.averageRating *  kraResourceRole.goals_and_results__c)/100).setScale(2, RoundingMode.FLOOR);   
+                }
                 
                 if (!answerscalculation.containsKey(contactKey)) {
                     answerscalculation.put(contactKey, new List<AnswerWrapper>());
@@ -145,6 +151,8 @@ public without sharing class CalculateFullQuarterlyKRA {
         public String contactId;
         @AuraEnabled
         public String contactname;
+        @AuraEnabled
+        public String ProjectName;
         @AuraEnabled
         public Decimal averageRating;
         @AuraEnabled
