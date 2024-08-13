@@ -63,6 +63,10 @@
                 <behavior>Edit</behavior>
                 <field>Nomination_Submitted__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Processed__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
