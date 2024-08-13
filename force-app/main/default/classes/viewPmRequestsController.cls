@@ -34,6 +34,8 @@ public without sharing class viewPmRequestsController {
                                               name,
                                               Mentee__r.name,
                                               Mentee__r.Resource_Role__r.name,
+                                              KRA__r.Resource__r.name,
+                                              KRA__r.Resource__r.Resource_Role__r.name,
                                               Mentor__r.name,
                                               Reporting_Contact__r.name,
                                               Reporting_Contact__c,
@@ -92,8 +94,8 @@ public without sharing class viewPmRequestsController {
                 List<PM_Configure__c> pmConfigRecs = projectMap.get(projectName);
                                
                          viewPMTableWrapper vpt = new viewPMTableWrapper();    
-                         vpt.mentee = pmConfigRecs[0].Mentee__r.name;
-                         vpt.menteeRole = pmConfigRecs[0].Mentee__r.Resource_Role__r.name;
+                         vpt.mentee = pmConfigRecs[0].KRA__r.Resource__r.name;
+                         vpt.menteeRole = pmConfigRecs[0].KRA__r.Resource__r.Resource_Role__r.name;
                          vpt.project = pmConfigRecs[0].Project_Name__r.name;
                           if(pmConfigRecs[0].Status__c == 'Awaiting Response'){
                          vpt.kraStatus = 'Request Sent';
