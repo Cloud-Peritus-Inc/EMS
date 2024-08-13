@@ -16,6 +16,7 @@ public without sharing class myPendingFeedbackRequest {
     public static final String PM_ANSWER_AWAITING = 'Awaiting Response';
     public static final String PM_ANSWER_ACCEPTED = 'Accepted';
     public static final String PM_ANSWER_SAVED = 'Saved';
+    public static final String PM_KRA_IN_PROGRESS = 'In Progress';
     
     public static final Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
 
@@ -29,9 +30,10 @@ public without sharing class myPendingFeedbackRequest {
             Set<Id> kraIdSet = new Set<Id>();
             Map<Id, List<PM_Configure__c>> kraToPmConfigMap = new Map<Id, List<PM_Configure__c>>();
             Map<Id, Map<String, PM_Configure__c>> displayedRecordsMap = new Map<Id, Map<String, PM_Configure__c>>();
-            Map<Id, Id> goalIdToResourceIdMap = new Map<Id, Id>();
-            Map<Id, String> goalIdToResourceNameMap = new Map<Id, String>();
+            //Map<Id, Id> goalIdToResourceIdMap = new Map<Id, Id>();
+            //Map<Id, String> goalIdToResourceNameMap = new Map<Id, String>();
             Map<String, EMS_TM_Assignment__c> projectVsResourceMap = new Map<String, EMS_TM_Assignment__c>();
+            Map<Id, Goal__c> goalStatusMap = new Map<Id, Goal__c>();
             
             List<PM_Configure__c> pmConfigAnswerList = [SELECT Id
                                                         ,KRA__c
@@ -59,7 +61,7 @@ public without sharing class myPendingFeedbackRequest {
                         kraToPmConfigMap.put(pmConfig.KRA__c, new List<PM_Configure__c>());
                     }
                     kraToPmConfigMap.get(pmConfig.KRA__c).add(pmConfig);
-                    goalIdToResourceIdMap.put(pmConfig.KRA__c, pmConfig.KRA__r.Resource__c);
+                    //goalIdToResourceIdMap.put(pmConfig.KRA__c, pmConfig.KRA__r.Resource__c);
             
                 }
             }
@@ -68,13 +70,15 @@ public without sharing class myPendingFeedbackRequest {
                                    			,Resource__c
                                     		,Resource__r.Name
                                     		,Resource__r.EMS_TM_User__r.CommunityNickname
+                                            ,Status__c
                                     FROM Goal__c
                                     WHERE Id IN : kraIdSet];
             
             for (Goal__c goal : glList) {
+                goalStatusMap.put(goal.Id,goal);
                 if (!displayedRecordsMap.containsKey(goal.Id)) {
                     displayedRecordsMap.put(goal.Id, new Map<String, PM_Configure__c>());
-                    goalIdToResourceNameMap.put(goal.Id,goal.Resource__r.Name);
+                    //goalIdToResourceNameMap.put(goal.Id,goal.Resource__r.Name);
                 }
                 
                 List<PM_Configure__c> pmConfigs = kraToPmConfigMap.get(goal.Id);
@@ -104,6 +108,7 @@ public without sharing class myPendingFeedbackRequest {
             
             
             for (Id goalId : displayedRecordsMap.keySet()) {
+                Goal__c gl = goalStatusMap.get(goalId);
                 for (PM_Configure__c pmConfig : displayedRecordsMap.get(goalId).values()) {
                     goalWrapper gw = new goalWrapper();
                     gw.hideEditBtn = true; 
@@ -122,10 +127,10 @@ public without sharing class myPendingFeedbackRequest {
                     
                     gw.projectId = pmConfig.Project_Name__c;
                     gw.goalId = goalId;
-                    gw.resource = goalIdToResourceIdMap.get(goalId);
+                    gw.resource = gl.Resource__c; //goalIdToResourceIdMap.get(goalId);
                     gw.ProjectName = pmConfig.Project_Name__r.Name;
                     gw.goalName = pmConfig.KRA__r.Goal_Name__c;
-                    gw.resourceName = goalIdToResourceNameMap.get(goalId);
+                    gw.resourceName = gl.Resource__r.Name;//goalIdToResourceNameMap.get(goalId);
                     
                     String assignmentKey = pmConfig.Project_Name__c + '|' + gw.resource;
                     if (projectVsResourceMap.containsKey(assignmentKey)) {
