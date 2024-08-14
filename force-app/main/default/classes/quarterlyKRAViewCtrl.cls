@@ -166,7 +166,7 @@ public without sharing class quarterlyKRAViewCtrl {
     }
 
     @AuraEnabled
-    public static Goal__c submitKraRecord( Goal__c kraRecord){
+    public static Goal__c submitKraRecord( Goal__c kraRecord,String tab){
         try {
             System.debug('submitKraRecord Record Detail : :' + kraRecord.Resource__c);
             //smaske: Updating Status conditionally for [Defect : PM_040]
@@ -190,6 +190,10 @@ public without sharing class quarterlyKRAViewCtrl {
             }
 
             Update kraRecord;
+            //smaske : PM_Def_157 : calling cancelPMAnswerRecords when mentor submits his KRA
+            if (tab == 'My Team' && kraRecord.Mentor_KRA_submitted__c == true ) {
+                cancelPMAnswerRecords(kraRecord);
+            }
             return kraRecord;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -424,10 +428,10 @@ public without sharing class quarterlyKRAViewCtrl {
         
         System.debug( 'GoalResultSum : ' + GoalResultSum );
 
-        Decimal avgTechSkillRating = TechSkillNo > 0 ? TechSkillSum / TechSkillNo : 0;
-        Decimal avgProfSkillRating = ProfSkillNo > 0 ? ProfSkillSum / ProfSkillNo : 0;
-        Decimal avgStrategicRating = StrategicNo > 0 ? StrategicSum / StrategicNo : 0;
-        Decimal avgGoalResultRating = GoalResultNo > 0 ? GoalResultSum / GoalResultNo : 0;
+        Decimal avgTechSkillRating = TechSkillNo > 0 ? (TechSkillSum / TechSkillNo).setScale(2, RoundingMode.FLOOR) : 0;
+        Decimal avgProfSkillRating = ProfSkillNo > 0 ? (ProfSkillSum / ProfSkillNo).setScale(2, RoundingMode.FLOOR) : 0;
+        Decimal avgStrategicRating = StrategicNo > 0 ? (StrategicSum / StrategicNo).setScale(2, RoundingMode.FLOOR) : 0;
+        Decimal avgGoalResultRating = GoalResultNo > 0 ? (GoalResultSum / GoalResultNo).setScale(2, RoundingMode.FLOOR) : 0;
 
         System.debug( 'avgTechSkillRating : ' + avgTechSkillRating );
 
@@ -529,6 +533,22 @@ public without sharing class quarterlyKRAViewCtrl {
             
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    //smaske : PM_Def_157 : When mentor has submitted his kra then cancelling the records which in 'Awaiting Response' / 'Accepted' / 'Saved'
+    @AuraEnabled
+    public static void cancelPMAnswerRecords(Goal__c kra) {
+        List<PM_Configure__c> recordsToCancel = new List<PM_Configure__c>();
+        Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+            List<PM_Configure__c> pmAnswerRecords = [  SELECT Id, Status__c, KRA__c,RecordTypeId FROM PM_Configure__c WHERE Status__c NOT IN ('Submitted', 'Rejected', 'Cancelled') AND RecordTypeId =: AnswerRecordTypeId and KRA__c =: kra.Id ];
+            for (PM_Configure__c pm : pmAnswerRecords) {
+                pm.Status__c='Cancelled';
+                recordsToCancel.add(pm);
+            }
+        // Update the records only if there are records to update
+        if (!recordsToCancel.isEmpty()) {
+            update recordsToCancel;
         }
     }
 
