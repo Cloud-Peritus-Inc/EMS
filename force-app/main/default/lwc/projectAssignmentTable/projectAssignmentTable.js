@@ -18,7 +18,7 @@ export default class ProjectAssignmentTable extends LightningElement {
     error;
     value;
     isShowModal = false;
-    otherManagerIds;
+    @track otherManagerIds;
     otherProjectId;
     otherProjectAssgnId;
 
@@ -150,7 +150,7 @@ selectedLabel
 
     handleConformModalBox(event) {
         if (this.otherManagerIds != null) {
-            this.isShowModal = false;
+            
             /*this.menteeList = this.menteeList.map(mentee => {
                 if (mentee.projectid === mentee.value) {
                     return {
@@ -160,42 +160,43 @@ selectedLabel
                 }
                 return mentee;
             });*/
-            console.log('otherProjectId----'+this.otherProjectId);
-            console.log('projectassigmentid----'+this.otherProjectAssgnId);
-            console.log('Conatct Id---'+this.optionarray);
-            console.log('manager Id---'+this.otherManagerIds);
-            this.isLoaded = true;
+            console.log('otherProjectId----' + this.otherProjectId);
+            console.log('projectassigmentid----' + this.otherProjectAssgnId);
+            console.log('Conatct Id---' + this.optionarray);
+            console.log('manager Id---' + this.otherManagerIds);
             //smaske : PM_Def_158 : Calling apex method to check of the selected OTHER contact is the On/Off Shore Manager for the Project.
             let allowKRARequest = false;
             allowSendingKraRequestToOtherPm({ managerContact: this.otherManagerIds, projectId: this.otherProjectId })
                 .then((result) => {
+                    
                     console.log('allowSendingKraRequestToOtherPm ' + result);
                     allowKRARequest = result;
+                    console.log('allowKRARequest-->', allowKRARequest);
+                    //smaske : PM_Def_158 : When on/off shore manager is not same as selected other contact
+                    if (allowKRARequest) {
+                        this.isLoaded = true;
+                        this.isShowModal = false;
+                        createPMAnswerConfigureForManager({ contactId: this.optionarray, managerContact: this.otherManagerIds, projectId: this.otherProjectId, projectassigmentid: this.otherProjectAssgnId })
+                            .then((result) => {
+                                refreshApex(this.wiregetTmenteeproject);
+                                this.ShowToast(' ', 'KRA request sent successfully', 'success', 'dismissable');
+                                this.isLoaded = false;
+                            })
+                            .catch((error) => {
+                                console.log('error-->', error);
+                                this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
+                                this.isLoaded = false;
+                            });
+                    } else {
+                        //smaske : PM_Def_158 : When on/off shore manager is same as selected other contact
+                        this.ShowToast(' ', 'Please choose resource other than onshore/offshore manager', 'error', 'dismissable');
+                    }
                 })
                 .catch((error) => {
                     console.log('error-->', error);
                     this.isLoaded = false;
+                    this.isShowModal = false;
                 });
-            
-            //smaske : PM_Def_158 : When on/off shore manager is not same as selected other contact
-            if (allowKRARequest) {
-                createPMAnswerConfigureForManager({ contactId: this.optionarray, managerContact: this.otherManagerIds, projectId: this.otherProjectId, projectassigmentid: this.otherProjectAssgnId })
-                    .then((result) => {
-                        refreshApex(this.wiregetTmenteeproject);
-                        this.ShowToast(' ', 'KRA request sent successfully', 'success', 'dismissable');
-                        this.isLoaded = false;
-                    })
-                    .catch((error) => {
-                        console.log('error-->', error);
-                        this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
-                        this.isLoaded = false;
-                    });
-            }else{
-                //smaske : PM_Def_158 : When on/off shore manager is same as selected other contact
-                this.ShowToast(' ', 'Please choose contacts other than your onshore or offshore manager', 'error', 'dismissable');
-                this.isLoaded = false;
-                this.hideModalBox();
-            }
 
         } else {
             this.ShowToast(' ', 'Please select a resource', 'error', 'dismissable');
@@ -211,6 +212,7 @@ selectedLabel
                 disableKRAbutton: true
             };
         });
+        this.otherManagerIds = null;
         console.log('this.menteeList-->' + this.menteeList);
     }
 
