@@ -1,6 +1,7 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import getTmenteeproject from '@salesforce/apex/myMetricsController.getMenteeProjectAssigne';
 import createPMAnswerConfigureForManager from '@salesforce/apex/myMetricsController.createPMAnswerConfigureForManager';
+import allowSendingKraRequestToOtherPm from '@salesforce/apex/myMetricsController.allowSendingKraRequestToOtherPm';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
 import LightningConfirm from 'lightning/confirm';
@@ -164,20 +165,37 @@ selectedLabel
             console.log('Conatct Id---'+this.optionarray);
             console.log('manager Id---'+this.otherManagerIds);
             this.isLoaded = true;
-            createPMAnswerConfigureForManager({ contactId: this.optionarray, managerContact: this.otherManagerIds, projectId: this.otherProjectId, projectassigmentid: this.otherProjectAssgnId })
+            //smaske : PM_Def_158 : Calling apex method to check of the selected OTHER contact is the On/Off Shore Manager for the Project.
+            let allowKRARequest = false;
+            allowSendingKraRequestToOtherPm({ managerContact: this.otherManagerIds, projectId: this.otherProjectId })
                 .then((result) => {
-                    
-                    refreshApex(this.wiregetTmenteeproject);
-                    this.ShowToast(' ', 'KRA request sent successfully', 'success', 'dismissable');
-                    this.isLoaded = false;
-                    
-
+                    console.log('allowSendingKraRequestToOtherPm ' + result);
+                    allowKRARequest = result;
                 })
                 .catch((error) => {
                     console.log('error-->', error);
-                    this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
                     this.isLoaded = false;
                 });
+            
+            //smaske : PM_Def_158 : When on/off shore manager is not same as selected other contact
+            if (allowKRARequest) {
+                createPMAnswerConfigureForManager({ contactId: this.optionarray, managerContact: this.otherManagerIds, projectId: this.otherProjectId, projectassigmentid: this.otherProjectAssgnId })
+                    .then((result) => {
+                        refreshApex(this.wiregetTmenteeproject);
+                        this.ShowToast(' ', 'KRA request sent successfully', 'success', 'dismissable');
+                        this.isLoaded = false;
+                    })
+                    .catch((error) => {
+                        console.log('error-->', error);
+                        this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
+                        this.isLoaded = false;
+                    });
+            }else{
+                //smaske : PM_Def_158 : When on/off shore manager is same as selected other contact
+                this.ShowToast(' ', 'Please choose contacts other than your onshore or offshore manager', 'error', 'dismissable');
+                this.isLoaded = false;
+                this.hideModalBox();
+            }
 
         } else {
             this.ShowToast(' ', 'Please select a resource', 'error', 'dismissable');
