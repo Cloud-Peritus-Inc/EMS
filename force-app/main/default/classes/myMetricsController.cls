@@ -745,5 +745,20 @@ return menteeRecords;
             throw new AuraHandledException('An error occurred while processing the request: ' + ex.getMessage());
         }
     }
+
+    /*smaske : PM_Def_158 : This method will compare the selected "Other" contact with the "On/Off Shore Managers" of the Project.
+    If the "Other" contact is same as "On/Off Shore Managers" then we will not allow the KRA Request to be sent. */
+    @AuraEnabled
+    public static boolean allowSendingKraRequestToOtherPm(String managerContact, String projectId) {
+        Boolean allowKraRequestCreation = false;
+        Set<String> projManagerIdSet = new Set<String>();
+        List<EMS_TM_Project__c> Projects = [Select Id,Name,Offshore_Project_Manager__c,Project_Manager__c from EMS_TM_Project__c WHERE ID=: projectId];
+        for (EMS_TM_Project__c proj : Projects) {
+            projManagerIdSet.add(proj.Project_Manager__c);
+            projManagerIdSet.add(proj.Offshore_Project_Manager__c);
+        }
+        allowKraRequestCreation = !projManagerIdSet.contains(managerContact);
+        return allowKraRequestCreation;
+    }
     
 }
