@@ -107,11 +107,11 @@ public without sharing class viewPmRequestsController {
                             }
                        else if(pmConfigRecs[0].Status__c == 'Rejected'){
                          vpt.kraStatus = 'Request Rejected';
-                         vpt.hideRecallButton = false;
+                         vpt.hideRecallButton = true;
                             }
                          else if(pmConfigRecs[0].Status__c == 'Submitted'){
                          vpt.kraStatus = 'Feedback Submitted';
-                          vpt.hideRecallButton = false;
+                          vpt.hideRecallButton = true;
                             }
                         else if(pmConfigRecs[0].Status__c == 'Cancelled'){
                          vpt.kraStatus = 'Feedback Cancelled';

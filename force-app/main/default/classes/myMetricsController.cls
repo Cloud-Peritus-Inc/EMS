@@ -52,6 +52,10 @@ public without sharing class myMetricsController {
     @AuraEnabled
     public static List<perfWrapper> getAllKRAs(String fyId){
         Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
+        //smaske : PM_Def_163 : Fetching logginuser data 
+        User loggedInUser = [SELECT Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+        String profileName = loggedInUser.Profile.Name; //ex : Employee - HR(Community)
+
         List<Fulfillment__c> returnList = new List<Fulfillment__c>();
         List<perfWrapper> returnval = new List<perfWrapper>();
         if(String.isEmpty(fyId)){
@@ -118,6 +122,9 @@ public without sharing class myMetricsController {
                 //smaske : [UAT_066] : [15-July-2024] : passing Mentee/Mentor Submitted var values to disable button based on tabs
                 qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
                 qw.mentorSubmitted = gl.Mentor_KRA_submitted__c;
+
+                //smaske : PM_Def_163 : hiding View PM Request button for HR
+                qw.showPmRequest = profileName == 'Employee - HR(Community)' ? false : true;
 
                 qlist.add(qw);
             }
@@ -213,6 +220,9 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
                       (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
         
+        //smaske : PM_Def_163 : Fetching logginuser data 
+        User loggedInUser = [SELECT Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+        String profileName = loggedInUser.Profile.Name; //ex : Employee - HR(Community)
         
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
@@ -243,6 +253,8 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
                 qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
                 qw.mentorSubmitted = gl.Mentor_KRA_submitted__c;
 
+                //smaske : PM_Def_163 : hiding View PM Request button for HR
+                qw.showPmRequest = profileName == 'Employee - HR(Community)' ? false : true;
 
                 qlist.add(qw);
             }
@@ -475,6 +487,8 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         public boolean mentorSubmitted;
         @AuraEnabled
         public boolean allowCopy;
+        @AuraEnabled
+        public boolean showPmRequest;//smaske
         
     }
     
