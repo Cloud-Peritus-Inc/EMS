@@ -68,7 +68,6 @@
                 <div class="slds-wrap">
                   <div class="image">
                     &nbsp;&nbsp;<img src={sout.resourcePhotoURL} />&nbsp;&nbsp;
-                    <!-- <a href="#">{sout.resourceName}</a> -->
                     <p>{sout.resourceName}</p>
                   </div>
                 </div>
@@ -114,7 +113,7 @@
         <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header allAwards">
           <thead>
             <tr class="slds-line-height_reset" style="color:lightcoral">
-              <th class="slds-border_right tableheading" scope="col">
+              <th class="slds-border_right tableheading" scope="col" style="width:120px;">
                 <div class="slds-truncate" title="Resource">Resource</div>
                </th>
                <th class="slds-border_right tableheading" scope="col">
@@ -152,9 +151,10 @@
                     <td style="word-wrap:break-word;">
                       <div class="slds-wrap">
                         <div class="image">
-                          &nbsp;&nbsp;&nbsp;&nbsp;<img src={item.currentFYId} />&nbsp;&nbsp;
+                          <p><img src={item.currentFYId} /></p>
                            <!-- <a href="#">{item.currentName}</a> -->
-                           {item.currentName}
+                            <br>
+                           <p>{item.currentName}</p>
                         </div>
                         </div>
                     </td>
