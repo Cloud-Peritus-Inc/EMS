@@ -264,6 +264,7 @@ export default class Myteam extends LightningElement {
                         if (this.viewonlymode == true) {
                             console.log("videmode is true");
                             qualItem.allowedit = false;
+                            qualItem.showPmRequest = false;//smaske : PM_Def_163 : hiding View PM Request button for secondary reportees
                         }else{
                             //smaske : PM_Def_123 : 06/Aug/2024
                             if (qualItem.status == 'KRA Inreview' || qualItem.status == 'In Progress') {

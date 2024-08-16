@@ -156,10 +156,12 @@
                              
                               <template if:true={contactItem.allowCopy}>
                               <lightning-button-icon icon-name='utility:copy' alternative-text='copy' data-id={contactItem.nameid} size='large' title='Copy Previous Quarter KRA inputs' onclick={handleCopyPreviousQuaterKRA} variant="bare"  class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
-                              
                               </template>
+
+                              <template if:true={contactItem.showPmRequest}>
                               <lightning-button-icon icon-name="action:record"  size="large"     variant="bare" alternative-text="View KRA Feedback Requests"  data-id={contactItem.nameid} onclick={handlePmRequest} class="slds-m-left_xx-medium"></lightning-button-icon>&nbsp;&nbsp;
-                              </div><!--email-->
+                              </template>
+                            </div><!--email-->
                           </td>
                         </tr>
                       </template>
