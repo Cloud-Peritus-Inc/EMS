@@ -26,7 +26,8 @@ public without sharing class viewPmRequestsController {
         public String recall_Reason{get;set;}
     }
     
-    @AuraEnabled(cacheable=true)
+    //smaske : PM_Def_174 : Changed this method as imperative from wire method
+    @AuraEnabled
     public static List<viewPMTableWrapper> viewPMRequestsTable(String KraId){
         
         Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
@@ -71,20 +72,7 @@ public without sharing class viewPmRequestsController {
                     managerProjPmAnsRecMap.get(pmRec.Reporting_Contact__c).get(projName).add(pmRec);
                 }
             }
-            system.debug('managerProjPmAnsRecMap-----'+managerProjPmAnsRecMap);
-
-       /* for(PM_Configure__c pm : pmConfiglist){
-              String projectConId = pm.Reporting_Contact__c + ' ' + pm.Project_Name__c; 
-            if( pmRequestMap.containskey(projectConId)){
-                pmRequestMap.get(projectConId).add(pm);
-                
-            }
-            else{
-                pmRequestMap.put(projectConId,new list<PM_Configure__c>{pm});
-                
-            }
-        }*/
-        
+            system.debug('managerProjPmAnsRecMap-----'+managerProjPmAnsRecMap);        
         
         List<viewPMTableWrapper> updatedPMConfigList = new List<viewPMTableWrapper>();
         
