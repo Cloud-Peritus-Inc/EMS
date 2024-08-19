@@ -6,6 +6,7 @@ export default class Genericmodal extends LightningModal {
     @api btnLable2;
     @api headerLable;
     @api bodyLable;
+    @api bodyLable2;
 
     handleSave(){
         this.close('okay');
@@ -14,4 +15,13 @@ export default class Genericmodal extends LightningModal {
     handleClose(){
         this.close('close');
     }
+
+    renderedCallback() {
+        const element = this.template.querySelector('.secondaryLable');
+        //smaske : PM_Def_165 : Showing the mentor an updated text messag with a Note
+        if (bodyLable2) {
+            element.innerHTML = this.bodyLable2;
+        }
+    }
+
 }

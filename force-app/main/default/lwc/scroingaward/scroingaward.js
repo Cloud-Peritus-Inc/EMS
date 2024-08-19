@@ -228,7 +228,7 @@ handleChange(event) {
 
     async handleCustomUpdateAll() {
         const result = await LightningConfirm.open({
-            message: 'Would you like to submit the from ?',
+            message: 'Would you like to submit the form ?',
             variant: 'header',
             label: 'Submit Comparison',
             theme : 'info'

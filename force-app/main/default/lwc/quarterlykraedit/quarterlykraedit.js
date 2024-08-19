@@ -484,8 +484,11 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         console.log('SUBMIT BUTTON IS CLICKED');
         //smaske : 12/Aug/2024 : PM_Def_141 : fixing spelling mistake and setting body lable for mentor/mentee
         let bodyLableText = 'Feedback response once submitted, cannot be reverted. Would you like to proceed?'
+        let bodyLableText2 ='';
         if (this.tab == 'My Team') {
-            bodyLableText = 'You are about to submit your feedback. Would you like to proceed?';
+            //smaske : PM_Def_165 : passing another variable for Note to show to mentor
+            bodyLableText = `You are about to submit your feedback. Would you like to proceed?`;
+            bodyLableText2 = '<b>Note:</b> Submitting the feedback will cancel any pending feedback requests.';
         }
         const result = await Genericmodal.open({
             // `label` is not included here in this example.
@@ -497,6 +500,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             btnLable2: 'Yes',
             headerLable: 'Confirm KRA Submission', 
             bodyLable: bodyLableText,
+            bodyLable2 : bodyLableText2,
             size: 'small',
         });
 
@@ -631,7 +635,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     submitKraRecordHandler(){
         console.log(' insideHandler');
-        submitKraRecord({ kraRecord: this.kraRecord })
+        submitKraRecord({ kraRecord: this.kraRecord, tab : this.tab })
                 .then(result => {
                     console.log('resultofsubmitKraRecord' + JSON.stringify(result));
                     this.kraRecord = result;
