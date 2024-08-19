@@ -1,5 +1,5 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import viewPmRequestsController from '@salesforce/apex/viewPmRequestsController.viewPMRequestsTable';
+import viewPMRequestsTable from '@salesforce/apex/viewPmRequestsController.viewPMRequestsTable';
 import recallPmRequests from '@salesforce/apex/viewPmRequestsController.recallPmRequests';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
@@ -17,43 +17,48 @@ export default class ViewPMRequests extends LightningElement {
     error;
     pmRequestTable;
 
-    connectedcallback() {
-      
+    connectedCallback() {
+        //smaske : PM_Def_174 : instead of wire calling in connected callback
+        console.log('In connected call back PM_Def_174');
+        this.loadPmRequests();
     }
 
-    @wire(viewPmRequestsController,{ KraId: '$receivedkraid'}) 
-        pmRequestData(result) {
-        this.viewRequestRecord = result;
-        if (result.data) {
-            this.pmRequestTable = [];
-            this.pmRequestTable = result.data;
-            if (this.tab == 'My Team') {
-                this.disablecolumn = true;
-                console.log('this.tab1 '+this.tab );
-            }
-            if (this.tab == 'My Metric') {
-               console.log('this.tab2 '+this.tab );
-                this.disablecolumn = false;
-            }
-                console.log('pm===='+JSON.stringify(this.pmRequestTable));
-                console.log('this.pmRequestTable.length ----'+this.pmRequestTable.length );
-                 if (this.pmRequestTable.length > 0) {
-                    this.showPMRequestRecords = true;
-                    console.log('Entered Inside this.showPMRequestRecord-----'+this.showPMRequestRecords);
-                    this.disablerecallbutton = false;
-                 }
-                  else{
-                    this.showPMRequestRecords = false;
-                  }
-        }
-        else if (result.error) {
-                 console.log('error------'+result.error);
+    loadPmRequests() {
+        console.log('In loadPmRequests');
+        viewPMRequestsTable({ KraId: this.receivedkraid })
+            .then(result => {
+                if (result) {
+                    console.log('result :' + JSON.stringify(result));
+                    
+                    this.pmRequestTable = [];
+                    this.pmRequestTable = result;
+                    if (this.tab === 'My Team') {
+                        this.disablecolumn = true;
+                        console.log('this.tab1 ' + this.tab);
+                    }
+                    if (this.tab === 'My Metric') {
+                        console.log('this.tab2 ' + this.tab);
+                        this.disablecolumn = false;
+                    }
+                    console.log('pm====' + JSON.stringify(this.pmRequestTable));
+                    console.log('this.pmRequestTable.length ----' + this.pmRequestTable.length);
+                    if (this.pmRequestTable.length > 0) {
+                        this.showPMRequestRecords = true;
+                        console.log('Entered Inside this.showPMRequestRecord-----' + this.showPMRequestRecords);
+                        this.disablerecallbutton = false;
+                    } else {
+                        this.showPMRequestRecords = false;
+                    }
+                }
+            })
+            .catch(error => {
+                console.log('error------' + error);
                 this.pmRequestTable = undefined;
-                this.error = result.error;
-            }
-        }
-     
-   
+                this.error = error;
+            });
+    }
+
+
 
     hideModalBox() {
         this.isShowPopUp = false;
@@ -97,12 +102,11 @@ export default class ViewPMRequests extends LightningElement {
                     mode: 'dismissable'
                 });
                 this.dispatchEvent(evt);
-                this.disablerecallbutton = false;
-                this.hideModalBox();
+                
                 console.log('this.viewRequestRecord BEFORE' + JSON.stringify(this.viewRequestRecord));
-                refreshApex(this.viewRequestRecord);
+                this.loadPmRequests(); //smaske : PM_Def_174 : calling the loadPmRequests to relead and update buttons on UI
+                this.hideModalBox();
                 console.log('this.viewRequestRecord aFTER' + JSON.stringify(this.viewRequestRecord));
-                // return refreshApex(this.viewRequestRecord);
             }).catch(err => {
                 this.disablerecallbutton = true;
                 console.log('err', err);

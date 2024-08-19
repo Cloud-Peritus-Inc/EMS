@@ -107,3 +107,7 @@
     max-width: 80rem !important;
     width: 80% !important;
 }
+
+.recallColumn{
+  width: 30%;
+}
