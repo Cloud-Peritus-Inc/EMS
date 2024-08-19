@@ -11,7 +11,7 @@
             <div class="slds-truncate" title="Mentee Role">Mentee Role</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
-            <div class="slds-truncate" title="Project">Project</div>
+            <div class="" title="Project">Project</div>
           </th>
           <th class="slds-border_right tableheading" scope="col">
             <div class="slds-truncate" title="Project Manager/Other">Project Manager/Other</div>
@@ -20,7 +20,7 @@
             <div class="slds-truncate" title="KRA Status">KRA Status</div>
           </th>
           <template if:true={disablecolumn}>
-          <th class="slds-border_right tableheading" scope="col">
+          <th class="slds-border_right tableheading recallColumn" scope="col">
             <div class="slds-truncate" title="Recall Reason">Recall Reason</div>
           </th>
           </template>
@@ -64,7 +64,7 @@
              <td>               
               <lightning-button variant="brand-outline" label="Recall" title="Recall" onclick={HandlerecallRowAction} disabled ={goalwrap.hideRecallButton}
                data-projectid ={goalwrap.projectId} data-managerid ={goalwrap.projectManagerId}
-                data-kraid ={goalwrap.kraId}  class="slds-m-left_x-small"></lightning-button>
+                data-kraid ={goalwrap.kraId}  class="slds-m-right_small"></lightning-button>
              </td>
              </template>
             </tr>
