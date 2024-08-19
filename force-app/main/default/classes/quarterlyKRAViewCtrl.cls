@@ -541,9 +541,10 @@ public without sharing class quarterlyKRAViewCtrl {
     public static void cancelPMAnswerRecords(Goal__c kra) {
         List<PM_Configure__c> recordsToCancel = new List<PM_Configure__c>();
         Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
-            List<PM_Configure__c> pmAnswerRecords = [  SELECT Id, Status__c, KRA__c,RecordTypeId FROM PM_Configure__c WHERE Status__c NOT IN ('Submitted', 'Rejected', 'Cancelled') AND RecordTypeId =: AnswerRecordTypeId and KRA__c =: kra.Id ];
+            List<PM_Configure__c> pmAnswerRecords = [  SELECT Id, Status__c,Recall_FeedBack_Comments__c, KRA__c,RecordTypeId FROM PM_Configure__c WHERE Status__c NOT IN ('Submitted', 'Rejected', 'Cancelled') AND RecordTypeId =: AnswerRecordTypeId and KRA__c =: kra.Id ];
             for (PM_Configure__c pm : pmAnswerRecords) {
                 pm.Status__c='Cancelled';
+                pm.Recall_FeedBack_Comments__c = 'Mentor has submitted without any particular reason';
                 recordsToCancel.add(pm);
             }
         // Update the records only if there are records to update
