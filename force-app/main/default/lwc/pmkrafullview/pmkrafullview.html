@@ -147,7 +147,7 @@
 		</template>
 
 		<template lwc:if={showTechnicalAcumen}>
-			<div class="slds-grid slds-wrap">
+			<div class="slds-grid slds-wrap scrollable-container">
 				<template lwc:if={questionstechicalskill}>
 					<template for:each={questionstechicalskill} for:item="questionWrapper">
 						<div key={questionWrapper.questionId} class="slds-col slds-size_1-of-1 slds-p-around_medium">
@@ -195,6 +195,7 @@
 					No data found
 				</template>
 			</div>
+			<br/><br/>
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
@@ -204,7 +205,7 @@
 			</footer>
 		</template>
 		<template lwc:if={showProfessionalSkills}>
-			<div class="slds-grid slds-wrap">
+			<div class="slds-grid slds-wrap scrollable-container">
 				<template lwc:if={questionsProfessionalskill}>
 					<template for:each={questionsProfessionalskill} for:item="questionWrapper">
 						<div key={questionWrapper.questionId} class="slds-col slds-size_1-of-1 slds-p-around_medium">
@@ -251,6 +252,7 @@
 					No data found
 				</template>
 			</div>
+			<br/><br/>
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
@@ -259,7 +261,7 @@
 			</footer>
 		</template>
 		<template lwc:if={showStrategicImpact}>
-			<div class="slds-grid slds-wrap">
+			<div class="slds-grid slds-wrap scrollable-container">
 				<template lwc:if={questionsStrategicskill}>
 					<template for:each={questionsStrategicskill} for:item="questionWrapper">
 						<div key={questionWrapper.questionId} class="slds-col slds-size_1-of-1 slds-p-around_medium">
@@ -306,6 +308,7 @@
 					No data found
 				</template>
 			</div>
+			<br/><br/>
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
@@ -314,7 +317,7 @@
 			</footer>
 		</template>
 		<template lwc:if={showGoalsResults}>
-			<div class="slds-grid slds-wrap">
+			<div class="slds-grid slds-wrap scrollable-container">
 				<template lwc:if={questionsGoalskill}>
 					<template for:each={questionsGoalskill} for:item="questionWrapper">
 						<div key={questionWrapper.questionId} class="slds-col slds-size_1-of-1 slds-p-around_medium">
@@ -361,6 +364,7 @@
 					No data found
 				</template>
 			</div>
+			<br/><br/>
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
@@ -370,9 +374,9 @@
 		</template>
 		<template lwc:if={showOverAllRating}>
 			<br/><br/>
-			<div class="pointerTableContainer">
+			<div class="overallTableContainer">
 				<!---class="slds-table  slds-table_cell-buffer slds-table_col-bordered"--->
-				<table class="slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+				<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
 					<thead>
 						<th><strong>Section Name</strong></th>
 						<th colspan={contacts.length} style="text-align:center;"><b>Average Rating [Weightage]</b></th>
@@ -392,7 +396,7 @@
 								<td>{areaData.area} [{areaData.areapercentage} %]</td>
 								<template for:each={areaData.ratings} for:item="rating">
 									<td key={rating.contactId}>
-										{rating.averageRating} ({rating.AvgRatingSkillForResource})
+										{rating.averageRating} [{rating.AvgRatingSkillForResource}]
 									</td>
 								</template>
 								<!--td>{areaData.overallAverage}</td-->

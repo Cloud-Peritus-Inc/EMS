@@ -37,7 +37,7 @@
 	align-items: center;
 
 	border: 2px solid rgb(190, 190, 190);
-	border-radius: 7px;
+	border-radius: 7px; 
 }
 .fieldsRow{
 	display: flex;
@@ -53,4 +53,15 @@
 .slds-table-container {
     border-left: 1px solid #d8dde6;
     border-right: 1px solid #d8dde6;
+}
+.overallTableContainer{
+	border: 2px solid rgb(190, 190, 190);
+	border-radius: 7px;
+
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto; 
+}
+.scrollable-container {
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;  /* Enables vertical scrolling */
 }
