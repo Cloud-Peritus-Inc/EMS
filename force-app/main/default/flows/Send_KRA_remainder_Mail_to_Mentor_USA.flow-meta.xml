@@ -92,7 +92,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.Resource__r.Location__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>India</stringValue>
                 </rightValue>
@@ -142,7 +142,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.Resource__r.Location__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>India</stringValue>
                 </rightValue>
@@ -178,7 +178,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.Resource__r.Location__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>India</stringValue>
                 </rightValue>
@@ -236,8 +236,8 @@
         <dataType>Date</dataType>
         <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 7,  {!$Record.Quarter_End_Date__c} - 8)</expression>
     </formulas>
-    <interviewLabel>Send KRA remainder Mail to Mentor {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Send KRA remainder Mail to Mentor</label>
+    <interviewLabel>Send KRA remainder Mail to Mentor(USA) {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send KRA remainder Mail to Mentor(USA)</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
