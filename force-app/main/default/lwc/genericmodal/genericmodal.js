@@ -19,7 +19,7 @@ export default class Genericmodal extends LightningModal {
     renderedCallback() {
         const element = this.template.querySelector('.secondaryLable');
         //smaske : PM_Def_165 : Showing the mentor an updated text messag with a Note
-        if (bodyLable2) {
+        if (this.bodyLable2) {
             element.innerHTML = this.bodyLable2;
         }
     }

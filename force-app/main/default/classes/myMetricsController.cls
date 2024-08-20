@@ -85,7 +85,7 @@ public without sharing class myMetricsController {
 
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c  FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
+                      (SELECT Id,Rating_Image__c,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c  FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
             for(Goal__c gl : ful.Goals__r){
@@ -96,7 +96,7 @@ public without sharing class myMetricsController {
                 qw.qendate = gl.Quarter_End_Date__c;
                 qw.status = gl.Status__c;
                 qw.typeval = gl.Type__c;
-                //qw.rating = String.valueOf(gl.Rating__c);
+                qw.rating = String.valueOf(gl.Rating_Image__c); //smaske : [EN_010] : Adding new rating field created by subba for star rating
                 qw.overallRating = gl.Overall_Rating__c; //Ravitheja
                 qw.allowedit = false;
                 qw.allowCopy = false;
@@ -218,7 +218,7 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         List<perfWrapper> returnval = new List<perfWrapper>();
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
+                      (SELECT Id,Name,Rating_Image__c,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
         
         //smaske : PM_Def_163 : Fetching logginuser data 
         User loggedInUser = [SELECT Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
@@ -234,7 +234,7 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
                 qw.qendate = gl.Quarter_End_Date__c;
                 qw.status = gl.Status__c;
                 qw.typeval = gl.Type__c;
-                //qw.rating = String.valueOf(gl.Rating__c);
+                qw.rating = String.valueOf(gl.Rating_Image__c);//smaske : [EN_010] : Adding new rating field created by subba for star rating
                 qw.overallRating = gl.Overall_Rating__c; //Ravitheja
                 qw.allowedit = false;
                 //smaske : PM_061 : updating conditon to only allow edit when status is "KRA Inreview" in MY TEAM TAB for selected Reportee's KRA

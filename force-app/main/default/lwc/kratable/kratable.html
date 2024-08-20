@@ -152,7 +152,7 @@
                              <template if:true={contactItem.allowedit}>
                              <lightning-button-icon icon-name="action:edit"  size="large"     variant="bare" alternative-text="Edit KRA"  data-id={contactItem.nameid} onclick={handleConNavEditClick} class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;&nbsp;
                              </template>
-                             <lightning-button-icon icon-name="action:goal"  size="large"     variant="bare" alternative-text="View Goals"  data-id={contactItem.nameid} onclick={handleGaolClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                             
                              
                               <template if:true={contactItem.allowCopy}>
                               <lightning-button-icon icon-name='utility:copy' alternative-text='copy' data-id={contactItem.nameid} size='large' title='Copy Previous Quarter KRA inputs' onclick={handleCopyPreviousQuaterKRA} variant="bare"  class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
@@ -161,7 +161,9 @@
                               <template if:true={contactItem.showPmRequest}>
                               <lightning-button-icon icon-name="action:record"  size="large"     variant="bare" alternative-text="View KRA Feedback Requests"  data-id={contactItem.nameid} onclick={handlePmRequest} class="slds-m-left_xx-medium"></lightning-button-icon>&nbsp;&nbsp;
                               </template>
-                            </div><!--email-->
+
+                              <lightning-button-icon icon-name="action:goal"  size="large"     variant="bare" alternative-text="View Goals"  data-id={contactItem.nameid} onclick={handleGaolClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                            </div>
                           </td>
                         </tr>
                       </template>
