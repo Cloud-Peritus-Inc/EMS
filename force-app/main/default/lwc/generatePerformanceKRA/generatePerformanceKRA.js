@@ -49,6 +49,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     connectedCallback() {
         console.log("CC " + this.member + ' ' + this.resourceId);
         console.log("FY " + this.fy);
+        this.orgDomainId = window.location.origin;
     }
 
     //getCurrentUserResourceRole
@@ -136,7 +137,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                         let sumOverallRating = 0;
                         this.kraRecords.forEach(record => {
                             sumOverallRating += record.Overall_Rating__c || 0; // Ravitheja --> replacing Overall_Average_Section_Rating__c with Overall_Rating__c from Goal object 
-                            console.log('sumOverallRating '+sumOverallRating);
+                            
                         });
                         this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(2) : 0;
                         console.log('averageOverallRating '+this.averageOverallRating);
@@ -462,7 +463,9 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         let node = event.currentTarget.dataset.id;
         this.selectedKraQuaterly = node;
         this.mode = 'View';
-        this.showKRAViewModalBox();
+       // this.showKRAViewModalBox(); sangharsh
+        const url = `${this.orgDomainId}/Grid/s/kra-view?c__kraid=${this.selectedKraQuaterly}&tab=${this.tab}`;
+        window.open(url, '_blank');
     }
 
     handleEditKRAClick(event) {

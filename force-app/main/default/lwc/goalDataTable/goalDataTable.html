@@ -74,6 +74,13 @@
 									<template if:false={goal.hideAcceptBtn}>
 										<lightning-button variant="success" label="Accept" data-id={goal.Id} data-index={index} onclick={acceptRequestHandler}></lightning-button>
 									</template>
+								</td>
+							</tr>
+						</template>
+					</template>
+				</tbody>
+			</table>
+
 									<template if:true={isShowPopUp}>
 										<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
 											aria-modal="true" aria-describedby="modal-content-id-1"
@@ -130,12 +137,6 @@
 											<div class="slds-backdrop slds-backdrop_open"></div>
 										</lightning-card>
 									</template>
-								</td>
-							</tr>
-						</template>
-					</template>
-				</tbody>
-			</table>
 
 			<template if:false={hasData}>
 				<div class="slds-text-align_center slds-p-around_medium">
