@@ -57,6 +57,10 @@
     <picklistValues>
         <picklist>System_Predicted_Status__c</picklist>
         <values>
+            <fullName>Less likely to win</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Might Winner</fullName>
             <default>false</default>
         </values>
