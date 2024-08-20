@@ -230,6 +230,11 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
                     this.showGoalsResults = false;
                     this.showOverAllRating = true;
                     this.selectedStep = 'overAllRating';
+                    //smaske : PM_Def_181 : calling calculateAverageRatingForKRAHandler method for recalculating
+                    setTimeout(() => {
+                        console.log('%%%%%%%% Calling Calculation %%%%%%%%');
+                        this.calculateAverageRatingForKRAHandler(this.viewwrap2.pmAnsRecordsIdData, this.kraRecord);
+                      },4500);
                     break;
             }
 
