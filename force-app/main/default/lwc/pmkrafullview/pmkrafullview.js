@@ -397,8 +397,8 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             },
             btnLable1: 'No',
             btnLable2: 'Yes',
-            headerLable: 'KRA process once completed, cannot be reverted. Do you want to proceed?',
-            bodyLable: 'Note: If the respective mentees or project managers are unable to submit their KRA comments following the completion of the KRA process, their records will be cancelled.',
+            headerLable: 'Confirm KRA Completion',
+            bodyLable: 'You are about to complete the KRA feedback process for your Mentee. Would you like to proceed?',
             size: 'small',
         });
 
