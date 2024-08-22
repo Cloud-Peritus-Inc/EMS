@@ -223,8 +223,8 @@
 							</div>
 							<!-- <div class="rightBox">
 							</div> -->
-							<div class="midBox">
-								<c-reusable-lookup label="Reviewers" selected-icon-name="standard:contact" object-label="Contact"
+							<div class="lookupBox">
+								<c-reusable-lookup label="Reviewer" selected-icon-name="standard:contact" object-label="Contact"
 									object-api-name="User" field-api-name="Name" other-field-api-name="User_Status__c"
 									other-field-api-name2="Hr_Access__c"
 									selected-record-id={Compensation.Reviewed_By__c}
@@ -246,7 +246,7 @@
 								</template>
 							</div>
 
-							<div class="midBox">
+							<div class="commentBox">
 								<lightning-input-rich-text label-visible="true" type="text" label="Comments" name="Comments__c"
 									value={Compensation.Comments__c} onchange={dataHandler}></lightning-input-rich-text>
 							</div>
@@ -259,13 +259,13 @@
                             </div> -->
 
 
-							<div class="midBox">
+							<!-- <div class="midBox">
 								<p class="subTitle">SCHEDULES</p>
 								<p class="">
 									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text="" title=""></lightning-icon> 
 									&nbsp;Assessment will be visible for 15 days from the date of trigger.
 								</p>
-								<!-- <p class="">
+								 <p class="">
 									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
 										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
 									Evaluation Date
@@ -274,8 +274,8 @@
 									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
 										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
 									Evaluation Date
-								</p> -->
-							</div>
+								</p> 
+							</div> -->
 
 						</div>
 					</lightning-accordion-section>
