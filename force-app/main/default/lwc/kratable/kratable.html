@@ -100,9 +100,9 @@
                         <th class="slds-border_right tableheading" scope="col">
                           <div class="" title="Type">Type</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
-                        <th class="slds-border_right tableheading" scope="col"  >
-                          <div class="" title="Rating">Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
-                        </th>
+                        <!--th class="slds-border_right tableheading" scope="col"  >
+                          <div class="" title="Rating">Rating</div>  ## comments smaske : UAT_014 : removed class="slds-truncate"> ## comments sangharsh : as per discussion with subba not required as of now
+                        </th-->
                         <th class="slds-border_right tableheading" scope="col"  >
                           <div class="" title="Overall Rating">Overall Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
@@ -137,11 +137,11 @@
                                {contactItem.typeval}
                               </div><!--response-->
                           </td>
-                          <td >
+                          <!--td >
                             <div class="slds-wrap" >
-                               {contactItem.rating}
-                              </div><!--email-->
-                          </td>
+                               {contactItem.rating} //sangharsh : as per discussion with subba not required as of now
+                              </div>
+                          </td-->
                           <td >
                             <div class="slds-wrap" ><lightning-formatted-rich-text  value={contactItem.overallRating}></lightning-formatted-rich-text>
                               </div>
@@ -326,7 +326,7 @@
           </header>
       
           <!-- modal body start -->
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+          <div class="slds-modal__content slds-p-top_small slds-p-bottom_none slds-p-right_small slds-p-left_small" id="modal-content-id-2">
             <!-- EDIT MODE -->
             <c-quarterlykraedit mode={mode} receivedkraid={selectedKraQuaterly} selectedresource={resourceid} onclose={hideKRAEditModalBox} tab={tab} copy={copy}> </c-quarterlykraedit>
           </div>
