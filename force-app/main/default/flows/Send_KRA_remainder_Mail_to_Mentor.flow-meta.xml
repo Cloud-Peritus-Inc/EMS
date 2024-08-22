@@ -54,7 +54,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Send_Remainder_For_Reporte</name>
-            <conditionLogic>(1 OR 2 OR 3 ) AND 4 AND 5 AND 6</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 ) AND 4 AND 5 AND 6 AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>CheckFisrtDay</leftValueReference>
                 <operator>EqualTo</operator>
@@ -80,7 +80,7 @@
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Active</stringValue>
+                    <stringValue>In Progress</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -91,10 +91,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Resource__r.Location__c</leftValueReference>
+                <leftValueReference>$Record.Resource__r.Work_Location_Country__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentee_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -104,12 +111,12 @@
         </rules>
         <rules>
             <name>Send_Remainder_Mail_to_Mentor</name>
-            <conditionLogic>1 AND 5 AND 6 AND ( 2 OR 3 OR 4 )</conditionLogic>
+            <conditionLogic>1 AND 5 AND 6 AND 7 AND ( 2 OR 3 OR 4 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>In Progress</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -141,10 +148,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Resource__r.Location__c</leftValueReference>
+                <leftValueReference>$Record.Resource__r.Work_Location_Country__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentor_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -153,7 +167,7 @@
             <label>Send Remainder Mail to Mentor</label>
         </rules>
         <rules>
-            <name>Enable_Mentee_Kra_Submitted</name>
+            <name>Change_Status_to_Missed</name>
             <conditionLogic>(1 OR 5) AND 2 AND 3 AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status__c</leftValueReference>
@@ -193,7 +207,7 @@
             <connector>
                 <targetReference>Update_Status_to_Missed</targetReference>
             </connector>
-            <label>Enable Mentee Kra Submitted</label>
+            <label>Change Status to Missed</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -273,9 +287,9 @@
             <targetReference>Send_email_to_Resource</targetReference>
         </connector>
         <inputAssignments>
-            <field>Mentee_KRA_submitted__c</field>
+            <field>Status__c</field>
             <value>
-                <booleanValue>true</booleanValue>
+                <stringValue>Missed</stringValue>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
