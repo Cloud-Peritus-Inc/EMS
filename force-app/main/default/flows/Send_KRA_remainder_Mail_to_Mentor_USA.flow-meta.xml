@@ -188,7 +188,7 @@
         </rules>
         <rules>
             <name>Change_Status_to_Missed</name>
-            <conditionLogic>(1 OR 5) AND 2 AND 3 AND 4</conditionLogic>
+            <conditionLogic>(1 OR 5) AND 2 AND 3 AND 4 AND 6</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -222,6 +222,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>KRA Inreview</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentee_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
