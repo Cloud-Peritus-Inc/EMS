@@ -16,12 +16,32 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
+        <description>Notifying mentor when KRA is missed: Email Template</description>
+        <name>Send_email_to_Mentor</name>
+        <label>Send email to Mentor</label>
+        <locationX>578</locationX>
+        <locationY>684</locationY>
+        <actionName>Goal__c.KRA_Missed_Alert_2</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>Notifying mentee when KRA is missed: Email Template</description>
         <name>Send_email_to_Resource</name>
         <label>Send email to Resource</label>
         <locationX>578</locationX>
         <locationY>576</locationY>
         <actionName>Goal__c.KRA_Missed_Alert</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Send_email_to_Mentor</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>

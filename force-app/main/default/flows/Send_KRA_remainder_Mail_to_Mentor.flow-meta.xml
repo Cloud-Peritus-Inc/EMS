@@ -16,12 +16,31 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
+        <description>Notifying mentor when KRA is missed: Email Template</description>
+        <name>Send_email_to_Mentor</name>
+        <label>Send email to Mentor</label>
+        <locationX>578</locationX>
+        <locationY>684</locationY>
+        <actionName>Goal__c.KRA_Missed_Alert_2</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Send_email_to_Resource</name>
         <label>Send email to Resource</label>
         <locationX>578</locationX>
-        <locationY>468</locationY>
+        <locationY>576</locationY>
         <actionName>Goal__c.KRA_Missed_Alert</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Send_email_to_Mentor</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -279,13 +298,71 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
+        <description>Cancelling the PM ANSWER records which are not submitted,Rejected,Cancelled</description>
+        <name>Cancel_PM_Answers</name>
+        <label>Cancel PM Answers</label>
+        <locationX>578</locationX>
+        <locationY>468</locationY>
+        <connector>
+            <targetReference>Send_email_to_Resource</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
+        <filters>
+            <field>KRA__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Submitted</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PM_Configure__c</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Status_to_Missed</name>
         <label>Update Status to Missed</label>
         <locationX>578</locationX>
         <locationY>360</locationY>
         <connector>
-            <targetReference>Send_email_to_Resource</targetReference>
+            <targetReference>Cancel_PM_Answers</targetReference>
         </connector>
+        <inputAssignments>
+            <field>Mentee_KRA_submitted__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mentor_KRA_submitted__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Status__c</field>
             <value>

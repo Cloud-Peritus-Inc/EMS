@@ -144,6 +144,30 @@
         <template>unfiled$public/Goal_Missed_Template_for_Mentee</template>
     </alerts>
     <alerts>
+        <fullName>KRA_Completion_Alert_for_Mentee</fullName>
+        <description>KRA Completion Alert for Mentee</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Resource__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Notifying_Mentee_on_KRA_Completion</template>
+    </alerts>
+    <alerts>
+        <fullName>KRA_Completion_Alert_for_Mentor</fullName>
+        <description>KRA Completion Alert for Mentor</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Check_In_By__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Notifying_Mentor_on_KRA_Completion</template>
+    </alerts>
+    <alerts>
         <fullName>KRA_Creation_Alert</fullName>
         <description>KRA Creation Alert</description>
         <protected>false</protected>
@@ -170,6 +194,18 @@
         <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/KRA_Missed_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>KRA_Missed_Alert_2</fullName>
+        <description>KRA Missed Alert 2</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Check_In_By__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>no-reply.grid@cloudperitus.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/KRA_Missed_Template_2</template>
     </alerts>
     <alerts>
         <fullName>KRA_Remainder_mail_to_Mentor</fullName>

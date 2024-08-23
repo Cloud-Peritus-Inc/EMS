@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
     <available>true</available>
-    <description>Send Email to Resource when he Submits his KRA record for his mentor</description>
+    <description>Notifying Mentor on Mentee&apos;s Feedback Completion: Email Template</description>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>Cloud_Peritus_Inc</letterhead>
-    <name>Notification about KRA Submission</name>
+    <name>Notifying Mentor on KRA Completion</name>
     <style>freeForm</style>
-    <subject>Performance: KRA Submission Confirmation</subject>
-    <textOnly>Dear {!Goal__c.Resource__c},
+    <subject>Performance: KRA Completion Confirmation</subject>
+    <textOnly>Dear {!Goal__c.Check_In_By__c},
 
+We are happy to inform you that you have successfully completed {!Goal__c.Resource__c} KRA review.
 
-We are pleased to inform you that your KRA has been successfully submitted for review to your mentor.
 
 
 Thank you for your proactive approach to setting and aligning your goals with the mentorship program. Your dedication contributes significantly to our shared success.
