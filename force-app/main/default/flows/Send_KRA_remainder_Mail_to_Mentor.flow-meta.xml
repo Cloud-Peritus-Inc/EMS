@@ -210,7 +210,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Resource__r.Location__c</leftValueReference>
+                <leftValueReference>$Record.Resource__r.Work_Location_Country__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>India</stringValue>
