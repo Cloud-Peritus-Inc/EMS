@@ -1,7 +1,7 @@
 /**
-* @author Subba Kalavala
-* @date 8/7/2023
-* @description  BatchToCreateKRAforQuaterly Batch to performance KRA's
+* @author Shubham Maske
+* @date 26/Aug/2024
+* @description  BatchToCreateKRAforQuaterly2 Batch to performance KRA's
 *              
 *               Schedule class 
 *               
@@ -9,17 +9,17 @@
 *               - BatchToCreateKRAforQuaterly_Test
 *
 * CHANGE HISTORY
- Shubham Maske : Updated the Start querry to fetch contacts whose work location country value is INDIA.
- This batch will create KRA for Contact from INDIA 
+ Shubham Maske : Updated the Start querry to fetch contacts whose work location country value is not INDIA.
+ This batch will create KRA for Contact not from INDIA 
  Date : 26/Aug/2024
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-global class BatchToCreateKRAforQuaterly implements Database.Batchable<sObject> {
+global class BatchToCreateKRAforQuaterly2 implements Database.Batchable<sObject> {
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        return Database.getQueryLocator([SELECT Id,Appraisal_Date__c,EMS_TM_User__c,(Select Id,Resource_Reports_To__c FROM Resource_Resource_Relationships__r WHERE Relationship_Type__c INCLUDES ('Mentor')),(SELECT Id,Resource__c,Fiscal_Year__c FROM Fulfillments__r) FROM Contact WHERE EMS_TM_User__r.isActive = true and Work_Location_Country__c = 'India' ]);
+        return Database.getQueryLocator([SELECT Id,Appraisal_Date__c,EMS_TM_User__c,(Select Id,Resource_Reports_To__c FROM Resource_Resource_Relationships__r WHERE Relationship_Type__c INCLUDES ('Mentor')),(SELECT Id,Resource__c,Fiscal_Year__c FROM Fulfillments__r) FROM Contact WHERE EMS_TM_User__r.isActive = true and Work_Location_Country__c != 'India' ]);
     }
     global void execute(Database.BatchableContext BC, List<Contact> conList) {
         Fiscal_Year__c currentFY = [SELECT Id,Name,Start_Date__c,End_Date__c FROM Fiscal_Year__c where Start_Date__c = THIS_FISCAL_YEAR Order BY Start_Date__c ASC];
