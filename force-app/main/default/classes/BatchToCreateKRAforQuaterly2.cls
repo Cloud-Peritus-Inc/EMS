@@ -1,7 +1,7 @@
 /**
 * @author Shubham Maske
 * @date 26/Aug/2024
-* @description  BatchToCreateKRAforQuaterly2 Batch to performance KRA's
+* @description  BatchToCreateKRAforQuaterly2 Batch to performance KRA's For NON - INDIA LOCATION CONTACTS
 *              
 *               Schedule class 
 *               
