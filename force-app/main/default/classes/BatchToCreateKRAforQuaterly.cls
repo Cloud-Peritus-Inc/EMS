@@ -19,7 +19,7 @@
 **/
 global class BatchToCreateKRAforQuaterly implements Database.Batchable<sObject> {
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        return Database.getQueryLocator([SELECT Id,Appraisal_Date__c,EMS_TM_User__c,(Select Id,Resource_Reports_To__c FROM Resource_Resource_Relationships__r WHERE Relationship_Type__c INCLUDES ('Mentor')),(SELECT Id,Resource__c,Fiscal_Year__c FROM Fulfillments__r) FROM Contact WHERE EMS_TM_User__r.isActive = true and Work_Location_Country__c = 'India' ]);
+        return Database.getQueryLocator([SELECT Id,Appraisal_Date__c,EMS_TM_User__c,Work_Location_Country__c,(Select Id,Resource_Reports_To__c FROM Resource_Resource_Relationships__r WHERE Relationship_Type__c INCLUDES ('Mentor')),(SELECT Id,Resource__c,Fiscal_Year__c FROM Fulfillments__r) FROM Contact WHERE EMS_TM_User__r.isActive = true and Work_Location_Country__c = 'India' ]);
     }
     global void execute(Database.BatchableContext BC, List<Contact> conList) {
         Fiscal_Year__c currentFY = [SELECT Id,Name,Start_Date__c,End_Date__c FROM Fiscal_Year__c where Start_Date__c = THIS_FISCAL_YEAR Order BY Start_Date__c ASC];
