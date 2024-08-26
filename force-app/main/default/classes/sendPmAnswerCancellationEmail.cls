@@ -1,3 +1,4 @@
+//smaske : this trigger is used for sending email alerts to Project Managers/Other Managers when the requested PM CONFIG records are cancelled when MENTOR submits his own KRA PM ANSWER records 
 public class sendPmAnswerCancellationEmail implements TriggerAction.AfterUpdate {
     
     public void afterUpdate(List<PM_Configure__c> newList, List<PM_Configure__c> oldList) {  
@@ -25,7 +26,7 @@ public class sendPmAnswerCancellationEmail implements TriggerAction.AfterUpdate 
                                                   AND Project_Name__c != null
                                                   AND Status__c = 'Cancelled'
                                                   AND RecordTypeId =: answerRecordTypeId
-                                                  AND KRA__r.Status__c = 'KRA Completed'
+                                                  AND KRA__r.Status__c = 'KRA Inreview'
                                                   AND Id IN :pmConfigRecordIds];
         
         System.debug('Total cancelledRecords size ' +  cancelledRecords.size());
@@ -66,8 +67,9 @@ public class sendPmAnswerCancellationEmail implements TriggerAction.AfterUpdate 
     
     public static void sendEmail(Map<String, Map<String, List<PM_Configure__c>>> managerProjPmAnsRecMap) {
         OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'no-reply.grid@cloudperitus.com'];
-        Id templateIdForNotifyingMentee = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Notifying_Mentee_On_Project_Manager_feedback_cancellation'].Id;
-        Id templateIdForNotifyingMentor = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Notifying_Mentor_On_Project_Manager_feedback_cancellation'].Id;
+        //smaske : [23/Aug/2024] : Commented below email alerts as we will not send them
+        //Id templateIdForNotifyingMentee = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Notifying_Mentee_On_Project_Manager_feedback_cancellation'].Id;
+        //Id templateIdForNotifyingMentor = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Notifying_Mentor_On_Project_Manager_feedback_cancellation'].Id;
         Id templateIdForNotifyingProjManager = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Notifying_Project_Manager_Other_On_Project_Manager_feedback_cancellation'].Id;
         
         List<Messaging.SingleEmailMessage> emailListToSend = new List<Messaging.SingleEmailMessage>();
@@ -94,7 +96,7 @@ public class sendPmAnswerCancellationEmail implements TriggerAction.AfterUpdate 
             }
         }
         
-        //for templateIdForNotifyingMentee       
+        /*for templateIdForNotifyingMentee       
         for (String managerId : managerProjPmAnsRecMap.keySet()) {
             Map<String, List<PM_Configure__c>> projectMap = managerProjPmAnsRecMap.get(managerId);
             for (String projectName : projectMap.keySet()) {
@@ -117,7 +119,7 @@ public class sendPmAnswerCancellationEmail implements TriggerAction.AfterUpdate 
         }
         
         
-        //for templateIdForNotifyingMentor       
+        for templateIdForNotifyingMentor       
         for (String managerId : managerProjPmAnsRecMap.keySet()) {
             Map<String, List<PM_Configure__c>> projectMap = managerProjPmAnsRecMap.get(managerId);
             for (String projectName : projectMap.keySet()) {
@@ -137,7 +139,7 @@ public class sendPmAnswerCancellationEmail implements TriggerAction.AfterUpdate 
                 System.debug('Mentors  msg :: ' +  msg );
                 emailListToSend.add(msg);
             }
-        }
+        }*/
         
         System.debug('emailListToSend size :: ' +  emailListToSend.size());
         System.debug('emailListToSend :: ' +  emailListToSend.toString() );

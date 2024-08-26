@@ -136,7 +136,7 @@ public without sharing class viewPmRequestsController {
                                               Mentee__r.Resource_Role__r.name,
                                               Mentor__r.name,
                                               Reporting_Contact__r.name,
-                                              Reporting_Contact__c,
+                                              Reporting_Contact__c,Reporting_Contact__r.Email,
                                               Status__c,
                                               KRA__c,KRA__r.Resource__c,
                                               Project_Name__r.name,
@@ -157,9 +157,42 @@ public without sharing class viewPmRequestsController {
           system.debug('updatedPmConfiglist---'+updatedPmConfiglist);
         if(!updatedPmConfiglist.isEmpty()){
             update updatedPmConfiglist;
+            //smaske : Calling email method for sending email
+            sendEmailToPmForRecallRecords(updatedPmConfiglist);
         }
 
 
+      }
+
+      //smaske: 23/Aug/2024 : Created this method send email alerts to Project Managers when Mentor Recalls the send KRA request
+      public static void sendEmailToPmForRecallRecords(List<PM_Configure__c> recalledPmConfiglist) {
+        OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'no-reply.grid@cloudperitus.com'];
+        Id templateIdForNotifyingProjManagerOnRecall = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Notifying_Project_Manager_Other_On_Project_Manager_feedback_Recall'].Id;
+        List<Messaging.SingleEmailMessage> emailListToSend = new List<Messaging.SingleEmailMessage>();
+        Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
+        Set<String> toAddresses = new Set<String>();
+        for (PM_Configure__c pmConfigRec : recalledPmConfiglist) {           
+            toAddresses.add(pmConfigRec.Reporting_Contact__r.Email);
+            msg.setTargetObjectId(pmConfigRec.Reporting_Contact__c);
+            msg.setWhatId(pmConfigRec.Id);
+        }
+        msg.setToAddresses(new List<String>(toAddresses));
+        msg.setOrgWideEmailAddressId(owea[0].Id); // Make sure 'owea' is properly defined
+        msg.setTemplateId(templateIdForNotifyingProjManagerOnRecall); // Make sure 'templateIdForNotifyingProjManager' is properly defined
+        msg.setSaveAsActivity(true);
+        System.debug('ProjectManager  msg :: ' +  msg );
+        emailListToSend.add(msg);
+
+        System.debug('emailListToSend size :: ' +  emailListToSend.size());
+        System.debug('emailListToSend :: ' +  emailListToSend.toString() );
+        Messaging.SendEmailResult[] results = Messaging.sendEmail(emailListToSend);
+        for (Messaging.SendEmailResult result : results) {
+            if (result.isSuccess()) {
+                System.debug('Email sent successfully.');
+            } else {
+                System.debug('Failed to send email. Error: ' + result.getErrors()[0].getMessage());
+            }
+        }
       }
 
      

@@ -5,7 +5,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notifying Mentor On Project Manager Declining The Feedback Request</name>
     <style>freeForm</style>
-    <subject>Decline of Requested Feedback Submission for {!PM_Configure__c.Mentee__c}</subject>
+    <subject>Performance: Decline Of Requested KRA Feedback Submission For {!PM_Configure__c.Mentee__c}</subject>
     <textOnly>Dear {!PM_Configure__c.Mentor__c} ,
 
 We hope this message finds you well. This is to inform you that, unfortunately {!PM_Configure__c.Reporting_Contact__c} ,of Project {!PM_Configure__c.Project_Name__c} was unable to submit the performance feedback for {!PM_Configure__c.Mentee__c} at this time due to the below stated reason
