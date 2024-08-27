@@ -70,13 +70,15 @@ public class sendEmailToMentor implements TriggerAction.AfterUpdate {
                 resourceId.add(gl.Resource__c);
             }
             
-            for (Resource_Resource_Relationship__c rrr : [SELECT Id, Resource__c, Resource_Reports_To__c 
+            for (Resource_Resource_Relationship__c rrr : [SELECT Id, Resource__c, Resource_Reports_To__c,Relationship_Type__c 
                                                           FROM Resource_Resource_Relationship__c 
                                                           WHERE Resource__c IN :resourceId 
                                                           AND Resource__c != NULL
-                                                          AND Relationship_Type__c = 'Mentor'
-                                                          AND Resource_Reports_To__c != NULL]) {    
-                reporteeId.add(rrr.Resource_Reports_To__c);
+                                                          //AND Relationship_Type__c = 'Mentor'
+                                                          AND Resource_Reports_To__c != NULL]) {  
+                                                              if(rrr.Relationship_Type__c != null && rrr.Relationship_Type__c.contains('Mentor')){
+                                                                  reporteeId.add(rrr.Resource_Reports_To__c);
+                                                              } 
             }
             
             Contact contact = [SELECT Id, Name, Email FROM Contact WHERE Id IN :reporteeId LIMIT 1];
@@ -124,11 +126,16 @@ public class sendEmailToMentor implements TriggerAction.AfterUpdate {
         Id templateIdOfSubmit = [SELECT Id FROM EmailTemplate WHERE DeveloperName ='Notifying_PM_other_On_Feedback_Submission'].Id;
         Set<Id> reportingContactId = new Set<Id>();
         
-        if(pmConfig.Reporting_Contact__c != NULL){
-            reportingContactId.add(pmConfig.Reporting_Contact__c);
+        pmConfig = [SELECT Id, Reporting_Contact__c, Status__c 
+                    FROM PM_Configure__c 
+                    WHERE Id = :pmConfig.Id LIMIT 1];
+        
+        if (pmConfig.Reporting_Contact__c == null) {
+            System.debug('Reporting_Contact__c is null. No email will be sent.');
+            return;
         }
         
-        Contact cont = [SELECT Id, Name, Email FROM Contact WHERE Id IN :reportingContactId LIMIT 1];
+        Contact cont = [SELECT Id, Name, Email FROM Contact WHERE Id = :pmConfig.Reporting_Contact__c LIMIT 1];
        
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
         
