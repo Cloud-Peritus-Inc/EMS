@@ -6,18 +6,18 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notifying Project Manager/Other On Project Manager feedback cancellation</name>
     <style>freeForm</style>
-    <subject>Performance: KRA Feedback On {!Goal__c.Resource__c} Canceled For The Project {!PM_Configure__c.Project_Name__c}</subject>
-    <textOnly>Dear {!PM_Configure__c.Mentor__c},
+    <subject>Performance: KRA Feedback On {!PM_Configure__c.Mentee__c} Canceled For The Project {!PM_Configure__c.Project_Name__c}</subject>
+    <textOnly>Dear {!PM_Configure__c.Reporting_Contact__c},
 
 We hope this message finds you well.
 
-This is to inform you that, unfortunately, {!PM_Configure__c.Reporting_Contact__c} of Project {!PM_Configure__c.Project_Name__c}  was unable to submit {!PM_Configure__c.Mentee__c}’s KRA feedback by the designated deadline. As a result, his/her feedback record has been automatically canceled by the system.
+This is to inform you that, {!PM_Configure__c.Mentor__c} has decided to proceed with providing the KRA feedback for the {!PM_Configure__c.Mentee__c} without your KRA feedback. As a result, your feedback record has been cancelled by the system.
 
 We apologize for any inconvenience this may cause and appreciate your understanding. Thank you for your consideration.
 
 Best Regards,
 
-The Cloud Peritus Team</textOnly>
+Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

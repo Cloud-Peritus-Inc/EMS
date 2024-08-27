@@ -6,7 +6,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Notification about KRA Submission 2</name>
     <style>freeForm</style>
-    <subject>Performance: KRA Completion Confirmation</subject>
+    <subject>Performance: KRA Submission Confirmation</subject>
     <textOnly>Dear {!Goal__c.Resource__c},
 
 We are pleased to inform you that your KRA feedback has been successfully submitted by your mentor {!Goal__c.Check_In_By__c}.
