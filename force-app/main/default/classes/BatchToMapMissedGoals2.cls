@@ -7,16 +7,15 @@
 *               - BatchToMapMissedGoals_sch
 *               Test code coverage provided by the following test class:
 *               - BatchToMapMissedGoals_Test
-*
 * CHANGE HISTORY
-* Sangharsh kamble : Updated the Start querry to fetch contacts whose work location country value is INDIA.
-*This batch will create KRA for Contact from INDIA
+* Sangharsh kamble : Updated the Start querry to fetch contacts whose work location country value is not INDIA.
+*This batch will create KRA for Contact not from INDIA 
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-global class BatchToMapMissedGoals implements Database.Batchable<sObject> {
+global class BatchToMapMissedGoals2 implements Database.Batchable<sObject> {
  /**
 * @author Subba
 * @date 22/01/2023
@@ -34,8 +33,8 @@ global class BatchToMapMissedGoals implements Database.Batchable<sObject> {
         Id goalRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get(GOAL_RECORD_TYPE).getRecordTypeId();
         //return Database.getQueryLocator([SELECT Id,Status__c,End_Date__c,RecordTypeId FROM Goal__c WHERE Status__c='Active' And RecordTypeId =:goalRecTypeId and End_Date__c>=:dt ]);
         //smaske :[PM_070] : updating query [commented above line as not considering the records based on custom lable]
-        return Database.getQueryLocator([SELECT Id,Status__c,Start_Date__c,End_Date__c,RecordTypeId FROM Goal__c WHERE (Status__c='Active' OR Status__c='Missed' OR Status__c='Draft' OR Status__c='In Progress') And RecordTypeId =:goalRecTypeId AND Resource__r.Work_Location_Country__c ='India']);
-    } 
+        return Database.getQueryLocator([SELECT Id,Status__c,Start_Date__c,End_Date__c,RecordTypeId FROM Goal__c WHERE (Status__c='Active' OR Status__c='Missed' OR Status__c='Draft' OR Status__c='In Progress') And RecordTypeId =:goalRecTypeId AND Resource__r.Work_Location_Country__c !='India']);
+    }
     
     /**
 * @author Subba

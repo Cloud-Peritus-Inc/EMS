@@ -6,16 +6,17 @@
 *       
 *               Test code coverage provided by the following test class:
 *               - BatchToMapMissedGoals_Test
-*Sangharsh : this schedule class is for Contacts with INDIA location
+Sngharsh : this schedule class is for Contacts with NON-INDIA location
+*
 * CHANGE HISTORY
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-global class BatchToMapMissedGoals_sch implements Schedulable {
+global class BatchToMapMissedGoals_sch2 implements Schedulable{
 global void execute(SchedulableContext sc) {
-      BatchToMapMissedGoals batchExecute = new BatchToMapMissedGoals(); 
+      BatchToMapMissedGoals2 batchExecute = new BatchToMapMissedGoals2(); 
       Database.executeBatch(batchExecute,100);
    }
 }
