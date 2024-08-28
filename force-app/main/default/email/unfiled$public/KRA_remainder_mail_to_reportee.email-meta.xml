@@ -9,19 +9,15 @@
     <textOnly>Dear {!Goal__c.Resource__c},
 
 
-
 This is a reminder that you have not provided the self-rating for the current {!Goal__c.Goal_Name__c}, which is due.
-
 
 
 Please click here to provide the self-rating on an immediate basis to avoid any strikes.
 
 
-
 Best Regards,
 
-
-The Cloud Peritus Team</textOnly>
+Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

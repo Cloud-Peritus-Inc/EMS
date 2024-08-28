@@ -10,7 +10,7 @@
     <textOnly>Dear {!EMS_TM_Assignment__c.Onshore_Manager_Name__c},
 
 
-We hope this message finds you well. As part of our ongoing performance review process, A KRA feedback request has been initiated to you for the employee {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c}
+We hope this message finds you well. As part of our ongoing performance review process, A KRA feedback request has been initiated to you for the employee {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c}.
 
 
 
