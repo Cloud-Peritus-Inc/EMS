@@ -10,12 +10,14 @@
     <textOnly>Dear {!Goal__c.Resource__c},
 
 
-We hope this message finds you well. We regret to inform you that the KRA for {!Goal__c.Goal_Name__c} was not submitted before the specified end date.
+We hope this message finds you well.
+
+We regret to inform you that the KRA feedback for {!Goal__c.Goal_Name__c} was not submitted before the specified end date, therefore the system will update your KRA record status to be missed.
 
 
 Best Regards,
 
-The Cloud Peritus Team</textOnly>
+Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

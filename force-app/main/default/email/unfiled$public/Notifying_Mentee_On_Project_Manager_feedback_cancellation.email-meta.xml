@@ -11,13 +11,13 @@
 
 We hope this message finds you well.
 
-This is to inform you that, unfortunately, {!PM_Configure__c.Reporting_Contact__c} of Project {!PM_Configure__c.Project_Name__c}  was unable to submit your KRA feedback by the designated deadline. As a result, his/her feedback record has been automatically canceled by the system.
+This is to inform you that, unfortunately, {!PM_Configure__c.Reporting_Contact__c} of Project {!PM_Configure__c.Project_Name__c} was unable to submit your KRA feedback by the designated deadline. As a result, his/her feedback record has been automatically canceled by the system.
 
 We apologize for any inconvenience this may cause and appreciate your understanding. Thank you for your consideration.
 
 Best Regards,
 
-The Cloud Peritus Team</textOnly>
+Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

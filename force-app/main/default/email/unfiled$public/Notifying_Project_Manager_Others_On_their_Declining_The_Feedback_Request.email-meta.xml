@@ -8,7 +8,10 @@
     <subject>Performance: Decline Of Requested KRA Feedback Submission For {!PM_Configure__c.Mentee__c}</subject>
     <textOnly>Dear {!PM_Configure__c.Reporting_Contact__c},
 
+
 I hope this message finds you well. This is to inform you that your recent feedback request on {!PM_Configure__c.Mentee__c} for the {!PM_Configure__c.Project_Name__c} has been declined by you.
+
+
 
 The reason submitted by you is provided below.
 
