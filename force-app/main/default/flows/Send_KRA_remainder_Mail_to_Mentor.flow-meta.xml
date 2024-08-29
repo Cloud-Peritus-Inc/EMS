@@ -130,7 +130,7 @@
         </rules>
         <rules>
             <name>Send_Remainder_Mail_to_Mentor</name>
-            <conditionLogic>1 AND 5 AND 6 AND 7 AND ( 2 OR 3 OR 4 )</conditionLogic>
+            <conditionLogic>1 AND 5 AND 6 AND 7 AND 8 AND ( 2 OR 3 OR 4 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -180,6 +180,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentee_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Send_KRA_reminder_mail_to_mentor</targetReference>
             </connector>
@@ -187,7 +194,7 @@
         </rules>
         <rules>
             <name>Change_Status_to_Missed</name>
-            <conditionLogic>(1 OR 5) AND 2 AND 3 AND 4 AND 6</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -214,13 +221,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>India</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
