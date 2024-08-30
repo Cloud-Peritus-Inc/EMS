@@ -6,17 +6,17 @@
     <name>Notifying Mentor On Project Manager Declining The Feedback Request</name>
     <style>freeForm</style>
     <subject>Performance: Decline Of Requested KRA Feedback Submission For {!PM_Configure__c.Mentee__c}</subject>
-    <textOnly>Dear {!PM_Configure__c.Mentor__c} ,
+    <textOnly>Dear {!PM_Configure__c.Mentor__c},
 
-We hope this message finds you well. This is to inform you that, unfortunately {!PM_Configure__c.Reporting_Contact__c} ,of Project {!PM_Configure__c.Project_Name__c} was unable to submit the performance feedback for {!PM_Configure__c.Mentee__c} at this time due to the below stated reason
+We hope this message finds you well. This is to inform you that, unfortunately {!PM_Configure__c.Reporting_Contact__c} of Project {!PM_Configure__c.Project_Name__c} has rejected to submit the performance feedback for {!PM_Configure__c.Mentee__c} at this time due to the below stated reason.
 
 {!PM_Configure__c.Rejection_Cancellation_Reason__c}
 
 We apologize for any inconvenience this may cause and appreciate your understanding. Thank you for your consideration.
 
-Best Regards
+Best Regards,
 
-The Cloud Peritus Team</textOnly>
+Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
