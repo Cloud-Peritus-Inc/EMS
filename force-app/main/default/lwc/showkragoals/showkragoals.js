@@ -224,9 +224,9 @@ export default class Showkragoals extends LightningElement {
 
             this.isLoading = true;
 
-            updateRecord({goalId: this.selectedGoaldId})
+            updateRecord({goalId: this.selectedGoaldId,finalComments: this.mycomments})
                 .then(() => {
-                    this.showToast('Success!!', 'Goal updated Inprogress successfully!!', 'success', 'dismissable');
+                    this.showToast('Success!!', 'Goal status updated to Inprogress successfully', 'success', 'dismissable');
                     // Display fresh data in the form
                     this.hideGoalEditModalBox();
                     this.isLoading = false;

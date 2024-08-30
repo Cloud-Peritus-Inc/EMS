@@ -105,11 +105,11 @@ public without sharing class myGoalsController {
         } 
     }
     @AuraEnabled 
-    public static void updateRecord(String goalId){
+    public static void updateRecord(String goalId, String finalComments){
         try{
             Goal__c gl = [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c, Goal_Completed_Date__c, Description__c,Feedback_and_Comments__c,Status__c FROM Goal__c WHERE Id=:goalId];
                 gl.Status__c = 'In Progress';  
-            
+                gl.Feedback_and_Comments__c = finalComments;
             update gl;  
         }catch(exception ex){
             String errorMsg = ex.getMessage();
