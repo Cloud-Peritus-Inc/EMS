@@ -46,6 +46,8 @@
 .slds-modal__container {
     max-width: 80rem !important;
     width: 80% !important;
+   /* max-height: 80rem !important;
+    height: 80% !important;*/
 }
 .custom-vertical-align {
     vertical-align: middle;

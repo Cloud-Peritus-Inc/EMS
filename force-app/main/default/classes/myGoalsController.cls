@@ -8,7 +8,7 @@ public without sharing class myGoalsController {
         //smaske : [PM_133] : Fetching Loggedin User Proifle details to HIDE the Edit button for Goal if HR-PROFILE 
         User userData = [SELECT Id,Profile.Name FROM User WHERE Id=:Userinfo.getUserId() LIMIT 1];
  
-         for(Goal__c gl : [SELECT Id,Name,Goal_Name__c,Parent_Goal__c,Start_Date__c, Goal_Completed_Date__c, CreatedDate,End_Date__c,Status__c,Description__c,Feedback_and_Comments__c,Overall_Rating__c 
+         for(Goal__c gl : [SELECT Id,Name,Goal_Name__c,Parent_Goal__c,Start_Date__c, Goal_Completed_Date__c, CreatedDate,End_Date__c,Status__c,Description__c,Feedback_and_Comments__c 
                           FROM Goal__c WHERE RecordTypeId=:goalRecTypeId 
                           //@Mukesh - For Defect- PM_126, Added a condition where Goals created in the current Quarter will show in only the Linked KRAs 
                           AND Parent_Goal__r.Fulfillment__c =:currentKRA.Fulfillment__c
@@ -25,7 +25,6 @@ public without sharing class myGoalsController {
                qw.Description = gl.Description__c;
                qw.comments = gl.Feedback_and_Comments__c;
                qw.goalCompletedDate = gl.Goal_Completed_Date__c;
-               qw.overallRating = gl.Overall_Rating__c;
                qw.showedit = false;
                if(gl.Status__c == 'Active' || gl.Status__c == 'Draft' || gl.Status__c =='In Progress'){
                    qw.showedit = true; 
@@ -106,11 +105,11 @@ public without sharing class myGoalsController {
         } 
     }
     @AuraEnabled 
-    public static void updateRecord(String goalId){
+    public static void updateRecord(String goalId, String finalComments){
         try{
             Goal__c gl = [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c, Goal_Completed_Date__c, Description__c,Feedback_and_Comments__c,Status__c FROM Goal__c WHERE Id=:goalId];
                 gl.Status__c = 'In Progress';  
-            
+                gl.Feedback_and_Comments__c = finalComments;
             update gl;  
         }catch(exception ex){
             String errorMsg = ex.getMessage();
@@ -143,9 +142,6 @@ public without sharing class myGoalsController {
         public boolean showInprogress; */
         @AuraEnabled
         public String profileName;
-
-         @AuraEnabled
-        public Decimal overallRating;
         
     }
 
