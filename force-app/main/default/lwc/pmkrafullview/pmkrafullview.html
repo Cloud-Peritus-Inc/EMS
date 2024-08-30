@@ -427,11 +427,10 @@
 
 		<!--check In modal start -->
 		<template if:true={showKRAEditModal}>
-			<lightning-card>
 				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
 					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
 					<div class="slds-modal__container">
-						<!-- modal header start -->
+						
 						<header class="slds-modal__header">
 							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideKRAEditModalBox}>
                 <lightning-icon icon-name="utility:close"
@@ -444,15 +443,13 @@
 							</h2>
 						</header>
 
-						<!-- modal body start -->
-						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
-							<!-- EDIT MODE -->
+						
+						<div class="slds-modal__content slds-p-around_medium slds-p-bottom_none slds-p-right_small slds-p-left_small" id="modal-content-id-2">
 							<c-quarterlykraedit mode={mode} receivedkraid={receivedKRAId} selectedresource={resourceid}
 								onclose={hideKRAEditModalBox} tab={tab}>
-							</c-quarterlykraedit>
+							</c-quarterlykraedit>	
 						</div>
 
-						<!-- modal footer start-->
 						<footer class="slds-modal__footer">
 							<button class="slds-button slds-button_neutral" onclick={hideKRAEditModalBox}>Close</button>
 						</footer>
@@ -460,8 +457,7 @@
 					</div>
 				</section>
 				<div class="slds-backdrop slds-backdrop_open"></div>
-			</lightning-card>
 		</template>
-		<!-- modal end -->
+		 <!--modal end -->
 	</lightning-card>
 </template>
