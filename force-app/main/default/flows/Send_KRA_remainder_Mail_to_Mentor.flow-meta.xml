@@ -236,26 +236,27 @@
             <label>Change Status to Missed</label>
         </rules>
     </decisions>
+    <description>Shubham: Updated flow to use Consideration_Date__c formula</description>
     <environments>Default</environments>
     <formulas>
         <name>CheckFiftinthDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 15,  {!$Record.Quarter_End_Date__c} - 16)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 15, {!$Record.Consideration_Date__c} - 16)</expression>
     </formulas>
     <formulas>
         <name>CheckFisrtDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 29,  {!$Record.Quarter_End_Date__c} - 30)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 29,  {!$Record.Consideration_Date__c} - 30)</expression>
     </formulas>
     <formulas>
         <name>CheckSeventhDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 23,  {!$Record.Quarter_End_Date__c} - 24)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 23,  {!$Record.Consideration_Date__c} - 24)</expression>
     </formulas>
     <formulas>
         <name>ChecksixteenthDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 14,  {!$Record.Quarter_End_Date__c} - 15)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 14, {!$Record.Consideration_Date__c} - 15)</expression>
     </formulas>
     <formulas>
         <name>Dayofthemonth</name>
@@ -266,12 +267,12 @@
     <formulas>
         <name>Last16day</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 14,  {!$Record.Quarter_End_Date__c} - 15)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 14,  {!$Record.Consideration_Date__c} - 15)</expression>
     </formulas>
     <formulas>
         <name>ThirdayDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} ,  {!$Record.Quarter_End_Date__c} - 1)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} ,  {!$Record.Consideration_Date__c} - 1)</expression>
     </formulas>
     <formulas>
         <name>TodayDate</name>
@@ -281,7 +282,7 @@
     <formulas>
         <name>TweentyThridDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 7,  {!$Record.Quarter_End_Date__c} - 8)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 7,  {!$Record.Consideration_Date__c} - 8)</expression>
     </formulas>
     <interviewLabel>Send KRA remainder Mail to Mentor {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send KRA remainder Mail to Mentor</label>
@@ -422,13 +423,4 @@
         <triggerType>Scheduled</triggerType>
     </start>
     <status>Active</status>
-    <textTemplates>
-        <name>Dummymail</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!$Record.Check_In_By__r.ContactName__c},
-You have not submitted your Reportee({!$Record.Goal_Name__c}) rating. Please submit KRA by before {!$Record.Quarter_End_Date__c},
-
-Thanks &amp;Regards
-Grid Team.</text>
-    </textTemplates>
 </Flow>

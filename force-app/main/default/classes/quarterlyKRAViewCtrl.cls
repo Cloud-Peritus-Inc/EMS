@@ -369,9 +369,13 @@ public without sharing class quarterlyKRAViewCtrl {
             Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
 
             User loggedInUser = [SELECT Id,ContactId,Contact.Resource_Role__c From User WHERE Id=:Userinfo.getUserId()];
+			
+			//smaske : [02/Aug/2024] diving the soql to fetch the kra resource first and then its recource role.
+			Contact kraCon = [Select Id,Name,Resource_Role__c,Resource_Role__r.Name from Contact Where Id =: kraRecord.Resource__c ];
+            Resource_Role__c kraContactResourceRole = [ Select id,name,technical_acumen__c, professional_skills__c, goals_and_results__c, strategic_impact__c from Resource_Role__c where Id =: kraCon.Resource_Role__c LIMIT 1];  
+            //smaske : original query below
+            //Resource_Role__c kraContactResourceRole = [ Select id,name,technical_acumen__c, professional_skills__c, goals_and_results__c, strategic_impact__c from Resource_Role__c where Id =: kraRecord.Resource__r.Resource_Role__c LIMIT 1];      
 
-
-            Resource_Role__c kraContactResourceRole = [ Select id,name,technical_acumen__c, professional_skills__c, goals_and_results__c, strategic_impact__c from Resource_Role__c where Id =: kraRecord.Resource__r.Resource_Role__c LIMIT 1];      
             
             List<PM_Configure__c> pmAnswerRecords = New List<PM_Configure__c>(); 
             
