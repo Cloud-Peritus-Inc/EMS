@@ -236,7 +236,7 @@
             <label>Change Status to Missed</label>
         </rules>
     </decisions>
-    <description>Shubham: Updated flow to use Consideration_Date__c formula</description>
+    <description>Shubham: Updated flow to use Consideration_Date__c formula and modified Update Records conditon</description>
     <environments>Default</environments>
     <formulas>
         <name>CheckFiftinthDay</name>
@@ -314,7 +314,7 @@
         <connector>
             <targetReference>Send_email_to_Resource</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>KRA__c</field>
             <operator>EqualTo</operator>
