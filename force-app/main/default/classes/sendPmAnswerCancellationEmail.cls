@@ -1,4 +1,15 @@
-//smaske : this trigger is used for sending email alerts to Project Managers/Other Managers when the requested PM CONFIG records are cancelled when MENTOR submits his own KRA PM ANSWER records 
+/**
+* @author Shubham Maske
+* @date 03/Aug/2024
+* @description : this trigger is used for sending email alerts to Project Managers/Other Managers when the requested PM CONFIG records are cancelled when MENTOR submits his own KRA PM ANSWER records 
+* Test class : sendPmAnswerCancellationEmail_Test
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* 
+* ====================================================================================================
+**/
+// Test Class : sendPmAnswerCancellationEmail_Test
 public class sendPmAnswerCancellationEmail implements TriggerAction.AfterUpdate {
     
     public void afterUpdate(List<PM_Configure__c> newList, List<PM_Configure__c> oldList) {  
