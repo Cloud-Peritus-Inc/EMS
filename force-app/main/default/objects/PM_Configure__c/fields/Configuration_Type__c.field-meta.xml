@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Type__c</fullName>
+    <fullName>Configuration_Type__c</fullName>
     <externalId>false</externalId>
-    <label>Type</label>
+    <label>Configuration Type</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -12,29 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Survey</fullName>
-                <default>false</default>
-                <label>Survey</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
                 <fullName>KRA</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>KRA</label>
             </value>
             <value>
-                <fullName>Org Level Goal</fullName>
+                <fullName>Annual Award Result</fullName>
                 <default>false</default>
-                <label>Org Level Goal</label>
+                <label>Annual Award Result</label>
             </value>
             <value>
-                <fullName>Resource Role Level Goal</fullName>
+                <fullName>Annual Award</fullName>
                 <default>false</default>
-                <label>Resource Role Level Goal</label>
+                <label>Annual Award</label>
             </value>
         </valueSetDefinition>
     </valueSet>
