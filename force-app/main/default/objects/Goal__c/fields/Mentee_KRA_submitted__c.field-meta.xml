@@ -3,6 +3,7 @@
     <fullName>Mentee_KRA_submitted__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This check box will be checked when the mentee has submitted his all PM Config Answer records</description>
+    <externalId>false</externalId>
     <label>Mentee KRA submitted</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

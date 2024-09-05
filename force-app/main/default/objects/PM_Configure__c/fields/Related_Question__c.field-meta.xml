@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Mentor__c</fullName>
+    <fullName>Related_Question__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Mentor</label>
-    <referenceTo>Contact</referenceTo>
-    <relationshipLabel>PM Configure (Mentor)</relationshipLabel>
+    <label>Related Question</label>
+    <referenceTo>PM_Configure__c</referenceTo>
+    <relationshipLabel>PM Ans Configure</relationshipLabel>
     <relationshipName>PM_Configure</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

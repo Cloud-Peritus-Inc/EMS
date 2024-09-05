@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Mentor__c</fullName>
+    <fullName>KRA__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Mentor</label>
-    <referenceTo>Contact</referenceTo>
-    <relationshipLabel>PM Configure (Mentor)</relationshipLabel>
-    <relationshipName>PM_Configure</relationshipName>
+    <label>KRA</label>
+    <referenceTo>Goal__c</referenceTo>
+    <relationshipLabel>PM Configure</relationshipLabel>
+    <relationshipName>PM_Answer_Configure</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Overall_Rating__c</fullName>
     <externalId>false</externalId>
-    <formula>Average_Goals_And_Result_Rating__c  +  Average_Professional_Skills_Rating__c  +  Average_Strategic_Impact_Rating__c  +  Average_Technical_Skills_Rating__c</formula>
+    <formula>(Average_Goals_And_Result_Rating__c  +  Average_Professional_Skills_Rating__c  +  Average_Strategic_Impact_Rating__c  +  Average_Technical_Skills_Rating__c)</formula>
     <label>Overall Rating</label>
     <precision>18</precision>
     <required>false</required>
