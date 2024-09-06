@@ -51,10 +51,13 @@ global class BatchToMapMissedGoals implements Database.Batchable<sObject> {
     global void execute(Database.BatchableContext BC, List<Goal__c> goalList) { 
         for(Goal__c gl : goalList){
             //smaske :[PM_070] : updating conditions
-            if(gl.status__c == 'Draft' && gl.Start_Date__c == System.today() ){
+            system.debug('System.today()'+System.today());
+            system.debug('System.today()'+(System.today()-1));
+            system.debug('gl.Start_Date__c'+gl.Start_Date__c);
+            if(gl.status__c == 'Draft' && gl.Start_Date__c == (System.today()+1)){
                 gl.status__c = 'Active';
             }
-            if( (gl.status__c == 'In Progress' || gl.status__c == 'Active' || gl.status__c == 'Draft') && gl.End_Date__c < System.today() ){
+            if( (gl.status__c == 'In Progress' || gl.status__c == 'Active' || gl.status__c == 'Draft') && gl.End_Date__c < (System.today()+1) ){
                 gl.status__c = 'Missed';
             }
         }
