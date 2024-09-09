@@ -163,11 +163,29 @@ public class myGoalsController_Test {
             myGoalsController.saveTheGoal(goal.Id, 'finalComments from Test');
             
             myGoalsController.saveTheGoal('12345', 'finalComments from Test');
+            myGoalsController.updateRecord(goal.Id, 'finalComments from Test');
         } catch (Exception ex) {
             String errorMsg = ex.getMessage();
             System.debug('An exception occurred: ' + errorMsg);
         }
         
+        Test.stopTest();
+    }
+    
+    testmethod static void  testupdateGoalsMethod(){
+        Test.startTest();
+        Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10230'];
+        Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10231'];
+        Fulfillment__c Ful = [Select Id,Resource__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];        
+       
+            Goal__c KRA = TestDataFactory.createKRARecords(MenteeCon.Id, MentorCon.Id,Ful,true);
+            String name = 'Certification Goal';
+            Date startdate = Date.today().addDays(1);
+            Date enddate = Date.today().addDays(10);
+            String descri = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+            Goal__c goal = TestDataFactory.createGoalRecords(MenteeCon.Id, name, startdate, enddate, KRA,true);
+            
+            myGoalsController.updateRecord(goal.Id, 'finalComments from Test');  
         Test.stopTest();
     }
 

@@ -14,14 +14,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Completed - OnTime</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed - PostTime</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Missed</fullName>
             <default>false</default>
         </values>
