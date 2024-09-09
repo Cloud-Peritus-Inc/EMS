@@ -51,6 +51,8 @@ public class CalculateFullQuarterlyKRATEST {
             insert resourceRelationship;
             
             u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con.Id,true);
+            con.EMS_TM_User__c = u.Id;
+        	update con;
             
             Fiscal_Year__c FiscalYear = Testdatafactory.createFiscalYear(true);
             

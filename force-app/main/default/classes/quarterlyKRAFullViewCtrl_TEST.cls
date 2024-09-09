@@ -41,6 +41,9 @@ public class quarterlyKRAFullViewCtrl_TEST {
         Insert u;
             
             User u1 = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,con1.Id,true);
+        con.EMS_TM_User__c = u1.Id;
+        update con;
+        
         Fiscal_Year__c FiscalYear = Testdatafactory.createFiscalYear(true);
         Fiscal_Year__c fy = Testdatafactory.createFiscalYear(false);
         Period currentFiscalYearPeriod = [SELECT FiscalYearSettings.Name, FullyQualifiedLabel, StartDate, EndDate  FROM Period WHERE Type = 'Year' AND StartDate = THIS_FISCAL_YEAR LIMIT 1];
