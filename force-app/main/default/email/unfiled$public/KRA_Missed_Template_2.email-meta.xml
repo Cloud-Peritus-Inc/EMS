@@ -12,7 +12,7 @@
 
 We hope this message finds you well.
 
-We regret to inform you that the KRA feedback for {!Goal__c.Goal_Name__c} was not submitted by mentee {!Goal__c.Resource__c} before the specified end date, therefore the system will update the KRA record status to be missed.
+We regret to inform you that the KRA feedback for {!Goal__c.Goal_Name__c} was not submitted by mentee {!Goal__c.Resource__c} before the specified end date, therefore the system will update the KRA record status to be Missed.
 
 
 Best Regards,
