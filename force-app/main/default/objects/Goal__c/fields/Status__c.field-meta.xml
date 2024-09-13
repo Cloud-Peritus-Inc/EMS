@@ -34,7 +34,7 @@
             <value>
                 <fullName>KRA Inreview</fullName>
                 <default>false</default>
-                <label>KRA Inreview</label>
+                <label>KRA In Review</label>
             </value>
             <value>
                 <fullName>KRA Completed</fullName>
