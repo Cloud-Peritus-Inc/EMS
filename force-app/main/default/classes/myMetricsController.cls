@@ -114,7 +114,7 @@ public without sharing class myMetricsController {
                 }
                 
                 //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
-                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Status__c == 'HR KRA Completed' || gl.Status__c == 'Missed'    ){ //|| gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate
+                if(gl.Status__c == 'KRA In Review' || gl.Status__c == 'KRA Completed' || gl.Status__c == 'HR KRA Completed' || gl.Status__c == 'Missed'    ){ //|| gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate
                     qw.allowCopy = false;
                 }
 
@@ -237,7 +237,7 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
                 qw.rating = String.valueOf(gl.Rating_Image__c);//smaske : [EN_010] : Adding new rating field created by subba for star rating
                 qw.overallRating = gl.Overall_Rating__c; //Ravitheja
                 qw.allowedit = false;
-                //smaske : PM_061 : updating conditon to only allow edit when status is "KRA Inreview" in MY TEAM TAB for selected Reportee's KRA
+                //smaske : PM_061 : updating conditon to only allow edit when status is "KRA In Review" in MY TEAM TAB for selected Reportee's KRA
                 //Previously it was : gl.Status__c != 'KRA Completed'
                 if(gl.Status__c == 'In Progress'){
                     qw.allowedit = true;  
@@ -245,7 +245,7 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
 
                 //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
                 qw.allowCopy = true;
-                if(gl.Status__c == 'KRA Inreview' || gl.Status__c == 'KRA Completed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate  ){
+                if(gl.Status__c == 'KRA In Review' || gl.Status__c == 'KRA Completed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate  ){
                     qw.allowCopy = false;
                 }
 
@@ -594,7 +594,7 @@ return menteeRecords;
         }
         
          
-      List<Contact> conGoalList = [SELECT Id,name,(Select Id,Quarter_Start_Date__c,Quarter_End_Date__c,Status__c from Goals__r where (Quarter_Start_Date__c =THIS_QUARTER OR Quarter_End_Date__c = THIS_QUARTER) AND Status__c Not IN('KRA Completed','HR KRA Completed','Active','Missed','KRA Inreview') ) from contact Where Id =:contactId];
+      List<Contact> conGoalList = [SELECT Id,name,(Select Id,Quarter_Start_Date__c,Quarter_End_Date__c,Status__c from Goals__r where (Quarter_Start_Date__c =THIS_QUARTER OR Quarter_End_Date__c = THIS_QUARTER) AND Status__c Not IN('KRA Completed','HR KRA Completed','Active','Missed','KRA In Review') ) from contact Where Id =:contactId];
         
 
         List<EMS_TM_Assignment__c> projectAssigneeidList = [SELECT Id,name,EMS_TM_EmployeeName__r.name,EMS_TM_EmployeeName__r.Work_Location_Country__c,EMS_TM_Status_Asgn__c,

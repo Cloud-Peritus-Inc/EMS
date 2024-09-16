@@ -58,13 +58,13 @@ public without sharing class myGoalsController {
              gl.End_Date__c = enddate;
              gl.Description__c = descri;
              
-             //smaske : [PM_Def_014] : Query for In Progress, KRA InReview KRA records as per PHASE 2.
+             //smaske : [PM_Def_014] : Query for In Progress, KRA In Review KRA records as per PHASE 2.
             List<Goal__c> findTheActiveGoal = [
                 SELECT Id 
                 FROM Goal__c 
                 WHERE Fulfillment__c = :fulfilmentId 
                 AND RecordTypeId = :kraRecordTypeId 
-                AND (Status__c = 'In Progress' OR Status__c = 'KRA Inreview') 
+                AND (Status__c = 'In Progress' OR Status__c = 'KRA In Review') 
                 LIMIT 1
             ];
 
