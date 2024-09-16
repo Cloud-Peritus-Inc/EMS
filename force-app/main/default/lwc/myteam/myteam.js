@@ -267,7 +267,7 @@ export default class Myteam extends LightningElement {
                             qualItem.showPmRequest = false;//smaske : PM_Def_163 : hiding View PM Request button for secondary reportees
                         }else{
                             //smaske : PM_Def_123 : 06/Aug/2024
-                            if (qualItem.status == 'KRA Inreview' || qualItem.status == 'In Progress') {
+                            if (qualItem.status == 'KRA In Review' || qualItem.status == 'In Progress') {
                                 console.log("Set value of  allowedit");
                                 qualItem.allowedit = true;
                             }else if (qualItem.status == 'HR KRA Completed' || qualItem.status == 'KRA Completed') {

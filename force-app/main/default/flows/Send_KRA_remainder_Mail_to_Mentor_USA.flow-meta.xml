@@ -237,6 +237,7 @@
             <label>Change Status to Missed</label>
         </rules>
     </decisions>
+    <description>Updated flow to use KRA Status</description>
     <environments>Default</environments>
     <formulas>
         <name>CheckFiftinthDay</name>
@@ -404,7 +405,7 @@
             <field>Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>KRA Inreview</stringValue>
+                <stringValue>KRA In Review</stringValue>
             </value>
         </filters>
         <filters>

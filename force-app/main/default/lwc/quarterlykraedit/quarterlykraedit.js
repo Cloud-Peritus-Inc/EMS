@@ -53,7 +53,7 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
 
     showSaveSubmitButtons;
 
-    STATUS_KRA_INREVIEW = 'KRA Inreview';
+    STATUS_KRA_INREVIEW = 'KRA In Review';
     STATUS_KRA_COMPLETE = 'KRA Completed';
     STATUS_KRA_HRCOMPLETE = 'HR KRA Completed';
     @track isSubmitBtnDisabled = true;
@@ -570,8 +570,8 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         console.log('ratingValue ' + ratingValue);
         if (ratingValue === 0 || ratingValue < 1 || ratingValue > 5 || isNaN(ratingValue) || (ratingValue * 2) % 1 !== 0) {
             event.currentTarget.value = NaN;
-            this.showToast('Rating must be between 1 and 5, and in increments of 0.5.', this.errorVariant, this.toastMode);
-            event.target.setCustomValidity('Rating must be between 1 and 5, and in increments of 0.5.');
+            this.showToast('The rating should be between 1 and 5, with increments of 0.5', this.errorVariant, this.toastMode);
+            event.target.setCustomValidity('The rating should be between 1 and 5, with increments of 0.5');
         } else {
             event.target.setCustomValidity(''); // Clear the error message
         }
