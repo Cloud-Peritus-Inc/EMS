@@ -35,40 +35,40 @@
 					<template if:true={hasData}>
 						<template for:each={data} for:item="goal" for:index="index">
 							<tr key={goal.Id}>
-								<td style="word-wrap:break-word; width: 10%;">
+								<td class="slds-text-align_center" style="word-wrap:break-word; width: 10%;">
 									<div class="slds-wrap">{goal.goalName}</div>
 								</td>
-								<td style="word-wrap:break-word; width: 10%;">
+								<td class="slds-text-align_center" style="word-wrap:break-word; width: 10%;">
 									<div class="slds-wrap">{goal.ProjectName}</div>
 								</td>
-								<td style="width: 10%;">
+								<td class="slds-text-align_center" style="width: 10%;">
 									<div class="slds-wrap">
 										<div class="slds-wrap">
 											<lightning-formatted-text value={goal.resourceName} ></lightning-formatted-text>
 										</div>
 									</div>
 								</td>
-								<td style="width: 15%;">
+								<td class="slds-text-align_center" style="width: 15%;">
 									<div class="slds-wrap">
 										<div class="slds-wrap">
 											<lightning-formatted-text value={goal.resourceRole} ></lightning-formatted-text>
 										</div>
 									</div>
 								</td>
-								<td style="width: 10%;">
+								<td class="slds-text-align_center" style="width: 10%;">
 									<div class="slds-wrap">
 										<div class="slds-wrap">
 											<lightning-formatted-text value={goal.requestedByName} ></lightning-formatted-text>
 										</div>
 									</div>
 								</td>
-								<td style="width: 10%;">
+								<td class="slds-text-align_center" style="width: 10%;">
 									<div class="slds-wrap">
 										<lightning-formatted-date-time value={goal.startDate}>
 										</lightning-formatted-date-time>
 									</div>
 								</td>
-								<td style="width: 10%;">
+								<td class="slds-text-align_center" style="width: 10%;">
 									<div class="slds-wrap">
 										<lightning-formatted-date-time value={goal.endDate}>
 										</lightning-formatted-date-time>
