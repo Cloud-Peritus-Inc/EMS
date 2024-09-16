@@ -176,7 +176,7 @@
                 <leftValueReference>$Record__Prior.Status__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>KRA In Review</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -348,7 +348,7 @@
                 <leftValueReference>$Record__Prior.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>KRA In Review</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
