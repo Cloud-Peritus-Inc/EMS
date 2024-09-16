@@ -2,6 +2,7 @@
 * @author CloudPeritus Inc
 * @date 24/07/2024
 * @description  
+* @test class quarterlyKRAFullViewCtrl_TEST
 *
 * CHANGE HISTORY
 * ====================================================================================================
@@ -73,7 +74,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                               Resource__r.ContactName__c ,Resource__r.Resource_Role__c,Resource__c 
                               FROM Goal__c 
                               WHERE Id=:kraid Limit 1];
-        if(goalRecord.Mentor_KRA_submitted__c == true && tab =='My Team' && goalRecord.Status__c == 'KRA Inreview'){
+        if(goalRecord.Mentor_KRA_submitted__c == true && tab =='My Team' && goalRecord.Status__c == 'KRA In Review'){
             aw.submittedKRAbutton=true; // by making it true will show Complete KRA button on UI
         }
         if(tab =='My Metric'){
@@ -123,7 +124,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
             questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,
+                         Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
                          FROM PM_Configure__r 
                          Where KRA__c =:kraid AND ((Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))
                                                                         OR Mentor_Mentee__c =: loggedInUser.ContactId))
@@ -137,7 +139,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
              questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,
+                         Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
                          FROM PM_Configure__r Where KRA__c =:kraid AND ( Mentor_Mentee__c =: loggedInUser.ContactId OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))))
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];   
@@ -145,7 +148,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
                 questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,
+                         Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
                          FROM PM_Configure__r Where KRA__c =:kraid AND Mentor_Mentee__c =: loggedInUser.ContactId)
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];
@@ -179,6 +183,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                 awn.contactId = contactKey;
                 awn.ProjectName =answer.Project_Name__c!=null? '('+answer.Project_Name__r.Name+')':' ';
                 awn.contactName = answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__r.Name:answer.Reporting_Contact__r.Name;
+                awn.resourceRole =answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__r.Resource_Role__r.Name:answer.Reporting_Contact__r.Resource_Role__r.Name;
                 
                 roleToAnswersMap.get(contactKey).add(awn);
                 answerIdlst.add(answer.Id);
@@ -232,6 +237,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
         public String contactName;
         @AuraEnabled
         public String ProjectName;
+        @AuraEnabled
+        public String resourceRole;
         @AuraEnabled
         public Decimal averageRating;
         @AuraEnabled
