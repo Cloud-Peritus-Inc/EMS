@@ -30,8 +30,6 @@ public without sharing class myPendingFeedbackRequest {
             Set<Id> kraIdSet = new Set<Id>();
             Map<Id, List<PM_Configure__c>> kraToPmConfigMap = new Map<Id, List<PM_Configure__c>>();
             Map<Id, Map<String, PM_Configure__c>> displayedRecordsMap = new Map<Id, Map<String, PM_Configure__c>>();
-            //Map<Id, Id> goalIdToResourceIdMap = new Map<Id, Id>();
-            //Map<Id, String> goalIdToResourceNameMap = new Map<Id, String>();
             Map<String, EMS_TM_Assignment__c> projectVsResourceMap = new Map<String, EMS_TM_Assignment__c>();
             Map<Id, Goal__c> goalStatusMap = new Map<Id, Goal__c>();
             
@@ -61,7 +59,6 @@ public without sharing class myPendingFeedbackRequest {
                         kraToPmConfigMap.put(pmConfig.KRA__c, new List<PM_Configure__c>());
                     }
                     kraToPmConfigMap.get(pmConfig.KRA__c).add(pmConfig);
-                    //goalIdToResourceIdMap.put(pmConfig.KRA__c, pmConfig.KRA__r.Resource__c);
             
                 }
             }
@@ -71,6 +68,7 @@ public without sharing class myPendingFeedbackRequest {
                                     		,Resource__r.Name
                                     		,Resource__r.EMS_TM_User__r.CommunityNickname
                                             ,Status__c
+                                            ,Resource__r.Resource_Role__r.Name 
                                     FROM Goal__c
                                     WHERE Id IN : kraIdSet];
             
@@ -78,7 +76,6 @@ public without sharing class myPendingFeedbackRequest {
                 goalStatusMap.put(goal.Id,goal);
                 if (!displayedRecordsMap.containsKey(goal.Id)) {
                     displayedRecordsMap.put(goal.Id, new Map<String, PM_Configure__c>());
-                    //goalIdToResourceNameMap.put(goal.Id,goal.Resource__r.Name);
                 }
                 
                 List<PM_Configure__c> pmConfigs = kraToPmConfigMap.get(goal.Id);
@@ -127,10 +124,11 @@ public without sharing class myPendingFeedbackRequest {
                     
                     gw.projectId = pmConfig.Project_Name__c;
                     gw.goalId = goalId;
-                    gw.resource = gl.Resource__c; //goalIdToResourceIdMap.get(goalId);
+                    gw.resource = gl.Resource__c; 
                     gw.ProjectName = pmConfig.Project_Name__r.Name;
                     gw.goalName = pmConfig.KRA__r.Goal_Name__c;
-                    gw.resourceName = gl.Resource__r.Name;//goalIdToResourceNameMap.get(goalId);
+                    gw.resourceName = gl.Resource__r.Name;
+                    gw.resourceRole = gl.Resource__r.Resource_Role__r.Name;
                     
                     String assignmentKey = pmConfig.Project_Name__c + '|' + gw.resource;
                     if (projectVsResourceMap.containsKey(assignmentKey)) {
@@ -212,6 +210,9 @@ public without sharing class myPendingFeedbackRequest {
 
         @AuraEnabled
         public String ProjectName;
+
+        @AuraEnabled
+        public String resourceRole;
 
         @AuraEnabled
         public Boolean hideEditBtn;

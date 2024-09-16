@@ -4,26 +4,29 @@
 			<table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
 				<thead>
 					<tr style="color:lightcoral">
-						<th class="slds-border_right tableheading" scope="col" style="width: 5%;">
-							<div class="slds-truncate" title="KRA Name">KRA Name</div>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 5%;">
+							<div class="slds-truncate" title="KRA Name" style="font-size: 13px;">KRA Name</div>
 						</th>
-						<th class="slds-border_right tableheading" scope="col" style="width: 15%;">
-							<div class="slds-truncate" title="Project Name">Project Name</div>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 10%;">
+							<div class="slds-truncate" title="Project Name" style="font-size: 13px;">Project Name</div>
 						</th>
-						<th class="slds-border_right tableheading" scope="col" style="width: 15%;">
-							<div class="slds-truncate" title="Resource Name">Resource Name</div>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 10%;">
+							<div class="slds-truncate" title="Resource Name" style="font-size: 13px;">Resource Name</div>
 						</th>
-						<th class="slds-border_right tableheading" scope="col" style="width: 15%;">
-							<div class="slds-truncate" title="Requested By">Requested By</div>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 15%;">
+							<div class="slds-truncate" title="Resource Role" style="font-size: 13px;">Resource Role</div>
 						</th>
-						<th class="slds-border_right tableheading" scope="col" style="width: 5% !important;">
-							<div class="slds-truncate" title="Assignment Start Date">Assignment Start Date</div>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 10%;">
+							<div class="slds-truncate" title="Requested By" style="font-size: 13px;">Requested By</div>
 						</th>
-						<th class="slds-border_right tableheading" scope="col" style="width: 5% !important;">
-							<div class="slds-truncate" title="Assignment End Date">Assignment End Date</div>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 5% !important;">
+							<div class="slds-truncate" title="Assignment Start Date" style="font-size: 13px;">Assignment Start Date</div>
 						</th>
-						<th class="slds-border_right tableheading" scope="col" style="width: 15%;">
-							<div class="slds-truncate" title="Actions"> Actions </div>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 5% !important;">
+							<div class="slds-truncate" title="Assignment End Date" style="font-size: 13px;">Assignment End Date</div>
+						</th>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 13%;">
+							<div class="slds-truncate" title="Actions" style="font-size: 13px;"> Actions </div>
 						</th>
 					</tr>
 				</thead>
@@ -35,10 +38,10 @@
 								<td style="word-wrap:break-word; width: 10%;">
 									<div class="slds-wrap">{goal.goalName}</div>
 								</td>
-								<td style="word-wrap:break-word; width: 15%;">
+								<td style="word-wrap:break-word; width: 10%;">
 									<div class="slds-wrap">{goal.ProjectName}</div>
 								</td>
-								<td style="width: 15%;">
+								<td style="width: 10%;">
 									<div class="slds-wrap">
 										<div class="slds-wrap">
 											<lightning-formatted-text value={goal.resourceName} ></lightning-formatted-text>
@@ -48,31 +51,38 @@
 								<td style="width: 15%;">
 									<div class="slds-wrap">
 										<div class="slds-wrap">
+											<lightning-formatted-text value={goal.resourceRole} ></lightning-formatted-text>
+										</div>
+									</div>
+								</td>
+								<td style="width: 10%;">
+									<div class="slds-wrap">
+										<div class="slds-wrap">
 											<lightning-formatted-text value={goal.requestedByName} ></lightning-formatted-text>
 										</div>
 									</div>
 								</td>
-								<td style="width: 15%;">
+								<td style="width: 10%;">
 									<div class="slds-wrap">
 										<lightning-formatted-date-time value={goal.startDate}>
 										</lightning-formatted-date-time>
 									</div>
 								</td>
-								<td style="width: 15%;">
+								<td style="width: 10%;">
 									<div class="slds-wrap">
 										<lightning-formatted-date-time value={goal.endDate}>
 										</lightning-formatted-date-time>
 									</div>
 								</td>
-								<td class="slds-text-align_center slds-p-around_medium">
+								<td class="slds-text-align_center slds-p-around_medium" >
 									<template if:false={goal.hideEditBtn}>
 										<lightning-button-icon icon-name="action:edit" size="large" variant="bare" alternative-text="Edit KRA" data-index={index} onclick={editKRAModalPopUp} class="slds-m-left_xx-small"></lightning-button-icon>
-									</template>		
+									</template>										
 									<template if:false={goal.hideRejectBtn}>						
 										<lightning-button style="margin-right: 10px;" variant="destructive" label="Reject" data-id={goal.Id} data-index={index} onclick={rejectRequestHandler}></lightning-button>
 									</template>
 									<template if:false={goal.hideAcceptBtn}>
-										<lightning-button variant="success" label="Accept" data-id={goal.Id} data-index={index} onclick={acceptRequestHandler}></lightning-button>
+										<lightning-button  variant="success" label="Accept" data-id={goal.Id} data-index={index} onclick={acceptRequestHandler}></lightning-button>
 									</template>
 								</td>
 							</tr>
