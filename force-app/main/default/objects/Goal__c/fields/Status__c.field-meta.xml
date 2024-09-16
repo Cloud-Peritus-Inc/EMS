@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Active</fullName>
+                <default>false</default>
+                <label>Active</label>
+            </value>
+            <value>
+                <fullName>Missed</fullName>
+                <default>false</default>
+                <label>Missed</label>
+            </value>
+            <value>
+                <fullName>New</fullName>
+                <default>false</default>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>KRA In Review</fullName>
+                <default>false</default>
+                <label>KRA In Review</label>
+            </value>
+            <value>
+                <fullName>KRA Completed</fullName>
+                <default>false</default>
+                <label>KRA Completed</label>
+            </value>
+            <value>
+                <fullName>Pulse Submitted</fullName>
+                <default>false</default>
+                <label>Pulse Submitted</label>
+            </value>
+            <value>
+                <fullName>Pulse Requested</fullName>
+                <default>false</default>
+                <label>Pulse Requested</label>
+            </value>
+            <value>
+                <fullName>Draft</fullName>
+                <default>false</default>
+                <label>Draft</label>
+            </value>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>HR KRA Completed</fullName>
+                <default>false</default>
+                <label>HR KRA Completed</label>
+            </value>
+            <value>
+                <fullName>Completed - OnTime</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Completed - OnTime</label>
+            </value>
+            <value>
+                <fullName>Completed - PostTime</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Completed - PostTime</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
