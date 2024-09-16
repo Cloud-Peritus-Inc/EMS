@@ -160,25 +160,24 @@
 
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
-										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname}</h3>
+										<div key={contactAnswer.contact.id} class="answer-column ">
+											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname}<br>{contactAnswer.contact.resourceRole}</h3>
 
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
-												<div class="fieldsRow" key={answer.answerId}>
+												<div key={answer.answerId}>
 													<lightning-helptext content={answer.ratingoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input type="text" variant="standard"
 														key={answer.answerId} required name="Rating" label="Rating"
 														value={answer.rating} disabled>
 													</lightning-input>
-												</div>
-												<div class="fieldsRow" key={answer.answerId}>
+												
 													<lightning-helptext content={answer.descriptionoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input-rich-text label-visible label="Description"
 														required key={answer.answerId} name="Description"
-														value={answer.answerValue} disabled
+														value={answer.answerValue} disabled formats={formats}
 														disabled-categories="INSERT_CONTENT">
 													</lightning-input-rich-text>
 												</div>
@@ -219,23 +218,22 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} </h3>
+											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
-												<div class="fieldsRow" key={answer.answerId}>
+												<div key={answer.answerId}>
 													<lightning-helptext content={answer.ratingoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input type="text" variant="standard"
 														key={answer.answerId} required name="Rating" label="Rating"
 														value={answer.rating} disabled>
 													</lightning-input>
-												</div>
-												<div class="fieldsRow" key={answer.answerId}>
+												
 													<lightning-helptext content={answer.descriptionoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input-rich-text label-visible label="Description"
 														required key={answer.answerId} name="Description"
-														value={answer.answerValue} disabled
+														value={answer.answerValue} disabled formats={formats}
 														disabled-categories="INSERT_CONTENT">
 													</lightning-input-rich-text>
 												</div>
@@ -275,23 +273,22 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} </h3>
+											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
-												<div class="fieldsRow" key={answer.answerId}>
+												<div key={answer.answerId}>
 													<lightning-helptext content={answer.ratingoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input type="text" variant="standard"
 														key={answer.answerId} required name="Rating" label="Rating"
 														value={answer.rating} disabled>
 													</lightning-input>
-												</div>
-												<div class="fieldsRow" key={answer.answerId}>
+												
 													<lightning-helptext content={answer.descriptionoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input-rich-text label-visible label="Description"
 														required key={answer.answerId} name="Description"
-														value={answer.answerValue} disabled
+														value={answer.answerValue} disabled formats={formats}
 														disabled-categories="INSERT_CONTENT">
 													</lightning-input-rich-text>
 												</div>
@@ -331,23 +328,22 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} </h3>
+											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
-												<div class="fieldsRow" key={answer.answerId}>
+												<div key={answer.answerId}>
 													<lightning-helptext content={answer.ratingoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input type="text" variant="standard"
 														key={answer.answerId} required name="Rating" label="Rating"
 														value={answer.rating} disabled>
 													</lightning-input>
-												</div>
-												<div class="fieldsRow" key={answer.answerId}>
+												
 													<lightning-helptext content={answer.descriptionoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input-rich-text label-visible label="Description"
 														required key={answer.answerId} name="Description"
-														value={answer.answerValue} disabled
+														value={answer.answerValue} disabled formats={formats}
 														disabled-categories="INSERT_CONTENT">
 													</lightning-input-rich-text>
 												</div>
@@ -383,9 +379,11 @@
 						<tr>
 						</tr>
 						<tr>
-							<th></th>
+							<th>Employee Name(Project Name)<br>Role
+
+							</th>
 							<template for:each={contacts} for:item="contact">
-								<th key={contact.contactId}><strong>{contact.contactname} {contact.projectname} </strong>
+								<th key={contact.contactId}><strong>{contact.contactname} {contact.projectname}<br>{contact.resourceRole} </strong>
 								</th>
 							</template>
 						</tr>
