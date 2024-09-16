@@ -90,7 +90,7 @@ public class sendPmAnswerCancellationEmail_Test {
         System.debug('gridPmConfigAns size :: ' + gridPmConfigAns.size());
         
         Kra.Mentor_KRA_submitted__c = true;
-        kra.Status__c = 'KRA Inreview';
+        kra.Status__c = 'KRA In Review';
         update Kra;
         
         // Create a Set to store the Ids

@@ -39,10 +39,10 @@
 	border: 2px solid rgb(190, 190, 190);
 	border-radius: 7px; 
 }
-.fieldsRow{
+/*.fieldsRow{
 	display: flex;
 	flex-direction: row;
-}
+}*/
 .slds-modal__container {
     max-width: 80rem !important;
     width: 80% !important;

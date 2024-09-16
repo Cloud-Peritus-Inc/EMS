@@ -37,7 +37,7 @@ public class sendPmAnswerCancellationEmail implements TriggerAction.AfterUpdate 
                                                   AND Project_Name__c != null
                                                   AND Status__c = 'Cancelled'
                                                   AND RecordTypeId =: answerRecordTypeId
-                                                  AND KRA__r.Status__c = 'KRA Inreview'
+                                                  AND KRA__r.Status__c = 'KRA In Review'
                                                   AND Id IN :pmConfigRecordIds];
         
         System.debug('Total cancelledRecords size ' +  cancelledRecords.size());

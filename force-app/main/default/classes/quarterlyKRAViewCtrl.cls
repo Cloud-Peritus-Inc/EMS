@@ -6,7 +6,7 @@
  */
 public without sharing class quarterlyKRAViewCtrl {
 
-    public static final String STATUS_KRA_INREVIEW = 'KRA Inreview';
+    public static final String STATUS_KRA_INREVIEW = 'KRA In Review';
     public static final String STATUS_KRA_COMPLETE = 'KRA Completed';
 
     @AuraEnabled(cacheable = true)
@@ -171,7 +171,7 @@ public without sharing class quarterlyKRAViewCtrl {
             System.debug('submitKraRecord Record Detail : :' + kraRecord.Resource__c);
             //smaske: Updating Status conditionally for [Defect : PM_040]
             /*
-            1) When mentee SUBMIT the KRA, Status will change to "KRA Inreview" as he will submit his KRA to his mentor for review.
+            1) When mentee SUBMIT the KRA, Status will change to "KRA In Review" as he will submit his KRA to his mentor for review.
             2) When Mentor SUBMIT the KRA, Status will change to "KRA Complete: as he will Complete KRA review from his end and submit the KRA as a Final Action.
             */
 
@@ -186,7 +186,7 @@ public without sharing class quarterlyKRAViewCtrl {
             }else if (RRR.Resource_Reports_To__c == con.Id) {
                 //smaske :[10-July-2024] : Updatng Mentor_KRA_submitted__c checkbox to TRUE when mentor submits his all answer records
                 kraRecord.Mentor_KRA_submitted__c	= true;
-                kraRecord.Status__c = STATUS_KRA_INREVIEW; //smaske : Setting status to "KRA Inreview" when mentor submits his PM ANSWERS 
+                kraRecord.Status__c = STATUS_KRA_INREVIEW; //smaske : Setting status to "KRA In Review" when mentor submits his PM ANSWERS 
             }
 
             Update kraRecord;

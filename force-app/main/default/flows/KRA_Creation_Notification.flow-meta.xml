@@ -162,7 +162,7 @@
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>KRA In Review</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -176,7 +176,7 @@
                 <leftValueReference>$Record__Prior.Status__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>KRA In Review</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -255,7 +255,7 @@
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>KRA In Review</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -348,14 +348,14 @@
                 <leftValueReference>$Record__Prior.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>KRA In Review</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>KRA In Review</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -385,7 +385,7 @@
             <label>Mentor KRA Resubmitted</label>
         </rules>
     </decisions>
-    <description>Shubham [13/Sep/2024] : Added new path for Mentor KRA Resubmitted</description>
+    <description>Shubham [16/Sep/2024] : Updated for KRA status field</description>
     <environments>Default</environments>
     <interviewLabel>KRA Creation Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>KRA Creation Notification</label>

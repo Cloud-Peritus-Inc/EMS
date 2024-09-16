@@ -103,7 +103,7 @@
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>KRA In Review</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -116,7 +116,8 @@
             <label>If KRA Status is InReview</label>
         </rules>
     </decisions>
-    <description>Shubham: Update KRA Rating Field modified to use new Overall Rating field based on Phase 2 requirements</description>
+    <description>Shubham: Update KRA Rating Field modified to use new Overall Rating field based on Phase 2 requirements
+Updated flow for KRA Status field</description>
     <environments>Default</environments>
     <interviewLabel>Update KRA Rating Field {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update KRA Rating Field</label>
@@ -264,7 +265,7 @@
             <field>Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>KRA Inreview</stringValue>
+                <stringValue>KRA In Review</stringValue>
             </value>
         </filters>
         <filters>
