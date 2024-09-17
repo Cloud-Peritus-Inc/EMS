@@ -1,0 +1,303 @@
+<template>
+	<div class="slds-card slds-box slds-p-around_small">
+		<h3 class="slds-section__title slds-theme_shade">
+			<span style="font-size:18px;font-weight:bold;" class="slds-truncate slds-p-horizontal_small">Medical
+				Insurance</span>
+		</h3> <br>
+		<div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+			class="slds-p-around_xx-small">
+			<h3 class="slds-section__title slds-theme_shade">
+				<span class="slds-truncate slds-p-horizontal_small">Beneficiary Details</span>
+			</h3>
+			<br>
+			<template if:true={hideCreateOrEditButton}>
+				<div style="text-align:right">
+					<lightning-button label={showMedicalDetailsLabel} slot="actions" variant="brand"
+						onclick={fullmyInfopage} style="margin-right:10px">
+					</lightning-button>
+				</div>
+			</template>
+			<br>
+			<template if:false={showMedicalDetails}>
+				<p style="text-align:center;padding:5px;font-size:20px;font-family:bold;color:red">There are no
+					beneficiary details currently</p>
+			</template>
+			<template if:true={showMedicalDetails}>
+				<lightning-record-edit-form record-id={medicalInsuranceId} object-api-name="EMS_EM_Benefits__c"
+					onsuccess={handleSuccess} onsubmit={handleSubmit} density="comfy">
+					<lightning-messages>
+					</lightning-messages>
+					<div class="slds-grid slds-gutters">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name="EMS_EM_Nominee__c" disabled value={recordId}>
+							</lightning-input-field>
+							<lightning-input-field field-name="EMS_EM_Valid_From__c" disabled>
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name="EMS_EM_Membership_No__c" disabled required>
+							</lightning-input-field>
+							<lightning-input-field field-name="EMS_EM_Relationship__c" disabled required> 
+							</lightning-input-field>
+						</div>
+					</div>
+				</lightning-record-edit-form>
+			</template>
+		</div>
+		<br>
+		<!--full my info Details modal start -->
+		<template if:true={isfullmyinfoModal}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+
+					<!-- modal header start -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							title="Close" onclick={hideModalBox}>
+							<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+								size="small"></lightning-icon>
+							<span class="slds-assistive-text">Close</span>
+						</button>
+						<h3 class="slds-section__title slds-theme_shade">
+							<span class="slds-truncate slds-p-horizontal_small">Beneficiary Details</span>
+						</h3>
+
+					</header>
+
+					<!-- modal body start -->
+					<div class="slds-modal__content slds-p-around_medium">
+						<lightning-record-edit-form object-api-name="EMS_EM_Benefits__c" record-id={medicalInsuranceId}
+							onsuccess={handleSuccess} onerror={Handlererror} onsubmit={handleSubmit} density="comfy">
+							<div class="slds-grid slds-gutters">
+								<div class="slds-col slds-size_1-of-2">
+									<lightning-input-field field-name="EMS_EM_Nominee__c" value={recordId} disabled>
+										<hr style="margin-top:2px">
+									</lightning-input-field>
+									<lightning-input-field field-name="EMS_EM_Valid_From__c" onchange={handleValidationDateforBenefits}>
+										<hr style="margin-top:2px">
+									</lightning-input-field>
+								</div>
+								<div class="slds-col slds-size_1-of-2">
+									<lightning-input-field field-name="EMS_EM_Membership_No__c" required>
+										<hr style="margin-top:2px">
+									</lightning-input-field>
+									<lightning-input-field field-name="EMS_EM_Relationship__c" required>
+										<hr style="margin-top:2px">
+									</lightning-input-field>
+								</div>
+							</div>
+							<br>
+
+							<div style="text-align:center">
+								<lightning-button variant="brand" button style="margin:5px;" type="submit"
+									label={showMedicalDetailsLabel} disabled={buttonDisable}> </lightning-button>
+							</div>
+							<br><br>
+							<footer class="slds-modal__footer">
+								<lightning-button variant="brand" button style="margin:5px;" onclick={hideModalBox}
+									label="Cancel"></lightning-button>
+							</footer>
+						</lightning-record-edit-form>
+					</div>
+				</div>
+	</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+<!--full my info Details modal Ends -->
+
+
+<br>
+<div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
+	class="slds-p-around_xx-small">
+	<h3 class="slds-section__title slds-theme_shade">
+		<span class="slds-truncate slds-p-horizontal_small">Dependents Details</span>
+	</h3> <br>
+	<template if:true={hideCreateOrEditButton}>
+		<div style="text-align:right">
+
+			<lightning-button label={showLabel} slot="actions" variant="brand" onclick={dependentpage}
+				style="margin-right:10px"></lightning-button>
+		</div> &nbsp;&nbsp; &nbsp;
+	</template>
+	<br>
+	<template if:true={checkForDependents}>
+		<p style="text-align:center;padding:5px;font-size:20px;font-family:bold;color:red">There are no dependents
+			currently</p>
+	</template>
+	<template if:true={hideExsistingDependencies}>
+		<template for:each={dependenciesRecordsArray} for:item="eachDepencies">
+			<lightning-record-edit-form object-api-name="EMS_EM_Dependents__c" record-id={eachDepencies.Id}
+				onsuccess={handleSuccess} onerror={Handlererror} key={eachDepencies.Id} onsubmit={handleSubmit}
+				density="comfy" class="updateExsisiingRecords">
+				<div class="slds-grid slds-gutters">
+					<div class="slds-col slds-size_1-of-3">
+						<lightning-input-field field-name="Name" disabled>
+						</lightning-input-field>
+					</div>
+					<div class="slds-col slds-size_1-of-3">
+						<lightning-input-field field-name="EMS_EM_Relationship_to_Nominee__c" disabled>
+						</lightning-input-field>
+					</div>
+					<div class="slds-col slds-size_1-of-3">
+						<lightning-input-field field-name="EMS_EM_Date_of_Birth__c" disabled>
+						</lightning-input-field>
+						<lightning-input-field field-name="EMS_EM_Contact__c" disabled class="slds-hide"
+							value={recordId}>
+						</lightning-input-field>
+					</div>
+				</div>
+			</lightning-record-edit-form>
+		</template>
+	</template>
+	<!--full my info Details modal start -->
+	<template if:true={isdependentpageModal}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+			<div class="slds-modal__container">
+
+				<!-- modal header start -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={hideModalBox}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h3 class="slds-section__title slds-theme_shade">
+						<span class="slds-truncate slds-p-horizontal_small">Dependents Details</span>
+					</h3>
+
+				</header>
+
+				<!-- modal body start -->
+				<div class="slds-modal__content slds-p-around_medium">
+					<div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
+						class="slds-p-around_x-small">
+						<h3 class="slds-section__title slds-theme_shade">
+							<span class="slds-truncate slds-p-horizontal_small">Exsisting Dependents</span>
+						</h3>
+						<br>
+						<template if:true={checkForDependents}>
+							<p style="text-align:center;padding:5px;font-size:20px;font-family:bold;color:red">There are
+								no dependents currently</p>
+						</template>
+						<template if:true={hideExsistingDependencies}>
+							<template for:each={dependenciesRecordsArray} for:item="eachDepencies">
+								<lightning-record-edit-form object-api-name="EMS_EM_Dependents__c"
+									record-id={eachDepencies.Id} onsuccess={handleSuccess} onerror={Handlererror}
+									key={eachDepencies.Id} onsubmit={handleSubmit} density="comfy"
+									class="updateExsisiingRecords">
+									<div class="slds-grid slds-wrap">
+										<div class="slds-col slds-size_4-of-12">
+											<lightning-input-field field-name="Name" onchange={handleValidationforUpdateDependents}>
+												<hr style="margin-top:2px">
+											</lightning-input-field>
+										</div>
+										<div class="slds-col slds-size_4-of-12">
+											<lightning-input-field field-name="EMS_EM_Relationship_to_Nominee__c">
+												<hr style="margin-top:2px">
+											</lightning-input-field>
+										</div>
+										<div class="slds-col slds-size_3-of-12">
+											<lightning-input-field field-name="EMS_EM_Date_of_Birth__c" onchange={handleValidationDateDependents} >
+												<hr style="margin-top:2px">
+											</lightning-input-field>
+										</div>
+										<div class="slds-col slds-size_1-of-12" style="margin-top:23px;">
+											<lightning-button-icon data-recordid={eachDepencies.Id}
+												icon-name="action:delete" onclick={deleteDependencyRecord} size="medium"
+												class="slds-icon-text-error">
+											</lightning-button-icon>
+										</div>
+										<lightning-input-field field-name="EMS_EM_Contact__c" disabled class="slds-hide"
+											value={recordId}>
+											<hr style="margin-top:2px">
+										</lightning-input-field>
+									</div>
+								</lightning-record-edit-form>
+							</template>
+							<br>
+							<diV style="text-align:center">
+								<lightning-button variant="brand" button style="margin:5px;" label="Update"
+									onclick={updateRecordsOfExsistingHandler} disabled={buttonDisable}></lightning-button>
+							</div>
+
+						</template>
+					</div>
+					<br> <br>
+					<div if:true={hideCreateNewDependentsRecords}
+						style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
+						class="slds-p-around_x-small">
+						<h3 class="slds-section__title slds-theme_shade">
+							<span class="slds-truncate slds-p-horizontal_small">Create New Dependents
+							</span>
+						</h3>
+						<br>
+						<template for:each={itemList} for:item="item" for:index="index">
+							<lightning-record-edit-form key={item.id} object-api-name="EMS_EM_Dependents__c"
+								class="createDependenciesRecord" density="comfy">
+
+								<div class="slds-grid slds-wrap">
+									<div class="slds-col slds-size_3-of-12">
+										<lightning-input-field field-name="Name" required variant="label-stacked" onchange={handleValidation}
+											class="inputValField">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_3-of-12">
+										<lightning-input-field field-name="EMS_EM_Relationship_to_Nominee__c"
+											variant="label-stacked" required class="inputValField">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_3-of-12">
+										<lightning-input-field field-name="EMS_EM_Date_of_Birth__c" onchange={handleValidationDate} 
+											variant="label-stacked" required class="inputValField">
+										</lightning-input-field>
+										<lightning-input-field field-name="EMS_EM_Contact__c" variant="label-stacked"
+											class="slds-hide inputValField" value={recordId} required>
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_3-of-12" style="margin-top:18px">
+										&nbsp;&nbsp; <lightning-icon icon-name="action:new" access-key={item.id}
+											id={index} alternative-text="Add Row" size="small" title="Add Row"
+											onclick={addRow} style="cursor:pointer">
+										</lightning-icon> &nbsp;&nbsp;
+										<lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+											alternative-text="Delete Row" size="small" title="Delete Row"
+											onclick={removeRow} style="cursor:pointer">
+										</lightning-icon>
+									</div>
+								</div> &nbsp;&nbsp; &nbsp;&nbsp;
+
+
+							</lightning-record-edit-form>
+						</template>
+						<lightning-layout>
+							<br>
+							<br>
+							<br>
+							<br>
+							<div class="slds-align_absolute-center">
+								<lightning-button variant="success" onclick={handleSubmit1} name="submit"
+									label="Submit">
+								</lightning-button>
+							</div>
+						</lightning-layout>
+
+					</div>
+				</div>
+				<footer class="slds-modal__footer">
+					<lightning-button variant="brand" button style="margin:5px;" onclick={hideModalBox} label="Cancel">
+					</lightning-button>
+				</footer>
+			</div>
+		</section>
+
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!--full my info Details modal Ends -->
+
+</div>
+</div>
+</template>
