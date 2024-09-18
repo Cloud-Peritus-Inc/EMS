@@ -218,7 +218,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
+											<h3 style="height:70px;">{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div key={answer.answerId}>
@@ -273,7 +273,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
+											<h3 style="height:70px;">{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div key={answer.answerId}>
@@ -328,7 +328,7 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3>{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
+											<h3 style="height:70px;">{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div key={answer.answerId}>
