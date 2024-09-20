@@ -48,8 +48,6 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     showKraEditButton = false;
     submittedKRAbutton = false;
 
-    formats = ['bold','image','link','table' ];
-
     connectedCallback() {
         this.orgDomainId = window.location.origin;
         console.log('this.tab-->' + this.tab);
