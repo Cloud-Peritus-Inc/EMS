@@ -29,7 +29,7 @@ public class timesheetRecordApprovalProcess implements TriggerAction.AfterUpdate
     private static String USA = 'California - USA';
     private static String Client_Projects = 'Client Projects';
     private static String Global_Projects = 'Global Projects';
-    private static String Internal_Projects = '	Internal Projects';
+    private static String Internal_Projects = 'Internal Projects';
     private static String TimesheetLineItemsApproval = 'Timesheet_Records_Approval';
     
     
