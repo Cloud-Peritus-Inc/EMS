@@ -58,8 +58,9 @@ public class PrepopulateMangersnameClass implements triggerAction.BeforeInsert {
                     Map<Id, Resource_Resource_Relationship__c> resourceMap = new Map<Id, Resource_Resource_Relationship__c>();
                     for (Resource_Resource_Relationship__c resource : [SELECT Id, Resource__r.Name, Resource__r.Email, Resource__c, Resource_Reports_To__r.EMS_TM_User__c, Resource_Reports_To__r.Email, Resource_Reports_To__c, Resource_Reports_To__r.Name, Resource__r.EMS_TM_User__c,Relationship_Type__c
                                                                        FROM Resource_Resource_Relationship__c
-                                                                       WHERE Resource__c = :con.Id]) {                 
-                                                                         if(resource.Relationship_Type__c.contains('Leave Approver')){
+                                                                       WHERE Resource__c = :con.Id]) { 
+                                                                           //smaske: [25/Sep/2024] :[PM_Def_208] : Replacing 'Leave Approver' with 'Resource Manager'
+                                                                         if(resource.Relationship_Type__c.contains('Resource Manager')){
                                                                                resourceMap.put(resource.Resource_Reports_To__r.EMS_TM_User__c, resource);
 																			}
                                                                        }
@@ -71,6 +72,8 @@ public class PrepopulateMangersnameClass implements triggerAction.BeforeInsert {
                     if(tslProjRec.Type_Of_Project__c == Global_Projects && !resourceMap.isEmpty()){
                             List<Id> idList = new List<Id>(resourceMap.Keyset());
                             timesheetproject.Timesheet_Approver__c=idList[0];
+                        String approverName = getUserName(timesheetproject.Timesheet_Approver__c);
+                        System.debug('## approverName' + approverName);
                             timesheetproject.ApproverLastName__c = getUserName(timesheetproject.Timesheet_Approver__c);
                     }else{
                         //Location Based Approval for CLIENT PROJECTS 
