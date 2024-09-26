@@ -47,7 +47,8 @@ public without sharing class populateApproverDetails implements TriggerAction.Be
             contactIdSet.add(newRec.EMS_LM_Contact__c);
         }
         system.debug('====contactIdSet===='+contactIdSet);
-        Map<Id,Id> resourceHiearchyMap = new Map<Id,Id>(); 
+        Map<Id,Id> resourceHiearchyMap = new Map<Id,Id>();
+        //Ravitheja -- PM_Def_207 --> Changed the code to get approver for the leave request.
         for(contact conRec : [SELECT Id, LeaveApprover__c, LeaveApprover__r.LeaveApprover__c,LeaveApprover__r.LeaveApprover__r.LeaveApprover__c,Override_the_standard_level_of_approval__c, Level_of_Approval__c 
 							  FROM Contact 
 							  WHERE Id IN :contactIdSet
@@ -65,7 +66,7 @@ public without sharing class populateApproverDetails implements TriggerAction.Be
             }
         }
         
-        
+        //Ravitheja -- PM_Def_207 --> checking Relationship_Type__c to get the approver.
         if(!contactIdSet.isEmpty()){
             resourceMap = new Map<ID, Contact>([SELECT Id,Name,Override_the_standard_level_of_approval__c,Level_of_Approval__c,Resource_Role__c,Resource_Role__r.Name,Resource_Role__r.Level_of_Approval__c,Resource_Role__r.Auto_Approve__c,EMS_TM_User__c,EMS_TM_User__r.FirstName, EMS_TM_User__r.LastName,
                                                 (SELECT Id,Resource_Reports_To__c,Resource_Reports_To_User__c FROM Resource_Resource_Relationships__r WHERE Resource_Reports_To_User__c != null AND Relationship_Type__c INCLUDES ('Leave Approver'))
