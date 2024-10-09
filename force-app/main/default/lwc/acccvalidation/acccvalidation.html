@@ -338,8 +338,12 @@
                                         value={it.value.Project_Task__c} onchange={handleUserInput} options={it.value.newTaskOptionList}></lightning-combobox>
                                 </template>
                                 <template lwc:else>
-                                    <lightning-input name="Project_Task__c" variant="label-hidden" data-id={it.index} value={it.value.Project_Task__c}
-                                    disabled={disableSubmited}></lightning-input>
+                                    <!--<lightning-input name="Project_Task__c" variant="label-hidden" data-id={it.index} value={it.value.Project_Task__c}
+                                    disabled={disableSubmited}></lightning-input> -->
+                                    <!-- smaske : 08/oct/2024 : TS_012 :  replacing input with combobox as for Global/OOO projects newTaskOptionList will be blank and projectTaskOptions will be populated as per existing code conditon -->
+                                    <lightning-combobox name="Project_Task__c" variant="label-hidden" placeholder="Choose" data-id={it.index} disabled={disableSubmited}
+                                    value={it.value.Project_Task__c} onchange={handleUserInput} options={it.value.projectTaskOptions}></lightning-combobox>
+                                    <!-- smaske : 08/oct/2024 : TS_012 : End -->
                                 </template>
                                 
                                 <!-- <lightning-combobox name="Project_Task__c"
