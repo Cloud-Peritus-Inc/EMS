@@ -128,7 +128,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             // console.log('assignmentProject');
         console.log('WireData==>>>>>>    ',JSON.stringify(data));
         console.log('proj ###########'+JSON.stringify(data.project));
-        console.log('project task===='+JSON.stringify(data.projectTaskList));
+        console.log('project task===='+JSON.stringify(data.projectTasks));
             // this.timeSheetRecord.User__c = data.User.Id;
             this.timeSheetRecord.Resource__c = data.User.Contacts__r[0].Id;
              console.log('RESOURCEID'+this.timeSheetRecord.Resource__c);
@@ -149,10 +149,12 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             }
 
             let projectTaskList = data.projectTasks;
-            console.log('projectTaskValues ' + projectTaskList);
+            console.log('projectTaskValues ' + JSON.stringify(projectTaskList));
             if (projectTaskList) {
                 console.log('this.projectTaskRecords========131',JSON.stringify(this.projectTaskRecords));
+                console.log('this.projectTaskList========155',JSON.stringify(this.projectTaskList));
                 this.projectTaskRecords = projectTaskList;
+                console.log('this.projectTaskRecords========157',JSON.stringify(this.projectTaskRecords));
                 projectTaskList.forEach(value => {
                     this.projectTaskValues.push({ value: value.Name, label: value.Name });
                 });
@@ -459,8 +461,10 @@ map2
             console.log('type of leave================',this.leaveRecords);
             if (this.leaveRecords.length > 0) {
                 let oooProject = this.projectRecords.find(item => item.Name === 'OOO');
+                console.log(' oooProject ==========' + JSON.stringify(oooProject));
                 if(oooProject != null || oooProject != undefined ){
-                let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true,EMS_TM_ProjectTask__c:this.resourcerole, projectValueAvailable: true, projectAssignAvail: true, projectTaskDuplicate: false,newTaskOptionList: this.pickListRecords.oooPicklist,Project_Task__c:'Paid time-off'};
+                    //smaske: TS_012 :  [08/Oct/2024] : replacing "Paid time-off" with "Paid time off"
+                let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true,EMS_TM_ProjectTask__c:this.resourcerole, projectValueAvailable: true, projectAssignAvail: true, projectTaskDuplicate: false,newTaskOptionList: this.pickListRecords.oooPicklist,Project_Task__c:'Paid time off'};
                 this.leaveRecords.forEach(leave => {
                  console.log('role406===============',record.EMS_TM_ProjectTask__c);
                   console.log('leaves405===============',leave);
