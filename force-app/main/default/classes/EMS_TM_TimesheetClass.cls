@@ -220,8 +220,13 @@ public class EMS_TM_TimesheetClass {
         picklistValues = [SELECT Id, EMS_TM_Value__c, EMS_TM_Label__c, 
                                                         EMS_TM_Type__c FROM EMS_TM_Picklist_value__c];
 
-        projectTaskList = [SELECT Id, Project_Name__c, Name
+        projectTaskList = [SELECT Id, Project_Name__c,Project_Name__r.Type_Of_Project__c, Name
                         FROM Project_Task__c WHERE Project_Name__c in :projects];
+
+                        // smaske : 08/oct/2024 : TS_012 : Fetching the GlobalProject TaskList as well for rendering the task in dropdown
+                        projectTaskList.addAll([SELECT Id, Project_Name__c, Project_Name__r.Type_Of_Project__c, Name
+                        FROM Project_Task__c 
+                        WHERE Project_Name__r.Type_Of_Project__c = 'Global Projects']);
 
 
         wrapperTimesheetRecords timesheetWrapper = new wrapperTimesheetRecords();
@@ -381,11 +386,12 @@ public class EMS_TM_TimesheetClass {
             }
             }
 
-            if (!GlobalProjectsList.isEmpty()) {
+            // smaske : 08/oct/2024 : TS_012 : Not passing the Global Project task data as updated code in getAssignmentProject method
+            /*if (!GlobalProjectsList.isEmpty()) {
                 for (EMS_TM_Project__c gpl : GlobalProjectsList) {
                     projectIDs.add(gpl.Id);
                 }
-            }
+            }*/
 
             List<EMS_TM_Project__c> ProjectListWithTask = new List<EMS_TM_Project__c>();
             if (!projectIDs.isEmpty()) {
