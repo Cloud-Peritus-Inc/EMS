@@ -356,6 +356,8 @@ test.stopTest();
             EMS_TM_TimesheetClass.returnProjectTasks();
             EMS_TM_TimesheetClass.getTimeSheetData(weekEnd,user.id);
             EMS_TM_TimesheetClass.reviseTimesheet(timesheetRec2);
+            //smaske : Calling getUserProjectAndProjectTask method
+            EMS_TM_TimesheetClass.getUserProjectAndProjectTask();
             test.stopTest();
         }
     }
