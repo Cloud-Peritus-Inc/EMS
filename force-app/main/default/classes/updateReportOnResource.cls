@@ -63,8 +63,6 @@ public without sharing class updateReportOnResource implements TriggerAction.Aft
                 // Check if 'Resource Manager' is in the multi-select picklist
                 if (newRec.Relationship_Type__c.contains('Resource Manager')) {
                     contactToUpdate.ReportsToId = newRec.Resource_Reports_To__c;
-                    //smaske : LMS_007 : 11/oct/2024 : Assigning Reporting Manager on Contact level same as Reporting Manager from Resource Relationship Records.
-                    contactToUpdate.Resource_Manager__c = newRec.Resource_Reports_To__c;
                 }
                                 
                 // Add the updated contact to the list
