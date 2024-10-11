@@ -269,14 +269,14 @@ public class timesheetRecordApprovalProcess implements TriggerAction.AfterUpdate
                         }
                     }else{
                         //Location Based Approval for CLIENT PROJECTS 
-                        if(con.Work_Location__c != null && con.Work_Location__r.Name == HYDERABAD && !resourceMap.isEmpty() && tslProjRec.Type_Of_Project__c == Client_Projects){
+                        if(con.Work_Location__c != null && con.Work_Location__r.Name == HYDERABAD && (tslProjRec.Type_Of_Project__c == Client_Projects || tslProjRec.Type_Of_Project__c == Internal_Projects)){
                             System.debug('INSIDE HYDERABAD');
                             if (activeProcesses2.isEmpty()) {
                                 System.debug('INSIDE activeProcesses2');
                                 reqApr = configureApprovalSubmitRequest(reqApr,timesheetproject,offShoreUser,bothOnShoreAndOffShoreUsers,Client_Projects,resourceMap);
                                 processApprovalRequest(reqApr);
                             }
-                        }else if(con.Work_Location__c != null && con.Work_Location__r.Name == USA && !resourceMap.isEmpty() && tslProjRec.Type_Of_Project__c == Client_Projects){
+                        }else if(con.Work_Location__c != null && con.Work_Location__r.Name == USA && (tslProjRec.Type_Of_Project__c == Client_Projects || tslProjRec.Type_Of_Project__c == Internal_Projects)){
                             System.debug('INSIDE USA');
                             if (activeProcesses2.isEmpty()) {
                                 System.debug('INSIDE activeProcesses2');
