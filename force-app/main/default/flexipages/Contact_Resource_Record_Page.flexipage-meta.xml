@@ -10,19 +10,19 @@
                             <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>LoginToPortalAsUser</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>EnableCustomerPortal</value>
                         </valueListItems>
                         <valueListItems>
                             <value>ViewCustomerPortal</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>LoginToNetworkAsUser</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>LoginToPortalAsUser</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Delete</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>LoginToNetworkAsUser</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Clone</value>
@@ -50,7 +50,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>3</value>
+                    <value>5</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
@@ -181,16 +181,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.EMS_RM_Employee_Id__c</fieldItem>
                 <identifier>RecordEMS_RM_Employee_Id_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Resource_Manager__c</fieldItem>
-                <identifier>RecordResource_Manager_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -395,36 +385,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.EMS_LM_Maternity_Leave__c</fieldItem>
                 <identifier>RecordEMS_LM_Maternity_Leave_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Last_Appraisal_Date__c</fieldItem>
-                <identifier>RecordLast_Appraisal_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Next_Appraisal_Date__c</fieldItem>
-                <identifier>RecordNext_Appraisal_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Appraisal_Date__c</fieldItem>
-                <identifier>RecordAppraisal_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ec348e39-0716-4e28-9239-d218b12e384b</name>
@@ -727,248 +687,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Leaves_Credit__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Leaves_Credit_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Utilized_Leaves__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Utilized_Leaves_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Availble_Leaves__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Availble_Leaves_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_of_Off_Credit__c</fieldItem>
-                <identifier>RecordEMS_LM_No_of_Off_Credit_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Utilized_Loss_Of_Pay_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Compensatory_Off_Credit__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Compensatory_Off_Credit_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_OF_Utilized_Compensatory_Off__c</fieldItem>
-                <identifier>RecordEMS_LM_No_OF_Utilized_Compensatory_Off_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Available_Compensatory_Off__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Available_Compensatory_Off_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.No_OF_Utilized_Work_from_Home__c</fieldItem>
-                <identifier>RecordNo_OF_Utilized_Work_from_Home_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.No_of_Avilable_floatLeaves__c</fieldItem>
-                <identifier>RecordNo_of_Avilable_floatLeaves_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.UtlizedFloatLeaves__c</fieldItem>
-                <identifier>RecordUtlizedFloatLeaves_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-024416d2-2d57-4e34-914d-602de3038699</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Paternity_Leaves_Credit__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Paternity_Leaves_Credit_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Available_Paternity_Leave__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Available_Paternity_Leave_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Maternity_Leaves_Credit__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Maternity_Leaves_Credit_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Available_Maternity_Leave__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Available_Maternity_Leave_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Utilized_Bereavement_Leaves__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Utilized_Bereavement_Leaves_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_of_Bereavement_Leaves_Credit__c</fieldItem>
-                <identifier>RecordEMS_LM_No_of_Bereavement_Leaves_Credit_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_Of_Available_Bereavement_Leave__c</fieldItem>
-                <identifier>RecordEMS_LM_No_Of_Available_Bereavement_Leave_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_of_Utilized_Marriage_Leave__c</fieldItem>
-                <identifier>RecordEMS_LM_No_of_Utilized_Marriage_Leave_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_of_Marriage_Leave_Credit__c</fieldItem>
-                <identifier>RecordEMS_LM_No_of_Marriage_Leave_Credit_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.EMS_LM_No_of_Available_Marriage_Leave__c</fieldItem>
-                <identifier>RecordEMS_LM_No_of_Available_Marriage_Leave_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-31b1341e-fe1b-44ba-bf9e-392bc2b3e499</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-024416d2-2d57-4e34-914d-602de3038699</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-31b1341e-fe1b-44ba-bf9e-392bc2b3e499</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column4</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-fc79ad11-81fa-4d4a-a184-24ea0dc686c5</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Vehicle_Type__c</fieldItem>
                 <identifier>RecordVehicle_Type_cField</identifier>
             </fieldInstance>
@@ -1109,24 +827,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-fc79ad11-81fa-4d4a-a184-24ea0dc686c5</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Leave Information</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
                     <value>Facet-8f7ef4ed-8773-46a8-9139-349999eda4db</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1171,7 +871,7 @@
                 <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-198fd34b-313b-4560-839f-ab795a42b96f</name>
+        <name>Facet-83e2fa06-67ac-4e66-a6d0-94510a49ae53</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -1193,7 +893,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-198fd34b-313b-4560-839f-ab795a42b96f</value>
+                    <value>Facet-83e2fa06-67ac-4e66-a6d0-94510a49ae53</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
@@ -1208,6 +908,248 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Leaves_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Leaves_Credit_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Utilized_Leaves__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Utilized_Leaves_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Availble_Leaves__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Availble_Leaves_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_of_Off_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_of_Off_Credit_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Utilized_Loss_Of_Pay__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Utilized_Loss_Of_Pay_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_of_Available_Loss_of_Pay__c</fieldItem>
+                <identifier>RecordEMS_LM_No_of_Available_Loss_of_Pay_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Compensatory_Off_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Compensatory_Off_Credit_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_OF_Utilized_Compensatory_Off__c</fieldItem>
+                <identifier>RecordEMS_LM_No_OF_Utilized_Compensatory_Off_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Available_Compensatory_Off__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Available_Compensatory_Off_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.No_OF_Utilized_Work_from_Home__c</fieldItem>
+                <identifier>RecordNo_OF_Utilized_Work_from_Home_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-4f5bd132-4834-4141-be02-31c0d3d1961a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Paternity_Leaves_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Paternity_Leaves_Credit_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Available_Paternity_Leave__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Available_Paternity_Leave_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Maternity_Leaves_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Maternity_Leaves_Credit_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Available_Maternity_Leave__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Available_Maternity_Leave_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Maternity_Leaves_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Maternity_Leaves_Credit_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_of_Bereavement_Leaves_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_of_Bereavement_Leaves_Credit_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Utilized_Bereavement_Leaves__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Utilized_Bereavement_Leaves_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_Of_Available_Bereavement_Leave__c</fieldItem>
+                <identifier>RecordEMS_LM_No_Of_Available_Bereavement_Leave_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_of_Marriage_Leave_Credit__c</fieldItem>
+                <identifier>RecordEMS_LM_No_of_Marriage_Leave_Credit_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_of_Available_Marriage_Leave__c</fieldItem>
+                <identifier>RecordEMS_LM_No_of_Available_Marriage_Leave_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.EMS_LM_No_of_Utilized_Marriage_Leave__c</fieldItem>
+                <identifier>RecordEMS_LM_No_of_Utilized_Marriage_Leave_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-ff4f34d5-6ab1-43bf-9989-92557c35f42c</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-4f5bd132-4834-4141-be02-31c0d3d1961a</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-ff4f34d5-6ab1-43bf-9989-92557c35f42c</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column6</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-93ce4a3e-e2db-4d8e-ad59-a65c6c37e4c4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
@@ -1215,6 +1157,24 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-93ce4a3e-e2db-4d8e-ad59-a65c6c37e4c4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Leave Information</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -1239,8 +1199,22 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>forceChatter:recordFeedContainer</componentName>
-                <identifier>forceChatter_recordFeedContainer</identifier>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>GLOBAL</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:publisher</componentName>
+                <identifier>forceChatter_publisher</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>RECORD</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:exposedFeed</componentName>
+                <identifier>forceChatter_exposedFeed</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
