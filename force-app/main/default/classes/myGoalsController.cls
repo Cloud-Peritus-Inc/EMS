@@ -93,10 +93,10 @@ public without sharing class myGoalsController {
             gl.Feedback_and_Comments__c = finalComments;
             gl.Goal_Completed_Date__c = system.today();
             if(gl.End_Date__c >= system.today()){
-                gl.Status__c = 'Completed - OnTime';  
-            }else{
+                gl.Status__c = 'Completed';  //@sangharsh UAT_051 deactiving Completed - OnTime  Completed - PostTime
+            }/*else{
                 gl.Status__c = '	Completed - PostTime';    
-            }
+            }*/
             
             update gl;  
         }catch(exception ex){

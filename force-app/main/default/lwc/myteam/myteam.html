@@ -1,187 +1,207 @@
-<!--
-  @description       : 
-  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
-  @group             : 
-  @last modified on  : 05-21-2024
-  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
--->
 <template>
-<lightning-card >
-        <div class="childparent">
-          <div class="childtext" style="padding-left:20px;">
-               <div style="padding-left:5px;"> 
-          <lightning-icon icon-name="standard:team_member" size="large" alternative-text="In Progress" ></lightning-icon>
-           <font size="4"  > &nbsp;&nbsp;<b> My Team </b> </font> <br/>
-            </div> 
-          </div>
-           <div class="childimage">
-             
-           </div>
-        </div>
+	<lightning-card>
+		<div class="childparent">
+			<div class="childtext" style="padding-left:20px;">
+				<div style="padding-left:5px;">
+					<lightning-icon icon-name="standard:team_member" size="large" alternative-text="In Progress">
+					</lightning-icon>
+					<font size="4"> &nbsp;&nbsp;<b> My Team </b> </font> <br/>
+            </div>
+				</div>
+				<div class="childimage">
 
-         <div class="childparent2">
-            <div class="childtext2">
-               <lightning-combobox name="primary" label="" value={selectedresource} placeholder="Select Resource"
-                  options={resourcemapdata} onchange={handleResourceChange} required>
-               </lightning-combobox>
-         
-            </div>
-            <div class="childimage2">
-               <template if:true={showtheFY}>
-                  <lightning-combobox name="" label="" value={selectedfy} placeholder="Fiscal Year" options={fymapdata}
-                     onchange={handleFYChange}>
-                  </lightning-combobox>
-               </template>
-            </div>
-         </div>
+				</div>
+			</div>
 
-      <!-- smaske : [EN_13 : New Dropdown for related reportess -->
-      <template lwc:if={setReporteesHierarchyVisibility}>
-         <div class="childparent2">
-            <div class="childtext2">
-         </div>
-      </template>
-      <!-- Mukesh : [ : New Dropdownes for Tree structure -->
-      <template lwc:if={setReporteesHierarchyVisibility2}>
-         <div class="childparent2">
-            <div class="childtext2">
-               <lightning-combobox name="tertiary" label="Ambigous" value={tertiarySelectedResource} placeholder="Select Resource"
-                  options={tertiaryreporteesmapdata} onchange={handleSecondaryResourceChange}>
-               </lightning-combobox>
-            </div>
-         </div>
-      </template>
-      <template lwc:if={setReporteesHierarchyVisibility3}>
-         <div class="childparent2">
-            <div class="childtext2">
-               <lightning-combobox name="quaternary" label="Ambigous" value={quaternarySelectedResource} placeholder="Select Resource"
-                  options={quaternaryreporteesmapdata} onchange={handleSecondaryResourceChange}>
-               </lightning-combobox>
-            </div>
-         </div>
-      
-    
-      <hr class="new5">
-    
+			<div class="childparent2">
+				<div class="childtext2">
+					<lightning-combobox name="primary" label="" value={selectedresource} placeholder="Select Resource"
+						options={resourcemapdata} onchange={handleResourceChange} required>
+					</lightning-combobox>
 
-</lightning-card>
- <template if:true={showtheFY}>
-<lightning-card>
-<div>
-  <lightning-layout multiple-rows>
-    <lightning-layout-item size="7">
-      <div class="magenta">
-        <lightning-input data-id="toggle1" type="toggle" label="Show All Check Ins" onchange={checkInToggle}
-             message-toggle-active="" message-toggle-inactive=""></lightning-input>
-            <!--  <lightning-input data-id="toggle2" type="toggle" label="Show All pulse" onchange={pulseToggle}
+				</div>
+				<div class="childimage2">
+					<template if:true={showtheFY}>
+						<lightning-combobox name="" label="" value={selectedfy} placeholder="Fiscal Year"
+							options={fymapdata} onchange={handleFYChange}>
+						</lightning-combobox>
+					</template>
+				</div>
+			</div>
+
+			<!-- smaske : [EN_13 : New Dropdown for related reportess -->
+			<template lwc:if={setReporteesHierarchyVisibility}>
+				<div class="childparent2">
+					<div class="childtext2">
+						<lightning-combobox name="secondary" label="Ambigous" value={secondarySelectedResource}
+							placeholder="Select Resource" options={secondaryreporteesmapdata}
+							onchange={handleSecondaryResourceChange}>
+						</lightning-combobox>
+					</div>
+				</div>
+			</template>
+			<!-- Mukesh : [ : New Dropdownes for Tree structure -->
+			<template lwc:if={setReporteesHierarchyVisibility2}>
+				<div class="childparent2">
+					<div class="childtext2">
+						<lightning-combobox name="tertiary" label="Ambigous" value={tertiarySelectedResource}
+							placeholder="Select Resource" options={tertiaryreporteesmapdata}
+							onchange={handleSecondaryResourceChange}>
+						</lightning-combobox>
+					</div>
+				</div>
+			</template>
+			<template lwc:if={setReporteesHierarchyVisibility3}>
+				<div class="childparent2">
+					<div class="childtext2">
+						<lightning-combobox name="quaternary" label="Ambigous" value={quaternarySelectedResource}
+							placeholder="Select Resource" options={quaternaryreporteesmapdata}
+							onchange={handleSecondaryResourceChange}>
+						</lightning-combobox>
+					</div>
+				</div>
+			</template>
+
+
+			<hr class="new5">
+
+
+	</lightning-card>
+	<template if:true={showtheFY}>
+		<lightning-card>
+			<div>
+				<lightning-layout multiple-rows>
+					<lightning-layout-item size="7">
+						<div class="magenta">
+							<lightning-input data-id="toggle1" type="toggle" label="Show All Check Ins"
+								onchange={checkInToggle} message-toggle-active="" message-toggle-inactive="">
+							</lightning-input>
+							<!--  <lightning-input data-id="toggle2" type="toggle" label="Show All pulse" onchange={pulseToggle}
              message-toggle-active="" message-toggle-inactive=""></lightning-input> -->
-              <lightning-input data-id="toggle3" type="toggle" label="Show All KRA's" onchange={kraToggle}
-             message-toggle-active="" message-toggle-inactive=""></lightning-input>
-       </div>
-    </lightning-layout-item>
-    <lightning-layout-item size="5">
-      <div class="green">
-         <template lwc:if={setCheckInVisibility}>
-         <lightning-button label="Check In"  title="Check In" icon-name="utility:checkin" class="slds-m-left_x-small slds-float_right" onclick={showCheckInModalBox}></lightning-button>
-         </template>
-         <template lwc:if={showGenPerKra}>
-            <lightning-button label="Generate Performance KRA" title="Generate Performance KRA"
-     </div>
-    </lightning-layout-item>
-</lightning-layout>
+							<lightning-input data-id="toggle3" type="toggle" label="Show All KRA's" onchange={kraToggle}
+								message-toggle-active="" message-toggle-inactive=""></lightning-input>
+							<lightning-input data-id="toggle4" type="toggle" label="Project assignments"
+								onchange={ProjectAssignToggle} message-toggle-active="" message-toggle-inactive="">
+							</lightning-input>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="5">
+						<div class="green">
+							<template lwc:if={setCheckInVisibility}>
+								<lightning-button label="Check In" title="Check In" icon-name="utility:checkin"
+									class="slds-m-left_x-small slds-float_right" onclick={showCheckInModalBox}>
+								</lightning-button>
+							</template>
+							<template lwc:if={showGenPerKra}>
+								<lightning-button label="Generate Performance KRA" title="Generate Performance KRA"
+									icon-name="standard:historical_adherence"
+									class="slds-m-left_x-small slds-float_right"
+									onclick={generatePerformanceKRAHandler}>
+								</lightning-button>
+							</template>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+			</div>
 
-    </lightning-card>
-    
-<br/>
-<br/>
+		</lightning-card>
 
-<template if:true={showcheckin}>
-  <br/>
- <c-checkintable tabledata={cintable} resourceid={selectedresource} fyid={selectedfy}></c-checkintable>
-</template>
+		<br/>
+		<br/>
 
-<template if:true={showkras}>
-  <br/>
- <c-kratable tabledata={kratable} resourceid={selectedresource} onkradata={getTheKRA} tab="My Team" viewonlymode={viewonlymode} ></c-kratable>
-</template>
+		<template if:true={showcheckin}>
+			<br/>
+			<c-checkintable tabledata={cintable} resourceid={selectedresource} fyid={selectedfy}></c-checkintable>
+		</template>
 
- </template>
+		<template if:true={showkras}>
+			<br/>
+			<c-kratable tabledata={kratable} resourceid={selectedresource} onkradata={getTheKRA} tab="My Team"
+				viewonlymode={viewonlymode}></c-kratable>
+		</template>
 
-<!--check In modal start -->      
-   <template if:true={isShowCheckInModal}>
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-       <div class="slds-modal__container">
-        <!-- modal header start -->
-          <header class="slds-modal__header">
-             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideCheckInModalBox}>
+		<template if:true={showcombobox}>
+			<c-project-assignment-table optionarray={selectedresource} tab="My Team"></c-project-assignment-table>
+		</template>
+
+	</template>
+
+	<!--check In modal start -->
+	<template if:true={isShowCheckInModal}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<!-- modal header start -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideCheckInModalBox}>
                 <lightning-icon icon-name="utility:close"
                    alternative-text="close"
                    variant="inverse"
                    size="small" ></lightning-icon>
                 <span class="slds-assistive-text">Close</span>
              </button>
-             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Resource Check-In</h2>
-          </header>
-      
-          <!-- modal body start -->
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                <p><i>Note: Once Check-in created, it can't be modified.</i></p> <br/>
-                <div class="c-container">
-                  <lightning-input-rich-text
-                     value={myVal}
-                     label = 'Notes'
-                     label-visible = true
-                     onchange={handlerichChange} 
-                     required >
-                  </lightning-input-rich-text>
-                </div>
+					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Resource Check-In</h2>
+				</header>
 
-          </div>
+				<!-- modal body start -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<p><i>Note: Once Check-in created, it can't be modified.</i></p> <br/>
+					<div class="c-container">
+						<lightning-input-rich-text value={myVal} label='Notes' label-visible=true
+							onchange={handlerichChange} required>
+						</lightning-input-rich-text>
+					</div>
 
-          <!-- modal footer start-->
-          <footer class="slds-modal__footer">
-            <button class="slds-button slds-button_neutral" onclick={hideCheckInModalBox}>Cancel</button>&nbsp;&nbsp;
-            <lightning-button  label="Save"  title="Save" icon-name="utility:checkin" class="slds-m-left_x-small" onclick={handleCheckInSave}></lightning-button>
+				</div>
 
-          </footer>
-       
-       </div>
-    </section>
-    <div class="slds-backdrop slds-backdrop_open"></div>
- </template>
- <!-- modal end -->
+				<!-- modal footer start-->
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={hideCheckInModalBox}>Cancel</button>&nbsp;&nbsp;
+					<lightning-button label="Save" title="Save" icon-name="utility:checkin" class="slds-m-left_x-small"
+						onclick={handleCheckInSave}></lightning-button>
 
-<!--generatePerformanceKRA modal start -->
-<template if:true={isShowGeneratePerformaneKraModal}>
-   <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
-      aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
-      <div class="slds-modal__container GPKContainer">
-         <!-- modal header start -->
-         <header class="slds-modal__header">
-            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+				</footer>
+
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- modal end -->
+
+	<!--generatePerformanceKRA modal start -->
+	<template if:true={isShowGeneratePerformaneKraModal}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+			aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container GPKContainer">
+				<!-- modal header start -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
                onclick={hideGeneratePerformaneKraModalBox}>
                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
                   size="small"></lightning-icon>
                <span class="slds-assistive-text">Close</span>
             </button>
-            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Generate Performance KRA</h2>
-         </header>
+					<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Generate Performance KRA
+					</h2>
+				</header>
 
-         <!-- modal body start -->
-         <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
-            <c-generate-performance-k-r-a fy={selectedfy} resource-id={resourceId} member={selectedresource} onclose={modalCloseHandler} tab="My Team" viewonlymode={viewonlymode} ></c-generate-performance-k-r-a>
-         </div>
+				<!-- modal body start -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+					<c-generate-performance-k-r-a fy={selectedfy} resource-id={resourceId} member={selectedresource}
+						onclose={modalCloseHandler} tab="My Team" viewonlymode={viewonlymode}>
+					</c-generate-performance-k-r-a>
+				</div>
 
-         <!-- modal footer start
+				<!-- modal footer start
          <footer class="slds-modal__footer">
             <button class="slds-button slds-button_neutral" onclick={hideGeneratePerformaneKraModalBox}>Cancel</button>
          </footer>-->
 
-      </div>
-   </section>
-   <div class="slds-backdrop slds-backdrop_open"></div>
-</template>
-<!-- generatePerformanceKRA modal end -->
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- generatePerformanceKRA modal end -->
 
 
 </template>
