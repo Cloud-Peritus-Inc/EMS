@@ -62,12 +62,14 @@
 	font-size: 13px;
 }
 
-.footer{
-	background-color: #D4D4D4;
-	margin-top:0px;
-	display: flex;
+.footer {
+	margin-top: 0px;
+	text-align: center;
+	width: 100%;
+}
+
+.footer-layout{
 	justify-content: center;
-	align-items: center;
 }
 
 a {
