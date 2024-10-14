@@ -225,8 +225,15 @@ public without sharing class quarterlyKRAViewCtrl {
         }
     }
 
-    @AuraEnabled(cacheable=true)
-    public static KraVisiableWrapper getGridConfigurationKRAData(String krarecordId) {
+    @AuraEnabled
+    public static KraVisiableWrapper getPMConfigKRAData(Goal__c krarecordId, String tab,Boolean copy) {
+
+        System.debug('Received TAB :: ' + tab);
+
+        Id QuestionRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Question').getRecordTypeId();
+        Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+        KraVisiableWrapper returnWrap = new KraVisiableWrapper();
+
         String resourceRoleId = '';
         System.debug('#getGridConfigurationKRAData');
         if(String.isEmpty(krarecordId)){
@@ -456,6 +463,182 @@ public without sharing class quarterlyKRAViewCtrl {
 
         return returnWrap;
     }
+
+    @AuraEnabled
+    public static KraVisiableWrapper calculateAverageRatingForKRA(List<String> PMAnswerRecordsId, Goal__c kraRecord, String tab ){
+        try {
+
+            System.debug(' RECEIVED PMAnswerRecordsId' + PMAnswerRecordsId);
+            System.debug(' RECEIVED kraRecord' + kraRecord);
+            System.debug(' RECEIVED tab' + tab);
+
+            KraVisiableWrapper wrap = new KraVisiableWrapper();
+
+            Decimal TechSkillSum = 0;
+            Integer TechSkillNo = 0;
+
+            Decimal ProfSkillSum = 0;
+            Integer ProfSkillNo = 0;
+
+            Decimal StrategicSum = 0;
+            Integer StrategicNo = 0;
+
+            Decimal GoalResultSum = 0;
+            Integer GoalResultNo = 0;
+
+
+            Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+
+            User loggedInUser = [SELECT Id,ContactId,Contact.Resource_Role__c From User WHERE Id=:Userinfo.getUserId()];
+
+
+            Resource_Role__c kraContactResourceRole = [ Select id,name,technical_acumen__c, professional_skills__c, goals_and_results__c, strategic_impact__c from Resource_Role__c where Id =: kraRecord.Resource__r.Resource_Role__c LIMIT 1];      
+            
+            List<PM_Configure__c> pmAnswerRecords = New List<PM_Configure__c>(); 
+            
+            if (tab == 'My Metric' || tab == 'My Team') {
+                pmAnswerRecords = [Select Id,Name,Area__c,KRA__c,Mentor_Mentee__c,Rating__c,Reporting_Contact__c,Resource_Role__c,Related_Question__r.Area__c FROM PM_Configure__c 
+                WHERE
+                Mentor_Mentee__c = :loggedInUser.ContactId
+                AND RecordTypeId =: AnswerRecordTypeId
+                AND KRA__c =: kraRecord.Id 
+                AND Id IN :PMAnswerRecordsId
+                ];
+            }else {
+                pmAnswerRecords = [Select Id,Name,Area__c,KRA__c,Mentor_Mentee__c,Rating__c,Reporting_Contact__c,Resource_Role__c,Related_Question__r.Area__c FROM PM_Configure__c 
+                WHERE
+                Reporting_Contact__c = :loggedInUser.ContactId
+                AND RecordTypeId =: AnswerRecordTypeId
+                AND KRA__c =: kraRecord.Id
+                AND Id IN :PMAnswerRecordsId
+                ];
+            }
+
+            System.debug(' SIZE OF pmAnswerRecords  ' +  pmAnswerRecords);
+
+            for (PM_Configure__c pmAns : pmAnswerRecords) {
+                if (pmAns.Related_Question__r.Area__c == 'TECHNICAL SKILLS') {
+                    if (pmAns.Rating__c != null) {
+                        TechSkillSum = TechSkillSum + pmAns.Rating__c;
+                        TechSkillNo ++;
+                    }
+                    
+                } else if (pmAns.Related_Question__r.Area__c == 'PROFESSIONAL SKILLS') {
+
+                    if (pmAns.Rating__c != null) {
+                        ProfSkillSum = ProfSkillSum + pmAns.Rating__c;
+                        ProfSkillNo ++;
+                    }
+                    
+                } else if (pmAns.Related_Question__r.Area__c == 'STRATEGIC IMPACT') {
+                    if (pmAns.Rating__c != null) {
+                        StrategicSum = StrategicSum + pmAns.Rating__c;
+                        StrategicNo ++;
+                    }
+                    
+                } else if (pmAns.Related_Question__r.Area__c == 'GOALS AND RESULTS') {
+                    if (pmAns.Rating__c != null) {
+                        GoalResultSum = GoalResultSum + pmAns.Rating__c;
+                        GoalResultNo ++;
+                    }
+                }                 
+            }
+
+        System.debug( 'TechSkillSum : ' + TechSkillSum );
+
+        System.debug( 'ProfSkillSum : ' + ProfSkillSum );
+        
+        System.debug( 'StrategicSum : ' + StrategicSum );
+        
+        System.debug( 'GoalResultSum : ' + GoalResultSum );
+
+        Decimal avgTechSkillRating = TechSkillNo > 0 ? TechSkillSum / TechSkillNo : 0;
+        Decimal avgProfSkillRating = ProfSkillNo > 0 ? ProfSkillSum / ProfSkillNo : 0;
+        Decimal avgStrategicRating = StrategicNo > 0 ? StrategicSum / StrategicNo : 0;
+        Decimal avgGoalResultRating = GoalResultNo > 0 ? GoalResultSum / GoalResultNo : 0;
+
+        System.debug( 'avgTechSkillRating : ' + avgTechSkillRating );
+
+        System.debug( 'avgProfSkillRating : ' + avgProfSkillRating );
+        
+        System.debug( 'avgStrategicRating : ' + avgStrategicRating );
+        
+        System.debug( 'avgGoalResultRating : ' + avgGoalResultRating );
+        
+
+        Decimal AvgTechSkillForResource = avgTechSkillRating * (kraContactResourceRole.technical_acumen__c/100);
+        Decimal AvgProfSkillForResource = avgProfSkillRating * (kraContactResourceRole.professional_skills__c/100);
+        Decimal AvgStrategicForResource = avgStrategicRating * (kraContactResourceRole.strategic_impact__c/100);
+        Decimal AvgGoalResultForResource = avgGoalResultRating * (kraContactResourceRole.goals_and_results__c/100);
+
+        System.debug( 'AvgTechSkillForResource : ' + AvgTechSkillForResource );
+
+        System.debug( 'AvgProfSkillForResource : ' + AvgProfSkillForResource );
+        
+        System.debug( 'AvgStrategicForResource : ' + AvgStrategicForResource );
+        
+        System.debug( 'AvgGoalResultForResource : ' + AvgGoalResultForResource );
+
+
+        Decimal totalAreaWiseAvgRating = (AvgTechSkillForResource + AvgProfSkillForResource + AvgStrategicForResource + AvgGoalResultForResource);
+
+        //Avg Rating values without Resource role % allocation
+        // Set the scale to 1 decimal place
+        wrap.TechSkillData = avgTechSkillRating.setScale(1, RoundingMode.HALF_UP);
+        wrap.ProfSkillData = avgProfSkillRating.setScale(1, RoundingMode.HALF_UP);
+        wrap.StrategicData = avgStrategicRating.setScale(1, RoundingMode.HALF_UP);
+        wrap.GoalResultData = avgGoalResultRating.setScale(1, RoundingMode.HALF_UP);
+
+
+        //Avg Rating values based on Resource Role % allocated to AREA
+        wrap.AvgTechSkillData = AvgTechSkillForResource.setScale(1, RoundingMode.HALF_UP);
+        wrap.AvgProfSkillData = AvgProfSkillForResource.setScale(1, RoundingMode.HALF_UP);
+        wrap.AvgStrategicData = AvgStrategicForResource.setScale(1, RoundingMode.HALF_UP);
+        wrap.AvgGoalResultData = AvgGoalResultForResource.setScale(1, RoundingMode.HALF_UP);
+
+
+        //Avg rating of ALL AREA'S  based on Resource Role % allocated
+        wrap.AreaWiseAvgRating = totalAreaWiseAvgRating.setScale(1, RoundingMode.HALF_UP);
+
+        wrap.kraRecordData = kraRecord;
+
+        return wrap;
+
+        }catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static List<PM_Configure__c> updatePMAnswerRecordsStatus(List<String> PMAnswerRecordsId, String newStatus){
+        try {
+            System.debug('APEX updatePMAnswerRecordsStatus List' + PMAnswerRecordsId);
+            System.debug('APEX updatePMAnswerRecordsStatus size' + PMAnswerRecordsId.size());
+            System.debug('APEX updatePMAnswerRecordsStatus newStatus' + newStatus);
+            List<PM_Configure__c> PMAnswerListToUpdate = New List<PM_Configure__c>();
+            List<PM_Configure__c> PMAnswerList = [SELECT Id, Status__c FROM PM_Configure__c WHERE Id IN :PMAnswerRecordsId];
+            if (PMAnswerList.size() > 0) {
+                for(PM_Configure__c PMRA :PMAnswerList){
+                    if (newStatus == 'Save') {
+                        PMRA.Status__c = 'Saved';
+                    } else if (newStatus == 'Submit') {
+                        PMRA.Status__c = 'Submitted';
+                    }
+                    PMAnswerListToUpdate.add(PMRA);
+                }
+            }
+
+            if (PMAnswerListToUpdate.size() > 0) {
+                Update PMAnswerListToUpdate;
+            }
+            System.debug('APEX PMAnswerListToUpdate' + PMAnswerListToUpdate);
+            return PMAnswerListToUpdate;
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
 
     //KraWrapper
     public class KraVisiableWrapper {
