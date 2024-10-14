@@ -1,14 +1,15 @@
 <template>
-    <lightning-card>
-        <lightning-progress-indicator current-step={selectedStep} type="path" variant="base">
-            <template for:each={steps} for:item="step">
-                <lightning-progress-step id={step.value} label={step.label} value={step.value} key={step.label}
-                    onclick={stepSelectionHanler}></lightning-progress-step>
-            </template>
-        </lightning-progress-indicator>
-    </lightning-card>
-
     <template lwc:if={kraRecord}>
+        <lightning-card>
+            <lightning-progress-indicator current-step={selectedStep} type="path" variant="base">
+                <template for:each={steps} for:item="step">
+                    <lightning-progress-step id={step.value} label={step.label} value={step.value} key={step.label}
+                        onclick={stepSelectionHanler}></lightning-progress-step>
+                </template>
+            </lightning-progress-indicator>
+        </lightning-card>
+
+    <!-- <template lwc:if={kraRecord}> -->
 
         <!-- REVIEWER DETAILS SECTION-->
         <template lwc:if={showReviewerDetails}>
@@ -1105,7 +1106,10 @@
         </template>
         <!-- OVERALL RATING SECTION -->
 
-
     </template>
-
+     <!-- smaske : PM_Def_039 : Showing spinner and assigning the value of kraRecord later till data is fetched -->
+    <template lwc:else>
+        <lightning-spinner alternative-text="Please wait while the page is loading..." size="large"></lightning-spinner>
+    </template>
+    
 </template>
