@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import createTheGoals from '@salesforce/apex/myGoalsController.createTheGoals';
+import Genericmodal from 'c/genericmodal';
 export default class Kratable extends NavigationMixin(LightningElement) {
     @api tab;
     @api viewonlymode = false;
@@ -151,7 +152,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         this.selectedKraQuaterly = node;
         this.mode = 'View';
         console.log('==node====' + node);
-        this.showKRAViewModalBox();
+       // this.showKRAViewModalBox();  sangharsh: commenting and adding below lines for navigating to KRA detail page
     }
 
     handleConNavEditClick(event) {
@@ -304,6 +305,30 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         }
 
 
+    }
+ 
+    async handleCopyPreviousQuaterKRA(event) {
+        let node = event.currentTarget.dataset.id;
+        this.selectedKraQuaterly = node;
+        console.log('selectedKraQuaterly' + this.selectedKraQuaterly);
+        this.mode = 'Edit';
+        console.log('==node====' + node);
+        console.log('Copy Clicked');
+        const result = await Genericmodal.open({
+            style: {
+                '--slds-c-modal-color-border': 'black'
+            },
+            btnLable1: 'No',
+            btnLable2: 'Yes',
+            headerLable: 'Confirm Copy KRA',
+            bodyLable: 'Would you like to carry over the previous quarter KRA inputs?',
+            size: 'small',
+        });
+        console.log(result);
+        if (result === 'okay') {
+            this.copy = true;
+            this.showKRAEditModalBox();
+        }
     }
 
 }

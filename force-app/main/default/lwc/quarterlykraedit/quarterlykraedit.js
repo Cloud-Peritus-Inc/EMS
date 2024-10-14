@@ -8,6 +8,9 @@ import getSelectedResourceConDetails from '@salesforce/apex/quarterlyKRAViewCtrl
 import getGridConfigurationKRAData from '@salesforce/apex/quarterlyKRAViewCtrl.getGridConfigurationKRAData';
 //other imports
 import exampleHelpText from "@salesforce/label/c.exampleHelpText";
+import LightningConfirm from 'lightning/confirm';
+import Genericmodal from 'c/genericmodal';
+
 
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -466,14 +469,28 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
     handleSaveAction() {
         console.log(" handleSaveAction ");
 
-        //console.log(JSON.stringify(this.kraRecord));
+    // ***SAVE/SUBMIT BUTTON CODE *** 
+    @track clickedBtnLabel = 'Save';
+    async handleSaveSubmitActionDuplicateOverAll(event) {
+        this.clickedBtnLabel = event.target.label;
+        console.log('SUBMIT BUTTON IS CLICKED');
+        const result = await Genericmodal.open({
+            // `label` is not included here in this example.
+            // it is set on lightning-modal-header instead
+            style: {
+                '--slds-c-modal-color-border': 'black'
+            },
+            btnLable1: 'No',
+            btnLable2: 'Yes',
+            headerLable: 'Confirm KRA Submition',
+            bodyLable: 'Feedback response once submitted, cannot be reverted. Would you like to proceed?',
+            size: 'small',
+        });
 
-        let isValid = true;
-        let allPositiveTechFieldsList = [];
-        let allPositiveProfessionalFieldsList = [];
-        let allPositiveStrategicFieldsList = [];
-        let allPositiveGoalResultFieldsList = [];
-        let inputFields = null;
+        if (result === 'okay') {
+            this.updatePMAnswerRecordsStatusHandler(this.viewwrap2.pmAnsRecordsIdData, this.clickedBtnLabel);
+        }
+    }
 
         if (this.viewwrap) {
             // Define relationships between viewwrap properties and associated fields
