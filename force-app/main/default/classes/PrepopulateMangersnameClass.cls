@@ -1,4 +1,4 @@
-public class PrepopulateMangersnameClass implements triggerAction.BeforeInsert {
+public class PrepopulateMangersnameClass implements triggerAction.BeforeInsert { 
     
     private static String HYDERABAD = 'Hyderabad - India';
     private static String USA = 'California - USA';
