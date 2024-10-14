@@ -147,3 +147,24 @@ label::first-letter {
 	visibility: hidden;
 	display: none;
 }
+
+.colRow{
+	align-content: baseline;
+}
+
+.R1{
+	width: 35%;
+}
+
+.R2{
+	width:auto;
+}
+
+.R3{
+	width:48%;
+}
+
+.fieldsRow{
+	display: flex;
+	flex-direction: row;
+}
