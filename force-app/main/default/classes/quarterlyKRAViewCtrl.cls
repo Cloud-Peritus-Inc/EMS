@@ -199,7 +199,7 @@ public without sharing class quarterlyKRAViewCtrl {
     }
 
     @AuraEnabled
-    public static Goal__c submitKraRecord( Goal__c kraRecord){
+    public static Goal__c submitKraRecord( Goal__c kraRecord,String tab){
         try {
             System.debug('submitKraRecord Record Detail : :' + kraRecord.Resource__c);
             //smaske: Updating Status conditionally for [Defect : PM_040]
@@ -219,6 +219,10 @@ public without sharing class quarterlyKRAViewCtrl {
             }
 
             Update kraRecord;
+            //smaske : PM_Def_157 : calling cancelPMAnswerRecords when mentor submits his KRA
+            if (tab == 'My Team' && kraRecord.Mentor_KRA_submitted__c == true ) {
+                cancelPMAnswerRecords(kraRecord);
+            }
             return kraRecord;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -455,6 +459,215 @@ public without sharing class quarterlyKRAViewCtrl {
         }
 
         return returnWrap;
+    }
+
+    @AuraEnabled
+    public static KraVisiableWrapper calculateAverageRatingForKRA(List<String> PMAnswerRecordsId, Goal__c kraRecord, String tab ){
+        try {
+
+            System.debug(' RECEIVED PMAnswerRecordsId' + PMAnswerRecordsId);
+            System.debug(' RECEIVED kraRecord' + kraRecord);
+            System.debug(' RECEIVED tab' + tab);
+
+            KraVisiableWrapper wrap = new KraVisiableWrapper();
+
+            Decimal TechSkillSum = 0;
+            Integer TechSkillNo = 0;
+
+            Decimal ProfSkillSum = 0;
+            Integer ProfSkillNo = 0;
+
+            Decimal StrategicSum = 0;
+            Integer StrategicNo = 0;
+
+            Decimal GoalResultSum = 0;
+            Integer GoalResultNo = 0;
+
+
+            Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+
+            User loggedInUser = [SELECT Id,ContactId,Contact.Resource_Role__c From User WHERE Id=:Userinfo.getUserId()];
+
+
+            Resource_Role__c kraContactResourceRole = [ Select id,name,technical_acumen__c, professional_skills__c, goals_and_results__c, strategic_impact__c from Resource_Role__c where Id =: kraRecord.Resource__r.Resource_Role__c LIMIT 1];      
+            
+            List<PM_Configure__c> pmAnswerRecords = New List<PM_Configure__c>(); 
+            
+            if (tab == 'My Metric' || tab == 'My Team') {
+                pmAnswerRecords = [Select Id,Name,Area__c,KRA__c,Mentor_Mentee__c,Rating__c,Reporting_Contact__c,Resource_Role__c,Related_Question__r.Area__c FROM PM_Configure__c 
+                WHERE
+                Mentor_Mentee__c = :loggedInUser.ContactId
+                AND RecordTypeId =: AnswerRecordTypeId
+                AND KRA__c =: kraRecord.Id 
+                AND Id IN :PMAnswerRecordsId
+                ];
+            }else {
+                pmAnswerRecords = [Select Id,Name,Area__c,KRA__c,Mentor_Mentee__c,Rating__c,Reporting_Contact__c,Resource_Role__c,Related_Question__r.Area__c FROM PM_Configure__c 
+                WHERE
+                Reporting_Contact__c = :loggedInUser.ContactId
+                AND RecordTypeId =: AnswerRecordTypeId
+                AND KRA__c =: kraRecord.Id
+                AND Id IN :PMAnswerRecordsId
+                ];
+            }
+
+            System.debug(' SIZE OF pmAnswerRecords  ' +  pmAnswerRecords);
+            //smaske : PM_Def_151 : Updated logic to consider null rating fields as default to 0
+            for (PM_Configure__c pmAns : pmAnswerRecords) {
+                if (pmAns.Related_Question__r.Area__c == 'TECHNICAL SKILLS') {
+                    pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;                    
+                        TechSkillSum = TechSkillSum + pmAns.Rating__c;
+                        TechSkillNo ++;
+                    
+                } else if (pmAns.Related_Question__r.Area__c == 'PROFESSIONAL SKILLS') {
+                    pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;    
+                    ProfSkillSum = ProfSkillSum + pmAns.Rating__c;
+                    ProfSkillNo ++;
+                    
+                    
+                } else if (pmAns.Related_Question__r.Area__c == 'STRATEGIC IMPACT') {
+                    pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;    
+                        StrategicSum = StrategicSum + pmAns.Rating__c;
+                        StrategicNo ++;
+                    
+                } else if (pmAns.Related_Question__r.Area__c == 'GOALS AND RESULTS') {
+                    pmAns.Rating__c = pmAns.Rating__c == null ? 0 : pmAns.Rating__c;    
+                        GoalResultSum = GoalResultSum + pmAns.Rating__c;
+                        GoalResultNo ++;
+                    
+                }                 
+            }
+
+        System.debug( 'TechSkillSum : ' + TechSkillSum );
+
+        System.debug( 'ProfSkillSum : ' + ProfSkillSum );
+        
+        System.debug( 'StrategicSum : ' + StrategicSum );
+        
+        System.debug( 'GoalResultSum : ' + GoalResultSum );
+
+        Decimal avgTechSkillRating = TechSkillNo > 0 ? (TechSkillSum / TechSkillNo).setScale(2, RoundingMode.FLOOR) : 0;
+        Decimal avgProfSkillRating = ProfSkillNo > 0 ? (ProfSkillSum / ProfSkillNo).setScale(2, RoundingMode.FLOOR) : 0;
+        Decimal avgStrategicRating = StrategicNo > 0 ? (StrategicSum / StrategicNo).setScale(2, RoundingMode.FLOOR) : 0;
+        Decimal avgGoalResultRating = GoalResultNo > 0 ? (GoalResultSum / GoalResultNo).setScale(2, RoundingMode.FLOOR) : 0;
+
+        System.debug( 'avgTechSkillRating : ' + avgTechSkillRating );
+
+        System.debug( 'avgProfSkillRating : ' + avgProfSkillRating );
+        
+        System.debug( 'avgStrategicRating : ' + avgStrategicRating );
+        
+        System.debug( 'avgGoalResultRating : ' + avgGoalResultRating );
+        
+        //smaske : Adding validation to check if value is NULL if yes then setting default value to 25
+        kraContactResourceRole.technical_acumen__c = kraContactResourceRole.technical_acumen__c != null ? kraContactResourceRole.technical_acumen__c : 0;
+        kraContactResourceRole.professional_skills__c = kraContactResourceRole.professional_skills__c != null ? kraContactResourceRole.professional_skills__c : 0;
+        kraContactResourceRole.strategic_impact__c = kraContactResourceRole.strategic_impact__c != null ? kraContactResourceRole.strategic_impact__c : 0;
+        kraContactResourceRole.goals_and_results__c = kraContactResourceRole.goals_and_results__c != null ? kraContactResourceRole.goals_and_results__c : 0;
+
+        Decimal AvgTechSkillForResource = ( avgTechSkillRating * (kraContactResourceRole.technical_acumen__c/100) ).setScale(2, RoundingMode.FLOOR);
+        Decimal AvgProfSkillForResource = ( avgProfSkillRating * (kraContactResourceRole.professional_skills__c/100) ).setScale(2, RoundingMode.FLOOR);
+        Decimal AvgStrategicForResource = ( avgStrategicRating * (kraContactResourceRole.strategic_impact__c/100) ).setScale(2, RoundingMode.FLOOR);
+        Decimal AvgGoalResultForResource = ( avgGoalResultRating * (kraContactResourceRole.goals_and_results__c/100) ).setScale(2, RoundingMode.FLOOR);
+
+        System.debug( 'AvgTechSkillForResource : ' + AvgTechSkillForResource );
+
+        System.debug( 'AvgProfSkillForResource : ' + AvgProfSkillForResource );
+        
+        System.debug( 'AvgStrategicForResource : ' + AvgStrategicForResource );
+        
+        System.debug( 'AvgGoalResultForResource : ' + AvgGoalResultForResource );
+
+
+        Decimal totalAreaWiseAvgRating = (AvgTechSkillForResource + AvgProfSkillForResource + AvgStrategicForResource + AvgGoalResultForResource).setScale(2, RoundingMode.FLOOR);
+
+        //Avg Rating values without Resource role % allocation
+        // Set the scale to 1 decimal place
+        wrap.TechSkillData = avgTechSkillRating.setScale(2, RoundingMode.FLOOR);
+        wrap.ProfSkillData = avgProfSkillRating.setScale(2, RoundingMode.FLOOR);
+        wrap.StrategicData = avgStrategicRating.setScale(2, RoundingMode.FLOOR);
+        wrap.GoalResultData = avgGoalResultRating.setScale(2, RoundingMode.FLOOR);
+
+
+        //Avg Rating values based on Resource Role % allocated to AREA
+        wrap.AvgTechSkillData = AvgTechSkillForResource.setScale(2, RoundingMode.FLOOR);
+        wrap.AvgProfSkillData = AvgProfSkillForResource.setScale(2, RoundingMode.FLOOR);
+        wrap.AvgStrategicData = AvgStrategicForResource.setScale(2, RoundingMode.FLOOR);
+        wrap.AvgGoalResultData = AvgGoalResultForResource.setScale(2, RoundingMode.FLOOR);
+
+
+        //Avg rating of ALL AREA'S  based on Resource Role % allocated
+        wrap.AreaWiseAvgRating = totalAreaWiseAvgRating.setScale(2, RoundingMode.FLOOR);
+
+        wrap.kraRecordData = kraRecord;
+
+        return wrap;
+
+        }catch (Exception e) {
+            System.debug('Error Line No :::: ' + e.getLineNumber());
+            System.debug('Error Message:::: ' + e.getMessage());
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static List<PM_Configure__c> updatePMAnswerRecordsStatus(List<String> PMAnswerRecordsId, String newStatus, String tab){
+        try {
+            System.debug('APEX updatePMAnswerRecordsStatus List' + PMAnswerRecordsId);
+            System.debug('APEX updatePMAnswerRecordsStatus size' + PMAnswerRecordsId.size());
+            System.debug('APEX updatePMAnswerRecordsStatus newStatus' + newStatus);
+            List<PM_Configure__c> PMAnswerListToUpdate = New List<PM_Configure__c>();
+            List<PM_Configure__c> PMAnswerList = [SELECT Id, Status__c, KRA__c, KRA__r.Mentor_KRA_submitted__c FROM PM_Configure__c WHERE Id IN :PMAnswerRecordsId];
+            if (PMAnswerList.size() > 0) {
+                for(PM_Configure__c PMRA :PMAnswerList){
+                    //smaske : added tab wise status change as the mentor can reedit the records even after submitting kra. which was affecting the record status value change.
+                    if (tab == 'My Team') {
+                        if (PMRA.KRA__r.Mentor_KRA_submitted__c == false) {
+                            if (newStatus == 'Save') {
+                                PMRA.Status__c = 'Saved';
+                            } else if (newStatus == 'Submit') {
+                                PMRA.Status__c = 'Submitted';
+                            }
+                        }else{
+                            PMRA.Status__c = 'Submitted';
+                        }
+                    }else{
+                        if (newStatus == 'Save') {
+                            PMRA.Status__c = 'Saved';
+                        } else if (newStatus == 'Submit') {
+                            PMRA.Status__c = 'Submitted';
+                        }
+                    }
+                    
+                    PMAnswerListToUpdate.add(PMRA);
+                }
+            }
+
+            if (PMAnswerListToUpdate.size() > 0) {
+                Update PMAnswerListToUpdate;
+            }
+            System.debug('APEX PMAnswerListToUpdate' + PMAnswerListToUpdate);
+            return PMAnswerListToUpdate;
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    //smaske : PM_Def_157 : When mentor has submitted his kra then cancelling the records which in 'Awaiting Response' / 'Accepted' / 'Saved'
+    @AuraEnabled
+    public static void cancelPMAnswerRecords(Goal__c kra) {
+        List<PM_Configure__c> recordsToCancel = new List<PM_Configure__c>();
+        Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+            List<PM_Configure__c> pmAnswerRecords = [  SELECT Id, Status__c, KRA__c,RecordTypeId FROM PM_Configure__c WHERE Status__c NOT IN ('Submitted', 'Rejected', 'Cancelled') AND RecordTypeId =: AnswerRecordTypeId and KRA__c =: kra.Id ];
+            for (PM_Configure__c pm : pmAnswerRecords) {
+                pm.Status__c='Cancelled';
+                recordsToCancel.add(pm);
+            }
+        // Update the records only if there are records to update
+        if (!recordsToCancel.isEmpty()) {
+            update recordsToCancel;
+        }
     }
 
     //KraWrapper
