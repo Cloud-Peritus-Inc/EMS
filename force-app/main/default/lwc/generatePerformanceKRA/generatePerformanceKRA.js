@@ -249,6 +249,21 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             RR[name] = dataValue;
         } else if (name == 'Finalized_Hike__c') {
             RR[name] = dataValue;
+        } else if (name == 'HR_Rating__c') {
+            console.log('name '+name);
+            const rating = parseFloat(dataValue);
+            if (!isNaN(rating) || rating < 1 || rating > 5) {//Ravitheja --> added validation to check the value
+                
+                console.log('dataValue '+dataValue);
+            }else{
+                const evt = new ShowToastEvent({
+                    message: 'HR Rating must be between 1 and 5.',
+                    variant: 'error',
+                    mode: 'dismissable'
+                });
+                this.dispatchEvent(evt);
+            }
+            RR[name] = dataValue;
         }
         this.Compensation = RR;
 
@@ -310,14 +325,32 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         this.Compensation.Overall_KRA_Average_Rating__c = this.averageOverallRating;
         let isValid = true;
         //smaske :[EN_05] : Removed "Finalized_Hike__c" from API Array as field is commented
-        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Overall_KRA_Average_Rating__c']; // Replace with your actual field names
+        //Ravitheja --> HR_Rating__c field is not mandatory
+        const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Overall_KRA_Average_Rating__c']; // Replace with your actual field names 
+        console.log('apiFieldNames '+apiFieldNames);
         // Iterate through the list of API field names
         for (const fieldName of apiFieldNames) {
             if (!this.Compensation[fieldName]) {
                 console.log(`${fieldName} is blank.`);
                 isValid = false;
             } else {
-                console.log(`${fieldName} is not blank. Value: ${this.Compensation[fieldName]}`);
+                console.log(`${fieldName} is not blank. Value: ${CompensationMod[fieldName]}`);
+            }
+        }
+
+        if (CompensationMod['HR_Rating__c'] != null && CompensationMod['HR_Rating__c'] !== '') { // Ravitheja --> added if condition to check the HR rating value.
+            console.log('checkfieldName ', fieldName);
+            const hrRating = parseFloat(CompensationMod['HR_Rating__c']);
+            console.log('hrRating ', hrRating);
+            if (!isNaN(rating) || hrRating < 1 || hrRating > 5) {
+                console.log('ifCondition ');
+                const evt = new ShowToastEvent({
+                    message: 'HR Rating must be between 1 and 5.',
+                    variant: 'error',
+                    mode: 'dismissable'
+                });
+                this.dispatchEvent(evt);
+                isValid = false;
             }
         }
 
