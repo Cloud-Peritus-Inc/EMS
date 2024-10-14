@@ -137,6 +137,13 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                             sumOverallRating += record.Overall_Average_Section_Rating__c || 0; // Ensure numeric values
                         });
                         this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(1) : 0;
+                        console.log('averageOverallRating '+this.averageOverallRating);
+                        let CompensationMod = { ...this.Compensation };
+                        
+                        CompensationMod.Overall_KRA_Average_Rating__c = this.averageOverallRating;
+                        CompensationMod.HR_Rating__c = this.averageOverallRating;
+                        this.Compensation = CompensationMod;
+                        console.log('checkCompensationMod ' + JSON.stringify(this.Compensation ));
                     }
                     this.dataLoaded = true;
                     console.log('member :' + this.member);
@@ -249,6 +256,21 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
             RR[name] = dataValue;
         } else if (name == 'Finalized_Hike__c') {
             RR[name] = dataValue;
+        } else if (name == 'HR_Rating__c') {
+            console.log('name '+name);
+            const rating = parseFloat(dataValue);
+            if (!isNaN(rating) && rating < 1 && rating > 5) {//Ravitheja --> added validation to check the value
+                RR[name] = dataValue;
+                console.log('dataValue '+dataValue);
+            }else{
+                //this.errorMessage = 'HR Rating must be between 1 and 5.';
+                const evt = new ShowToastEvent({
+                    message: 'HR Rating must be between 1 and 5.',
+                    variant: 'error',
+                    mode: 'dismissable'
+                });
+                this.dispatchEvent(evt);
+            }
         }
         this.Compensation = RR;
 
@@ -299,29 +321,53 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
     }
 
     handleSubmitButtonAction() {
-
+        console.log('handlesubmit ');
         // Check if kraRecords is not blank
         if (!this.kraRecords || this.kraRecords.length === 0) {
             let msg = 'No KRA records available to Generate performance KRA!';
+            console.log('msg ');
             this.showNotification(msg, this.errorVariant);
             return;
         }
         //smaske : PM_079/PM_078 : Updating Submit functionality to avoid duplicate record creation and Field Validation.
-        this.Compensation.Overall_KRA_Average_Rating__c = this.averageOverallRating;
+        let CompensationMod = { ...this.Compensation };
+        console.log('msg23 '+JSON.stringify(CompensationMod));
+        
+        //CompensationMod.Overall_KRA_Average_Rating__c = this.averageOverallRating; //
+        console.log('msg2 '+CompensationMod.Overall_KRA_Average_Rating__c);
+        console.log('msg3 ',this.averageOverallRating);
         let isValid = true;
         //smaske :[EN_05] : Removed "Finalized_Hike__c" from API Array as field is commented
         const apiFieldNames = ['Next_Appraisal_Date__c', 'Reviewed_By__c', 'Comments__c', 'Overall_KRA_Average_Rating__c']; // Replace with your actual field names
         // Iterate through the list of API field names
         for (const fieldName of apiFieldNames) {
-            if (!this.Compensation[fieldName]) {
+            console.log('isblank '+CompensationMod[fieldName]);
+            if (CompensationMod[fieldName] == null || CompensationMod[fieldName] =='' ) {
                 console.log(`${fieldName} is blank.`);
                 isValid = false;
             } else {
-                console.log(`${fieldName} is not blank. Value: ${this.Compensation[fieldName]}`);
+                if(fieldName == 'HR_Rating__c'){ // Ravitheja --> added if condition to check the HR rating value.
+                    console.log('checkfieldName ',fieldName);
+                    const hrRating = parseFloat(CompensationMod[fieldName]);
+                    console.log('hrRating ',hrRating);
+                    if(hrRating < 1 || hrRating > 5){
+                        console.log('ifCondition ');
+                        const evt = new ShowToastEvent({
+                            message: 'HR Rating must be between 1 and 5.',
+                            variant: 'error',
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(evt);
+                        isValid = false;
+                    }
+                }
+                console.log(`${fieldName} is not blank. Value: ${CompensationMod[fieldName]}`);
             }
         }
 
         if (isValid) {
+            this.Compensation = CompensationMod; // Ravitheja 
+            console.log('VALIDCONDITION '+ JSON.stringify(this.Compensation));
             // Update/Create Record when all required fields value is populated.
             updateCompensationDetails({ record: this.Compensation, kraRecords: this.kraRecords, fy: this.fy })
                 .then(result => {
@@ -340,7 +386,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                     console.log(" updateCompensationDetails error " + JSON.stringify(error));
                 })
         } else {
-            let msg = 'All field values are required!';
+            let msg = 'Please check all the fields and enter valid data';
             this.showNotification(msg, this.errorVariant);
         }
     }
