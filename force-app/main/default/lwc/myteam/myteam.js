@@ -123,6 +123,9 @@ export default class Myteam extends LightningElement {
     handleSecondaryResourceChange(event) {
         //Onchange based on Dropdown Name
         let name = event.target.name;
+        //console.log('Name clciked lable :: ' + name);
+        //console.log('Name clciked lable :: ' + event.detail.value);
+
         let selectedresocure = event.detail.value;
         if (name == 'secondary') {
             if (selectedresocure != null) {
@@ -145,6 +148,7 @@ export default class Myteam extends LightningElement {
                         console.error('Error occurred: ' + JSON.stringify(error));
                     });
             } else {
+                this.viewonlymode = false;//smaske [PM_Def_081] [24/july/2024] : Enabling the CreateGoal button when secondary is null
                 this.tertiaryreporteesmapdata = [];
                 this.quaternaryreporteesmapdata = [];
                 this.secondarySelectedResource = null;
@@ -240,7 +244,7 @@ export default class Myteam extends LightningElement {
         }
         if (this.quaternarySelectedResource) {
             resourceId = this.quaternarySelectedResource;
-        } 
+        }
 
         getResourceKRAs({
             resourceId: resourceId,
