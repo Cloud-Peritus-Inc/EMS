@@ -212,10 +212,12 @@ public without sharing class quarterlyKRAViewCtrl {
             System.debug('con Record Detail : :' + con.Id);
             if (kraRecord.Resource__c == con.Id) {
                 System.debug('IN 208');
-                kraRecord.Status__c = STATUS_KRA_INREVIEW;
-            }else {
-                System.debug('IN 211');
-                kraRecord.Status__c = STATUS_KRA_COMPLETE;
+                //smaske :[10-July-2024] : Updatng Mentee_KRA_submitted__c checkbox to TRUE when mentee submits his all answer records
+                kraRecord.Mentee_KRA_submitted__c	= true;
+            }else if (RRR.Resource_Reports_To__c == con.Id) {
+                //smaske :[10-July-2024] : Updatng Mentor_KRA_submitted__c checkbox to TRUE when mentor submits his all answer records
+                kraRecord.Mentor_KRA_submitted__c	= true;
+                kraRecord.Status__c = STATUS_KRA_INREVIEW; //smaske : Setting status to "KRA Inreview" when mentor submits his PM ANSWERS 
             }
 
             Update kraRecord;
