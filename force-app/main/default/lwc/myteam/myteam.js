@@ -9,6 +9,7 @@ import getReporteesInHierarchy from '@salesforce/apex/myTeamController.getReport
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class Myteam extends LightningElement {
+    @api tab = 'My Team'; //smaske
     @track selectedresource = '';
     @track showcombobox = false; //sangharsh
     @track secondarySelectedResource = '';
@@ -254,6 +255,14 @@ export default class Myteam extends LightningElement {
                         if (this.viewonlymode == true) {
                             console.log("videmode is true");
                             qualItem.allowedit = false;
+                        }
+                        if (qualItem.mentorSubmitted == true) {
+                            console.log("Set value of  allowedit");
+                            qualItem.allowedit = false;
+                        }
+                        //smaske : [PM_Def_047] : Copy button should not be visible in MY TEAM section.
+                        if (this.tab == 'My Team') {
+                            qualItem.allowCopy = false;
                         }
                     });
                 });
