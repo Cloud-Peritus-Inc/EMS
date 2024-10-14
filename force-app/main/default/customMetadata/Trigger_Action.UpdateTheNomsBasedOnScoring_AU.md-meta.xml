@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>Apex_Class_Test_Class__c</field>
-        <value xsi:type="xsd:string">UpdateTheScoresForWinnerTest</value>
+        <value xsi:type="xsd:string">UpdateTheNomsBasedOnScoringTest</value>
     </values>
     <values>
         <field>Before_Delete__c</field>
@@ -60,7 +60,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">6.0</value>
+        <value xsi:type="xsd:double">1.0</value>
     </values>
     <values>
         <field>Required_Permission__c</field>
