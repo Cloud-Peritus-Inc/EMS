@@ -12,6 +12,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     @track iconName = "utility:chevrondown";
     @track iconParentName = "utility:chevronright";
     @track minDate;//smaske :[UAT_005]
+    orgDomainId;
 
     
     get kraTableAvailble() {
@@ -47,6 +48,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         var day = tomorrow.getDate().toString().padStart(2, '0');
         this.minDate = `${tomorrow.getFullYear()}-${month}-${day}`;
 
+this.orgDomainId = window.location.origin;
         //this.enableDisableCreateGoalButton();
     }
     @track showKRAViewModal = false;
@@ -61,7 +63,25 @@ export default class Kratable extends NavigationMixin(LightningElement) {
     }
 
     showKRAViewModalBox() {
-        this.showKRAViewModal = true;
+        this.showKRAViewModal = false;
+        console.log('=====kraview====='+this.selectedKraQuaterly);
+        console.log('Navigating to FlexiPage...');
+        const url = `${this.orgDomainId}/Grid/s/kra-view?c__kraid=${this.selectedKraQuaterly}&tab=${this.tab}`;
+        window.open(url, '_blank');
+       // window.open('https://cpprd--dev.sandbox.my.site.com/Grid/s/kra-view?c__kraid='+this.selectedKraQuaterly+ '&tab='+this.tab, '_blank');
+       /* this[NavigationMixin.Navigate]({
+            type: 'standard__navItemPage',
+            attributes: {
+                apiName: 'leave-management'
+            },
+            state: {
+                c__kraid : this.selectedKraQuaterly
+            }
+        }).then((result) => {
+            console.log('Navigation result:', result);
+        }).catch((error) => {
+            console.error('Navigation error:', error);
+        }); */
     }
 
     hideKRAEditModalBox() {
@@ -304,6 +324,27 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         }
 
 
+    }
+
+    async handleCopyPreviousQuaterKRA(event) {
+        let node = event.currentTarget.dataset.id;
+        this.selectedKraQuaterly = node;
+        console.log('selectedKraQuaterly' + this.selectedKraQuaterly);
+            this.mode = 'Edit';
+            console.log('==node====' + node);
+        console.log('Copy Clicked');
+        const result = await LightningConfirm.open({
+            message: 'Would you like to carry over the previous quarter KRA inputs?',
+            variant: 'header',
+            label: 'Confirm Copy KRA',
+            style: 'text-align:center;',
+            theme : 'info',
+            // setting theme would have no effect
+        });
+        if (result === true) {
+            this.copy = true;
+            this.showKRAEditModalBox();
+        }
     }
 
 }
