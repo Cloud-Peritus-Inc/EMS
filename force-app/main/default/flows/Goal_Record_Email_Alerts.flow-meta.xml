@@ -65,6 +65,8 @@
                 <elementReference>GoalCreatedTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>GCOEM</name>
@@ -131,6 +133,7 @@
                 <elementReference>GoalCompletionOnTimeTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+
     </actionCalls>
     <actionCalls>
         <name>GMEM</name>
@@ -197,6 +200,8 @@
                 <elementReference>GoalMissedTemplateforMentor.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Completion_Email</name>
@@ -212,6 +217,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_On_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Completion_Email2</name>
@@ -230,6 +237,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Completion_On_Time_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>When a &quot;GOAL&quot; is created send confirmation email to  Resource</description>
@@ -246,6 +255,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Created_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>When a &quot;GOAL&quot; is created send confirmation email to  Resource</description>
@@ -265,6 +276,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Created_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Missed_Email</name>
@@ -280,6 +293,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Goal__c.Goal_Missed_Alert_for_Mentee</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Goal_Missed_Email2</name>
@@ -298,6 +313,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <collectionProcessors>
@@ -344,6 +360,7 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Completed</stringValue>
+
                 </rightValue>
             </conditions>
             <conditions>

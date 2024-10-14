@@ -6,6 +6,7 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>KRA Feeback Request to Offshore PM</name>
     <style>freeForm</style>
+
     <subject>Performance: Request For KRA Feedback for {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c}</subject>
     <textOnly>Dear {!EMS_TM_Assignment__c.Offshore_Manager_Name__c},
 
@@ -18,6 +19,7 @@ We hope this message finds you well. As part of our ongoing performance review p
 Best Regards,
 
 Cloud Peritus Team</textOnly>
+
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

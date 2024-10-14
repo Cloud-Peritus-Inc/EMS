@@ -1,7 +1,9 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import getTmenteeproject from '@salesforce/apex/myMetricsController.getMenteeProjectAssigne';
 import createPMAnswerConfigureForManager from '@salesforce/apex/myMetricsController.createPMAnswerConfigureForManager';
+
 import allowSendingKraRequestToOtherPm from '@salesforce/apex/myMetricsController.allowSendingKraRequestToOtherPm';
+
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
 import LightningConfirm from 'lightning/confirm';
@@ -18,9 +20,11 @@ export default class ProjectAssignmentTable extends LightningElement {
     error;
     value;
     isShowModal = false;
+
     @track otherManagerIds;
     otherProjectId;
     otherProjectAssgnId;
+
 
     BE_PR_RR = {
         Resource__c: null,
@@ -91,15 +95,19 @@ selectedLabel
     handleChangeCombobox(event) {
         const projectId = event.currentTarget.dataset.projectid;
         const selectedManagerId = event.detail.value;
+
         const projectassgnId = event.currentTarget.dataset.projectassigmentid;
        console.log('Project assgn Id-----'+projectassgnId);
+
         console.log(`Project ID: ${projectId}, Selected Manager ID: ${selectedManagerId}`);
         console.log('OUTPUT : ', JSON.parse(JSON.stringify(this.menteeList)));
         if (selectedManagerId == 'Other') {
             this.isShowModal = true;
+
             this.otherProjectId = projectId;
             this.otherProjectAssgnId = projectassgnId;
             console.log('Project assgn Id 2-----'+this.otherProjectAssgnId);
+
         }
         
        /*  for (const mentee of this.menteeList) {
@@ -145,11 +153,14 @@ selectedLabel
         const value = selectedLookupValue.id;
         const label = selectedLookupValue.label;
         let currentStep = this.selectedStep;
+
         this.otherManagerIds = null;
+
     }
 
     handleConformModalBox(event) {
         if (this.otherManagerIds != null) {
+
             
             /*this.menteeList = this.menteeList.map(mentee => {
                 if (mentee.projectid === mentee.value) {
@@ -159,6 +170,7 @@ selectedLabel
                     };
                 }
                 return mentee;
+
             });*/
             console.log('otherProjectId----' + this.otherProjectId);
             console.log('projectassigmentid----' + this.otherProjectAssgnId);
@@ -200,6 +212,7 @@ selectedLabel
 
         } else {
             this.ShowToast(' ', 'Please select a resource', 'error', 'dismissable');
+
         }
     }
 
@@ -208,11 +221,13 @@ selectedLabel
         this.menteeList = this.menteeList.map(mentee => {
             return {
                 ...mentee,
+
                 value:'',
                 disableKRAbutton: true
             };
         });
         this.otherManagerIds = null;
+
         console.log('this.menteeList-->' + this.menteeList);
     }
 
@@ -234,6 +249,7 @@ selectedLabel
             // setting theme would have no effect
         });*/
        // if (result === true) {
+
             this.isLoaded = true;
             console.log('managerId-->', managerId);
             console.log('projectId-->', projectId);
@@ -241,7 +257,9 @@ selectedLabel
             createPMAnswerConfigureForManager({ contactId: this.optionarray, managerContact: managerId, projectId: projectId, projectassigmentid: projectassigmentid })
                 .then((result) => {
                     refreshApex(this.wiregetTmenteeproject);
+
                     this.ShowToast(' ', 'KRA request sent successfully', 'success', 'dismissable');
+
                     this.isLoaded = false;
                 })
                 .catch((error) => {
@@ -249,7 +267,9 @@ selectedLabel
                     this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
                     this.isLoaded = false;
                 });
+
        // }
+
     }
 
     ShowToast(title, message, variant, mode) {

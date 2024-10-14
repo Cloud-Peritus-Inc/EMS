@@ -84,8 +84,10 @@ public without sharing class myMetricsController {
         System.debug(' prevQuarterGoals ' + prevQuarterGoals);
 
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
+
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
                       (SELECT Id,Rating_Image__c,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c  FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
+
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
             for(Goal__c gl : ful.Goals__r){
@@ -96,6 +98,7 @@ public without sharing class myMetricsController {
                 qw.qendate = gl.Quarter_End_Date__c;
                 qw.status = gl.Status__c;
                 qw.typeval = gl.Type__c;
+
                 qw.rating = String.valueOf(gl.Rating_Image__c); //smaske : [EN_010] : Adding new rating field created by subba for star rating
                 qw.overallRating = gl.Overall_Rating__c; //Ravitheja
                 qw.allowedit = false;
@@ -111,6 +114,7 @@ public without sharing class myMetricsController {
                     qw.allowCopy = true;
                 }else {
                     qw.allowCopy = false;
+
                 }
                 
                 //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
@@ -218,7 +222,9 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         List<perfWrapper> returnval = new List<perfWrapper>();
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
+
                       (SELECT Id,Name,Rating_Image__c,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
+
         
         //smaske : PM_Def_163 : Fetching logginuser data 
         User loggedInUser = [SELECT Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
@@ -234,10 +240,12 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
                 qw.qendate = gl.Quarter_End_Date__c;
                 qw.status = gl.Status__c;
                 qw.typeval = gl.Type__c;
+
                 qw.rating = String.valueOf(gl.Rating_Image__c);//smaske : [EN_010] : Adding new rating field created by subba for star rating
                 qw.overallRating = gl.Overall_Rating__c; //Ravitheja
                 qw.allowedit = false;
                 //smaske : PM_061 : updating conditon to only allow edit when status is "KRA In Review" in MY TEAM TAB for selected Reportee's KRA
+
                 //Previously it was : gl.Status__c != 'KRA Completed'
                 if(gl.Status__c == 'In Progress'){
                     qw.allowedit = true;  
@@ -485,10 +493,12 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         public boolean menteeSubmitted;
         @AuraEnabled
         public boolean mentorSubmitted;
+
         @AuraEnabled
         public boolean allowCopy;
         @AuraEnabled
         public boolean showPmRequest;//smaske
+
         
     }
     
@@ -553,9 +563,11 @@ return menteeRecords;
         @AuraEnabled
         public String projectid{get;set;}
         @AuraEnabled
+
         public List<ManagerOption> managerOptions { get; set; }
         @AuraEnabled
         public boolean disableCombobox{get;set;}
+
     }
     
     public class ManagerOption {
@@ -581,7 +593,9 @@ return menteeRecords;
             SELECT Assignment__c, SUM(Number_of_Hours__c) totalHours
             FROM EMS_TM_Timesheet_Record__c 
             WHERE EMS_Timesheet__r.Resource__c = :contactId AND 
+
             (EMS_Timesheet__r.Week_Start_Date__c = THIS_QUARTER OR EMS_Timesheet__r.Week_End_Date__c = THIS_QUARTER) and Status__c != 'Rejected'  
+
             GROUP BY Assignment__c];
         system.debug('timesheetAggregate'+timesheetAggregate);
         
@@ -593,16 +607,20 @@ return menteeRecords;
             }
         }
         
+
          
       List<Contact> conGoalList = [SELECT Id,name,(Select Id,Quarter_Start_Date__c,Quarter_End_Date__c,Status__c from Goals__r where (Quarter_Start_Date__c =THIS_QUARTER OR Quarter_End_Date__c = THIS_QUARTER) AND Status__c Not IN('KRA Completed','HR KRA Completed','Active','Missed','KRA In Review') ) from contact Where Id =:contactId];
         
+
 
         List<EMS_TM_Assignment__c> projectAssigneeidList = [SELECT Id,name,EMS_TM_EmployeeName__r.name,EMS_TM_EmployeeName__r.Work_Location_Country__c,EMS_TM_Status_Asgn__c,
                                                             Offshore_PM_Configure__c,Onshore_PM_Configure__c,Other_PM_Configure__c,
                                                             EMS_TM_ProjectName_Asgn__r.name,EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name,
                                                             EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,EMS_TM_ProjectName_Asgn__r.Project_Manager__c,
                                                             EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name,EMS_TM_StartDate_Asgn__c,EMS_TM_EndDate_Asgn__c 
+
                                                             from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId and EMS_TM_Status_Asgn__c !='Scheduled'  and Id =:assignmentIds ];
+
         system.debug('projectAssigneeidList-->'+projectAssigneeidList);
         List<projectAssgnWrapper> wrapperlist = new List<projectAssgnWrapper>();
         for(EMS_TM_Assignment__c assgn : projectAssigneeidList){
@@ -618,6 +636,7 @@ return menteeRecords;
             wrp.projectName = assgn.EMS_TM_ProjectName_Asgn__r.name;
             wrp.projectid = assgn.EMS_TM_ProjectName_Asgn__c;
             
+
             if(!conGoalList.IsEmpty() && conGoalList[0].Goals__r.size() == 0){
                wrp.disableCombobox =true;
              }
@@ -637,6 +656,7 @@ return menteeRecords;
                 }
                 if (wrp.onshoremanagerid != null && wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c) {
                     wrp.managerOptions.add(new ManagerOption('Both Managers ' + '', wrp.onshoremanagerid +','+ wrp.offshoremanagerid));
+
                 }
             }  
             if(!assgn.Other_PM_Configure__c){
@@ -655,7 +675,9 @@ return menteeRecords;
         Set<Id> managerContactSet = new Set<Id>(managerContactList);
         System.debug('managerContactList: ' + managerContactList);
         
+
        /* List<Contact> conRecList =[Select Id,name,EMS_TM_User__c from Contact where Id IN :managerContactSet ];*/
+
         // Get Record Type IDs
         Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
         Id questionRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Question').getRecordTypeId();
@@ -679,9 +701,11 @@ return menteeRecords;
                                      FROM Contact 
                                      WHERE Id = :contactId];
         
+
         list<Resource_Resource_Relationship__c> mentorlst =[Select id,Relationship_Type__c,Resource__c,Resource_Reports_To__c from Resource_Resource_Relationship__c 
                                                          where Relationship_Type__c Includes('Mentor') AND Resource__c=:contactId];
         
+
         if (contactList.isEmpty()) {
             throw new AuraHandledException('Contact not found.');
         }
@@ -697,7 +721,9 @@ return menteeRecords;
         
         for (Id reportingManager : managerContactSet) {
             System.debug('reportingManager: ' + reportingManager);
+
             Id gettingownerID =[Select Id, EMS_TM_User__c from Contact where Id =:reportingManager limit 1].EMS_TM_User__c;
+
             for (PM_Configure__c pm : [SELECT Id, Configuration_Type__c, Resource_Role__c,Name__c, Area__c,Question__c
                                        FROM PM_Configure__c 
                                        WHERE Configuration_Type__c = 'KRA' 
@@ -711,6 +737,7 @@ return menteeRecords;
                                            pmAnswer.Project_Name__c = projectId;
                                            pmAnswer.Fiscal_Year__c = goalList[0].Fulfillment__r.Fiscal_Year__c;
                                            pmAnswer.KRA__c = goalList[0].Id;
+
                                            if(!mentorlst.isEmpty()){  
                                            pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
                                            }
@@ -721,6 +748,7 @@ return menteeRecords;
                                            }
                                           // pmAnswer.OwnerId = 
                                         //add reportingManager as the owner of the record
+
                                            pmAnswerList.add(pmAnswer);
                                        }
             
@@ -760,6 +788,7 @@ return menteeRecords;
         }
     }
 
+
     /*smaske : PM_Def_158 : This method will compare the selected "Other" contact with the "On/Off Shore Managers" of the Project.
     If the "Other" contact is same as "On/Off Shore Managers" then we will not allow the KRA Request to be sent. */
     @AuraEnabled
@@ -774,5 +803,6 @@ return menteeRecords;
         allowKraRequestCreation = !projManagerIdSet.contains(managerContact);
         return allowKraRequestCreation;
     }
+
     
 }
