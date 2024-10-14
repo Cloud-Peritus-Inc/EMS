@@ -136,7 +136,14 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
                         this.kraRecords.forEach(record => {
                             sumOverallRating += record.Overall_Average_Section_Rating__c || 0; // Ensure numeric values
                         });
-                        this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(1) : 0;
+                        this.averageOverallRating = this.totalkraRecords > 0 ? (sumOverallRating / this.totalkraRecords).toFixed(2) : 0;
+                        console.log('averageOverallRating '+this.averageOverallRating);
+                        let CompensationMod = { ...this.Compensation };
+                        
+                        CompensationMod.Overall_KRA_Average_Rating__c = this.averageOverallRating;
+                        CompensationMod.HR_Rating__c = this.averageOverallRating;
+                        this.Compensation = CompensationMod;
+                        console.log('checkCompensationMod ' + JSON.stringify(this.Compensation ));
                     }
                     this.dataLoaded = true;
                     console.log('member :' + this.member);
