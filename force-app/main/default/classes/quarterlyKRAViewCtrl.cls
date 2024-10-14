@@ -56,17 +56,6 @@ public without sharing class quarterlyKRAViewCtrl {
         return con;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     /**
      * This method returns the Goal__c record for displaying record values on the KRArecord edit/view action
      *
@@ -237,6 +226,91 @@ public without sharing class quarterlyKRAViewCtrl {
             resourceRoleId = [SELECT Resource__r.Resource_Role__c FROM Goal__c WHERE Id=:krarecordId].Resource__r.Resource_Role__c;
             System.debug('#ELSE ' + resourceRoleId);
         }
+
+        Set<Id> pmAnswerRecordsIdSet = new Set<Id>();
+        List<Id> pmAnswerRecordsIdList = new List<Id>();
+
+        List<String> technicalArea = new List<String>();
+        List<String> goalsAndResultArea = new List<String>();
+        List<String> profiessionalSkillsArea = new List<String>();
+        List<String> strategicImpactArea = new List<String>();
+
+        List<PM_Configure__c> pmAnswerConfigRecords = new List<PM_Configure__c>();
+        List<PM_Configure__c> pmAnswerConfigRecordsOld = new List<PM_Configure__c>();
+
+        if (tab == 'My Metric' || tab == 'My Team') {
+            System.debug('INSIDE IF FOR TAB :' + tab);
+            pmAnswerConfigRecords = [SELECT Id,name,Question__c,Rating__c, Description__c,Status__c,Related_Question__r.Question__c,Related_Question__r.Resource_Role__c, Related_Question__r.Area__c, KRA__c, Related_Question__r.Question_overview__c,Related_Question__r.Rating_overview__c,Related_Question__r.Description__c,Mentor_Mentee__c,Reporting_Contact__c 
+            FROM PM_Configure__c 
+            WHERE RecordTypeId =: AnswerRecordTypeId
+            AND Related_Question__r.Resource_Role__c =: resourceRoleId
+            AND Mentor_Mentee__c =: loggedInUser.ContactId
+            AND KRA__c =:krarecordId.Id ];
+        } else {
+            pmAnswerConfigRecords = [SELECT Id,name,Question__c,Rating__c, Description__c,Status__c,Related_Question__r.Question__c,Related_Question__r.Resource_Role__c, Related_Question__r.Area__c, KRA__c, Related_Question__r.Question_overview__c,Related_Question__r.Rating_overview__c,Related_Question__r.Description__c,Mentor_Mentee__c,Reporting_Contact__c
+            FROM PM_Configure__c 
+            WHERE RecordTypeId =: AnswerRecordTypeId
+            AND Related_Question__r.Resource_Role__c =: resourceRoleId
+            AND Reporting_Contact__c =: loggedInUser.ContactId
+            AND KRA__c =:krarecordId.Id ];
+        }
+        System.debug('pmAnswerConfigRecords records found  :' + pmAnswerConfigRecords);
+		
+        If(copy){
+            pmAnswerConfigRecords.sort();
+            
+            // Query the current fiscal quarter
+            Period currentFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel FROM Period WHERE Type = 'Quarter' AND StartDate = THIS_FISCAL_QUARTER LIMIT 1];
+            
+            /* Query the previous fiscal quarter using the current fiscal quarter's start date
+            Period lastFiscalQuarter = [ SELECT StartDate, EndDate, FullyQualifiedLabel 
+                FROM Period  WHERE Type = 'Quarter'  AND EndDate < :currentFiscalQuarter.StartDate ORDER BY EndDate DESC  LIMIT 1]; */
+            
+            if (tab == 'My Metric' || tab == 'My Team') {
+                System.debug('INSIDE IF FOR TAB :' + tab);
+                pmAnswerConfigRecordsOld = [SELECT Id,name,Question__c,Rating__c, Description__c,Status__c,Related_Question__r.Question__c,Related_Question__r.Resource_Role__c, Related_Question__r.Area__c, KRA__c,KRA__r.Quarter_Start_Date__c,KRA__r.Quarter_End_Date__c, Related_Question__r.Question_overview__c,Related_Question__r.Rating_overview__c,Related_Question__r.Description__c,Mentor_Mentee__c,Reporting_Contact__c 
+                                            FROM PM_Configure__c 
+                                            WHERE RecordTypeId =: AnswerRecordTypeId
+                                            AND Related_Question__r.Resource_Role__c =: resourceRoleId
+                                            AND Mentor_Mentee__c =: loggedInUser.ContactId
+                                            AND KRA__r.Quarter_End_Date__c < :currentFiscalQuarter.StartDate
+                                            ORDER BY KRA__r.Quarter_End_Date__c DESC, CreatedDate DESC ];
+            } else {
+                pmAnswerConfigRecordsOld = [SELECT Id,name,Question__c,Rating__c, Description__c,Status__c,Related_Question__r.Question__c,Related_Question__r.Resource_Role__c, Related_Question__r.Area__c, KRA__c,KRA__r.Quarter_Start_Date__c,KRA__r.Quarter_End_Date__c,Related_Question__r.Question_overview__c,Related_Question__r.Rating_overview__c,Related_Question__r.Description__c,Mentor_Mentee__c,Reporting_Contact__c
+                                            FROM PM_Configure__c 
+                                            WHERE RecordTypeId =: AnswerRecordTypeId
+                                            AND Related_Question__r.Resource_Role__c =: resourceRoleId
+                                            AND Reporting_Contact__c =: loggedInUser.ContactId
+                                            AND KRA__r.Quarter_End_Date__c < :currentFiscalQuarter.StartDate
+                                            ORDER BY KRA__r.Quarter_End_Date__c DESC, CreatedDate DESC ];
+            }
+            
+            if(pmAnswerConfigRecordsOld.size()>0){
+                System.debug('OLD PM AVAILABLE ::: '+ pmAnswerConfigRecordsOld);
+                pmAnswerConfigRecordsOld.sort();
+                for (Integer i = 0; i < pmAnswerConfigRecords.size(); i++) {
+                    if (i < pmAnswerConfigRecordsOld.size()) {
+                        pmAnswerConfigRecords[i].Rating__c = pmAnswerConfigRecordsOld[i].Rating__c != null ? pmAnswerConfigRecordsOld[i].Rating__c : 0 ;
+                        pmAnswerConfigRecords[i].Description__c = pmAnswerConfigRecordsOld[i].Description__c != null ? pmAnswerConfigRecordsOld[i].Description__c : '';
+                    }
+                }
+                System.debug('VALUE POPULATED ' + pmAnswerConfigRecords);
+            }
+        }
+
+        Map<String, Map<String,PM_Configure__c> > areaAndQueAnsMap = new Map<String, Map<String,PM_Configure__c> >();
+        Map<String,PM_Configure__c> questionAndAnswerMap = new Map<String,PM_Configure__c>();
+
+        for (PM_Configure__c ans : pmAnswerConfigRecords) {
+            if (ans.Related_Question__r.Question__c != null && ans.Related_Question__r.Area__c != null) {
+                questionAndAnswerMap.put(ans.Related_Question__r.Question__c, ans);
+            }
+            pmAnswerRecordsIdSet.add(ans.Id);
+        }
+
+        for (String question : questionAndAnswerMap.keySet()) {
+            PM_Configure__c ansRec = questionAndAnswerMap.get(question);
+            String area = ansRec.Related_Question__r.Area__c;
         
         KraVisiableWrapper returnWrap = new KraVisiableWrapper();
         returnWrap.showDevelopment = false;
