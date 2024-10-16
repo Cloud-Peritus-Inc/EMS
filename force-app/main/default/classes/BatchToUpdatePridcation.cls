@@ -1,4 +1,4 @@
-/* Smaske : this batch should be run with batch size as 1 only as confirmed by subba on 09/Aug/2024 */
+/* Smaske : this batch should be run with batch size as 1 only as confirmed by subba on 09/Aug/2024 */ 
 global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
     global Database.QueryLocator start(Database.BatchableContext BC) {
          Id scoringRecordTypeId = Schema.SObjectType.Reward_And_Recognition__c.getRecordTypeInfosByName().get('Scoring').getRecordTypeId();
@@ -35,6 +35,8 @@ global class BatchToUpdatePridcation  implements Database.Batchable<sObject> {
             if(rr.of_Total_Nominations__c > totalNoms){
                 totalNoms = rr.of_Total_Nominations__c;
                 winner = rr.id;
+              scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Potential Winner'; //smaske:[03-July-2024]: Changing "Might Winner" with "Less likely to win" for PM_102 , //smaske:[PM_Def_007] : 'Less likely to win' changed to 'Potential Winner'
+              scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got more nominations when compared to other Contenders.';  //smaske : PM_Def_105 : nomination -> nominations
             }else{
               scoringUpdateMap.get(rr.Id).System_Predicted_Status__c = 'Less likely to win'; //smaske:[PM_Def_007] :updating 'Most Likely Winner' to "Less likely to win"
               scoringUpdateMap.get(rr.Id).Comments__c = 'Resource got less nominations when compared to other Contenders.';  //smaske : PM_Def_105 : nomination -> nominations
