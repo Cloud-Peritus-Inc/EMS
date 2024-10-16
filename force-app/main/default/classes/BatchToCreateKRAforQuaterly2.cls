@@ -14,10 +14,15 @@
  Date : 26/Aug/2024
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION
-* N/A           N/A                     N/A
+* 15/Oct/2024   Shubham Maske       	Updating code to use Database.SaveResult class for Inserting records.Hence commenting try-catch block.
 * ====================================================================================================
 **/
-global class BatchToCreateKRAforQuaterly2 implements Database.Batchable<sObject> {
+global class BatchToCreateKRAforQuaterly2 implements Database.Batchable<sObject>,Database.Stateful {
+    
+    //smaske : 15/Oct/2024 : UAT_Smoke_006 : List to store failed records across all batches
+    private List<Goal__c> failedRecords = new List<Goal__c>();
+    private List<String> errorMessages = new List<String>();
+    
     global Database.QueryLocator start(Database.BatchableContext BC) {
         return Database.getQueryLocator([SELECT Id,Appraisal_Date__c,EMS_TM_User__c,Work_Location_Country__c,(Select Id,Resource_Reports_To__c FROM Resource_Resource_Relationships__r WHERE Relationship_Type__c INCLUDES ('Mentor')),(SELECT Id,Resource__c,Fiscal_Year__c FROM Fulfillments__r) FROM Contact WHERE EMS_TM_User__r.isActive = true and Work_Location_Country__c != 'India' ]);
     }
@@ -88,7 +93,7 @@ global class BatchToCreateKRAforQuaterly2 implements Database.Batchable<sObject>
                 if(resourcewithMentor.containsKey(fis.Resource__c)){
                     gol.Check_In_By__c = resourcewithMentor.get(fis.Resource__c);
                 }
-                //smaske : [10-July-2024] : Changing default statyus from "Active" to "In Progress" as discussed with subba on 09-July-2024
+                //smaske : [10-July-2024] : Changing default status from "Active" to "In Progress" as discussed with subba on 09-July-2024
                 gol.Status__c = 'In Progress';
                 gol.Fulfillment__c = fis.Id;
                 gol.RecordTypeId = kraRecordTypeId;
@@ -100,14 +105,40 @@ global class BatchToCreateKRAforQuaterly2 implements Database.Batchable<sObject>
             } 
         }  
         
-        try{
+        //smaske : 15/Oct/2024 : UAT_Smoke_006 : Updating code to use Database.SaveResult class for Inserting records.Hence commenting try-catch block.
+        /*try{
             insert goalsInsert; 
         }catch(exception ex){
             LogException.logHandledException(ex, 'BatchToCreateKRAforQuaterly', 'execute');  
+        }*/
+        
+        if(!goalsInsert.isEmpty()) {
+            // Perform the DML operation with allOrNone set to false
+            Database.SaveResult[] saveResults = Database.insert(goalsInsert, false);
+            System.debug('saveResults :' + saveResults);
+            // Iterate over the save results to separate successful and failed records
+            for(Integer i = 0; i < saveResults.size(); i++) {
+                Database.SaveResult sr = saveResults[i];
+                if(!sr.isSuccess()) {
+                    // Add the failed contact to the list and log the errors
+                    failedRecords.add(goalsInsert[i]);
+                    for(Database.Error error : sr.getErrors()) {
+                        errorMessages.add('Error for record ' + goalsInsert[i].Resource__c + ': ' + error.getMessage());
+                    }
+                }
+            }
         }
     }
     
     global void finish(Database.BatchableContext BC) {
+        System.debug('IN finish');
+        //smaske : 15/Oct/2024 : UAT_Smoke_006 : Updating finish method for handling errors.
+        if(!failedRecords.isEmpty()) {
+            System.debug('Failed records: ' + failedRecords);
+            for(String errorMsg : errorMessages) {
+                System.debug('Error: ' + errorMsg);
+            }
+        }
         
     }
 }
