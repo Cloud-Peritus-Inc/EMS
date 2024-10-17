@@ -15,6 +15,7 @@
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION
 * 15/Oct/2024   Shubham Maske       	Updating code to use Database.SaveResult class for Inserting records.Hence commenting try-catch block.
+* 17/Oct/2024	Shubham Maske			Updating code to create KRA for contacts with Mentor assigned.
 * ====================================================================================================
 **/
 global class BatchToCreateKRAforQuaterly2 implements Database.Batchable<sObject>,Database.Stateful {
@@ -82,6 +83,8 @@ global class BatchToCreateKRAforQuaterly2 implements Database.Batchable<sObject>
         if(fulList.size() > 0){
             Period pd = [Select StartDate,EndDate,FullyQualifiedLabel From Period Where type = 'Quarter' and StartDate = THIS_FISCAL_QUARTER];
             for(Fulfillment__c fis : fulList){
+               //Smsake :[17-Oct-2024]: UAT_Smoke_015 : Updating code to create KRA for contacts with Mentor assigned.
+               if(resourcewithMentor.containsKey(fis.Resource__c)){ 
                 Goal__c gol = new Goal__c();
                 gol.Quarter_Start_Date__c = pd.StartDate;
                 gol.Quarter_End_Date__c = pd.EndDate;
@@ -102,6 +105,7 @@ global class BatchToCreateKRAforQuaterly2 implements Database.Batchable<sObject>
                 goalsInsert.add(gol);
                 
                 system.debug('goalsInsert >>>>> '+goalsInsert);
+               }
             } 
         }  
         
