@@ -5,6 +5,8 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import getFinalNominsWinners from '@salesforce/apex/RRController.getFinalNominsWinners';
 import updateTheWinners from '@salesforce/apex/RRController.updateTheWinners';
 import checkTheAnnualAnn from '@salesforce/apex/RRController.checkTheAnnualAnn';
+import LightningConfirm from 'lightning/confirm';
+
 export default class Scroingaward extends LightningElement {
 @api selectedfy;
 @api awarddatalist = [];
@@ -18,6 +20,7 @@ disableconfirmbutton = false;
 showtable = false;
 alreadyAnnounced = false;
 @api isDisabled;
+disableSubmitBtn = true;
 connectedCallback() {
      this.getTheAllAward(); 
      
@@ -41,8 +44,6 @@ handleChange(event) {
             this.getTheAllAward();
             this.showthecampare = false;
             this.announcebutton = true; 
-            console.log('44');
-           
         }
        
 }
@@ -57,7 +58,6 @@ handleChange(event) {
             this.getThelInfoByAward();
         }else{
             console.log('47');
-             console.log(this.isDisabled);
             this.getTheAllAward();
             this.showthecampare = false;
             this.announcebutton = true; 
@@ -156,7 +156,7 @@ handleChange(event) {
 
     hideKCompareModalBox() {  
         this.showcomparepop = false; 
-        
+        this.disableSubmitBtn = true;
     }
 
      showAnnualAnnModalBox() { 
@@ -208,4 +208,43 @@ handleChange(event) {
             this.dispatchEvent(evt);
              this.showcomparepop = false;
         }
+
+    
+    handleStatusChange(event){
+        const statusValue = event.currentTarget.value;
+        console.log('statusValue is ' +  statusValue);
+        this.disableSubmitBtn = false;
     }
+
+    /* handleCustomUpdateAll() {
+        const forms = this.template.querySelectorAll('lightning-record-edit-form');
+        forms.forEach(form => {
+            if (form) {
+                form.submit();
+            }
+        });
+        this.disableSubmitBtn = true;
+    } */
+
+    async handleCustomUpdateAll() {
+        const result = await LightningConfirm.open({
+            message: 'Would you like to submit the form ?',
+            variant: 'header',
+            label: 'Submit Comparison',
+            theme : 'info'
+        });
+        //Confirm has been closed
+        //result is true if OK was clicked
+        //and false if cancel was clicked
+        if (result) {
+            const forms = this.template.querySelectorAll('lightning-record-edit-form');
+            forms.forEach(form => {
+                if (form) {
+                    form.submit();
+                }
+            });
+            this.disableSubmitBtn = true;
+        }
+    }
+    
+}

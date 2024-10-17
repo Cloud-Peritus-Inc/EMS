@@ -1,7 +1,20 @@
-public without sharing class generatePerformanceKRAController {
-    public generatePerformanceKRAController() {
+/**
+* @author 
+* @date 
+* @description  
+*
+*               Test code coverage provided by the following test class:
+*               - generatePerformanceKRAController_Test
+*
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
 
-    }
+
+public without sharing class generatePerformanceKRAController {
 
     @AuraEnabled(cacheable=true)
     public static Contact getResourceDetails(Id selectedresource){
@@ -28,8 +41,8 @@ public without sharing class generatePerformanceKRAController {
         List<Goal__c> kraGoalRecords = Null;
         try {
             if (member != Null && member.Id != Null) {
-                    kraGoalRecords = [Select Id,Name,Resource__c, Goal_Name__c, Status__c, Overall_Average_Section_Rating__c,Fulfillment__c,
-                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,
+                    kraGoalRecords = [Select Id,Name,Resource__c, Goal_Name__c, Status__c,Fulfillment__c,
+                    Quarter_Start_Date__c,Quarter_End_Date__c,RecordTypeId,Overall_Rating__c,
                     Fulfillment__r.Fiscal_Year__c
                     FROM  Goal__c 
                     WHERE Resource__c =: member.Id 
@@ -56,7 +69,7 @@ public without sharing class generatePerformanceKRAController {
             //smaske : PM_079 : Created new field Compensation_Submitted__c
             Compensation_Submitted__c,
              //Mukesh :: Created new field Overall_KRA_Average_Rating__c
-             Overall_KRA_Average_Rating__c
+             Overall_KRA_Average_Rating__c,HR_Rating__c 
                         FROM Compensation__c 
                         WHERE Resource__c = :selectedresource LIMIT 1];
         } catch (Exception e) {

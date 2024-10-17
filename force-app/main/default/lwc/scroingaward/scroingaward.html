@@ -68,7 +68,6 @@
                 <div class="slds-wrap">
                   <div class="image">
                     &nbsp;&nbsp;<img src={sout.resourcePhotoURL} />&nbsp;&nbsp;
-                    <!-- <a href="#">{sout.resourceName}</a> -->
                     <p>{sout.resourceName}</p>
                   </div>
                 </div>
@@ -114,7 +113,7 @@
         <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header allAwards">
           <thead>
             <tr class="slds-line-height_reset" style="color:lightcoral">
-              <th class="slds-border_right tableheading" scope="col">
+              <th class="slds-border_right tableheading" scope="col" style="width:120px;">
                 <div class="slds-truncate" title="Resource">Resource</div>
                </th>
                <th class="slds-border_right tableheading" scope="col">
@@ -152,9 +151,10 @@
                     <td style="word-wrap:break-word;">
                       <div class="slds-wrap">
                         <div class="image">
-                          &nbsp;&nbsp;&nbsp;&nbsp;<img src={item.currentFYId} />&nbsp;&nbsp;
+                          <p><img src={item.currentFYId} /></p>
                            <!-- <a href="#">{item.currentName}</a> -->
-                           {item.currentName}
+                            <br>
+                           <p>{item.currentName}</p>
                         </div>
                         </div>
                     </td>
@@ -230,6 +230,7 @@
                 <span class="slds-assistive-text">Close</span>
              </button>
              <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">Comparison</h2>
+             <p>Please change the status value to enable the Update button</p>
           </header>
       
           <!-- modal body start -->
@@ -253,24 +254,38 @@
                        <!-- <lightning-output-field field-name="Reason_for_award__c">
                       </lightning-output-field> -->
                       <div style="color:red;padding:10px;"><b><i>
-                       Predicted Status: {rrcurrent.Title} </i></b></div>
+                       Prediction Status: {rrcurrent.Title} </i></b></div>
                        <!-- <lightning-output-field field-name="Lost_Reason__c">
                       </lightning-output-field> -->
-                      <lightning-input-field field-name="Status__c">
+                      <lightning-input-field field-name="Status__c" onchange={handleStatusChange}>
                       </lightning-input-field>
                       <lightning-input-field field-name="Comments__c">
                       </lightning-input-field>
+
+                      <!-- Smaske [PM_102] : Commented below button as created new buttons below -->
+                      <!--
                       <center>
                         <button class="slds-button slds-button_neutral" onclick={hideKCompareModalBox}>Close</button>
                         &nbsp;&nbsp;  
                       <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update">
                       </lightning-button>
                       </center>
+                      -->
                   </lightning-record-edit-form>
                       </lightning-card>
                     </lightning-layout-item>
                 </template>
      </lightning-layout>
+
+     <!-- Smaske [PM_102] : Replacing above button as a single button to update and close the Compare PopUp Widnow -->
+    <lightning-layout vertical-align='center' horizontal-align='center' multiple-rows="false" class="x-large">
+      <button class="slds-button slds-button_neutral" onclick={hideKCompareModalBox}>Close</button>
+      &nbsp;&nbsp;
+      <lightning-button variant="success" label="Update" onclick={handleCustomUpdateAll}
+      title="Update" disabled={disableSubmitBtn}
+      ></lightning-button>
+    </lightning-layout>
+
            
                  
           </div>

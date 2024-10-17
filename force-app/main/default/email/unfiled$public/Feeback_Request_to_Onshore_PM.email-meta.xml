@@ -6,19 +6,21 @@
     <letterhead>Cloud_Peritus_Inc</letterhead>
     <name>Kra Feeback Request to Onshore PM</name>
     <style>freeForm</style>
-    <subject>Request for Performance Feedback for {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c}</subject>
-    <textOnly>Dear {!Goal__c.Resource__c},
+
+    <subject>Performance: Request For KRA Feedback for {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c}</subject>
+    <textOnly>Dear {!EMS_TM_Assignment__c.Onshore_Manager_Name__c},
 
 
-This is to notify you that {!Goal__c.Check_In_By__c} has requested a Pulse review from you.
+We hope this message finds you well. As part of our ongoing performance review process, A KRA feedback request has been initiated to you for the employee {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c}.
 
 
-Please click here to submit the details.
+
+{!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c} has been working on {!EMS_TM_Assignment__c.EMS_TM_ProjectName_Asgn__c} and your insights into their performance, contributions, and areas for development would be incredibly valuable. Please click here to submit your feedback.
 
 
 Best Regards,
 
-The Cloud Peritus Team</textOnly>
+Cloud Peritus Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

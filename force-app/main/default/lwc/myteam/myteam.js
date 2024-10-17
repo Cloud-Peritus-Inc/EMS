@@ -9,6 +9,7 @@ import getReporteesInHierarchy from '@salesforce/apex/myTeamController.getReport
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class Myteam extends LightningElement {
+    @api tab = 'My Team'; //smaske
     @track selectedresource = '';
     @track showcombobox = false; //sangharsh
     @track secondarySelectedResource = '';
@@ -123,6 +124,9 @@ export default class Myteam extends LightningElement {
     handleSecondaryResourceChange(event) {
         //Onchange based on Dropdown Name
         let name = event.target.name;
+        //console.log('Name clciked lable :: ' + name);
+        //console.log('Name clciked lable :: ' + event.detail.value);
+
         let selectedresocure = event.detail.value;
         if (name == 'secondary') {
             if (selectedresocure != null) {
@@ -145,6 +149,7 @@ export default class Myteam extends LightningElement {
                         console.error('Error occurred: ' + JSON.stringify(error));
                     });
             } else {
+                this.viewonlymode = false;//smaske [PM_Def_081] [24/july/2024] : Enabling the CreateGoal button when secondary is null
                 this.tertiaryreporteesmapdata = [];
                 this.quaternaryreporteesmapdata = [];
                 this.secondarySelectedResource = null;
@@ -240,24 +245,47 @@ export default class Myteam extends LightningElement {
         }
         if (this.quaternarySelectedResource) {
             resourceId = this.quaternarySelectedResource;
-        } 
+        }
 
         getResourceKRAs({
             resourceId: resourceId,
             fyId: this.selectedfy
         })
             .then(result => {
-                //console.log('====result getResourceKRAs =======' + JSON.stringify(result));
+                console.log('====My Team result getResourceKRAs =======' + JSON.stringify(result));
                 //smaske : [EN_13]: Disabling Edit KRA button when Indirect Reportee are selected
                 result.forEach(item => {
                     item.qualList.forEach(qualItem => {
+                        //smaske : [PM_Def_047] : Copy button should not be visible in MY TEAM section.
+                        if (this.tab == 'My Team') {
+                            qualItem.allowCopy = false;
+                        }
+
                         if (this.viewonlymode == true) {
                             console.log("videmode is true");
                             qualItem.allowedit = false;
+                            qualItem.showPmRequest = false;//smaske : PM_Def_163 : hiding View PM Request button for secondary reportees
+                        }else{
+                            //smaske : PM_Def_123 : 06/Aug/2024
+                            if (qualItem.status == 'KRA In Review' || qualItem.status == 'In Progress') {
+                                console.log("Set value of  allowedit");
+                                qualItem.allowedit = true;
+                            }else if (qualItem.status == 'HR KRA Completed' || qualItem.status == 'KRA Completed') {
+                                console.log("Set value of  allowedit");
+                                qualItem.allowedit = false;
+                            }
                         }
+                        /*if (qualItem.mentorSubmitted == true) {
+                            console.log("Set value of  allowedit");
+                            qualItem.allowedit = false;
+                        }*/ 
+                        
+                        
+                        
                     });
                 });
-
+                console.log('====My Team result getResourceKRAs Modified=======' + JSON.stringify(result));
+                
                 //smaske : [EN_13]: Disabling CREATE GOAL button when Indirect Reportee are selected
                 if(result.length > 0){
                     if (this.viewonlymode == true) {

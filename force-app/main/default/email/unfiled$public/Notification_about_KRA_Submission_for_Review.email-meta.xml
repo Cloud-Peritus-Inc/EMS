@@ -6,6 +6,25 @@
     <name>Notification about KRA Submission for Review</name>
     <style>freeForm</style>
     <subject>Gentle Reminder: Completion of Performance KRA for the Current Quarter is Pending</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+We would like to remind you about the completion of the Quarterly KRA for this evaluation period is still pending to submit for mentor review.
+
+
+
+Please make sure to complete and submit your KRA to your mentor before 2 weeks to {!Goal__c.Quarter_End_Date__c}. Please check here to access your KRA.
+
+
+
+If you already submitted the KRA, please ignore this email.
+
+For any further details on KRA please contact your mentor  {!Goal__c.Check_In_By__c}
+
+
+Best Regards,
+
+HR Team</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

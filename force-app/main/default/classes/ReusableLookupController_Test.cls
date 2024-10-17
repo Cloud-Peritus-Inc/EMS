@@ -130,6 +130,7 @@ public class ReusableLookupController_Test {
     }
     
     testmethod static void  testFetchRecords3(){
+        TriggerBase.bypass('Contact');
         Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,AccountId,EMS_TM_User__r.IsActive From Contact WHERE EMS_RM_Employee_Id__c = 'CP10350'];
         MentorCon.EMS_RM_ApplicantStatus_Update__c = 'Inactive' ;
         update MentorCon;
@@ -137,6 +138,7 @@ public class ReusableLookupController_Test {
         Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,AccountId,EMS_TM_User__r.IsActive From Contact WHERE EMS_RM_Employee_Id__c = 'CP10351'];
         MenteeCon.EMS_RM_ApplicantStatus_Update__c = 'Inactive' ;
         update MenteeCon;
+        TriggerBase.clearBypass('Contact');
         
         ReusableLookupController.SearchWrapper inputWrapper = new ReusableLookupController.SearchWrapper();
         inputWrapper.objectApiName = 'Contact';

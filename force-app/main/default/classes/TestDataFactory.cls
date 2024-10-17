@@ -112,11 +112,11 @@ public class TestDataFactory {
     }
     
     public static User createCommunityUserWithAccAndContact(Id accId,Id conId,Boolean doInsert){
-        Id p = [select id from profile where name='Employee - Resource(Community)'].id;
+        profile p = [select id,Name from profile where name='Employee - Resource(Community)'];
         
         User user = new User(alias = 'test123', email= 'testemail@testclass.com.they',
                              emailencodingkey='UTF-8', lastname='Testing', Firstname = 'User', languagelocalekey='en_US',
-                             localesidkey='en_US', profileid = p, country='United States',IsActive =true,
+                             localesidkey='en_US', profileid = p.Id, country='United States',IsActive =true,
                              ContactId = conId,
                              timezonesidkey='America/Los_Angeles', username='testemail'/*+string.valueOf(system.now())*/+'@gmail.com');
         if(doInsert){
@@ -206,6 +206,10 @@ public class TestDataFactory {
         Resource_Role__c rr = new Resource_Role__c();
         rr.Name = name;
         rr.Active__c = true;
+        rr.technical_acumen__c=25;
+        rr.professional_skills__c=25;
+        rr.strategic_impact__c=25;
+        rr.goals_and_results__c=25;
         rr.Level_of_Approval__c = 1;
         rr.Auto_Approve__c = false;
         if(doInsert){
@@ -238,6 +242,17 @@ public class TestDataFactory {
         officeLoc.Name = name;
         officeLoc.Address__c = 'test Address';
         officeLoc.Country__c = 'India';
+        if(doInsert){
+            insert officeLoc;
+        }
+        return officeLoc;
+    }
+    
+    public static Office_Location__c createOfficeLocationboth(String name,String Country, Boolean doInsert){
+        Office_Location__c officeLoc = new Office_Location__c(); 
+        officeLoc.Name = name;
+        officeLoc.Address__c = 'test Address';
+        officeLoc.Country__c = Country;
         if(doInsert){
             insert officeLoc;
         }
@@ -483,7 +498,7 @@ public class TestDataFactory {
     public static Goal__c createKRARecords(String resourceId,String resourceMentorId,Fulfillment__c Full,Boolean doInsert){
         Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
         Period pd = [Select StartDate,EndDate,FullyQualifiedLabel From Period Where type = 'Quarter' and StartDate = THIS_FISCAL_QUARTER];
-        Fulfillment__c Ful;
+        Fulfillment__c Ful = new Fulfillment__c();
         if(Full == null){
             Ful = TestDataFactory.createFulfillment(resourceId, true);
         }else{
@@ -499,10 +514,10 @@ public class TestDataFactory {
         gol.End_Date__c = pd.EndDate; 
         gol.Resource__c = Ful.Resource__c;
         gol.Check_In_By__c =  resourceMentorId;
-        gol.Status__c = 'Active';
         gol.Fulfillment__c = Ful.Id;
         gol.RecordTypeId = kraRecordTypeId;
-        if(doInsert){
+        gol.Status__c = 'In Progress';
+        if(doInsert){ 
             Insert gol;
         }
         return gol;
@@ -542,15 +557,15 @@ public class TestDataFactory {
     
     public static Reward_And_Recognition__c AnnualAwardNominationRecords(Id resourceId, Id currentfy, Boolean doInsert){
         Id nominationsRecTypeId = Schema.SObjectType.Reward_And_Recognition__c.getRecordTypeInfosByName().get('Nominations').getRecordTypeId();
-            
-        	Reward_And_Recognition__c AnnualAwardNomination = new Reward_And_Recognition__c();
-            AnnualAwardNomination.Resource__c = resourceId;
-            AnnualAwardNomination.Award_Type__c = 'Going Above and Beyond';
-            AnnualAwardNomination.RecordTypeId = nominationsRecTypeId;
-            AnnualAwardNomination.Recognization_By_Text__c = 'Testing Employee1';
-            AnnualAwardNomination.Fiscal_Year__c = currentfy;
-            AnnualAwardNomination.Reason_for_award__c = 'Test';
-            
+        
+        Reward_And_Recognition__c AnnualAwardNomination = new Reward_And_Recognition__c();
+        AnnualAwardNomination.Resource__c = resourceId;
+        AnnualAwardNomination.Award_Type__c = 'Going Above and Beyond';
+        AnnualAwardNomination.RecordTypeId = nominationsRecTypeId;
+        AnnualAwardNomination.Recognization_By_Text__c = 'Testing Employee1';
+        AnnualAwardNomination.Fiscal_Year__c = currentfy;
+        AnnualAwardNomination.Reason_for_award__c = 'Test';
+        
         
         if(doInsert){
             Insert AnnualAwardNomination;
@@ -558,5 +573,143 @@ public class TestDataFactory {
         return AnnualAwardNomination;
     }
     
+    public static List<PM_Configure__c> createPMConfigQuestionRec(Id roleId, Boolean doInsert) {
+        
+        //smaske : Initialized list of Area and Questions
+        String ResourceRoleName = [SELECT Name FROM Resource_Role__c WHERE Id = :roleId LIMIT 1].Name;
+        List<String> Areas = new List<String>{'TECHNICAL SKILLS','PROFESSIONAL SKILLS', 'STRATEGIC IMPACT', 'GOALS AND RESULTS'};
+            List<String> Questions = getListOfQuestions();
+        
+        List<PM_Configure__c> pmQuestionList = new List<PM_Configure__c>(); 
+        Id questionRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Question').getRecordTypeId();
+        
+        for(String area : Areas){
+            for(String que : Questions){
+                PM_Configure__c pm = new PM_Configure__c();
+                pm.Name__c = ResourceRoleName +' - '+ que;
+                pm.Question__c =que;
+                pm.Answer_Type__c ='text';
+                pm.Area__c=area;
+                pm.Active__c =true;
+                pm.Rating_overview__c ='Adhere to coding standards, Implementations using OOB features, Know fundamentals ';
+                pm.Question_overview__c ='Able to gain context of the current build with help from more senior developers, Able to reverse engineer certain classes to build their own understanding';
+                pm.Configuration_Type__c ='KRA';
+                pm.Description__c = '- Strives to write code that adheres to CPs Best Practices and Coding Standards documentation - Knows the fundamentals of Lightning Web Components such as wire service, security, and cross-component communication - Knows how to implement record-triggered flows and how to configure record pages for dynamic visibility without code - Is familiar with the governor limits and best practices when developing in Apex';
+                pm.Resource_Role__c =roleId;
+                pm.RecordTypeId = questionRecordTypeId;
+                pmQuestionList.add(pm);
+            }
+        }
+        
+        if(!pmQuestionList.Isempty()){
+            insert pmQuestionList;
+        }
+        return pmQuestionList;
+    }
+    
+    Public static List<PM_Configure__c> createPMConfigRecords(String ResourceRoleId,String MentorMentee,String reportingManager,String projectId,String KRAId,Boolean doInsert){
+        
+        List<PM_Configure__c> pmAnswerList = new List<PM_Configure__c>();    
+        Id questionRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Question').getRecordTypeId();
+        Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+        Id gettingownerID = null;
+        Id MentorMenteeID = null;
+        if(reportingManager != null){
+            gettingownerID =[Select Id, EMS_TM_User__c from Contact where Id =:reportingManager limit 1].EMS_TM_User__c;
+        }
+        
+        if(MentorMentee != null){
+            MentorMenteeID =[Select Id, EMS_TM_User__c from Contact where Id =:MentorMentee limit 1].EMS_TM_User__c;
+        }
+        
+        
+        createPMConfigQuestionRec(ResourceRoleId,true);
+        
+        for (PM_Configure__c pm : [SELECT Id, Configuration_Type__c, Resource_Role__c,Name__c, Area__c,Question__c
+                                   FROM PM_Configure__c 
+                                   WHERE Configuration_Type__c = 'KRA' 
+                                   AND Resource_Role__c =: ResourceRoleId 
+                                   AND RecordTypeId = :questionRecordTypeId]) {
+                                       PM_Configure__c pmAnswer = new PM_Configure__c();
+                                       pmAnswer.Related_Question__c = pm.Id;
+                                       pmAnswer.Name__c = 'Test';
+                                       pmAnswer.Status__c = 'Awaiting Response';
+                                       pmAnswer.Mentor_Mentee__c = MentorMentee;
+                                       if(projectId!=null){
+                                           pmAnswer.Project_Name__c = projectId;
+                                       }
+                                       // pmAnswer.Fiscal_Year__c = goalList[0].Fulfillment__r.Fiscal_Year__c;
+                                       pmAnswer.KRA__c = KRAId;
+                                       /*if(!mentorlst.isEmpty()){  
+pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
+}*/
+                                       pmAnswer.RecordTypeId = answerRecordTypeId;
+                                       //pmAnswer.Mentee__c=goalList[0].Resource__c;	
+                                       if(gettingownerID!=null){
+                                           pmAnswer.Reporting_Contact__c = reportingManager;
+                                           pmAnswer.OwnerId = gettingownerID;
+                                       }else{
+                                           pmAnswer.OwnerId = MentorMenteeID;
+                                       }                                         
+                                       pmAnswerList.add(pmAnswer);
+                                       system.debug('pmAnswerList-----'+pmAnswerList);
+                                   }
+        //try{
+        if(!pmAnswerList.IsEmpty() && doInsert){
+            insert pmAnswerList;
+        }
+        //}
+        /*catch (Exception ex) {
+throw new AuraHandledException('An error occurred while processing the request: ' + ex.getMessage());
+}*/
+        return pmAnswerList;
+    }
+    
+    //smaske: Method to return list of questions, use this method for creating PM Answer question type records.
+    public static List<String> getListOfQuestions() {
+        List<String> Questions = new List<String>{ 'Development', 'Testing', 'Understanding Code',
+            'Platform Knowledge',
+            'Design and Architecture',
+            'Documentation',
+            'Development',
+            'Testing',
+            'Continuous Improvement',
+            'Delivery Accountability',
+            'Effective Communication',
+            'Knowledge Sharing',
+            'Teamwork',
+            'Attitude and Behavior',
+            'Business Development',
+            'Strategic Work',
+            'Company Growth',
+            'Requirement Gathering',
+            'POV Creation & Client Demos'
+            };
+                return Questions;
+    }
+    
+    public static User createMultipleCommunityUserWithAccAndContact(Id accountId, Id contactId, Boolean isActive) {
+        String uniqueSuffix = Datetime.now().getTime() + '.' + String.valueOf(Crypto.getRandomInteger()).substring(0, 5);
+    	String username = 'testuser' + uniqueSuffix + '@example.com';  
+        Id p = [select id from profile where name='Employee - Resource(Community)'].id;
+        
+        User u = new User(
+            Username = username,
+            Alias = 'test',
+            Email = 'testuser@example.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'Test',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            ProfileId = p,
+            ContactId = contactId,
+            IsActive = isActive
+        );
+        
+        insert u;
+        
+        return u;
+    }
     
 }

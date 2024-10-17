@@ -53,6 +53,12 @@
                 <label>Recognize</label>
             </value>
             <value>
+                <fullName>Service Awards</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Service Awards</label>
+            </value>
+            <value>
                 <fullName>Shout Out</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

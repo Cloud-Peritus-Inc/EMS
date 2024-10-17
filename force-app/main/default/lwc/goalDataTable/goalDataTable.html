@@ -1,0 +1,158 @@
+<template>
+	<lightning-card>
+		<div class="tableFixHead">
+			<table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
+				<thead>
+					<tr style="color:lightcoral">
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 5%;">
+							<div class="slds-truncate" title="KRA Name" style="font-size: 13px;">KRA Name</div>
+						</th>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 10%;">
+							<div class="slds-truncate" title="Project Name" style="font-size: 13px;">Project Name</div>
+						</th>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 10%;">
+							<div class="slds-truncate" title="Resource Name" style="font-size: 13px;">Resource Name</div>
+						</th>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 15%;">
+							<div class="slds-truncate" title="Resource Role" style="font-size: 13px;">Resource Role</div>
+						</th>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 10%;">
+							<div class="slds-truncate" title="Requested By" style="font-size: 13px;">Requested By</div>
+						</th>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 5% !important;">
+							<div class="slds-truncate" title="Assignment Start Date" style="font-size: 13px;">Assignment Start Date</div>
+						</th>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 5% !important;">
+							<div class="slds-truncate" title="Assignment End Date" style="font-size: 13px;">Assignment End Date</div>
+						</th>
+						<th class="slds-border_right tableheading slds-text-align_center" scope="col" style="width: 13%;">
+							<div class="slds-truncate" title="Actions" style="font-size: 13px;"> Actions </div>
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<template if:true={hasData}>
+						<template for:each={data} for:item="goal" for:index="index">
+							<tr key={goal.Id}>
+								<td class="slds-text-align_center" style="word-wrap:break-word; width: 10%;">
+									<div class="slds-wrap">{goal.goalName}</div>
+								</td>
+								<td class="slds-text-align_center" style="word-wrap:break-word; width: 10%;">
+									<div class="slds-wrap">{goal.ProjectName}</div>
+								</td>
+								<td class="slds-text-align_center" style="width: 10%;">
+									<div class="slds-wrap">
+										<div class="slds-wrap">
+											<lightning-formatted-text value={goal.resourceName} ></lightning-formatted-text>
+										</div>
+									</div>
+								</td>
+								<td class="slds-text-align_center" style="width: 15%;">
+									<div class="slds-wrap">
+										<div class="slds-wrap">
+											<lightning-formatted-text value={goal.resourceRole} ></lightning-formatted-text>
+										</div>
+									</div>
+								</td>
+								<td class="slds-text-align_center" style="width: 10%;">
+									<div class="slds-wrap">
+										<div class="slds-wrap">
+											<lightning-formatted-text value={goal.requestedByName} ></lightning-formatted-text>
+										</div>
+									</div>
+								</td>
+								<td class="slds-text-align_center" style="width: 10%;">
+									<div class="slds-wrap">
+										<lightning-formatted-date-time value={goal.startDate}>
+										</lightning-formatted-date-time>
+									</div>
+								</td>
+								<td class="slds-text-align_center" style="width: 10%;">
+									<div class="slds-wrap">
+										<lightning-formatted-date-time value={goal.endDate}>
+										</lightning-formatted-date-time>
+									</div>
+								</td>
+								<td class="slds-text-align_center slds-p-around_medium" >
+									<template if:false={goal.hideEditBtn}>
+										<lightning-button-icon icon-name="action:edit" size="large" variant="bare" alternative-text="Edit KRA" data-index={index} onclick={editKRAModalPopUp} class="slds-m-left_xx-small"></lightning-button-icon>
+									</template>										
+									<template if:false={goal.hideRejectBtn}>						
+										<lightning-button style="margin-right: 10px;" variant="destructive" label="Reject" data-id={goal.Id} data-index={index} onclick={rejectRequestHandler}></lightning-button>
+									</template>
+									<template if:false={goal.hideAcceptBtn}>
+										<lightning-button  variant="success" label="Accept" data-id={goal.Id} data-index={index} onclick={acceptRequestHandler}></lightning-button>
+									</template>
+								</td>
+							</tr>
+						</template>
+					</template>
+				</tbody>
+			</table>
+
+									<template if:true={isShowPopUp}>
+										<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+											aria-modal="true" aria-describedby="modal-content-id-1"
+											class="slds-modal slds-fade-in-open">
+											<div class="slds-modal__container">
+												<header class="slds-modal__header">
+													<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                										<lightning-icon icon-name="utility:close"
+                   														alternative-text="close"
+                   														variant="inverse"
+                   														size="small" ></lightning-icon>
+                													<span class="slds-assistive-text">Close</span>
+             										</button>
+													<h2 id="modal-heading-01"
+														class="slds-text-heading_medium slds-hyphenate">Rejection Reason</h2>
+												</header>
+												<div class="slds-modal__content slds-p-around_medium"  id="modal-content-id-1">
+													<lightning-textarea class="rreason" variant="label-stacked" required label="Enter rejection reason" value={comment} onchange={handleCommentChange}></lightning-textarea>
+													<!-- smaske : PM_Def_098 : Removed the error msg paragraph from as showing toast msg -->
+												</div>
+												<footer class="slds-modal__footer">
+													<!-- smaske : PM_Def_098 : Replacing html button with lwc button -->
+													<lightning-button variant="brand" label="Submit" title="Submit" onclick={handleRejectionSubmission} ></lightning-button>
+												</footer>
+											</div>
+										</section>
+										<div class="slds-backdrop slds-backdrop_open"></div>
+									</template>
+
+									<template if:true={showKRAEditModal}>
+										<lightning-card>
+											<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+												aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+												<div class="slds-modal__container">													
+													<header class="slds-modal__header">
+													<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideKRAEditModalBox}>
+									                <lightning-icon icon-name="utility:close"
+									                   alternative-text="close"
+									                   variant="inverse"
+									                   size="small" ></lightning-icon>
+									                <span class="slds-assistive-text">Close</span>
+									            	 </button>
+														<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Quarterly KRA Edit</h2>
+													</header>																					
+													<div class="slds-modal__content slds-p-around_medium slds-p-bottom_none slds-p-right_small slds-p-left_small" id="modal-content-id-2">
+																											
+														<c-quarterlykraedit mode={mode} selected-project-id ={selectedProjectId} receivedkraid={selectedKraQuaterly} selectedresource={selectedResourceId} tab={tab} onmycustomevent={handleCustomEvent} onclose ={hideKRAEditModalBox}> </c-quarterlykraedit>
+													</div>																					
+													<footer class="slds-modal__footer">									
+														<button class="slds-button slds-button_neutral" title="Close" onclick={hideKRAEditModalBox}>Close</button>
+													</footer>							
+												</div>
+											</section>
+											<div class="slds-backdrop slds-backdrop_open"></div>
+										</lightning-card>
+									</template>
+
+			<template if:false={hasData}>
+				<div class="slds-text-align_center slds-p-around_medium">
+					<center>No KRA records found.</center>
+				</div>
+			</template>
+		</div>
+	</lightning-card>
+</template>

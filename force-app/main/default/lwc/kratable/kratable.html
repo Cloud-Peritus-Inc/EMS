@@ -39,7 +39,7 @@
               <td data-label={accWithContacts.nameid}>
                 <template if:true={accWithContacts.qualList}>
                   <div class="slds-truncate slds-p-left_large">
-                    <lightning-icon icon-name={iconParentName} data-id={accWithContacts.nameid} size="x-small"
+                    <lightning-icon id={accWithContacts.nameid} icon-name={iconName} data-id={accWithContacts.nameid} size="x-small"
                       onclick={handleContactChild} class="slds-m-right_large"></lightning-icon>
                   </div>
                 </template>
@@ -100,11 +100,11 @@
                         <th class="slds-border_right tableheading" scope="col">
                           <div class="" title="Type">Type</div> <!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
+                        <!--th class="slds-border_right tableheading" scope="col"  >
+                          <div class="" title="Rating">Rating</div>  ## comments smaske : UAT_014 : removed class="slds-truncate"> ## comments sangharsh : as per discussion with subba not required as of now
+                        </th-->
                         <th class="slds-border_right tableheading" scope="col"  >
-                          <div class="" title="Rating">Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
-                        </th>
-                        <th class="slds-border_right tableheading" scope="col"  >
-                          <div class="" title="Rating">Overall Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
+                          <div class="" title="Overall Rating">Overall Rating</div><!-- smaske : UAT_014 : removed class="slds-truncate"  -->
                         </th>
                         <th class="slds-border_right tableheading" scope="col"  >
                           <div class="slds-truncate" title="Actions"> Actions</div>
@@ -117,9 +117,11 @@
                         <tr key={contactItem.nameid}>
                           
                           <td >
-                            <div class="slds-wrap"><a href="javascript:void(0);" data-id={contactItem.nameid} onclick={handleConNavClick}>
-                      {contactItem.name}
-                    </a></div>
+                            <div class="slds-wrap"><a href="javascript:void(0);" data-id={contactItem.nameid} onclick={handleConNavViewClick}>
+                                <!-- sangharsh : PM_Def_075 : add hanndle to navigate to kra view screen  -->
+                                <!--onclick={handleConNavClick}-->
+                                {contactItem.name}
+                              </a></div>
                           </td>
                           <td>
                             <div class="slds-wrap"> <lightning-formatted-date-time value={contactItem.qstartdate}></lightning-formatted-date-time></div>
@@ -135,23 +137,32 @@
                                {contactItem.typeval}
                               </div><!--response-->
                           </td>
-                          <td >
+                          <!--td >
                             <div class="slds-wrap" >
-                               {contactItem.rating}
-                              </div><!--email-->
-                          </td>
+                               {contactItem.rating} //sangharsh : as per discussion with subba not required as of now
+                              </div>
+                          </td-->
                           <td >
                             <div class="slds-wrap" ><lightning-formatted-rich-text  value={contactItem.overallRating}></lightning-formatted-rich-text>
                               </div>
                           </td>
                           <td >
                             <div class="slds-wrap" >
-                             <lightning-button-icon icon-name="action:preview"  size="large"  variant="bare" alternative-text="View KRA" data-id={contactItem.nameid} onclick={handleConNavClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
-                             <template if:true={contactItem.allowedit}>
-                             <lightning-button-icon icon-name="action:edit"  size="large"     variant="bare" alternative-text="Edit KRA"  data-id={contactItem.nameid} onclick={handleConNavEditClick} class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;&nbsp;
-                             </template>
-                             <lightning-button-icon icon-name="action:goal"  size="large"     variant="bare" alternative-text="View Goals"  data-id={contactItem.nameid} onclick={handleGaolClick} class="slds-m-left_xx-small"></lightning-button-icon>
-                              </div><!--email-->
+                              <template if:true={contactItem.allowCopy}>
+                                <lightning-button-icon icon-name='utility:copy' alternative-text='copy' data-id={contactItem.nameid} size='large' title='Copy Previous Quarter KRA inputs' onclick={handleCopyPreviousQuaterKRA} variant="bare"  class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                                </template>
+                              <template if:true={contactItem.allowedit}>
+                                <lightning-button-icon icon-name="action:edit"  size="large"     variant="bare" alternative-text="Edit KRA"  data-id={contactItem.nameid} onclick={handleConNavEditClick} class="slds-m-left_xx-small"></lightning-button-icon> &nbsp;&nbsp;
+                                </template>
+                             <lightning-button-icon icon-name="action:preview"  size="large"  variant="bare" alternative-text="View KRA" data-id={contactItem.nameid} onclick={handleConNavViewClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                             
+                             
+                              <template if:true={contactItem.showPmRequest}>
+                              <lightning-button-icon icon-name="action:record"  size="large"     variant="bare" alternative-text="View KRA Feedback Requests"  data-id={contactItem.nameid} onclick={handlePmRequest} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                              </template>
+
+                              <lightning-button-icon icon-name="action:goal"  size="large"     variant="bare" alternative-text="View Goals"  data-id={contactItem.nameid} onclick={handleGaolClick} class="slds-m-left_xx-small"></lightning-button-icon>&nbsp;&nbsp;
+                            </div>
                           </td>
                         </tr>
                       </template>
@@ -216,6 +227,43 @@
  </template>
  <!-- modal end -->
 
+<!--Goal modal start -->      
+   <template if:true={showPMRequestModalBox}>
+     <lightning-card>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hidePMRequestsModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-8" class="slds-text-heading_medium slds-hyphenate">View KRA Feedback Requests</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-8">
+                <p><i></i></p> <br/>
+                <div class="c-container">
+                  <c-view-p-m-requests receivedkraid={selectedKraQuaterly} tab={tab}  > </c-view-p-m-requests> 
+                </div>
+
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+          
+             <button class="slds-button slds-button_neutral" onclick={hidePMRequestsModalBox}>Close</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+     </lightning-card>
+ </template>
 
 <!--check In modal start -->      
    <template if:true={showKRAViewModal}>
@@ -257,6 +305,8 @@
  </template>
  <!-- modal end -->
 
+ 
+
  <!--check In modal start -->      
    <template if:true={showKRAEditModal}>
      <lightning-card>
@@ -275,9 +325,9 @@
           </header>
       
           <!-- modal body start -->
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+          <div class="slds-modal__content slds-p-top_small slds-p-bottom_none slds-p-right_small slds-p-left_small" id="modal-content-id-2">
             <!-- EDIT MODE -->
-            <c-quarterlykraedit mode={mode} receivedkraid={selectedKraQuaterly} selectedresource={resourceid} onclose={hideKRAEditModalBox}> </c-quarterlykraedit>
+            <c-quarterlykraedit mode={mode} receivedkraid={selectedKraQuaterly} selectedresource={resourceid} onclose={hideKRAEditModalBox} tab={tab} copy={copy}> </c-quarterlykraedit>
           </div>
 
           <!-- modal footer start-->

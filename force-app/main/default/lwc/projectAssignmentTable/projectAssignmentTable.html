@@ -7,23 +7,32 @@
 				</template>
 			</div>
 		<div class="tableFixHead">
+
+			<p style="font-size: 1.0em;">
+				 <strong>Note:</strong> The "Request to" dropdown will auto-update by removing the options each time an option has been selected to send the request to. 
+				However, you can still track the KRA feedback requests sent, by clicking on the action button available in the Mentee's KRA record.
+			</p><br>
+
+
 			<table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header">
 				<thead>
-					<tr class="slds-line-height_reset" style="color:lightcoral">
+					<tr  style="color:lightcoral ">
+
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
 							<div class="slds-truncate" title="Project Name">Project Name</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
-							<div class="" title="Contact Name">Contact Name</div>
+
+							<div class="" title="Resource Name">Resource Name</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
-							<div class="slds-truncate" title="Project Start Date">Project Start Date</div>
+							<div class="slds-truncate" title="Assignment Start Date">Assignment Start Date</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
-							<div class="slds-truncate" title="Project End Date">Project End Date</div>
+							<div class="slds-truncate" title="Assignment End Date">Assignment End Date</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
-							<div class="slds-truncate" title="Project Manager">Project Manager</div>
+							<div class="slds-truncate" title="Request To">Request To</div>
 						</th>
 						<th class="slds-border_right tableheading" style="width: 15%;" scope="col">
 							<div class="slds-truncate" title="Action">Action</div>
@@ -52,18 +61,21 @@
 										</lightning-formatted-date-time>
 									</div>
 								</td>
-								<td style=";word-wrap:break-word; width: 15%;" class="overflowModal">
 
-									<lightning-combobox class="overflowModal" placeholder="Choose PM"
-										value={mentee.value} data-projectid={mentee.projectid}
+								<td style=";word-wrap:break-word; width: 15%;padding-bottom:24px;" class="overflowModal">
+
+									<lightning-combobox class="overflowModal" placeholder="-Please Select-"
+										value={mentee.value} data-projectid={mentee.projectid} disabled ={mentee.disableCombobox} 
+										data-projectassigmentid={mentee.projectAssigmentId} 
 										onchange={handleChangeCombobox} options={mentee.managerOptions}>
 									</lightning-combobox>
-
+                               
 								</td>
 								<td>
 									<lightning-button variant="brand" icon-name="utility:adduser"
-										disabled={mentee.disableKRAbutton} label="Send KRA Request"
-										title="Send KRA Request" onclick={HandlementeeRowAction}
+										disabled={mentee.disableKRAbutton} label="Send KRA request"
+										title="Send KRA request" onclick={HandlementeeRowAction}
+
 										data-projectid={mentee.projectid}
 										data-projectassigmentid={mentee.projectAssigmentId}
 										data-managerid={mentee.value} class="slds-m-left_x-small">
@@ -93,7 +105,9 @@
 								</lightning-button-icon>
 								<br/><br/>
 								<center>
-									<h2 class="slds-modal__title slds-hyphenate">Select Resource to send a KRA Request
+
+									<h2 class="slds-modal__title slds-hyphenate">Select a resource to send KRA request
+
 									</h2>
 									<br/>
 									<c-reusable-lookup label="" selected-icon-name="standard:contact"
@@ -105,11 +119,13 @@
 										onvalueremoved={handleValueRemovedOnAccount}>
 									</c-reusable-lookup>
 									<br/><br/>
-									<lightning-button variant="brand-outline" label="Cancel" title="Cancel"
-										onclick={hideModalBox} icon-name="utility:back">
+
+									<lightning-button variant="destructive" label="Cancel" title="Cancel"
+										onclick={hideModalBox} class="slds-m-left_x-small">
 									</lightning-button>&nbsp;&nbsp;
-									<lightning-button variant="brand-outline" label="Confirm" title="Confirm"
-										onclick={handleConformModalBox} icon-name="utility:save">
+									<lightning-button variant="brand" label="Send KRA request" title="Send KRA request"
+										onclick={handleConformModalBox} class="slds-m-top_small">
+
 									</lightning-button>
 								</center> <br/>
 								<div>
