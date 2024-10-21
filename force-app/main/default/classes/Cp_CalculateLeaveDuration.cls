@@ -124,9 +124,10 @@ public without sharing class Cp_CalculateLeaveDuration implements TriggerAction.
                 DateTime currDate = DateTime.newInstance(dt.year(), dt.month(), dt.day());
                 String todayDay = currDate.format('EEEE');
     
-                if (todayDay != 'Saturday' && todayDay != 'Sunday' && daycheck == 'Full Day' && !holidaysSet.contains(dt) && leaveTypeName != LeaveRequestConstant.LOSS_OF_PAY) {
+                //@sangharsh 21/10/2024: Added condition for maternity leaves for excluding weekends and holiday for calculating duration
+                if (todayDay != 'Saturday' && todayDay != 'Sunday' && daycheck == 'Full Day' && !holidaysSet.contains(dt) && (leaveTypeName != LeaveRequestConstant.LOSS_OF_PAY || leaveTypeName != LeaveRequestConstant.MATERNITY_LEAVE)) {
                     duration += 1;
-                } else if (leaveTypeName == LeaveRequestConstant.LOSS_OF_PAY && daycheck == 'Full Day') {
+                } else if ((leaveTypeName == LeaveRequestConstant.LOSS_OF_PAY || leaveTypeName == LeaveRequestConstant.MATERNITY_LEAVE) && daycheck == 'Full Day') {
                     duration += 1;
                 } else if (daycheck != 'Full Day') {
                     duration += 0.5;
