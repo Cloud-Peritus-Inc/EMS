@@ -7,6 +7,7 @@ export default class ViewPMRequests extends LightningElement {
 
     @api receivedkraid;
     @api tab;
+    @api viewonlymode = false;
     viewRequestRecord;
     rejectionReason = '';
     @track showPMRequestRecords = false;
@@ -20,11 +21,13 @@ export default class ViewPMRequests extends LightningElement {
     connectedCallback() {
         //smaske : PM_Def_174 : instead of wire calling in connected callback
         console.log('In connected call back PM_Def_174');
+        console.log('In connected call back PM_Def_174 '+ this.viewonlymode);
         this.loadPmRequests();
     }
 
     loadPmRequests() {
         console.log('In loadPmRequests');
+        console.log('In connected call back PM_Def_174 '+ this.viewonlymode);
         viewPMRequestsTable({ KraId: this.receivedkraid })
             .then(result => {
                 if (result) {
@@ -33,7 +36,8 @@ export default class ViewPMRequests extends LightningElement {
                     this.pmRequestTable = [];
                     this.pmRequestTable = result;
                     if (this.tab === 'My Team') {
-                        this.disablecolumn = true;
+                        //smaske: UAT_Smoke_016 : [24-oct-2024] : hiding action column for indirect reportee, showing for direct reportees.Originally it was set to true
+                        this.disablecolumn = this.viewonlymode == true ? false : true;
                         console.log('this.tab1 ' + this.tab);
                     }
                     if (this.tab === 'My Metric') {
