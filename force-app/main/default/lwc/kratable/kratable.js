@@ -92,7 +92,7 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         this.selectedKraQuaterly = node;
         this.mode = 'View';
         console.log('==node====' + node);
-        const url = `${this.orgDomainId}/Grid/s/kra-view?c__kraid=${this.selectedKraQuaterly}&tab=${this.tab}`;
+        const url = `${this.orgDomainId}/Grid/s/kra-view?c__kraid=${this.selectedKraQuaterly}&tab=${this.tab}&viewonlymode=${this.viewonlymode}`;
         window.open(url, '_blank');
         // window.open('https://cpprd--dev.sandbox.my.site.com/Grid/s/kra-view?c__kraid='+this.selectedKraQuaterly+ '&tab='+this.tab, '_blank');
     }

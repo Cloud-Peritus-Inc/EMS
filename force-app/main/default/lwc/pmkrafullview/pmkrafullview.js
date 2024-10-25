@@ -12,6 +12,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     @track questions = [];
     @api tab;
     receivedKRAId;
+    viewonlymode = false;
     error;
     @track allAnswerIdList = [];
     @track kraRecord;
@@ -79,10 +80,12 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             console.log('receivedKRAId ' + this.receivedKRAId);
             this.tab = pageRef.state.tab;
             console.log('tab--> ' + this.tab);
+            this.viewonlymode = pageRef.state.viewonlymode;
+            console.log('viewonlymode--> ' + this.viewonlymode);
         }
     }
 
-    @wire(getLoginAnswerdata, { kraid: '$receivedKRAId', tab: '$tab' })
+    @wire(getLoginAnswerdata, { kraid: '$receivedKRAId', tab: '$tab', viewonlymode: '$viewonlymode' })
     loginwiredData({ error, data }) {
         if (data) {
             console.log(' getLoginAnswerdata data-->' + JSON.stringify(data));

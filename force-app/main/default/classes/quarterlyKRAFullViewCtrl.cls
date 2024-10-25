@@ -65,7 +65,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
     }
     
     @AuraEnabled(cacheable=true)
-    public static viewAnswerWrapper getLoginAnswerdata(String kraid,String tab) {
+    public static viewAnswerWrapper getLoginAnswerdata(String kraid,String tab, Boolean viewonlymode) {
         
         Id AnswerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
         
@@ -74,18 +74,18 @@ public without sharing class quarterlyKRAFullViewCtrl {
                               Resource__r.ContactName__c ,Resource__r.Resource_Role__c,Resource__c 
                               FROM Goal__c 
                               WHERE Id=:kraid Limit 1];
-        if(goalRecord.Mentor_KRA_submitted__c == true && tab =='My Team' && goalRecord.Status__c == 'KRA In Review'){
-            aw.submittedKRAbutton=true; // by making it true will show Complete KRA button on UI
+        if(goalRecord.Mentor_KRA_submitted__c == true && tab =='My Team' && goalRecord.Status__c == 'KRA In Review' && viewonlymode==false){
+            aw.submittedKRAbutton=true; //@sangharsh by making it true will show Complete KRA button on UI
         }
         if(tab =='My Metric'){
             aw.submittedKRAbutton=false;
         }       
         
             if(tab =='My Team'){
-                if(goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c =='HR KRA Completed'){
-                    aw.submittedRecords=false;
+                if(viewonlymode==true || goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c =='HR KRA Completed' || goalRecord.Status__c == 'Missed'){
+                        aw.submittedRecords=false;
                 }else{
-                    aw.submittedRecords=true;
+                     aw.submittedRecords=true;   //@sangharsh by making it true will show KRA Edit button on UI
                 }
             }
         if(tab =='My Metric'){
@@ -97,7 +97,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
     
     public class viewAnswerWrapper{
         @AuraEnabled 
-        public Boolean submittedRecords=true;
+        public Boolean submittedRecords=true; //default making it true
         @AuraEnabled 
         public Boolean submittedKRAbutton=false;
         @AuraEnabled 
