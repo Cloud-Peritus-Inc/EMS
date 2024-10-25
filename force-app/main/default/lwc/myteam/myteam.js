@@ -485,4 +485,9 @@ export default class Myteam extends LightningElement {
         }
     }
 
+    get isProjectAssignmentVisible(){
+        console.log(this.viewonlymode);
+        return !this.viewonlymode;
+    }
+
 }
