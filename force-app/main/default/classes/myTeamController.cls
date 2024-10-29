@@ -14,7 +14,7 @@ public without sharing class myTeamController {
         if(isPerAdmin){
             //search RESOURCE based on HR's Work location
             for(Resource_Resource_Relationship__c rrr : [SELECT Id,Resource_Reports_To__c,Resource_Reports_To__r.Name,Resource__c,Resource__r.Name,Resource__r.EMS_TM_User__r.IsPortalEnabled,Resource__r.EMS_RM_ApplicantStatus_Update__c,Resource__r.Work_Location__c,Resource__r.Work_Location__r.Name FROM 
-                                                         Resource_Resource_Relationship__c WHERE Resource__r.EMS_TM_User__r.isActive = true AND Resource__r.EMS_RM_ApplicantStatus_Update__c IN ('Active', 'Active - Probation')
+                                                         Resource_Resource_Relationship__c WHERE Resource__r.EMS_TM_User__r.isActive = true AND Resource__r.EMS_RM_ApplicantStatus_Update__c IN ('Active', 'Active - Probation', 'Notice Period')
                                                          AND Resource__r.EMS_TM_User__r.IsPortalEnabled = true AND Resource__r.EMS_TM_User__c !=: Userinfo.getUserId() AND Resource__r.Work_Location__r.Name =: workLocationName Order By Resource__r.Name ASC ]){
                                                              resourceMap.put(rrr.Resource__r.Name,rrr.Resource__c); 
                                                          }             
@@ -22,7 +22,9 @@ public without sharing class myTeamController {
             for(Resource_Resource_Relationship__c rrr : [SELECT Id,Resource_Reports_To__c,Resource_Reports_To__r.Name,Resource__c,
                                                          Resource__r.Name FROM Resource_Resource_Relationship__c 
                                                          WHERE Resource_Reports_To__r.EMS_TM_User__c=:Userinfo.getUserId() AND Resource__r.EMS_TM_User__r.isActive = true  
-                                                         AND Resource__r.EMS_RM_ApplicantStatus_Update__c IN ('Active', 'Active - Probation')
+                                                         AND Resource__r.EMS_RM_ApplicantStatus_Update__c IN ('Active', 'Active - Probation', 'Notice Period')
+                                                         //smaske :[28/Oct/2024] : PM_Def_213 : Updating Querry to fetch only records where Mentor is selected
+                                                         AND Relationship_Type__c includes ('Mentor')
                                                          AND Resource__r.EMS_TM_User__r.IsPortalEnabled = true AND Resource__r.EMS_TM_User__c !=: Userinfo.getUserId() Order By Resource__r.Name ASC]){
                                                              resourceMap.put(rrr.Resource__r.Name,rrr.Resource__c); 
                                                          }
