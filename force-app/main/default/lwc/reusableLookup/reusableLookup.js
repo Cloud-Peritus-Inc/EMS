@@ -116,6 +116,7 @@ export default class ReusableLookup extends LightningElement {
     }
 
     //handler for deselection of the selected item
+    @api
     handleCommit() {
         //smaske: passing event on unselecting selected CONTACT
         let selectedRecord = {
