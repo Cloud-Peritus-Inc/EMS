@@ -151,6 +151,9 @@ public class myMetricsControllerTest {
             myMetricsController.getAllKRAs('');
             myMetricsController.getAllKRAs(fy.Id);
         }
+        //smaske : [30-Oct-2024] : PM_Def_214 :calling getRRRdata for test class coverage
+        myMetricsController.getRRRdata(con.Id,'My Metric');
+        myMetricsController.getRRRdata(con.Id,'My Team');
         Test.stopTest();
     }
     
