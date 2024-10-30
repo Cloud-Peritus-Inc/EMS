@@ -139,8 +139,19 @@ selectedLabel
 
     handleConformModalBox(event) {
         if (this.otherManagerIds != null) {
-            this.isShowModal = false;
-            this.menteeList = this.menteeList.map(mentee => {
+
+            //smaske : [30-Oct-2024] : PM_Def_214 : adding validation when selecting other contac for KRA request
+            if (this.tab === 'My Metric' && this.otherManagerIds === this.RRRData.mentorContact) {
+                this.ShowToast(' ', 'Please choose resource other than your mentor', 'error', 'dismissable');
+                return;
+            }
+            
+            if (this.tab === 'My Team' && this.otherManagerIds === this.RRRData.menteeContact) {
+                this.ShowToast(' ', 'Please choose resource other than your mentee', 'error', 'dismissable');
+                return;
+            }
+            
+            /*this.menteeList = this.menteeList.map(mentee => {
                 if (mentee.projectid === mentee.value) {
                     return {
                         ...mentee,
