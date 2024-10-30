@@ -1,6 +1,9 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import getTmenteeproject from '@salesforce/apex/myMetricsController.getMenteeProjectAssigne';
 import createPMAnswerConfigureForManager from '@salesforce/apex/myMetricsController.createPMAnswerConfigureForManager';
+import allowSendingKraRequestToOtherPm from '@salesforce/apex/myMetricsController.allowSendingKraRequestToOtherPm';
+import getRRRdata from '@salesforce/apex/myMetricsController.getRRRdata';
+
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
 import LightningConfirm from 'lightning/confirm';
@@ -22,7 +25,7 @@ export default class ProjectAssignmentTable extends LightningElement {
         Resource__c: null,
     };
     wiregetTmenteeproject
-
+    RRRData;
     @wire(getRecord, { recordId: Id, fields: [contactId] })
     userDetails({ error, data }) {
         if (error) {
@@ -83,6 +86,22 @@ export default class ProjectAssignmentTable extends LightningElement {
         }
     }
 
+    //smaske : [30-Oct-2024] : PM_Def_214 : GetRRRData
+    @wire(getRRRdata, { contactId: '$optionarray', tab: '$tab' })
+    wiredRRRData(result) {
+        if (result.data) {
+            this.RRRData = result.data;
+            console.log('this.RRRData Data',  JSON.stringify(this.RRRData) );
+            console.log('this.RRRData menteeContact',  JSON.stringify(this.RRRData.menteeContact) );
+            console.log('this.RRRData mentorContact',  JSON.stringify(this.RRRData.mentorContact) );
+            this.error = undefined;
+        } else if (result.error) {
+            this.error = result.error;
+            console.log('##error-->', result.error);
+            this.ShowToast(' ', 'Error Fetching Resource Relationship data!', 'error', 'dismissable');
+        }
+    }
+
 selectedLabel
     handleChangeCombobox(event) {
         const projectId = event.currentTarget.dataset.projectid;
@@ -127,6 +146,27 @@ selectedLabel
         console.log(" selectedLookupValue " + JSON.stringify(selectedLookupValue));
         this.otherManagerIds = selectedLookupValue.id;
         console.log(" this.otherManagerIds " + this.otherManagerIds);
+        //smaske : [30-Oct-2024] : PM_Def_214 : adding validation when selecting other contac for KRA request
+        if (this.tab == 'My Metric') {
+            if (this.otherManagerIds == this.RRRData.mentorContact) {
+                console.log('ERROR YOU CAN NOT SEND KRA REQUEST TO YOUR MENTOR');
+                const childComponent = this.template.querySelector('c-reusable-lookup');
+                if (childComponent) {
+                    childComponent.handleCommit();
+                }
+                this.ShowToast(' ', 'Please choose resource other than your mentor', 'error', 'dismissable');
+            }
+        }
+        if (this.tab == 'My Team') {
+            if (this.otherManagerIds == this.RRRData.menteeContact) {
+                console.log('ERROR YOU CAN NOT SEND KRA REQUEST TO YOUR MENTEE');
+                const childComponent = this.template.querySelector('c-reusable-lookup');
+                if (childComponent) {
+                    childComponent.handleCommit();
+                }
+                this.ShowToast(' ', 'Please choose resource other than your mentee', 'error', 'dismissable');
+            }
+        }
     }
 
     handleValueRemovedOnAccount(event) {
