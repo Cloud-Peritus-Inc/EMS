@@ -154,27 +154,6 @@ selectedLabel
         console.log(" selectedLookupValue " + JSON.stringify(selectedLookupValue));
         this.otherManagerIds = selectedLookupValue.id;
         console.log(" this.otherManagerIds " + this.otherManagerIds);
-        //smaske : [30-Oct-2024] : PM_Def_214 : adding validation when selecting other contac for KRA request
-        if (this.tab == 'My Metric') {
-            if (this.otherManagerIds == this.RRRData.mentorContact) {
-                console.log('ERROR YOU CAN NOT SEND KRA REQUEST TO YOUR MENTOR');
-                const childComponent = this.template.querySelector('c-reusable-lookup');
-                if (childComponent) {
-                    childComponent.handleCommit();
-                }
-                this.ShowToast(' ', 'Please choose resource other than your mentor', 'error', 'dismissable');
-            }
-        }
-        if (this.tab == 'My Team') {
-            if (this.otherManagerIds == this.RRRData.menteeContact) {
-                console.log('ERROR YOU CAN NOT SEND KRA REQUEST TO YOUR MENTEE');
-                const childComponent = this.template.querySelector('c-reusable-lookup');
-                if (childComponent) {
-                    childComponent.handleCommit();
-                }
-                this.ShowToast(' ', 'Please choose resource other than your mentee', 'error', 'dismissable');
-            }
-        }
     }
 
     handleValueRemovedOnAccount(event) {
@@ -188,6 +167,17 @@ selectedLabel
 
     handleConformModalBox(event) {
         if (this.otherManagerIds != null) {
+
+            //smaske : [30-Oct-2024] : PM_Def_214 : adding validation when selecting other contac for KRA request
+            if (this.tab === 'My Metric' && this.otherManagerIds === this.RRRData.mentorContact) {
+                this.ShowToast(' ', 'Please choose resource other than your mentor', 'error', 'dismissable');
+                return;
+            }
+            
+            if (this.tab === 'My Team' && this.otherManagerIds === this.RRRData.menteeContact) {
+                this.ShowToast(' ', 'Please choose resource other than your mentee', 'error', 'dismissable');
+                return;
+            }
             
             /*this.menteeList = this.menteeList.map(mentee => {
                 if (mentee.projectid === mentee.value) {
