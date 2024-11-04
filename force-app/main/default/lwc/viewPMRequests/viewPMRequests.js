@@ -79,7 +79,7 @@ export default class ViewPMRequests extends LightningElement {
     projectid;
 
     handleRejectionSubmission() {
-        if (!this.comment) {
+        if (!this.comment || !this.comment.trim()) { //smaske :[04/Nov/2024] : UAT_035
             //smaske : PM_Def_098 : showing toast msg if rejection reason is not filled
             //this.showToast2('Please Enter a Rejection Reason.', 'error', 'dismissible');
             const evt = new ShowToastEvent({
