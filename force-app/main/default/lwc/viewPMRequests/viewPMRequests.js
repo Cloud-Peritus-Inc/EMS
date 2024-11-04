@@ -17,6 +17,7 @@ export default class ViewPMRequests extends LightningElement {
     @track comment = '';
     error;
     pmRequestTable;
+    isLoaded=false;
 
     connectedCallback() {
         //smaske : PM_Def_174 : instead of wire calling in connected callback
@@ -26,6 +27,7 @@ export default class ViewPMRequests extends LightningElement {
     }
 
     loadPmRequests() {
+        this.isLoaded=true;
         console.log('In loadPmRequests');
         console.log('In connected call back PM_Def_174 '+ this.viewonlymode);
         viewPMRequestsTable({ KraId: this.receivedkraid })
@@ -50,8 +52,10 @@ export default class ViewPMRequests extends LightningElement {
                         this.showPMRequestRecords = true;
                         console.log('Entered Inside this.showPMRequestRecord-----' + this.showPMRequestRecords);
                         this.disablerecallbutton = false;
+                        this.isLoaded=false;
                     } else {
                         this.showPMRequestRecords = false;
+                        this.isLoaded=false;
                     }
                 }
             })
@@ -59,6 +63,7 @@ export default class ViewPMRequests extends LightningElement {
                 console.log('error------' + error);
                 this.pmRequestTable = undefined;
                 this.error = error;
+                this.isLoaded=false;
             });
     }
 
