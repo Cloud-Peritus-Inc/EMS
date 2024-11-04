@@ -1,6 +1,12 @@
 <template>
-  <lightning-card>
+  <lightning-card>    
      <div class="tableFixHead">
+       <div class="slds-m-around_large">
+			<template if:true={isLoaded} class="slds-is-relative">
+				<lightning-spinner alternative-text="Loading..." variant="brand">
+				</lightning-spinner>
+			</template>
+		</div>
     <table class="slds-table_cell-buffer slds-no-row-hover slds-table_bordered fixed_header" >
       <thead>
         <tr  style="color:lightcoral">
@@ -72,7 +78,7 @@
         </template>
       </tbody>
     </table>
-       <template if:false={showPMRequestRecords}>
+       <template if:true={noPMRequestRecords}>
           <div class="slds-text-align_center slds-p-around_medium">
             <center>No KRA feedback requests found.</center>
           </div>
