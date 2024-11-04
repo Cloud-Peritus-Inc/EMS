@@ -545,9 +545,22 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
         recordEditForms.forEach(form => {
             const inputFields = form.querySelectorAll('lightning-input-field');
             inputFields.forEach(inputField => {
-                if (!inputField.value) {
-                    isFormValid = false;
-                    inputField.reportValidity();
+                const fieldLabel = inputField.dataset.label;
+                //smaske : [04/Nov/2024] : UAT_038 : Added validation for blank spaces in description field, appended data-label="Description" in html 
+                console.log(`Field Label: ${fieldLabel}`);
+                if (fieldLabel === 'Description') {
+                    const rawValue = inputField.value;
+                    if (!rawValue || !rawValue.replace(/<[^>]*>/g, '').trim()) {
+                        isFormValid = false;
+                        console.log('Invalid description');
+                        return isFormValid;
+                    }
+
+                } else {
+                    if (!inputField.value) {
+                        isFormValid = false;
+                        inputField.reportValidity();
+                    }
                 }
             });
         });
