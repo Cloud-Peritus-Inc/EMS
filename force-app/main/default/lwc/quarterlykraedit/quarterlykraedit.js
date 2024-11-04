@@ -514,14 +514,50 @@ export default class Quarterlykraedit extends NavigationMixin(LightningElement) 
             };*/
             //console.log("#getAllPropertyFieldMap 363 : " + JSON.stringify(this.getAllPropertyFieldMap()));
 
-            
-            //smaske :[EN_002] : Disabling Field Validation on SAVE as per Feedback
-            // Validate fields based on viewwrap properties
-            /*Object.entries(propertyFieldMap).forEach(([property, fields]) => {
-                if (this.viewwrap[property]) {
-                    if (fields.some(field => !this.kraRecord[field])) {
-                        console.error(`${property} fields are blank in the kraRecord object`);
-                        isValid = false;
+    // ***SAVE BUTTON CODE WIHOUT VALIDATION *** 
+    /*smaske : [PM_Def_033] : As part fo this defect not validating the record-edit-form data and drectly saving record changes.*/
+    handleSaveActionDuplicate(event) {
+        console.log(" handleSaveActionDuplicate Invoked");
+        this.clickedBtnLabel = event.target.label;
+        //console.log(" clickedBtnLabel & selectedStep  :" + this.clickedBtnLabel + ' ---- ' + this.selectedStep);
+        let isFormValid = true;
+        const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
+        console.log(" recordEditForms size 583 " + recordEditForms.length);
+        if (isFormValid) {
+            console.log("Form is Valid");
+            recordEditForms.forEach(form => {
+                form.submit();
+            });
+        }
+    }
+
+
+    // ***SAVE BUTTON CODE WItH VALIDATION *** 
+    /*smaske : [PM_Def_027] : Adding validaion before moving to next section.
+        handleSaveActionDuplicateWithValidation will do validation and pass result to changeSection
+        if changeSection is true we are moving to next section */
+    handleSaveActionDuplicateWithValidation() {
+        console.log(" handleSaveActionDuplicateWithValidation Invoked");
+        let isFormValid = true;
+        const recordEditForms = this.template.querySelectorAll('lightning-record-edit-form');
+        recordEditForms.forEach(form => {
+            const inputFields = form.querySelectorAll('lightning-input-field');
+            inputFields.forEach(inputField => {
+                const fieldLabel = inputField.dataset.label;
+                //smaske : [04/Nov/2024] : UAT_038 : Added validation for blank spaces in description field, appended data-label="Description" in html 
+                console.log(`Field Label: ${fieldLabel}`);
+                if (fieldLabel === 'Description') {
+                    const rawValue = inputField.value;
+                    if (!rawValue || !rawValue.replace(/<[^>]*>/g, '').trim()) {
+                        isFormValid = false;
+                        console.log('Invalid description');
+                        return isFormValid;
+                    }
+
+                } else {
+                    if (!inputField.value) {
+                        isFormValid = false;
+                        inputField.reportValidity();
                     }
                 }
             });*/
