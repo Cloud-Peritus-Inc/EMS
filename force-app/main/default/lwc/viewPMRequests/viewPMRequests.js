@@ -11,6 +11,7 @@ export default class ViewPMRequests extends LightningElement {
     viewRequestRecord;
     rejectionReason = '';
     @track showPMRequestRecords = false;
+    noPMRequestRecords=false;
     @track disablerecallbutton = false;
     @track disablecolumn = false;
     isShowPopUp = false;
@@ -54,7 +55,7 @@ export default class ViewPMRequests extends LightningElement {
                         this.disablerecallbutton = false;
                         this.isLoaded=false;
                     } else {
-                        this.showPMRequestRecords = false;
+                        this.noPMRequestRecords = true;
                         this.isLoaded=false;
                     }
                 }
