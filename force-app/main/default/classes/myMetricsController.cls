@@ -546,18 +546,28 @@ return menteeRecords;
             wrp.projectid = assgn.EMS_TM_ProjectName_Asgn__c;
             
             wrp.managerOptions = new List<ManagerOption>();
+
+            Resource_Resource_Relationship__c rrr = new  Resource_Resource_Relationship__c();
+            rrr = [SELECT Id,Resource__c,Resource_Reports_To__c,Relationship_Type__c FROM Resource_Resource_Relationship__c 
+                WHERE Resource__c =: contactId
+                AND Resource__r.EMS_TM_User__r.isActive = true and Relationship_Type__c includes ('Mentor')];
             //wrp.managerOptions.add(new ManagerOption(' ' + 'None', 'None'));
-            if(wrp.offshoremanagerid == wrp.onshoremanagerid && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c){
-                wrp.managerOptions.add(new ManagerOption('Onshore & Offshore: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
+
+            if(wrp.offshoremanagerid == wrp.onshoremanagerid && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c && 
+                (wrp.offshoremanagerid != rrr.Resource_Reports_To__c ||  wrp.onshoremanagerid != rrr.Resource_Reports_To__c) && (wrp.onshoremanagerid != contactId || wrp.offshoremanagerid != contactId )   ){
+                wrp.managerOptions.add(new ManagerOption('Onshore & Offshore Manager: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
             }else{
-                if (wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c) {
-                    wrp.managerOptions.add(new ManagerOption('Offshore: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
+                
+                if (wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c && (wrp.offshoremanagerid != rrr.Resource_Reports_To__c && wrp.offshoremanagerid != contactId)) {
+                    wrp.managerOptions.add(new ManagerOption('Offshore Manager: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
                 }
-                if (wrp.onshoremanagerid != null && !assgn.Onshore_PM_Configure__c) {
-                    wrp.managerOptions.add(new ManagerOption('Onshore: ' + wrp.onshoremanagerName, wrp.onshoremanagerid));
+                if (wrp.onshoremanagerid != null && !assgn.Onshore_PM_Configure__c && (wrp.onshoremanagerid != rrr.Resource_Reports_To__c && wrp.onshoremanagerid != contactId )) {
+                    wrp.managerOptions.add(new ManagerOption('Onshore Manager: ' + wrp.onshoremanagerName, wrp.onshoremanagerid));
                 }
-                if (wrp.onshoremanagerid != null && wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c) {
-                    wrp.managerOptions.add(new ManagerOption('Both ' + '', wrp.onshoremanagerid +','+ wrp.offshoremanagerid));
+                if (wrp.onshoremanagerid != null && wrp.offshoremanagerid != null && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c && 
+                       wrp.offshoremanagerid != rrr.Resource_Reports_To__c && wrp.onshoremanagerid != rrr.Resource_Reports_To__c && wrp.offshoremanagerid != contactId 
+                        && wrp.onshoremanagerid != contactId) {
+                    wrp.managerOptions.add(new ManagerOption('Both Managers ' + '', wrp.onshoremanagerid +','+ wrp.offshoremanagerid));
                 }
             }  
             if(!assgn.Other_PM_Configure__c){
@@ -661,8 +671,9 @@ return menteeRecords;
         try {
             if (!pmAnswerList.isEmpty()) {
                 insert pmAnswerList;
+                return 'success'; 
             }
-            return 'success'; 
+            return null;
         } catch (Exception ex) {
             throw new AuraHandledException('An error occurred while processing the request: ' + ex.getMessage());
         }
