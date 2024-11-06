@@ -670,10 +670,9 @@ return menteeRecords;
         
         try {
             if (!pmAnswerList.isEmpty()) {
-                insert pmAnswerList;
-                return 'success'; 
+                insert pmAnswerList;                
             }
-            return null;
+            return 'success';
         } catch (Exception ex) {
             throw new AuraHandledException('An error occurred while processing the request: ' + ex.getMessage());
         }
