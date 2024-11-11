@@ -130,7 +130,7 @@ export default class PulseKraRecordFrom extends NavigationMixin(LightningElement
                             this.disableSubmitBtn = true;
                             const event = new ShowToastEvent({
                                 title: '',
-                                message: 'Feedback Submitted Successfully !!',
+                                message: 'Pulse Submitted Successfully !!',
                                 variant: 'success',
                                 mode: 'dismissable'
                             });
@@ -149,7 +149,7 @@ export default class PulseKraRecordFrom extends NavigationMixin(LightningElement
                     this.disableSubmitBtn = false;
                     const event = new ShowToastEvent({
                         title: '',
-                        message: 'Error Submitting Feedback !!',
+                        message: 'Error Submitting Pulse !!',
                         variant: 'error',
                         mode: 'dismissable'
                     });
