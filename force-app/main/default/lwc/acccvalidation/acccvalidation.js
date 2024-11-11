@@ -1633,7 +1633,7 @@ map2
                             }).catch(error => {
                                 console.log('Error 1350===>> '+ error);
                                 let err = JSON.stringify(error);
-                                if(err.includes('Please enter time within the start')){
+                                if(err.includes('Please enter time within the start')  || err.includes('Please don`t enter time before the start')){
                                     let errerrr = error.body.pageErrors[0].message;
                                     this.dispatchEvent(
                                             new ShowToastEvent({
