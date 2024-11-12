@@ -80,7 +80,7 @@ public class restrictAssignmentTimePreandPost implements triggerAction.BeforeIns
                 
                 if (throwError) {
                     if(assEndDate==null){
-                    errorMessage = projectName + ': Please don`t enter time before the start (' + String.valueOf(assStartDate.day()) + '/' + String.valueOf(assStartDate.month()) + '/' + String.valueOf(assStartDate.year())
+                    errorMessage = projectName + ': Please do not enter time before the start (' + String.valueOf(assStartDate.day()) + '/' + String.valueOf(assStartDate.month()) + '/' + String.valueOf(assStartDate.year())
                          + ') date of your assignment.';
                     }
                     else{
