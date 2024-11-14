@@ -65,6 +65,7 @@ export default class PulseKraRecordFrom extends NavigationMixin(LightningElement
     }
 
     rating(event) {
+         
         if (event.target.name === "Work Environment") {
             console.log('Rating Value : ' + event.target.value);
             this.WorkEnvironment = event.target.value;
