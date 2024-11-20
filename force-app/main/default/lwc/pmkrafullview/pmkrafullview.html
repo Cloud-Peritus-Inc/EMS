@@ -161,28 +161,38 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column ">
-											<h3 style="height:70px;">{contactAnswer.contact.name} {contactAnswer.contact.projectname}<br>{contactAnswer.contact.resourceRole}</h3>
+											<h3 style="height:70px;">{contactAnswer.contact.name}
+												{contactAnswer.contact.projectname}<br>{contactAnswer.contact.resourceRole}
+											</h3>
 
-											<!-- Render each answer for the contact -->
-											<template for:each={contactAnswer.answers} for:item="answer">
-												<div key={answer.answerId}>
-													<lightning-helptext content={answer.ratingoverview}
-														key={answer.answerId}></lightning-helptext>
-													<lightning-input type="text" variant="standard"
-														key={answer.answerId} required name="Rating" label="Rating"
-														value={answer.rating} disabled>
-													</lightning-input>
-												
-													<lightning-helptext content={answer.descriptionoverview}
-														key={answer.answerId}></lightning-helptext>
-													<lightning-input-rich-text label-visible label="Description"
-														required key={answer.answerId} name="Description"
-														value={answer.answerValue} disabled
-														disabled-categories="INSERT_CONTENT">
-													</lightning-input-rich-text>
-												</div>
+											<!-- Render each answer for the contact 
+											  slds-table_bordered slds-table_col-bordered slds-table_cell-buffer slds-table_fixed-layout-->
+											<table class="slds-table slds-table_cell-buffer slds-table_fixed-layout">
+												<tbody>
+													<tr key={key.Id}>
+														<template for:each={contactAnswer.answers} for:item="answer">
+															<div key={answer.answerId}>
+																<lightning-helptext content={answer.ratingoverview}
+																	key={answer.answerId}></lightning-helptext>
+																<lightning-input type="text" variant="standard"
+																	key={answer.answerId} required name="Rating"
+																	label="Rating" value={answer.rating} disabled>
+																</lightning-input>
 
-											</template>
+																<lightning-helptext content={answer.descriptionoverview}
+																	key={answer.answerId}></lightning-helptext>
+																<lightning-input-rich-text label-visible
+																	label="Description" required key={answer.answerId}
+																	name="Description" value={answer.answerValue}
+																	disabled disabled-categories="INSERT_CONTENT">
+																</lightning-input-rich-text>
+
+															</div>
+
+														</template>
+													</tr>
+												</tbody>
+											</table>
 										</div>
 									</template>
 								</div>
@@ -218,7 +228,9 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3 style="height:70px;">{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
+											<h3 style="height:70px;">{contactAnswer.contact.name}
+												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
+											</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div key={answer.answerId}>
@@ -228,7 +240,7 @@
 														key={answer.answerId} required name="Rating" label="Rating"
 														value={answer.rating} disabled>
 													</lightning-input>
-												
+
 													<lightning-helptext content={answer.descriptionoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input-rich-text label-visible label="Description"
@@ -273,7 +285,9 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3 style="height:70px;">{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
+											<h3 style="height:70px;">{contactAnswer.contact.name}
+												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
+											</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div key={answer.answerId}>
@@ -283,7 +297,7 @@
 														key={answer.answerId} required name="Rating" label="Rating"
 														value={answer.rating} disabled>
 													</lightning-input>
-												
+
 													<lightning-helptext content={answer.descriptionoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input-rich-text label-visible label="Description"
@@ -328,7 +342,9 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3 style="height:70px;">{contactAnswer.contact.name} {contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}</h3>
+											<h3 style="height:70px;">{contactAnswer.contact.name}
+												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
+											</h3>
 											<!-- Render each answer for the contact -->
 											<template for:each={contactAnswer.answers} for:item="answer">
 												<div key={answer.answerId}>
@@ -338,7 +354,7 @@
 														key={answer.answerId} required name="Rating" label="Rating"
 														value={answer.rating} disabled>
 													</lightning-input>
-												
+
 													<lightning-helptext content={answer.descriptionoverview}
 														key={answer.answerId}></lightning-helptext>
 													<lightning-input-rich-text label-visible label="Description"
@@ -383,7 +399,8 @@
 
 							</th>
 							<template for:each={contacts} for:item="contact">
-								<th key={contact.contactId}><strong>{contact.contactname} {contact.projectname}<br>{contact.resourceRole} </strong>
+								<th key={contact.contactId}>
+									<strong>{contact.contactname} {contact.projectname}<br>{contact.resourceRole} </strong>
 								</th>
 							</template>
 						</tr>
@@ -425,37 +442,38 @@
 
 		<!--check In modal start -->
 		<template if:true={showKRAEditModal}>
-				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-					<div class="slds-modal__container">
-						
-						<header class="slds-modal__header">
-							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideKRAEditModalBox}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideKRAEditModalBox}>
                 <lightning-icon icon-name="utility:close"
                    alternative-text="close"
                    variant="inverse"
                    size="small" ></lightning-icon>
                 <span class="slds-assistive-text">Close</span>
              </button>
-							<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Quarterly KRA Edit
-							</h2>
-						</header>
+						<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Quarterly KRA Edit
+						</h2>
+					</header>
 
-						
-						<div class="slds-modal__content slds-p-around_medium slds-p-bottom_none slds-p-right_small slds-p-left_small" id="modal-content-id-2">
-							<c-quarterlykraedit mode={mode} receivedkraid={receivedKRAId} selectedresource={resourceid}
-								onclose={hideKRAEditModalBox} tab={tab}>
-							</c-quarterlykraedit>	
-						</div>
 
-						<footer class="slds-modal__footer">
-							<button class="slds-button slds-button_neutral" onclick={hideKRAEditModalBox}>Close</button>
-						</footer>
-
+					<div class="slds-modal__content slds-p-around_medium slds-p-bottom_none slds-p-right_small slds-p-left_small"
+						id="modal-content-id-2">
+						<c-quarterlykraedit mode={mode} receivedkraid={receivedKRAId} selectedresource={resourceid}
+							onclose={hideKRAEditModalBox} tab={tab}>
+						</c-quarterlykraedit>
 					</div>
-				</section>
-				<div class="slds-backdrop slds-backdrop_open"></div>
+
+					<footer class="slds-modal__footer">
+						<button class="slds-button slds-button_neutral" onclick={hideKRAEditModalBox}>Close</button>
+					</footer>
+
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
 		</template>
-		 <!--modal end -->
+		<!--modal end -->
 	</lightning-card>
 </template>
