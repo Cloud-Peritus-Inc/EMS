@@ -231,25 +231,31 @@
 												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
 											</h3>
 											<!-- Render each answer for the contact -->
-											<template for:each={contactAnswer.answers} for:item="answer">
-												<div key={answer.answerId}>
-													<lightning-helptext content={answer.ratingoverview}
-														key={answer.answerId}></lightning-helptext>
-													<lightning-input type="text" variant="standard"
-														key={answer.answerId} required name="Rating" label="Rating"
-														value={answer.rating} disabled>
-													</lightning-input>
+											<table class="slds-table slds-table_cell-buffer slds-table_fixed-layout">
+												<tbody>
+													<tr key={key.Id}>
+														<template for:each={contactAnswer.answers} for:item="answer">
+															<div key={answer.answerId}>
+																<lightning-helptext content={answer.ratingoverview}
+																	key={answer.answerId}></lightning-helptext>
+																<lightning-input type="text" variant="standard"
+																	key={answer.answerId} required name="Rating"
+																	label="Rating" value={answer.rating} disabled>
+																</lightning-input>
 
-													<lightning-helptext content={answer.descriptionoverview}
-														key={answer.answerId}></lightning-helptext>
-													<lightning-input-rich-text label-visible label="Description"
-														required key={answer.answerId} name="Description"
-														value={answer.answerValue} disabled
-														disabled-categories="INSERT_CONTENT">
-													</lightning-input-rich-text>
-												</div>
+																<lightning-helptext content={answer.descriptionoverview}
+																	key={answer.answerId}></lightning-helptext>
+																<lightning-input-rich-text label-visible
+																	label="Description" required key={answer.answerId}
+																	name="Description" value={answer.answerValue}
+																	disabled disabled-categories="INSERT_CONTENT">
+																</lightning-input-rich-text>
+															</div>
 
-											</template>
+														</template>
+													</tr>
+												</tbody>
+											</table>
 										</div>
 									</template>
 								</div>
@@ -288,25 +294,31 @@
 												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
 											</h3>
 											<!-- Render each answer for the contact -->
-											<template for:each={contactAnswer.answers} for:item="answer">
-												<div key={answer.answerId}>
-													<lightning-helptext content={answer.ratingoverview}
-														key={answer.answerId}></lightning-helptext>
-													<lightning-input type="text" variant="standard"
-														key={answer.answerId} required name="Rating" label="Rating"
-														value={answer.rating} disabled>
-													</lightning-input>
+											<table class="slds-table slds-table_cell-buffer slds-table_fixed-layout">
+												<tbody>
+													<tr key={key.Id}>
+														<template for:each={contactAnswer.answers} for:item="answer">
+															<div key={answer.answerId}>
+																<lightning-helptext content={answer.ratingoverview}
+																	key={answer.answerId}></lightning-helptext>
+																<lightning-input type="text" variant="standard"
+																	key={answer.answerId} required name="Rating"
+																	label="Rating" value={answer.rating} disabled>
+																</lightning-input>
 
-													<lightning-helptext content={answer.descriptionoverview}
-														key={answer.answerId}></lightning-helptext>
-													<lightning-input-rich-text label-visible label="Description"
-														required key={answer.answerId} name="Description"
-														value={answer.answerValue} disabled
-														disabled-categories="INSERT_CONTENT">
-													</lightning-input-rich-text>
-												</div>
+																<lightning-helptext content={answer.descriptionoverview}
+																	key={answer.answerId}></lightning-helptext>
+																<lightning-input-rich-text label-visible
+																	label="Description" required key={answer.answerId}
+																	name="Description" value={answer.answerValue}
+																	disabled disabled-categories="INSERT_CONTENT">
+																</lightning-input-rich-text>
+															</div>
 
-											</template>
+														</template>
+													</tr>
+												</tbody>
+											</table>
 										</div>
 									</template>
 								</div>
@@ -345,25 +357,31 @@
 												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
 											</h3>
 											<!-- Render each answer for the contact -->
-											<template for:each={contactAnswer.answers} for:item="answer">
-												<div key={answer.answerId}>
-													<lightning-helptext content={answer.ratingoverview}
-														key={answer.answerId}></lightning-helptext>
-													<lightning-input type="text" variant="standard"
-														key={answer.answerId} required name="Rating" label="Rating"
-														value={answer.rating} disabled>
-													</lightning-input>
+											<table class="slds-table slds-table_cell-buffer slds-table_fixed-layout">
+												<tbody>
+													<tr key={key.Id}>
+														<template for:each={contactAnswer.answers} for:item="answer">
+															<div key={answer.answerId}>
+																<lightning-helptext content={answer.ratingoverview}
+																	key={answer.answerId}></lightning-helptext>
+																<lightning-input type="text" variant="standard"
+																	key={answer.answerId} required name="Rating"
+																	label="Rating" value={answer.rating} disabled>
+																</lightning-input>
 
-													<lightning-helptext content={answer.descriptionoverview}
-														key={answer.answerId}></lightning-helptext>
-													<lightning-input-rich-text label-visible label="Description"
-														required key={answer.answerId} name="Description"
-														value={answer.answerValue} disabled
-														disabled-categories="INSERT_CONTENT">
-													</lightning-input-rich-text>
-												</div>
+																<lightning-helptext content={answer.descriptionoverview}
+																	key={answer.answerId}></lightning-helptext>
+																<lightning-input-rich-text label-visible
+																	label="Description" required key={answer.answerId}
+																	name="Description" value={answer.answerValue}
+																	disabled disabled-categories="INSERT_CONTENT">
+																</lightning-input-rich-text>
+															</div>
 
-											</template>
+														</template>
+													</tr>
+												</tbody>
+											</table>
 										</div>
 									</template>
 								</div>
