@@ -177,6 +177,66 @@
             <targetReference>loop_flitered_rr</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Add_Project_Assignee</name>
+        <label>Add Project Assignee</label>
+        <locationX>138</locationX>
+        <locationY>2795</locationY>
+        <assignmentItems>
+            <assignToReference>ProjectAssigneeList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ProjectAssigneeVar</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Project_Assignement_loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_ProjectAssignee</name>
+        <label>Assign ProjectAssignee</label>
+        <locationX>138</locationX>
+        <locationY>2687</locationY>
+        <assignmentItems>
+            <assignToReference>ProjectAssigneeVar.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Project_Assignement_loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProjectAssigneeVar.Offshore_PM_Configure__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProjectAssigneeVar.Onshore_PM_Configure__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProjectAssigneeVar.Other_Resource_PM_Configure__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProjectAssigneeVar.Other_PM_Configure__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Project_Assignee</targetReference>
+        </connector>
+    </assignments>
     <collectionProcessors>
         <name>Filter_RRR_Records</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
@@ -198,6 +258,28 @@
             <targetReference>Loop_Over_RRR_Records</targetReference>
         </connector>
     </collectionProcessors>
+    <decisions>
+        <name>Check_Project_Assignee</name>
+        <label>Check Project Assignee</label>
+        <locationX>182</locationX>
+        <locationY>2471</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>outcome_Project_Assignee</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Resource_Project_Assignement</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Project_Assignement_loop</targetReference>
+            </connector>
+            <label>outcome Project Assignee</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_the_PM_configure_is_null_or_not</name>
         <label>Check the PM configure is null or not</label>
@@ -314,6 +396,21 @@
             <targetReference>Create_PM_Config_Records</targetReference>
         </noMoreValuesConnector>
     </loops>
+    <loops>
+        <description>To send the KRA to the project manager, we are checking the &quot;Onshore,&quot; &quot;Offshore,&quot; and &quot;Other&quot; checkboxes on project assignment records. If these checkboxes were selected in the previous quarter, they are being unchecked for the current quarter.</description>
+        <name>Project_Assignement_loop</name>
+        <label>Project Assignement loop</label>
+        <locationX>50</locationX>
+        <locationY>2579</locationY>
+        <collectionReference>Get_Resource_Project_Assignement</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_ProjectAssignee</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Project_Assignment</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -338,6 +435,9 @@
         <label>Copy 1 of Create PM Config Records</label>
         <locationX>314</locationX>
         <locationY>1571</locationY>
+        <connector>
+            <targetReference>Get_Resource_Project_Assignement</targetReference>
+        </connector>
         <inputReference>PM_Ans_Config_ListVar</inputReference>
     </recordCreates>
     <recordCreates>
@@ -345,6 +445,9 @@
         <label>Create PM Config Records</label>
         <locationX>50</locationX>
         <locationY>2171</locationY>
+        <connector>
+            <targetReference>Get_Resource_Project_Assignement</targetReference>
+        </connector>
         <inputReference>PM_Ans_Config_ListVar</inputReference>
     </recordCreates>
     <recordLookups>
@@ -431,6 +534,34 @@
         <object>Resource_Resource_Relationship__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Resource_Project_Assignement</name>
+        <label>Get Resource Project Assignement</label>
+        <locationX>182</locationX>
+        <locationY>2363</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Project_Assignee</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EMS_TM_EmployeeName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Resource__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>EMS_TM_Assignment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Project_Assignment</name>
+        <label>Update Project Assignment</label>
+        <locationX>50</locationX>
+        <locationY>2987</locationY>
+        <inputReference>ProjectAssigneeList</inputReference>
+    </recordUpdates>
     <start>
         <locationX>254</locationX>
         <locationY>0</locationY>
@@ -501,6 +632,22 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>PM_Configure__c</objectType>
+    </variables>
+    <variables>
+        <name>ProjectAssigneeList</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>EMS_TM_Assignment__c</objectType>
+    </variables>
+    <variables>
+        <name>ProjectAssigneeVar</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>EMS_TM_Assignment__c</objectType>
     </variables>
     <variables>
         <name>Resource_Reports_To</name>
