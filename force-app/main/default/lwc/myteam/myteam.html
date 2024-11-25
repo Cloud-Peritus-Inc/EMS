@@ -33,7 +33,7 @@
 			<template lwc:if={setReporteesHierarchyVisibility}>
 				<div class="childparent2">
 					<div class="childtext2">
-						<lightning-combobox name="secondary" label="Ambigous" value={secondarySelectedResource}
+						<lightning-combobox name="secondary" label="Indirect Reportees" value={secondarySelectedResource}
 							placeholder="Select Resource" options={secondaryreporteesmapdata}
 							onchange={handleSecondaryResourceChange}>
 						</lightning-combobox>
@@ -44,7 +44,7 @@
 			<template lwc:if={setReporteesHierarchyVisibility2}>
 				<div class="childparent2">
 					<div class="childtext2">
-						<lightning-combobox name="tertiary" label="Ambigous" value={tertiarySelectedResource}
+						<lightning-combobox name="tertiary" label="Indirect Reportees" value={tertiarySelectedResource}
 							placeholder="Select Resource" options={tertiaryreporteesmapdata}
 							onchange={handleSecondaryResourceChange}>
 						</lightning-combobox>
@@ -54,7 +54,7 @@
 			<template lwc:if={setReporteesHierarchyVisibility3}>
 				<div class="childparent2">
 					<div class="childtext2">
-						<lightning-combobox name="quaternary" label="Ambigous" value={quaternarySelectedResource}
+						<lightning-combobox name="quaternary" label="Indirect Reportees" value={quaternarySelectedResource}
 							placeholder="Select Resource" options={quaternaryreporteesmapdata}
 							onchange={handleSecondaryResourceChange}>
 						</lightning-combobox>
