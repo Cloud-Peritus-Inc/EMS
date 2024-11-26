@@ -544,8 +544,18 @@ return menteeRecords;
             wrp.endDate = assgn.EMS_TM_EndDate_Asgn__c;
             wrp.projectName = assgn.EMS_TM_ProjectName_Asgn__r.name;
             wrp.projectid = assgn.EMS_TM_ProjectName_Asgn__c;
-            
             wrp.managerOptions = new List<ManagerOption>();
+            if(!conGoalList.IsEmpty() && conGoalList[0].Goals__r.size() == 0){
+               wrp.disableCombobox =true;
+             }
+            else {
+              wrp.disableCombobox = false;
+               }
+
+            Resource_Resource_Relationship__c rrr = new  Resource_Resource_Relationship__c();
+            rrr = [SELECT Id,Resource__c,Resource_Reports_To__c,Relationship_Type__c FROM Resource_Resource_Relationship__c 
+                WHERE Resource__c =: contactId
+                AND Resource__r.EMS_TM_User__r.isActive = true and Relationship_Type__c includes ('Mentor')];
             //wrp.managerOptions.add(new ManagerOption(' ' + 'None', 'None'));
             if(wrp.offshoremanagerid == wrp.onshoremanagerid && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c){
                 wrp.managerOptions.add(new ManagerOption('Onshore & Offshore: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
@@ -562,7 +572,10 @@ return menteeRecords;
             }  
             if(!assgn.Other_PM_Configure__c){
                 wrp.managerOptions.add(new ManagerOption('Other ' + '', 'Other'));
-            }   
+            }  
+            if(wrp.managerOptions.IsEmpty() || wrp.managerOptions.Size()==0){
+               wrp.disableCombobox =true;
+             }
             wrapperlist.add(wrp);
         }
         
