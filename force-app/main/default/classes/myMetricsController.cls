@@ -622,14 +622,13 @@ return menteeRecords;
             wrp.endDate = assgn.EMS_TM_EndDate_Asgn__c;
             wrp.projectName = assgn.EMS_TM_ProjectName_Asgn__r.name;
             wrp.projectid = assgn.EMS_TM_ProjectName_Asgn__c;
-            
+            wrp.managerOptions = new List<ManagerOption>();
             if(!conGoalList.IsEmpty() && conGoalList[0].Goals__r.size() == 0){
                wrp.disableCombobox =true;
              }
             else {
               wrp.disableCombobox = false;
                }
-            wrp.managerOptions = new List<ManagerOption>();
 
             Resource_Resource_Relationship__c rrr = new  Resource_Resource_Relationship__c();
             rrr = [SELECT Id,Resource__c,Resource_Reports_To__c,Relationship_Type__c FROM Resource_Resource_Relationship__c 
@@ -656,7 +655,10 @@ return menteeRecords;
             }  
             if(!assgn.Other_PM_Configure__c){
                 wrp.managerOptions.add(new ManagerOption('Other ' + '', 'Other'));
-            }   
+            }  
+            if(wrp.managerOptions.IsEmpty() || wrp.managerOptions.Size()==0){
+               wrp.disableCombobox =true;
+             }
             wrapperlist.add(wrp);
         }
         
