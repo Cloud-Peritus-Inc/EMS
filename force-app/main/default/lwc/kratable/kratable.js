@@ -400,6 +400,13 @@ export default class Kratable extends NavigationMixin(LightningElement) {
         if (result === 'okay') {
             this.copy = true;
             this.showKRAEditModalBox();
+            const evt = new ShowToastEvent({
+                    //title: 'success',
+                    message: 'The ratings have been successfully copied from the previous quarter.',
+                    variant: 'success',
+                    mode: 'dismissable'
+                });
+                this.dispatchEvent(evt);
         }
     }
 
