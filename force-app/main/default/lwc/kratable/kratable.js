@@ -305,5 +305,36 @@ export default class Kratable extends NavigationMixin(LightningElement) {
 
 
     }
+ 
+    async handleCopyPreviousQuaterKRA(event) {
+        let node = event.currentTarget.dataset.id;
+        this.selectedKraQuaterly = node;
+        console.log('selectedKraQuaterly' + this.selectedKraQuaterly);
+        this.mode = 'Edit';
+        console.log('==node====' + node);
+        console.log('Copy Clicked');
+        const result = await Genericmodal.open({
+            style: {
+                '--slds-c-modal-color-border': 'black'
+            },
+            btnLable1: 'No',
+            btnLable2: 'Yes',
+            headerLable: 'Confirm Copy KRA',
+            bodyLable: 'Would you like to carry over the previous quarter KRA inputs?',
+            size: 'small',
+        });
+        console.log(result);
+        if (result === 'okay') {
+            this.copy = true;
+            this.showKRAEditModalBox();
+            const evt = new ShowToastEvent({
+                    //title: 'success',
+                    message: 'The ratings have been successfully copied from the previous quarter.',
+                    variant: 'success',
+                    mode: 'dismissable'
+                });
+                this.dispatchEvent(evt);
+        }
+    }
 
 }
