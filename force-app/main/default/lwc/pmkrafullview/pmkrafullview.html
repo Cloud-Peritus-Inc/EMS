@@ -402,7 +402,20 @@
 			</footer>
 		</template>
 		<template lwc:if={showOverAllRating}>
-			<br/><br/>
+			<div class="slds-m-around_large">
+				<template if:true={isLoaded} class="slds-is-relative">
+					<lightning-spinner alternative-text="Loading..." variant="brand">
+					</lightning-spinner>
+				</template>
+			</div>
+			<br/>
+			<template if:true={submittedKRAbutton}>
+				Note: By checking or unchecking the checkbox next to the project manager's name, you can indicate
+				whether you are considering their feedback.
+				A project manager's name displayed in green means their rating is being considered, while a name in red
+				means it is not.
+			</template>
+			<br/>
 			<div class="overallTableContainer">
 				<!---class="slds-table  slds-table_cell-buffer slds-table_col-bordered"--->
 				<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
@@ -417,7 +430,11 @@
 							</th>
 							<template for:each={contacts} for:item="contact">
 								<th key={contact.contactId}>
-									<strong>{contact.contactname} {contact.projectname}<br>{contact.resourceRole} </strong>
+									<div class={contact.classs}>{contact.contactname} {contact.projectname}<br>{contact.resourceRole} </div><strong>
+									<template if:true={contact.projectname}><template if:true={submittedKRAbutton}>
+										<lightning-input type="checkbox" data-id={contact.contactId} onchange={handleCheckbox} checked={contact.ConsiderFeedbackRating} variant="standard"></lightning-input> 
+									</template>	</template> 
+									</strong>
 								</th>
 							</template>
 						</tr>
@@ -428,7 +445,7 @@
 								<td>{areaData.area} [{areaData.areapercentage} %]</td>
 								<template for:each={areaData.ratings} for:item="rating">
 									<td key={rating.contactId}>
-										{rating.averageRating} [{rating.AvgRatingSkillForResource}]
+									<div class={rating.classs}>{rating.averageRating} [{rating.AvgRatingSkillForResource}] </div>
 									</td>
 								</template>
 								<!--td>{areaData.overallAverage}</td-->
@@ -437,7 +454,7 @@
 						<tr>
 							<td><strong>Overall Rating</strong></td>
 							<template for:each={overallRatings} for:item="overallRating">
-								<td key={overallRating.contactId}><b>{overallRating.overallRating}</b></td>
+								<td key={overallRating.contactId}><b class={overallRating.classs}>{overallRating.overallRating}</b></td>
 							</template>
 						</tr>
 					</tbody>
@@ -448,6 +465,8 @@
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
+				<!--lightning-button variant="brand" label="Save" onclick={handleSave} class="slds-var-m-left_x-small">
+				</lightning-button-->
 				<template if:true={submittedKRAbutton}>
 					<lightning-button variant="brand" label="Complete KRA" onclick={handleCompleteKRA}
 						class="slds-var-m-left_x-small"></lightning-button>

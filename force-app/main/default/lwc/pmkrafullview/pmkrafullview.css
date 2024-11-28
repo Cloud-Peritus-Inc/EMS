@@ -67,3 +67,10 @@
     max-height: 400px; /* Adjust height as needed */
     overflow-y: auto;  /* Enables vertical scrolling */
 }
+.red {
+    color: rgb(211, 211, 211); /* Changes the checkbox color */
+}
+
+.green {
+    color: rgb(0, 0, 0); /* Changes the checkbox color */
+}
