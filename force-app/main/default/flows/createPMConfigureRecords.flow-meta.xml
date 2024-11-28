@@ -69,6 +69,13 @@
                 <elementReference>loop_flitered_rr.Resource_Reports_To__r.EMS_TM_User__r.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PM_Ans_Confg_Mentor_Var.Consider_Feedback_Rating__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_PM_configure_record_for_mentor_to_ListVar</targetReference>
         </connector>
@@ -139,6 +146,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.Resource__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PM_Ans_Config_Records_Var.Consider_Feedback_Rating__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>

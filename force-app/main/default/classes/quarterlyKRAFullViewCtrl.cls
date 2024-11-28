@@ -13,7 +13,7 @@
 public without sharing class quarterlyKRAFullViewCtrl {
     
     @AuraEnabled
-    public static String completekraMethod(String kraid) {
+    public static String completekraMethod(String kraid,String contactData) {
         
         //updating status as KRA Completed
         Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Resource__c
@@ -57,6 +57,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
         try {
             if(!pmAnswer.isEmpty()){
                 update pmAnswer;
+                CalculateFullQuarterlyKRA.updatePmConfigure( kraid,  contactData);
             }
             return 'updated'; 
         } catch (Exception ex) {
@@ -96,8 +97,10 @@ public without sharing class quarterlyKRAFullViewCtrl {
     }
     
     public class viewAnswerWrapper{
+        //KRA Edit button variable -submittedRecords
         @AuraEnabled 
-        public Boolean submittedRecords=true; //default making it true
+        public Boolean submittedRecords=false; //default making it false
+        //Complete KRA button variable -submittedKRAbutton
         @AuraEnabled 
         public Boolean submittedKRAbutton=false;
         @AuraEnabled 

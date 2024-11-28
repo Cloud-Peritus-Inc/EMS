@@ -606,7 +606,9 @@ return menteeRecords;
                                                             Offshore_PM_Configure__c,Onshore_PM_Configure__c,Other_PM_Configure__c,
                                                             EMS_TM_ProjectName_Asgn__r.name,EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name,
                                                             EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,EMS_TM_ProjectName_Asgn__r.Project_Manager__c,
-                                                            EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name,EMS_TM_StartDate_Asgn__c,EMS_TM_EndDate_Asgn__c 
+                                                            EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name,EMS_TM_StartDate_Asgn__c,EMS_TM_EndDate_Asgn__c,
+                                                            EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.EMS_RM_ApplicantStatus_Update__c,
+                                                            EMS_TM_ProjectName_Asgn__r.Project_Manager__r.EMS_RM_ApplicantStatus_Update__c 
                                                             from EMS_TM_Assignment__c where EMS_TM_EmployeeName__r.Id =:contactId and EMS_TM_Status_Asgn__c !='Scheduled'  and Id =:assignmentIds ];
         system.debug('projectAssigneeidList-->'+projectAssigneeidList);
         List<projectAssgnWrapper> wrapperlist = new List<projectAssgnWrapper>();
@@ -614,10 +616,14 @@ return menteeRecords;
             projectAssgnWrapper wrp = new projectAssgnWrapper();
             wrp.empName =  assgn.EMS_TM_EmployeeName__r.name;
             wrp.projectAssigmentId = assgn.Id;
+            if(assgn.EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive'){
             wrp.offshoremanagerName = assgn.EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.Name;
             wrp.offshoremanagerid=assgn.EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c;
+            }
+            if(assgn.EMS_TM_ProjectName_Asgn__r.Project_Manager__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive' ){
             wrp.onshoremanagerName = assgn.EMS_TM_ProjectName_Asgn__r.Project_Manager__r.Name;
             wrp.onshoremanagerid=assgn.EMS_TM_ProjectName_Asgn__r.Project_Manager__c; 
+            }
             wrp.startDate = assgn.EMS_TM_StartDate_Asgn__c;
             wrp.endDate = assgn.EMS_TM_EndDate_Asgn__c;
             wrp.projectName = assgn.EMS_TM_ProjectName_Asgn__r.name;
@@ -637,6 +643,7 @@ return menteeRecords;
             //wrp.managerOptions.add(new ManagerOption(' ' + 'None', 'None'));
 
             if(wrp.offshoremanagerid == wrp.onshoremanagerid && !assgn.Offshore_PM_Configure__c && !assgn.Onshore_PM_Configure__c && 
+                assgn.EMS_TM_ProjectName_Asgn__r.Project_Manager__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive'  && assgn.EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__r.EMS_RM_ApplicantStatus_Update__c != 'Inactive' &&
                 (wrp.offshoremanagerid != rrr.Resource_Reports_To__c ||  wrp.onshoremanagerid != rrr.Resource_Reports_To__c) && (wrp.onshoremanagerid != contactId || wrp.offshoremanagerid != contactId )   ){
                 wrp.managerOptions.add(new ManagerOption('Onshore & Offshore Manager: ' + wrp.offshoremanagerName, wrp.offshoremanagerid));
             }else{
@@ -728,6 +735,7 @@ return menteeRecords;
                                            pmAnswer.Project_Name__c = projectId;
                                            pmAnswer.Fiscal_Year__c = goalList[0].Fulfillment__r.Fiscal_Year__c;
                                            pmAnswer.KRA__c = goalList[0].Id;
+                                           pmAnswer.Consider_Feedback_Rating__c=true; //@sangharsh Consider Feedback Rating if this field is true
                                            if(!mentorlst.isEmpty()){  
                                            pmAnswer.Mentor__c=mentorlst[0].Resource_Reports_To__c!=null?mentorlst[0].Resource_Reports_To__c:null;
                                            }
