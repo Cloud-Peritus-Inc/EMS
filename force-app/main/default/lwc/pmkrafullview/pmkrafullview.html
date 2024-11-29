@@ -410,10 +410,10 @@
 			</div>
 			<br/>
 			<template if:true={submittedKRAbutton}>
-				Note: By checking or unchecking the checkbox next to the project manager's name, you can indicate
+				<p>Note:</p><p> 1. By checking or unchecking the checkbox next to the project manager's, you can indicate
 				whether you are considering their feedback.
-				A project manager's name displayed in green means their rating is being considered, while a name in red
-				means it is not.
+				A project manager's displayed in grey out means their rating is not being considered.</p>
+				<p> 2. To save your changes, click Complete KRA. Please note that once you click Complete KRA, no further changes can be made.</p> 
 			</template>
 			<br/>
 			<div class="overallTableContainer">
@@ -465,8 +465,6 @@
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
-				<!--lightning-button variant="brand" label="Save" onclick={handleSave} class="slds-var-m-left_x-small">
-				</lightning-button-->
 				<template if:true={submittedKRAbutton}>
 					<lightning-button variant="brand" label="Complete KRA" onclick={handleCompleteKRA}
 						class="slds-var-m-left_x-small"></lightning-button>

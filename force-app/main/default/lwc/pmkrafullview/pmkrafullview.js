@@ -2,12 +2,10 @@ import { LightningElement, wire, track, api } from 'lwc';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getKRAFullDetails from '@salesforce/apex/quarterlyKRAFullViewCtrl.getPMConfigKRAFullDetails';
-//import completekraMethod from '@salesforce/apex/quarterlyKRAFullViewCtrl.completekraMethod';
 import getLoginAnswerdata from '@salesforce/apex/quarterlyKRAFullViewCtrl.getLoginAnswerdata';
 import getCurrentUserConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getCurrentUserConDetails';
 import calculateAverageRatingForKRA from '@salesforce/apex/CalculateFullQuarterlyKRA.calculateAverageRatingForKRA';
-import updateFeedbackRating from '@salesforce/apex/CalculateFullQuarterlyKRA.updateFeedbackRating';
-//import updateconsideringCheckbox from '@salesforce/apex/CalculateFullQuarterlyKRA.updateconsideringCheckbox';
+import completekraMethod from '@salesforce/apex/quarterlyKRAFullViewCtrl.completekraMethod';
 import Genericmodal from 'c/genericmodal';
 
 export default class Pmkrafullview extends NavigationMixin(LightningElement) {
@@ -412,33 +410,6 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
 
     }
 
-    handleCloseFullView() {
-        var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
-        this[NavigationMixin.Navigate]({
-            type: 'standard__webPage',
-            attributes: {
-                url: url.href
-            }
-        });
-    }
-
-  /*  handleSave() {
-        const relevantContacts = this.contacts.filter(contact => contact.contactId.includes('&'));
-         const filteredContacts = relevantContacts.map(contact => ({
-        contactId: contact.contactId,
-        ConsiderFeedbackRating: contact.ConsiderFeedbackRating
-    }));
-
-        updateFeedbackRating({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
-            .then((result) => {
-                this.ShowToast(' ', 'Feedback ratings updated successfully.', 'success');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                this.ShowToast(' ', 'An error occurred while updating feedback ratings.', 'error');
-            });
-    }*/
-
     //Feedback response once submitted, cannot be reverted. Would you like to proceed?
     async handleCompleteKRA() {
         /* const result = await LightningConfirm.open({
@@ -477,7 +448,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         ConsiderFeedbackRating: contact.ConsiderFeedbackRating
     }));
 
-        updateFeedbackRating({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
+        completekraMethod({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
             .then((result) => {
                   this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable');
                     var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
@@ -494,24 +465,6 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
                     this.isLoading = false;;
             });
-
-          /*  completekraMethod({ kraid: this.receivedKRAId,contactData: JSON.stringify(filteredContacts) })
-                .then((result) => {
-                    this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable');
-                    var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
-                    this[NavigationMixin.Navigate]({
-                        type: 'standard__webPage',
-                        attributes: {
-                            url: url.href
-                        }
-                    });
-                    this.isLoading = false;
-                })
-                .catch((error) => {
-                    console.log('error-->', error);
-                    this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
-                    this.isLoading = false;
-                });*/
         }
     }
 
