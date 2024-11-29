@@ -1,3 +1,15 @@
+/**
+* @author Ravitheja
+* @date 09/07/2024
+* @description Update the Avegae Rating fields on the Goal when the KRA Status is updated as KRA Completed.
+* 
+* CHANGE HISTORY
+* ====================================================================================================
+* DATE          NAME                    DESCRIPTION
+* N/A           N/A                     N/A
+* ====================================================================================================
+**/
+
 public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
     
     public void beforeUpdate(List<Goal__c> newList, List<Goal__c> oldList) {
@@ -29,6 +41,7 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
                                                , KRA__c
                                                , Related_Question__r.Area__c
                                                , Mentor_Mentee__c
+                                               ,Consider_Feedback_Rating__c
                                                , KRA__r.Resource__c
                                                , Rating__c 
             									FROM PM_Configure__c 
@@ -37,6 +50,7 @@ public class UpdateAverageRatingsOnKRA implements TriggerAction.BeforeUpdate {
                                                 AND Related_Question__c != NULL 
                                                 AND Related_Question__r.Area__c != NULL
                                                 AND Status__c =: PM_ANSWER_SUBMITTED
+                                                AND Consider_Feedback_Rating__c =true  //@SANGHARSH Consider Feedback Rating if this field is true
                                                 ];
         
         if(!pmConfigList.isEmpty()){

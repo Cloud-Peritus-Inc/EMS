@@ -13,16 +13,83 @@
 public without sharing class quarterlyKRAFullViewCtrl {
     
     @AuraEnabled
-    public static String completekraMethod(String kraid) {
+    public static String completekraMethod(String kraid,String contactData) {
+		updatePmConfigure( kraid,  contactData);
+        return 'success';
+    }
+    
+    @future    
+    public static void updatePmConfigure(String kraid, String contactData){
+        // Deserialize the input data
+        Object deserializedData = JSON.deserializeUntyped(contactData);
         
-        //updating status as KRA Completed
+        // Validate that the data is a list
+        if (!(deserializedData instanceof List<Object>)) {
+            throw new AuraHandledException('Invalid data format. Expected a list of contacts.');
+        }
+        
+        // Convert to a list of maps
+        List<Object> contactListGeneric = (List<Object>) deserializedData;
+        List<Map<String, Object>> contactList = new List<Map<String, Object>>();
+        
+        for (Object contactObj : contactListGeneric) {
+            if (!(contactObj instanceof Map<String, Object>)) {
+                throw new AuraHandledException('Invalid data format. Each contact should be a map.');
+            }
+            contactList.add((Map<String, Object>) contactObj);
+        }
+        
+        System.debug('Contact List: ' + contactList);
+        
+        // Get RecordTypeId for 'Answer'
+        Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+        
+        // Prepare to collect data for querying and updating
+        Set<String> contactIds = new Set<String>();
+        Map<String, Boolean> feedbackMap = new Map<String, Boolean>();
+        
+        // Extract contact IDs and feedback ratings
+        for (Map<String, Object> contact : contactList) {
+            if (contact.containsKey('contactId') && contact.containsKey('ConsiderFeedbackRating')) {
+                String fullContactId = (String) contact.get('contactId');
+                String contactId = fullContactId.split('&')[0];
+                contactIds.add(contactId);
+                feedbackMap.put(contactId, (Boolean) contact.get('ConsiderFeedbackRating'));
+            }
+        }
+        
+        System.debug('Extracted Contact IDs: ' + contactIds);
+        System.debug('Feedback Map: ' + feedbackMap);
+        
+        // Query all relevant PM_Configure__c records
+        List<PM_Configure__c> answersToUpdate = [
+            SELECT Id, Consider_Feedback_Rating__c, Reporting_Contact__c
+            FROM PM_Configure__c
+            WHERE KRA__c = :kraid
+            AND RecordTypeId = :answerRecordTypeId
+            AND Reporting_Contact__c IN :contactIds
+        ];
+        
+        // Update feedback ratings based on input map
+        for (PM_Configure__c answer : answersToUpdate) {
+            if (feedbackMap.containsKey(answer.Reporting_Contact__c)) {
+                answer.Consider_Feedback_Rating__c = feedbackMap.get(answer.Reporting_Contact__c);
+            }
+        }
+        
+        // Perform bulk DML update
+        if (!answersToUpdate.isEmpty()) {
+            update answersToUpdate; // Single DML for all records
+            System.debug('Updated PM_Configure__c records: ' + answersToUpdate);
+        }
+        //--------------------------------------------------------------------------
         Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Resource__c
                               FROM Goal__c 
                               WHERE Id=:kraid AND Status__c!='KRA Completed' Limit 1]; 
         goalRecord.Status__c='KRA Completed';
         update goalRecord;
         
-        //unchecking project assignement 
+                //unchecking project assignement 
         List<EMS_TM_Assignment__c> projectAssignmentList = [SELECT Id, EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,
                                                             EMS_TM_EmployeeName__c,Offshore_PM_Configure__c, Other_Resource_PM_Configure__c,
                                                             Onshore_PM_Configure__c,Other_PM_Configure__c
@@ -54,14 +121,9 @@ public without sharing class quarterlyKRAFullViewCtrl {
         for(PM_Configure__c pm:pmAnswer){
             pm.Status__c='Cancelled';   
         }    
-        try {
             if(!pmAnswer.isEmpty()){
                 update pmAnswer;
             }
-            return 'updated'; 
-        } catch (Exception ex) {
-            throw new AuraHandledException('An error occurred while processing the request: ' + ex.getMessage());
-        }
     }
     
     @AuraEnabled(cacheable=true)
@@ -96,8 +158,10 @@ public without sharing class quarterlyKRAFullViewCtrl {
     }
     
     public class viewAnswerWrapper{
+        //KRA Edit button variable -submittedRecords
         @AuraEnabled 
-        public Boolean submittedRecords=true; //default making it true
+        public Boolean submittedRecords=false; //default making it false
+        //Complete KRA button variable -submittedKRAbutton
         @AuraEnabled 
         public Boolean submittedKRAbutton=false;
         @AuraEnabled 

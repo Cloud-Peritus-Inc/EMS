@@ -2,10 +2,10 @@ import { LightningElement, wire, track, api } from 'lwc';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getKRAFullDetails from '@salesforce/apex/quarterlyKRAFullViewCtrl.getPMConfigKRAFullDetails';
-import completekraMethod from '@salesforce/apex/quarterlyKRAFullViewCtrl.completekraMethod';
 import getLoginAnswerdata from '@salesforce/apex/quarterlyKRAFullViewCtrl.getLoginAnswerdata';
 import getCurrentUserConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getCurrentUserConDetails';
 import calculateAverageRatingForKRA from '@salesforce/apex/CalculateFullQuarterlyKRA.calculateAverageRatingForKRA';
+import completekraMethod from '@salesforce/apex/quarterlyKRAFullViewCtrl.completekraMethod';
 import Genericmodal from 'c/genericmodal';
 
 export default class Pmkrafullview extends NavigationMixin(LightningElement) {
@@ -48,6 +48,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     orgDomainId;
     showKraEditButton = false;
     submittedKRAbutton = false;
+    isLoaded=false;
 
     connectedCallback() {
         this.orgDomainId = window.location.origin;
@@ -59,7 +60,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         if (data) {
             this.isLoading = true;
             this.CurrentUserConDetails = data;
-           // this.resourceid = data.Id;
+            // this.resourceid = data.Id;
             this.currentContactName = data.Name;
             this.currentContactResourceRole = data.Resource_Role__r.Name;
 
@@ -91,8 +92,8 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             console.log(' getLoginAnswerdata data-->' + JSON.stringify(data));
             this.showKraEditButton = data.submittedRecords;
             this.submittedKRAbutton = data.submittedKRAbutton;
-            this.resourceid=data.kraResourceId;
-            console.log('this.resourceid-->'+this.resourceid);
+            this.resourceid = data.kraResourceId;
+            console.log('this.resourceid-->' + this.resourceid);
             this.isLoading = false;
         }
         else if (error) {
@@ -124,11 +125,12 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                             if (answer.contactId) {
                                 if (!contactAnswers[answer.contactId]) {
                                     contactAnswers[answer.contactId] = {
-                                        contact: { id: answer.contactId, 
-                                                    name: answer.contactName , 
-                                                    projectname:answer.ProjectName, 
-                                                    resourceRole:answer.resourceRole
-                                                }, // @sangharsh adding projectname and resource role
+                                        contact: {
+                                            id: answer.contactId,
+                                            name: answer.contactName,
+                                            projectname: answer.ProjectName,
+                                            resourceRole: answer.resourceRole
+                                        }, // @sangharsh adding projectname and resource role
                                         answers: []
                                     };
                                 }
@@ -211,12 +213,12 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         let contactMap = new Map();
         let contactOverallRatingMap = new Map();
         // Define the custom order for the areas
-    const areaOrder = ['TECHNICAL SKILLS', 'PROFESSIONAL SKILLS', 'STRATEGIC IMPACT', 'GOALS AND RESULTS'];
-    console.log('areaOrder-->'+areaOrder);
-    // Sort the areaWrapperList based on the custom order
-    let sortedAreaWrapperList = areaOrder.map(area => 
-        this.areaWrapperList.find(wrapper => wrapper.area === area)
-    ).filter(wrapper => wrapper !== undefined); 
+        const areaOrder = ['TECHNICAL SKILLS', 'PROFESSIONAL SKILLS', 'STRATEGIC IMPACT', 'GOALS AND RESULTS'];
+        console.log('areaOrder-->' + areaOrder);
+        // Sort the areaWrapperList based on the custom order
+        let sortedAreaWrapperList = areaOrder.map(area =>
+            this.areaWrapperList.find(wrapper => wrapper.area === area)
+        ).filter(wrapper => wrapper !== undefined);
 
         this.processedData = sortedAreaWrapperList.map(areaWrapper => {
             let ratingsArray = [];
@@ -232,7 +234,9 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                 ratingsArray.push({
                     contactId: contactId,
                     averageRating: averageRating,
-                    AvgRatingSkillForResource: AvgRatingSkillForResource
+                    AvgRatingSkillForResource: AvgRatingSkillForResource,
+                    ConsiderFeedbackRating:answer.ConsiderFeedbackRating,
+                    classs: answer.ConsiderFeedbackRating? 'green' : 'red' 
                 });
 
                 totalRating += parseFloat(answer.averageRating);
@@ -240,19 +244,28 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                 totalCount++;
 
                 if (!contactMap.has(contactId)) {
-                    contactMap.set(contactId, { contactId: answer.contactId, 
-                                                contactname: answer.contactname , 
-                                                projectname:answer.ProjectName,
-                                                resourceRole:answer.resourceRole
-                                                 // @sangharsh adding projectname and resource role
-                                                }); 
+                    contactMap.set(contactId, {
+                        contactId: answer.contactId,
+                        contactname: answer.contactname,
+                        projectname: answer.ProjectName,
+                        resourceRole: answer.resourceRole,
+                        ConsiderFeedbackRating: answer.ConsiderFeedbackRating,
+                        classs: answer.ConsiderFeedbackRating ? 'green' : 'red' 
+                        // @sangharsh adding projectname and resource role
+                    });
                 }
                 if (!contactOverallRatingMap.has(contactId)) {
-                    contactOverallRatingMap.set(contactId, 0);
+                    contactOverallRatingMap.set(contactId, {
+                    rating: 0,
+                    ConsiderFeedbackRating: answer.ConsiderFeedbackRating
+                });
                 }
-                contactOverallRatingMap.set(contactId, contactOverallRatingMap.get(contactId) + parseFloat(answer.AvgRatingSkillForResource));
-
-            }
+                let contactData = contactOverallRatingMap.get(contactId);
+            contactOverallRatingMap.set(contactId, {
+                ...contactData,
+                rating: contactData.rating + parseFloat(answer.AvgRatingSkillForResource)
+            });
+        }
 
             let overallAverage = (totalCount > 0) ? (totalRating / totalCount).toFixed(2) : 'N/A';
             let overallSkillAverage = (totalCount > 0) ? (totalSkillRating / totalCount).toFixed(2) : 'N/A';
@@ -265,12 +278,23 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             };
         });
         // Convert contactOverallRatingMap to an array for template rendering
-        this.overallRatings = Array.from(contactOverallRatingMap.entries()).map(([contactId, rating]) => ({
-            contactId: contactId,
-            overallRating: rating.toFixed(2)
-        }));
-        this.contacts = Array.from(contactMap.values());
-        console.log('this.contacts'+JSON.stringify(this.contacts));
+        this.overallRatings = Array.from(contactOverallRatingMap.entries()).map(([contactId, { rating, ConsiderFeedbackRating }]) => ({
+        contactId: contactId,
+        overallRating: rating.toFixed(2),
+        ConsiderFeedbackRating: ConsiderFeedbackRating,
+        classs: ConsiderFeedbackRating ? 'green' : 'red'
+    }));
+        console.log('this.overallRatings' + JSON.stringify(this.overallRatings));
+
+         this.contacts = Array.from(contactMap.values());
+
+       /* this.contacts = Array.from(contactMap.values()).map(contact => {
+            return {
+                ...contact,
+                classs: contact.ConsiderFeedbackRating ? 'green' : 'red' // Add class dynamically
+            };
+        });*/
+        console.log('this.contacts' + JSON.stringify(this.contacts));
     }
 
     stepSelectionHanler(event) {
@@ -386,24 +410,27 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
 
     }
 
-    handleCloseFullView() {
-        var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
-        this[NavigationMixin.Navigate]({
-            type: 'standard__webPage',
-            attributes: {
-                url: url.href
-            }
-        });
-    }
-//Feedback response once submitted, cannot be reverted. Would you like to proceed?
+    //Feedback response once submitted, cannot be reverted. Would you like to proceed?
     async handleCompleteKRA() {
-       /* const result = await LightningConfirm.open({
-            message: '',
-            variant: 'header',
-            label: 'Are you sure you want to complete the KRA?',
-            // setting theme would have no effect
-        });*/
-         const result = await Genericmodal.open({
+        /* const result = await LightningConfirm.open({
+             message: '',
+             variant: 'header',
+             label: 'Are you sure you want to complete the KRA?',
+             // setting theme would have no effect
+         });*/
+
+        const relevantContacts = this.contacts.filter(contact => contact.contactId.includes('&'));
+        console.log('relevantContacts.length' + relevantContacts.length);
+        if (relevantContacts.length != 0) {
+            const allFalse = relevantContacts.every(contact => !contact.ConsiderFeedbackRating);
+
+            if (allFalse) {
+                this.ShowToast(' ', 'Please select at least one additional rating besides your own.', 'error', 'dismissable');
+                return;
+            }
+        }
+
+        const result = await Genericmodal.open({
             style: {
                 '--slds-c-modal-color-border': 'black'
             },
@@ -416,9 +443,14 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
 
         if (result === 'okay') {
             this.isLoading = true;
-            completekraMethod({ kraid: this.receivedKRAId })
-                .then((result) => {
-                    this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable'); 
+            const filteredContacts = relevantContacts.map(contact => ({
+        contactId: contact.contactId,
+        ConsiderFeedbackRating: contact.ConsiderFeedbackRating
+    }));
+
+        completekraMethod({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
+            .then((result) => {
+                  this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable');
                     var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
                     this[NavigationMixin.Navigate]({
                         type: 'standard__webPage',
@@ -427,13 +459,58 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                         }
                     });
                     this.isLoading = false;
-                })
-                .catch((error) => {
-                    console.log('error-->', error);
+            })
+            .catch((error) => {
+                 console.log('error-->', error);
                     this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
-                    this.isLoading = false;
-                });
+                    this.isLoading = false;;
+            });
         }
+    }
+
+    handleCheckbox(event) {
+        this.isLoaded=true;
+        const contactId = event.target.dataset.id;
+        const isChecked = event.target.checked;
+        console.log('contactId' + contactId);
+        console.log('isChecked' + isChecked);
+        // Update the ConsiderFeedbackRating for the corresponding contact
+        this.contacts = this.contacts.map(contact => {
+            if (contact.contactId === contactId) {
+                return {
+                    ...contact,
+                    ConsiderFeedbackRating: isChecked,
+                    classs: isChecked ?  'green':'red' 
+                };
+            }
+            return contact;
+        }); 
+
+        this.overallRatings= this.overallRatings.map(overallRating => {
+            if (overallRating.contactId === contactId) {
+                return {
+                    ...overallRating,
+                    ConsiderFeedbackRating: isChecked,
+                    classs: isChecked ?  'green':'red' 
+                };
+            }
+            return overallRating;
+        }); 
+ this.processedData.forEach(areaData => {
+        areaData.ratings = areaData.ratings.map(rating => {
+            if (rating.contactId === contactId) {
+                return {
+                    ...rating,
+                    ConsiderFeedbackRating: isChecked,
+                    classs: isChecked ?  'green':'red' 
+                };
+            }
+            return rating;
+        });
+    });
+        console.log('this.overallRatings' + JSON.stringify(this.overallRatings));
+        console.log('this.contacts' + JSON.stringify(this.contacts));
+            this.isLoaded=false;
     }
 
     ShowToast(title, message, variant, mode) {

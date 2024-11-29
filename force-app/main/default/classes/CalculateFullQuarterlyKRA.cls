@@ -9,7 +9,8 @@
 * N/A           SANGHARSH KAMBLE        controller of KRA View and calculating and returning overall rating
 * ====================================================================================================
 **/
-public without sharing class CalculateFullQuarterlyKRA {
+public without sharing class CalculateFullQuarterlyKRA {   
+    
     @AuraEnabled(cacheable=true)
     public static List<AreaWrapper> calculateAverageRatingForKRA(String kraid, String tab ){
         List<AreaWrapper> AreaWrapperlst = new List<AreaWrapper>();
@@ -32,7 +33,7 @@ public without sharing class CalculateFullQuarterlyKRA {
             answers= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                       Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
                       Reporting_Contact__r.Name,Related_Question__r.Area__c,Project_Name__c,Project_Name__r.Name,
-                      Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
+                      Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name,Consider_Feedback_Rating__c
                       FROM PM_Configure__c 
                       Where KRA__c =:kraid AND RecordTypeId  = :AnswerRecordTypeId 
                       AND Related_Question__r.Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c 
@@ -45,7 +46,7 @@ public without sharing class CalculateFullQuarterlyKRA {
                 answers= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                           Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
                           Reporting_Contact__r.Name,Related_Question__r.Area__c,Project_Name__c,Project_Name__r.Name,
-                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
+                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name,Consider_Feedback_Rating__c
                           FROM PM_Configure__c Where KRA__c =:kraid AND RecordTypeId  = :AnswerRecordTypeId 
                           AND Related_Question__r.Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c 
                           AND ( Mentor_Mentee__c =: loggedInUser.ContactId
@@ -54,7 +55,7 @@ public without sharing class CalculateFullQuarterlyKRA {
                 answers= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                           Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
                           Reporting_Contact__r.Name,Related_Question__r.Area__c,Project_Name__c,Project_Name__r.Name,
-                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
+                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name,Consider_Feedback_Rating__c
                           FROM PM_Configure__c Where KRA__c =:kraid AND RecordTypeId  = :AnswerRecordTypeId
                           AND Related_Question__r.Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c 
                           AND Mentor_Mentee__c =: loggedInUser.ContactId];
@@ -83,8 +84,9 @@ public without sharing class CalculateFullQuarterlyKRA {
             AnswerWrapper answerWrapper = areaToContactMap.get(area).get(contactKey);
             answerWrapper.contactId = contactKey;
             answerWrapper.contactname = pmAns.Mentor_Mentee__c != null ? pmAns.Mentor_Mentee__r.Name : pmAns.Reporting_Contact__r.Name;
-            answerWrapper.ProjectName =pmAns.Project_Name__c!=null? '('+pmAns.Project_Name__r.Name+')':' ';
-         	answerWrapper.resourceRole=pmAns.Mentor_Mentee__c!=null?pmAns.Mentor_Mentee__r.Resource_Role__r.Name:pmAns.Reporting_Contact__r.Resource_Role__r.Name;
+            answerWrapper.ProjectName =pmAns.Project_Name__c!=null? '('+pmAns.Project_Name__r.Name+')':null;
+            answerWrapper.resourceRole=pmAns.Mentor_Mentee__c!=null?pmAns.Mentor_Mentee__r.Resource_Role__r.Name:pmAns.Reporting_Contact__r.Resource_Role__r.Name;
+            answerWrapper.ConsiderFeedbackRating= pmAns.Consider_Feedback_Rating__c;
             answerWrapper.averageRating += pmAns.Rating__c != null?pmAns.Rating__c:0;
             answerWrapper.ratingCount += 1;
         }
@@ -154,6 +156,8 @@ public without sharing class CalculateFullQuarterlyKRA {
         public String ProjectName;
         @AuraEnabled
         public String resourceRole;
+        @AuraEnabled
+        public Boolean ConsiderFeedbackRating;
         @AuraEnabled
         public Decimal averageRating;
         @AuraEnabled
