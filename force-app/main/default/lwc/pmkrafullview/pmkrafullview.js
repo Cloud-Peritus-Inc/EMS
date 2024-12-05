@@ -48,11 +48,16 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     orgDomainId;
     showKraEditButton = false;
     submittedKRAbutton = false;
-    isLoaded=false;
+    isLoaded = false;
+    disabledCheckbox = false;
+    visiableNote =false;
 
     connectedCallback() {
         this.orgDomainId = window.location.origin;
         console.log('this.tab-->' + this.tab);
+        if(this.tab == 'My Metric'){
+            this.visiableNote = true;
+        }
     }
 
     @wire(getCurrentUserConDetails)
@@ -92,6 +97,9 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             console.log(' getLoginAnswerdata data-->' + JSON.stringify(data));
             this.showKraEditButton = data.submittedRecords;
             this.submittedKRAbutton = data.submittedKRAbutton;
+           this.disabledCheckbox = !this.submittedKRAbutton;
+            console.log('this.submittedKRAbutton' + this.submittedKRAbutton);
+            console.log('this.disabledCheckbox' + this.disabledCheckbox);
             this.resourceid = data.kraResourceId;
             console.log('this.resourceid-->' + this.resourceid);
             this.isLoading = false;
@@ -129,7 +137,8 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                                             id: answer.contactId,
                                             name: answer.contactName,
                                             projectname: answer.ProjectName,
-                                            resourceRole: answer.resourceRole
+                                            resourceRole: answer.resourceRole,
+                                            classs: answer.ConsiderFeedbackRating ? 'green' : 'red'
                                         }, // @sangharsh adding projectname and resource role
                                         answers: []
                                     };
@@ -139,7 +148,8 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                                     answerValue: answer.answerValue,
                                     ratingoverview: answer.Ratingoverview,
                                     descriptionoverview: answer.Descriptionoverview,
-                                    rating: answer.rating
+                                    rating: answer.rating,
+                                    classs: answer.ConsiderFeedbackRating ? 'green' : 'red'
                                 });
                                 answerIdList.push(answer.answerId);
                             }
@@ -235,8 +245,8 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     contactId: contactId,
                     averageRating: averageRating,
                     AvgRatingSkillForResource: AvgRatingSkillForResource,
-                    ConsiderFeedbackRating:answer.ConsiderFeedbackRating,
-                    classs: answer.ConsiderFeedbackRating? 'green' : 'red' 
+                    ConsiderFeedbackRating: answer.ConsiderFeedbackRating,
+                    classs: answer.ConsiderFeedbackRating ? 'green' : 'red'
                 });
 
                 totalRating += parseFloat(answer.averageRating);
@@ -250,22 +260,22 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                         projectname: answer.ProjectName,
                         resourceRole: answer.resourceRole,
                         ConsiderFeedbackRating: answer.ConsiderFeedbackRating,
-                        classs: answer.ConsiderFeedbackRating ? 'green' : 'red' 
+                        classs: answer.ConsiderFeedbackRating ? 'green' : 'red'
                         // @sangharsh adding projectname and resource role
                     });
                 }
                 if (!contactOverallRatingMap.has(contactId)) {
                     contactOverallRatingMap.set(contactId, {
-                    rating: 0,
-                    ConsiderFeedbackRating: answer.ConsiderFeedbackRating
-                });
+                        rating: 0,
+                        ConsiderFeedbackRating: answer.ConsiderFeedbackRating
+                    });
                 }
                 let contactData = contactOverallRatingMap.get(contactId);
-            contactOverallRatingMap.set(contactId, {
-                ...contactData,
-                rating: contactData.rating + parseFloat(answer.AvgRatingSkillForResource)
-            });
-        }
+                contactOverallRatingMap.set(contactId, {
+                    ...contactData,
+                    rating: contactData.rating + parseFloat(answer.AvgRatingSkillForResource)
+                });
+            }
 
             let overallAverage = (totalCount > 0) ? (totalRating / totalCount).toFixed(2) : 'N/A';
             let overallSkillAverage = (totalCount > 0) ? (totalSkillRating / totalCount).toFixed(2) : 'N/A';
@@ -279,21 +289,21 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         });
         // Convert contactOverallRatingMap to an array for template rendering
         this.overallRatings = Array.from(contactOverallRatingMap.entries()).map(([contactId, { rating, ConsiderFeedbackRating }]) => ({
-        contactId: contactId,
-        overallRating: rating.toFixed(2),
-        ConsiderFeedbackRating: ConsiderFeedbackRating,
-        classs: ConsiderFeedbackRating ? 'green' : 'red'
-    }));
+            contactId: contactId,
+            overallRating: rating.toFixed(2),
+            ConsiderFeedbackRating: ConsiderFeedbackRating,
+            classs: ConsiderFeedbackRating ? 'green' : 'red'
+        }));
         console.log('this.overallRatings' + JSON.stringify(this.overallRatings));
 
-         this.contacts = Array.from(contactMap.values());
+        this.contacts = Array.from(contactMap.values());
 
-       /* this.contacts = Array.from(contactMap.values()).map(contact => {
-            return {
-                ...contact,
-                classs: contact.ConsiderFeedbackRating ? 'green' : 'red' // Add class dynamically
-            };
-        });*/
+        /* this.contacts = Array.from(contactMap.values()).map(contact => {
+             return {
+                 ...contact,
+                 classs: contact.ConsiderFeedbackRating ? 'green' : 'red' // Add class dynamically
+             };
+         });*/
         console.log('this.contacts' + JSON.stringify(this.contacts));
     }
 
@@ -444,13 +454,13 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         if (result === 'okay') {
             this.isLoading = true;
             const filteredContacts = relevantContacts.map(contact => ({
-        contactId: contact.contactId,
-        ConsiderFeedbackRating: contact.ConsiderFeedbackRating
-    }));
+                contactId: contact.contactId,
+                ConsiderFeedbackRating: contact.ConsiderFeedbackRating
+            }));
 
-        completekraMethod({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
-            .then((result) => {
-                  this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable');
+            completekraMethod({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
+                .then((result) => {
+                    this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable');
                     var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
                     this[NavigationMixin.Navigate]({
                         type: 'standard__webPage',
@@ -459,17 +469,17 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                         }
                     });
                     this.isLoading = false;
-            })
-            .catch((error) => {
-                 console.log('error-->', error);
+                })
+                .catch((error) => {
+                    console.log('error-->', error);
                     this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
                     this.isLoading = false;;
-            });
+                });
         }
     }
 
     handleCheckbox(event) {
-        this.isLoaded=true;
+        this.isLoaded = true;
         const contactId = event.target.dataset.id;
         const isChecked = event.target.checked;
         console.log('contactId' + contactId);
@@ -480,37 +490,36 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                 return {
                     ...contact,
                     ConsiderFeedbackRating: isChecked,
-                    classs: isChecked ?  'green':'red' 
+                    classs: isChecked ? 'green' : 'red'
                 };
             }
             return contact;
-        }); 
+        });
 
-        this.overallRatings= this.overallRatings.map(overallRating => {
+        this.overallRatings = this.overallRatings.map(overallRating => {
             if (overallRating.contactId === contactId) {
                 return {
                     ...overallRating,
                     ConsiderFeedbackRating: isChecked,
-                    classs: isChecked ?  'green':'red' 
+                    classs: isChecked ? 'green' : 'red'
                 };
             }
             return overallRating;
-        }); 
- this.processedData.forEach(areaData => {
-        areaData.ratings = areaData.ratings.map(rating => {
-            if (rating.contactId === contactId) {
-                return {
-                    ...rating,
-                    ConsiderFeedbackRating: isChecked,
-                    classs: isChecked ?  'green':'red' 
-                };
-            }
-            return rating;
         });
-    });
-        console.log('this.overallRatings' + JSON.stringify(this.overallRatings));
-        console.log('this.contacts' + JSON.stringify(this.contacts));
-            this.isLoaded=false;
+        this.processedData.forEach(areaData => {
+            areaData.ratings = areaData.ratings.map(rating => {
+                if (rating.contactId === contactId) {
+                    return {
+                        ...rating,
+                        ConsiderFeedbackRating: isChecked,
+                        classs: isChecked ? 'green' : 'red'
+                    };
+                }
+                return rating;
+            });
+        });
+
+        this.isLoaded = false;
     }
 
     ShowToast(title, message, variant, mode) {
