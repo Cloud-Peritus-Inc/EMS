@@ -90,11 +90,7 @@ public without sharing class myMetricsController {
                 if(gl.Status__c == 'In Progress' ){
                     qw.allowedit = true; 
                     qw.allowCopy = true; 
-                }
-                /*else if(gl.Status__c == 'In Progress' && profileName != HR_PROFILE){
-                      qw.allowedit = true;
-
-                }*/
+                }           
 
                 if (prevQuarterGoals.size() > 0) {
                     qw.allowCopy = true;
@@ -114,13 +110,7 @@ public without sharing class myMetricsController {
 
                 //smaske : PM_Def_163 : hiding View PM Request button for HR
                 qw.showPmRequest = profileName == 'Employee - HR(Community)' ? false : true;
-                 /*qw.checkHR = false;
-                  if ((loggedInUser.Contact.Id == gl.Check_In_By__c  || loggedInUser.Contact.Id == gl.Resource__c) && gl.Status__c == 'In Progress' && profileName == HR_PROFILE ) {   
-                     qw.checkHR = true;
-                     qw.allowedit = false; 
-                      }*/
-                     
-
+      
                 qlist.add(qw);
             }
             perfWrapper pw = new perfWrapper();
