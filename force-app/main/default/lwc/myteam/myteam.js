@@ -254,6 +254,25 @@ export default class Myteam extends LightningElement {
                         if (this.viewonlymode == true) {
                             console.log("videmode is true");
                             qualItem.allowedit = false;
+                            //smaske : PM_Def_163 : hiding View PM Request button for secondary reportees
+                            //smaske : UAT_Smoke_016 : 24/oct/2024 :[New Update] enabling View PM Request button for secondary reportees
+                            qualItem.showPmRequest = true;
+                        }else{
+                            //smaske : PM_Def_123 : 06/Aug/2024
+                            if (qualItem.status == 'KRA In Review' || qualItem.status == 'In Progress') {
+                                console.log("Set value of  allowedit");
+                                //Rohit Bhupati :[PM_Def_218] 
+                                if(qualItem.checkHR == true){
+
+                                  qualItem.allowedit = false;
+                                }
+                                else{
+                               qualItem.allowedit = true;
+                                }
+                            }else if (qualItem.status == 'HR KRA Completed' || qualItem.status == 'KRA Completed') {
+                                console.log("Set value of  allowedit");
+                                qualItem.allowedit = false;
+                            }
                         }
                     });
                 });
