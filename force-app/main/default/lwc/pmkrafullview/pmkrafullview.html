@@ -160,8 +160,10 @@
 
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
-										<div key={contactAnswer.contact.id} class="answer-column ">
-											<h3 style="height:70px;">{contactAnswer.contact.name}
+										<div key={contactAnswer.contact.id}
+											class="answer-column {contactAnswer.contact.classs}">
+											<h3 class={contactAnswer.contact.classs} style="height:70px;">
+												{contactAnswer.contact.name}
 												{contactAnswer.contact.projectname}<br>{contactAnswer.contact.resourceRole}
 											</h3>
 
@@ -227,7 +229,8 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3 style="height:70px;">{contactAnswer.contact.name}
+											<h3 class={contactAnswer.contact.classs} style="height:70px;">
+												{contactAnswer.contact.name}
 												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
 											</h3>
 											<!-- Render each answer for the contact -->
@@ -290,7 +293,8 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3 style="height:70px;">{contactAnswer.contact.name}
+											<h3 class={contactAnswer.contact.classs} style="height:70px;">
+												{contactAnswer.contact.name}
 												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
 											</h3>
 											<!-- Render each answer for the contact -->
@@ -353,7 +357,8 @@
 									<!-- Iterate over preprocessed contact answers to create dynamic columns -->
 									<template for:each={questionWrapper.contactAnswers} for:item="contactAnswer">
 										<div key={contactAnswer.contact.id} class="answer-column">
-											<h3 style="height:70px;">{contactAnswer.contact.name}
+											<h3 class={contactAnswer.contact.classs} style="height:70px;">
+												{contactAnswer.contact.name}
 												{contactAnswer.contact.projectname} <br>{contactAnswer.contact.resourceRole}
 											</h3>
 											<!-- Render each answer for the contact -->
@@ -408,12 +413,8 @@
 					</lightning-spinner>
 				</template>
 			</div>
-			<br/>
-			<template if:true={submittedKRAbutton}>
-				<p>Note:</p><p> 1. By checking or unchecking the checkbox next to the project manager's, you can indicate
-				whether you are considering their feedback.
-				A project manager's displayed in grey out means their rating is not being considered.</p>
-				<p> 2. To save your changes, click Complete KRA. Please note that once you click Complete KRA, no further changes can be made.</p> 
+			<template lwc:if={visiableNote}>
+				<p>Note: Greyed-out names indicate that the respective Manager's/Other's ratings are excluded.</p>
 			</template>
 			<br/>
 			<div class="overallTableContainer">
@@ -430,10 +431,11 @@
 							</th>
 							<template for:each={contacts} for:item="contact">
 								<th key={contact.contactId}>
-									<div class={contact.classs}>{contact.contactname} {contact.projectname}<br>{contact.resourceRole} </div><strong>
-									<template if:true={contact.projectname}><template if:true={submittedKRAbutton}>
-										<lightning-input type="checkbox" data-id={contact.contactId} onchange={handleCheckbox} checked={contact.ConsiderFeedbackRating} variant="standard"></lightning-input> 
-									</template>	</template> 
+									<div class={contact.classs}>{contact.contactname} {contact.projectname}<br>{contact.resourceRole}
+									</div><strong>
+									<template if:true={contact.projectname}>
+										<lightning-input type="checkbox" data-id={contact.contactId} onchange={handleCheckbox} checked={contact.ConsiderFeedbackRating} variant="standard" disabled={disabledCheckbox}></lightning-input> 
+									</template> 
 									</strong>
 								</th>
 							</template>
@@ -445,7 +447,8 @@
 								<td>{areaData.area} [{areaData.areapercentage} %]</td>
 								<template for:each={areaData.ratings} for:item="rating">
 									<td key={rating.contactId}>
-									<div class={rating.classs}>{rating.averageRating} [{rating.AvgRatingSkillForResource}] </div>
+										<div class={rating.classs}>{rating.averageRating}
+											[{rating.AvgRatingSkillForResource}] </div>
 									</td>
 								</template>
 								<!--td>{areaData.overallAverage}</td-->
@@ -454,7 +457,8 @@
 						<tr>
 							<td><strong>Overall Rating</strong></td>
 							<template for:each={overallRatings} for:item="overallRating">
-								<td key={overallRating.contactId}><b class={overallRating.classs}>{overallRating.overallRating}</b></td>
+								<td key={overallRating.contactId}>
+									<b class={overallRating.classs}>{overallRating.overallRating}</b></td>
 							</template>
 						</tr>
 					</tbody>
