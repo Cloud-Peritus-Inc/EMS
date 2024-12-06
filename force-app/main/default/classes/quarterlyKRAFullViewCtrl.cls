@@ -153,6 +153,9 @@ public without sharing class quarterlyKRAFullViewCtrl {
         if(tab =='My Metric'){
                 aw.submittedRecords=false;
             }
+        if(tab =='My Metric' && goalRecord.Status__c == 'KRA Completed'){
+            aw.overallViewScreenNote=true;
+        }
         aw.kraResourceId=goalRecord.Resource__c;
         return aw;
     }
@@ -164,6 +167,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
         //Complete KRA button variable -submittedKRAbutton
         @AuraEnabled 
         public Boolean submittedKRAbutton=false;
+        @AuraEnabled
+        public Boolean overallViewScreenNote =false; 
         @AuraEnabled 
         public string kraResourceId;
     }
@@ -188,7 +193,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
             questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
                          FROM PM_Configure__r 
                          Where KRA__c =:kraid AND ((Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))
@@ -203,7 +208,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
              questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
                          FROM PM_Configure__r Where KRA__c =:kraid AND ( Mentor_Mentee__c =: loggedInUser.ContactId OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))))
                         FROM PM_Configure__c 
@@ -212,7 +217,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                 questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
                         (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                          Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,
+                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
                          FROM PM_Configure__r Where KRA__c =:kraid AND Mentor_Mentee__c =: loggedInUser.ContactId)
                         FROM PM_Configure__c 
@@ -245,6 +250,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                 awn.Descriptionoverview = answer.Related_Question__r.Question_overview__c;
                 awn.rating = answer.Rating__c!=null?answer.Rating__c:null;
                 awn.contactId = contactKey;
+                awn.ConsiderFeedbackRating = answer.Consider_Feedback_Rating__c;
                 awn.ProjectName =answer.Project_Name__c!=null? '('+answer.Project_Name__r.Name+')':' ';
                 awn.contactName = answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__r.Name:answer.Reporting_Contact__r.Name;
                 awn.resourceRole =answer.Mentor_Mentee__c!=null?answer.Mentor_Mentee__r.Resource_Role__r.Name:answer.Reporting_Contact__r.Resource_Role__r.Name;
@@ -307,6 +313,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
         public Decimal averageRating;
         @AuraEnabled
     	public Integer ratingCount;
+        @AuraEnabled
+        Public boolean ConsiderFeedbackRating;
         
         public AnswerWrapper() {}
         
