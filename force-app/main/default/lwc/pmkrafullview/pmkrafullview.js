@@ -55,9 +55,6 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     connectedCallback() {
         this.orgDomainId = window.location.origin;
         console.log('this.tab-->' + this.tab);
-        if(this.tab == 'My Metric'){
-            this.visiableNote = true;
-        }
     }
 
     @wire(getCurrentUserConDetails)
@@ -98,6 +95,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             this.showKraEditButton = data.submittedRecords;
             this.submittedKRAbutton = data.submittedKRAbutton;
            this.disabledCheckbox = !this.submittedKRAbutton;
+           this.visiableNote = data.overallViewScreenNote;
             console.log('this.submittedKRAbutton' + this.submittedKRAbutton);
             console.log('this.disabledCheckbox' + this.disabledCheckbox);
             this.resourceid = data.kraResourceId;
