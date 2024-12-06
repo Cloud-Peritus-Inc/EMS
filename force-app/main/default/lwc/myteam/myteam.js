@@ -271,7 +271,14 @@ export default class Myteam extends LightningElement {
                             //smaske : PM_Def_123 : 06/Aug/2024
                             if (qualItem.status == 'KRA In Review' || qualItem.status == 'In Progress') {
                                 console.log("Set value of  allowedit");
-                                qualItem.allowedit = true;
+                                //Rohit Bhupati :[PM_Def_218] 
+                                if(qualItem.checkHR == true){
+
+                                  qualItem.allowedit = false;
+                                }
+                                else{
+                               qualItem.allowedit = true;
+                                }
                             }else if (qualItem.status == 'HR KRA Completed' || qualItem.status == 'KRA Completed') {
                                 console.log("Set value of  allowedit");
                                 qualItem.allowedit = false;
