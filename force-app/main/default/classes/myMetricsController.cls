@@ -52,6 +52,10 @@ public without sharing class myMetricsController {
     @AuraEnabled
     public static List<perfWrapper> getAllKRAs(String fyId){
         Id kraRecordTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get('KRA').getRecordTypeId();
+        //smaske : PM_Def_163 : Fetching logginuser data 
+        User loggedInUser = [SELECT Id,Contact.Id,Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+        String profileName = loggedInUser.Profile.Name; //ex : Employee - HR(Community)
+
         List<Fulfillment__c> returnList = new List<Fulfillment__c>();
         List<perfWrapper> returnval = new List<perfWrapper>();
         if(String.isEmpty(fyId)){
@@ -67,7 +71,7 @@ public without sharing class myMetricsController {
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c  FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
+                      (SELECT Id,Rating_Image__c,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c,Check_In_By__c,Resource__c  FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__r.EMS_TM_User__c=:Userinfo.getUserId()];
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
             for(Goal__c gl : ful.Goals__r){
@@ -83,9 +87,30 @@ public without sharing class myMetricsController {
                 qw.allowedit = false;
                 //smaske : PM_061 : updating conditon to only allow edit when status is "Active" in MY METRIC TAB
                 //Previously it was : gl.Status__c != 'KRA Complete'
-                if(gl.Status__c == 'In Progress'){
-                    qw.allowedit = true;  
+                if(gl.Status__c == 'In Progress' ){
+                    qw.allowedit = true; 
+                    qw.allowCopy = true; 
+                }           
+
+                if (prevQuarterGoals.size() > 0) {
+                    qw.allowCopy = true;
+                }else {
+                    qw.allowCopy = false;
                 }
+                
+                //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
+                if(gl.Status__c == 'KRA In Review' || gl.Status__c == 'KRA Completed' || gl.Status__c == 'HR KRA Completed' || gl.Status__c == 'Missed'    ){ //|| gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate
+                    qw.allowCopy = false;
+                }
+
+
+                //smaske : [UAT_066] : [15-July-2024] : passing Mentee/Mentor Submitted var values to disable button based on tabs
+                qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
+                qw.mentorSubmitted = gl.Mentor_KRA_submitted__c;
+
+                //smaske : PM_Def_163 : hiding View PM Request button for HR
+                qw.showPmRequest = profileName == 'Employee - HR(Community)' ? false : true;
+      
                 qlist.add(qw);
             }
             perfWrapper pw = new perfWrapper();
@@ -172,8 +197,11 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         List<perfWrapper> returnval = new List<perfWrapper>();
         //smaske : [UAT_PR_008] : Updated SOQL to fetch Next_Appraisal_Date__c field
         returnList = [SELECT Id,Name,Resource__c,Resource__r.Appraisal_Date__c,Resource__r.Next_Appraisal_Date__c,Fiscal_Year__c,Fiscal_Year__r.Name,Avg_Rating__c,Recognization_Type__c,LastModifiedDate,LastModifiedBy.Name,Status__c,
-                      (SELECT Id,Name,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
+                      (SELECT Id,Name,Rating_Image__c,Check_in_Date__c,Quarter_Start_Date__c,Goal_Name__c,Quarter_End_Date__c,Status__c,Type__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Overall_Rating__c,Check_In_By__c,Resource__c FROM Goals__r WHERE RecordTypeId =:kraRecordTypeId) FROM Fulfillment__c WHERE Fiscal_Year__c =:fyId and Resource__c =:resourceId]; 
         
+        //smaske : PM_Def_163 : Fetching logginuser data 
+        User loggedInUser = [SELECT Id,contact.Id,Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+        String profileName = loggedInUser.Profile.Name; //ex : Employee - HR(Community)
         
         for(Fulfillment__c ful : returnList){
             List<quatWrapper> qlist = new List<quatWrapper>();
@@ -193,6 +221,29 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
                 if(gl.Status__c == 'In Progress'){
                     qw.allowedit = true;  
                 }
+
+                //Rohit Bhupati :[PM_Def_218] : Added a condition to check, HR should not have edit access to the Indirect reportees KRA's in My team tab.
+                  if ((loggedInUser.Contact.Id != gl.Check_In_By__c )&& profileName == HR_PROFILE ) {   
+                     qw.allowedit = false;
+                      qw.checkHR = true;
+                  }
+                 
+
+                //smaske :[UAT_066]: [12-July-2024] : Disabling copy prev btn , when kra is completed or In Review and also for old kra
+                qw.allowCopy = true;
+                if(gl.Status__c == 'KRA In Review' || gl.Status__c == 'KRA Completed' || gl.Quarter_Start_Date__c < currentFiscalQuarter.StartDate  ){
+                    qw.allowCopy = false;
+                }
+
+                //smaske : [UAT_066] : [15-July-2024] : passing Mentee/Mentor Submitted var values to disable button based on tabs
+                qw.menteeSubmitted = gl.Mentee_KRA_submitted__c;
+                qw.mentorSubmitted = gl.Mentor_KRA_submitted__c;
+
+                //smaske : PM_Def_163 : hiding View PM Request button for HR
+                qw.showPmRequest = profileName == 'Employee - HR(Community)' ? false : true;
+
+               
+
                 qlist.add(qw);
             }
             perfWrapper pw = new perfWrapper();
@@ -422,6 +473,12 @@ system.debug(kraAreaList.size()+'====='+kraAreaList);*/
         public boolean menteeSubmitted;
         @AuraEnabled
         public boolean mentorSubmitted;
+        @AuraEnabled
+        public boolean allowCopy;
+        @AuraEnabled
+        public boolean showPmRequest;//smaske
+        @AuraEnabled
+        public boolean checkHR;//Rohit Bhupati :[PM_Def_218] 
         
     }
     
