@@ -424,22 +424,36 @@
 						<th><strong>Section Name</strong></th>
 						<th colspan={contacts.length} style="text-align:center;"><b>Average Rating [Weightage]</b></th>
 						<tr>
-						</tr>
-						<tr>
-							<th>Employee Name (Project Name)<br>Role
-
-							</th>
+							<th>Employee Name (Project Name)<br>Role</th>
 							<template for:each={contacts} for:item="contact">
 								<th key={contact.contactId}>
 									<div class={contact.classs}>{contact.contactname} {contact.projectname}<br>{contact.resourceRole}
 									</div><strong>
 									<template if:true={contact.projectname}>
+										<template if:true={visiablecheckbox}>
 										<lightning-input type="checkbox" data-id={contact.contactId} onchange={handleCheckbox} checked={contact.ConsiderFeedbackRating} variant="standard" disabled={disabledCheckbox}></lightning-input> 
+										</template>
 									</template> 
 									</strong>
 								</th>
 							</template>
 						</tr>
+						<template if:true={showthisSection}>
+						<tr>
+							<th>Reason Not Considering Feedback</th>
+							<template for:each={contacts} for:item="contact">
+								<td key={contact.contactId}>
+									<div>
+										<template if:true={contact.projectname}>
+											<lightning-textarea data-id={contact.contactId} value={contact.NotConsiderFeedbackReason}
+												required={contact.requiredreason} variant="standard" onchange={handleChangeFeedbackReason}
+												disabled={contact.ConsiderFeedbackRating}></lightning-textarea>
+										</template>
+									</div>
+								</td>
+							</template>
+						</tr>
+						</template>
 					</thead>
 					<tbody>
 						<template for:each={processedData} for:item="areaData">
@@ -458,7 +472,8 @@
 							<td><strong>Overall Rating</strong></td>
 							<template for:each={overallRatings} for:item="overallRating">
 								<td key={overallRating.contactId}>
-									<b class={overallRating.classs}>{overallRating.overallRating}</b></td>
+									<b class={overallRating.classs}>{overallRating.overallRating}</b>
+								</td>
 							</template>
 						</tr>
 					</tbody>
@@ -469,12 +484,11 @@
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
 				</lightning-button>
+				<lightning-button variant="" label="Save" onclick={HandlesavePMFeedbackReason} class="slds-var-m-left_x-small"></lightning-button>
 				<template if:true={submittedKRAbutton}>
 					<lightning-button variant="brand" label="Complete KRA" onclick={handleCompleteKRA}
 						class="slds-var-m-left_x-small"></lightning-button>
 				</template>
-				<!--lightning-button variant="" label="Close" onclick={handleCloseFullView}
-					class="slds-var-m-left_x-small"></lightning-button-->
 			</footer>
 		</template>
 

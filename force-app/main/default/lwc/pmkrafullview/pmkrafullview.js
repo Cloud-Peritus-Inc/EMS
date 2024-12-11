@@ -6,6 +6,7 @@ import getLoginAnswerdata from '@salesforce/apex/quarterlyKRAFullViewCtrl.getLog
 import getCurrentUserConDetails from '@salesforce/apex/quarterlyKRAViewCtrl.getCurrentUserConDetails';
 import calculateAverageRatingForKRA from '@salesforce/apex/CalculateFullQuarterlyKRA.calculateAverageRatingForKRA';
 import completekraMethod from '@salesforce/apex/quarterlyKRAFullViewCtrl.completekraMethod';
+import SavePMFeedbackReason from '@salesforce/apex/quarterlyKRAFullViewCtrl.SavePMFeedbackReason';
 import Genericmodal from 'c/genericmodal';
 
 export default class Pmkrafullview extends NavigationMixin(LightningElement) {
@@ -50,7 +51,8 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     submittedKRAbutton = false;
     isLoaded = false;
     disabledCheckbox = false;
-    visiableNote =false;
+    visiablecheckbox = false;
+    visiableNote = false;
 
     connectedCallback() {
         this.orgDomainId = window.location.origin;
@@ -94,8 +96,9 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             console.log(' getLoginAnswerdata data-->' + JSON.stringify(data));
             this.showKraEditButton = data.submittedRecords;
             this.submittedKRAbutton = data.submittedKRAbutton;
-           this.disabledCheckbox = !this.submittedKRAbutton;
-           this.visiableNote = data.overallViewScreenNote;
+            this.disabledCheckbox = !this.submittedKRAbutton;
+            this.visiableNote = data.overallViewScreenNote;
+            this.visiablecheckbox = data.visiablecheckbox;
             console.log('this.submittedKRAbutton' + this.submittedKRAbutton);
             console.log('this.disabledCheckbox' + this.disabledCheckbox);
             this.resourceid = data.kraResourceId;
@@ -244,7 +247,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     averageRating: averageRating,
                     AvgRatingSkillForResource: AvgRatingSkillForResource,
                     ConsiderFeedbackRating: answer.ConsiderFeedbackRating,
-                    classs: answer.ConsiderFeedbackRating ? 'green' : 'red'
+                    classs: answer.ConsiderFeedbackRating ? 'green' : 'red',
                 });
 
                 totalRating += parseFloat(answer.averageRating);
@@ -258,7 +261,9 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                         projectname: answer.ProjectName,
                         resourceRole: answer.resourceRole,
                         ConsiderFeedbackRating: answer.ConsiderFeedbackRating,
-                        classs: answer.ConsiderFeedbackRating ? 'green' : 'red'
+                        classs: answer.ConsiderFeedbackRating ? 'green' : 'red',
+                        requiredreason: !answer.ConsiderFeedbackRating,
+                        NotConsiderFeedbackReason: answer.NotConsiderFeedbackReason
                         // @sangharsh adding projectname and resource role
                     });
                 }
@@ -295,6 +300,8 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         console.log('this.overallRatings' + JSON.stringify(this.overallRatings));
 
         this.contacts = Array.from(contactMap.values());
+        const allConsidered = this.contacts.every(contact => contact.ConsiderFeedbackRating);
+        this.showthisSection = !allConsidered;
 
         /* this.contacts = Array.from(contactMap.values()).map(contact => {
              return {
@@ -437,35 +444,84 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                 return;
             }
         }
+        const allValid = [...this.template.querySelectorAll('lightning-textarea')]
+            .reduce((validSoFar, inputCmp) => {
+                inputCmp.reportValidity();
+                return validSoFar && inputCmp.checkValidity();
+            }, true);
+        if (allValid) {
 
-        const result = await Genericmodal.open({
-            style: {
-                '--slds-c-modal-color-border': 'black'
-            },
-            btnLable1: 'No',
-            btnLable2: 'Yes',
-            headerLable: 'Confirm KRA Completion',
-            bodyLable: 'You are about to complete the KRA feedback process for your Mentee. Would you like to proceed?',
-            size: 'small',
-        });
+            const result = await Genericmodal.open({
+                style: {
+                    '--slds-c-modal-color-border': 'black'
+                },
+                btnLable1: 'No',
+                btnLable2: 'Yes',
+                headerLable: 'Confirm KRA Completion',
+                bodyLable: 'You are about to complete the KRA feedback process for your Mentee. Would you like to proceed?',
+                size: 'small',
+            });
 
-        if (result === 'okay') {
+            if (result === 'okay') {
+                this.isLoading = true;
+                const filteredContacts = relevantContacts.map(contact => ({
+                    contactId: contact.contactId,
+                    ConsiderFeedbackRating: contact.ConsiderFeedbackRating,
+                    NotConsiderFeedbackReason: contact.NotConsiderFeedbackReason
+                }));
+
+                completekraMethod({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
+                    .then((result) => {
+                        this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable');
+                        var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
+                        this[NavigationMixin.Navigate]({
+                            type: 'standard__webPage',
+                            attributes: {
+                                url: url.href
+                            }
+                        });
+                        this.isLoading = false;
+                    })
+                    .catch((error) => {
+                        console.log('error-->', error);
+                        this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
+                        this.isLoading = false;;
+                    });
+            }
+        } else {
+            this.ShowToast(' ', 'Please compelete required field', 'error', 'dismissable');
+        }
+    }
+
+    HandlesavePMFeedbackReason() {
+        const allValid = [...this.template.querySelectorAll('lightning-textarea')]
+            .reduce((validSoFar, inputCmp) => {
+                inputCmp.reportValidity();
+                return validSoFar && inputCmp.checkValidity();
+            }, true);
+        if (allValid) {
+            const relevantContacts = this.contacts.filter(contact => contact.contactId.includes('&'));
+            console.log('relevantContacts.length' + relevantContacts.length);
+            if (relevantContacts.length != 0) {
+                const allFalse = relevantContacts.every(contact => !contact.ConsiderFeedbackRating);
+
+                if (allFalse) {
+                    this.ShowToast(' ', 'Please select at least one additional rating besides your own.', 'error', 'dismissable');
+                    return;
+                }
+            }
             this.isLoading = true;
             const filteredContacts = relevantContacts.map(contact => ({
                 contactId: contact.contactId,
-                ConsiderFeedbackRating: contact.ConsiderFeedbackRating
+                ConsiderFeedbackRating: contact.ConsiderFeedbackRating,
+                NotConsiderFeedbackReason: contact.NotConsiderFeedbackReason
             }));
 
-            completekraMethod({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
+            console.log('filteredContacts' + JSON.stringify(filteredContacts));
+            SavePMFeedbackReason({ kraid: this.receivedKRAId, contactData: JSON.stringify(filteredContacts) })
                 .then((result) => {
-                    this.ShowToast(' ', 'KRA completed successfully', 'success', 'dismissable');
-                    var url = new URL(this.orgDomainId + '/Grid/s/performance-management');
-                    this[NavigationMixin.Navigate]({
-                        type: 'standard__webPage',
-                        attributes: {
-                            url: url.href
-                        }
-                    });
+                    console.log('result' + result);
+                    this.ShowToast(' ', 'Changes Saved successfully!', 'success', 'dismissable');
                     this.isLoading = false;
                 })
                 .catch((error) => {
@@ -473,29 +529,45 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     this.ShowToast(' ', 'Something went wrong!', 'error', 'dismissable');
                     this.isLoading = false;;
                 });
+        } else {
+            this.ShowToast(' ', 'Please compelete required field', 'error', 'dismissable');
         }
     }
 
+    projectManagerId;
+    showReasonModel = false;
+    showthisSection = false;
+
     handleCheckbox(event) {
         this.isLoaded = true;
-        const contactId = event.target.dataset.id;
+        this.projectManagerId = event.target.dataset.id;
         const isChecked = event.target.checked;
-        console.log('contactId' + contactId);
+        console.log('projectManagerId' + this.projectManagerId);
         console.log('isChecked' + isChecked);
         // Update the ConsiderFeedbackRating for the corresponding contact
+
+       /* if (!isChecked) {
+            this.showthisSection = true;
+        }*/
+
         this.contacts = this.contacts.map(contact => {
-            if (contact.contactId === contactId) {
+            if (contact.contactId === this.projectManagerId) {
                 return {
                     ...contact,
                     ConsiderFeedbackRating: isChecked,
-                    classs: isChecked ? 'green' : 'red'
+                    classs: isChecked ? 'green' : 'red',
+                    requiredreason: !isChecked,
+                    NotConsiderFeedbackReason: isChecked ? '':contact.NotConsiderFeedbackReason
                 };
             }
             return contact;
         });
 
+    const allConsidered = this.contacts.every(contact => contact.ConsiderFeedbackRating);
+    this.showthisSection = !allConsidered;
+
         this.overallRatings = this.overallRatings.map(overallRating => {
-            if (overallRating.contactId === contactId) {
+            if (overallRating.contactId === this.projectManagerId) {
                 return {
                     ...overallRating,
                     ConsiderFeedbackRating: isChecked,
@@ -506,7 +578,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         });
         this.processedData.forEach(areaData => {
             areaData.ratings = areaData.ratings.map(rating => {
-                if (rating.contactId === contactId) {
+                if (rating.contactId === this.projectManagerId) {
                     return {
                         ...rating,
                         ConsiderFeedbackRating: isChecked,
@@ -518,6 +590,20 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         });
 
         this.isLoaded = false;
+    }
+
+    handleChangeFeedbackReason(event){
+        const value = event.target.value;
+        const contactId = event.target.dataset.id;
+                this.contacts = this.contacts.map(contact => {
+            if (contact.contactId === contactId) {
+                return {
+                    ...contact,
+                    NotConsiderFeedbackReason: value
+                };
+            }
+            return contact;
+        });
     }
 
     ShowToast(title, message, variant, mode) {
