@@ -13,76 +13,179 @@
 public without sharing class quarterlyKRAFullViewCtrl {
     
     @AuraEnabled
-    public static String completekraMethod(String kraid,String contactData) {
-		updatePmConfigure( kraid,  contactData);
-        return 'success';
-    }
-    
-    @future    
-    public static void updatePmConfigure(String kraid, String contactData){
-        // Deserialize the input data
-        Object deserializedData = JSON.deserializeUntyped(contactData);
-        
-        // Validate that the data is a list
-        if (!(deserializedData instanceof List<Object>)) {
-            throw new AuraHandledException('Invalid data format. Expected a list of contacts.');
+    public static String SavePMFeedbackReason(String kraid,String contactData) {
+         try {
+        // Debug input data
+        System.debug('Contact Data: ' + contactData);
+
+        // Deserialize and validate input
+        List<Object> contactListGeneric = (List<Object>) JSON.deserializeUntyped(contactData);
+        if (contactListGeneric == null || contactListGeneric.isEmpty()) {
+            throw new AuraHandledException('Contact data is empty or invalid.');
         }
-        
-        // Convert to a list of maps
-        List<Object> contactListGeneric = (List<Object>) deserializedData;
+
+        // Parse contact data into a structured format
         List<Map<String, Object>> contactList = new List<Map<String, Object>>();
-        
         for (Object contactObj : contactListGeneric) {
-            if (!(contactObj instanceof Map<String, Object>)) {
-                throw new AuraHandledException('Invalid data format. Each contact should be a map.');
+            if (contactObj instanceof Map<String, Object>) {
+                contactList.add((Map<String, Object>) contactObj);
+            } else {
+                throw new AuraHandledException('Invalid data format: Each contact should be a map.');
             }
-            contactList.add((Map<String, Object>) contactObj);
         }
-        
-        System.debug('Contact List: ' + contactList);
-        
-        // Get RecordTypeId for 'Answer'
-        Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
-        
-        // Prepare to collect data for querying and updating
+
+        System.debug('Parsed Contact List: ' + contactList);
+
+        // Extract Contact IDs and feedback details
         Set<String> contactIds = new Set<String>();
         Map<String, Boolean> feedbackMap = new Map<String, Boolean>();
-        
-        // Extract contact IDs and feedback ratings
+        Map<String, String> reasonMap = new Map<String, String>();
+
         for (Map<String, Object> contact : contactList) {
-            if (contact.containsKey('contactId') && contact.containsKey('ConsiderFeedbackRating')) {
+            if (contact.containsKey('contactId')) {
                 String fullContactId = (String) contact.get('contactId');
-                String contactId = fullContactId.split('&')[0];
+                String contactId = fullContactId.split('&')[0]; // Extract the first 18 characters
                 contactIds.add(contactId);
-                feedbackMap.put(contactId, (Boolean) contact.get('ConsiderFeedbackRating'));
+
+                if (contact.containsKey('ConsiderFeedbackRating')) {
+                    feedbackMap.put(contactId, (Boolean) contact.get('ConsiderFeedbackRating'));
+                }
+
+                if (contact.containsKey('NotConsiderFeedbackReason')) {
+                    reasonMap.put(contactId, (String) contact.get('NotConsiderFeedbackReason'));
+                }
             }
         }
-        
+
         System.debug('Extracted Contact IDs: ' + contactIds);
         System.debug('Feedback Map: ' + feedbackMap);
-        
-        // Query all relevant PM_Configure__c records
+        System.debug('Reason Map: ' + reasonMap);
+
+        // Retrieve RecordTypeId for PM_Configure__c with 'Answer'
+        Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+
+        // Query relevant PM_Configure__c records
         List<PM_Configure__c> answersToUpdate = [
-            SELECT Id, Consider_Feedback_Rating__c, Reporting_Contact__c
+            SELECT Id, Consider_Feedback_Rating__c, Not_Consider_Feedback_Reason__c, Reporting_Contact__c
             FROM PM_Configure__c
             WHERE KRA__c = :kraid
             AND RecordTypeId = :answerRecordTypeId
             AND Reporting_Contact__c IN :contactIds
         ];
-        
-        // Update feedback ratings based on input map
+
+        System.debug('Queried PM_Configure__c Records: ' + answersToUpdate);
+
+        // Update records with new feedback data
         for (PM_Configure__c answer : answersToUpdate) {
-            if (feedbackMap.containsKey(answer.Reporting_Contact__c)) {
-                answer.Consider_Feedback_Rating__c = feedbackMap.get(answer.Reporting_Contact__c);
+            String reportingContactId = answer.Reporting_Contact__c;
+            if (feedbackMap.containsKey(reportingContactId)) {
+                answer.Consider_Feedback_Rating__c = feedbackMap.get(reportingContactId);
+            }
+
+            if (reasonMap.containsKey(reportingContactId)) {
+                answer.Not_Consider_Feedback_Reason__c = reasonMap.get(reportingContactId);
             }
         }
-        
+
         // Perform bulk DML update
         if (!answersToUpdate.isEmpty()) {
-            update answersToUpdate; // Single DML for all records
-            System.debug('Updated PM_Configure__c records: ' + answersToUpdate);
+            update answersToUpdate;
+            System.debug('Updated PM_Configure__c Records: ' + answersToUpdate);
+        }
+
+        return 'success';
+    } catch (Exception e) {
+        System.debug('Error in SavePMFeedbackReason: ' + e.getMessage());
+        throw new AuraHandledException('An error occurred while saving PM feedback: ' + e.getMessage());
+    }
+    }
+    
+    @AuraEnabled
+    public static String completekraMethod(String kraid,String contactData) {
+        system.debug('contactData-->'+contactData);
+		updatePmConfigure( kraid,  contactData, true);
+        return 'success';
+    }
+    
+    @future    
+    public static void updatePmConfigure(String kraid, String contactData, boolean completekra){
+        // Deserialize and validate input
+        List<Object> contactListGeneric = (List<Object>) JSON.deserializeUntyped(contactData);
+        if (contactListGeneric == null || contactListGeneric.isEmpty()) {
+            throw new AuraHandledException('Contact data is empty or invalid.');
+        }
+
+        // Parse contact data into a structured format
+        List<Map<String, Object>> contactList = new List<Map<String, Object>>();
+        for (Object contactObj : contactListGeneric) {
+            if (contactObj instanceof Map<String, Object>) {
+                contactList.add((Map<String, Object>) contactObj);
+            } else {
+                throw new AuraHandledException('Invalid data format: Each contact should be a map.');
+            }
+        }
+
+        System.debug('Parsed Contact List: ' + contactList);
+
+        // Extract Contact IDs and feedback details
+        Set<String> contactIds = new Set<String>();
+        Map<String, Boolean> feedbackMap = new Map<String, Boolean>();
+        Map<String, String> reasonMap = new Map<String, String>();
+
+        for (Map<String, Object> contact : contactList) {
+            if (contact.containsKey('contactId')) {
+                String fullContactId = (String) contact.get('contactId');
+                String contactId = fullContactId.split('&')[0]; // Extract the first 18 characters
+                contactIds.add(contactId);
+
+                if (contact.containsKey('ConsiderFeedbackRating')) {
+                    feedbackMap.put(contactId, (Boolean) contact.get('ConsiderFeedbackRating'));
+                }
+
+                if (contact.containsKey('NotConsiderFeedbackReason')) {
+                    reasonMap.put(contactId, (String) contact.get('NotConsiderFeedbackReason'));
+                }
+            }
+        }
+
+        System.debug('Extracted Contact IDs: ' + contactIds);
+        System.debug('Feedback Map: ' + feedbackMap);
+        System.debug('Reason Map: ' + reasonMap);
+
+        // Retrieve RecordTypeId for PM_Configure__c with 'Answer'
+        Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+
+        // Query relevant PM_Configure__c records
+        List<PM_Configure__c> answersToUpdate = [
+            SELECT Id, Consider_Feedback_Rating__c, Not_Consider_Feedback_Reason__c, Reporting_Contact__c
+            FROM PM_Configure__c
+            WHERE KRA__c = :kraid
+            AND RecordTypeId = :answerRecordTypeId
+            AND Reporting_Contact__c IN :contactIds
+        ];
+
+        System.debug('Queried PM_Configure__c Records: ' + answersToUpdate);
+
+        // Update records with new feedback data
+        for (PM_Configure__c answer : answersToUpdate) {
+            String reportingContactId = answer.Reporting_Contact__c;
+            if (feedbackMap.containsKey(reportingContactId)) {
+                answer.Consider_Feedback_Rating__c = feedbackMap.get(reportingContactId);
+            }
+
+            if (reasonMap.containsKey(reportingContactId)) {
+                answer.Not_Consider_Feedback_Reason__c = reasonMap.get(reportingContactId);
+            }
+        }
+
+        // Perform bulk DML update
+        if (!answersToUpdate.isEmpty()) {
+            update answersToUpdate;
+            System.debug('Updated PM_Configure__c Records: ' + answersToUpdate);
         }
         //--------------------------------------------------------------------------
+        if(completekra){
+            
         Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Resource__c
                               FROM Goal__c 
                               WHERE Id=:kraid AND Status__c!='KRA Completed' Limit 1]; 
@@ -124,6 +227,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
             if(!pmAnswer.isEmpty()){
                 update pmAnswer;
             }
+        }
     }
     
     @AuraEnabled(cacheable=true)
@@ -156,6 +260,9 @@ public without sharing class quarterlyKRAFullViewCtrl {
         if(tab =='My Metric' && goalRecord.Status__c == 'KRA Completed'){
             aw.overallViewScreenNote=true;
         }
+        if(goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c == 'KRA In Review'){
+            aw.visiablecheckbox=true;
+        }
         aw.kraResourceId=goalRecord.Resource__c;
         return aw;
     }
@@ -169,6 +276,8 @@ public without sharing class quarterlyKRAFullViewCtrl {
         public Boolean submittedKRAbutton=false;
         @AuraEnabled
         public Boolean overallViewScreenNote =false; 
+        @AuraEnabled
+        public Boolean visiablecheckbox=false; 
         @AuraEnabled 
         public string kraResourceId;
     }
