@@ -53,6 +53,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     disabledCheckbox = false;
     visiablecheckbox = false;
     visiableNote = false;
+    showFeedbackReason =false;
 
     connectedCallback() {
         this.orgDomainId = window.location.origin;
@@ -101,6 +102,11 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             this.visiablecheckbox = data.visiablecheckbox;
             console.log('this.submittedKRAbutton' + this.submittedKRAbutton);
             console.log('this.disabledCheckbox' + this.disabledCheckbox);
+            if(this.tab =='My Team' && this.submittedKRAbutton){
+            this.showFeedbackReason =true;
+        }else{
+            this.showFeedbackReason =false;
+        }
             this.resourceid = data.kraResourceId;
             console.log('this.resourceid-->' + this.resourceid);
             this.isLoading = false;
