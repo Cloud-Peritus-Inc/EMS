@@ -439,20 +439,30 @@
 							</template>
 						</tr>
 						<template if:true={showthisSection}>
+							<template if:true={visiablecheckbox}>
 						<tr>
-							<th>Reason Not Considering Feedback</th>
+							<th>Reason for Exclusion</th>
 							<template for:each={contacts} for:item="contact">
 								<td key={contact.contactId}>
 									<div>
 										<template if:true={contact.projectname}>
+											<template if:true={showFeedbackReason}>
 											<lightning-textarea data-id={contact.contactId} value={contact.NotConsiderFeedbackReason}
 												required={contact.requiredreason} variant="standard" onchange={handleChangeFeedbackReason}
 												disabled={contact.ConsiderFeedbackRating}></lightning-textarea>
+										</template>
+										<template if:false={showFeedbackReason}>
+											
+											<lightning-textarea data-id={contact.contactId} value={contact.NotConsiderFeedbackReason}
+												required={contact.requiredreason} variant="standard" onchange={handleChangeFeedbackReason}
+												disabled></lightning-textarea>
+											</template>
 										</template>
 									</div>
 								</td>
 							</template>
 						</tr>
+							</template>
 						</template>
 					</thead>
 					<tbody>
@@ -483,9 +493,9 @@
 			<br/><br/>
 			<footer class="slds-align_absolute-center">
 				<lightning-button variant="" label="Previous" onclick={handlePreviousAction}>
-				</lightning-button>
-				<lightning-button variant="" label="Save" onclick={HandlesavePMFeedbackReason} class="slds-var-m-left_x-small"></lightning-button>
+				</lightning-button>			
 				<template if:true={submittedKRAbutton}>
+					<lightning-button variant="" label="Save" onclick={HandlesavePMFeedbackReason} class="slds-var-m-left_x-small"></lightning-button>
 					<lightning-button variant="brand" label="Complete KRA" onclick={handleCompleteKRA}
 						class="slds-var-m-left_x-small"></lightning-button>
 				</template>
