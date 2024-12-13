@@ -447,7 +447,7 @@
 									<div>
 										<template if:true={contact.projectname}>
 											<template if:true={showFeedbackReason}>
-											<lightning-textarea data-id={contact.contactId} value={contact.NotConsiderFeedbackReason}
+											<lightning-textarea data-id={contact.contactId} value={contact.NotConsiderFeedbackReason} max-length="255"
 												required={contact.requiredreason} variant="standard" onchange={handleChangeFeedbackReason}
 												disabled={contact.ConsiderFeedbackRating}></lightning-textarea>
 										</template>

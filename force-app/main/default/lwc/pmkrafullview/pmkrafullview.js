@@ -53,7 +53,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
     disabledCheckbox = false;
     visiablecheckbox = false;
     visiableNote = false;
-    showFeedbackReason =false;
+    showFeedbackReason = false;
 
     connectedCallback() {
         this.orgDomainId = window.location.origin;
@@ -102,11 +102,11 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             this.visiablecheckbox = data.visiablecheckbox;
             console.log('this.submittedKRAbutton' + this.submittedKRAbutton);
             console.log('this.disabledCheckbox' + this.disabledCheckbox);
-            if(this.tab =='My Team' && this.submittedKRAbutton){
-            this.showFeedbackReason =true;
-        }else{
-            this.showFeedbackReason =false;
-        }
+            if (this.tab == 'My Team' && this.submittedKRAbutton) {
+                this.showFeedbackReason = true;
+            } else {
+                this.showFeedbackReason = false;
+            }
             this.resourceid = data.kraResourceId;
             console.log('this.resourceid-->' + this.resourceid);
             this.isLoading = false;
@@ -495,7 +495,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     });
             }
         } else {
-            this.ShowToast(' ', 'Please compelete required field', 'error', 'dismissable');
+            this.ShowToast(' ', 'Please complete required field', 'error', 'dismissable');
         }
     }
 
@@ -536,7 +536,7 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     this.isLoading = false;;
                 });
         } else {
-            this.ShowToast(' ', 'Please compelete required field', 'error', 'dismissable');
+            this.ShowToast(' ', 'Please complete required field', 'error', 'dismissable');
         }
     }
 
@@ -552,10 +552,6 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
         console.log('isChecked' + isChecked);
         // Update the ConsiderFeedbackRating for the corresponding contact
 
-       /* if (!isChecked) {
-            this.showthisSection = true;
-        }*/
-
         this.contacts = this.contacts.map(contact => {
             if (contact.contactId === this.projectManagerId) {
                 return {
@@ -563,14 +559,14 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
                     ConsiderFeedbackRating: isChecked,
                     classs: isChecked ? 'green' : 'red',
                     requiredreason: !isChecked,
-                    NotConsiderFeedbackReason: isChecked ? '':contact.NotConsiderFeedbackReason
+                    NotConsiderFeedbackReason: isChecked ? '' : contact.NotConsiderFeedbackReason
                 };
             }
             return contact;
         });
 
-    const allConsidered = this.contacts.every(contact => contact.ConsiderFeedbackRating);
-    this.showthisSection = !allConsidered;
+        const allConsidered = this.contacts.every(contact => contact.ConsiderFeedbackRating);
+        this.showthisSection = !allConsidered;
 
         this.overallRatings = this.overallRatings.map(overallRating => {
             if (overallRating.contactId === this.projectManagerId) {
@@ -595,13 +591,110 @@ export default class Pmkrafullview extends NavigationMixin(LightningElement) {
             });
         });
 
+        //-----------------------------------------------------------
+        this.questionstechicalskill = this.questionstechicalskill.map(question => {
+            return {
+                ...question,
+                contactAnswers: question.contactAnswers.map(contactAnswer => {
+                    console.log('contactAnswer.contact.id-->' + contactAnswer.contact.id);
+                    if (contactAnswer.contact.id === this.projectManagerId) {
+                        return {
+                            ...contactAnswer,
+                            contact: {
+                                ...contactAnswer.contact,
+                                classs: isChecked ? 'green' : 'red'
+                            }
+                        };
+                    }
+                    return contactAnswer;
+                })
+            };
+        });
+
+           this.questionsProfessionalskill= this.questionsProfessionalskill.map(question => {
+            return {
+                ...question,
+                contactAnswers: question.contactAnswers.map(contactAnswer => {
+                    console.log('contactAnswer.contact.id-->' + contactAnswer.contact.id);
+                    if (contactAnswer.contact.id === this.projectManagerId) {
+                        return {
+                            ...contactAnswer,
+                            contact: {
+                                ...contactAnswer.contact,
+                                classs: isChecked ? 'green' : 'red'
+                            }
+                        };
+                    }
+                    return contactAnswer;
+                })
+            };
+        });
+             
+             this.questionsStrategicskill= this.questionsStrategicskill.map(question => {
+            return {
+                ...question,
+                contactAnswers: question.contactAnswers.map(contactAnswer => {
+                    console.log('contactAnswer.contact.id-->' + contactAnswer.contact.id);
+                    if (contactAnswer.contact.id === this.projectManagerId) {
+                        return {
+                            ...contactAnswer,
+                            contact: {
+                                ...contactAnswer.contact,
+                                classs: isChecked ? 'green' : 'red'
+                            }
+                        };
+                    }
+                    return contactAnswer;
+                })
+            };
+        });
+             
+             this.questionsGoalskill= this.questionsGoalskill.map(question => {
+            return {
+                ...question,
+                contactAnswers: question.contactAnswers.map(contactAnswer => {
+                    console.log('contactAnswer.contact.id-->' + contactAnswer.contact.id);
+                    if (contactAnswer.contact.id === this.projectManagerId) {
+                        return {
+                            ...contactAnswer,
+                            contact: {
+                                ...contactAnswer.contact,
+                                classs: isChecked ? 'green' : 'red'
+                            }
+                        };
+                    }
+                    return contactAnswer;
+                })
+            };
+        });
+             
+             this.questionsSpecificArea= this.questionsSpecificArea.map(question => {
+            return {
+                ...question,
+                contactAnswers: question.contactAnswers.map(contactAnswer => {
+                    console.log('contactAnswer.contact.id-->' + contactAnswer.contact.id);
+                    if (contactAnswer.contact.id === this.projectManagerId) {
+                        return {
+                            ...contactAnswer,
+                            contact: {
+                                ...contactAnswer.contact,
+                                classs: isChecked ? 'green' : 'red'
+                            }
+                        };
+                    }
+                    return contactAnswer;
+                })
+            };
+        });
+
+
         this.isLoaded = false;
     }
 
-    handleChangeFeedbackReason(event){
+    handleChangeFeedbackReason(event) {
         const value = event.target.value;
         const contactId = event.target.dataset.id;
-                this.contacts = this.contacts.map(contact => {
+        this.contacts = this.contacts.map(contact => {
             if (contact.contactId === contactId) {
                 return {
                     ...contact,
