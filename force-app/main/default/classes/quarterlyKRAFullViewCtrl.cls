@@ -14,96 +14,96 @@ public without sharing class quarterlyKRAFullViewCtrl {
     
     @AuraEnabled
     public static String SavePMFeedbackReason(String kraid,String contactData) {
-         try {
-        // Debug input data
-        System.debug('Contact Data: ' + contactData);
-
-        // Deserialize and validate input
-        List<Object> contactListGeneric = (List<Object>) JSON.deserializeUntyped(contactData);
-        if (contactListGeneric == null || contactListGeneric.isEmpty()) {
-            throw new AuraHandledException('Contact data is empty or invalid.');
-        }
-
-        // Parse contact data into a structured format
-        List<Map<String, Object>> contactList = new List<Map<String, Object>>();
-        for (Object contactObj : contactListGeneric) {
-            if (contactObj instanceof Map<String, Object>) {
-                contactList.add((Map<String, Object>) contactObj);
-            } else {
-                throw new AuraHandledException('Invalid data format: Each contact should be a map.');
+        try {
+            // Debug input data
+            System.debug('Contact Data: ' + contactData);
+            
+            // Deserialize and validate input
+            List<Object> contactListGeneric = (List<Object>) JSON.deserializeUntyped(contactData);
+            if (contactListGeneric == null || contactListGeneric.isEmpty()) {
+                throw new AuraHandledException('Contact data is empty or invalid.');
             }
-        }
-
-        System.debug('Parsed Contact List: ' + contactList);
-
-        // Extract Contact IDs and feedback details
-        Set<String> contactIds = new Set<String>();
-        Map<String, Boolean> feedbackMap = new Map<String, Boolean>();
-        Map<String, String> reasonMap = new Map<String, String>();
-
-        for (Map<String, Object> contact : contactList) {
-            if (contact.containsKey('contactId')) {
-                String fullContactId = (String) contact.get('contactId');
-                String contactId = fullContactId.split('&')[0]; // Extract the first 18 characters
-                contactIds.add(contactId);
-
-                if (contact.containsKey('ConsiderFeedbackRating')) {
-                    feedbackMap.put(contactId, (Boolean) contact.get('ConsiderFeedbackRating'));
-                }
-
-                if (contact.containsKey('NotConsiderFeedbackReason')) {
-                    reasonMap.put(contactId, (String) contact.get('NotConsiderFeedbackReason'));
+            
+            // Parse contact data into a structured format
+            List<Map<String, Object>> contactList = new List<Map<String, Object>>();
+            for (Object contactObj : contactListGeneric) {
+                if (contactObj instanceof Map<String, Object>) {
+                    contactList.add((Map<String, Object>) contactObj);
+                } else {
+                    throw new AuraHandledException('Invalid data format: Each contact should be a map.');
                 }
             }
-        }
-
-        System.debug('Extracted Contact IDs: ' + contactIds);
-        System.debug('Feedback Map: ' + feedbackMap);
-        System.debug('Reason Map: ' + reasonMap);
-
-        // Retrieve RecordTypeId for PM_Configure__c with 'Answer'
-        Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
-
-        // Query relevant PM_Configure__c records
-        List<PM_Configure__c> answersToUpdate = [
-            SELECT Id, Consider_Feedback_Rating__c, Not_Consider_Feedback_Reason__c, Reporting_Contact__c
-            FROM PM_Configure__c
-            WHERE KRA__c = :kraid
-            AND RecordTypeId = :answerRecordTypeId
-            AND Reporting_Contact__c IN :contactIds
-        ];
-
-        System.debug('Queried PM_Configure__c Records: ' + answersToUpdate);
-
-        // Update records with new feedback data
-        for (PM_Configure__c answer : answersToUpdate) {
-            String reportingContactId = answer.Reporting_Contact__c;
-            if (feedbackMap.containsKey(reportingContactId)) {
-                answer.Consider_Feedback_Rating__c = feedbackMap.get(reportingContactId);
+            
+            System.debug('Parsed Contact List: ' + contactList);
+            
+            // Extract Contact IDs and feedback details
+            Set<String> contactIds = new Set<String>();
+            Map<String, Boolean> feedbackMap = new Map<String, Boolean>();
+            Map<String, String> reasonMap = new Map<String, String>();
+            
+            for (Map<String, Object> contact : contactList) {
+                if (contact.containsKey('contactId')) {
+                    String fullContactId = (String) contact.get('contactId');
+                    String contactId = fullContactId.split('&')[0]; // Extract the first 18 characters
+                    contactIds.add(contactId);
+                    
+                    if (contact.containsKey('ConsiderFeedbackRating')) {
+                        feedbackMap.put(contactId, (Boolean) contact.get('ConsiderFeedbackRating'));
+                    }
+                    
+                    if (contact.containsKey('NotConsiderFeedbackReason')) {
+                        reasonMap.put(contactId, (String) contact.get('NotConsiderFeedbackReason'));
+                    }
+                }
             }
-
-            if (reasonMap.containsKey(reportingContactId)) {
-                answer.Not_Consider_Feedback_Reason__c = reasonMap.get(reportingContactId);
+            
+            System.debug('Extracted Contact IDs: ' + contactIds);
+            System.debug('Feedback Map: ' + feedbackMap);
+            System.debug('Reason Map: ' + reasonMap);
+            
+            // Retrieve RecordTypeId for PM_Configure__c with 'Answer'
+            Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
+            
+            // Query relevant PM_Configure__c records
+            List<PM_Configure__c> answersToUpdate = [
+                SELECT Id, Consider_Feedback_Rating__c, Not_Consider_Feedback_Reason__c, Reporting_Contact__c
+                FROM PM_Configure__c
+                WHERE KRA__c = :kraid
+                AND RecordTypeId = :answerRecordTypeId
+                AND Reporting_Contact__c IN :contactIds
+            ];
+            
+            System.debug('Queried PM_Configure__c Records: ' + answersToUpdate);
+            
+            // Update records with new feedback data
+            for (PM_Configure__c answer : answersToUpdate) {
+                String reportingContactId = answer.Reporting_Contact__c;
+                if (feedbackMap.containsKey(reportingContactId)) {
+                    answer.Consider_Feedback_Rating__c = feedbackMap.get(reportingContactId);
+                }
+                
+                if (reasonMap.containsKey(reportingContactId)) {
+                    answer.Not_Consider_Feedback_Reason__c = reasonMap.get(reportingContactId);
+                }
             }
+            
+            // Perform bulk DML update
+            if (!answersToUpdate.isEmpty()) {
+                update answersToUpdate;
+                System.debug('Updated PM_Configure__c Records: ' + answersToUpdate);
+            }
+            
+            return 'success';
+        } catch (Exception e) {
+            System.debug('Error in SavePMFeedbackReason: ' + e.getMessage());
+            throw new AuraHandledException('An error occurred while saving PM feedback: ' + e.getMessage());
         }
-
-        // Perform bulk DML update
-        if (!answersToUpdate.isEmpty()) {
-            update answersToUpdate;
-            System.debug('Updated PM_Configure__c Records: ' + answersToUpdate);
-        }
-
-        return 'success';
-    } catch (Exception e) {
-        System.debug('Error in SavePMFeedbackReason: ' + e.getMessage());
-        throw new AuraHandledException('An error occurred while saving PM feedback: ' + e.getMessage());
-    }
     }
     
     @AuraEnabled
     public static String completekraMethod(String kraid,String contactData) {
         system.debug('contactData-->'+contactData);
-		updatePmConfigure( kraid,  contactData, true);
+        updatePmConfigure( kraid,  contactData, true);
         return 'success';
     }
     
@@ -114,7 +114,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
         if (contactListGeneric == null || contactListGeneric.isEmpty()) {
             throw new AuraHandledException('Contact data is empty or invalid.');
         }
-
+        
         // Parse contact data into a structured format
         List<Map<String, Object>> contactList = new List<Map<String, Object>>();
         for (Object contactObj : contactListGeneric) {
@@ -124,37 +124,37 @@ public without sharing class quarterlyKRAFullViewCtrl {
                 throw new AuraHandledException('Invalid data format: Each contact should be a map.');
             }
         }
-
+        
         System.debug('Parsed Contact List: ' + contactList);
-
+        
         // Extract Contact IDs and feedback details
         Set<String> contactIds = new Set<String>();
         Map<String, Boolean> feedbackMap = new Map<String, Boolean>();
         Map<String, String> reasonMap = new Map<String, String>();
-
+        
         for (Map<String, Object> contact : contactList) {
             if (contact.containsKey('contactId')) {
                 String fullContactId = (String) contact.get('contactId');
                 String contactId = fullContactId.split('&')[0]; // Extract the first 18 characters
                 contactIds.add(contactId);
-
+                
                 if (contact.containsKey('ConsiderFeedbackRating')) {
                     feedbackMap.put(contactId, (Boolean) contact.get('ConsiderFeedbackRating'));
                 }
-
+                
                 if (contact.containsKey('NotConsiderFeedbackReason')) {
                     reasonMap.put(contactId, (String) contact.get('NotConsiderFeedbackReason'));
                 }
             }
         }
-
+        
         System.debug('Extracted Contact IDs: ' + contactIds);
         System.debug('Feedback Map: ' + feedbackMap);
         System.debug('Reason Map: ' + reasonMap);
-
+        
         // Retrieve RecordTypeId for PM_Configure__c with 'Answer'
         Id answerRecordTypeId = Schema.SObjectType.PM_Configure__c.getRecordTypeInfosByName().get('Answer').getRecordTypeId();
-
+        
         // Query relevant PM_Configure__c records
         List<PM_Configure__c> answersToUpdate = [
             SELECT Id, Consider_Feedback_Rating__c, Not_Consider_Feedback_Reason__c, Reporting_Contact__c
@@ -163,21 +163,21 @@ public without sharing class quarterlyKRAFullViewCtrl {
             AND RecordTypeId = :answerRecordTypeId
             AND Reporting_Contact__c IN :contactIds
         ];
-
+        
         System.debug('Queried PM_Configure__c Records: ' + answersToUpdate);
-
+        
         // Update records with new feedback data
         for (PM_Configure__c answer : answersToUpdate) {
             String reportingContactId = answer.Reporting_Contact__c;
             if (feedbackMap.containsKey(reportingContactId)) {
                 answer.Consider_Feedback_Rating__c = feedbackMap.get(reportingContactId);
             }
-
+            
             if (reasonMap.containsKey(reportingContactId)) {
                 answer.Not_Consider_Feedback_Reason__c = reasonMap.get(reportingContactId);
             }
         }
-
+        
         // Perform bulk DML update
         if (!answersToUpdate.isEmpty()) {
             update answersToUpdate;
@@ -186,44 +186,44 @@ public without sharing class quarterlyKRAFullViewCtrl {
         //--------------------------------------------------------------------------
         if(completekra){
             
-        Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Resource__c
-                              FROM Goal__c 
-                              WHERE Id=:kraid AND Status__c!='KRA Completed' Limit 1]; 
-        goalRecord.Status__c='KRA Completed';
-        update goalRecord;
-        
-                //unchecking project assignement 
-        List<EMS_TM_Assignment__c> projectAssignmentList = [SELECT Id, EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,
-                                                            EMS_TM_EmployeeName__c,Offshore_PM_Configure__c, Other_Resource_PM_Configure__c,
-                                                            Onshore_PM_Configure__c,Other_PM_Configure__c
-                                                            FROM EMS_TM_Assignment__c 
-                                                            WHERE EMS_TM_EmployeeName__c = :goalRecord.Resource__c];
-        for(EMS_TM_Assignment__c projectass:projectAssignmentList){
-            if (projectass.Offshore_PM_Configure__c ==true) {
-                projectass.Offshore_PM_Configure__c = false;  
+            Goal__c goalRecord = [SELECT Id, Type__c, RecordTypeId, Status__c,Mentee_KRA_submitted__c,Mentor_KRA_submitted__c,Resource__c
+                                  FROM Goal__c 
+                                  WHERE Id=:kraid AND Status__c!='KRA Completed' Limit 1]; 
+            goalRecord.Status__c='KRA Completed';
+            update goalRecord;
+            
+            //unchecking project assignement 
+            List<EMS_TM_Assignment__c> projectAssignmentList = [SELECT Id, EMS_TM_ProjectName_Asgn__r.Offshore_Project_Manager__c,
+                                                                EMS_TM_EmployeeName__c,Offshore_PM_Configure__c, Other_Resource_PM_Configure__c,
+                                                                Onshore_PM_Configure__c,Other_PM_Configure__c
+                                                                FROM EMS_TM_Assignment__c 
+                                                                WHERE EMS_TM_EmployeeName__c = :goalRecord.Resource__c];
+            for(EMS_TM_Assignment__c projectass:projectAssignmentList){
+                if (projectass.Offshore_PM_Configure__c ==true) {
+                    projectass.Offshore_PM_Configure__c = false;  
+                }
+                
+                if (projectass.Onshore_PM_Configure__c == true) {
+                    projectass.Onshore_PM_Configure__c = false;  
+                }
+                
+                if (projectass.Other_PM_Configure__c ==true ) {
+                    projectass.Other_PM_Configure__c = false; 
+                    projectass.Other_Resource_PM_Configure__c = null;
+                }
             }
             
-            if (projectass.Onshore_PM_Configure__c == true) {
-                projectass.Onshore_PM_Configure__c = false;  
+            if(!projectAssignmentList.isEmpty()){
+                update projectAssignmentList;
             }
             
-            if (projectass.Other_PM_Configure__c ==true ) {
-                projectass.Other_PM_Configure__c = false; 
-                projectass.Other_Resource_PM_Configure__c = null;
-            }
-        }
-        
-        if(!projectAssignmentList.isEmpty()){
-            update projectAssignmentList;
-        }
-        
-        // updating status as Cancelled all Pm comfigure answers who still status Awaiting Response, Accepeted and Saved
-        list<PM_Configure__c> pmAnswer =[Select Id,Status__c,KRA__c 
-                                         from PM_Configure__c 
-                                         WHERE KRA__c=:kraid AND (Status__c='Awaiting Response' OR Status__c='Accepted' OR Status__c='Saved')];
-        for(PM_Configure__c pm:pmAnswer){
-            pm.Status__c='Cancelled';   
-        }    
+            // updating status as Cancelled all Pm comfigure answers who still status Awaiting Response, Accepeted and Saved
+            list<PM_Configure__c> pmAnswer =[Select Id,Status__c,KRA__c 
+                                             from PM_Configure__c 
+                                             WHERE KRA__c=:kraid AND (Status__c='Awaiting Response' OR Status__c='Accepted' OR Status__c='Saved')];
+            for(PM_Configure__c pm:pmAnswer){
+                pm.Status__c='Cancelled';   
+            }    
             if(!pmAnswer.isEmpty()){
                 update pmAnswer;
             }
@@ -247,21 +247,26 @@ public without sharing class quarterlyKRAFullViewCtrl {
             aw.submittedKRAbutton=false;
         }       
         
-            if(tab =='My Team'){
-                if(viewonlymode==true || goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c =='HR KRA Completed' || goalRecord.Status__c == 'Missed'){
-                        aw.submittedRecords=false;
-                }else{
-                     aw.submittedRecords=true;   //@sangharsh by making it true will show KRA Edit button on UI
-                }
-            }
-        if(tab =='My Metric'){
+        if(tab =='My Team'){
+            if(viewonlymode==true || goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c =='HR KRA Completed' || goalRecord.Status__c == 'Missed'){
                 aw.submittedRecords=false;
+            }else{
+                aw.submittedRecords=true;   //@sangharsh by making it true will show KRA Edit button on UI
             }
+        }
+        if(tab =='My Metric'){
+            aw.submittedRecords=false;
+        }
         if(tab =='My Metric' && goalRecord.Status__c == 'KRA Completed'){
             aw.overallViewScreenNote=true;
         }
         if(goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c == 'KRA In Review'){
-            aw.visiablecheckbox=true;
+            if(tab =='My Team'){
+                aw.visiablecheckbox=true; //@sangharsh mentor and HR can we checkbox
+            }
+            if(tab =='My Metric'){
+                aw.visiablecheckbox=false; //@sangharsh mentee it will disable
+            }
         }
         aw.kraResourceId=goalRecord.Resource__c;
         return aw;
@@ -306,7 +311,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
                          FROM PM_Configure__r 
                          Where KRA__c =:kraid AND ((Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))
-                                                                        OR Mentor_Mentee__c =: loggedInUser.ContactId))
+                                                   OR Mentor_Mentee__c =: loggedInUser.ContactId))
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c]; 
             //OR Reporting_Contact__c=: loggedInUser.ContactId
@@ -314,23 +319,23 @@ public without sharing class quarterlyKRAFullViewCtrl {
         if(tab=='My Metric'){
             System.debug('goalRecord.Mentor_KRA_submitted__c'+goalRecord.Mentor_KRA_submitted__c);
             if(goalRecord.Mentor_KRA_submitted__c==true){
-             questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
-                        (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
-                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
-                         Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
-                         FROM PM_Configure__r Where KRA__c =:kraid AND ( Mentor_Mentee__c =: loggedInUser.ContactId OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))))
-                        FROM PM_Configure__c 
-                        Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];   
+                questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
+                            (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
+                             Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
+                             Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
+                             Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
+                             FROM PM_Configure__r Where KRA__c =:kraid AND ( Mentor_Mentee__c =: loggedInUser.ContactId OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))))
+                            FROM PM_Configure__c 
+                            Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];   
             }else{
                 questions= [SELECT Id,Area__c, KRA__c,Resource_Role__c,Question__c,
-                        (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
-                         Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
-                         Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
-                         Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
-                         FROM PM_Configure__r Where KRA__c =:kraid AND Mentor_Mentee__c =: loggedInUser.ContactId)
-                        FROM PM_Configure__c 
-                        Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];
+                            (SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
+                             Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
+                             Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
+                             Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
+                             FROM PM_Configure__r Where KRA__c =:kraid AND Mentor_Mentee__c =: loggedInUser.ContactId)
+                            FROM PM_Configure__c 
+                            Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];
             }
         } 
         
@@ -421,7 +426,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
         @AuraEnabled
         public Decimal averageRating;
         @AuraEnabled
-    	public Integer ratingCount;
+        public Integer ratingCount;
         @AuraEnabled
         Public boolean ConsiderFeedbackRating;
         

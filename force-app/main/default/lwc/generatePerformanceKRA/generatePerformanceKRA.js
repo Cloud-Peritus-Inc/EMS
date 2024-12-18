@@ -464,7 +464,7 @@ export default class GeneratePerformanceKRA extends NavigationMixin(LightningEle
         this.selectedKraQuaterly = node;
         this.mode = 'View';
        // this.showKRAViewModalBox(); sangharsh
-        const url = `${this.orgDomainId}/Grid/s/kra-view?c__kraid=${this.selectedKraQuaterly}&tab=${this.tab}`;
+        const url = `${this.orgDomainId}/Grid/s/kra-view?c__kraid=${this.selectedKraQuaterly}&tab=${this.tab}&&viewonlymode=${this.viewonlymode}`;
         window.open(url, '_blank');
     }
 
