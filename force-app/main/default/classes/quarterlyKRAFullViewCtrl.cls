@@ -257,7 +257,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
         if(tab =='My Metric'){
             aw.submittedRecords=false;
         }
-        if(tab =='My Metric' && goalRecord.Status__c == 'KRA Completed'){
+        if(goalRecord.Status__c == 'KRA Completed'){ //@SANGHARSH by making it true will show Note on overall view screen
             aw.overallViewScreenNote=true;
         }
         if(goalRecord.Status__c == 'KRA Completed' || goalRecord.Status__c == 'KRA In Review'){
