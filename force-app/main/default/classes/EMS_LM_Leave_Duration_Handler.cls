@@ -40,7 +40,7 @@ public  without sharing class EMS_LM_Leave_Duration_Handler {
             DateTime currDate = DateTime.newInstance(dt.year(), dt.month(), dt.day());  
             String todayDay = currDate.format('EEEE'); 
             //@sangharsh 03/12/2024: Added condition for maternity leaves for excluding weekends and holiday for calculating duration also if more than 14 leaves of pto weekends should be consider
-            if(todayDay != 'Saturday' && todayDay !='Sunday' && (!holidaysSet.contains(dt)) && (value!=LeaveRequestConstant.LOSS_OF_PAY || value!= LeaveRequestConstant.MATERNITY_LEAVE)){  
+            if(todayDay != 'Saturday' && todayDay !='Sunday' && (!holidaysSet.contains(dt)) && value!=LeaveRequestConstant.LOSS_OF_PAY && value!= LeaveRequestConstant.MATERNITY_LEAVE){  
                 Duration += 1;  
             }
               if(startDate.daysBetween(endDate) > 13 && value==LeaveRequestConstant.LOSS_OF_PAY){
