@@ -266,7 +266,7 @@ public class EMS_TM_TimesheetClass {
                                                         User__c, 
                                                         User__r.Name,
                                                         EMS_TM_Week__c,
-                                                        EMS_TM_Status__c
+                                                        EMS_TM_Status__c,WFH_Sun__c,WFH_Mon__c,WFH_Tue__c,WFH_Wed__c,WFH_Thu__c,WFH_Fri__c,WFH_Sat__c
                                                         FROM EMS_Timesheet__c 
                                                         where User__c = :userId
                                                         AND EMS_TM_Week__c = :week LIMIT 1];
@@ -304,7 +304,7 @@ public class EMS_TM_TimesheetClass {
         Date weekStart = timesheet.EMS_TM_Week__c.addDays(-7);
         //System.debug('weekStart => '+weekStart);
 
-        list<EMS_Timesheet__c> timeSheetValues = [SELECT id,User__c,EMS_TM_Week__c
+        list<EMS_Timesheet__c> timeSheetValues = [SELECT id,User__c,EMS_TM_Week__c,WFH_Sun__c,WFH_Mon__c,WFH_Tue__c,WFH_Wed__c,WFH_Thu__c,WFH_Fri__c,WFH_Sat__c
                                                         FROM EMS_Timesheet__c  
                                                         WHERE EMS_TM_Week__c = :weekStart  
                                                         AND User__c = :timesheet.User__c];
@@ -556,6 +556,13 @@ public class EMS_TM_TimesheetClass {
         timeSheetRecord.EMS_TM_Remarks__c                   = timesheet.EMS_TM_Remarks__c;
         timeSheetRecord.EMS_TM_Status__c                    = timesheet.EMS_TM_Status__c;
         timeSheetRecord.User__c                             = timesheet.User__c;
+        timeSheetRecord.WFH_Sun__c                       	= timesheet.WFH_Sun__c;
+        timeSheetRecord.WFH_Mon__c                       	= timesheet.WFH_Mon__c;
+        timeSheetRecord.WFH_Tue__c                       	= timesheet.WFH_Tue__c;
+        timeSheetRecord.WFH_Wed__c                       	= timesheet.WFH_Wed__c;
+        timeSheetRecord.WFH_Thu__c                      	= timesheet.WFH_Thu__c;
+        timeSheetRecord.WFH_Fri__c                       	= timesheet.WFH_Fri__c;
+        timeSheetRecord.WFH_Sat__c                       	= timesheet.WFH_Sat__c;
         //timeSheetRecord = underWorkingHourDays(timeSheetRecord);
 
         return timeSheetRecord;
@@ -694,7 +701,7 @@ public class EMS_TM_TimesheetClass {
 List<EMS_Timesheet__c> timesheetList = [SELECT EMS_TM_Total__c,
                                                              Week_End_Date__c,
                                                              enddate__c,
-                                                             OwnerId
+                                                             OwnerId,WFH_Sun__c,WFH_Mon__c,WFH_Tue__c,WFH_Wed__c,WFH_Thu__c,WFH_Fri__c,WFH_Sat__c
                                                              FROM EMS_Timesheet__c
                                                              WHERE OwnerId =: UserInfo.getUserId() 
                                                              AND startweek__c < THIS_WEEK

@@ -54,3 +54,7 @@ border-top-style: none;
     border-bottom-style: none;
     border-left-style: none;
 }
+
+.slds-grid_align-spread {
+    gap: 2px; /* Add spacing between the checkbox and text */
+}
