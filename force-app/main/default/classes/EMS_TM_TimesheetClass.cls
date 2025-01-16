@@ -310,7 +310,7 @@ public class EMS_TM_TimesheetClass {
                                     EMS_TM_ProjectTask__c, EMS_TM_Project__c,
                                     Project_Task__c,
                                     EMS_TM_Week__c, User__c, EMS_Timesheet__c, EMS_TM_Remarks__c,
-                                    EMS_TM_OtherTask__c
+                                    EMS_TM_OtherTask__c,Assignment__c
                                     FROM EMS_TM_Timesheet_Record__c
                                     WHERE EMS_Timesheet__c = :timeSheetValues[0].Id
                                     AND User__c = :timesheet.User__c];
