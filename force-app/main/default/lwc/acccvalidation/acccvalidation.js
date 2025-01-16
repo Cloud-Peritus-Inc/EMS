@@ -368,7 +368,10 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                             if (project.EMS_TM_Project_Type__c === 'OOO') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
 
-                                const daysMapping = {EMS_TM_Mon__c: 'WFH_Mon__c',
+                                if(timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked'){
+                                    this.disableWFOcheckbox = { WFH_Mon__c: true, WFH_Tue__c: true, WFH_Wed__c: true, WFH_Thu__c: true, WFH_Fri__c: true, WFH_Sat__c: true, WFH_Sun__c: true };
+                                }else{
+                                     const daysMapping = {EMS_TM_Mon__c: 'WFH_Mon__c',
                                                     EMS_TM_Tue__c: 'WFH_Tue__c',
                                                     EMS_TM_Wed__c: 'WFH_Wed__c',
                                                     EMS_TM_Thu__c: 'WFH_Thu__c',
@@ -377,12 +380,13 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                                                     EMS_TM_Sun__c: 'WFH_Sun__c'};
 
                                  Object.entries(daysMapping).forEach(([dayField, wfhField]) => {
-                                if (record[dayField] > 4) {
+                                     if (record[dayField] > 4) {
                                     this.disableWFOcheckbox[wfhField] = true;
                                 } else if (record[dayField] >= 0 && record[dayField] <= 4 || record[dayField] === '') {
                                     this.disableWFOcheckbox[wfhField] = false;
                                 }
                             });
+                                }
 
                             } else if (project.EMS_TM_Project_Type__c === 'Bench') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.benchPicklist));
