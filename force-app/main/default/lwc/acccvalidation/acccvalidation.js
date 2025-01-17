@@ -340,7 +340,9 @@ map2
                        }
                        console.log(element.projectAssignAvail);
                         if (project) {
+                            console.log('367 projectname-->'+record.EMS_TM_Project__r.Name);
                             element.EMS_TM_Project__c = record.EMS_TM_Project__c;
+                            element.projectName =record.EMS_TM_Project__r.Name;
                             if (project.EMS_TM_Project_Type__c === 'OOO') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
                             } else if (project.EMS_TM_Project_Type__c === 'Bench') {
@@ -961,6 +963,37 @@ map2
             } else {
                 this.records[index][fieldName] = parseFloat(value);
             }
+            /*    if([this.records[index][fieldName] projectName]){
+    
+                }*/
+            //let fieldName = event.target.name;
+            console.log('this.records[index]-->'+JSON.stringify(this.records[index]));
+            console.log('this.records[index].projectName-->'+this.records[index].projectName);
+            console.log('this.records[index][fieldName]-->'+this.records[index][fieldName]);
+            if (this.records[index].projectName === 'OOO') {
+                // Map EMS_TM fields to WFH fields
+                const daysMapping = {
+                    EMS_TM_Mon__c: 'WFH_Mon__c',
+                    EMS_TM_Tue__c: 'WFH_Tue__c',
+                    EMS_TM_Wed__c: 'WFH_Wed__c',
+                    EMS_TM_Thu__c: 'WFH_Thu__c',
+                    EMS_TM_Fri__c: 'WFH_Fri__c',
+                    EMS_TM_Sat__c: 'WFH_Sat__c',
+                    EMS_TM_Sun__c: 'WFH_Sun__c'
+                };
+                console.log('daysMapping-->'+daysMapping);
+                
+                if (daysMapping[fieldName] && this.records[index][fieldName]>4) {
+                    this.disableWFOcheckbox[daysMapping[fieldName]] = true;
+                    this.timeSheetRecord[daysMapping[fieldName]] = false;
+                }else if(daysMapping[fieldName] && ((this.records[index][fieldName]>=0 && this.records[index][fieldName]<=4) || this.records[index][fieldName]=='')){
+                    this.disableWFOcheckbox[daysMapping[fieldName]] = false;
+                }
+                console.log('fieldName-->'+fieldName);
+                console.log('this.disableWFOcheckbox-->'+JSON.stringify(this.disableWFOcheckbox));
+            }
+
+
             this.calculateTotalHours();
         } else {
             this.records[index][fieldName] = value;
