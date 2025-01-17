@@ -5,7 +5,7 @@
     <formula>IF( EMS_Timesheet__r.WFH_Mon__c, 1, 0) +
 IF(EMS_Timesheet__r.WFH_Tue__c, 1, 0) +
 IF(EMS_Timesheet__r.WFH_Wed__c, 1, 0) +
-IF(EMS_Timesheet__r.WFH_Tue__c, 1, 0) +
+IF(EMS_Timesheet__r.WFH_Thu__c, 1, 0) +
 IF(EMS_Timesheet__r.WFH_Fri__c, 1, 0) +
 IF(EMS_Timesheet__r.WFH_Sat__c, 1, 0) +
 IF(EMS_Timesheet__r.WFH_Sun__c, 1, 0)</formula>
