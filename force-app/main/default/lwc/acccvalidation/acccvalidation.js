@@ -364,7 +364,9 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                         }
                         console.log(element.projectAssignAvail);
                         if (project) {
+                            console.log('367 projectname-->'+record.EMS_TM_Project__r.Name);
                             element.EMS_TM_Project__c = record.EMS_TM_Project__c;
+                            element.projectName =record.EMS_TM_Project__r.Name;
                             if (project.EMS_TM_Project_Type__c === 'OOO') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
 
@@ -1058,7 +1060,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
     
                 }*/
             //let fieldName = event.target.name;
-
+            console.log('this.records[index]-->'+JSON.stringify(this.records[index]));
             console.log('this.records[index].projectName-->'+this.records[index].projectName);
             console.log('this.records[index][fieldName]-->'+this.records[index][fieldName]);
             if (this.records[index].projectName === 'OOO') {
