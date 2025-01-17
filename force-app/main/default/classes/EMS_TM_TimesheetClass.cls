@@ -276,7 +276,7 @@ public class EMS_TM_TimesheetClass {
         if (!timeSheetValues.isEmpty()) {
             timeSheetRecordValues = [SELECT Id, EMS_TM_Sun__c, EMS_TM_Mon__c, EMS_TM_Tue__c,
                                     EMS_TM_Wed__c, EMS_TM_Thu__c, EMS_TM_Fri__c, EMS_TM_Sat__c,
-                                    EMS_TM_ProjectTask__c, EMS_TM_Project__c,Project_Task__c,
+                                    EMS_TM_ProjectTask__c, EMS_TM_Project__c,Project_Task__c,EMS_TM_Project__r.Name,
                                     EMS_TM_Week__c, User__c, EMS_Timesheet__c, EMS_TM_Remarks__c,
                                     EMS_TM_OtherTask__c,ApprovedandSubmitted__c
                                     FROM EMS_TM_Timesheet_Record__c
@@ -312,7 +312,7 @@ public class EMS_TM_TimesheetClass {
         if (!timeSheetValues.isEmpty()) {
             List<EMS_TM_Timesheet_Record__c> timeSheetRecordValues = [SELECT Id, EMS_TM_Sun__c, EMS_TM_Mon__c, EMS_TM_Tue__c,
                                     EMS_TM_Wed__c, EMS_TM_Thu__c, EMS_TM_Fri__c, EMS_TM_Sat__c,
-                                    EMS_TM_ProjectTask__c, EMS_TM_Project__c,
+                                    EMS_TM_ProjectTask__c, EMS_TM_Project__c,EMS_TM_Project__r.Name,
                                     Project_Task__c,
                                     EMS_TM_Week__c, User__c, EMS_Timesheet__c, EMS_TM_Remarks__c,
                                     EMS_TM_OtherTask__c
