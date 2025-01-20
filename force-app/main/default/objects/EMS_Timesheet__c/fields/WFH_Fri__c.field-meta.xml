@@ -3,7 +3,7 @@
     <fullName>WFH_Fri__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>WFH Fri</label>
+    <label>WFO Friday</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
