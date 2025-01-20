@@ -382,10 +382,11 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                                                     EMS_TM_Sun__c: 'WFH_Sun__c'};
 
                                  Object.entries(daysMapping).forEach(([dayField, wfhField]) => {
-                                     if (record[dayField] > 4) {
-                                    this.disableWFOcheckbox[wfhField] = true;
-                                } else if (record[dayField] >= 0 && record[dayField] <= 4 || record[dayField] === '') {
+                                /*if (record[dayField] >= 0 && record[dayField] <= 4 || record[dayField] === '') {
                                     this.disableWFOcheckbox[wfhField] = false;
+                                }*/
+                                if (record[dayField] > 4) {
+                                    this.disableWFOcheckbox[wfhField] = true;
                                 }
                             });
                                 }
