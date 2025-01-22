@@ -479,11 +479,11 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                         let date = new Date(holiday.EMS_TM_Calendar_Date__c).getDay();
                         // console.log('holidays ',date);
                         switch (date) {
-                            case 1: record.EMS_TM_Mon__c = 8; addRow = true; break;
-                            case 2: record.EMS_TM_Tue__c = 8; addRow = true; break;
-                            case 3: record.EMS_TM_Wed__c = 8; addRow = true; break;
-                            case 4: record.EMS_TM_Thu__c = 8; addRow = true; break;
-                            case 5: record.EMS_TM_Fri__c = 8; addRow = true; break;
+                            case 1: record.EMS_TM_Mon__c = 8; (addRow = true, this.disableWFOcheckbox.WFH_Mon__c =true); break;
+                            case 2: record.EMS_TM_Tue__c = 8; (addRow = true, this.disableWFOcheckbox.WFH_Tue__c =true); break;
+                            case 3: record.EMS_TM_Wed__c = 8; (addRow = true, this.disableWFOcheckbox.WFH_Wed__c =true); break;
+                            case 4: record.EMS_TM_Thu__c = 8; (addRow = true, this.disableWFOcheckbox.WFH_Thu__c =true); break;
+                            case 5: record.EMS_TM_Fri__c = 8; (addRow = true, this.disableWFOcheckbox.WFH_Fri__c =true); break;
                             default: break;
                         }
                     });
@@ -535,18 +535,18 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                 console.log(' oooProject ==========' + JSON.stringify(oooProject));
                 if (oooProject != null || oooProject != undefined) {
                     //smaske: TS_012 :  [08/Oct/2024] : replacing "Paid time-off" with "Paid time off"
-                    let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: this.resourcerole, projectValueAvailable: true, projectAssignAvail: true, projectTaskDuplicate: false, newTaskOptionList: this.pickListRecords.oooPicklist, Project_Task__c: 'Paid time off' };
+                    let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: this.resourcerole, projectValueAvailable: true, projectAssignAvail: true, projectTaskDuplicate: false, newTaskOptionList: this.pickListRecords.oooPicklist, Project_Task__c: 'Paid time off',projectName: oooProject.Name };
                     this.leaveRecords.forEach(leave => {
                         console.log('role406===============', record.EMS_TM_ProjectTask__c);
                         console.log('leaves405===============', leave);
                         let date = new Date(leave).getDay();
                         // console.log('leaves===============',date);
                         switch (date) {
-                            case 1: record.EMS_TM_Mon__c = 8; break;
-                            case 2: record.EMS_TM_Tue__c = 8; break;
-                            case 3: record.EMS_TM_Wed__c = 8; break;
-                            case 4: record.EMS_TM_Thu__c = 8; break;
-                            case 5: record.EMS_TM_Fri__c = 8; break;
+                            case 1: record.EMS_TM_Mon__c = 8; this.disableWFOcheckbox.WFH_Mon__c =true; break;
+                            case 2: record.EMS_TM_Tue__c = 8; this.disableWFOcheckbox.WFH_Tue__c =true; break;
+                            case 3: record.EMS_TM_Wed__c = 8; this.disableWFOcheckbox.WFH_Wed__c =true; break;
+                            case 4: record.EMS_TM_Thu__c = 8; this.disableWFOcheckbox.WFH_Thu__c =true; break;
+                            case 5: record.EMS_TM_Fri__c = 8; this.disableWFOcheckbox.WFH_Fri__c =true; break;
                             default: break;
                         }
                     });
@@ -985,11 +985,44 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
         if (!this.disableSubmited && !event.target.disabled) {
             this.hideSpinner = false;
             let index = event.target.dataset.id;
+            console.log('index---'+index);
+            let projectname =event.target.dataset.projectname;
+            let projecttask =event.target.dataset.projecttask;
             let project = event.target.dataset.project ? true : false;
             console.log('event.target.dataset.project'+event.target.dataset.project);
             if (this.timeSheetRecord.EMS_TM_Status__c === 'Saved' && this.records[index].Id) {
                 this.deletedRecordsList.push(this.records[index]);
             }
+            
+                this.records.forEach((record) => {
+                    console.log('record.Project_Task__c'+JSON.stringify(record));
+                    console.log('record.Project_Task__c'+record.projectName);
+                     console.log('projectname'+projectname);
+                    if (record.projectName === 'OOO' && record.projectName == projectname && record.Project_Task__c == projecttask) {  
+                         console.log('Entered');
+                            if (record.EMS_TM_Mon__c > 4) {
+                                this.disableWFOcheckbox.WFH_Mon__c = false;
+                            }
+                            if (record.EMS_TM_Tue__c > 4) {
+                                this.disableWFOcheckbox.WFH_Tue__c = false;
+                            }
+                            if (record.EMS_TM_Wed__c > 4) {
+                                this.disableWFOcheckbox.WFH_Wed__c = false;
+                            }
+                            if (record.EMS_TM_Thu__c > 4) {
+                                this.disableWFOcheckbox.WFH_Thu__c = false;
+                            }
+                            if (record.EMS_TM_Fri__c > 4) {
+                                this.disableWFOcheckbox.WFH_Fri__c = false;
+                            }
+                            if (record.EMS_TM_Sat__c > 4) {
+                                this.disableWFOcheckbox.WFH_Sat__c = false;
+                            }
+                            if (record.EMS_TM_Sun__c > 4) {
+                                this.disableWFOcheckbox.WFH_Sun__c = false;
+                            }
+                    }
+                });
             // this.template.querySelectorAll('lightning-input').forEach(field => {
             //     if (field.dataset.id === index && field.value!= '') {
             //         field = '';
@@ -1027,7 +1060,6 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             //console.log('this.deletedRecordsList => ', this.deletedRecordsList);
             this.displayItemList = JSON.parse(JSON.stringify(this.records));
             // console.log('this.displayItemList ',this.displayItemList);
-            this.disableWFOcheckbox = { WFH_Mon__c: false, WFH_Tue__c: false, WFH_Wed__c: false, WFH_Thu__c: false, WFH_Fri__c: false, WFH_Sat__c: false, WFH_Sun__c: false };
             this.hideSpinner = true;
         }
     }
