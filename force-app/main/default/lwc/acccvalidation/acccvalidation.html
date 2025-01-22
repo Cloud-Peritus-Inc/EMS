@@ -86,7 +86,8 @@
                 data-id="includeToggle" type="toggle" label="WFO"
                 onchange={handleincludeWorkFromHome}
                 message-toggle-active=""
-                message-toggle-inactive="" checked></lightning-input>
+                message-toggle-inactive="" checked 
+                disabled={disableSubmited}></lightning-input>
             <lightning-input class="slds-p-right_large"
                 data-id="weekendToggle" type="toggle" label="Weekend"
                 onchange={handleWeekendToggle}
@@ -243,14 +244,14 @@
                         <lightning-button-icon icon-name="utility:delete" data-id={it.index}
                             alternative-text="Delete Row" variant="destructive"  class="slds-m-left_xx-small changeIconColor"
                             title="Delete Row" onclick={removeRow} disabled={disableSubmited}
-                            data-project={it.value.projectValueAvailable}>
+                            data-project={it.value.projectValueAvailable} data-projectname={it.value.projectName} data-projecttask={it.value.Project_Task__c}>
                         </lightning-button-icon> 
                         </template>
                         <template if:true={it.value.ApprovedandSubmitted__c}>
                         <lightning-button-icon icon-name="utility:delete" data-id={it.index}
                             alternative-text="Delete Row" variant="destructive"  class="slds-m-left_xx-small changeIconColor"
                             title="Delete Row" onclick={removeRow} disabled={disabledsubmittedApproved}
-                            data-project={it.value.projectValueAvailable}>
+                            data-project={it.value.projectValueAvailable} data-projectname={it.value.projectName}>
                         </lightning-button-icon> 
                         </template>
                     </td>
