@@ -220,8 +220,13 @@ public class EMS_TM_TimesheetClass {
         picklistValues = [SELECT Id, EMS_TM_Value__c, EMS_TM_Label__c, 
                                                         EMS_TM_Type__c FROM EMS_TM_Picklist_value__c];
 
-        projectTaskList = [SELECT Id, Project_Name__c, Name
+        projectTaskList = [SELECT Id, Project_Name__c,Project_Name__r.Type_Of_Project__c, Name
                         FROM Project_Task__c WHERE Project_Name__c in :projects];
+
+                        // smaske : 08/oct/2024 : TS_012 : Fetching the GlobalProject TaskList as well for rendering the task in dropdown
+                        projectTaskList.addAll([SELECT Id, Project_Name__c, Project_Name__r.Type_Of_Project__c, Name
+                        FROM Project_Task__c 
+                        WHERE Project_Name__r.Type_Of_Project__c = 'Global Projects']);
 
 
         wrapperTimesheetRecords timesheetWrapper = new wrapperTimesheetRecords();
@@ -261,7 +266,7 @@ public class EMS_TM_TimesheetClass {
                                                         User__c, 
                                                         User__r.Name,
                                                         EMS_TM_Week__c,
-                                                        EMS_TM_Status__c
+                                                        EMS_TM_Status__c,WFH_Sun__c,WFH_Mon__c,WFH_Tue__c,WFH_Wed__c,WFH_Thu__c,WFH_Fri__c,WFH_Sat__c
                                                         FROM EMS_Timesheet__c 
                                                         where User__c = :userId
                                                         AND EMS_TM_Week__c = :week LIMIT 1];
@@ -271,7 +276,7 @@ public class EMS_TM_TimesheetClass {
         if (!timeSheetValues.isEmpty()) {
             timeSheetRecordValues = [SELECT Id, EMS_TM_Sun__c, EMS_TM_Mon__c, EMS_TM_Tue__c,
                                     EMS_TM_Wed__c, EMS_TM_Thu__c, EMS_TM_Fri__c, EMS_TM_Sat__c,
-                                    EMS_TM_ProjectTask__c, EMS_TM_Project__c,Project_Task__c,
+                                    EMS_TM_ProjectTask__c, EMS_TM_Project__c,Project_Task__c,EMS_TM_Project__r.Name,
                                     EMS_TM_Week__c, User__c, EMS_Timesheet__c, EMS_TM_Remarks__c,
                                     EMS_TM_OtherTask__c,ApprovedandSubmitted__c
                                     FROM EMS_TM_Timesheet_Record__c
@@ -299,7 +304,7 @@ public class EMS_TM_TimesheetClass {
         Date weekStart = timesheet.EMS_TM_Week__c.addDays(-7);
         //System.debug('weekStart => '+weekStart);
 
-        list<EMS_Timesheet__c> timeSheetValues = [SELECT id,User__c,EMS_TM_Week__c
+        list<EMS_Timesheet__c> timeSheetValues = [SELECT id,User__c,EMS_TM_Week__c,WFH_Sun__c,WFH_Mon__c,WFH_Tue__c,WFH_Wed__c,WFH_Thu__c,WFH_Fri__c,WFH_Sat__c
                                                         FROM EMS_Timesheet__c  
                                                         WHERE EMS_TM_Week__c = :weekStart  
                                                         AND User__c = :timesheet.User__c];
@@ -307,7 +312,7 @@ public class EMS_TM_TimesheetClass {
         if (!timeSheetValues.isEmpty()) {
             List<EMS_TM_Timesheet_Record__c> timeSheetRecordValues = [SELECT Id, EMS_TM_Sun__c, EMS_TM_Mon__c, EMS_TM_Tue__c,
                                     EMS_TM_Wed__c, EMS_TM_Thu__c, EMS_TM_Fri__c, EMS_TM_Sat__c,
-                                    EMS_TM_ProjectTask__c, EMS_TM_Project__c,
+                                    EMS_TM_ProjectTask__c, EMS_TM_Project__c,EMS_TM_Project__r.Name,
                                     Project_Task__c,
                                     EMS_TM_Week__c, User__c, EMS_Timesheet__c, EMS_TM_Remarks__c,
                                     EMS_TM_OtherTask__c,Assignment__c
@@ -381,11 +386,12 @@ public class EMS_TM_TimesheetClass {
             }
             }
 
-            if (!GlobalProjectsList.isEmpty()) {
+            // smaske : 08/oct/2024 : TS_012 : Not passing the Global Project task data as updated code in getAssignmentProject method
+            /*if (!GlobalProjectsList.isEmpty()) {
                 for (EMS_TM_Project__c gpl : GlobalProjectsList) {
                     projectIDs.add(gpl.Id);
                 }
-            }
+            }*/
 
             List<EMS_TM_Project__c> ProjectListWithTask = new List<EMS_TM_Project__c>();
             if (!projectIDs.isEmpty()) {
@@ -551,6 +557,13 @@ public class EMS_TM_TimesheetClass {
         timeSheetRecord.EMS_TM_Remarks__c                   = timesheet.EMS_TM_Remarks__c;
         timeSheetRecord.EMS_TM_Status__c                    = timesheet.EMS_TM_Status__c;
         timeSheetRecord.User__c                             = timesheet.User__c;
+        timeSheetRecord.WFH_Sun__c                       	= timesheet.WFH_Sun__c;
+        timeSheetRecord.WFH_Mon__c                       	= timesheet.WFH_Mon__c;
+        timeSheetRecord.WFH_Tue__c                       	= timesheet.WFH_Tue__c;
+        timeSheetRecord.WFH_Wed__c                       	= timesheet.WFH_Wed__c;
+        timeSheetRecord.WFH_Thu__c                      	= timesheet.WFH_Thu__c;
+        timeSheetRecord.WFH_Fri__c                       	= timesheet.WFH_Fri__c;
+        timeSheetRecord.WFH_Sat__c                       	= timesheet.WFH_Sat__c;
         //timeSheetRecord = underWorkingHourDays(timeSheetRecord);
 
         return timeSheetRecord;
@@ -689,7 +702,7 @@ public class EMS_TM_TimesheetClass {
 List<EMS_Timesheet__c> timesheetList = [SELECT EMS_TM_Total__c,
                                                              Week_End_Date__c,
                                                              enddate__c,
-                                                             OwnerId
+                                                             OwnerId,WFH_Sun__c,WFH_Mon__c,WFH_Tue__c,WFH_Wed__c,WFH_Thu__c,WFH_Fri__c,WFH_Sat__c
                                                              FROM EMS_Timesheet__c
                                                              WHERE OwnerId =: UserInfo.getUserId() 
                                                              AND startweek__c < THIS_WEEK

@@ -80,8 +80,14 @@
                 </c-ems-custom-look-up>
             </template>
         </div>
-        <div class="slds-size_1-of-6"></div>
-        <div class="slds-grid alignCenter slds-p-around_medium slds-size_1-of-3">
+        <!--div class="slds-size_1-of-6"></div-->
+        <div class="slds-grid alignCenter slds-p-around_medium slds-large-size_6-of-12 "> <!--slds-size_1-of-3 . slds-size_2-of-3-->
+            <lightning-input class="slds-p-right_large"
+                data-id="includeToggle" type="toggle" label="WFO"
+                onchange={handleincludeWorkFromHome}
+                message-toggle-active=""
+                message-toggle-inactive="" checked 
+                disabled={disableSubmited}></lightning-input>
             <lightning-input class="slds-p-right_large"
                 data-id="weekendToggle" type="toggle" label="Weekend"
                 onchange={handleWeekendToggle}
@@ -142,6 +148,11 @@
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
                     </div>
+                    <template if:true={showWFHcheckbox}>
+                        <lightning-input name="WFH_Mon__c" type="checkbox" variant="standard"
+                         checked={timeSheetRecord.WFH_Mon__c} onchange={handlechangeWorkMode} disabled={disableWFOcheckbox.WFH_Mon__c}>
+                         </lightning-input>
+                    </template>
                 </th>
                 <th scope="col">
                     <div class="slds-truncate" title="Tuesday">
@@ -149,6 +160,11 @@
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
                     </div>
+                    <template if:true={showWFHcheckbox}>
+                            <lightning-input name="WFH_Tue__c" type="checkbox" variant="standard" 
+                            checked={timeSheetRecord.WFH_Tue__c} onchange={handlechangeWorkMode} disabled={disableWFOcheckbox.WFH_Tue__c}>
+                            </lightning-input>
+                        </template>
                 </th>
                 <th scope="col">
                     <div class="slds-truncate" title="Wednesday">
@@ -156,6 +172,11 @@
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
                     </div>
+                     <template if:true={showWFHcheckbox}>
+                            <lightning-input name="WFH_Wed__c" type="checkbox" variant="standard" 
+                            checked={timeSheetRecord.WFH_Wed__c} onchange={handlechangeWorkMode} disabled={disableWFOcheckbox.WFH_Wed__c}>
+                            </lightning-input>
+                        </template>
                 </th>
                 <th scope="col">
                     <div class="slds-truncate" title="Thursday">
@@ -163,6 +184,11 @@
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
                     </div>
+                    <template if:true={showWFHcheckbox}>
+                        <lightning-input name="WFH_Thu__c" type="checkbox" variant="standard" 
+                        checked={timeSheetRecord.WFH_Thu__c} onchange={handlechangeWorkMode} disabled={disableWFOcheckbox.WFH_Thu__c}>
+                        </lightning-input>
+                     </template>
                 </th>
                 <th scope="col">
                     <div class="slds-truncate" title="Friday">
@@ -170,6 +196,11 @@
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
                     </div>
+                    <template if:true={showWFHcheckbox}>
+                            <lightning-input name="WFH_Fri__c" type="checkbox" variant="standard" 
+                            checked={timeSheetRecord.WFH_Fri__c} onchange={handlechangeWorkMode} disabled={disableWFOcheckbox.WFH_Fri__c}>
+                            </lightning-input>
+                        </template>
                 </th>
                 <th if:true={showWeekend} scope="col">
                     <div class="slds-truncate" title="Saturday">
@@ -177,6 +208,11 @@
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
                     </div>
+                    <template if:true={showWFHcheckbox}>
+                            <lightning-input name="WFH_Sat__c" type="checkbox" variant="standard" 
+                            checked={timeSheetRecord.WFH_Sat__c} onchange={handlechangeWorkMode} disabled={disableWFOcheckbox.WFH_Sat__c}>
+                            </lightning-input>
+                        </template>
                 </th>
                 <!-- weekday="short" month="numeric" day="numeric" time-zone="UTC"> -->
                 <th if:true={showWeekend} scope="col">
@@ -185,6 +221,11 @@
                             weekday="short" month="numeric" day="numeric" time-zone="UTC">
                         </lightning-formatted-date-time>
                     </div>
+                    <template if:true={showWFHcheckbox}>
+                            <lightning-input name="WFH_Sun__c" type="checkbox" variant="standard" 
+                            checked={timeSheetRecord.WFH_Sun__c} onchange={handlechangeWorkMode} disabled={disableWFOcheckbox.WFH_Sun__c}>
+                            </lightning-input>
+                        </template>
                 </th>
                 <th scope="col">
                     <div class="slds-truncate" title="Total Hours">Sub Total</div>
@@ -203,14 +244,14 @@
                         <lightning-button-icon icon-name="utility:delete" data-id={it.index}
                             alternative-text="Delete Row" variant="destructive"  class="slds-m-left_xx-small changeIconColor"
                             title="Delete Row" onclick={removeRow} disabled={disableSubmited}
-                            data-project={it.value.projectValueAvailable}>
+                            data-project={it.value.projectValueAvailable} data-projectname={it.value.projectName} data-projecttask={it.value.Project_Task__c}>
                         </lightning-button-icon> 
                         </template>
                         <template if:true={it.value.ApprovedandSubmitted__c}>
                         <lightning-button-icon icon-name="utility:delete" data-id={it.index}
                             alternative-text="Delete Row" variant="destructive"  class="slds-m-left_xx-small changeIconColor"
                             title="Delete Row" onclick={removeRow} disabled={disabledsubmittedApproved}
-                            data-project={it.value.projectValueAvailable}>
+                            data-project={it.value.projectValueAvailable} data-projectname={it.value.projectName}>
                         </lightning-button-icon> 
                         </template>
                     </td>
@@ -338,8 +379,12 @@
                                         value={it.value.Project_Task__c} onchange={handleUserInput} options={it.value.newTaskOptionList}></lightning-combobox>
                                 </template>
                                 <template lwc:else>
-                                    <lightning-input name="Project_Task__c" variant="label-hidden" data-id={it.index} value={it.value.Project_Task__c}
-                                    disabled={disableSubmited}></lightning-input>
+                                    <!--<lightning-input name="Project_Task__c" variant="label-hidden" data-id={it.index} value={it.value.Project_Task__c}
+                                    disabled={disableSubmited}></lightning-input> -->
+                                    <!-- smaske : 08/oct/2024 : TS_012 :  replacing input with combobox as for Global/OOO projects newTaskOptionList will be blank and projectTaskOptions will be populated as per existing code conditon -->
+                                    <lightning-combobox name="Project_Task__c" variant="label-hidden" placeholder="Choose" data-id={it.index} disabled={disableSubmited}
+                                    value={it.value.Project_Task__c} onchange={handleUserInput} options={it.value.projectTaskOptions}></lightning-combobox>
+                                    <!-- smaske : 08/oct/2024 : TS_012 : End -->
                                 </template>
                                 
                                 <!-- <lightning-combobox name="Project_Task__c"
@@ -393,7 +438,7 @@
                     </td>
                     <td> <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Mon__c' type="number" step=".5" maxlength="4"
-                            value={it.value.EMS_TM_Mon__c}
+                            value={it.value.EMS_TM_Mon__c} data-pname={it.value.projectName}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden" required
                             disabled={disableSubmited}>
@@ -401,7 +446,7 @@
                         </template>
                         <template if:true={it.value.ApprovedandSubmitted__c}>
                             <lightning-input name='EMS_TM_Mon__c' type="number" step=".5" maxlength="4"
-                            value={it.value.EMS_TM_Mon__c}
+                            value={it.value.EMS_TM_Mon__c} data-pname={it.value.projectName}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden" required
                             disabled={disabledsubmittedApproved}>
@@ -484,7 +529,7 @@
                     <td if:true={showWeekend}>
                         <template if:false={it.value.ApprovedandSubmitted__c}>
                         <lightning-input name='EMS_TM_Sat__c' type="number" step=".5" maxlength="4"
-                            value={it.value.EMS_TM_Sat__c}
+                            value={it.value.EMS_TM_Sat__c} data-pname={it.value.projectName}
                             data-id={it.index} onchange={handleUserInput}
                             variant="label-hidden"
                             disabled={disableSubmited}>
@@ -552,37 +597,37 @@
                 <td>
                     <p>{totalDayHours.EMS_TM_Mon__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Mon__c}
-                        class="slds-has-error maxValueError">Value must be between 8-24 Only</p>
+                        class="slds-has-error maxValueError">Value must be between 8-24 only</p>
                 </td>
                 <td>
                     <p>{totalDayHours.EMS_TM_Tue__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Tue__c} class="slds-has-error maxValueError">Value must be
-                        between 8-24 Only</p>
+                        between 8-24 only</p>
                 </td>
                 <td>
                     <p>{totalDayHours.EMS_TM_Wed__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Wed__c} class="slds-has-error maxValueError">Value must be
-                        between 8-24 Only</p>
+                        between 8-24 only</p>
                 </td>
                 <td>
                     <p>{totalDayHours.EMS_TM_Thu__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Thu__c} class="slds-has-error maxValueError">Value must be
-                        between 8-24 Only</p>
+                        between 8-24 only</p>
                 </td>
                 <td>
                     <p>{totalDayHours.EMS_TM_Fri__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Fri__c} class="slds-has-error maxValueError">Value must be
-                        between 8-24 Only</p>
+                        between 8-24 only</p>
                 </td>
                 <td if:true={showWeekend}>
                     <p>{totalDayHours.EMS_TM_Sat__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Sat__c} class="slds-has-error maxValueError">Value must be
-                        between 0-24 Only</p>
+                        between 0-24 only</p>
                 </td>
                 <td if:true={showWeekend}>
                    <p>{totalDayHours.EMS_TM_Sun__c}</p>
                    <p if:true={totalDayHours.errorEMS_TM_Sun__c} class="slds-has-error maxValueError">Value must be
-                       between 0-24 Only</p>
+                       between 0-24 only</p>
                 </td>
                 <td>
                     <p>{totalHours.value}</p>
