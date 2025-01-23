@@ -311,7 +311,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                          Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
                          FROM PM_Configure__r 
                          Where KRA__c =:kraid AND ((Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))
-                                                   OR Mentor_Mentee__c =: loggedInUser.ContactId))
+                                                   OR Mentor_Mentee__c =: loggedInUser.ContactId) ORDER BY Mentor_Mentee__c ASC NULLS LAST)
                         FROM PM_Configure__c 
                         Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c]; 
             //OR Reporting_Contact__c=: loggedInUser.ContactId
@@ -324,7 +324,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                              Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
                              Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
                              Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
-                             FROM PM_Configure__r Where KRA__c =:kraid AND ( Mentor_Mentee__c =: loggedInUser.ContactId OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))))
+                             FROM PM_Configure__r Where KRA__c =:kraid AND ( Mentor_Mentee__c =: loggedInUser.ContactId OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))) ORDER BY Mentor_Mentee__c ASC NULLS LAST)
                             FROM PM_Configure__c 
                             Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];   
             }else{
@@ -333,7 +333,7 @@ public without sharing class quarterlyKRAFullViewCtrl {
                              Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
                              Reporting_Contact__r.Name,Project_Name__r.Name,Project_Name__c,Consider_Feedback_Rating__c,
                              Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name
-                             FROM PM_Configure__r Where KRA__c =:kraid AND Mentor_Mentee__c =: loggedInUser.ContactId)
+                             FROM PM_Configure__r Where KRA__c =:kraid AND Mentor_Mentee__c =: loggedInUser.ContactId ORDER BY Mentor_Mentee__c ASC NULLS LAST)
                             FROM PM_Configure__c 
                             Where RecordTypeId  = :QuestionRecordTypeId AND Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c];
             }
