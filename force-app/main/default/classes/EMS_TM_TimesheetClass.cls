@@ -110,7 +110,7 @@ public class EMS_TM_TimesheetClass {
                                                                EMS_TM_ProjectName_Asgn__c
                                                                FROM EMS_TM_Assignment__c
                                                                WHERE EMS_TM_ProjectName_Asgn__c IN:projectIdSet
-                                                               AND EMS_TM_Status_Asgn__c ='Active']){
+                                                              	and (EMS_TM_Status_Asgn__c ='Active' OR EMS_TM_Status_Asgn__c  ='Closed') ]){//AND EMS_TM_Status_Asgn__c ='Active'
                                              userIdsSet.add(assignmentRec.EMS_TM_EmployeeName__r.EMS_TM_user__c);
                     
                 }
@@ -155,7 +155,7 @@ public class EMS_TM_TimesheetClass {
                                                 FROM EMS_TM_Assignment__c 
                                                 WHERE EMS_TM_EmployeeName__r.EMS_TM_User__c =:userId
                                                 AND EMS_TM_StartDate_Asgn__c <= :weekEnd
-                                                AND EMS_TM_Status_Asgn__c ='Active'];
+                                                AND (EMS_TM_Status_Asgn__c ='Active' OR EMS_TM_Status_Asgn__c  ='Closed')];
                                                 System.debug('assignments'+assignments);
 
         if (!assignments.isEmpty()) {
@@ -315,7 +315,7 @@ public class EMS_TM_TimesheetClass {
                                     EMS_TM_ProjectTask__c, EMS_TM_Project__c,EMS_TM_Project__r.Name,
                                     Project_Task__c,
                                     EMS_TM_Week__c, User__c, EMS_Timesheet__c, EMS_TM_Remarks__c,
-                                    EMS_TM_OtherTask__c
+                                    EMS_TM_OtherTask__c,Assignment__c
                                     FROM EMS_TM_Timesheet_Record__c
                                     WHERE EMS_Timesheet__c = :timeSheetValues[0].Id
                                     AND User__c = :timesheet.User__c];
@@ -374,7 +374,7 @@ public class EMS_TM_TimesheetClass {
 
         User LoggedInUser = [Select Id,ContactId From User WHERE Id=: UserInfo.getUserId()];
         List<EMS_TM_Assignment__c> projectAssignmentList = [Select Id,EMS_TM_ProjectName_Asgn__c, EMS_TM_ProjectName_Asgn__r.Name,EMS_TM_ProjectName_Asgn__r.EMS_TM_Status__c,EMS_TM_EmployeeName__c, EMS_TM_Status_Asgn__c  From EMS_TM_Assignment__c  
-        WHERE EMS_TM_Status_Asgn__c = 'Active' and EMS_TM_EmployeeName__c =: LoggedInUser.ContactId AND EMS_TM_ProjectName_Asgn__r.EMS_TM_Status__c = 'Ongoing'];
+        WHERE (EMS_TM_Status_Asgn__c ='Active' OR EMS_TM_Status_Asgn__c  ='Closed') and EMS_TM_EmployeeName__c =: LoggedInUser.ContactId AND EMS_TM_ProjectName_Asgn__r.EMS_TM_Status__c = 'Ongoing'];
 
         List<EMS_TM_Project__c> GlobalProjectsList = [Select Id,Name,EMS_TM_Status__c,Type_Of_Project__c   from EMS_TM_Project__c where EMS_TM_Status__c = 'Ongoing' AND Type_Of_Project__c = 'Global Projects'];
 
