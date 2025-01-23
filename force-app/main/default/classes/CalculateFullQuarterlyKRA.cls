@@ -38,7 +38,7 @@ public without sharing class CalculateFullQuarterlyKRA {
                       Where KRA__c =:kraid AND RecordTypeId  = :AnswerRecordTypeId 
                       AND Related_Question__r.Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c 
                       AND (Mentor_Mentee__c =: loggedInUser.ContactId OR 
-                           (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))) ]; 
+                           (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))) ORDER BY Mentor_Mentee__c ASC NULLS LAST ]; 
             //OR Reporting_Contact__c=: loggedInUser.ContactId
         }
         if(tab=='My Metric'){
@@ -50,7 +50,7 @@ public without sharing class CalculateFullQuarterlyKRA {
                           FROM PM_Configure__c Where KRA__c =:kraid AND RecordTypeId  = :AnswerRecordTypeId 
                           AND Related_Question__r.Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c 
                           AND ( Mentor_Mentee__c =: loggedInUser.ContactId
-                               OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))) ];
+                               OR (Status__c ='Submitted' AND (Reporting_Contact__c !=null OR Mentor_Mentee__c !=: loggedInUser.ContactId))) ORDER BY Mentor_Mentee__c ASC NULLS LAST];
             }else{
                 answers= [SELECT Id, Description__c, Rating__c, Mentor_Mentee__c,Reporting_Contact__c,Related_Question__c,Status__c,
                           Related_Question__r.Rating_overview__c,Related_Question__r.Question_overview__c,Mentor_Mentee__r.Name,
@@ -58,7 +58,7 @@ public without sharing class CalculateFullQuarterlyKRA {
                           Mentor_Mentee__r.Resource_Role__r.Name,Reporting_Contact__r.Resource_Role__r.Name,Consider_Feedback_Rating__c
                           FROM PM_Configure__c Where KRA__c =:kraid AND RecordTypeId  = :AnswerRecordTypeId
                           AND Related_Question__r.Resource_Role__c=: goalRecord.Resource__r.Resource_Role__c 
-                          AND Mentor_Mentee__c =: loggedInUser.ContactId];
+                          AND Mentor_Mentee__c =: loggedInUser.ContactId ORDER BY Mentor_Mentee__c ASC NULLS LAST];
             }
         }
         
