@@ -170,7 +170,6 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                         this.pickListRecords.clientPicklist.push({ value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c });
                     }
                     else if (value.EMS_TM_Type__c === 'OOO') {
-                        const newValue = { ...value };
                         this.pickListRecords.oooPicklist.push({ value: newValue.EMS_TM_Value__c, label: newValue.EMS_TM_Label__c });
                     } else if (value.EMS_TM_Type__c === 'Bench') {
                         this.pickListRecords.benchPicklist.push({ value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c });
