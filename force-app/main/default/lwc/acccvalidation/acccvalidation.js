@@ -170,7 +170,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                         this.pickListRecords.clientPicklist.push({ value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c });
                     }
                     else if (value.EMS_TM_Type__c === 'OOO') {
-                        this.pickListRecords.oooPicklist.push({ value: newValue.EMS_TM_Value__c, label: newValue.EMS_TM_Label__c });
+                        this.pickListRecords.oooPicklist.push({ value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c });
                     } else if (value.EMS_TM_Type__c === 'Bench') {
                         this.pickListRecords.benchPicklist.push({ value: value.EMS_TM_Value__c, label: value.EMS_TM_Label__c });
                     } else if (value.EMS_TM_Type__c === 'Other') {
@@ -324,10 +324,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             this.disableSubmited = timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked' ? true : false;
            //@sangharsh disable WFH checkbox when record is locked or Submitted
             if (timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked') {
-                this.disableWFOcheckbox = Object.keys(this.disableWFOcheckbox).reduce((acc, key) => {
-                    acc[key] = true;
-                    return acc;
-                }, {});
+                this.disableWFOcheckbox = { WFH_Mon__c: true, WFH_Tue__c: true, WFH_Wed__c: true, WFH_Thu__c: true, WFH_Fri__c: true, WFH_Sat__c: true, WFH_Sun__c: true };
             }
             this.disableRevise = timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked' ? false : true;
             this.recordId = timeSheet.Id;
@@ -1000,7 +997,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             if (this.timeSheetRecord.EMS_TM_Status__c === 'Saved' && this.records[index].Id) {
                 this.deletedRecordsList.push(this.records[index]);
             }
-            
+            //@sangharsh when projectName is OOO and hours more than 4 then disable the checkbox
                 this.records.forEach((record) => {
                     console.log('record.Project_Task__c'+JSON.stringify(record));
                     console.log('record.Project_Task__c'+record.projectName);
