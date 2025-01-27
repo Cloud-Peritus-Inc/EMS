@@ -341,7 +341,6 @@
                             disabled={disableSubmited}>
                         </lightning-combobox> -->
                         <template if:false={showProjectTask}>
-                       
                         <!--<template if:true={it.value.projectAssignAvail}>-->
                               <lightning-combobox name="Project_Task__c"
                                 variant="label-hidden" placeholder="Choose"
@@ -366,7 +365,6 @@
                         </template>
 
                         <template if:true={showProjectTask}>
-                        
                             <template if:true={it.value.projectAssignAvail}>
 
                                 <!-- Smaske [HY_P034 / TS_005] : adding conditonal rendering here for the Assignment Box
