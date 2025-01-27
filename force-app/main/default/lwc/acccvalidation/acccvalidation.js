@@ -59,7 +59,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
     disablePreButtons = false;
     disableNextButtons = false;
     disableSubmited = false;
-    disableWFOcheckbox = { WFH_Mon__c: false, WFH_Tue__c: false, WFH_Wed__c: false, WFH_Thu__c: false, WFH_Fri__c: false, WFH_Sat__c: false, WFH_Sun__c: false };
+    disableWFOcheckbox = { WFH_Mon__c: false, WFH_Tue__c: false, WFH_Wed__c: false, WFH_Thu__c: false, WFH_Fri__c: false, WFH_Sat__c: false, WFH_Sun__c: false }; // @sangharsh add this array variable to disable WFH Checkbox
     disabledsubmittedApproved = true;
     falseVariable = false;
     assignmentRecords = [];
@@ -163,8 +163,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             }
 
             let pickListValues = data.picklist;
-            console.log('data.picklist' + data.picklist);
-            console.log('data.picklist====================================================================' + data.picklist);
+            console.log('data.picklist' +JSON.stringify(data.picklist));
             if (pickListValues) {
                 pickListValues.forEach(value => {
                     if (value.EMS_TM_Type__c === 'Client Projects') {
@@ -323,16 +322,15 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
         //  console.log('timeSheetRecords=====================================1234567 ',this.timeSheetRecords)
         if (timeSheet) {
             this.disableSubmited = timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked' ? true : false;
+           //@sangharsh disable WFH checkbox when record is locked or Submitted
             if (timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked') {
-                this.disableWFOcheckbox = Object.keys(this.disableWFOcheckbox).reduce((acc, key) => {
-                    acc[key] = true;
-                    return acc;
-                }, {});
+                this.disableWFOcheckbox = { WFH_Mon__c: true, WFH_Tue__c: true, WFH_Wed__c: true, WFH_Thu__c: true, WFH_Fri__c: true, WFH_Sat__c: true, WFH_Sun__c: true };
             }
             this.disableRevise = timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked' ? false : true;
             this.recordId = timeSheet.Id;
             this.timeSheetRecord.Id = timeSheet.Id;
             this.timeSheetRecord.EMS_TM_Status__c = timeSheet.EMS_TM_Status__c;
+            //@sangharsh retrieve WFH data
             this.timeSheetRecord.WFH_Mon__c = timeSheet.WFH_Mon__c;
             this.timeSheetRecord.WFH_Tue__c = timeSheet.WFH_Tue__c;
             this.timeSheetRecord.WFH_Wed__c = timeSheet.WFH_Wed__c;
@@ -369,7 +367,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                             element.projectName =record.EMS_TM_Project__r.Name;
                             if (project.EMS_TM_Project_Type__c === 'OOO') {
                                 element.projectTaskOptions = JSON.parse(JSON.stringify(this.pickListRecords.oooPicklist));
-
+                                 //@sangharsh when project OOO and disable WFH checkbox when record is locked or Submitted else disable as per checkbox data retrive
                                 if(timeSheet.EMS_TM_Status__c === 'Submitted' || timeSheet.EMS_TM_Status__c === 'Locked'){
                                     this.disableWFOcheckbox = { WFH_Mon__c: true, WFH_Tue__c: true, WFH_Wed__c: true, WFH_Thu__c: true, WFH_Fri__c: true, WFH_Sat__c: true, WFH_Sun__c: true };
                                 }else{
@@ -474,10 +472,11 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
 
                 let addRow = false;
                 if (oooProject != null || oooProject != undefined) {
-                    let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: 'Holiday', projectValueAvailable: true, projectAssignAvail: false, projectTaskDuplicate: false, projectName: oooProject.Name };
+                    let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: this.resourcerole, projectValueAvailable: true, projectAssignAvail: false, projectTaskDuplicate: false, projectName: oooProject.Name };
                     this.holidayRecords.forEach(holiday => {
                         let date = new Date(holiday.EMS_TM_Calendar_Date__c).getDay();
                         // console.log('holidays ',date);
+                        //@sangharsh disable WFO checkbox when Retrieves holidays on week changes 
                         switch (date) {
                             case 1: record.EMS_TM_Mon__c = 8; (addRow = true, this.disableWFOcheckbox.WFH_Mon__c =true); break;
                             case 2: record.EMS_TM_Tue__c = 8; (addRow = true, this.disableWFOcheckbox.WFH_Tue__c =true); break;
@@ -496,9 +495,12 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                         if (record.projectName === key) {
                             for (const task of tasks) {
                                 console.log('Iterate task name:', task.Name);
-                                tempTaskPicklist.push({ value: task.Id, label: task.Name });
+                                tempTaskPicklist.push({ value: task.Name, label: task.Name });
                                 if (task.Name === 'Holiday') {
-                                    record.Project_Task__c = task.Id; // Set the ID of "Holiday"
+                                    record.Project_Task__c =task.Name; // @sangharsh set "Holiday" to show assignment in timesheet
+                                    record.disableEMS_TM_ProjectTask__c =true;
+                                    record.EMS_TM_ProjectTask__c= this.resourcerole;
+                                  //  record.Project_Task__c = task.Id; // Set the ID of "Holiday"
                                 }
                             }
                         }
@@ -535,12 +537,13 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                 console.log(' oooProject ==========' + JSON.stringify(oooProject));
                 if (oooProject != null || oooProject != undefined) {
                     //smaske: TS_012 :  [08/Oct/2024] : replacing "Paid time-off" with "Paid time off"
-                    let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: this.resourcerole, projectValueAvailable: true, projectAssignAvail: true, projectTaskDuplicate: false, newTaskOptionList: this.pickListRecords.oooPicklist, Project_Task__c: 'Paid time off',projectName: oooProject.Name };
+                    let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: this.resourcerole, projectValueAvailable: true, projectAssignAvail: true, projectTaskDuplicate: false, newTaskOptionList: this.pickListRecords.oooPicklist,projectName: oooProject.Name,Project_Task__c:'Paid time off' };
                     this.leaveRecords.forEach(leave => {
                         console.log('role406===============', record.EMS_TM_ProjectTask__c);
                         console.log('leaves405===============', leave);
                         let date = new Date(leave).getDay();
                         // console.log('leaves===============',date);
+                        //@sangharsh disable WFO checkbox when Retrieves leaves on week changes
                         switch (date) {
                             case 1: record.EMS_TM_Mon__c = 8; this.disableWFOcheckbox.WFH_Mon__c =true; break;
                             case 2: record.EMS_TM_Tue__c = 8; this.disableWFOcheckbox.WFH_Tue__c =true; break;
@@ -550,6 +553,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                             default: break;
                         }
                     });
+
                     console.log('record 415', record);
                     this.records.push(record);
                     console.log('record 417', record);
@@ -993,7 +997,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             if (this.timeSheetRecord.EMS_TM_Status__c === 'Saved' && this.records[index].Id) {
                 this.deletedRecordsList.push(this.records[index]);
             }
-            
+            //@sangharsh when projectName is OOO and hours more than 4 then disable the checkbox
                 this.records.forEach((record) => {
                     console.log('record.Project_Task__c'+JSON.stringify(record));
                     console.log('record.Project_Task__c'+record.projectName);
@@ -1096,6 +1100,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
             console.log('this.records[index]-->'+JSON.stringify(this.records[index]));
             console.log('this.records[index].projectName-->'+this.records[index].projectName);
             console.log('this.records[index][fieldName]-->'+this.records[index][fieldName]);
+            //@sangharsh entering OOO hours disable the WFO Checkbox
             if (this.records[index].projectName === 'OOO') {
                 // Map EMS_TM fields to WFH fields
                 const daysMapping = {
@@ -2010,6 +2015,12 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
         });*/
     }
 
+      /*
+        @author     : Sangharsh
+        function    : handlechangeWorkMode
+        Description : Set WFH values
+        Parameters  : null 
+    */
     handlechangeWorkMode(event) {
         console.log('event.target.name' + event.target.name);
         console.log('event.target.value' + event.target.checked);
