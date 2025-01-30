@@ -472,7 +472,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
 
                 let addRow = false;
                 if (oooProject != null || oooProject != undefined) {
-                    let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: this.resourcerole, projectValueAvailable: true, projectAssignAvail: false, projectTaskDuplicate: false, projectName: oooProject.Name };
+                    let record = { key: 0, otherTask: false, EMS_TM_Sun__c: 0, EMS_TM_Mon__c: 0, EMS_TM_Tue__c: 0, EMS_TM_Wed__c: 0, EMS_TM_Thu__c: 0, EMS_TM_Fri__c: 0, EMS_TM_Sat__c: 0, projectTaskOptions: this.pickListRecords.oooPicklist, EMS_TM_Project__c: oooProject.Id, disableEMS_TM_Project__c: true, disableEMS_TM_ProjectTask__c: true, EMS_TM_ProjectTask__c: this.resourcerole, projectValueAvailable: true, projectAssignAvail: true, projectTaskDuplicate: false, projectName: oooProject.Name };
                     this.holidayRecords.forEach(holiday => {
                         let date = new Date(holiday.EMS_TM_Calendar_Date__c).getDay();
                         // console.log('holidays ',date);
@@ -1003,7 +1003,6 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                     console.log('record.Project_Task__c'+record.projectName);
                      console.log('projectname'+projectname);
                     if (record.projectName === 'OOO' && record.projectName == projectname && record.Project_Task__c == projecttask) {  
-                         console.log('Entered');
                             if (record.EMS_TM_Mon__c > 4) {
                                 this.disableWFOcheckbox.WFH_Mon__c = false;
                             }
@@ -1398,8 +1397,33 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
     */
     handleProjectRemove(e) {
         let val = JSON.parse(JSON.stringify(e.detail));
-        let fieldName = val.name;
+         let fieldName = val.name;
         let index = val.index;
+        //@sangharsh when projectName is OOO and hours more than 4 then disable the checkbox
+        if ( this.records[index]['projectName'] ==='OOO' ){
+                            if (this.records[index]['EMS_TM_Mon__c'] > 4) {
+                                this.disableWFOcheckbox.WFH_Mon__c = false;
+                            }
+                            if (this.records[index]['EMS_TM_Tue__c'] > 4) {
+                                this.disableWFOcheckbox.WFH_Tue__c = false;
+                            }
+                            if (this.records[index]['EMS_TM_Wed__c'] > 4) {
+                                this.disableWFOcheckbox.WFH_Wed__c = false;
+                            }
+                            if (this.records[index]['EMS_TM_Thu__c'] > 4) {
+                                this.disableWFOcheckbox.WFH_Thu__c = false;
+                            }
+                            if (this.records[index]['EMS_TM_Fri__c'] > 4) {
+                                this.disableWFOcheckbox.WFH_Fri__c = false;
+                            }
+                            if (this.records[index]['EMS_TM_Sat__c'] > 4) {
+                                this.disableWFOcheckbox.WFH_Sat__c = false;
+                            }
+                            if (this.records[index]['EMS_TM_Sun__c'] > 4) {
+                                this.disableWFOcheckbox.WFH_Sun__c = false;
+                            }
+        }
+       
         this.records[index][fieldName] = '';
         this.records[index].projectName = '';
         this.handlePicklistValues(index, '');
@@ -1826,6 +1850,7 @@ export default class Acccvalidation extends NavigationMixin(LightningElement) {
                                     }),
                                 );
                                 this.isRoleEmpty = true;
+                             //   return
                             } else {
                                 this.isRoleEmpty = false;
                             }
