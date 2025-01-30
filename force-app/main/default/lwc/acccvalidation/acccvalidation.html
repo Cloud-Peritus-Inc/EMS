@@ -289,7 +289,8 @@
 							</td>
 						</template>
                     </td>
-                     <!-- Assignment Column Starts Here--options=projectTaskValues-->
+                    
+                    <!-- Assignment Column Starts Here--options=projectTaskValues-->
                     <td>
                         <!-- <lightning-combobox name="EMS_TM_ProjectTask__c"
                             variant="label-hidden" placeholder="Choose"
@@ -299,7 +300,7 @@
                             disabled={disableSubmited}>
                         </lightning-combobox> -->
                         <template if:false={showProjectTask}>
-                           
+                       
                         <!--<template if:true={it.value.projectAssignAvail}>-->
                               <lightning-combobox name="Project_Task__c"
                                 variant="label-hidden" placeholder="Choose"
@@ -322,51 +323,65 @@
                             <p if:true={it.value.projectTaskDuplicate} class="slds-has-error">Duplicate task value</p>
                         </template>-->  
                         </template>
+
                         <template if:true={showProjectTask}>
-                          
-                        <template if:true={it.value.projectAssignAvail}>
-                            
-                            	<lightning-input name="Project_Task__c" variant="label-hidden" data-id={it.index}
-									value={it.value.Project_Task__c} disabled></lightning-input>
-                         <!-- <lightning-combobox name="Project_Task__c"
-                                variant="label-hidden" placeholder="Choose"
-                                data-id={it.index} value={it.value.Project_Task__c}
-                                onchange={handleUserInput}
-                                options={it.value.newTaskOptionList}
-                                disabled={disabledsubmittedApproved}>
-                            </lightning-combobox> -->
-                            <p if:true={it.value.projectTaskDuplicate} class="slds-has-error">Duplicate task value</p>
                         
+                            <template if:true={it.value.projectAssignAvail}>
+
+                                <!-- Smaske [HY_P034 / TS_005] : adding conditonal rendering here for the Assignment Box
+                                If the newTaskOptionList has values then dropdown is rendered.Else Input field with selected value.
+                                PS : Not sure who has commented the fields previously.
+                                -->
+
+                                <template lwc:if={it.value.newTaskOptionList}>
+                                    <lightning-combobox name="Project_Task__c" variant="label-hidden" placeholder="Choose" data-id={it.index} disabled={disableSubmited}
+                                        value={it.value.Project_Task__c} onchange={handleUserInput} options={it.value.newTaskOptionList}></lightning-combobox>
+                                </template>
+                                <template lwc:else>
+                                    <!--<lightning-input name="Project_Task__c" variant="label-hidden" data-id={it.index} value={it.value.Project_Task__c}
+                                    disabled={disableSubmited}></lightning-input> -->
+                                    <!-- smaske : 08/oct/2024 : TS_012 :  replacing input with combobox as for Global/OOO projects newTaskOptionList will be blank and projectTaskOptions will be populated as per existing code conditon -->
+                                    <lightning-combobox name="Project_Task__c" variant="label-hidden" placeholder="Choose" data-id={it.index} disabled={disableSubmited}
+                                    value={it.value.Project_Task__c} onchange={handleUserInput} options={it.value.projectTaskOptions}></lightning-combobox>
+                                    <!-- smaske : 08/oct/2024 : TS_012 : End -->
+                                </template>
+                                
+                                <!-- <lightning-combobox name="Project_Task__c"
+                                                        variant="label-hidden" placeholder="Choose"
+                                                        data-id={it.index} value={it.value.Project_Task__c}
+                                                        onchange={handleUserInput}
+                                                        options={it.value.newTaskOptionList}
+                                                        disabled={disabledsubmittedApproved}>
+                                                    </lightning-combobox> -->
+                                <p if:true={it.value.projectTaskDuplicate} class="slds-has-error">Duplicate task value</p>
+                            </template>
+
+                            <template if:false={it.value.projectAssignAvail}>
+                                <lightning-combobox name="Project_Task__c" variant="label-hidden" placeholder="Choose" data-id={it.index}
+                                    value={it.value.Project_Task__c} onchange={handleUserInput} options={it.value.newTaskOptionList}
+                                    disabled={disableSubmited}>
+                                </lightning-combobox>
+                                <p if:true={it.value.projectTaskDuplicate} class="slds-has-error">Duplicate task value</p>
+                            </template>
+                        
+                        
+                            <td if:true={showOtherTask}>
+                                <div if:true={it.value.otherTask}>
+                        
+                                    <lightning-combobox name="Project_Task__c" variant="label-hidden" placeholder="Choose" data-id={it.index}
+                                        value={it.value.Project_Task__c} onchange={handleOtherTask} options={it.value.projectTaskOptions}
+                                        disabled={disableSubmited}>
+                        
+                                    </lightning-combobox>
+                                </div>
+                                <div if:false={it.value.otherTask}></div>
+                            </td>
+
                         </template>
-                        <template if:false={it.value.projectAssignAvail}>
-                            
-                            <lightning-combobox name="Project_Task__c"
-                                variant="label-hidden" placeholder="Choose"
-                                data-id={it.index} value={it.value.Project_Task__c}
-                                onchange={handleUserInput}
-                                options={it.value.newTaskOptionList}
-                                disabled={disableSubmited}>
-                            </lightning-combobox>
-                            <p if:true={it.value.projectTaskDuplicate} class="slds-has-error">Duplicate task value</p>
-                        </template>  
 
-
-                         <td if:true={showOtherTask}>
-                         <div if:true={it.value.otherTask}>
-                         <lightning-combobox name="Project_Task__c"
-                            variant="label-hidden" placeholder="Choose"
-                            data-id={it.index} value={it.value.Project_Task__c}
-                            onchange={handleOtherTask}
-                            options={it.value.projectTaskOptions}
-                            disabled={disableSubmited}>
-                        
-                        </lightning-combobox>
-                        </div> 
-                        <div if:false={it.value.otherTask}></div>
-                    </td>
-                        </template> 
                     </td>
                     <!-- Assignment Column Ends Here-->
+
                     <td if:true={showOtherTask}>
                          <div if:true={it.value.otherTask}>
                             <lightning-combobox name='EMS_TM_OtherTask__c'
@@ -541,37 +556,37 @@
                 <td>
                     <p>{totalDayHours.EMS_TM_Mon__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Mon__c}
-                        class="slds-has-error maxValueError">Value must be between 8-24 Only</p>
+                        class="slds-has-error maxValueError">Value must be between 8-24 only</p>
                 </td>
                 <td>
                     <p>{totalDayHours.EMS_TM_Tue__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Tue__c} class="slds-has-error maxValueError">Value must be
-                        between 8-24 Only</p>
+                        between 8-24 only</p>
                 </td>
                 <td>
                     <p>{totalDayHours.EMS_TM_Wed__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Wed__c} class="slds-has-error maxValueError">Value must be
-                        between 8-24 Only</p>
+                        between 8-24 only</p>
                 </td>
                 <td>
                     <p>{totalDayHours.EMS_TM_Thu__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Thu__c} class="slds-has-error maxValueError">Value must be
-                        between 8-24 Only</p>
+                        between 8-24 only</p>
                 </td>
                 <td>
                     <p>{totalDayHours.EMS_TM_Fri__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Fri__c} class="slds-has-error maxValueError">Value must be
-                        between 8-24 Only</p>
+                        between 8-24 only</p>
                 </td>
                 <td if:true={showWeekend}>
                     <p>{totalDayHours.EMS_TM_Sat__c}</p>
                     <p if:true={totalDayHours.errorEMS_TM_Sat__c} class="slds-has-error maxValueError">Value must be
-                        between 0-24 Only</p>
+                        between 0-24 only</p>
                 </td>
                 <td if:true={showWeekend}>
                    <p>{totalDayHours.EMS_TM_Sun__c}</p>
                    <p if:true={totalDayHours.errorEMS_TM_Sun__c} class="slds-has-error maxValueError">Value must be
-                       between 0-24 Only</p>
+                       between 0-24 only</p>
                 </td>
                 <td>
                     <p>{totalHours.value}</p>

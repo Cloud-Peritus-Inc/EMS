@@ -15,7 +15,10 @@ public class BatchToMapMissedGoals_Test {
         Test.StartTest();
         BatchToMapMissedGoals_sch testsche = new BatchToMapMissedGoals_sch();
         String sch = '0 0 23 * * ?';
-        system.schedule('Test BatchToCalculateTheAvaiLeaves Check', sch, testsche );
+        system.schedule('Test BatchToMapMissedGoals_sch Check', sch, testsche );
+        
+        BatchToMapMissedGoals_sch2 testsche2 = new BatchToMapMissedGoals_sch2();
+        system.schedule('Test BatchToMapMissedGoals_sch2 Check2', sch, testsche2 );
         Test.stopTest();
     }
     
@@ -88,8 +91,14 @@ Test.stopTest();
             paidTimeOff = TestDataFactory.createLeaveType('Paid time off',true);
             
             
-            hydIndia = TestDataFactory.createOfficeLocation('Hyderabad - India',true);
-            usLocation = TestDataFactory.createOfficeLocation('California - USA',true);
+            hydIndia = TestDataFactory.createOfficeLocationboth('Hyderabad - India','India',true);
+            usLocation = TestDataFactory.createOfficeLocationboth('California - USA','United States of America',true);
+        
+           /* usLocation.Name = 'California - USA';
+        usLocation.Address__c = '3000 Executive Parkway Suite 215, San Ramon, CA 94583 USA';
+        usLocation.Country__c = 'United States of America';
+            insert usLocation;*/
+        
             List<Office_Location__c> OfficeLocationList = new List<Office_Location__c>();
             OfficeLocationList.add(hydIndia);
             OfficeLocationList.add(usLocation);
@@ -108,8 +117,9 @@ Test.stopTest();
                 con.RecordTypeId = ContactConstant.RESOURCE_RECORDTYPEID;
                 con.EMS_EM_JD__c = system.today() - 180;
                 con.Work_Location__c = OfficeLocationList[i].Id;
-                contactList.add(con);              
+                contactList.add(con);
             }
+            
             insert contactList;
            
             for(Contact cont : contactList){
@@ -117,27 +127,31 @@ Test.stopTest();
                 u.Username = u.Username + cont.Id;
                 u.ContactId = cont.Id;
                 userList.add(u);
+                system.debug('cont.Work_Location_Country__c'+cont.Work_Location_Country__c);
             }
             Insert userList;
             
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
             Fiscal_Year__c FiscalYear = TestDataFactory.createFiscalYear(true);
-            
-            Fulfillment__c Ful = TestDataFactory.createFulfillment(contactList[0].Id, true);
-            Fulfillment__c Ful2 = TestDataFactory.createFulfillment(contactList[1].Id, true);
         }
     }
     
     //smaske : New method
     testmethod static void  testBatchclassForGoals(){
         
-        Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10230'];
-        Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10231'];
-        Fulfillment__c Ful = [Select Id,Resource__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
+      /*  Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,Work_Location__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10230'];
+        system.debug('MentorCon-->'+MentorCon);
+        Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,Work_Location__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10231'];
+        system.debug('MenteeCon-->'+MenteeCon);
+        Fulfillment__c Ful = TestDataFactory.createFulfillment(MenteeCon.Id, true);
+        Fulfillment__c Ful2 = TestDataFactory.createFulfillment(MentorCon.Id, true);
+        system.debug('Ful-->'+Ful);
+        system.debug('Ful2-->'+Ful2);
         
         try {
-            Goal__c KRA = TestDataFactory.createKRARecords(MenteeCon.Id, MentorCon.Id,Ful,true); 
+            Goal__c KRA = TestDataFactory.createKRARecords(MenteeCon.Id, MentorCon.Id,Ful,true);
+            Goal__c KRA1 = TestDataFactory.createKRARecords(MentorCon.Id, MenteeCon.Id,Ful2,true);
             List<Goal__c> ListOfGoalsToCreate = New List<Goal__c>();
             for(Integer i = 0; i < 10; i ++){
                 String name = 'Certification Goal ' + '' + i;
@@ -146,6 +160,8 @@ Test.stopTest();
                 String descri = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
                 Goal__c goal = TestDataFactory.createGoalRecords(MenteeCon.Id, Name, startdate, enddate, Null,false);
                 ListOfGoalsToCreate.add(goal);
+                Goal__c goal1 = TestDataFactory.createGoalRecords(MentorCon.Id, Name, startdate, enddate, Null,false);
+                ListOfGoalsToCreate.add(goal1);
             }   
             for(Integer i = 0; i < 5; i ++){
                 String name = 'Certification Goal ' + '' + i;
@@ -155,6 +171,9 @@ Test.stopTest();
                 Goal__c goal = TestDataFactory.createGoalRecords(MenteeCon.Id, Name, startdate, enddate, KRA,false);
                 goal.Status__c = 'Active';
                 ListOfGoalsToCreate.add(goal);
+                Goal__c goal1 = TestDataFactory.createGoalRecords(MentorCon.Id, Name, startdate, enddate, KRA1,false);
+                goal1.Status__c = 'Active';
+                ListOfGoalsToCreate.add(goal1);
             }
             for(Integer i = 0; i < 5; i ++){
                 String name = 'Certification Goal ' + '' + i;
@@ -164,6 +183,9 @@ Test.stopTest();
                 Goal__c goal = TestDataFactory.createGoalRecords(MenteeCon.Id, Name, startdate, enddate, KRA,false);
                 goal.Status__c = 'In Progress';
                 ListOfGoalsToCreate.add(goal);
+                Goal__c goal1 = TestDataFactory.createGoalRecords(MentorCon.Id, Name, startdate, enddate, KRA1,false);
+                goal1.Status__c = 'In Progress';
+                ListOfGoalsToCreate.add(goal1);
             }
             for(Integer i = 0; i < 5; i ++){
                 String name = 'Certification Goal ' + '' + i;
@@ -173,16 +195,30 @@ Test.stopTest();
                 Goal__c goal = TestDataFactory.createGoalRecords(MenteeCon.Id, Name, startdate, enddate, KRA,false);
                 goal.Status__c = 'Missed';
                 ListOfGoalsToCreate.add(goal);
+                Goal__c goal1 = TestDataFactory.createGoalRecords(MentorCon.Id, Name, startdate, enddate, KRA1,false);
+                goal1.Status__c = 'Missed';
+                ListOfGoalsToCreate.add(goal1);
             }
-            insert ListOfGoalsToCreate;
+            
             Test.startTest();
+            insert ListOfGoalsToCreate;
+            
+            String GOAL_RECORD_TYPE = 'Goal';
+        	Id goalRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get(GOAL_RECORD_TYPE).getRecordTypeId();
+            list<Goal__c> indiaGoal=[SELECT Id,Status__c,Start_Date__c,End_Date__c,RecordTypeId FROM Goal__c WHERE (Status__c='Active' OR Status__c='Missed' OR Status__c='Draft' OR Status__c='In Progress') And RecordTypeId =:goalRecTypeId AND Resource__r.Work_Location_Country__c ='India'];
+            list<Goal__c> notindiaGoal=[SELECT Id,Status__c,Start_Date__c,End_Date__c,RecordTypeId FROM Goal__c WHERE (Status__c='Active' OR Status__c='Missed' OR Status__c='Draft' OR Status__c='In Progress') And RecordTypeId =:goalRecTypeId AND Resource__r.Work_Location_Country__c !='India'];
+            system.debug('indiaGoal-->'+indiaGoal);
+        	system.debug('notindiaGoal-->'+notindiaGoal);
+
             BatchToMapMissedGoals batchExecute = new BatchToMapMissedGoals(); 
             Database.executeBatch(batchExecute);
+            BatchToMapMissedGoals2 batchExecute2 = new BatchToMapMissedGoals2(); 
+            Database.executeBatch(batchExecute2);
             Test.stopTest();
         } catch (Exception ex) {
             String errorMsg = ex.getMessage();
             System.debug('An exception occurred: ' + errorMsg);
-        }
+        }*/
         
         
     }

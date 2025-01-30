@@ -191,6 +191,8 @@ public class BatchToCreateScoringForAwards_Test {
             rec.Award_Type__c = awardType;
             rec.Secondary_Nomination__c = true;
             rec.Nomination_Submitted__c = true;
+            rec.of_Primary_Nominations__c =1;
+            rec.of_Secondary_Nominations__c=2;
             recoListToInsert.add(rec);
         }
         

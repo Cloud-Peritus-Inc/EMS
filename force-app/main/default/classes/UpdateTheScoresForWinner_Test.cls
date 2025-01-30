@@ -124,7 +124,8 @@ public class UpdateTheScoresForWinner_Test {
         System.debug('MentorUser 118 ' + MentorUser);
         
         List<String> AwardTypeList = new List<String>{'Best Entrepreneur', 'Most Professional', 'Rising Star', 'Rock Star', 'Shining Star', 'Going Above and Beyond', 'Award of Excellence'};
-            List<Reward_And_Recognition__c> recoListToInsert = New List<Reward_And_Recognition__c>();
+        List<Reward_And_Recognition__c> recoListToInsert = New List<Reward_And_Recognition__c>();
+        List<Reward_And_Recognition__c> recoListToInsert2 = New List<Reward_And_Recognition__c>();
         List<Reward_And_Recognition__c> recoListToUpdate = New List<Reward_And_Recognition__c>();
         
         //SCORING_RECORDTYPE records 

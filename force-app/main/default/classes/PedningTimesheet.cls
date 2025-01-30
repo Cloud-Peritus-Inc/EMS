@@ -1,4 +1,4 @@
-/**
+/** 
 * @author Vamsi
 * @date 05/27/2023
 * @description  This classs for getting Timesheet records
@@ -9,7 +9,7 @@
 * N/A           N/A                     N/A
 * ====================================================================================================
 **/
-public class PedningTimesheet {
+public without sharing class PedningTimesheet {
     public class WrapperClass {
         
         @AuraEnabled
@@ -208,7 +208,7 @@ public class PedningTimesheet {
             
         }
     
-        
+        system.debug('wrapperOppList========================='+wrapperOppList);
         return  wrapperOppList;
         
     }
@@ -217,7 +217,9 @@ public class PedningTimesheet {
         //
         User user = [SELECT Id, ContactId FROM User WHERE Id =: UserInfo.getUserId()];
         System.debug(user.ContactId);
-        integer records= [select count() FROM EMS_TM_Timesheet_Record__c where Status__c='Submitted' AND Timesheet_Approver__c=:user.ID];
+        integer records= [select count() FROM EMS_TM_Timesheet_Record__c where Status__c='Submitted' AND 
+                          Timesheet_Approver__c=:user.ID
+                          ]; 
         
         system.debug('records.size()' +records);
         return  records;

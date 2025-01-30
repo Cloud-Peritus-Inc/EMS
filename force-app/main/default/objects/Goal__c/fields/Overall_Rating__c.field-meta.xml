@@ -2,19 +2,13 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Overall_Rating__c</fullName>
     <externalId>false</externalId>
-    <formula>IMAGE(
-IF( Rating__c &lt;1 , &quot;/img/samples/stars_000.gif&quot;,
-IF(Rating__c&lt;2, &quot;/img/samples/stars_100.gif&quot;,
-IF(Rating__c&lt;3, &quot;/img/samples/stars_200.gif&quot;,
-IF(Rating__c&lt;4, &quot;/img/samples/stars_300.gif&quot;,
-IF(Rating__c&lt;5, &quot;/img/samples/stars_400.gif&quot;, &quot;/img/samples/stars_500.gif&quot;
-))))),
-&quot;Rating&quot;)</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <formula>(Average_Goals_And_Result_Rating__c  +  Average_Professional_Skills_Rating__c  +  Average_Strategic_Impact_Rating__c  +  Average_Technical_Skills_Rating__c)</formula>
     <label>Overall Rating</label>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

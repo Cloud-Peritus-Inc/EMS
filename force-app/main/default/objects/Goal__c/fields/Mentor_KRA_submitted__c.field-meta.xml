@@ -3,6 +3,9 @@
     <fullName>Mentor_KRA_submitted__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This check box will be checked when the mentor has submitted all his PM Config Answer records</description>
+
+    <externalId>false</externalId>
+
     <label>Mentor KRA submitted</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

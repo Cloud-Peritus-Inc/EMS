@@ -16,12 +16,31 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
+        <description>Notifying mentor when KRA is missed: Email Template</description>
+        <name>Send_email_to_Mentor</name>
+        <label>Send email to Mentor</label>
+        <locationX>578</locationX>
+        <locationY>684</locationY>
+        <actionName>Goal__c.KRA_Missed_Alert_2</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Send_email_to_Resource</name>
         <label>Send email to Resource</label>
         <locationX>578</locationX>
-        <locationY>468</locationY>
+        <locationY>576</locationY>
         <actionName>Goal__c.KRA_Missed_Alert</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Send_email_to_Mentor</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -54,7 +73,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Send_Remainder_For_Reporte</name>
-            <conditionLogic>(1 OR 2 OR 3 ) AND 4 AND 5</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 ) AND 4 AND 5 AND 6 AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>CheckFisrtDay</leftValueReference>
                 <operator>EqualTo</operator>
@@ -80,7 +99,7 @@
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Active</stringValue>
+                    <stringValue>In Progress</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -90,6 +109,20 @@
                     <stringValue>KRA</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Resource__r.Work_Location_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentee_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Remainder_mail_to_reportee</targetReference>
             </connector>
@@ -97,12 +130,12 @@
         </rules>
         <rules>
             <name>Send_Remainder_Mail_to_Mentor</name>
-            <conditionLogic>1 AND 5 AND ( 2 OR 3 OR 4 )</conditionLogic>
+            <conditionLogic>1 AND 5 AND 6 AND 7 AND 8 AND ( 2 OR 3 OR 4 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>KRA Inreview</stringValue>
+                    <stringValue>In Progress</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -133,6 +166,27 @@
                     <stringValue>KRA</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Resource__r.Work_Location_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentor_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentee_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Send_KRA_reminder_mail_to_mentor</targetReference>
             </connector>
@@ -145,7 +199,7 @@
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Active</stringValue>
+                    <stringValue>In Progress</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -162,32 +216,47 @@
                     <elementReference>TodayDate</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Resource__r.Work_Location_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Mentee_KRA_submitted__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Update_Status_to_Missed</targetReference>
             </connector>
             <label>Change Status to Missed</label>
         </rules>
     </decisions>
+    <description>Shubham: Updated flow to use Consideration_Date__c formula and modified Update Records conditon</description>
     <environments>Default</environments>
     <formulas>
         <name>CheckFiftinthDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 15,  {!$Record.Quarter_End_Date__c} - 16)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 15, {!$Record.Consideration_Date__c} - 16)</expression>
     </formulas>
     <formulas>
         <name>CheckFisrtDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 29,  {!$Record.Quarter_End_Date__c} - 30)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 29,  {!$Record.Consideration_Date__c} - 30)</expression>
     </formulas>
     <formulas>
         <name>CheckSeventhDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 23,  {!$Record.Quarter_End_Date__c} - 24)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 23,  {!$Record.Consideration_Date__c} - 24)</expression>
     </formulas>
     <formulas>
         <name>ChecksixteenthDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 14,  {!$Record.Quarter_End_Date__c} - 15)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 14, {!$Record.Consideration_Date__c} - 15)</expression>
     </formulas>
     <formulas>
         <name>Dayofthemonth</name>
@@ -198,12 +267,12 @@
     <formulas>
         <name>Last16day</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 14,  {!$Record.Quarter_End_Date__c} - 15)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 14,  {!$Record.Consideration_Date__c} - 15)</expression>
     </formulas>
     <formulas>
         <name>ThirdayDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} ,  {!$Record.Quarter_End_Date__c} - 1)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} ,  {!$Record.Consideration_Date__c} - 1)</expression>
     </formulas>
     <formulas>
         <name>TodayDate</name>
@@ -213,7 +282,7 @@
     <formulas>
         <name>TweentyThridDay</name>
         <dataType>Date</dataType>
-        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Quarter_End_Date__c} - 7,  {!$Record.Quarter_End_Date__c} - 8)</expression>
+        <expression>IF(DAY({!$Record.Quarter_End_Date__c}) = 30,  {!$Record.Consideration_Date__c} - 7,  {!$Record.Consideration_Date__c} - 8)</expression>
     </formulas>
     <interviewLabel>Send KRA remainder Mail to Mentor {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send KRA remainder Mail to Mentor</label>
@@ -237,13 +306,71 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
+        <description>Cancelling the PM ANSWER records which are not submitted,Rejected,Cancelled</description>
+        <name>Cancel_PM_Answers</name>
+        <label>Cancel PM Answers</label>
+        <locationX>578</locationX>
+        <locationY>468</locationY>
+        <connector>
+            <targetReference>Send_email_to_Resource</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>KRA__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Submitted</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PM_Configure__c</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Status_to_Missed</name>
         <label>Update Status to Missed</label>
         <locationX>578</locationX>
         <locationY>360</locationY>
         <connector>
-            <targetReference>Send_email_to_Resource</targetReference>
+            <targetReference>Cancel_PM_Answers</targetReference>
         </connector>
+        <inputAssignments>
+            <field>Mentee_KRA_submitted__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mentor_KRA_submitted__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Status__c</field>
             <value>
@@ -263,7 +390,7 @@
             <field>Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Active</stringValue>
+                <stringValue>In Progress</stringValue>
             </value>
         </filters>
         <filters>
@@ -277,7 +404,7 @@
             <field>Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>KRA Inreview</stringValue>
+                <stringValue>KRA In Review</stringValue>
             </value>
         </filters>
         <filters>
@@ -290,19 +417,10 @@
         <object>Goal__c</object>
         <schedule>
             <frequency>Daily</frequency>
-            <startDate>2024-01-01</startDate>
-            <startTime>03:30:00.000Z</startTime>
+            <startDate>2024-08-20</startDate>
+            <startTime>18:30:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
     <status>Active</status>
-    <textTemplates>
-        <name>Dummymail</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!$Record.Check_In_By__r.ContactName__c},
-You have not submitted your Reportee({!$Record.Goal_Name__c}) rating. Please submit KRA by before {!$Record.Quarter_End_Date__c},
-
-Thanks &amp;Regards
-Grid Team.</text>
-    </textTemplates>
 </Flow>

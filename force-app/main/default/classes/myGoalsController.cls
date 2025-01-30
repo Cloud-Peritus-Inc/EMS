@@ -58,13 +58,13 @@ public without sharing class myGoalsController {
              gl.End_Date__c = enddate;
              gl.Description__c = descri;
              
-             // Query for Active, KRA InReview, and KRA Completed records
+             //smaske : [PM_Def_014] : Query for In Progress, KRA In Review KRA records as per PHASE 2.
             List<Goal__c> findTheActiveGoal = [
                 SELECT Id 
                 FROM Goal__c 
                 WHERE Fulfillment__c = :fulfilmentId 
                 AND RecordTypeId = :kraRecordTypeId 
-                AND (Status__c = 'Active' OR Status__c = 'KRA Inreview' OR Status__c = 'KRA Completed') 
+                AND (Status__c = 'In Progress' OR Status__c = 'KRA In Review') 
                 LIMIT 1
             ];
 
@@ -105,11 +105,11 @@ public without sharing class myGoalsController {
         } 
     }
     @AuraEnabled 
-    public static void updateRecord(String goalId){
+    public static void updateRecord(String goalId, String finalComments){
         try{
             Goal__c gl = [SELECT Id,Goal_Name__c,Start_Date__c,End_Date__c, Goal_Completed_Date__c, Description__c,Feedback_and_Comments__c,Status__c FROM Goal__c WHERE Id=:goalId];
                 gl.Status__c = 'In Progress';  
-            
+                gl.Feedback_and_Comments__c = finalComments;
             update gl;  
         }catch(exception ex){
             String errorMsg = ex.getMessage();

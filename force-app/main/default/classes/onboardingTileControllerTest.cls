@@ -32,6 +32,7 @@ public class onboardingTileControllerTest {
         goalRec.End_Date__c = System.today().addDays(10);
         goalRec.is_Navigation_Required__c = True;
         goalRec.Navigation_address__c = 'Test';
+        goalRec.Type__c = 'Org Level Goal';
         insert goalRec;
         
         Goal__c goalRec1 = new Goal__c();

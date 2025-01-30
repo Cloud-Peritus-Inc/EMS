@@ -1,0 +1,14 @@
+<template>
+    <lightning-modal-header label={headerLable}></lightning-modal-header>
+    <lightning-modal-body>
+        <p class="slds-text-heading_small slds-text-align_center">{bodyLable}</p>
+        <template lwc:if={bodyLable2}>
+            <p lwc:dom="manual" class="slds-text-heading_small slds-text-align_center secondaryLable"></p>
+        </template>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label={btnLable1} variant="neutral" onclick={handleClose}
+            class="slds-var-p-right_x-small"></lightning-button>
+        <lightning-button label={btnLable2} variant="brand" onclick={handleSave}></lightning-button>
+    </lightning-modal-footer>
+</template>

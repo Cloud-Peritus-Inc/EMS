@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LeaveApprover__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This lookup field will store the contact value, which is the Leave approver for the contact.
+The leave approver will be decided by the relationship type field on the Resource relationship object record.</description>
+    <externalId>false</externalId>
+    <label>Leave Approver</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Contacts (Leave Approver)</relationshipLabel>
+    <relationshipName>LeaveApprover</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

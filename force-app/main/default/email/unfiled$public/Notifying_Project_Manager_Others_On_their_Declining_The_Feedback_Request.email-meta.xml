@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notifying Project Manager/Others On their Declining The Feedback Request</name>
+    <style>freeForm</style>
+    <subject>Performance: Decline Of Requested KRA Feedback Submission For {!PM_Configure__c.Mentee__c}</subject>
+    <textOnly>Dear {!PM_Configure__c.Reporting_Contact__c},
+
+
+I hope this message finds you well. This is to inform you that your recent feedback request on {!PM_Configure__c.Mentee__c} for the {!PM_Configure__c.Project_Name__c} has been declined by you.
+
+
+
+The reason submitted by you is provided below.
+
+{!PM_Configure__c.Rejection_Cancellation_Reason__c}
+
+Thank you for your cooperation.
+
+Best Regards,
+
+Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

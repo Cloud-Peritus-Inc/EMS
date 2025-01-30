@@ -62,7 +62,9 @@ public class UpdatetheKRAStatus implements TriggerAction.AfterUpdate {
                     System.debug('### duplicatepmConfigMap------' + duplicatepmConfigMap.get(goalrecordId.Id));
                     System.debug('### duplicatepmConfigMap2-----' + duplicatepmConfigMap2.get(goalrecordId.Id));
                     if (duplicatepmConfigMap.get(goalrecordId.Id) == duplicatepmConfigMap2.get(goalrecordId.Id)) {
+
                         goalrecordId.Status__c ='KRA Inreview';
+
                         updatedGoalList.add(goalrecordId);
                     }
                 }

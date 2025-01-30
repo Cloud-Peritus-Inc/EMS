@@ -10,7 +10,7 @@
     <textOnly>Dear Mentor,
 
 
-The goal has been successfully created by your reportee {!Goal__c.Resource__c}.
+The goal has been successfully created for your reportee {!Goal__c.Resource__c}.
 
 
 

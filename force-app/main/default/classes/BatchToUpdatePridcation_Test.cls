@@ -85,6 +85,13 @@ public class BatchToUpdatePridcation_Test {
             
             for(Integer i=0; i<2; i++){
                 contactList[i].EMS_TM_User__c = userList[i].Id;
+                if(contactList[i].EMS_RM_Employee_Id__c == 'CP10880'){
+                    contactList[i].Not_Eligible_For_Annual_Awards__c = false;
+        			contactList[i].EMS_EM_Exp__c = 1;
+                }
+              /*  if(contactList[i].EMS_RM_Employee_Id__c == 'CP10881'){
+                    contactList[i].Not_Eligible_For_Annual_Awards__c = true;
+                }*/
             }
             update contactList;
             System.debug('Updated Contact List ' + contactList);
@@ -114,26 +121,18 @@ public class BatchToUpdatePridcation_Test {
         Test.StartTest();
         BatchToUpdatePridcation_sch testsche = new BatchToUpdatePridcation_sch();
         String sch = '0 0 23 * * ?';
-        system.schedule('Test BatchToCreateScoringForAwards_Sch Check', sch, testsche );
+        system.schedule('Test BatchToUpdatePridcation_sch Check', sch, testsche );
         Test.stopTest();
     }
     
     testmethod static void  testingUpdatePridcationBatch(){
-        
+        Test.startTest();
         Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c,Not_Eligible_For_Annual_Awards__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10880'];
-        MenteeCon.Not_Eligible_For_Annual_Awards__c = false;
-        MenteeCon.EMS_EM_Exp__c = 1;
-        update MenteeCon;
-        
         Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c,Not_Eligible_For_Annual_Awards__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10881'];
-        MentorCon.Not_Eligible_For_Annual_Awards__c = true;
-        update MentorCon;
         
         Fulfillment__c Ful = [Select Id,Resource__c,Fiscal_Year__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
         List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c LIMIT 1];
-        system.debug('FY  ' + FY);
         List<EMS_TM_Project__c> projects = [Select Id,Name FROM EMS_TM_Project__c WHERE Name='Demo' LIMIT 1];
-        system.debug('projects ' + projects);
         
         List<String> AwardTypeList = new List<String>{'Rising Star','Best Entrepreneur', 'Most Professional','Rock Star', 'Shining Star', 'Going Above and Beyond', 'Award of Excellence','Best Entrepreneur', 'Most Professional', 'Rising Star', 'Rock Star', 'Shining Star', 'Going Above and Beyond', 'Award of Excellence'};
 		
@@ -152,6 +151,8 @@ public class BatchToUpdatePridcation_Test {
             rec.Award_Type__c = awardType;
             rec.Primary_Nomination__c = true;
             rec.Nomination_Submitted__c = true; 
+            rec.of_Primary_Nominations__c =1;
+            rec.of_Secondary_Nominations__c=2;
             recoListToInsert.add(rec);
         }
         
@@ -167,6 +168,8 @@ public class BatchToUpdatePridcation_Test {
             rec.Award_Type__c = awardType;
             rec.Primary_Nomination__c = true;
             rec.Nomination_Submitted__c = true; 
+            rec.of_Primary_Nominations__c =1;
+            rec.of_Secondary_Nominations__c=2;
             recoListToInsert.add(rec);
         }
             
@@ -182,6 +185,8 @@ public class BatchToUpdatePridcation_Test {
                 rec.Award_Type__c = awardType;
                 rec.Primary_Nomination__c = true;
                 rec.Nomination_Submitted__c = true;
+                rec.of_Primary_Nominations__c =1;
+            rec.of_Secondary_Nominations__c=2;
                 recoListToInsert.add(rec);
             }
         
@@ -197,6 +202,8 @@ public class BatchToUpdatePridcation_Test {
                 rec.Award_Type__c = awardType;
                 rec.Primary_Nomination__c = true;
                 rec.Nomination_Submitted__c = true;
+            rec.of_Primary_Nominations__c =1;
+            rec.of_Secondary_Nominations__c=2;
                 recoListToInsert.add(rec);
             }
         
@@ -212,6 +219,8 @@ public class BatchToUpdatePridcation_Test {
             rec.Award_Type__c = awardType;
             rec.Primary_Nomination__c = true;
             rec.Nomination_Submitted__c = true;
+            rec.of_Primary_Nominations__c =1;
+            rec.of_Secondary_Nominations__c=2;
             recoListToInsert.add(rec);
         }
 
@@ -227,16 +236,13 @@ public class BatchToUpdatePridcation_Test {
             rec.Award_Type__c = 'Best Entrepreneur';
             rec.Primary_Nomination__c = true;
             rec.Nomination_Submitted__c = true;
+            rec.of_Primary_Nominations__c =1;
+            rec.of_Secondary_Nominations__c=2;
             recoListToInsert.add(rec);
         }
         
         system.debug('recoListToInsert value ' + recoListToInsert);
-        Insert  recoListToInsert;   
-        
-        BatchToCreateScoringForAwards batchExe = new BatchToCreateScoringForAwards(); 
-        Database.executeBatch(batchExe,200);
-        
-        Test.startTest();
+        Insert  recoListToInsert;
         try {
             BatchToUpdatePridcation batchExecute = new BatchToUpdatePridcation(); 
             Database.executeBatch(batchExecute,200);

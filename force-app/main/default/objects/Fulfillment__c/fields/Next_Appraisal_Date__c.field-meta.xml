@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Next_Appraisal_Date__c</fullName>
+    <description>Next appraisal date value of the related Resource(Contact)</description>
+    <externalId>false</externalId>
+    <formula>Resource__r.Next_Appraisal_Date__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Next appraisal date value of the related Resource</inlineHelpText>
+    <label>Next Appraisal Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

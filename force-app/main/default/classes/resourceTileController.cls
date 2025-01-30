@@ -165,7 +165,7 @@ public without sharing class resourceTileController {
     }
     
     
-    @AuraEnabled(cacheable=true)
+ @AuraEnabled(cacheable=true)
     public static datawrapper getUserHiearchyInfo(Id userId) {
         
         Id conReportToId;
@@ -260,7 +260,8 @@ public without sharing class resourceTileController {
         }
         
         List<Contact> directReports = [SELECT Id,Name,EMS_TM_User__r.FullPhotoUrl,EMS_RM_Employee_Id__c,Resource_Role__r.Name,ReportsTo.Name,
-                                       EMS_TM_User__c FROM Contact WHERE ID IN : resourceIds AND ReportsToId=:urecord.contactId AND EMS_RM_ApplicantStatus_Update__c != 'Inactive' AND EMS_TM_User__r.IsPortalEnabled = true ];
+                                       EMS_TM_User__c FROM Contact WHERE ID IN : resourceIds AND EMS_RM_ApplicantStatus_Update__c != 'Inactive' AND EMS_TM_User__r.IsPortalEnabled = true ];
+        //ReportsToId=:urecord.contactId AND
         
         /*List<Contact> directReports = [SELECT Id,Name,EMS_TM_User__r.FullPhotoUrl,EMS_RM_Employee_Id__c,Resource_Role__r.Name,ReportsTo.Name,
 			EMS_TM_User__c FROM Contact WHERE ReportsToId=:urecord.contactId AND EMS_RM_ApplicantStatus_Update__c != 'Inactive'];*/
@@ -336,5 +337,4 @@ public without sharing class resourceTileController {
         @AuraEnabled public string url;
         @AuraEnabled public string filetype;
     }  
-    
 }

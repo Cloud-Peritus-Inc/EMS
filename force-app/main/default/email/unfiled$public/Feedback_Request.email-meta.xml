@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Feedback Request</name>
+    <style>freeForm</style>
+    <subject>Performance: Request for Performance Feedback for {!PM_Configure__c.Mentee__c}</subject>
+    <textOnly>Dear {!PM_Configure__c.Reporting_Contact__c},
+
+We hope this message finds you well. As part of our ongoing performance review process, A performance feedback request has been initiated to you for the employee {!PM_Configure__c.Mentee__c}
+
+
+
+{!PM_Configure__c.Mentee__c} has been working on [mention key projects/tasks] and your insights into their performance, contributions, and areas for development would be incredibly valuable. Please click here to submit your feedback
+
+
+
+Best Regards
+
+The Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

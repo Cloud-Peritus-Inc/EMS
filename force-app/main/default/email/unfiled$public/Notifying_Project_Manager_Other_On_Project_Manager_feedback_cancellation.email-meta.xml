@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notifying Project Manager/Other On Project Manager feedback cancellation when mentor completes KRA</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notifying Project Manager/Other On Project Manager feedback cancellation</name>
+    <style>freeForm</style>
+    <subject>Performance: KRA Feedback On {!PM_Configure__c.Mentee__c} Canceled For The Project {!PM_Configure__c.Project_Name__c}</subject>
+    <textOnly>Dear {!PM_Configure__c.Reporting_Contact__c},
+
+We hope this message finds you well.
+
+This is to inform you that, {!PM_Configure__c.Mentor__c} has decided to proceed with providing the KRA feedback for the {!PM_Configure__c.Mentee__c} without your KRA feedback. As a result, your feedback record has been cancelled by the system.
+
+We apologize for any inconvenience this may cause and appreciate your understanding. Thank you for your consideration.
+
+Best Regards,
+
+Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

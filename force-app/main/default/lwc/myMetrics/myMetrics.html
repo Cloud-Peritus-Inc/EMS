@@ -31,7 +31,9 @@
 								disabled={disableButton}></lightning-input>
 							<lightning-input data-id="toggle3" type="toggle" label="Show All KRA's" onchange={kraToggle}
 								message-toggle-active="" message-toggle-inactive=""></lightning-input>
-								<lightning-input data-id="toggle4" type="toggle" label="My project assignments"
+
+								<lightning-input data-id="toggle4" type="toggle" label="My Project Assignments"
+
 								onchange={ProjectAssignToggle} message-toggle-active="" message-toggle-inactive="">
 							</lightning-input>
 						</div>
@@ -47,6 +49,14 @@
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>
+
+				<br />
+				<lightning-layout multiple-rows>
+					<lightning-layout-item size="12">
+						<p><b>Note: FY filter is not applicable to "My Project Assignments".</b></p>
+					</lightning-layout-item>
+				</lightning-layout>
+
 			</div>
 
 	</lightning-card>

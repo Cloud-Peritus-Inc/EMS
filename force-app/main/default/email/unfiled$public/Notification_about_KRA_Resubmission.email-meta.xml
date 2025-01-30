@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send Email to Resource when he Mentor ReSubmits KRA record for his mentee</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notification about KRA Resubmission</name>
+    <style>freeForm</style>
+    <subject>Performance: KRA  Resubmission Confirmation</subject>
+    <textOnly>Dear {!Goal__c.Resource__c},
+
+
+We are pleased to inform you that your KRA feedback has been updated and successfully resubmitted by your mentor {!Goal__c.Check_In_By__c}.
+
+
+For further details or any necessary actions, please click here to log in to the GRID system.
+
+
+Best Regards,
+
+Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

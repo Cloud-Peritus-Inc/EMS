@@ -142,7 +142,7 @@
 
 														<td>
 															<div class="slds-wrap">
-																{kra.Overall_Average_Section_Rating__c}
+																{kra.Overall_Rating__c}<!-- Ravitheja -- added overall rating from goal-->
 															</div>
 														</td>
 
@@ -223,8 +223,8 @@
 							</div>
 							<!-- <div class="rightBox">
 							</div> -->
-							<div class="midBox">
-								<c-reusable-lookup label="Reviewers" selected-icon-name="standard:contact" object-label="Contact"
+							<div class="lookupBox">
+								<c-reusable-lookup label="Reviewer" selected-icon-name="standard:contact" object-label="Contact"
 									object-api-name="User" field-api-name="Name" other-field-api-name="User_Status__c"
 									other-field-api-name2="Hr_Access__c"
 									selected-record-id={Compensation.Reviewed_By__c}
@@ -232,11 +232,21 @@
 							</div>
 
 							<div class="midBox">
-								<!-- smaske : [PM_129] : Updated Label Value -->
 								<p class="subTitle2">Overall Average Rating: {averageOverallRating}</p>
 							</div>
 
-							<div class="midBox">
+							<div class="leftBox">
+								<lightning-input label="HR Rating" type="Number" name="HR_Rating__c"
+									value= {averageOverallRating} onchange={dataHandler} step="0.01" min="1" max="5">
+								</lightning-input>
+								<template if:true={errorMessage}>
+									<div class="slds-text-color_error slds-m-top_small">
+										{errorMessage}
+									</div>
+								</template>
+							</div>
+
+							<div class="commentBox">
 								<lightning-input-rich-text label-visible="true" type="text" label="Comments" name="Comments__c"
 									value={Compensation.Comments__c} onchange={dataHandler}></lightning-input-rich-text>
 							</div>
@@ -249,13 +259,13 @@
                             </div> -->
 
 
-							<div class="midBox">
+							<!-- <div class="midBox">
 								<p class="subTitle">SCHEDULES</p>
 								<p class="">
 									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text="" title=""></lightning-icon> 
 									&nbsp;Assessment will be visible for 15 days from the date of trigger.
 								</p>
-								<!-- <p class="">
+								 <p class="">
 									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
 										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
 									Evaluation Date
@@ -264,8 +274,8 @@
 									<lightning-icon size="xx-small" icon-name="action:approval" alternative-text=""
 										title=""></lightning-icon> Assesment will be visible 30 days before prior to the
 									Evaluation Date
-								</p> -->
-							</div>
+								</p> 
+							</div> -->
 
 						</div>
 					</lightning-accordion-section>

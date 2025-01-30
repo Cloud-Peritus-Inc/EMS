@@ -59,6 +59,10 @@
                 <behavior>Edit</behavior>
                 <field>Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Next_Appraisal_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -108,7 +112,6 @@
         <fields>Goal_Name__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>Status__c</fields>
-        <fields>Rating__c</fields>
         <relatedList>Goal__c.Fulfillment__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

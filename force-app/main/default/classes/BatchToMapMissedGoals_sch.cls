@@ -6,7 +6,7 @@
 *       
 *               Test code coverage provided by the following test class:
 *               - BatchToMapMissedGoals_Test
-*
+*Sangharsh : this schedule class is for Contacts with INDIA location
 * CHANGE HISTORY
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION

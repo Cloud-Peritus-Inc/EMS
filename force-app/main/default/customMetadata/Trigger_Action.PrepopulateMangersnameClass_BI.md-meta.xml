@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Prepopulating the managers Name</value>
+        <value xsi:type="xsd:string">Prepopulating the Project Manager/ Resource Manager Name on timesheet line item records before its inserted based on the Resource work location and project type</value>
     </values>
     <values>
         <field>Flow_Name__c</field>

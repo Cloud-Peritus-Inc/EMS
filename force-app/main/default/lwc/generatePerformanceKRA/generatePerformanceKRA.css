@@ -16,8 +16,8 @@
 }
 
 .boxContiner {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
     flex-wrap: wrap;
     border: 1px solid black;
     border-radius: 10px;
@@ -241,4 +241,21 @@
 .slds-modal__container {
     max-width: 100rem !important;
     width: 100% !important;
+}
+
+.slds-form-element__control{
+    width: 47%;
+}
+
+.commentBox {
+    padding: 5px 10px 5px 10px;
+    width: 100%;
+    /* Occupy the full width of the container */
+    box-sizing: border-box;
+}
+
+.lookupBox {
+    padding: 5px 10px 5px 10px;
+    width: 465px;
+    box-sizing: border-box;
 }

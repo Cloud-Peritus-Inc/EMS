@@ -103,6 +103,8 @@ public class checkInController_Test {
             checkInController.getThePulseInfo(MentorCon.Id, FiscalYear.Id);
             checkInController.getThePulseInfo(MentorCon.Id, null);
             checkInController.getThePulseInfo(null, FiscalYear.Id);
+            //
+            checkInController.getThePulseInfo(MenteeCon.Id, FiscalYear.Id);
         }
         Test.stopTest();
     } 

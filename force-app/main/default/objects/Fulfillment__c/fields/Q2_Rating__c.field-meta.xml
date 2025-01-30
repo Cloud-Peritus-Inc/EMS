@@ -3,9 +3,9 @@
     <fullName>Q2_Rating__c</fullName>
     <externalId>false</externalId>
     <label>Q2 Rating</label>
-    <precision>3</precision>
+    <precision>4</precision>
     <required>false</required>
-    <scale>1</scale>
+    <scale>2</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Number</type>

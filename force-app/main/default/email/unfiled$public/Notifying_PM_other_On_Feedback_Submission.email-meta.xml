@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Notifying PM/other On Feedback Submission</name>
+    <style>freeForm</style>
+    <subject>Performance: Performance Feedback For {!PM_Configure__c.Mentee__c} Submitted</subject>
+    <textOnly>Dear {!PM_Configure__c.Reporting_Contact__c},
+
+We hope this message finds you well. This is  to inform you that the performance feedback for {!PM_Configure__c.Mentee__c} under the Project {!PM_Configure__c.Project_Name__c} is successfully submitted by you.
+
+Thank you for your cooperation.
+
+Best Regards,
+
+Cloud Peritus Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

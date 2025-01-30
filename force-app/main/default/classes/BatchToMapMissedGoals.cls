@@ -9,6 +9,8 @@
 *               - BatchToMapMissedGoals_Test
 *
 * CHANGE HISTORY
+* Sangharsh kamble : Updated the Start querry to fetch contacts whose work location country value is INDIA.
+*This batch will create KRA for Contact from INDIA
 * ====================================================================================================
 * DATE          NAME                    DESCRIPTION
 * N/A           N/A                     N/A
@@ -32,8 +34,8 @@ global class BatchToMapMissedGoals implements Database.Batchable<sObject> {
         Id goalRecTypeId = Schema.SObjectType.Goal__c.getRecordTypeInfosByName().get(GOAL_RECORD_TYPE).getRecordTypeId();
         //return Database.getQueryLocator([SELECT Id,Status__c,End_Date__c,RecordTypeId FROM Goal__c WHERE Status__c='Active' And RecordTypeId =:goalRecTypeId and End_Date__c>=:dt ]);
         //smaske :[PM_070] : updating query [commented above line as not considering the records based on custom lable]
-        return Database.getQueryLocator([SELECT Id,Status__c,Start_Date__c,End_Date__c,RecordTypeId FROM Goal__c WHERE (Status__c='Active' OR Status__c='Missed' OR Status__c='Draft' OR Status__c='In Progress') And RecordTypeId =:goalRecTypeId]);
-    }
+        return Database.getQueryLocator([SELECT Id,Status__c,Start_Date__c,End_Date__c,RecordTypeId FROM Goal__c WHERE (Status__c='Active' OR Status__c='Missed' OR Status__c='Draft' OR Status__c='In Progress') And RecordTypeId =:goalRecTypeId AND Resource__r.Work_Location_Country__c ='India']);
+    } 
     
     /**
 * @author Subba
@@ -49,10 +51,13 @@ global class BatchToMapMissedGoals implements Database.Batchable<sObject> {
     global void execute(Database.BatchableContext BC, List<Goal__c> goalList) { 
         for(Goal__c gl : goalList){
             //smaske :[PM_070] : updating conditions
-            if(gl.status__c == 'Draft' && gl.Start_Date__c == System.today() ){
+            system.debug('System.today()'+System.today());
+            system.debug('System.today()'+(System.today()-1));
+            system.debug('gl.Start_Date__c'+gl.Start_Date__c);
+            if(gl.status__c == 'Draft' && gl.Start_Date__c == (System.today()+1)){
                 gl.status__c = 'Active';
             }
-            if( (gl.status__c == 'In Progress' || gl.status__c == 'Active' || gl.status__c == 'Draft') && gl.End_Date__c < System.today() ){
+            if( (gl.status__c == 'In Progress' || gl.status__c == 'Active' || gl.status__c == 'Draft') && gl.End_Date__c < (System.today()+1) ){
                 gl.status__c = 'Missed';
             }
         }

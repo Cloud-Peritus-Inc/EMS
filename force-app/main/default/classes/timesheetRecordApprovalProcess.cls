@@ -1,5 +1,5 @@
 /**
-* @author Ramakrishna 
+* @author Ramakrishna  
 * @date 24/01/2023
 * @description  timesheetRecordApprovalProcess to Send  TimesheetRecord  to related Project Manager for Approval.
 *
@@ -245,12 +245,11 @@ public class timesheetRecordApprovalProcess implements TriggerAction.AfterUpdate
                 For(Contact con : resConList){
                     System.debug('Inside Contact For Loop');
                     Map<Id, Resource_Resource_Relationship__c> resourceMap = new Map<Id, Resource_Resource_Relationship__c>();
+                    //smaske : [PM_Def_208] : 24/Sep/2024 : Updating Querry to fetch 'Resource Manager' value as a approver.
                     for (Resource_Resource_Relationship__c resource : [SELECT Id, Resource__r.Name, Resource__r.Email, Resource__c, Resource_Reports_To__r.EMS_TM_User__c, Resource_Reports_To__r.Email, Resource_Reports_To__c, Resource_Reports_To__r.Name, Resource__r.EMS_TM_User__c,Relationship_Type__c
                                                                        FROM Resource_Resource_Relationship__c
-                                                                       WHERE Resource__c = :con.Id ]) {
-                                                                           if(resource.Relationship_Type__c.contains('Leave Approver')){
-                                                                               resourceMap.put(resource.Resource_Reports_To__r.EMS_TM_User__c, resource);
-																			}
+                                                                       WHERE Resource__c = :con.Id AND Relationship_Type__c includes ('Resource Manager')]) {
+                                                                           resourceMap.put(resource.Resource_Reports_To__r.EMS_TM_User__c, resource);
                                                                        }
                     System.debug('resourceMap Value 1' + resourceMap.toString());
                     

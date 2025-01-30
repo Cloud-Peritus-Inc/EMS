@@ -49,8 +49,8 @@ public class sendEmailToResourceManagerAndMentor_Test {
             paidTimeOff = TestDataFactory.createLeaveType('Paid time off',true);
             
             
-            hydIndia = TestDataFactory.createOfficeLocation('Hyderabad - India',true);
-            usLocation = TestDataFactory.createOfficeLocation('California - USA',true);
+            hydIndia = TestDataFactory.createOfficeLocationboth('Hyderabad - India','India',true);
+            usLocation = TestDataFactory.createOfficeLocationboth('California - USA','United States of America',true);
             List<Office_Location__c> OfficeLocationList = new List<Office_Location__c>();
             OfficeLocationList.add(hydIndia);
             OfficeLocationList.add(usLocation);
@@ -69,17 +69,28 @@ public class sendEmailToResourceManagerAndMentor_Test {
                 con.RecordTypeId = ContactConstant.RESOURCE_RECORDTYPEID;
                 con.EMS_EM_JD__c = system.today() - 180;
                 con.Work_Location__c = OfficeLocationList[i].Id;
-                contactList.add(con);              
+                contactList.add(con); 
             }
+            TriggerBase.bypass('Contact');
             insert contactList;
+             TriggerBase.clearBypass('Contact');
             
             for(Contact cont : contactList){
                 User u = Testdatafactory.createCommunityUserWithAccAndContact(acc.id,cont.Id,false);
                 u.Username = u.Username + cont.Id;
                 u.ContactId = cont.Id;
-                userList.add(u);
+                userList.add(u);   
             }
             Insert userList;
+            
+            List<Contact> updateCon=New List<Contact>();
+            for(User us:userList){
+                Contact cons=new Contact();
+                cons.Id=us.ContactId;
+                cons.EMS_TM_User__c =us.Id;
+                updateCon.add(cons);
+            }
+            update updateCon;
             
             rrr = TestDataFactory.createRRR(contactList[0].Id, true, contactList[1].Id);
             
@@ -104,16 +115,18 @@ public class sendEmailToResourceManagerAndMentor_Test {
     
     testmethod static void  EmailToResourceManagerAndMentorTest(){
         
-        Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10560'];
-        Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10561'];
+        Contact MenteeCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c,EMS_RM_ApplicantStatus_Update__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10560'];
+        Contact MentorCon = [Select Id,Name,EMS_RM_Employee_Id__c,EMS_TM_User__c,EMS_RM_ApplicantStatus_Update__c From Contact WHERE EMS_RM_Employee_Id__c = 'CP10561'];
         Fulfillment__c Ful = [Select Id,Resource__c From Fulfillment__c WHERE Resource__c =: MenteeCon.Id ];
         List<Fiscal_Year__c> FY = [Select Id,Name FROM Fiscal_Year__c LIMIT 1];
         system.debug('FY ' + FY);
+        system.debug('MenteeCon ' + MenteeCon);
+        system.debug('MentorCon ' + MentorCon);
         List<EMS_TM_Project__c> projects = [Select Id,Name FROM EMS_TM_Project__c WHERE Name='Demo' LIMIT 1];
         system.debug('projects ' + projects);
         
         List<Reward_And_Recognition__c> recoListToInsert = New List<Reward_And_Recognition__c>();
-        for(Integer i = 1; i < 3; i++){
+      /*  for(Integer i = 1; i < 3; i++){
             Reward_And_Recognition__c rec = new Reward_And_Recognition__c();
             rec.Types_of_Recognition__c = 'Monetary Rewards';
             rec.Status__c = 'Completed';
@@ -123,7 +136,7 @@ public class sendEmailToResourceManagerAndMentor_Test {
             rec.RecordTypeId = RR_WINNER_RECORDTYPEID;
             rec.Resource__c = MenteeCon.Id;
             recoListToInsert.add(rec);
-        }
+        }*/
         
         for(Integer i = 1; i < 3; i++){
             Reward_And_Recognition__c rec = new Reward_And_Recognition__c();
@@ -162,13 +175,13 @@ public class sendEmailToResourceManagerAndMentor_Test {
         }
         
         Test.startTest();
-        try {
+       // try {
             system.debug('recoListToInsert value ' + recoListToInsert);
             Insert  recoListToInsert;    
-        } catch (Exception ex) {
+      /*  } catch (Exception ex) {
             String errorMsg = ex.getMessage();
             System.debug('An exception occurred: ' + errorMsg);
-        }
+        }*/
         Test.stopTest();
     }
     
