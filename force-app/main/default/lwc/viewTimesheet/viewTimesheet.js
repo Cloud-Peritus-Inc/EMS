@@ -83,7 +83,7 @@ export default class ViewTimesheet extends NavigationMixin(LightningElement) {
         console.log('result--> ', result);
         const event = new ShowToastEvent({
           title: 'Rejected ',
-          message: 'This Timesheet was Record  rejected',
+          message: 'The timesheet record was rejected.',
           variant: 'info',
           mode: 'dismissable'
         });
