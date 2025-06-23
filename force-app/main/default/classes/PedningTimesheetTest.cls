@@ -90,7 +90,7 @@ public class PedningTimesheetTest {
         lineitem.EMS_Timesheet__c = timesheetRec.Id;
         lineitem.OwnerId = timesheetRec.User__c;
         lineitem.EMS_TM_Project__c = projectRec.Id;
-        lineitem.EMS_TM_Mon__c = 5;
+        lineitem.EMS_TM_Mon__c = 0;
         lineitem.EMS_TM_Wed__c = 0;
         lineitem.EMS_TM_Tue__c = 0;
         lineitem.EMS_TM_Thu__c = 0;
@@ -303,12 +303,69 @@ public class PedningTimesheetTest {
     }
     
     static testMethod void testApproveAndRejectSingleRecord() {
+                
+        //--
+        user userId =[SELECT id FROM User  WHERE IsActive = true and profile.name = 'System Administrator' LIMIT 1];                  
+            Date todayval = system.today(); 
+            Date considerDate = todayval.toStartofWeek().addDays(-2);
+            Date weekStart = considerDate.toStartofWeek().addDays(1);
+            Date weekEnd = considerDate.toStartofWeek().addDays(7);
+            
+            Resource_Role__c role = TestDataFactory.createResourceRole(true);
+            
+            Contact con3 = [select id from contact where EMS_RM_Employee_Id__c = 'CP10235'];
+            
+            EMS_TM_Project__c projectRec2 = new EMS_TM_Project__c();
+            projectRec2.EMS_TM_StartDate__c = System.today();
+            projectRec2.EMS_TM_EndDate__c = System.today() + 10;
+            projectRec2.EMS_TM_Status__c = 'ongoing';
+            projectRec2.Name = 'project2';
+            projectRec2.Project_Manager__c = con3.Id;
+            projectRec2.Offshore_Project_Manager__c = con3.Id;
+            projectRec2.Type_Of_Project__c = 'Global Projects';
+            projectRec2.Approval_Needed__c = 'YES';
+            INSERT projectRec2;
+            
+            EMS_TM_Assignment__c assignmentRec2 = new EMS_TM_Assignment__c();
+            assignmentRec2.EMS_TM_EmployeeName__c = con3.Id;
+            assignmentRec2.EMS_TM_ProjectName_Asgn__c = projectRec2.Id;
+            assignmentRec2.EMS_TM_StartDate_Asgn__c = System.today();
+            assignmentRec2.EMS_TM_Billable__c = true;
+            assignmentRec2.EMS_TM_AssignedAs__c = 'Administrator';
+            assignmentRec2.Project_Allocation__c = 1;
+            INSERT assignmentRec2;
+            
+            EMS_Timesheet__c timesheetRec2 = new EMS_Timesheet__c();
+            timesheetRec2.Week_Start_Date__c = weekStart;
+            timesheetRec2.Week_End_Date__c = weekEnd;
+            timesheetRec2.Resource__c = con3.Id;
+            timesheetRec2.User__c = userId.Id;
+            timesheetRec2.EMS_TM_Sat__c = 0;
+            timesheetRec2.EMS_TM_Sun__c = 0;
+            timesheetRec2.OwnerId = userId.Id;
+            timesheetRec2.EMS_TM_Status__c = 'Submitted';
+            timesheetRec2.EMS_TM_Week__c = System.today();
+            INSERT timesheetRec2;
+            
+            Test.startTest();
+            EMS_TM_Timesheet_Record__c lineitem2 = new EMS_TM_Timesheet_Record__c();
+            lineitem2.EMS_Timesheet__c = timesheetRec2.Id;
+            lineitem2.OwnerId = timesheetRec2.User__c;
+            lineitem2.EMS_TM_Project__c = projectRec2.Id;
+            lineitem2.EMS_TM_Mon__c = 5;
+            lineitem2.EMS_TM_Tue__c = 0;
+            lineitem2.EMS_TM_Wed__c = 0;
+            lineitem2.EMS_TM_Thu__c = 0;
+            lineitem2.EMS_TM_Fri__c = 0;
+            lineitem2.EMS_TM_Sat__c = 0;
+            lineitem2.EMS_TM_Sun__c = 0;
+            lineitem2.Status__c = 'Submitted';
+            INSERT lineitem2;
         
-        User userId = [SELECT id FROM User  WHERE IsActive = true LIMIT 1]; 
-        EMS_TM_Timesheet_Record__c ts = [SELECT Id,User__c, EMS_TM_Mon__c FROM EMS_TM_Timesheet_Record__c where EMS_TM_Mon__c = 5 LIMIT 1];
         
-        Test.startTest();
-        PedningTimesheet.Approvetimesheets(ts.Id);
+        
+        
+        PedningTimesheet.Approvetimesheets(lineitem2.Id);
         Test.stopTest();
     }
     
