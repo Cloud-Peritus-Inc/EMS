@@ -90,7 +90,7 @@ public class PedningTimesheetTest {
         lineitem.EMS_Timesheet__c = timesheetRec.Id;
         lineitem.OwnerId = timesheetRec.User__c;
         lineitem.EMS_TM_Project__c = projectRec.Id;
-        lineitem.EMS_TM_Mon__c = 0;
+        lineitem.EMS_TM_Mon__c = 5;
         lineitem.EMS_TM_Wed__c = 0;
         lineitem.EMS_TM_Tue__c = 0;
         lineitem.EMS_TM_Thu__c = 0;
@@ -305,7 +305,7 @@ public class PedningTimesheetTest {
     static testMethod void testApproveAndRejectSingleRecord() {
         
         User userId = [SELECT id FROM User  WHERE IsActive = true LIMIT 1]; 
-        EMS_TM_Timesheet_Record__c ts = [SELECT Id,User__c, EMS_TM_Mon__c FROM EMS_TM_Timesheet_Record__c where EMS_TM_Mon__c = 0 LIMIT 1];
+        EMS_TM_Timesheet_Record__c ts = [SELECT Id,User__c, EMS_TM_Mon__c FROM EMS_TM_Timesheet_Record__c where EMS_TM_Mon__c = 5 LIMIT 1];
         
         Test.startTest();
         PedningTimesheet.Approvetimesheets(ts.Id);
