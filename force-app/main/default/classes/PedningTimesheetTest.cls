@@ -153,6 +153,53 @@ public class PedningTimesheetTest {
         lineitem2.Status__c = 'Submitted';
         INSERT lineitem2;
         
+        //---
+        EMS_TM_Project__c projectRec3 = new EMS_TM_Project__c();
+        projectRec3.EMS_TM_StartDate__c = System.today();
+        projectRec3.EMS_TM_EndDate__c = System.today() + 10;
+        projectRec3.EMS_TM_Status__c = 'ongoing';
+        projectRec3.Name = 'project2';
+        projectRec3.Project_Manager__c = con.Id;
+        projectRec3.Offshore_Project_Manager__c = con.Id;
+        projectRec3.Type_Of_Project__c = 'Global Projects';
+        projectRec3.Approval_Needed__c = 'YES';
+        INSERT projectRec3;
+        
+        EMS_TM_Assignment__c assignmentRec3 = new EMS_TM_Assignment__c();
+        assignmentRec3.EMS_TM_EmployeeName__c = con.Id;
+        assignmentRec3.EMS_TM_ProjectName_Asgn__c = projectRec3.Id;
+        assignmentRec3.EMS_TM_StartDate_Asgn__c = System.today();
+        assignmentRec3.EMS_TM_Billable__c = true;
+        assignmentRec3.EMS_TM_AssignedAs__c = 'Administrator';
+        assignmentRec3.Project_Allocation__c = 1;
+        INSERT assignmentRec3;
+        
+        EMS_Timesheet__c timesheetRec3 = new EMS_Timesheet__c();
+        timesheetRec3.Week_Start_Date__c = weekStart;
+        timesheetRec3.Week_End_Date__c = weekEnd;
+        timesheetRec3.Resource__c = con.Id;
+        timesheetRec3.User__c = userId.Id;
+        timesheetRec3.EMS_TM_Sat__c = 0;
+        timesheetRec3.EMS_TM_Sun__c = 0;
+        timesheetRec3.OwnerId = userId.Id;
+        timesheetRec3.EMS_TM_Status__c = 'Submitted';
+        timesheetRec3.EMS_TM_Week__c = System.today();
+        INSERT timesheetRec3;
+        
+        EMS_TM_Timesheet_Record__c lineitem3 = new EMS_TM_Timesheet_Record__c();
+        lineitem3.EMS_Timesheet__c = timesheetRec3.Id;
+        lineitem3.OwnerId = timesheetRec3.User__c;
+        lineitem3.EMS_TM_Project__c = projectRec2.Id;
+        lineitem3.EMS_TM_Mon__c = 0;
+        lineitem3.EMS_TM_Tue__c = 8;
+        lineitem3.EMS_TM_Wed__c = 0;
+        lineitem3.EMS_TM_Thu__c = 0;
+        lineitem3.EMS_TM_Fri__c = 0;
+        lineitem3.EMS_TM_Sat__c = 0;
+        lineitem3.EMS_TM_Sun__c = 0;
+        lineitem3.Status__c = 'Submitted';
+        INSERT lineitem3;
+        
     }
     
     static testMethod void testPendingRecords() {
@@ -276,7 +323,7 @@ public class PedningTimesheetTest {
     static testMethod void testApprovetimesheetsall() {
         List<id> idTest = new List<id>();
         
-        EMS_TM_Timesheet_Record__c ts = [SELECT Id FROM EMS_TM_Timesheet_Record__c LIMIT 1];
+        EMS_TM_Timesheet_Record__c ts = [SELECT Id,EMS_TM_Tue__c FROM EMS_TM_Timesheet_Record__c where EMS_TM_Tue__c = 8 LIMIT 1];
         idTest.add(ts.id);
         PedningTimesheet.approvetimesheetsall(idTest);
         
