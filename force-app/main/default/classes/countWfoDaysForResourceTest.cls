@@ -6,7 +6,17 @@ static void setupTestData() {
     //User userId = [SELECT Id FROM User WHERE IsActive = true AND Profile.Name = 'System Administrator' LIMIT 1];
     User usrConId = [SELECT Id, ContactId FROM User WHERE Id =: LeaveRequestConstant.LOGGEDIN_USERID];
 
-    Resource_Role__c role = TestDataFactory.createResourceRole(true);        
+    Resource_Role__c role = TestDataFactory.createResourceRole(true);  
+    Office_Location__c hydofficlocRec =TestDataFactory.createOfficeLocation('Hyderabad - India',true);
+        Office_Location__c usofficlocRec =TestDataFactory.createOfficeLocation('California - USA',true);
+        EMS_LM_Leave__c annualtype = TestDataFactory.createLeaveType('Annual Leave',true);
+        EMS_LM_Leave__c loptype = TestDataFactory.createLeaveType('Loss of Pay',true);
+        EMS_LM_Leave__c bretype = TestDataFactory.createLeaveType('Maternity Leave',true);
+        EMS_LM_Leave__c compofftype = TestDataFactory.createLeaveType('Compensatory Off',true);
+        EMS_LM_Leave__c workfromhome = TestDataFactory.createLeaveType('Work From Home',true);
+        EMS_LM_Leave__c paidtimeof = TestDataFactory.createLeaveType('Paid time off',true);
+        EMS_LM_Leave__c unpaidTimeOff = TestDataFactory.createLeaveType('UnPaid time off',true);
+        EMS_LM_Leave__c floatingholiday = TestDataFactory.createLeaveType('Floating Holiday',true);
     Account acc = TestDataFactory.createAccount(true);
     Contact con = TestDataFactory.createResourceContact(acc.Id, false);
     con.EMS_RM_Employee_Id__c = 'CP10288';
