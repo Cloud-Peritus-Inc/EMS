@@ -13,10 +13,15 @@
 	border-right: 1px black;
 }
 
+.childimage2{
+    width: 40%;
+	padding-bottom: 10px;
+}
+
 .childtext {
     width: 70%;
 	padding-bottom: 10px;
-    padding-left : 20px;
+    padding-left : 10px;
 }
 
 .container {
@@ -61,6 +66,7 @@
     justify-content: space-between;
     min-height: 135px;
     max-height: 135px;
+    padding-left : 10px;
 }
 
 .child1 {
