@@ -16,7 +16,7 @@ public class countWfoDaysForResource {
         // Query Timesheet records that have a date range overlapping with the current month
         List<EMS_Timesheet__c> timesheetRecords = [
             SELECT Id,WFH_Mon__c,WFH_Tue__c,WFH_Wed__c,WFH_Thu__c,WFH_Fri__c,WFH_Sat__c,WFH_Sun__c,Week_Start_Date__c,enddate__c  from EMS_Timesheet__c 
-            WHERE Week_Start_Date__c <= :monthEndDate AND enddate__c  >= :monthStartDate and Resource__c  =:usrConId.ContactId];//usrConId.ContactId
+            WHERE Week_Start_Date__c <= :monthEndDate AND enddate__c  >= :monthStartDate and Resource__c  =:usrConId.ContactId];//usrConId.ContactId   
         system.debug('timesheetRecords---'+timesheetRecords);
         for (EMS_Timesheet__c record : timesheetRecords) {
             // Determine the valid range for counting days
