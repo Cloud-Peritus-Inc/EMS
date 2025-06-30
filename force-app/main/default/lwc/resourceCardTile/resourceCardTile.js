@@ -28,7 +28,7 @@ resourceContactId = '';
 
 contextText = 'This shows your current month\'s Work From Office days.';
 wfodaysNo;
-wfoDaysData;
+wfoDaysData = 0;
 showData =false;
 
 
