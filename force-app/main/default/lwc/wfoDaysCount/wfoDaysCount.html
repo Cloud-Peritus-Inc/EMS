@@ -1,0 +1,42 @@
+<template>
+    <div class="homeCard" style="border-top: 3px solid #9602c7">
+        <lightning-card>
+            <template if:true={showData}>
+                <div style="padding-left:20px;">
+                    <div class="childtext" style="width:82%;">
+                        <font size="4"><b>My WFO Days
+                            <lightning-helptext content={contextText} class="help-icon"></lightning-helptext>
+                        </b></font>
+                        
+                        <div class="childparent">
+                            <div class="childtext">
+                             <Center>   <font size="9"><b>{wfoDaysData}</b></font>
+                                <font size="2"><b>days</b></font>
+                             </Center></div>
+                        </div> <!-- Missing closing div fixed here -->
+                    </div>
+                </div>
+            </template>
+
+            <template if:false={showData}>
+               <div style="padding-left:20px;">
+                    <div class="childtext" style="width:82%;">
+                        <font size="4"><b>My WFO Days
+                            <lightning-helptext content={contextText} class="help-icon"></lightning-helptext>
+                        </b></font>
+                        
+                        <div class="childparent">
+                            <div class="childtext">
+                             <Center>   <font size="9"><b>0</b></font>
+                                <font size="2"><b>days</b></font>
+                             </Center></div>
+                        </div> <!-- Missing closing div fixed here -->
+                    </div>
+                </div>
+
+                
+                <br/> <!-- Fixed improper <br> tag -->
+            </template>
+        </lightning-card>
+    </div>
+</template>
