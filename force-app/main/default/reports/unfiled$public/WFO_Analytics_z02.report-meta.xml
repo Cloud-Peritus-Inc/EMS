@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_$Contact.ContactName__c</field>
+    </columns>
+    <columns>
+        <field>EMS_Timesheet__c.Week_Start_Date__c</field>
+    </columns>
+    <columns>
+        <field>EMS_Timesheet__c.Week_End_Date__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>EMS_Timesheet__c.WFH_Mon__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>EMS_Timesheet__c.WFH_Tue__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>EMS_Timesheet__c.WFH_Wed__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>EMS_Timesheet__c.WFH_Thu__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>EMS_Timesheet__c.WFH_Fri__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>WFO Analytics</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$EMS_Timesheet__c@EMS_Timesheet__c.Resource__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>EMS_Timesheet__c.Week_Start_Date__c</dateColumn>
+        <interval>INTERVAL_THISWEEK</interval>
+    </timeFrameFilter>
+</Report>
