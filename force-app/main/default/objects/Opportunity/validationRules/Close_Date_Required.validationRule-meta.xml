@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Date_Required</fullName>
+    <active>true</active>
+    <description>Prevents saving Opportunity without a Close Date</description>
+    <errorConditionFormula>ISBLANK(CloseDate)</errorConditionFormula>
+    <errorDisplayField>CloseDate</errorDisplayField>
+    <errorMessage>Close Date is required before saving the Opportunity.</errorMessage>
+</ValidationRule>
