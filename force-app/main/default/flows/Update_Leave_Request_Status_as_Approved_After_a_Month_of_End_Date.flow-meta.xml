@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <decisions>
+        <name>Check_Leave_End_Date_Greater_Than_1_Month</name>
+        <label>Check Leave End Date Greater Than 1 Month</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_1_of_Decision_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EMS_LM_Leave_End_Date__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>OverDueDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Leave_Request_as_Approved</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>OverDueDate</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} - 30</expression>
+    </formulas>
+    <interviewLabel>Update Leave Request Status as Approved After a Month of End Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Leave Request Status as Approved After a Month of End Date</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Leave_Request_as_Approved</name>
+        <label>Update Leave Request as Approved</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>EMS_LM_Approved_On__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EMS_LM_Current_Approver__c</field>
+            <value>
+                <stringValue>Deployment User</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EMS_LM_Remarks__c</field>
+            <value>
+                <stringValue>Auto Approved by System</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EMS_LM_Status__c</field>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Leave_End_Date_Greater_Than_1_Month</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>EMS_LM_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pending</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EMS_LM_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approver 2 Pending</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EMS_LM_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approver 1 Pending</stringValue>
+            </value>
+        </filters>
+        <object>EMS_LM_Leave_History__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2025-07-21</startDate>
+            <startTime>06:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
