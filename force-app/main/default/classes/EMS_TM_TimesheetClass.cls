@@ -386,11 +386,12 @@ public class EMS_TM_TimesheetClass {
             }
             }
 
-            if (!GlobalProjectsList.isEmpty()) {
+            // smaske : 08/oct/2024 : TS_012 : Not passing the Global Project task data as updated code in getAssignmentProject method
+            /*if (!GlobalProjectsList.isEmpty()) {
                 for (EMS_TM_Project__c gpl : GlobalProjectsList) {
                     projectIDs.add(gpl.Id);
                 }
-            }
+            }*/
 
             List<EMS_TM_Project__c> ProjectListWithTask = new List<EMS_TM_Project__c>();
             if (!projectIDs.isEmpty()) {
