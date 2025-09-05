@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Cloud_Peritus_Inc</letterhead>
+    <name>Project Assignee Email Notification</name>
+    <style>freeForm</style>
+    <subject>Project Management: Kicking off the {!EMS_TM_Assignment__c.EMS_TM_ProjectName_Asgn__c} project.</subject>
+    <textOnly>Hi {!EMS_TM_Assignment__c.EMS_TM_EmployeeName__c},
+
+
+You&apos;ve been assigned to the [Project Name] project, effective [Start Date].
+
+Assigned As: {!EMS_TM_Assignment__c.EMS_TM_AssignedAs__c}
+
+Allocation Percent: {!EMS_TM_Assignment__c.Project_Allocation__c}
+
+Onshore Manger: {!EMS_TM_Assignment__c.Onshore_Manager_Name__c}
+
+Offshore Manager: {!EMS_TM_Assignment__c.Offshore_Manager_Name__c}
+
+
+
+Please sync with them to get started.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
